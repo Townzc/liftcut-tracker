@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { AuthProvider } from "@/components/auth/auth-provider";
+import { AppIntlProvider } from "@/components/i18n/app-intl-provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { HydrationGate } from "@/components/shared/hydration-gate";
 import "./globals.css";
@@ -29,9 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">
-        <HydrationGate>
-          <AppShell>{children}</AppShell>
-        </HydrationGate>
+        <AppIntlProvider>
+          <HydrationGate>
+            <AuthProvider>
+              <AppShell>{children}</AppShell>
+            </AuthProvider>
+          </HydrationGate>
+        </AppIntlProvider>
       </body>
     </html>
   );

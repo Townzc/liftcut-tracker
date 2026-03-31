@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Activity,
   Apple,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -21,14 +23,7 @@ interface NavItem {
   icon: ComponentType<{ className?: string }>;
 }
 
-const navItems: NavItem[] = [
-  { href: "/", label: "Dashboard", icon: Home },
-  { href: "/plan", label: "Plan", icon: CalendarCheck },
-  { href: "/workout", label: "Workout", icon: Dumbbell },
-  { href: "/nutrition", label: "Nutrition", icon: Apple },
-  { href: "/body", label: "Body", icon: Weight },
-  { href: "/settings", label: "Settings", icon: Settings },
-];
+const authRoutes = ["/login", "/register", "/forgot-password"];
 
 function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }) {
   const pathname = usePathname();
@@ -53,6 +48,38 @@ function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
+  const pathname = usePathname();
+  const { loading } = useAuth();
+
+  const navItems: NavItem[] = [
+    { href: "/", label: tNav("dashboard"), icon: Home },
+    { href: "/plan", label: tNav("plan"), icon: CalendarCheck },
+    { href: "/workout", label: tNav("workout"), icon: Dumbbell },
+    { href: "/nutrition", label: tNav("nutrition"), icon: Apple },
+    { href: "/body", label: tNav("body"), icon: Weight },
+    { href: "/settings", label: tNav("settings"), icon: Settings },
+  ];
+
+  if (authRoutes.some((route) => pathname.startsWith(route))) {
+    return (
+      <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,116,144,0.08),transparent_55%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
+        <main className="mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-10 md:px-8">
+          {children}
+        </main>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+        {tCommon("loading")}
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,116,144,0.08),transparent_55%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
       <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-slate-200/70 bg-white/90 p-4 backdrop-blur md:block">
@@ -62,7 +89,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <p className="text-sm font-semibold text-slate-900">LiftCut Tracker</p>
-            <p className="text-xs text-slate-500">Simple training and fat-loss tracker</p>
+            <p className="text-xs text-slate-500">{tNav("subtitle")}</p>
           </div>
         </div>
 

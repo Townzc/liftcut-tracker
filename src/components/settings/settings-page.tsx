@@ -1,16 +1,27 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AlertTriangle, Download, Upload } from "lucide-react";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { downloadJson, readJsonFile, validateTrainingPlan } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
+import { exportUserData } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import type { UserSettings } from "@/types";
+import { useUIStore } from "@/store/use-ui-store";
+import type { AppLocale, UserSettings } from "@/types";
 
 function numberOrZero(value: string): number {
   const parsed = Number(value);
@@ -18,143 +29,175 @@ function numberOrZero(value: string): number {
 }
 
 export function SettingsPage() {
+  const t = useTranslations("settings");
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
+
+  const language = useUIStore((state) => state.language);
+  const setLanguage = useUIStore((state) => state.setLanguage);
+
   const settings = useTrackerStore((state) => state.settings);
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const updateSettings = useTrackerStore((state) => state.updateSettings);
   const resetAllData = useTrackerStore((state) => state.resetAllData);
-  const getSnapshot = useTrackerStore((state) => state.getSnapshot);
+
+  const { user, profile, signOut, setPreferredLanguage } = useAuth();
 
   const [draft, setDraft] = useState<UserSettings>(settings);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmClear, setConfirmClear] = useState(false);
 
+  useEffect(() => {
+    setDraft(settings);
+  }, [settings]);
+
   const weeklyLossHint = useMemo(
     () =>
       draft.targetWeeklyLossMin <= draft.targetWeeklyLossMax
-        ? "Target range is valid"
-        : "Min weekly loss must be <= max weekly loss",
-    [draft.targetWeeklyLossMax, draft.targetWeeklyLossMin],
+        ? t("rangeOk")
+        : t("rangeInvalid"),
+    [draft.targetWeeklyLossMax, draft.targetWeeklyLossMin, t],
   );
 
   const updateField = <K extends keyof UserSettings>(key: K, value: UserSettings[K]) => {
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSaveSettings = () => {
+  const handleSaveSettings = async () => {
     try {
       const parsed = userSettingsSchema.parse(draft);
       if (parsed.targetWeeklyLossMin > parsed.targetWeeklyLossMax) {
-        throw new Error("Min weekly loss cannot be greater than max weekly loss.");
+        throw new Error(t("rangeInvalid"));
       }
 
-      updateSettings(parsed);
-      setMessage("Settings saved.");
+      await updateSettings({
+        ...parsed,
+        userId: settings.userId,
+        updatedAt: new Date().toISOString(),
+      });
+      setMessage(t("saved"));
       setError(null);
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Failed to save settings.");
+      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
       setMessage(null);
     }
   };
 
   const handleImportPlan = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) {
+    if (!file || !settings.userId) {
       return;
     }
 
     try {
       const json = await readJsonFile(file);
-      const plan = validateTrainingPlan(json);
-      setTrainingPlan(plan);
-      setMessage("Training plan imported.");
+      const plan = validateTrainingPlan(json, { userId: settings.userId });
+      await setTrainingPlan(plan);
+      setMessage(t("saved"));
       setError(null);
     } catch (importError) {
-      setError(importError instanceof Error ? importError.message : "Plan import failed.");
+      setError(importError instanceof Error ? importError.message : t("saveFailed"));
       setMessage(null);
     } finally {
       event.target.value = "";
     }
   };
 
-  const handleExportAllData = () => {
-    const snapshot = getSnapshot();
+  const handleExportAllData = async () => {
+    if (!settings.userId) {
+      return;
+    }
+
+    const snapshot = await exportUserData(settings.userId);
     const date = new Date().toISOString().slice(0, 10);
     downloadJson(`liftcut-backup-${date}.json`, snapshot);
   };
 
-  const handleClear = () => {
+  const handleLanguageChange = async (nextLanguage: AppLocale) => {
+    try {
+      setLanguage(nextLanguage);
+      await setPreferredLanguage(nextLanguage);
+      setMessage(t("languageSaved"));
+      setError(null);
+    } catch (languageError) {
+      setError(languageError instanceof Error ? languageError.message : t("saveFailed"));
+      setMessage(null);
+    }
+  };
+
+  const handleClear = async () => {
     if (!confirmClear) {
       setConfirmClear(true);
       return;
     }
 
-    resetAllData();
+    await resetAllData();
     setDraft(useTrackerStore.getState().settings);
     setConfirmClear(false);
-    setMessage("Local data reset to demo defaults.");
+    setMessage(t("resetDone"));
     setError(null);
   };
 
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">Settings</p>
-        <h1 className="text-2xl font-semibold text-slate-900">Settings and Data</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("settings")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
       </div>
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
-          <CardTitle className="text-base">Profile and Targets</CardTitle>
-          <CardDescription>Used by dashboard and trend analysis</CardDescription>
+          <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
+          <CardDescription>{t("profileDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1">
-            <Label>Height (cm)</Label>
+            <Label>{t("height")}</Label>
             <Input type="number" value={draft.height} onChange={(event) => updateField("height", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Current Weight (kg)</Label>
+            <Label>{t("currentWeight")}</Label>
             <Input type="number" value={draft.currentWeight} onChange={(event) => updateField("currentWeight", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Target Weight (kg)</Label>
+            <Label>{t("targetWeight")}</Label>
             <Input type="number" value={draft.targetWeight} onChange={(event) => updateField("targetWeight", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Weekly Training Days</Label>
+            <Label>{t("weeklyTrainingDays")}</Label>
             <Input type="number" value={draft.weeklyTrainingDays} onChange={(event) => updateField("weeklyTrainingDays", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Calorie Target</Label>
+            <Label>{t("calorieTarget")}</Label>
             <Input type="number" value={draft.calorieTarget} onChange={(event) => updateField("calorieTarget", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Protein Target</Label>
+            <Label>{t("proteinTarget")}</Label>
             <Input type="number" value={draft.proteinTarget} onChange={(event) => updateField("proteinTarget", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Weekly Loss Min (kg)</Label>
+            <Label>{t("weeklyLossMin")}</Label>
             <Input type="number" step="0.1" value={draft.targetWeeklyLossMin} onChange={(event) => updateField("targetWeeklyLossMin", numberOrZero(event.target.value))} />
           </div>
           <div className="space-y-1">
-            <Label>Weekly Loss Max (kg)</Label>
+            <Label>{t("weeklyLossMax")}</Label>
             <Input type="number" step="0.1" value={draft.targetWeeklyLossMax} onChange={(event) => updateField("targetWeeklyLossMax", numberOrZero(event.target.value))} />
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardTitle className="text-base">Plan Import and Data Export</CardTitle>
-            <CardDescription>Plan JSON is validated by Zod</CardDescription>
+            <CardTitle className="text-base">{t("planAndExportTitle")}</CardTitle>
+            <CardDescription>{t("planAndExportDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Input type="file" accept="application/json" onChange={handleImportPlan} />
             <Button variant="outline" className="w-full" onClick={handleExportAllData}>
               <Download className="mr-2 h-4 w-4" />
-              Export All Data JSON
+              {t("exportAll")}
             </Button>
             <a
               href="/samples/sample-training-plan.json"
@@ -162,10 +205,37 @@ export function SettingsPage() {
               className="inline-flex w-full items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               <Upload className="mr-2 h-4 w-4" />
-              Download Sample Plan JSON
+              {t("downloadSample")}
             </a>
             <Button onClick={handleSaveSettings} className="w-full">
-              Save Settings
+              {t("saveSettings")}
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200/80 bg-white/90">
+          <CardHeader>
+            <CardTitle className="text-base">{t("accountTitle")}</CardTitle>
+            <CardDescription>{t("email")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700">
+              {profile?.email || user?.email || "-"}
+            </p>
+            <div className="space-y-1">
+              <Label>{t("language")}</Label>
+              <Select value={language} onValueChange={(value) => handleLanguageChange(value as AppLocale)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="zh-CN">{t("languageZh")}</SelectItem>
+                  <SelectItem value="en">{t("languageEn")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button variant="outline" className="w-full" onClick={signOut}>
+              {t("logout")}
             </Button>
           </CardContent>
         </Card>
@@ -174,22 +244,22 @@ export function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base text-rose-800">
               <AlertTriangle className="h-4 w-4" />
-              Dangerous Action
+              {t("dangerTitle")}
             </CardTitle>
             <CardDescription className="text-rose-700">
-              Local data reset requires second confirmation.
+              {t("dangerDesc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button variant="destructive" className="w-full" onClick={handleClear}>
-              {confirmClear ? "Click again to confirm reset" : "Reset Local Data"}
+              {confirmClear ? t("resetConfirm") : t("reset")}
             </Button>
             {confirmClear ? (
               <Button variant="outline" className="w-full" onClick={() => setConfirmClear(false)}>
-                Cancel
+                {tCommon("cancel")}
               </Button>
             ) : null}
-            <p className="text-xs text-rose-700">Status: {weeklyLossHint}</p>
+            <p className="text-xs text-rose-700">{t("status", { value: weeklyLossHint })}</p>
           </CardContent>
         </Card>
       </div>
