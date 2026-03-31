@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Trash2 } from "lucide-react";
+import { LoaderCircle, Trash2 } from "lucide-react";
 
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -44,6 +44,10 @@ export function BodyPage() {
   const [weight, setWeight] = useState(0);
   const [waist, setWaist] = useState(0);
   const [notes, setNotes] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const sortedLogs = useMemo(
     () => [...bodyMetricLogs].sort((a, b) => compareDateAsc(b.date, a.date)),
@@ -61,15 +65,57 @@ export function BodyPage() {
     return average(values);
   }, [bodyMetricLogs]);
 
-  const handleSubmit = async () => {
-    await addBodyMetricLog({
-      date,
-      weight,
-      waist,
-      notes,
-    });
+  const clearFeedback = () => {
+    setMessage(null);
+    setError(null);
+  };
 
-    setNotes("");
+  const handleSubmit = async () => {
+    clearFeedback();
+
+    if (weight <= 0) {
+      setError(t("errorWeightRequired"));
+      return;
+    }
+
+    if (waist <= 0) {
+      setError(t("errorWaistRequired"));
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      await addBodyMetricLog({
+        date,
+        weight,
+        waist,
+        notes,
+      });
+
+      setNotes("");
+      setMessage(t("saveSuccess"));
+    } catch (saveError) {
+      console.error(saveError);
+      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    clearFeedback();
+    setDeletingId(id);
+
+    try {
+      await deleteBodyMetricLog(id);
+      setMessage(t("deleteSuccess"));
+    } catch (deleteError) {
+      console.error(deleteError);
+      setError(deleteError instanceof Error ? deleteError.message : t("deleteFailed"));
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -126,12 +172,16 @@ export function BodyPage() {
               <Input type="number" value={waist} onChange={(event) => setWaist(parseNumber(event.target.value))} />
             </div>
             <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder={t("optionalNote")} />
-            <Button className="w-full" onClick={handleSubmit}>
+            <Button className="w-full" onClick={handleSubmit} disabled={isSaving || deletingId !== null}>
+              {isSaving ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t("save")}
             </Button>
           </CardContent>
         </Card>
       </div>
+
+      {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
+      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="border-slate-200/80 bg-white/90">
@@ -185,8 +235,12 @@ export function BodyPage() {
                     })}
                   </p>
                 </div>
-                <Button size="icon" variant="ghost" onClick={() => deleteBodyMetricLog(log.id)}>
-                  <Trash2 className="h-4 w-4 text-rose-600" />
+                <Button size="icon" variant="ghost" onClick={() => handleDelete(log.id)} disabled={isSaving || deletingId !== null}>
+                  {deletingId === log.id ? (
+                    <LoaderCircle className="h-4 w-4 animate-spin text-rose-600" />
+                  ) : (
+                    <Trash2 className="h-4 w-4 text-rose-600" />
+                  )}
                 </Button>
               </div>
             ))

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Save } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Save } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
@@ -65,24 +65,37 @@ function WorkoutDraftForm({
     buildExerciseRows(currentDay, existingLog),
   );
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const updateRow = (index: number, patch: Partial<ExerciseLog>) => {
     setExerciseRows((rows) => rows.map((row, rowIndex) => (rowIndex === index ? { ...row, ...patch } : row)));
   };
 
   const handleSaveWorkout = async () => {
-    await onSave({
-      id: existingLog?.id,
-      date: workoutDate,
-      trainingPlanId,
-      weekNumber: currentWeekNumber,
-      dayNumber: currentDay.dayNumber,
-      durationMinutes,
-      completed,
-      notes,
-      exercises: exerciseRows,
-    });
-    setMessage(t("saved"));
+    setIsSaving(true);
+    setMessage(null);
+    setError(null);
+
+    try {
+      await onSave({
+        id: existingLog?.id,
+        date: workoutDate,
+        trainingPlanId,
+        weekNumber: currentWeekNumber,
+        dayNumber: currentDay.dayNumber,
+        durationMinutes,
+        completed,
+        notes,
+        exercises: exerciseRows,
+      });
+      setMessage(t("saved"));
+    } catch (saveError) {
+      console.error(saveError);
+      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -172,8 +185,12 @@ function WorkoutDraftForm({
         </CardContent>
       </Card>
 
-      <Button className="fixed bottom-24 left-4 right-4 z-20 h-12 md:static md:h-10" onClick={handleSaveWorkout}>
-        <Save className="mr-2 h-4 w-4" />
+      <Button
+        className="fixed bottom-24 left-4 right-4 z-20 h-12 md:static md:h-10"
+        onClick={handleSaveWorkout}
+        disabled={isSaving}
+      >
+        {isSaving ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
         {t("saveWorkout")}
       </Button>
 
@@ -183,6 +200,7 @@ function WorkoutDraftForm({
           {message}
         </p>
       ) : null}
+      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
     </div>
   );
 }

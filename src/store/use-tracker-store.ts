@@ -47,6 +47,14 @@ function createEmptySnapshot(userId: string): AppDataSnapshot {
   };
 }
 
+function requireUserId(userId: string | null): string {
+  if (!userId) {
+    throw new Error("You need to sign in before editing data.");
+  }
+
+  return userId;
+}
+
 interface TrackerState extends AppDataSnapshot {
   trainingPlanList: TrainingPlanSummary[];
   userId: string | null;
@@ -131,64 +139,53 @@ export const useTrackerStore = create<TrackerState>()(
       },
       refreshUserData: async () => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
-
-        await get().initializeForUser(userId);
+        const resolvedUserId = requireUserId(userId);
+        await get().initializeForUser(resolvedUserId);
       },
       updateSettings: async (nextSettings) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
         const payload: UserSettings = {
           ...nextSettings,
-          userId,
+          userId: resolvedUserId,
           updatedAt: nowIso(),
         };
 
         set({ settings: payload });
-        await upsertUserSettings(userId, payload);
+        await upsertUserSettings(resolvedUserId, payload);
       },
       setTrainingPlan: async (plan) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
         const payload: TrainingPlan = {
           ...plan,
-          userId,
+          userId: resolvedUserId,
           isActive: true,
           updatedAt: nowIso(),
           createdAt: plan.createdAt || nowIso(),
         };
 
         set({ trainingPlan: payload });
-        await saveTrainingPlan(userId, payload);
+        await saveTrainingPlan(resolvedUserId, payload);
         await get().refreshUserData();
       },
       setActivePlan: async (planId) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        await setActiveTrainingPlan(userId, planId);
+        await setActiveTrainingPlan(resolvedUserId, planId);
         await get().refreshUserData();
       },
       addWorkoutLog: async (workoutLog) => {
         const { userId, trainingPlan } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
         const workoutLogId = workoutLog.id ?? safeRandomId("workout");
         const payload: WorkoutLog = {
           id: workoutLogId,
-          userId,
+          userId: resolvedUserId,
           date: workoutLog.date,
           trainingPlanId: workoutLog.trainingPlanId || trainingPlan.id,
           weekNumber: workoutLog.weekNumber,
@@ -209,7 +206,7 @@ export const useTrackerStore = create<TrackerState>()(
           })),
         };
 
-        await upsertWorkoutLog(userId, payload);
+        await upsertWorkoutLog(resolvedUserId, payload);
         await get().refreshUserData();
       },
       updateWorkoutLog: async (workoutLog) => {
@@ -217,13 +214,11 @@ export const useTrackerStore = create<TrackerState>()(
       },
       addFoodLog: async (foodLog) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
         const payload: FoodLog = {
           id: foodLog.id ?? safeRandomId("food"),
-          userId,
+          userId: resolvedUserId,
           date: foodLog.date,
           mealType: foodLog.mealType,
           foodName: foodLog.foodName,
@@ -232,36 +227,30 @@ export const useTrackerStore = create<TrackerState>()(
           createdAt: nowIso(),
         };
 
-        await upsertFoodLog(userId, payload);
+        await upsertFoodLog(resolvedUserId, payload);
         await get().refreshUserData();
       },
       updateFoodLog: async (foodLog) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        await upsertFoodLog(userId, foodLog);
+        await upsertFoodLog(resolvedUserId, foodLog);
         await get().refreshUserData();
       },
       deleteFoodLog: async (id) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        await removeFoodLog(userId, id);
+        await removeFoodLog(resolvedUserId, id);
         await get().refreshUserData();
       },
       addBodyMetricLog: async (log) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
         const payload: BodyMetricLog = {
           id: log.id ?? safeRandomId("body"),
-          userId,
+          userId: resolvedUserId,
           date: log.date,
           weight: log.weight,
           waist: log.waist,
@@ -269,36 +258,30 @@ export const useTrackerStore = create<TrackerState>()(
           createdAt: nowIso(),
         };
 
-        await upsertBodyMetricLog(userId, payload);
+        await upsertBodyMetricLog(resolvedUserId, payload);
         await get().refreshUserData();
       },
       updateBodyMetricLog: async (log) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        await upsertBodyMetricLog(userId, log);
+        await upsertBodyMetricLog(resolvedUserId, log);
         await get().refreshUserData();
       },
       deleteBodyMetricLog: async (id) => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        await removeBodyMetricLog(userId, id);
+        await removeBodyMetricLog(resolvedUserId, id);
         await get().refreshUserData();
       },
       resetAllData: async () => {
         const { userId } = get();
-        if (!userId) {
-          return;
-        }
+        const resolvedUserId = requireUserId(userId);
 
-        const snapshot = createEmptySnapshot(userId);
-        await upsertUserSettings(userId, snapshot.settings);
-        await saveTrainingPlan(userId, snapshot.trainingPlan);
+        const snapshot = createEmptySnapshot(resolvedUserId);
+        await upsertUserSettings(resolvedUserId, snapshot.settings);
+        await saveTrainingPlan(resolvedUserId, snapshot.trainingPlan);
         await get().refreshUserData();
       },
       getSnapshot: () => {

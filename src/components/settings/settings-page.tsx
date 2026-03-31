@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle, Download, Upload } from "lucide-react";
+import { AlertTriangle, Download, LoaderCircle, Upload } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
@@ -28,13 +28,20 @@ function numberOrZero(value: string): number {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+type SettingsAction =
+  | "save"
+  | "import-plan"
+  | "export-data"
+  | "language"
+  | "logout"
+  | "reset";
+
 export function SettingsPage() {
   const t = useTranslations("settings");
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
 
   const language = useUIStore((state) => state.language);
-  const setLanguage = useUIStore((state) => state.setLanguage);
 
   const settings = useTrackerStore((state) => state.settings);
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
@@ -47,6 +54,7 @@ export function SettingsPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmClear, setConfirmClear] = useState(false);
+  const [loadingAction, setLoadingAction] = useState<SettingsAction | null>(null);
 
   useEffect(() => {
     setDraft(settings);
@@ -64,7 +72,15 @@ export function SettingsPage() {
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
+  const clearFeedback = () => {
+    setMessage(null);
+    setError(null);
+  };
+
   const handleSaveSettings = async () => {
+    setLoadingAction("save");
+    clearFeedback();
+
     try {
       const parsed = userSettingsSchema.parse(draft);
       if (parsed.targetWeeklyLossMin > parsed.targetWeeklyLossMax) {
@@ -77,10 +93,11 @@ export function SettingsPage() {
         updatedAt: new Date().toISOString(),
       });
       setMessage(t("saved"));
-      setError(null);
     } catch (saveError) {
+      console.error(saveError);
       setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
-      setMessage(null);
+    } finally {
+      setLoadingAction(null);
     }
   };
 
@@ -90,39 +107,70 @@ export function SettingsPage() {
       return;
     }
 
+    setLoadingAction("import-plan");
+    clearFeedback();
+
     try {
       const json = await readJsonFile(file);
       const plan = validateTrainingPlan(json, { userId: settings.userId });
       await setTrainingPlan(plan);
-      setMessage(t("saved"));
-      setError(null);
+      setMessage(t("importPlanSuccess"));
     } catch (importError) {
+      console.error(importError);
       setError(importError instanceof Error ? importError.message : t("saveFailed"));
-      setMessage(null);
     } finally {
       event.target.value = "";
+      setLoadingAction(null);
     }
   };
 
   const handleExportAllData = async () => {
-    if (!settings.userId) {
-      return;
-    }
+    setLoadingAction("export-data");
+    clearFeedback();
 
-    const snapshot = await exportUserData(settings.userId);
-    const date = new Date().toISOString().slice(0, 10);
-    downloadJson(`liftcut-backup-${date}.json`, snapshot);
+    try {
+      if (!settings.userId) {
+        throw new Error(t("authRequired"));
+      }
+
+      const snapshot = await exportUserData(settings.userId);
+      const date = new Date().toISOString().slice(0, 10);
+      downloadJson(`liftcut-backup-${date}.json`, snapshot);
+      setMessage(t("exportDataSuccess"));
+    } catch (exportError) {
+      console.error(exportError);
+      setError(exportError instanceof Error ? exportError.message : t("exportDataFailed"));
+    } finally {
+      setLoadingAction(null);
+    }
   };
 
   const handleLanguageChange = async (nextLanguage: AppLocale) => {
+    setLoadingAction("language");
+    clearFeedback();
+
     try {
-      setLanguage(nextLanguage);
       await setPreferredLanguage(nextLanguage);
       setMessage(t("languageSaved"));
-      setError(null);
     } catch (languageError) {
+      console.error(languageError);
       setError(languageError instanceof Error ? languageError.message : t("saveFailed"));
-      setMessage(null);
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setLoadingAction("logout");
+    clearFeedback();
+
+    try {
+      await signOut();
+    } catch (logoutError) {
+      console.error(logoutError);
+      setError(logoutError instanceof Error ? logoutError.message : t("logoutFailed"));
+    } finally {
+      setLoadingAction(null);
     }
   };
 
@@ -132,12 +180,23 @@ export function SettingsPage() {
       return;
     }
 
-    await resetAllData();
-    setDraft(useTrackerStore.getState().settings);
-    setConfirmClear(false);
-    setMessage(t("resetDone"));
-    setError(null);
+    setLoadingAction("reset");
+    clearFeedback();
+
+    try {
+      await resetAllData();
+      setDraft(useTrackerStore.getState().settings);
+      setConfirmClear(false);
+      setMessage(t("resetDone"));
+    } catch (clearError) {
+      console.error(clearError);
+      setError(clearError instanceof Error ? clearError.message : t("resetFailed"));
+    } finally {
+      setLoadingAction(null);
+    }
   };
+
+  const isBusy = loadingAction !== null;
 
   return (
     <div className="space-y-4">
@@ -194,9 +253,15 @@ export function SettingsPage() {
             <CardDescription>{t("planAndExportDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Input type="file" accept="application/json" onChange={handleImportPlan} />
-            <Button variant="outline" className="w-full" onClick={handleExportAllData}>
-              <Download className="mr-2 h-4 w-4" />
+            <Input type="file" accept="application/json" onChange={handleImportPlan} disabled={isBusy} />
+            {loadingAction === "import-plan" ? (
+              <p className="inline-flex items-center text-xs text-slate-500">
+                <LoaderCircle className="mr-1 h-3.5 w-3.5 animate-spin" />
+                {t("importingPlan")}
+              </p>
+            ) : null}
+            <Button variant="outline" className="w-full" onClick={handleExportAllData} disabled={isBusy}>
+              {loadingAction === "export-data" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
               {t("exportAll")}
             </Button>
             <a
@@ -207,7 +272,8 @@ export function SettingsPage() {
               <Upload className="mr-2 h-4 w-4" />
               {t("downloadSample")}
             </a>
-            <Button onClick={handleSaveSettings} className="w-full">
+            <Button onClick={handleSaveSettings} className="w-full" disabled={isBusy}>
+              {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t("saveSettings")}
             </Button>
           </CardContent>
@@ -224,7 +290,7 @@ export function SettingsPage() {
             </p>
             <div className="space-y-1">
               <Label>{t("language")}</Label>
-              <Select value={language} onValueChange={(value) => handleLanguageChange(value as AppLocale)}>
+              <Select value={language} onValueChange={(value) => handleLanguageChange(value as AppLocale)} disabled={isBusy}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -234,7 +300,8 @@ export function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <Button variant="outline" className="w-full" onClick={signOut}>
+            <Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
+              {loadingAction === "logout" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t("logout")}
             </Button>
           </CardContent>
@@ -251,11 +318,12 @@ export function SettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button variant="destructive" className="w-full" onClick={handleClear}>
+            <Button variant="destructive" className="w-full" onClick={handleClear} disabled={isBusy && loadingAction !== "reset"}>
+              {loadingAction === "reset" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {confirmClear ? t("resetConfirm") : t("reset")}
             </Button>
             {confirmClear ? (
-              <Button variant="outline" className="w-full" onClick={() => setConfirmClear(false)}>
+              <Button variant="outline" className="w-full" onClick={() => setConfirmClear(false)} disabled={isBusy}>
                 {tCommon("cancel")}
               </Button>
             ) : null}
