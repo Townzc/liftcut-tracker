@@ -1,89 +1,146 @@
-# LiftCut Tracker
+﻿# LiftCut Tracker (V1.1)
 
-LiftCut Tracker is a minimal training plan and fat-loss tracking web MVP.
+LiftCut Tracker 是一个极简、无广告、可日常使用的训练与减脂追踪 Web 应用。
 
-Focus of v1:
-- See your training plan clearly
-- Log each workout quickly
-- Track food and body metrics daily
-- Get simple daily/weekly feedback
+V1.1 在 V1 MVP 基础上完成了三项关键升级：
+- 全站中英文国际化（默认中文，可在设置中切换）
+- 训练计划支持“文本输入 -> 规则解析 -> 预览修正 -> 保存”
+- 接入 Supabase Auth + Postgres，支持注册/登录与多用户数据隔离
 
-No backend, no login, no database. Data is persisted in browser localStorage.
+---
 
-## Tech Stack
+## 1. 技术栈
 
-- Next.js 16 (App Router)
-- TypeScript (strict mode)
-- Tailwind CSS v4
+- Next.js 16（App Router）
+- TypeScript（strict）
+- Tailwind CSS
 - shadcn/ui
 - Recharts
 - Lucide React
-- Zustand (persist middleware)
-- Zod (JSON validation)
+- Zustand
+- Zod
+- next-intl（国际化）
+- Supabase Auth + Postgres（认证与数据持久化）
 
-## Run Locally
+---
+
+## 2. 页面与路由
+
+- `/` Dashboard
+- `/plan` 训练计划
+- `/workout` 训练记录
+- `/nutrition` 饮食记录
+- `/body` 体重与身体数据
+- `/settings` 设置与数据管理
+- `/login` 登录
+- `/register` 注册
+- `/forgot-password` 忘记密码
+
+受保护路由通过 `middleware.ts` 控制：未登录访问业务页会自动跳转到 `/login`。
+
+---
+
+## 3. 国际化说明（i18n）
+
+- 默认语言：`zh-CN`
+- 支持语言：`zh-CN`、`en`
+- 语言包文件：
+  - `messages/zh-CN.json`
+  - `messages/en.json`
+- 语言切换入口：`/settings`
+- 语言偏好保存策略：
+  - Supabase `profiles.preferred_language`（跨设备）
+  - 本地 `localStorage`（刷新不丢失）
+
+---
+
+## 4. 文本导入训练计划
+
+### 4.1 功能入口
+
+在 `/plan` 页面使用“文本导入计划”区域：
+1. 点击“加载示例模板”
+2. 粘贴或输入半结构化计划文本
+3. 点击“解析计划”
+4. 在“预览与编辑”中手动修正（动作名/组数/次数/RPE/备注/替代动作）
+5. 点击“保存解析结果”
+
+### 4.2 支持格式（第一阶段规则解析）
+
+- 周：`Week 1` 或 `第1周`
+- 天：`Day 1` / `Day1` 或 `第1天`
+- 动作行：`动作名 组数 x 次数 RPE 数值`
+
+示例：
+
+```text
+Week 1
+Day 1
+Bench Press 4 x 5 RPE 7
+Incline DB Press 3 x 8-10 RPE 8
+
+Day 2
+Squat 3 x 6 RPE 6
+Romanian Deadlift 3 x 8 RPE 6.5
+```
+
+### 4.3 模块结构
+
+- `src/lib/plan-parser.ts`：规则解析（正则）
+- `src/lib/plan-import-schema.ts`：Zod 校验
+- `src/lib/plan-normalizer.ts`：标准化为 `TrainingPlan`
+- `src/services/plan-import.ts`：导入服务层（已为未来模型接入预留接口）
+
+---
+
+## 5. Supabase 配置
+
+### 5.1 环境变量
+
+复制 `.env.example` 为 `.env.local`，填写：
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 5.2 初始化数据库
+
+1. 在 Supabase 控制台创建项目
+2. 打开 SQL Editor
+3. 执行 `supabase/schema.sql`
+
+该 SQL 包含：
+- 核心业务表（设置/计划/训练日志/饮食/体重）
+- `profiles` 资料表
+- 全量 RLS 策略（按 `user_id`/所属关系隔离）
+
+### 5.3 Auth 配置
+
+在 Supabase Auth 中启用 Email 登录（建议同时启用 Email Confirm）。
+
+---
+
+## 6. 本地运行
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build check:
+构建检查：
 
 ```bash
 npm run build
 ```
 
-## Routes and Pages
+---
 
-- `/` Dashboard
-  - Today plan card
-  - Today nutrition summary (calories/protein/remaining)
-  - Last 7 days body-weight chart
-  - Weekly workout completion
-  - Weekly status summary
+## 7. 数据结构
 
-- `/plan` Training plan
-  - Week 1-12 switch
-  - Day switch
-  - Exercise details (sets, rep range, target RPE, notes, alternatives)
-  - Create blank plan
-  - Import/export plan JSON
+核心类型定义在 `src/types/index.ts`，主要包括：
 
-- `/workout` Workout logging
-  - Select date/week/day
-  - Log actual weight/reps/RPE/completed for each exercise
-  - Log duration and notes
-  - Mark full workout complete
-  - Save updates dashboard immediately
-
-- `/nutrition` Nutrition logging
-  - Add/edit/delete food logs
-  - Meal type (breakfast/lunch/dinner/snack)
-  - Daily total calories/protein
-  - Quick add common foods
-
-- `/body` Body metrics
-  - Log date, weight, waist, notes
-  - 7-day average weight
-  - Weekly trend
-  - Waist trend
-  - Weight and waist line charts
-  - Date-based history list
-
-- `/settings` Settings and data management
-  - Height, current weight, target weight
-  - Weekly training days
-  - Calorie target, protein target
-  - Weekly loss target min/max
-  - Import plan JSON
-  - Export all data JSON
-  - Reset local data with second confirmation
-
-## Data Model
-
-Core types are in `src/types/index.ts`:
-
+- `UserProfile`
 - `UserSettings`
 - `TrainingPlan`
 - `PlanWeek`
@@ -95,45 +152,27 @@ Core types are in `src/types/index.ts`:
 - `BodyMetricLog`
 - `AppDataSnapshot`
 
-## Import Training Plan JSON
+---
 
-1. Open `/plan` or `/settings`
-2. Choose a `.json` file
-3. File is validated with Zod schema
-4. If valid, current plan is replaced
-5. If invalid, user gets a friendly error
+## 8. 数据导入导出
 
-Sample file:
+### 8.1 训练计划导入
 
+- JSON 导入：`/plan` 或 `/settings`
+- 文本导入：`/plan`（规则解析 + 预览修正）
+- JSON 校验：基于 Zod（格式错误会显示友好提示）
+
+示例 JSON：
 - `public/samples/sample-training-plan.json`
 
-## Export Data
+### 8.2 全量数据导出
 
-Open `/settings`, then click `Export All Data JSON`.
-
-Output filename format:
-
+在 `/settings` 点击“导出全部数据 JSON”，导出文件名格式：
 - `liftcut-backup-YYYY-MM-DD.json`
 
-The export includes:
+---
 
-- settings
-- trainingPlan
-- workoutLogs
-- foodLogs
-- bodyMetricLogs
-- quickFoods
-
-## Built-in Demo Data
-
-On first open, app includes:
-
-- A 12-week demo training plan
-- Quick foods (egg, milk, greek yogurt, whey protein, chicken breast, rice)
-- Sample body metric logs
-- Sample workout and nutrition logs
-
-## Project Structure
+## 9. 目录结构（核心）
 
 ```text
 src/
@@ -144,7 +183,12 @@ src/
     nutrition/page.tsx
     body/page.tsx
     settings/page.tsx
+    login/page.tsx
+    register/page.tsx
+    forgot-password/page.tsx
   components/
+    auth/
+    i18n/
     layout/
     dashboard/
     plan/
@@ -155,25 +199,35 @@ src/
     charts/
     shared/
     ui/
+  i18n/
+    config.ts
+    messages.ts
   lib/
-    date.ts
-    metrics.ts
-    demo-data.ts
-    schemas.ts
-    import-export.ts
-    plan.ts
+    plan-parser.ts
+    plan-normalizer.ts
+    plan-import-schema.ts
+    supabase/
+    ...
+  services/
+    data-repository.ts
+    plan-import.ts
   store/
     use-tracker-store.ts
+    use-ui-store.ts
   types/
     index.ts
-public/
-  samples/sample-training-plan.json
+messages/
+  zh-CN.json
+  en.json
+supabase/
+  schema.sql
 ```
 
-## Future Extension Ideas
+---
 
-- Backend API and account sync
-- Database persistence and migrations
-- Smarter progression suggestions
-- Larger nutrition templates
-- PWA offline support and mobile UX improvements
+## 10. 后续扩展建议
+
+1. 增加服务端 Action / API Route，减少前端仓库层复杂度
+2. 增加训练日志的组级明细（每组重量/次数）与统计报表
+3. 引入云端计划版本管理（计划历史、回滚、比较）
+
