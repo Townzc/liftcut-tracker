@@ -1,36 +1,179 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LiftCut Tracker
 
-## Getting Started
+LiftCut Tracker is a minimal training plan and fat-loss tracking web MVP.
 
-First, run the development server:
+Focus of v1:
+- See your training plan clearly
+- Log each workout quickly
+- Track food and body metrics daily
+- Get simple daily/weekly feedback
+
+No backend, no login, no database. Data is persisted in browser localStorage.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- TypeScript (strict mode)
+- Tailwind CSS v4
+- shadcn/ui
+- Recharts
+- Lucide React
+- Zustand (persist middleware)
+- Zod (JSON validation)
+
+## Run Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build check:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes and Pages
 
-## Learn More
+- `/` Dashboard
+  - Today plan card
+  - Today nutrition summary (calories/protein/remaining)
+  - Last 7 days body-weight chart
+  - Weekly workout completion
+  - Weekly status summary
 
-To learn more about Next.js, take a look at the following resources:
+- `/plan` Training plan
+  - Week 1-12 switch
+  - Day switch
+  - Exercise details (sets, rep range, target RPE, notes, alternatives)
+  - Create blank plan
+  - Import/export plan JSON
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/workout` Workout logging
+  - Select date/week/day
+  - Log actual weight/reps/RPE/completed for each exercise
+  - Log duration and notes
+  - Mark full workout complete
+  - Save updates dashboard immediately
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/nutrition` Nutrition logging
+  - Add/edit/delete food logs
+  - Meal type (breakfast/lunch/dinner/snack)
+  - Daily total calories/protein
+  - Quick add common foods
 
-## Deploy on Vercel
+- `/body` Body metrics
+  - Log date, weight, waist, notes
+  - 7-day average weight
+  - Weekly trend
+  - Waist trend
+  - Weight and waist line charts
+  - Date-based history list
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `/settings` Settings and data management
+  - Height, current weight, target weight
+  - Weekly training days
+  - Calorie target, protein target
+  - Weekly loss target min/max
+  - Import plan JSON
+  - Export all data JSON
+  - Reset local data with second confirmation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data Model
+
+Core types are in `src/types/index.ts`:
+
+- `UserSettings`
+- `TrainingPlan`
+- `PlanWeek`
+- `PlanDay`
+- `ExercisePlan`
+- `WorkoutLog`
+- `ExerciseLog`
+- `FoodLog`
+- `BodyMetricLog`
+- `AppDataSnapshot`
+
+## Import Training Plan JSON
+
+1. Open `/plan` or `/settings`
+2. Choose a `.json` file
+3. File is validated with Zod schema
+4. If valid, current plan is replaced
+5. If invalid, user gets a friendly error
+
+Sample file:
+
+- `public/samples/sample-training-plan.json`
+
+## Export Data
+
+Open `/settings`, then click `Export All Data JSON`.
+
+Output filename format:
+
+- `liftcut-backup-YYYY-MM-DD.json`
+
+The export includes:
+
+- settings
+- trainingPlan
+- workoutLogs
+- foodLogs
+- bodyMetricLogs
+- quickFoods
+
+## Built-in Demo Data
+
+On first open, app includes:
+
+- A 12-week demo training plan
+- Quick foods (egg, milk, greek yogurt, whey protein, chicken breast, rice)
+- Sample body metric logs
+- Sample workout and nutrition logs
+
+## Project Structure
+
+```text
+src/
+  app/
+    page.tsx
+    plan/page.tsx
+    workout/page.tsx
+    nutrition/page.tsx
+    body/page.tsx
+    settings/page.tsx
+  components/
+    layout/
+    dashboard/
+    plan/
+    workout/
+    nutrition/
+    body/
+    settings/
+    charts/
+    shared/
+    ui/
+  lib/
+    date.ts
+    metrics.ts
+    demo-data.ts
+    schemas.ts
+    import-export.ts
+    plan.ts
+  store/
+    use-tracker-store.ts
+  types/
+    index.ts
+public/
+  samples/sample-training-plan.json
+```
+
+## Future Extension Ideas
+
+- Backend API and account sync
+- Database persistence and migrations
+- Smarter progression suggestions
+- Larger nutrition templates
+- PWA offline support and mobile UX improvements
