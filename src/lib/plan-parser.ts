@@ -8,7 +8,7 @@ export interface ParsedPlanResult {
   warnings: string[];
 }
 
-export const PLAN_TEXT_TEMPLATE = `Week 1
+export const ENGLISH_PLAN_TEXT_TEMPLATE = `Week 1
 Day 1
 Bench Press 4 x 5 RPE 7
 Incline DB Press 3 x 8-10 RPE 8
@@ -17,11 +17,32 @@ Seated Row 3 x 8-10 RPE 8
 Day 2
 Squat 3 x 6 RPE 6
 Romanian Deadlift 3 x 8 RPE 6.5
-Overhead Press 3 x 10 RPE 7.5`;
+Overhead Press 3 x 10 RPE 7.5
 
-const weekPattern = /^(?:week\s*(\d+)|\u7b2c\s*(\d+)\s*\u5468)$/i;
-const dayPattern = /^(?:day\s*(\d+)|day(\d+)|\u7b2c\s*(\d+)\s*\u5929)(?:\s*[:\-]\s*(.+))?$/i;
-const exercisePattern = /^(.+?)\s+(\d+)\s*[xX*\u00d7]\s*([0-9]+(?:\s*-\s*[0-9]+)?(?:s|sec|seconds)?)\s*(?:rpe\s*([0-9]+(?:\.[0-9]+)?))?(?:\s*(?:#|\/\/|note[:\uff1a]|\u5907\u6ce8[:\uff1a])\s*(.*))?$/i;
+Day 3
+Lat Pulldown 3 x 10-12 RPE 8
+Leg Press 3 x 10 RPE 7`;
+
+export const CHINESE_PLAN_TEXT_TEMPLATE = `第1周
+Day1
+卧推 4 × 5 RPE 7
+上斜哑铃卧推 3 × 8-10 RPE 8
+坐姿划船 3 × 8-10 RPE 8
+
+Day2
+深蹲 3 × 6 RPE 6
+罗马尼亚硬拉 3 × 8 RPE 6.5
+哑铃推肩 3 × 10 RPE 7.5
+
+Day3
+高位下拉 3 × 10-12 RPE 8
+腿举 3 × 10 RPE 7`;
+
+export const PLAN_TEXT_TEMPLATE = ENGLISH_PLAN_TEXT_TEMPLATE;
+
+const weekPattern = /^(?:week\s*(\d+)|第\s*(\d+)\s*周)$/i;
+const dayPattern = /^(?:day\s*(\d+)|day(\d+)|第\s*(\d+)\s*天)(?:\s*[:\-：]\s*(.+))?$/i;
+const exercisePattern = /^(.+?)\s+(\d+)\s*[xX*×]\s*([0-9]+(?:\s*-\s*[0-9]+)?(?:s|sec|seconds|秒)?)\s*(?:rpe\s*([0-9]+(?:\.[0-9]+)?))?(?:\s*(?:#|\/\/|note[:：]|备注[:：])\s*(.*))?$/i;
 
 type ParsedExerciseRow = {
   name: string;
@@ -76,7 +97,53 @@ function toPositiveInteger(value: string | undefined, fallback: number): number 
   return fallback;
 }
 
+function detectExerciseReason(line: string): string {
+  const normalizedLine = line.trim();
+  const normalizedRpe = /rpe/i;
+
+  if (!/[xX*×]/.test(normalizedLine) && /\d/.test(normalizedLine)) {
+    return "missing_sets";
+  }
+
+  if (/[xX*×]/.test(normalizedLine) && !/\d+\s*[xX*×]/.test(normalizedLine)) {
+    return "missing_sets";
+  }
+
+  if (/\d+\s*[xX*×]\s*(?:rpe|#|\/\/|note|备注|$)/i.test(normalizedLine)) {
+    return "missing_rep_range";
+  }
+
+  if (normalizedRpe.test(normalizedLine) && !/rpe\s*[0-9]+(?:\.[0-9]+)?/i.test(normalizedLine)) {
+    return "invalid_rpe";
+  }
+
+  if (/rpe\s*([0-9]+(?:\.[0-9]+)?)/i.test(normalizedLine)) {
+    const matched = normalizedLine.match(/rpe\s*([0-9]+(?:\.[0-9]+)?)/i);
+    const value = Number(matched?.[1] ?? "0");
+    if (value <= 0 || value > 10) {
+      return "invalid_rpe";
+    }
+  }
+
+  return "unrecognized_line_format";
+}
+
 export function parsePlanText(input: string, defaultPlanName = "Imported Text Plan"): ParsedPlanResult {
+  const trimmedInput = input.trim();
+  if (!trimmedInput) {
+    return {
+      draft: null,
+      errors: [
+        {
+          lineNumber: 0,
+          content: "",
+          reason: "empty_input",
+        },
+      ],
+      warnings: [],
+    };
+  }
+
   const lines = input.split(/\r?\n/);
   const errors: ParsedLineError[] = [];
   const warnings: string[] = [];
@@ -137,7 +204,7 @@ export function parsePlanText(input: string, defaultPlanName = "Imported Text Pl
     errors.push({
       lineNumber: index + 1,
       content: rawLine,
-      reason: "unrecognized_line_format",
+      reason: detectExerciseReason(line),
     });
   }
 

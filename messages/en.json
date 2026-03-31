@@ -115,7 +115,28 @@
     "lineError": "Line {line}: {reason}",
     "reasonUnrecognizedLine": "Unrecognized line format",
     "reasonNoValidStructure": "No valid week/day/exercise structure found",
-    "warningMissingRpe": "Line {line}: missing RPE, defaulted to 7"
+    "warningMissingRpe": "Line {line}: missing RPE, defaulted to 7",
+    "authRequired": "Please sign in before editing plans.",
+    "createFailed": "Failed to create a blank plan.",
+    "exportPdf": "Export Current Plan (PDF)",
+    "exportPdfSuccess": "PDF exported successfully.",
+    "exportPdfFailed": "Failed to export PDF.",
+    "exportJsonSuccess": "JSON exported successfully.",
+    "exportJsonFailed": "Failed to export JSON.",
+    "loadTemplateZh": "Load Chinese Template",
+    "loadTemplateEn": "Load English Template",
+    "saveParsedSuccess": "Parsed plan saved and activated.",
+    "saveParsedFailed": "Failed to save parsed plan.",
+    "previewMissing": "No parsed preview to save yet.",
+    "setActiveSuccess": "Active plan updated.",
+    "setActiveFailed": "Failed to set active plan.",
+    "emptyExercisesTitle": "No exercises for this day",
+    "emptyExercisesDesc": "Use text import or JSON import to add exercises.",
+    "reasonEmptyInput": "Plan text is empty.",
+    "reasonMissingSets": "Missing sets format (e.g. 3 x 8-10).",
+    "reasonMissingRepRange": "Missing rep range after sets.",
+    "reasonInvalidRpe": "RPE format is invalid. Use RPE 7 or RPE 7.5.",
+    "importing": "Importing plan..."
   },
   "workout": {
     "title": "Workout Logging",
@@ -134,7 +155,8 @@
     "saved": "Workout log saved.",
     "noDayTitle": "No training day found",
     "noDayDesc": "Create or import a plan first.",
-    "exerciseLabel": "Exercise {index}"
+    "exerciseLabel": "Exercise {index}",
+    "saveFailed": "Failed to save workout log."
   },
   "nutrition": {
     "title": "Nutrition Logging",
@@ -158,7 +180,18 @@
     "meal_lunch": "Lunch",
     "meal_dinner": "Dinner",
     "meal_snack": "Snack",
-    "entryMeta": "{mealType} | {calories} kcal | {protein} g protein"
+    "entryMeta": "{mealType} | {calories} kcal | {protein} g protein",
+    "errorMealRequired": "Please select a meal type.",
+    "errorFoodRequired": "Food name is required.",
+    "errorCaloriesRequired": "Calories must be greater than 0.",
+    "errorProteinRequired": "Protein must be 0 or greater.",
+    "quickAddSuccess": "{name} added successfully.",
+    "addSuccess": "Food log added.",
+    "editSuccess": "Food log updated.",
+    "saveFailed": "Failed to save food log.",
+    "editingState": "Editing selected entry.",
+    "deleteSuccess": "Food log deleted.",
+    "deleteFailed": "Failed to delete food log."
   },
   "body": {
     "title": "Body Metrics",
@@ -182,7 +215,13 @@
     "noWeightDesc": "Add your first body entry.",
     "noWaistTitle": "No waist data",
     "noWaistDesc": "Add your first body entry.",
-    "historyLine": "Weight {weight}kg | Waist {waist}cm {note}"
+    "historyLine": "Weight {weight}kg | Waist {waist}cm {note}",
+    "saveSuccess": "Body entry saved.",
+    "saveFailed": "Failed to save body entry.",
+    "deleteSuccess": "Body entry deleted.",
+    "deleteFailed": "Failed to delete body entry.",
+    "errorWeightRequired": "Weight must be greater than 0.",
+    "errorWaistRequired": "Waist must be greater than 0."
   },
   "settings": {
     "title": "Settings and Data",
@@ -217,7 +256,14 @@
     "languageSaved": "Language preference updated.",
     "accountTitle": "Account",
     "email": "Email",
-    "logout": "Sign Out"
+    "logout": "Sign Out",
+    "importPlanSuccess": "Plan imported successfully.",
+    "exportDataSuccess": "Data exported successfully.",
+    "exportDataFailed": "Failed to export data.",
+    "authRequired": "Please sign in first.",
+    "logoutFailed": "Failed to sign out.",
+    "resetFailed": "Failed to reset local data.",
+    "importingPlan": "Importing plan..."
   },
   "empty": {
     "title": "No data",
