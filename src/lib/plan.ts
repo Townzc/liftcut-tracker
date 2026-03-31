@@ -1,20 +1,7 @@
-import type { ExercisePlan, PlanDay, PlanWeek, TrainingPlan } from "@/types";
+import type { PlanDay, PlanWeek, TrainingPlan } from "@/types";
 
 function nowIso(): string {
   return new Date().toISOString();
-}
-
-function createExerciseTemplate(dayId: string, index: number): ExercisePlan {
-  return {
-    id: `${dayId}-ex-${index}`,
-    dayId,
-    name: "New Exercise",
-    sets: 3,
-    repRange: "8-12",
-    targetRpe: 8,
-    notes: "",
-    alternativeExercises: [],
-  };
 }
 
 function createPlanDay(weekId: string, dayNumber: number): PlanDay {
@@ -26,7 +13,7 @@ function createPlanDay(weekId: string, dayNumber: number): PlanDay {
     dayNumber,
     title: `Day ${dayNumber}`,
     notes: "",
-    exercises: [createExerciseTemplate(dayId, 1)],
+    exercises: [],
   };
 }
 
