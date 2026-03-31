@@ -15,7 +15,9 @@ import type {
 } from "@/types";
 import { toDateString } from "@/lib/date";
 
-const dayTemplates: Array<Omit<PlanDay, "exercises"> & { exercises: Omit<ExercisePlan, "id">[] }> = [
+const DEMO_USER_ID = "demo-user";
+
+const dayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exercises: Omit<ExercisePlan, "id" | "dayId">[] }> = [
   {
     dayNumber: 1,
     title: "Lower + Push",
@@ -149,16 +151,7 @@ const dayTemplates: Array<Omit<PlanDay, "exercises"> & { exercises: Omit<Exercis
   },
 ];
 
-export const defaultSettings: UserSettings = {
-  height: 176,
-  currentWeight: 78,
-  targetWeight: 72,
-  weeklyTrainingDays: 3,
-  calorieTarget: 2200,
-  proteinTarget: 160,
-  targetWeeklyLossMin: 0.3,
-  targetWeeklyLossMax: 0.8,
-};
+const nowIso = () => new Date().toISOString();
 
 export const defaultQuickFoods: QuickFoodItem[] = [
   { id: "egg", name: "Egg", calories: 78, protein: 6, mealType: "breakfast" },
@@ -169,50 +162,63 @@ export const defaultQuickFoods: QuickFoodItem[] = [
   { id: "rice", name: "Rice", calories: 180, protein: 3, mealType: "dinner" },
 ];
 
-function buildWeek(weekNumber: number): PlanWeek {
+export function createDefaultSettings(userId: string): UserSettings {
+  return {
+    userId,
+    height: 176,
+    currentWeight: 78,
+    targetWeight: 72,
+    weeklyTrainingDays: 3,
+    calorieTarget: 2200,
+    proteinTarget: 160,
+    targetWeeklyLossMin: 0.3,
+    targetWeeklyLossMax: 0.8,
+    updatedAt: nowIso(),
+  };
+}
+
+function buildWeek(weekNumber: number, trainingPlanId: string): PlanWeek {
   const blockProgression = Math.floor((weekNumber - 1) / 4) * 0.5;
+  const weekId = `${trainingPlanId}-w${weekNumber}`;
 
   return {
+    id: weekId,
+    trainingPlanId,
     weekNumber,
-    days: dayTemplates.map((day) => ({
-      dayNumber: day.dayNumber,
-      title: day.title,
-      notes: `${day.notes} Week ${weekNumber}: add small load or reps if quality stays high.`,
-      exercises: day.exercises.map((exercise, exerciseIndex) => ({
-        ...exercise,
-        id: `w${weekNumber}-d${day.dayNumber}-e${exerciseIndex + 1}`,
-        targetRpe: Math.min(9.5, Number((exercise.targetRpe + blockProgression).toFixed(1))),
-      })),
-    })),
+    days: dayTemplates.map((day) => {
+      const dayId = `${weekId}-d${day.dayNumber}`;
+      return {
+        id: dayId,
+        weekId,
+        dayNumber: day.dayNumber,
+        title: day.title,
+        notes: `${day.notes} Week ${weekNumber}: add small load or reps if quality stays high.`,
+        exercises: day.exercises.map((exercise, exerciseIndex) => ({
+          ...exercise,
+          id: `${dayId}-e${exerciseIndex + 1}`,
+          dayId,
+          targetRpe: Math.min(9.5, Number((exercise.targetRpe + blockProgression).toFixed(1))),
+        })),
+      };
+    }),
   };
 }
 
-export function createDemoTrainingPlan(): TrainingPlan {
+export function createDemoTrainingPlan(userId: string): TrainingPlan {
+  const planId = `plan-${userId}-demo`;
+
   return {
-    id: "demo-12-week-fat-loss-strength",
+    id: planId,
+    userId,
     name: "12 Week Fat Loss Strength Plan (Demo)",
-    weeks: Array.from({ length: 12 }, (_, idx) => buildWeek(idx + 1)),
+    isActive: true,
+    createdAt: nowIso(),
+    updatedAt: nowIso(),
+    weeks: Array.from({ length: 12 }, (_, idx) => buildWeek(idx + 1, planId)),
   };
 }
 
-function buildFoodLog(
-  date: string,
-  foodName: string,
-  calories: number,
-  protein: number,
-  mealType: FoodLog["mealType"],
-): FoodLog {
-  return {
-    id: `${date}-${foodName}-${mealType}`,
-    date,
-    foodName,
-    calories,
-    protein,
-    mealType,
-  };
-}
-
-function buildBodyLogs(): BodyMetricLog[] {
+function buildBodyLogs(userId: string): BodyMetricLog[] {
   const baseWeight = 78.6;
   const baseWaist = 86.5;
 
@@ -222,16 +228,18 @@ function buildBodyLogs(): BodyMetricLog[] {
     const waist = Number((baseWaist - idx * 0.05 + (idx % 3) * 0.04).toFixed(1));
 
     return {
-      id: `body-${date}`,
+      id: `body-${userId}-${date}`,
+      userId,
       date,
       weight,
       waist,
       notes: idx % 7 === 0 ? "Morning fasted" : "",
+      createdAt: nowIso(),
     };
   });
 }
 
-function buildWorkoutExerciseLogs(plan: TrainingPlan, weekNumber: number, dayNumber: number): ExerciseLog[] {
+function buildWorkoutExerciseLogs(plan: TrainingPlan, weekNumber: number, dayNumber: number, workoutLogId: string): ExerciseLog[] {
   const week = plan.weeks.find((item) => item.weekNumber === weekNumber);
   const day = week?.days.find((item) => item.dayNumber === dayNumber);
 
@@ -240,6 +248,8 @@ function buildWorkoutExerciseLogs(plan: TrainingPlan, weekNumber: number, dayNum
   }
 
   return day.exercises.map((exercise, idx) => ({
+    id: `${workoutLogId}-ex-${idx + 1}`,
+    workoutLogId,
     exercisePlanId: exercise.id,
     name: exercise.name,
     actualWeight: Number((40 + idx * 5 + weekNumber * 0.5).toFixed(1)),
@@ -249,51 +259,75 @@ function buildWorkoutExerciseLogs(plan: TrainingPlan, weekNumber: number, dayNum
   }));
 }
 
-function buildWorkoutLogs(plan: TrainingPlan): WorkoutLog[] {
+function buildWorkoutLogs(userId: string, plan: TrainingPlan): WorkoutLog[] {
   const today = new Date();
   const dates = [subDays(today, 5), subDays(today, 3), subDays(today, 1)];
 
   return dates.map((date, idx) => {
     const weekNumber = 1;
     const dayNumber = idx + 1;
+    const workoutLogId = `workout-${userId}-${toDateString(date)}-${dayNumber}`;
 
     return {
-      id: `workout-${toDateString(date)}-${dayNumber}`,
+      id: workoutLogId,
+      userId,
       date: toDateString(date),
+      trainingPlanId: plan.id,
       weekNumber,
       dayNumber,
       durationMinutes: 62 + idx * 7,
       completed: true,
       notes: idx === 1 ? "Felt average, reduced load on final set" : "Good training pace",
-      exercises: buildWorkoutExerciseLogs(plan, weekNumber, dayNumber),
+      createdAt: nowIso(),
+      exercises: buildWorkoutExerciseLogs(plan, weekNumber, dayNumber, workoutLogId),
     };
   });
 }
 
-function buildFoodLogs(): FoodLog[] {
+function buildFoodLog(
+  userId: string,
+  date: string,
+  foodName: string,
+  calories: number,
+  protein: number,
+  mealType: FoodLog["mealType"],
+): FoodLog {
+  return {
+    id: `${userId}-${date}-${foodName}-${mealType}`,
+    userId,
+    date,
+    foodName,
+    calories,
+    protein,
+    mealType,
+    createdAt: nowIso(),
+  };
+}
+
+function buildFoodLogs(userId: string): FoodLog[] {
   const today = toDateString(new Date());
   const yesterday = toDateString(subDays(new Date(), 1));
 
   return [
-    buildFoodLog(today, "Egg", 156, 12, "breakfast"),
-    buildFoodLog(today, "Milk", 120, 8, "breakfast"),
-    buildFoodLog(today, "Chicken Breast", 230, 42, "lunch"),
-    buildFoodLog(today, "Rice", 180, 3, "lunch"),
-    buildFoodLog(today, "Whey Protein", 130, 24, "snack"),
-    buildFoodLog(yesterday, "Greek Yogurt", 90, 9, "snack"),
-    buildFoodLog(yesterday, "Chicken Breast", 200, 38, "dinner"),
+    buildFoodLog(userId, today, "Egg", 156, 12, "breakfast"),
+    buildFoodLog(userId, today, "Milk", 120, 8, "breakfast"),
+    buildFoodLog(userId, today, "Chicken Breast", 230, 42, "lunch"),
+    buildFoodLog(userId, today, "Rice", 180, 3, "lunch"),
+    buildFoodLog(userId, today, "Whey Protein", 130, 24, "snack"),
+    buildFoodLog(userId, yesterday, "Greek Yogurt", 90, 9, "snack"),
+    buildFoodLog(userId, yesterday, "Chicken Breast", 200, 38, "dinner"),
   ];
 }
 
-export function createDemoSnapshot(): AppDataSnapshot {
-  const trainingPlan = createDemoTrainingPlan();
+export function createDemoSnapshot(userId = DEMO_USER_ID): AppDataSnapshot {
+  const trainingPlan = createDemoTrainingPlan(userId);
 
   return {
-    settings: defaultSettings,
+    settings: createDefaultSettings(userId),
     trainingPlan,
-    workoutLogs: buildWorkoutLogs(trainingPlan),
-    foodLogs: buildFoodLogs(),
-    bodyMetricLogs: buildBodyLogs(),
+    workoutLogs: buildWorkoutLogs(userId, trainingPlan),
+    foodLogs: buildFoodLogs(userId),
+    bodyMetricLogs: buildBodyLogs(userId),
     quickFoods: defaultQuickFoods,
   };
 }

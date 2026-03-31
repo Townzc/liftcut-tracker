@@ -1,6 +1,15 @@
+export type AppLocale = "zh-CN" | "en";
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 
+export interface UserProfile {
+  id: string;
+  email: string;
+  preferredLanguage: AppLocale;
+  createdAt: string;
+}
+
 export interface UserSettings {
+  userId: string;
   height: number;
   currentWeight: number;
   targetWeight: number;
@@ -9,10 +18,12 @@ export interface UserSettings {
   proteinTarget: number;
   targetWeeklyLossMin: number;
   targetWeeklyLossMax: number;
+  updatedAt: string;
 }
 
 export interface ExercisePlan {
   id: string;
+  dayId: string;
   name: string;
   sets: number;
   repRange: string;
@@ -22,6 +33,8 @@ export interface ExercisePlan {
 }
 
 export interface PlanDay {
+  id: string;
+  weekId: string;
   dayNumber: number;
   title: string;
   exercises: ExercisePlan[];
@@ -29,17 +42,34 @@ export interface PlanDay {
 }
 
 export interface PlanWeek {
+  id: string;
+  trainingPlanId: string;
   weekNumber: number;
   days: PlanDay[];
 }
 
 export interface TrainingPlan {
   id: string;
+  userId: string;
   name: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   weeks: PlanWeek[];
 }
 
+export interface TrainingPlanSummary {
+  id: string;
+  userId: string;
+  name: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ExerciseLog {
+  id: string;
+  workoutLogId: string;
   exercisePlanId: string;
   name: string;
   actualWeight: number;
@@ -50,30 +80,37 @@ export interface ExerciseLog {
 
 export interface WorkoutLog {
   id: string;
+  userId: string;
   date: string;
+  trainingPlanId: string;
   weekNumber: number;
   dayNumber: number;
   durationMinutes: number;
   completed: boolean;
   notes: string;
+  createdAt: string;
   exercises: ExerciseLog[];
 }
 
 export interface FoodLog {
   id: string;
+  userId: string;
   date: string;
   mealType: MealType;
   foodName: string;
   calories: number;
   protein: number;
+  createdAt: string;
 }
 
 export interface BodyMetricLog {
   id: string;
+  userId: string;
   date: string;
   weight: number;
   waist: number;
   notes?: string;
+  createdAt: string;
 }
 
 export interface QuickFoodItem {
@@ -93,3 +130,8 @@ export interface AppDataSnapshot {
   quickFoods: QuickFoodItem[];
 }
 
+export interface ParsedLineError {
+  lineNumber: number;
+  content: string;
+  reason: string;
+}

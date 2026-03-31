@@ -3,6 +3,52 @@ import { ZodError } from "zod";
 import { appDataSnapshotSchema, getFirstZodError, trainingPlanSchema } from "@/lib/schemas";
 import type { AppDataSnapshot, TrainingPlan } from "@/types";
 
+function nowIso(): string {
+  return new Date().toISOString();
+}
+
+function normalizeTrainingPlan(parsed: ReturnType<typeof trainingPlanSchema.parse>, userId = ""): TrainingPlan {
+  const planId = parsed.id;
+  const normalizedUserId = parsed.userId || userId;
+
+  return {
+    id: planId,
+    userId: normalizedUserId,
+    name: parsed.name,
+    isActive: parsed.isActive,
+    createdAt: parsed.createdAt || nowIso(),
+    updatedAt: parsed.updatedAt || nowIso(),
+    weeks: parsed.weeks.map((week, weekIndex) => {
+      const weekId = week.id || `${planId}-w${week.weekNumber || weekIndex + 1}`;
+      return {
+        id: weekId,
+        trainingPlanId: planId,
+        weekNumber: week.weekNumber,
+        days: week.days.map((day, dayIndex) => {
+          const dayId = day.id || `${weekId}-d${day.dayNumber || dayIndex + 1}`;
+          return {
+            id: dayId,
+            weekId,
+            dayNumber: day.dayNumber,
+            title: day.title,
+            notes: day.notes || "",
+            exercises: day.exercises.map((exercise, exerciseIndex) => ({
+              id: exercise.id || `${dayId}-e${exerciseIndex + 1}`,
+              dayId,
+              name: exercise.name,
+              sets: exercise.sets,
+              repRange: exercise.repRange,
+              targetRpe: exercise.targetRpe,
+              notes: exercise.notes || "",
+              alternativeExercises: exercise.alternativeExercises ?? [],
+            })),
+          };
+        }),
+      };
+    }),
+  };
+}
+
 export async function readJsonFile(file: File): Promise<unknown> {
   const text = await file.text();
 
@@ -13,9 +59,10 @@ export async function readJsonFile(file: File): Promise<unknown> {
   }
 }
 
-export function validateTrainingPlan(input: unknown): TrainingPlan {
+export function validateTrainingPlan(input: unknown, options?: { userId?: string }): TrainingPlan {
   try {
-    return trainingPlanSchema.parse(input);
+    const parsed = trainingPlanSchema.parse(input);
+    return normalizeTrainingPlan(parsed, options?.userId);
   } catch (error) {
     if (error instanceof ZodError) {
       throw new Error(`Training plan format error: ${getFirstZodError(error)}`);

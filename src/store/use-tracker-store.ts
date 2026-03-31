@@ -1,19 +1,32 @@
-"use client";
+﻿"use client";
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { createDemoSnapshot } from "@/lib/demo-data";
+import { createDefaultSettings, createDemoTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
+import {  fetchUserDataBundle,
+  removeBodyMetricLog,
+  removeFoodLog,
+  saveTrainingPlan,
+  setActiveTrainingPlan,
+  upsertBodyMetricLog,
+  upsertFoodLog,
+  upsertUserSettings,
+  upsertWorkoutLog,
+} from "@/services/data-repository";
 import type {
   AppDataSnapshot,
   BodyMetricLog,
   FoodLog,
   TrainingPlan,
+  TrainingPlanSummary,
   UserSettings,
   WorkoutLog,
 } from "@/types";
 
-const demoSnapshot = createDemoSnapshot();
+function nowIso(): string {
+  return new Date().toISOString();
+}
 
 function safeRandomId(prefix: string): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -23,111 +36,271 @@ function safeRandomId(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
+function createEmptySnapshot(userId: string): AppDataSnapshot {
+  return {
+    settings: createDefaultSettings(userId),
+    trainingPlan: createDemoTrainingPlan(userId),
+    workoutLogs: [],
+    foodLogs: [],
+    bodyMetricLogs: [],
+    quickFoods: defaultQuickFoods,
+  };
+}
+
 interface TrackerState extends AppDataSnapshot {
+  trainingPlanList: TrainingPlanSummary[];
+  userId: string | null;
   selectedWeek: number;
   selectedDay: number;
   hydrated: boolean;
+  loading: boolean;
+  error: string | null;
+  markHydrated: () => void;
   setSelectedWeek: (weekNumber: number) => void;
   setSelectedDay: (dayNumber: number) => void;
-  updateSettings: (nextSettings: UserSettings) => void;
-  setTrainingPlan: (plan: TrainingPlan) => void;
-  addWorkoutLog: (workoutLog: Omit<WorkoutLog, "id"> & { id?: string }) => void;
-  updateWorkoutLog: (workoutLog: WorkoutLog) => void;
-  addFoodLog: (foodLog: Omit<FoodLog, "id"> & { id?: string }) => void;
-  updateFoodLog: (foodLog: FoodLog) => void;
-  deleteFoodLog: (id: string) => void;
-  addBodyMetricLog: (log: Omit<BodyMetricLog, "id"> & { id?: string }) => void;
-  updateBodyMetricLog: (log: BodyMetricLog) => void;
-  deleteBodyMetricLog: (id: string) => void;
-  importAllData: (snapshot: AppDataSnapshot) => void;
-  resetAllData: () => void;
-  markHydrated: () => void;
+  initializeForUser: (userId: string) => Promise<void>;
+  clearUserData: () => void;
+  refreshUserData: () => Promise<void>;
+  updateSettings: (nextSettings: UserSettings) => Promise<void>;
+  setTrainingPlan: (plan: TrainingPlan) => Promise<void>;
+  setActivePlan: (planId: string) => Promise<void>;
+  addWorkoutLog: (workoutLog: Omit<WorkoutLog, "id" | "userId" | "createdAt"> & { id?: string }) => Promise<void>;
+  updateWorkoutLog: (workoutLog: WorkoutLog) => Promise<void>;
+  addFoodLog: (foodLog: Omit<FoodLog, "id" | "userId" | "createdAt"> & { id?: string }) => Promise<void>;
+  updateFoodLog: (foodLog: Omit<FoodLog, "userId" | "createdAt">) => Promise<void>;
+  deleteFoodLog: (id: string) => Promise<void>;
+  addBodyMetricLog: (log: Omit<BodyMetricLog, "id" | "userId" | "createdAt"> & { id?: string }) => Promise<void>;
+  updateBodyMetricLog: (log: BodyMetricLog) => Promise<void>;
+  deleteBodyMetricLog: (id: string) => Promise<void>;
+  resetAllData: () => Promise<void>;
   getSnapshot: () => AppDataSnapshot;
 }
+
+const defaultSnapshot = createEmptySnapshot("demo-user");
 
 export const useTrackerStore = create<TrackerState>()(
   persist(
     (set, get) => ({
-      ...demoSnapshot,
+      ...defaultSnapshot,
+      trainingPlanList: [],
+      userId: null,
       selectedWeek: 1,
       selectedDay: 1,
       hydrated: false,
-      setSelectedWeek: (weekNumber) =>
+      loading: false,
+      error: null,
+      markHydrated: () => set({ hydrated: true }),
+      setSelectedWeek: (weekNumber) => set({ selectedWeek: weekNumber }),
+      setSelectedDay: (dayNumber) => set({ selectedDay: dayNumber }),
+      initializeForUser: async (userId) => {
+        set({ loading: true, error: null, userId });
+        try {
+          const bundle = await fetchUserDataBundle(userId);
+          const previousWeek = get().selectedWeek;
+          const previousDay = get().selectedDay;
+          const matchedWeek = bundle.snapshot.trainingPlan.weeks.find((week) => week.weekNumber === previousWeek) ?? bundle.snapshot.trainingPlan.weeks[0];
+          const matchedDay = matchedWeek?.days.find((day) => day.dayNumber === previousDay) ?? matchedWeek?.days[0];
+
+          set({
+            ...bundle.snapshot,
+            trainingPlanList: bundle.planList,
+            selectedWeek: matchedWeek?.weekNumber ?? 1,
+            selectedDay: matchedDay?.dayNumber ?? 1,
+            loading: false,
+          });
+        } catch (error) {
+          console.error(error);
+          set({
+            ...createEmptySnapshot(userId),
+            trainingPlanList: [],
+            error: error instanceof Error ? error.message : "Failed to load user data.",
+            loading: false,
+          });
+        }
+      },
+      clearUserData: () => {
         set({
-          selectedWeek: weekNumber,
-        }),
-      setSelectedDay: (dayNumber) =>
-        set({
-          selectedDay: dayNumber,
-        }),
-      updateSettings: (nextSettings) =>
-        set({
-          settings: nextSettings,
-        }),
-      setTrainingPlan: (plan) =>
-        set({
-          trainingPlan: plan,
-          selectedWeek: plan.weeks[0]?.weekNumber ?? 1,
-          selectedDay: plan.weeks[0]?.days[0]?.dayNumber ?? 1,
-        }),
-      addWorkoutLog: (workoutLog) =>
-        set((state) => ({
-          workoutLogs: [
-            ...state.workoutLogs.filter((item) => item.id !== workoutLog.id),
-            { ...workoutLog, id: workoutLog.id ?? safeRandomId("workout") },
-          ],
-        })),
-      updateWorkoutLog: (workoutLog) =>
-        set((state) => ({
-          workoutLogs: state.workoutLogs.map((item) =>
-            item.id === workoutLog.id ? workoutLog : item,
-          ),
-        })),
-      addFoodLog: (foodLog) =>
-        set((state) => ({
-          foodLogs: [
-            ...state.foodLogs,
-            { ...foodLog, id: foodLog.id ?? safeRandomId("food") },
-          ],
-        })),
-      updateFoodLog: (foodLog) =>
-        set((state) => ({
-          foodLogs: state.foodLogs.map((item) =>
-            item.id === foodLog.id ? foodLog : item,
-          ),
-        })),
-      deleteFoodLog: (id) =>
-        set((state) => ({
-          foodLogs: state.foodLogs.filter((item) => item.id !== id),
-        })),
-      addBodyMetricLog: (log) =>
-        set((state) => ({
-          bodyMetricLogs: [
-            ...state.bodyMetricLogs.filter((item) => item.date !== log.date),
-            { ...log, id: log.id ?? safeRandomId("body") },
-          ],
-        })),
-      updateBodyMetricLog: (log) =>
-        set((state) => ({
-          bodyMetricLogs: state.bodyMetricLogs.map((item) =>
-            item.id === log.id ? log : item,
-          ),
-        })),
-      deleteBodyMetricLog: (id) =>
-        set((state) => ({
-          bodyMetricLogs: state.bodyMetricLogs.filter((item) => item.id !== id),
-        })),
-      importAllData: (snapshot) =>
-        set({
-          ...snapshot,
-        }),
-      resetAllData: () =>
-        set({
-          ...createDemoSnapshot(),
+          ...createEmptySnapshot("demo-user"),
+          trainingPlanList: [],
+          userId: null,
+          error: null,
+          loading: false,
           selectedWeek: 1,
           selectedDay: 1,
-        }),
-      markHydrated: () => set({ hydrated: true }),
+        });
+      },
+      refreshUserData: async () => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await get().initializeForUser(userId);
+      },
+      updateSettings: async (nextSettings) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        const payload: UserSettings = {
+          ...nextSettings,
+          userId,
+          updatedAt: nowIso(),
+        };
+
+        set({ settings: payload });
+        await upsertUserSettings(userId, payload);
+      },
+      setTrainingPlan: async (plan) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        const payload: TrainingPlan = {
+          ...plan,
+          userId,
+          isActive: true,
+          updatedAt: nowIso(),
+          createdAt: plan.createdAt || nowIso(),
+        };
+
+        set({ trainingPlan: payload });
+        await saveTrainingPlan(userId, payload);
+        await get().refreshUserData();
+      },
+      setActivePlan: async (planId) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await setActiveTrainingPlan(userId, planId);
+        await get().refreshUserData();
+      },
+      addWorkoutLog: async (workoutLog) => {
+        const { userId, trainingPlan } = get();
+        if (!userId) {
+          return;
+        }
+
+        const workoutLogId = workoutLog.id ?? safeRandomId("workout");
+        const payload: WorkoutLog = {
+          id: workoutLogId,
+          userId,
+          date: workoutLog.date,
+          trainingPlanId: workoutLog.trainingPlanId || trainingPlan.id,
+          weekNumber: workoutLog.weekNumber,
+          dayNumber: workoutLog.dayNumber,
+          durationMinutes: workoutLog.durationMinutes,
+          completed: workoutLog.completed,
+          notes: workoutLog.notes,
+          createdAt: nowIso(),
+          exercises: workoutLog.exercises.map((exercise, index) => ({
+            id: exercise.id || `${workoutLogId}-ex-${index + 1}`,
+            workoutLogId,
+            exercisePlanId: exercise.exercisePlanId,
+            name: exercise.name,
+            actualWeight: exercise.actualWeight,
+            actualReps: exercise.actualReps,
+            actualRpe: exercise.actualRpe,
+            completed: exercise.completed,
+          })),
+        };
+
+        await upsertWorkoutLog(userId, payload);
+        await get().refreshUserData();
+      },
+      updateWorkoutLog: async (workoutLog) => {
+        await get().addWorkoutLog(workoutLog);
+      },
+      addFoodLog: async (foodLog) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        const payload: FoodLog = {
+          id: foodLog.id ?? safeRandomId("food"),
+          userId,
+          date: foodLog.date,
+          mealType: foodLog.mealType,
+          foodName: foodLog.foodName,
+          calories: foodLog.calories,
+          protein: foodLog.protein,
+          createdAt: nowIso(),
+        };
+
+        await upsertFoodLog(userId, payload);
+        await get().refreshUserData();
+      },
+      updateFoodLog: async (foodLog) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await upsertFoodLog(userId, foodLog);
+        await get().refreshUserData();
+      },
+      deleteFoodLog: async (id) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await removeFoodLog(userId, id);
+        await get().refreshUserData();
+      },
+      addBodyMetricLog: async (log) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        const payload: BodyMetricLog = {
+          id: log.id ?? safeRandomId("body"),
+          userId,
+          date: log.date,
+          weight: log.weight,
+          waist: log.waist,
+          notes: log.notes ?? "",
+          createdAt: nowIso(),
+        };
+
+        await upsertBodyMetricLog(userId, payload);
+        await get().refreshUserData();
+      },
+      updateBodyMetricLog: async (log) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await upsertBodyMetricLog(userId, log);
+        await get().refreshUserData();
+      },
+      deleteBodyMetricLog: async (id) => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        await removeBodyMetricLog(userId, id);
+        await get().refreshUserData();
+      },
+      resetAllData: async () => {
+        const { userId } = get();
+        if (!userId) {
+          return;
+        }
+
+        const snapshot = createEmptySnapshot(userId);
+        await upsertUserSettings(userId, snapshot.settings);
+        await saveTrainingPlan(userId, snapshot.trainingPlan);
+        await get().refreshUserData();
+      },
       getSnapshot: () => {
         const state = get();
         return {
@@ -141,25 +314,15 @@ export const useTrackerStore = create<TrackerState>()(
       },
     }),
     {
-      name: "liftcut-tracker-storage",
-      storage:
-        typeof window !== "undefined"
-          ? createJSONStorage(() => localStorage)
-          : undefined,
+      name: "liftcut-tracker-ui-state",
+      storage: typeof window !== "undefined" ? createJSONStorage(() => localStorage) : undefined,
       onRehydrateStorage: () => (state) => {
         state?.markHydrated();
       },
       partialize: (state) => ({
-        settings: state.settings,
-        trainingPlan: state.trainingPlan,
-        workoutLogs: state.workoutLogs,
-        foodLogs: state.foodLogs,
-        bodyMetricLogs: state.bodyMetricLogs,
-        quickFoods: state.quickFoods,
         selectedWeek: state.selectedWeek,
         selectedDay: state.selectedDay,
       }),
     },
   ),
 );
-

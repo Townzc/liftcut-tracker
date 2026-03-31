@@ -1,8 +1,13 @@
-import type { ExercisePlan, PlanDay, TrainingPlan } from "@/types";
+import type { ExercisePlan, PlanDay, PlanWeek, TrainingPlan } from "@/types";
 
-export function createExerciseTemplate(index: number): ExercisePlan {
+function nowIso(): string {
+  return new Date().toISOString();
+}
+
+function createExerciseTemplate(dayId: string, index: number): ExercisePlan {
   return {
-    id: `custom-ex-${index}`,
+    id: `${dayId}-ex-${index}`,
+    dayId,
     name: "New Exercise",
     sets: 3,
     repRange: "8-12",
@@ -12,24 +17,42 @@ export function createExerciseTemplate(index: number): ExercisePlan {
   };
 }
 
-function createPlanDay(dayNumber: number): PlanDay {
+function createPlanDay(weekId: string, dayNumber: number): PlanDay {
+  const dayId = `${weekId}-d${dayNumber}`;
+
   return {
+    id: dayId,
+    weekId,
     dayNumber,
     title: `Day ${dayNumber}`,
     notes: "",
-    exercises: [createExerciseTemplate(dayNumber)],
+    exercises: [createExerciseTemplate(dayId, 1)],
   };
 }
 
-export function createBlankTrainingPlan(name: string, weeks = 12, daysPerWeek = 3): TrainingPlan {
+function createPlanWeek(trainingPlanId: string, weekNumber: number, daysPerWeek: number): PlanWeek {
+  const weekId = `${trainingPlanId}-w${weekNumber}`;
+
   return {
-    id: `plan-${Date.now()}`,
+    id: weekId,
+    trainingPlanId,
+    weekNumber,
+    days: Array.from({ length: daysPerWeek }, (_, dayIndex) => createPlanDay(weekId, dayIndex + 1)),
+  };
+}
+
+export function createBlankTrainingPlan(userId: string, name: string, weeks = 12, daysPerWeek = 3): TrainingPlan {
+  const id = `plan-${userId}-${Date.now()}`;
+
+  return {
+    id,
+    userId,
     name,
-    weeks: Array.from({ length: weeks }, (_, weekIndex) => ({
-      weekNumber: weekIndex + 1,
-      days: Array.from({ length: daysPerWeek }, (_, dayIndex) =>
-        createPlanDay(dayIndex + 1),
-      ),
-    })),
+    isActive: true,
+    createdAt: nowIso(),
+    updatedAt: nowIso(),
+    weeks: Array.from({ length: weeks }, (_, weekIndex) =>
+      createPlanWeek(id, weekIndex + 1, daysPerWeek),
+    ),
   };
 }
