@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
-import { Download, FileJson, Upload } from "lucide-react";
+import { Download, FileJson, LoaderCircle, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { EmptyState } from "@/components/shared/empty-state";
@@ -13,10 +13,15 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { downloadJson, readJsonFile, validateTrainingPlan } from "@/lib/import-export";
+import {
+  CHINESE_PLAN_TEXT_TEMPLATE,
+  ENGLISH_PLAN_TEXT_TEMPLATE,
+} from "@/lib/plan-parser";
 import { createBlankTrainingPlan } from "@/lib/plan";
-import { PLAN_TEXT_TEMPLATE } from "@/lib/plan-parser";
+import { exportTrainingPlanPdf } from "@/services/plan-export";
 import { planImportService } from "@/services/plan-import";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { useUIStore } from "@/store/use-ui-store";
 import type { TrainingPlan } from "@/types";
 
 function parseNumber(value: string): number {
@@ -24,10 +29,35 @@ function parseNumber(value: string): number {
   return Number.isFinite(next) ? next : 0;
 }
 
+type PlanAction =
+  | "create"
+  | "import-json"
+  | "export-pdf"
+  | "export-json"
+  | "parse"
+  | "save-parsed"
+  | "set-active";
+
 function getLocalizedParseReason(
   reason: string,
   t: ReturnType<typeof useTranslations>,
 ): string {
+  if (reason === "empty_input") {
+    return t("reasonEmptyInput");
+  }
+
+  if (reason === "missing_sets") {
+    return t("reasonMissingSets");
+  }
+
+  if (reason === "missing_rep_range") {
+    return t("reasonMissingRepRange");
+  }
+
+  if (reason === "invalid_rpe") {
+    return t("reasonInvalidRpe");
+  }
+
   if (reason === "unrecognized_line_format") {
     return t("reasonUnrecognizedLine");
   }
@@ -56,6 +86,8 @@ export function PlanPage() {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
 
+  const language = useUIStore((state) => state.language);
+
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const trainingPlanList = useTrackerStore((state) => state.trainingPlanList);
   const selectedWeek = useTrackerStore((state) => state.selectedWeek);
@@ -66,7 +98,7 @@ export function PlanPage() {
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const setActivePlan = useTrackerStore((state) => state.setActivePlan);
 
-  const [planName, setPlanName] = useState("My Training Plan");
+  const [planName, setPlanName] = useState("");
   const [weeksInput, setWeeksInput] = useState(12);
   const [daysInput, setDaysInput] = useState(3);
   const [message, setMessage] = useState<string | null>(null);
@@ -77,6 +109,9 @@ export function PlanPage() {
   const [parseWarnings, setParseWarnings] = useState<string[]>([]);
   const [parseErrors, setParseErrors] = useState<Array<{ lineNumber: number; content: string; reason: string }>>([]);
 
+  const [loadingAction, setLoadingAction] = useState<PlanAction | null>(null);
+  const [activePlanLoadingId, setActivePlanLoadingId] = useState<string | null>(null);
+
   const currentWeek = useMemo(
     () => trainingPlan.weeks.find((week) => week.weekNumber === selectedWeek) ?? trainingPlan.weeks[0],
     [selectedWeek, trainingPlan.weeks],
@@ -86,66 +121,141 @@ export function PlanPage() {
     [currentWeek, selectedDay],
   );
 
-  const handleCreatePlan = async () => {
-    if (!userId) {
-      return;
-    }
-
-    const nextPlan = createBlankTrainingPlan(
-      userId,
-      planName.trim() || "My Training Plan",
-      Math.min(12, Math.max(1, weeksInput)),
-      Math.min(7, Math.max(1, daysInput)),
-    );
-
-    await setTrainingPlan(nextPlan);
-    setMessage(t("blankCreated"));
+  const clearFeedback = () => {
+    setMessage(null);
     setError(null);
+  };
+
+  const handleCreatePlan = async () => {
+    setLoadingAction("create");
+    clearFeedback();
+
+    try {
+      if (!userId) {
+        throw new Error(t("authRequired"));
+      }
+
+      const normalizedWeeks = Math.min(12, Math.max(1, weeksInput || 1));
+      const normalizedDays = Math.min(7, Math.max(1, daysInput || 1));
+      const defaultPlanName = language === "zh-CN" ? "新训练计划" : "Untitled Plan";
+
+      const nextPlan = createBlankTrainingPlan(
+        userId,
+        planName.trim() || defaultPlanName,
+        normalizedWeeks,
+        normalizedDays,
+      );
+
+      await setTrainingPlan(nextPlan);
+      setSelectedWeek(1);
+      setSelectedDay(1);
+      setMessage(t("blankCreated"));
+      setParsedPlanDraft(null);
+      setParseWarnings([]);
+      setParseErrors([]);
+    } catch (createError) {
+      console.error(createError);
+      setError(createError instanceof Error ? createError.message : t("createFailed"));
+    } finally {
+      setLoadingAction(null);
+    }
   };
 
   const handleImportJson = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file || !userId) {
+    if (!file) {
       return;
     }
 
+    setLoadingAction("import-json");
+    clearFeedback();
+
     try {
+      if (!userId) {
+        throw new Error(t("authRequired"));
+      }
+
       const json = await readJsonFile(file);
       const parsedPlan = validateTrainingPlan(json, { userId });
       await setTrainingPlan(parsedPlan);
+      setSelectedWeek(1);
+      setSelectedDay(1);
       setMessage(t("importSuccess"));
-      setError(null);
     } catch (importError) {
+      console.error(importError);
       setError(importError instanceof Error ? importError.message : t("importFailed"));
-      setMessage(null);
     } finally {
       event.target.value = "";
+      setLoadingAction(null);
     }
   };
 
-  const handleParseText = () => {
-    if (!userId) {
-      return;
+  const handleExportPdf = async () => {
+    setLoadingAction("export-pdf");
+    clearFeedback();
+
+    try {
+      await exportTrainingPlanPdf(trainingPlan, language);
+      setMessage(t("exportPdfSuccess"));
+    } catch (exportError) {
+      console.error(exportError);
+      setError(exportError instanceof Error ? exportError.message : t("exportPdfFailed"));
+    } finally {
+      setLoadingAction(null);
     }
+  };
 
-    const result = planImportService.parseFromText(textPlanInput, {
-      userId,
-      planName: planName.trim() || "Imported Text Plan",
-    });
+  const handleExportJson = async () => {
+    setLoadingAction("export-json");
+    clearFeedback();
 
-    setParseWarnings(result.warnings);
-    setParseErrors(result.errors);
+    try {
+      downloadJson("training-plan-export.json", trainingPlan);
+      setMessage(t("exportJsonSuccess"));
+    } catch (exportError) {
+      console.error(exportError);
+      setError(exportError instanceof Error ? exportError.message : t("exportJsonFailed"));
+    } finally {
+      setLoadingAction(null);
+    }
+  };
 
-    if (!result.plan) {
+  const handleParseText = async () => {
+    setLoadingAction("parse");
+    clearFeedback();
+
+    try {
+      if (!userId) {
+        throw new Error(t("authRequired"));
+      }
+
+      if (!textPlanInput.trim()) {
+        throw new Error(t("reasonEmptyInput"));
+      }
+
+      const result = planImportService.parseFromText(textPlanInput, {
+        userId,
+        planName: planName.trim() || (language === "zh-CN" ? "文本导入计划" : "Imported Text Plan"),
+      });
+
+      setParseWarnings(result.warnings);
+      setParseErrors(result.errors);
+
+      if (!result.plan) {
+        setParsedPlanDraft(null);
+        setError(t("parseFailed"));
+        return;
+      }
+
+      setParsedPlanDraft(result.plan);
+      setMessage(t("parseSuccess"));
+    } catch (parseError) {
+      console.error(parseError);
       setParsedPlanDraft(null);
-      setError(t("parseFailed"));
-      setMessage(null);
-      return;
+      setError(parseError instanceof Error ? parseError.message : t("parseFailed"));
+    } finally {
+      setLoadingAction(null);
     }
-
-    setParsedPlanDraft(result.plan);
-    setMessage(t("parseSuccess"));
-    setError(null);
   };
 
   const updateDraftExercise = (
@@ -175,14 +285,43 @@ export function PlanPage() {
   };
 
   const handleSaveParsedPlan = async () => {
-    if (!parsedPlanDraft) {
-      return;
-    }
+    setLoadingAction("save-parsed");
+    clearFeedback();
 
-    await setTrainingPlan(parsedPlanDraft);
-    setMessage(t("importSuccess"));
-    setError(null);
+    try {
+      if (!parsedPlanDraft) {
+        throw new Error(t("previewMissing"));
+      }
+
+      await setTrainingPlan(parsedPlanDraft);
+      setSelectedWeek(1);
+      setSelectedDay(1);
+      setMessage(t("saveParsedSuccess"));
+    } catch (saveError) {
+      console.error(saveError);
+      setError(saveError instanceof Error ? saveError.message : t("saveParsedFailed"));
+    } finally {
+      setLoadingAction(null);
+    }
   };
+
+  const handleSetActivePlan = async (planId: string) => {
+    setActivePlanLoadingId(planId);
+    clearFeedback();
+
+    try {
+      await setActivePlan(planId);
+      setMessage(t("setActiveSuccess"));
+    } catch (setActiveError) {
+      console.error(setActiveError);
+      setError(setActiveError instanceof Error ? setActiveError.message : t("setActiveFailed"));
+    } finally {
+      setActivePlanLoadingId(null);
+    }
+  };
+
+  const renderLoadingIcon = (condition: boolean) =>
+    condition ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null;
 
   return (
     <div className="space-y-4">
@@ -243,28 +382,32 @@ export function PlanPage() {
                     </div>
 
                     <div className="space-y-2">
-                      {currentDay.exercises.map((exercise) => (
-                        <div
-                          key={exercise.id}
-                          className="rounded-xl border border-slate-200 bg-slate-50/80 p-3"
-                        >
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <p className="font-medium text-slate-900">{exercise.name}</p>
-                            <Badge variant="outline">RPE {exercise.targetRpe}</Badge>
-                          </div>
-                          <p className="mt-1 text-sm text-slate-600">
-                            {t("setsReps", { sets: exercise.sets, repRange: exercise.repRange })}
-                          </p>
-                          <p className="mt-1 text-xs text-slate-500">
-                            {t("notes", { value: exercise.notes || "-" })}
-                          </p>
-                          {exercise.alternativeExercises?.length ? (
-                            <p className="mt-1 text-xs text-slate-500">
-                              {t("alternatives", { value: exercise.alternativeExercises.join(" / ") })}
+                      {currentDay.exercises.length === 0 ? (
+                        <EmptyState title={t("emptyExercisesTitle")} description={t("emptyExercisesDesc")} />
+                      ) : (
+                        currentDay.exercises.map((exercise) => (
+                          <div
+                            key={exercise.id}
+                            className="rounded-xl border border-slate-200 bg-slate-50/80 p-3"
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <p className="font-medium text-slate-900">{exercise.name}</p>
+                              <Badge variant="outline">RPE {exercise.targetRpe}</Badge>
+                            </div>
+                            <p className="mt-1 text-sm text-slate-600">
+                              {t("setsReps", { sets: exercise.sets, repRange: exercise.repRange })}
                             </p>
-                          ) : null}
-                        </div>
-                      ))}
+                            <p className="mt-1 text-xs text-slate-500">
+                              {t("notes", { value: exercise.notes || "-" })}
+                            </p>
+                            {exercise.alternativeExercises?.length ? (
+                              <p className="mt-1 text-xs text-slate-500">
+                                {t("alternatives", { value: exercise.alternativeExercises.join(" / ") })}
+                              </p>
+                            ) : null}
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -313,7 +456,13 @@ export function PlanPage() {
               </div>
             </div>
 
-            <Button type="button" className="w-full" onClick={handleCreatePlan}>
+            <Button
+              type="button"
+              className="w-full"
+              onClick={handleCreatePlan}
+              disabled={loadingAction !== null}
+            >
+              {renderLoadingIcon(loadingAction === "create")}
               {t("createBlank")}
             </Button>
 
@@ -321,16 +470,41 @@ export function PlanPage() {
               <Label htmlFor="plan-import" className="text-sm">
                 {t("importJson")}
               </Label>
-              <Input id="plan-import" type="file" accept="application/json" onChange={handleImportJson} />
+              <Input
+                id="plan-import"
+                type="file"
+                accept="application/json"
+                onChange={handleImportJson}
+                disabled={loadingAction !== null}
+              />
+              {loadingAction === "import-json" ? (
+                <p className="inline-flex items-center text-xs text-slate-500">
+                  <LoaderCircle className="mr-1 h-3.5 w-3.5 animate-spin" />
+                  {t("importing")}
+                </p>
+              ) : null}
             </div>
+
+            <Button
+              type="button"
+              className="w-full"
+              onClick={handleExportPdf}
+              disabled={loadingAction !== null}
+            >
+              {renderLoadingIcon(loadingAction === "export-pdf")}
+              <Download className="mr-2 h-4 w-4" />
+              {t("exportPdf")}
+            </Button>
 
             <Button
               type="button"
               variant="outline"
               className="w-full"
-              onClick={() => downloadJson("training-plan-export.json", trainingPlan)}
+              onClick={handleExportJson}
+              disabled={loadingAction !== null}
             >
-              <Download className="mr-2 h-4 w-4" />
+              {renderLoadingIcon(loadingAction === "export-json")}
+              <FileJson className="mr-2 h-4 w-4" />
               {t("exportCurrent")}
             </Button>
 
@@ -339,7 +513,7 @@ export function PlanPage() {
               download
               className="inline-flex w-full items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
-              <FileJson className="mr-2 h-4 w-4" />
+              <Upload className="mr-2 h-4 w-4" />
               {t("downloadSample")}
             </a>
 
@@ -356,8 +530,10 @@ export function PlanPage() {
                     type="button"
                     variant={planItem.isActive ? "default" : "outline"}
                     className="w-full justify-start"
-                    onClick={() => setActivePlan(planItem.id)}
+                    onClick={() => handleSetActivePlan(planItem.id)}
+                    disabled={loadingAction !== null || activePlanLoadingId !== null}
                   >
+                    {renderLoadingIcon(activePlanLoadingId === planItem.id)}
                     {planItem.name}
                   </Button>
                 ))}
@@ -377,10 +553,24 @@ export function PlanPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex flex-wrap gap-2">
-            <Button type="button" variant="outline" onClick={() => setTextPlanInput(PLAN_TEXT_TEMPLATE)}>
-              {t("loadTemplate")}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setTextPlanInput(CHINESE_PLAN_TEXT_TEMPLATE)}
+              disabled={loadingAction !== null}
+            >
+              {t("loadTemplateZh")}
             </Button>
-            <Button type="button" onClick={handleParseText}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setTextPlanInput(ENGLISH_PLAN_TEXT_TEMPLATE)}
+              disabled={loadingAction !== null}
+            >
+              {t("loadTemplateEn")}
+            </Button>
+            <Button type="button" onClick={handleParseText} disabled={loadingAction !== null}>
+              {renderLoadingIcon(loadingAction === "parse")}
               {t("parseButton")}
             </Button>
           </div>
@@ -391,7 +581,7 @@ export function PlanPage() {
               value={textPlanInput}
               onChange={(event) => setTextPlanInput(event.target.value)}
               rows={12}
-              placeholder={PLAN_TEXT_TEMPLATE}
+              placeholder={language === "zh-CN" ? CHINESE_PLAN_TEXT_TEMPLATE : ENGLISH_PLAN_TEXT_TEMPLATE}
             />
           </div>
 
@@ -496,7 +686,8 @@ export function PlanPage() {
                 </Card>
               ))}
 
-              <Button type="button" onClick={handleSaveParsedPlan}>
+              <Button type="button" onClick={handleSaveParsedPlan} disabled={loadingAction !== null}>
+                {renderLoadingIcon(loadingAction === "save-parsed")}
                 {t("saveParsed")}
               </Button>
             </div>
@@ -506,4 +697,3 @@ export function PlanPage() {
     </div>
   );
 }
-
