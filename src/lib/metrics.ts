@@ -117,7 +117,6 @@ export function getWeightGoalStatus(
   settings: UserSettings,
 ): {
   status: "on-track" | "too-slow" | "too-fast" | "insufficient";
-  message: string;
   weeklyLoss: number | null;
 } {
   const weeklyLoss = getWeeklyWeightChange(bodyMetricLogs);
@@ -125,7 +124,6 @@ export function getWeightGoalStatus(
   if (weeklyLoss === null) {
     return {
       status: "insufficient",
-      message: "Not enough data in last 14 days. Keep logging.",
       weeklyLoss,
     };
   }
@@ -133,7 +131,6 @@ export function getWeightGoalStatus(
   if (weeklyLoss < settings.targetWeeklyLossMin) {
     return {
       status: "too-slow",
-      message: `Weekly average drop is ${weeklyLoss}kg, below target range.`,
       weeklyLoss,
     };
   }
@@ -141,14 +138,12 @@ export function getWeightGoalStatus(
   if (weeklyLoss > settings.targetWeeklyLossMax) {
     return {
       status: "too-fast",
-      message: `Weekly average drop is ${weeklyLoss}kg, above target range.`,
       weeklyLoss,
     };
   }
 
   return {
     status: "on-track",
-    message: `Weekly average drop is ${weeklyLoss}kg, within target range.`,
     weeklyLoss,
   };
 }

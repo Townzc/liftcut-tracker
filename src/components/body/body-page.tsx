@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Trash2 } from "lucide-react";
 
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
@@ -32,6 +33,9 @@ function average(values: number[]): number | null {
 }
 
 export function BodyPage() {
+  const t = useTranslations("body");
+  const tNav = useTranslations("nav");
+
   const bodyMetricLogs = useTrackerStore((state) => state.bodyMetricLogs);
   const addBodyMetricLog = useTrackerStore((state) => state.addBodyMetricLog);
   const deleteBodyMetricLog = useTrackerStore((state) => state.deleteBodyMetricLog);
@@ -57,8 +61,8 @@ export function BodyPage() {
     return average(values);
   }, [bodyMetricLogs]);
 
-  const handleSubmit = () => {
-    addBodyMetricLog({
+  const handleSubmit = async () => {
+    await addBodyMetricLog({
       date,
       weight,
       waist,
@@ -71,59 +75,59 @@ export function BodyPage() {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">Body</p>
-        <h1 className="text-2xl font-semibold text-slate-900">Body Metrics</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("body")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-4">
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardDescription>7-day average weight</CardDescription>
+            <CardDescription>{t("avg7")}</CardDescription>
             <CardTitle className="text-2xl text-slate-900">
-              {recent7DayAverage !== null ? `${recent7DayAverage.toFixed(1)} kg` : "Not enough data"}
+              {recent7DayAverage !== null ? `${recent7DayAverage.toFixed(1)} kg` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardDescription>Weekly trend</CardDescription>
+            <CardDescription>{t("weeklyTrend")}</CardDescription>
             <CardTitle className="text-2xl text-slate-900">
-              {weeklyWeightDelta !== null ? `${weeklyWeightDelta > 0 ? "-" : "+"}${Math.abs(weeklyWeightDelta).toFixed(2)} kg` : "Not enough data"}
+              {weeklyWeightDelta !== null ? `${weeklyWeightDelta > 0 ? "-" : "+"}${Math.abs(weeklyWeightDelta).toFixed(2)} kg` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardDescription>7-day average waist</CardDescription>
+            <CardDescription>{t("waistAvg7")}</CardDescription>
             <CardTitle className="text-2xl text-slate-900">
-              {recentWaistAvg !== null ? `${recentWaistAvg.toFixed(1)} cm` : "Not enough data"}
+              {recentWaistAvg !== null ? `${recentWaistAvg.toFixed(1)} cm` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardTitle className="text-base">Add Entry</CardTitle>
-            <CardDescription>Saving same date overwrites that date data</CardDescription>
+            <CardTitle className="text-base">{t("addEntryTitle")}</CardTitle>
+            <CardDescription>{t("addEntryDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label>Date</Label>
+              <Label>{t("date")}</Label>
               <Input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
             </div>
             <div className="space-y-1">
-              <Label>Weight (kg)</Label>
+              <Label>{t("weight")}</Label>
               <Input type="number" value={weight} onChange={(event) => setWeight(parseNumber(event.target.value))} />
             </div>
             <div className="space-y-1">
-              <Label>Waist (cm)</Label>
+              <Label>{t("waist")}</Label>
               <Input type="number" value={waist} onChange={(event) => setWaist(parseNumber(event.target.value))} />
             </div>
-            <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Optional note" />
+            <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder={t("optionalNote")} />
             <Button className="w-full" onClick={handleSubmit}>
-              Save
+              {t("save")}
             </Button>
           </CardContent>
         </Card>
@@ -132,26 +136,26 @@ export function BodyPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardTitle className="text-base">Weight Trend</CardTitle>
+            <CardTitle className="text-base">{t("weightTrend")}</CardTitle>
           </CardHeader>
           <CardContent>
             {trendData.length > 0 ? (
               <SimpleLineChart data={trendData} lines={[{ key: "weight", color: "#0f766e", name: "Weight" }]} />
             ) : (
-              <EmptyState title="No weight data" description="Add your first body entry." />
+              <EmptyState title={t("noWeightTitle")} description={t("noWeightDesc")} />
             )}
           </CardContent>
         </Card>
 
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardTitle className="text-base">Waist Trend</CardTitle>
+            <CardTitle className="text-base">{t("waistTrend")}</CardTitle>
           </CardHeader>
           <CardContent>
             {trendData.length > 0 ? (
               <SimpleLineChart data={trendData} lines={[{ key: "waist", color: "#ea580c", name: "Waist" }]} />
             ) : (
-              <EmptyState title="No waist data" description="Add your first body entry." />
+              <EmptyState title={t("noWaistTitle")} description={t("noWaistDesc")} />
             )}
           </CardContent>
         </Card>
@@ -159,12 +163,12 @@ export function BodyPage() {
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
-          <CardTitle className="text-base">History</CardTitle>
-          <CardDescription>Browse by date and delete if needed</CardDescription>
+          <CardTitle className="text-base">{t("historyTitle")}</CardTitle>
+          <CardDescription>{t("historyDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
           {sortedLogs.length === 0 ? (
-            <EmptyState title="No history yet" description="Log your first weight and waist entry." />
+            <EmptyState title={t("noHistoryTitle")} description={t("noHistoryDesc")} />
           ) : (
             sortedLogs.map((log) => (
               <div
@@ -174,7 +178,11 @@ export function BodyPage() {
                 <div>
                   <p className="font-medium text-slate-900">{log.date}</p>
                   <p className="text-xs text-slate-600">
-                    Weight {log.weight}kg | Waist {log.waist}cm {log.notes ? `| ${log.notes}` : ""}
+                    {t("historyLine", {
+                      weight: log.weight,
+                      waist: log.waist,
+                      note: log.notes ? `| ${log.notes}` : "",
+                    })}
                   </p>
                 </div>
                 <Button size="icon" variant="ghost" onClick={() => deleteBodyMetricLog(log.id)}>

@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { CheckCircle2, Save } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
@@ -26,6 +27,8 @@ function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): Exerc
     );
 
     return {
+      id: existingExercise?.id ?? "",
+      workoutLogId: existingExercise?.workoutLogId ?? "",
       exercisePlanId: exercise.id,
       name: exercise.name,
       actualWeight: existingExercise?.actualWeight ?? 0,
@@ -42,13 +45,19 @@ function WorkoutDraftForm({
   workoutDate,
   existingLog,
   onSave,
+  trainingPlanId,
 }: {
   currentWeekNumber: number;
   currentDay: PlanDay;
   workoutDate: string;
   existingLog?: WorkoutLog;
-  onSave: (payload: Omit<WorkoutLog, "id"> & { id?: string }) => void;
+  trainingPlanId: string;
+  onSave: (
+    payload: Omit<WorkoutLog, "id" | "userId" | "createdAt"> & { id?: string },
+  ) => Promise<void>;
 }) {
+  const t = useTranslations("workout");
+
   const [durationMinutes, setDurationMinutes] = useState(existingLog?.durationMinutes ?? 60);
   const [notes, setNotes] = useState(existingLog?.notes ?? "");
   const [completed, setCompleted] = useState(existingLog?.completed ?? true);
@@ -61,10 +70,11 @@ function WorkoutDraftForm({
     setExerciseRows((rows) => rows.map((row, rowIndex) => (rowIndex === index ? { ...row, ...patch } : row)));
   };
 
-  const handleSaveWorkout = () => {
-    onSave({
+  const handleSaveWorkout = async () => {
+    await onSave({
       id: existingLog?.id,
       date: workoutDate,
+      trainingPlanId,
       weekNumber: currentWeekNumber,
       dayNumber: currentDay.dayNumber,
       durationMinutes,
@@ -72,7 +82,7 @@ function WorkoutDraftForm({
       notes,
       exercises: exerciseRows,
     });
-    setMessage("Workout log saved. Dashboard updated.");
+    setMessage(t("saved"));
   };
 
   return (
@@ -80,7 +90,7 @@ function WorkoutDraftForm({
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
           <CardTitle className="text-lg">{currentDay.title}</CardTitle>
-          <CardDescription>{currentDay.notes || "No notes"}</CardDescription>
+          <CardDescription>{currentDay.notes || "-"}</CardDescription>
         </CardHeader>
       </Card>
 
@@ -88,11 +98,11 @@ function WorkoutDraftForm({
         <Card key={exercise.exercisePlanId} className="border-slate-200/80 bg-white/90">
           <CardHeader>
             <CardTitle className="text-base">{exercise.name}</CardTitle>
-            <CardDescription>Exercise {index + 1}</CardDescription>
+            <CardDescription>{t("exerciseLabel", { index: index + 1 })}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-4">
             <div className="space-y-2">
-              <Label>Actual Weight (kg)</Label>
+              <Label>{t("actualWeight")}</Label>
               <Input
                 type="number"
                 value={exercise.actualWeight}
@@ -100,7 +110,7 @@ function WorkoutDraftForm({
               />
             </div>
             <div className="space-y-2">
-              <Label>Actual Reps</Label>
+              <Label>{t("actualReps")}</Label>
               <Input
                 type="number"
                 value={exercise.actualReps}
@@ -108,7 +118,7 @@ function WorkoutDraftForm({
               />
             </div>
             <div className="space-y-2">
-              <Label>Actual RPE</Label>
+              <Label>{t("actualRpe")}</Label>
               <Input
                 type="number"
                 value={exercise.actualRpe}
@@ -124,7 +134,7 @@ function WorkoutDraftForm({
                 checked={exercise.completed}
                 onCheckedChange={(checked) => updateRow(index, { completed: checked === true })}
               />
-              <Label htmlFor={`completed-${exercise.exercisePlanId}`}>Completed</Label>
+              <Label htmlFor={`completed-${exercise.exercisePlanId}`}>{t("completed")}</Label>
             </div>
           </CardContent>
         </Card>
@@ -132,12 +142,12 @@ function WorkoutDraftForm({
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
-          <CardTitle className="text-base">Workout Notes</CardTitle>
+          <CardTitle className="text-base">{t("notesTitle")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label>Duration (minutes)</Label>
+              <Label>{t("duration")}</Label>
               <Input
                 type="number"
                 value={durationMinutes}
@@ -151,20 +161,20 @@ function WorkoutDraftForm({
                 checked={completed}
                 onCheckedChange={(checked) => setCompleted(checked === true)}
               />
-              <Label htmlFor="workout-completed">Session completed</Label>
+              <Label htmlFor="workout-completed">{t("sessionCompleted")}</Label>
             </div>
           </div>
           <Textarea
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
-            placeholder="Example: reduced load on final set due fatigue."
+            placeholder={t("notesPlaceholder")}
           />
         </CardContent>
       </Card>
 
       <Button className="fixed bottom-24 left-4 right-4 z-20 h-12 md:static md:h-10" onClick={handleSaveWorkout}>
         <Save className="mr-2 h-4 w-4" />
-        Save Workout Log
+        {t("saveWorkout")}
       </Button>
 
       {message ? (
@@ -178,6 +188,10 @@ function WorkoutDraftForm({
 }
 
 export function WorkoutPage() {
+  const t = useTranslations("workout");
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
+
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const workoutLogs = useTrackerStore((state) => state.workoutLogs);
   const selectedWeek = useTrackerStore((state) => state.selectedWeek);
@@ -213,18 +227,18 @@ export function WorkoutPage() {
   return (
     <div className="space-y-4 pb-20">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">Workout</p>
-        <h1 className="text-2xl font-semibold text-slate-900">Workout Logging</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("workout")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
       </div>
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
-          <CardTitle className="text-base">Session Selector</CardTitle>
-          <CardDescription>Pick date, week, and day before entering logs</CardDescription>
+          <CardTitle className="text-base">{t("selectorTitle")}</CardTitle>
+          <CardDescription>{t("selectorDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 sm:grid-cols-3">
           <div className="space-y-2">
-            <Label htmlFor="workout-date">Date</Label>
+            <Label htmlFor="workout-date">{t("date")}</Label>
             <Input
               id="workout-date"
               type="date"
@@ -234,7 +248,7 @@ export function WorkoutPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="week-select">Week</Label>
+            <Label htmlFor="week-select">{tCommon("week")}</Label>
             <Input
               id="week-select"
               type="number"
@@ -253,7 +267,7 @@ export function WorkoutPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="day-select">Day</Label>
+            <Label htmlFor="day-select">{tCommon("day")}</Label>
             <Input
               id="day-select"
               type="number"
@@ -279,11 +293,14 @@ export function WorkoutPage() {
           currentDay={currentDay}
           workoutDate={workoutDate}
           existingLog={existingLog}
+          trainingPlanId={trainingPlan.id}
           onSave={addWorkoutLog}
         />
       ) : (
-        <EmptyState title="No training day found" description="Create or import a plan first." />
+        <EmptyState title={t("noDayTitle")} description={t("noDayDesc")} />
       )}
     </div>
   );
 }
+
+

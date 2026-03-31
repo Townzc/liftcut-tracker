@@ -1,12 +1,14 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Flame, Goal, Salad, TrendingDown } from "lucide-react";
 
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -18,20 +20,28 @@ import {
   getWeightGoalStatus,
 } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { cn } from "@/lib/utils";
 
-function formatRemaining(value: number, unit: string): string {
+function formatRemaining(
+  value: number,
+  unit: string,
+  t: ReturnType<typeof useTranslations>,
+): string {
   if (value > 0) {
-    return `Remaining ${value}${unit}`;
+    return t("remaining", { value, unit });
   }
 
   if (value < 0) {
-    return `Over by ${Math.abs(value)}${unit}`;
+    return t("overBy", { value: Math.abs(value), unit });
   }
 
-  return "Target reached";
+  return t("reached");
 }
 
 export function DashboardPage() {
+  const t = useTranslations("dashboard");
+  const tNav = useTranslations("nav");
+
   const settings = useTrackerStore((state) => state.settings);
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const foodLogs = useTrackerStore((state) => state.foodLogs);
@@ -66,14 +76,17 @@ export function DashboardPage() {
     (nutritionSummary.protein / Math.max(1, settings.proteinTarget)) * 100,
   );
 
+  const weeklyLossText =
+    weightStatus.weeklyLoss !== null ? Math.abs(weightStatus.weeklyLoss).toFixed(2) : "0";
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">Dashboard</p>
-          <h1 className="text-2xl font-semibold text-slate-900">Today at a glance</h1>
+          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("dashboard")}</p>
+          <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
         </div>
-        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">MVP local mode</Badge>
+        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">{t("badge")}</Badge>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -81,28 +94,30 @@ export function DashboardPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Goal className="h-4 w-4 text-emerald-600" />
-              Today plan
+              {t("todayPlanTitle")}
             </CardTitle>
-            <CardDescription>Auto-suggested from your schedule</CardDescription>
+            <CardDescription>{t("todayPlanDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             {todayPlan ? (
               <div className="space-y-3">
                 <p className="text-sm text-slate-700">
-                  Week {todayPlan.weekNumber} / Day {todayPlan.dayNumber}
+                  {t("weekDayLabel", { week: todayPlan.weekNumber, day: todayPlan.dayNumber })}
                 </p>
                 <p className="text-lg font-semibold text-slate-900">{todayPlan.title}</p>
-                <p className="text-sm text-slate-600">{todayPlan.exerciseCount} exercises queued</p>
+                <p className="text-sm text-slate-600">
+                  {t("exerciseQueued", { count: todayPlan.exerciseCount })}
+                </p>
                 <Link
                   href="/workout"
                   className="inline-flex items-center gap-1 text-sm font-medium text-emerald-700"
                 >
-                  Start logging
+                  {t("goWorkout")}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             ) : (
-              <EmptyState title="No plan found" description="Create or import a plan in the plan page." />
+              <EmptyState title={t("noPlanTitle")} description={t("noPlanDesc")} />
             )}
           </CardContent>
         </Card>
@@ -111,36 +126,42 @@ export function DashboardPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Salad className="h-4 w-4 text-orange-600" />
-              Nutrition today
+              {t("nutritionTitle")}
             </CardTitle>
-            <CardDescription>Calories and protein gaps</CardDescription>
+            <CardDescription>{t("nutritionDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">Calories</span>
+                <span className="text-slate-600">{t("calories")}</span>
                 <span className="font-medium text-slate-900">
                   {nutritionSummary.calories} / {settings.calorieTarget} kcal
                 </span>
               </div>
               <Progress value={calorieProgress} />
               <p className="text-xs text-slate-500">
-                {formatRemaining(nutritionSummary.remainingCalories, "kcal")}
+                {formatRemaining(nutritionSummary.remainingCalories, "kcal", t)}
               </p>
             </div>
 
             <div className="space-y-1">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">Protein</span>
+                <span className="text-slate-600">{t("protein")}</span>
                 <span className="font-medium text-slate-900">
                   {nutritionSummary.protein} / {settings.proteinTarget} g
                 </span>
               </div>
               <Progress value={proteinProgress} />
               <p className="text-xs text-slate-500">
-                {formatRemaining(nutritionSummary.remainingProtein, "g")}
+                {formatRemaining(nutritionSummary.remainingProtein, "g", t)}
               </p>
             </div>
+
+            {nutritionSummary.calories === 0 && nutritionSummary.protein === 0 ? (
+              <Link href="/nutrition" className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
+                {t("goNutrition")}
+              </Link>
+            ) : null}
           </CardContent>
         </Card>
 
@@ -148,9 +169,9 @@ export function DashboardPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Flame className="h-4 w-4 text-rose-600" />
-              Weekly workout progress
+              {t("weeklyWorkoutTitle")}
             </CardTitle>
-            <CardDescription>Completed / planned sessions</CardDescription>
+            <CardDescription>{t("weeklyWorkoutDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-2xl font-semibold text-slate-900">
@@ -158,7 +179,7 @@ export function DashboardPage() {
             </p>
             <Progress value={weekWorkoutSummary.completionRate} />
             <p className="text-xs text-slate-500">
-              Completion {Math.round(weekWorkoutSummary.completionRate)}%
+              {t("completion", { value: Math.round(weekWorkoutSummary.completionRate) })}
             </p>
           </CardContent>
         </Card>
@@ -169,9 +190,9 @@ export function DashboardPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <TrendingDown className="h-4 w-4 text-cyan-700" />
-              Last 7 days body weight
+              {t("weightTrendTitle")}
             </CardTitle>
-            <CardDescription>Used for dynamic 7-day average</CardDescription>
+            <CardDescription>{t("weightTrendDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             {weightChartData.some((item) => item.weight !== null) ? (
@@ -180,20 +201,20 @@ export function DashboardPage() {
                 lines={[{ key: "weight", color: "#0f766e", name: "Weight (kg)" }]}
               />
             ) : (
-              <EmptyState title="No weight data" description="Add entries in the body page." />
+              <EmptyState title={t("noWeightTitle")} description={t("noWeightDesc")} />
             )}
           </CardContent>
         </Card>
 
         <Card className="border-slate-200/80 bg-white/90">
           <CardHeader>
-            <CardTitle className="text-base">Weekly status</CardTitle>
-            <CardDescription>Weight trend target check</CardDescription>
+            <CardTitle className="text-base">{t("weeklyStatusTitle")}</CardTitle>
+            <CardDescription>{t("weeklyStatusDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="text-sm text-slate-600">7-day average weight</p>
+            <p className="text-sm text-slate-600">{t("avgWeight")}</p>
             <p className="text-2xl font-semibold text-slate-900">
-              {sevenDayAverage !== null ? `${sevenDayAverage.toFixed(1)} kg` : "Not enough data"}
+              {sevenDayAverage !== null ? `${sevenDayAverage.toFixed(1)} kg` : t("statusInsufficient")}
             </p>
             <Badge
               className={
@@ -207,17 +228,26 @@ export function DashboardPage() {
               }
             >
               {weightStatus.status === "on-track"
-                ? "On track"
+                ? t("statusOnTrack")
                 : weightStatus.status === "too-fast"
-                  ? "Too fast"
+                  ? t("statusTooFast")
                   : weightStatus.status === "too-slow"
-                    ? "Too slow"
-                    : "Insufficient data"}
+                    ? t("statusTooSlow")
+                    : t("statusInsufficient")}
             </Badge>
-            <p className="text-sm leading-6 text-slate-600">{weightStatus.message}</p>
+            <p className="text-sm leading-6 text-slate-600">
+              {weightStatus.status === "insufficient"
+                ? t("statusMessageInsufficient")
+                : weightStatus.status === "too-fast"
+                  ? t("statusMessageTooFast", { value: weeklyLossText })
+                  : weightStatus.status === "too-slow"
+                    ? t("statusMessageTooSlow", { value: weeklyLossText })
+                    : t("statusMessageOnTrack", { value: weeklyLossText })}
+            </p>
           </CardContent>
         </Card>
       </div>
     </div>
   );
 }
+
