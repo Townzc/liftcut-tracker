@@ -1,1358 +1,1710 @@
 {
-  "id": "sample-12-week-plan",
-  "name": "?? 12 ?????",
+  "id": "sample-plan-12w",
+  "userId": "sample-user",
+  "name": "12 Week Sample Strength Plan",
+  "isActive": true,
+  "createdAt": "2026-03-31T15:59:27.311Z",
+  "updatedAt": "2026-03-31T15:59:27.311Z",
   "weeks": [
     {
+      "id": "sample-plan-12w-w1",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 1,
       "days": [
         {
+          "id": "sample-plan-12w-w1-d1",
+          "weekId": "sample-plan-12w-w1",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 1 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 1: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w1-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w1-d1-e1",
+              "dayId": "sample-plan-12w-w1-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w1-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w1-d1-e2",
+              "dayId": "sample-plan-12w-w1-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w1-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 7.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 1 ??",
-          "exercises": [
-            {
-              "id": "w1-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w1-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "???"
-            },
-            {
-              "id": "w1-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w1-d1-e3",
+              "dayId": "sample-plan-12w-w1-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 1 ??",
+          "id": "sample-plan-12w-w1-d2",
+          "weekId": "sample-plan-12w-w1",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 1: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w1-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 7.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w1-d2-e1",
+              "dayId": "sample-plan-12w-w1-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w1-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w1-d2-e2",
+              "dayId": "sample-plan-12w-w1-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w1-d2-e3",
+              "dayId": "sample-plan-12w-w1-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 7.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w1-d3",
+          "weekId": "sample-plan-12w-w1",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 1: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w1-d3-e1",
+              "dayId": "sample-plan-12w-w1-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w1-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w1-d3-e2",
+              "dayId": "sample-plan-12w-w1-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w1-d3-e3",
+              "dayId": "sample-plan-12w-w1-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w2",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 2,
       "days": [
         {
+          "id": "sample-plan-12w-w2-d1",
+          "weekId": "sample-plan-12w-w2",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 2 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 2: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w2-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w2-d1-e1",
+              "dayId": "sample-plan-12w-w2-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w2-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w2-d1-e2",
+              "dayId": "sample-plan-12w-w2-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w2-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 7.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 2 ??",
-          "exercises": [
-            {
-              "id": "w2-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w2-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "???"
-            },
-            {
-              "id": "w2-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w2-d1-e3",
+              "dayId": "sample-plan-12w-w2-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 2 ??",
+          "id": "sample-plan-12w-w2-d2",
+          "weekId": "sample-plan-12w-w2",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 2: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w2-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 7.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w2-d2-e1",
+              "dayId": "sample-plan-12w-w2-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w2-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w2-d2-e2",
+              "dayId": "sample-plan-12w-w2-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w2-d2-e3",
+              "dayId": "sample-plan-12w-w2-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 7.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w2-d3",
+          "weekId": "sample-plan-12w-w2",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 2: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w2-d3-e1",
+              "dayId": "sample-plan-12w-w2-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w2-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w2-d3-e2",
+              "dayId": "sample-plan-12w-w2-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w2-d3-e3",
+              "dayId": "sample-plan-12w-w2-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w3",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 3,
       "days": [
         {
+          "id": "sample-plan-12w-w3-d1",
+          "weekId": "sample-plan-12w-w3",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 3 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 3: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w3-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w3-d1-e1",
+              "dayId": "sample-plan-12w-w3-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w3-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w3-d1-e2",
+              "dayId": "sample-plan-12w-w3-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w3-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 7.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 3 ??",
-          "exercises": [
-            {
-              "id": "w3-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w3-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "???"
-            },
-            {
-              "id": "w3-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w3-d1-e3",
+              "dayId": "sample-plan-12w-w3-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 3 ??",
+          "id": "sample-plan-12w-w3-d2",
+          "weekId": "sample-plan-12w-w3",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 3: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w3-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 7.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w3-d2-e1",
+              "dayId": "sample-plan-12w-w3-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w3-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w3-d2-e2",
+              "dayId": "sample-plan-12w-w3-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w3-d2-e3",
+              "dayId": "sample-plan-12w-w3-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 7.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w3-d3",
+          "weekId": "sample-plan-12w-w3",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 3: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w3-d3-e1",
+              "dayId": "sample-plan-12w-w3-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w3-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w3-d3-e2",
+              "dayId": "sample-plan-12w-w3-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w3-d3-e3",
+              "dayId": "sample-plan-12w-w3-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w4",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 4,
       "days": [
         {
+          "id": "sample-plan-12w-w4-d1",
+          "weekId": "sample-plan-12w-w4",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 4 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 4: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w4-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w4-d1-e1",
+              "dayId": "sample-plan-12w-w4-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w4-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w4-d1-e2",
+              "dayId": "sample-plan-12w-w4-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w4-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 7.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 4 ??",
-          "exercises": [
-            {
-              "id": "w4-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w4-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "???"
-            },
-            {
-              "id": "w4-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w4-d1-e3",
+              "dayId": "sample-plan-12w-w4-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 4 ??",
+          "id": "sample-plan-12w-w4-d2",
+          "weekId": "sample-plan-12w-w4",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 4: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w4-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 7.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w4-d2-e1",
+              "dayId": "sample-plan-12w-w4-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w4-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w4-d2-e2",
+              "dayId": "sample-plan-12w-w4-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w4-d2-e3",
+              "dayId": "sample-plan-12w-w4-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 7.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w4-d3",
+          "weekId": "sample-plan-12w-w4",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 4: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w4-d3-e1",
+              "dayId": "sample-plan-12w-w4-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w4-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w4-d3-e2",
+              "dayId": "sample-plan-12w-w4-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w4-d3-e3",
+              "dayId": "sample-plan-12w-w4-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w5",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 5,
       "days": [
         {
+          "id": "sample-plan-12w-w5-d1",
+          "weekId": "sample-plan-12w-w5",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 5 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 5: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w5-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w5-d1-e1",
+              "dayId": "sample-plan-12w-w5-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w5-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w5-d1-e2",
+              "dayId": "sample-plan-12w-w5-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w5-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 5 ??",
-          "exercises": [
-            {
-              "id": "w5-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7.5,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w5-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "???"
-            },
-            {
-              "id": "w5-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w5-d1-e3",
+              "dayId": "sample-plan-12w-w5-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 5 ??",
+          "id": "sample-plan-12w-w5-d2",
+          "weekId": "sample-plan-12w-w5",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 5: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w5-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8,
-              "notes": "????",
+              "id": "sample-plan-12w-w5-d2-e1",
+              "dayId": "sample-plan-12w-w5-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7.5,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w5-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w5-d2-e2",
+              "dayId": "sample-plan-12w-w5-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w5-d2-e3",
+              "dayId": "sample-plan-12w-w5-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w5-d3",
+          "weekId": "sample-plan-12w-w5",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 5: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w5-d3-e1",
+              "dayId": "sample-plan-12w-w5-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w5-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w5-d3-e2",
+              "dayId": "sample-plan-12w-w5-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w5-d3-e3",
+              "dayId": "sample-plan-12w-w5-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7.5,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w6",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 6,
       "days": [
         {
+          "id": "sample-plan-12w-w6-d1",
+          "weekId": "sample-plan-12w-w6",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 6 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 6: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w6-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w6-d1-e1",
+              "dayId": "sample-plan-12w-w6-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w6-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w6-d1-e2",
+              "dayId": "sample-plan-12w-w6-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w6-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 6 ??",
-          "exercises": [
-            {
-              "id": "w6-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7.5,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w6-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "???"
-            },
-            {
-              "id": "w6-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w6-d1-e3",
+              "dayId": "sample-plan-12w-w6-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 6 ??",
+          "id": "sample-plan-12w-w6-d2",
+          "weekId": "sample-plan-12w-w6",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 6: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w6-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8,
-              "notes": "????",
+              "id": "sample-plan-12w-w6-d2-e1",
+              "dayId": "sample-plan-12w-w6-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7.5,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w6-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w6-d2-e2",
+              "dayId": "sample-plan-12w-w6-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w6-d2-e3",
+              "dayId": "sample-plan-12w-w6-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w6-d3",
+          "weekId": "sample-plan-12w-w6",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 6: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w6-d3-e1",
+              "dayId": "sample-plan-12w-w6-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w6-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w6-d3-e2",
+              "dayId": "sample-plan-12w-w6-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w6-d3-e3",
+              "dayId": "sample-plan-12w-w6-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7.5,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w7",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 7,
       "days": [
         {
+          "id": "sample-plan-12w-w7-d1",
+          "weekId": "sample-plan-12w-w7",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 7 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 7: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w7-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w7-d1-e1",
+              "dayId": "sample-plan-12w-w7-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w7-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w7-d1-e2",
+              "dayId": "sample-plan-12w-w7-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w7-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 7 ??",
-          "exercises": [
-            {
-              "id": "w7-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7.5,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w7-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "???"
-            },
-            {
-              "id": "w7-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w7-d1-e3",
+              "dayId": "sample-plan-12w-w7-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 7 ??",
+          "id": "sample-plan-12w-w7-d2",
+          "weekId": "sample-plan-12w-w7",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 7: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w7-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8,
-              "notes": "????",
+              "id": "sample-plan-12w-w7-d2-e1",
+              "dayId": "sample-plan-12w-w7-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7.5,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w7-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w7-d2-e2",
+              "dayId": "sample-plan-12w-w7-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w7-d2-e3",
+              "dayId": "sample-plan-12w-w7-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w7-d3",
+          "weekId": "sample-plan-12w-w7",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 7: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w7-d3-e1",
+              "dayId": "sample-plan-12w-w7-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w7-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w7-d3-e2",
+              "dayId": "sample-plan-12w-w7-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w7-d3-e3",
+              "dayId": "sample-plan-12w-w7-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7.5,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w8",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 8,
       "days": [
         {
+          "id": "sample-plan-12w-w8-d1",
+          "weekId": "sample-plan-12w-w8",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 8 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 8: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w8-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w8-d1-e1",
+              "dayId": "sample-plan-12w-w8-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w8-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w8-d1-e2",
+              "dayId": "sample-plan-12w-w8-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 7.5,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w8-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 8 ??",
-          "exercises": [
-            {
-              "id": "w8-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 7.5,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w8-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "???"
-            },
-            {
-              "id": "w8-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w8-d1-e3",
+              "dayId": "sample-plan-12w-w8-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 8.5,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 8 ??",
+          "id": "sample-plan-12w-w8-d2",
+          "weekId": "sample-plan-12w-w8",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 8: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w8-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8,
-              "notes": "????",
+              "id": "sample-plan-12w-w8-d2-e1",
+              "dayId": "sample-plan-12w-w8-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 7.5,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w8-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w8-d2-e2",
+              "dayId": "sample-plan-12w-w8-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w8-d2-e3",
+              "dayId": "sample-plan-12w-w8-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w8-d3",
+          "weekId": "sample-plan-12w-w8",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 8: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w8-d3-e1",
+              "dayId": "sample-plan-12w-w8-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w8-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w8-d3-e2",
+              "dayId": "sample-plan-12w-w8-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w8-d3-e3",
+              "dayId": "sample-plan-12w-w8-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 7.5,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w9",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 9,
       "days": [
         {
+          "id": "sample-plan-12w-w9-d1",
+          "weekId": "sample-plan-12w-w9",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 9 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 9: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w9-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w9-d1-e1",
+              "dayId": "sample-plan-12w-w9-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w9-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w9-d1-e2",
+              "dayId": "sample-plan-12w-w9-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w9-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 9 ??",
-          "exercises": [
-            {
-              "id": "w9-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 8,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w9-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 9,
-              "notes": "???"
-            },
-            {
-              "id": "w9-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w9-d1-e3",
+              "dayId": "sample-plan-12w-w9-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 9 ??",
+          "id": "sample-plan-12w-w9-d2",
+          "weekId": "sample-plan-12w-w9",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 9: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w9-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w9-d2-e1",
+              "dayId": "sample-plan-12w-w9-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 8,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w9-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w9-d2-e2",
+              "dayId": "sample-plan-12w-w9-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 9,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w9-d2-e3",
+              "dayId": "sample-plan-12w-w9-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w9-d3",
+          "weekId": "sample-plan-12w-w9",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 9: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w9-d3-e1",
+              "dayId": "sample-plan-12w-w9-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w9-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w9-d3-e2",
+              "dayId": "sample-plan-12w-w9-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w9-d3-e3",
+              "dayId": "sample-plan-12w-w9-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 8,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w10",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 10,
       "days": [
         {
+          "id": "sample-plan-12w-w10-d1",
+          "weekId": "sample-plan-12w-w10",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 10 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 10: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w10-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w10-d1-e1",
+              "dayId": "sample-plan-12w-w10-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w10-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w10-d1-e2",
+              "dayId": "sample-plan-12w-w10-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w10-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 10 ??",
-          "exercises": [
-            {
-              "id": "w10-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 8,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w10-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 9,
-              "notes": "???"
-            },
-            {
-              "id": "w10-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w10-d1-e3",
+              "dayId": "sample-plan-12w-w10-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 10 ??",
+          "id": "sample-plan-12w-w10-d2",
+          "weekId": "sample-plan-12w-w10",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 10: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w10-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w10-d2-e1",
+              "dayId": "sample-plan-12w-w10-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 8,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w10-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w10-d2-e2",
+              "dayId": "sample-plan-12w-w10-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 9,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w10-d2-e3",
+              "dayId": "sample-plan-12w-w10-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w10-d3",
+          "weekId": "sample-plan-12w-w10",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 10: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w10-d3-e1",
+              "dayId": "sample-plan-12w-w10-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w10-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w10-d3-e2",
+              "dayId": "sample-plan-12w-w10-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w10-d3-e3",
+              "dayId": "sample-plan-12w-w10-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 8,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w11",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 11,
       "days": [
         {
+          "id": "sample-plan-12w-w11-d1",
+          "weekId": "sample-plan-12w-w11",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 11 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 11: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w11-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w11-d1-e1",
+              "dayId": "sample-plan-12w-w11-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w11-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w11-d1-e2",
+              "dayId": "sample-plan-12w-w11-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w11-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 11 ??",
-          "exercises": [
-            {
-              "id": "w11-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 8,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w11-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 9,
-              "notes": "???"
-            },
-            {
-              "id": "w11-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w11-d1-e3",
+              "dayId": "sample-plan-12w-w11-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 11 ??",
+          "id": "sample-plan-12w-w11-d2",
+          "weekId": "sample-plan-12w-w11",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 11: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w11-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w11-d2-e1",
+              "dayId": "sample-plan-12w-w11-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 8,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w11-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w11-d2-e2",
+              "dayId": "sample-plan-12w-w11-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 9,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w11-d2-e3",
+              "dayId": "sample-plan-12w-w11-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w11-d3",
+          "weekId": "sample-plan-12w-w11",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 11: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w11-d3-e1",
+              "dayId": "sample-plan-12w-w11-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w11-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w11-d3-e2",
+              "dayId": "sample-plan-12w-w11-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w11-d3-e3",
+              "dayId": "sample-plan-12w-w11-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 8,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
       ]
     },
     {
+      "id": "sample-plan-12w-w12",
+      "trainingPlanId": "sample-plan-12w",
       "weekNumber": 12,
       "days": [
         {
+          "id": "sample-plan-12w-w12-d1",
+          "weekId": "sample-plan-12w-w12",
           "dayNumber": 1,
-          "title": "?? + ?",
-          "notes": "????? 1-2 ????? 12 ??",
+          "title": "Push + Legs",
+          "notes": "Focus on stable compound reps. Week 12: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w12-d1-e1",
-              "name": "????",
+              "id": "sample-plan-12w-w12-d1-e1",
+              "dayId": "sample-plan-12w-w12-d1",
+              "name": "Bench Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "??????",
+              "notes": "Pause on chest",
               "alternativeExercises": [
-                "?????"
+                "DB Bench Press"
               ]
             },
             {
-              "id": "w12-d1-e2",
-              "name": "??",
+              "id": "sample-plan-12w-w12-d1-e2",
+              "dayId": "sample-plan-12w-w12-d1",
+              "name": "Back Squat",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8,
-              "notes": "????",
+              "notes": "Brace core",
               "alternativeExercises": [
-                "????"
+                "Hack Squat"
               ]
             },
             {
-              "id": "w12-d1-e3",
-              "name": "??????",
-              "sets": 3,
-              "repRange": "6-10",
-              "targetRpe": 8.5,
-              "notes": "?????"
-            }
-          ]
-        },
-        {
-          "dayNumber": 2,
-          "title": "? + ??",
-          "notes": "?????????? 12 ??",
-          "exercises": [
-            {
-              "id": "w12-d2-e1",
-              "name": "??",
-              "sets": 3,
-              "repRange": "3-5",
-              "targetRpe": 8,
-              "notes": "?????",
-              "alternativeExercises": [
-                "?????"
-              ]
-            },
-            {
-              "id": "w12-d2-e2",
-              "name": "????",
-              "sets": 4,
-              "repRange": "6-10",
-              "targetRpe": 9,
-              "notes": "???"
-            },
-            {
-              "id": "w12-d2-e3",
-              "name": "??????",
+              "id": "sample-plan-12w-w12-d1-e3",
+              "dayId": "sample-plan-12w-w12-d1",
+              "name": "Seated Row",
               "sets": 3,
               "repRange": "8-12",
               "targetRpe": 9,
-              "notes": "????"
+              "notes": "Control each rep",
+              "alternativeExercises": [
+                "Chest Supported Row"
+              ]
             }
           ]
         },
         {
-          "dayNumber": 3,
-          "title": "?? + ?",
-          "notes": "?????????? 12 ??",
+          "id": "sample-plan-12w-w12-d2",
+          "weekId": "sample-plan-12w-w12",
+          "dayNumber": 2,
+          "title": "Pull + Posterior Chain",
+          "notes": "Keep technique strict and avoid ego loading. Week 12: add load or reps if execution is solid.",
           "exercises": [
             {
-              "id": "w12-d3-e1",
-              "name": "??",
-              "sets": 4,
-              "repRange": "4-6",
-              "targetRpe": 8.5,
-              "notes": "????",
+              "id": "sample-plan-12w-w12-d2-e1",
+              "dayId": "sample-plan-12w-w12-d2",
+              "name": "Deadlift",
+              "sets": 3,
+              "repRange": "3-5",
+              "targetRpe": 8,
+              "notes": "Reset each rep",
               "alternativeExercises": [
-                "??"
+                "Trap Bar Deadlift"
               ]
             },
             {
-              "id": "w12-d3-e2",
-              "name": "????",
+              "id": "sample-plan-12w-w12-d2-e2",
+              "dayId": "sample-plan-12w-w12-d2",
+              "name": "Pull-Up",
+              "sets": 4,
+              "repRange": "6-10",
+              "targetRpe": 9,
+              "notes": "Full range of motion",
+              "alternativeExercises": [
+                "Lat Pulldown"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w12-d2-e3",
+              "dayId": "sample-plan-12w-w12-d2",
+              "name": "Romanian Deadlift",
+              "sets": 3,
+              "repRange": "6-10",
+              "targetRpe": 8.5,
+              "notes": "Slow eccentric",
+              "alternativeExercises": [
+                "Hip Hinge Machine"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sample-plan-12w-w12-d3",
+          "weekId": "sample-plan-12w-w12",
+          "dayNumber": 3,
+          "title": "Shoulders + Accessories",
+          "notes": "Build volume with clean form. Week 12: add load or reps if execution is solid.",
+          "exercises": [
+            {
+              "id": "sample-plan-12w-w12-d3-e1",
+              "dayId": "sample-plan-12w-w12-d3",
+              "name": "Overhead Press",
               "sets": 4,
               "repRange": "5-8",
               "targetRpe": 8.5,
-              "notes": "????",
+              "notes": "No overextension",
               "alternativeExercises": [
-                "?????"
+                "Machine Shoulder Press"
               ]
             },
             {
-              "id": "w12-d3-e3",
-              "name": "???",
+              "id": "sample-plan-12w-w12-d3-e2",
+              "dayId": "sample-plan-12w-w12-d3",
+              "name": "Lateral Raise",
               "sets": 4,
               "repRange": "12-20",
               "targetRpe": 9.5,
-              "notes": "????"
+              "notes": "Full control",
+              "alternativeExercises": [
+                "Cable Lateral Raise"
+              ]
+            },
+            {
+              "id": "sample-plan-12w-w12-d3-e3",
+              "dayId": "sample-plan-12w-w12-d3",
+              "name": "Plank",
+              "sets": 3,
+              "repRange": "40-60 sec",
+              "targetRpe": 8,
+              "notes": "Neutral pelvis",
+              "alternativeExercises": [
+                "Dead Bug"
+              ]
             }
           ]
         }
