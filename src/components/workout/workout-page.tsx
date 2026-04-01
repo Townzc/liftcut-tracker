@@ -6,6 +6,7 @@ import { CheckCircle2, LoaderCircle, Save } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -67,6 +68,14 @@ function WorkoutDraftForm({
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [lastSavedSummary, setLastSavedSummary] = useState<{
+    date: string;
+    weekNumber: number;
+    dayNumber: number;
+    durationMinutes: number;
+    completed: boolean;
+    exerciseCount: number;
+  } | null>(null);
 
   const updateRow = (index: number, patch: Partial<ExerciseLog>) => {
     setExerciseRows((rows) => rows.map((row, rowIndex) => (rowIndex === index ? { ...row, ...patch } : row)));
@@ -90,6 +99,14 @@ function WorkoutDraftForm({
         exercises: exerciseRows,
       });
       setMessage(t("saved"));
+      setLastSavedSummary({
+        date: workoutDate,
+        weekNumber: currentWeekNumber,
+        dayNumber: currentDay.dayNumber,
+        durationMinutes,
+        completed,
+        exerciseCount: exerciseRows.length,
+      });
     } catch (saveError) {
       console.error(saveError);
       setError(
@@ -195,7 +212,7 @@ function WorkoutDraftForm({
         disabled={isSaving || trackerLoading}
       >
         {isSaving ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-        {t("saveWorkout")}
+        {isSaving ? t("savingWorkout") : t("saveWorkout")}
       </Button>
 
       {message ? (
@@ -205,6 +222,37 @@ function WorkoutDraftForm({
         </p>
       ) : null}
       {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+
+      {lastSavedSummary ? (
+        <Card className="border-emerald-200 bg-emerald-50/60">
+          <CardHeader>
+            <CardTitle className="text-sm text-emerald-900">{t("savedSummaryTitle")}</CardTitle>
+            <CardDescription>{t("savedSummaryDesc")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-1 text-xs text-emerald-900">
+            <p>
+              {t("savedSummaryDate", { date: lastSavedSummary.date })}
+            </p>
+            <p>
+              {t("savedSummaryWeekDay", {
+                week: lastSavedSummary.weekNumber,
+                day: lastSavedSummary.dayNumber,
+              })}
+            </p>
+            <p>
+              {t("savedSummaryDuration", { minutes: lastSavedSummary.durationMinutes })}
+            </p>
+            <p>
+              {t("savedSummaryCompleted", {
+                value: lastSavedSummary.completed ? tCommon("yes") : tCommon("no"),
+              })}
+            </p>
+            <p>
+              {t("savedSummaryExercises", { count: lastSavedSummary.exerciseCount })}
+            </p>
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 }
@@ -244,6 +292,7 @@ export function WorkoutPage() {
       ),
     [currentDay?.dayNumber, currentWeek?.weekNumber, workoutDate, workoutLogs],
   );
+  const recentLogs = useMemo(() => workoutLogs.slice(0, 5), [workoutLogs]);
 
   const draftKey = `${workoutDate}-${currentWeek?.weekNumber ?? 1}-${currentDay?.dayNumber ?? 1}-${existingLog?.id ?? "new"}`;
 
@@ -310,6 +359,20 @@ export function WorkoutPage() {
         </CardContent>
       </Card>
 
+      <Card className="border-slate-200/80 bg-white/90">
+        <CardHeader>
+          <CardTitle className="text-base">{t("whereSavedTitle")}</CardTitle>
+          <CardDescription>{t("whereSavedDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-1 text-sm text-slate-600">
+          <p>{t("whereSavedItemDate")}</p>
+          <p>{t("whereSavedItemWeekDay")}</p>
+          <p>{t("whereSavedItemDuration")}</p>
+          <p>{t("whereSavedItemCompleted")}</p>
+          <p>{t("whereSavedItemExercises")}</p>
+        </CardContent>
+      </Card>
+
       {currentWeek && currentDay ? (
         <WorkoutDraftForm
           key={draftKey}
@@ -324,6 +387,40 @@ export function WorkoutPage() {
       ) : (
         <EmptyState title={t("noDayTitle")} description={t("noDayDesc")} />
       )}
+
+      <Card className="border-slate-200/80 bg-white/90">
+        <CardHeader>
+          <CardTitle className="text-base">{t("recentLogsTitle")}</CardTitle>
+          <CardDescription>{t("recentLogsDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          {recentLogs.length === 0 ? (
+            <EmptyState title={t("recentLogsEmptyTitle")} description={t("recentLogsEmptyDesc")} />
+          ) : (
+            recentLogs.map((log) => (
+              <div
+                key={log.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3"
+              >
+                <div>
+                  <p className="font-medium text-slate-900">{log.date}</p>
+                  <p className="text-xs text-slate-600">
+                    {t("recentLogMeta", {
+                      week: log.weekNumber,
+                      day: log.dayNumber,
+                      duration: log.durationMinutes,
+                      count: log.exercises.length,
+                    })}
+                  </p>
+                </div>
+                <Badge variant={log.completed ? "default" : "outline"}>
+                  {log.completed ? t("statusCompleted") : t("statusPending")}
+                </Badge>
+              </div>
+            ))
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

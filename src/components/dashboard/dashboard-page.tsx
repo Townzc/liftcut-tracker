@@ -56,6 +56,7 @@ export function DashboardPage() {
     () => getCurrentWeekWorkoutSummary(workoutLogs, settings.weeklyTrainingDays),
     [settings.weeklyTrainingDays, workoutLogs],
   );
+  const latestWorkout = useMemo(() => workoutLogs[0] ?? null, [workoutLogs]);
   const weightChartData = useMemo(() => getWeightChartData(bodyMetricLogs, 7), [bodyMetricLogs]);
   const sevenDayAverage = useMemo(() => getAverageWeightByDays(bodyMetricLogs, 7), [bodyMetricLogs]);
   const weightStatus = useMemo(
@@ -181,6 +182,18 @@ export function DashboardPage() {
             <p className="text-xs text-slate-500">
               {t("completion", { value: Math.round(weekWorkoutSummary.completionRate) })}
             </p>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600">
+              {latestWorkout ? (
+                <p>
+                  {t("latestWorkout", {
+                    date: latestWorkout.date,
+                    status: latestWorkout.completed ? t("latestWorkoutDone") : t("latestWorkoutPending"),
+                  })}
+                </p>
+              ) : (
+                <p>{t("latestWorkoutEmpty")}</p>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
