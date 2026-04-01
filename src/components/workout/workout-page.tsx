@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { CheckCircle2, LoaderCircle, Save } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
+import { NumericInput } from "@/components/shared/numeric-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,13 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { todayString } from "@/lib/date";
+import { normalizeActionError } from "@/lib/error-utils";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import type { ExerciseLog, PlanDay, WorkoutLog } from "@/types";
-
-function parseNumber(value: string): number {
-  const numericValue = Number(value);
-  return Number.isFinite(numericValue) ? numericValue : 0;
-}
 
 function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): ExerciseLog[] {
   return currentDay.exercises.map((exercise) => {
@@ -46,17 +43,20 @@ function WorkoutDraftForm({
   existingLog,
   onSave,
   trainingPlanId,
+  trackerLoading,
 }: {
   currentWeekNumber: number;
   currentDay: PlanDay;
   workoutDate: string;
   existingLog?: WorkoutLog;
   trainingPlanId: string;
+  trackerLoading: boolean;
   onSave: (
     payload: Omit<WorkoutLog, "id" | "userId" | "createdAt"> & { id?: string },
   ) => Promise<void>;
 }) {
   const t = useTranslations("workout");
+  const tCommon = useTranslations("common");
 
   const [durationMinutes, setDurationMinutes] = useState(existingLog?.durationMinutes ?? 60);
   const [notes, setNotes] = useState(existingLog?.notes ?? "");
@@ -92,7 +92,12 @@ function WorkoutDraftForm({
       setMessage(t("saved"));
     } catch (saveError) {
       console.error(saveError);
-      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(saveError, {
+          fallback: t("saveFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -116,29 +121,29 @@ function WorkoutDraftForm({
           <CardContent className="grid gap-3 sm:grid-cols-4">
             <div className="space-y-2">
               <Label>{t("actualWeight")}</Label>
-              <Input
-                type="number"
+              <NumericInput
                 value={exercise.actualWeight}
-                onChange={(event) => updateRow(index, { actualWeight: parseNumber(event.target.value) })}
+                min={0}
+                onValueChange={(value) => updateRow(index, { actualWeight: value })}
               />
             </div>
             <div className="space-y-2">
               <Label>{t("actualReps")}</Label>
-              <Input
-                type="number"
+              <NumericInput
                 value={exercise.actualReps}
-                onChange={(event) => updateRow(index, { actualReps: parseNumber(event.target.value) })}
+                allowDecimal={false}
+                min={0}
+                onValueChange={(value) => updateRow(index, { actualReps: value })}
               />
             </div>
             <div className="space-y-2">
               <Label>{t("actualRpe")}</Label>
-              <Input
-                type="number"
+              <NumericInput
                 value={exercise.actualRpe}
                 step="0.1"
                 min={0}
                 max={10}
-                onChange={(event) => updateRow(index, { actualRpe: parseNumber(event.target.value) })}
+                onValueChange={(value) => updateRow(index, { actualRpe: value })}
               />
             </div>
             <div className="flex items-end gap-2 pb-1">
@@ -161,11 +166,10 @@ function WorkoutDraftForm({
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>{t("duration")}</Label>
-              <Input
-                type="number"
+              <NumericInput
                 value={durationMinutes}
                 min={0}
-                onChange={(event) => setDurationMinutes(parseNumber(event.target.value))}
+                onValueChange={(value) => setDurationMinutes(value)}
               />
             </div>
             <div className="flex items-end gap-2 pb-1">
@@ -188,7 +192,7 @@ function WorkoutDraftForm({
       <Button
         className="fixed bottom-24 left-4 right-4 z-20 h-12 md:static md:h-10"
         onClick={handleSaveWorkout}
-        disabled={isSaving}
+        disabled={isSaving || trackerLoading}
       >
         {isSaving ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
         {t("saveWorkout")}
@@ -212,6 +216,7 @@ export function WorkoutPage() {
 
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const workoutLogs = useTrackerStore((state) => state.workoutLogs);
+  const trackerLoading = useTrackerStore((state) => state.loading);
   const selectedWeek = useTrackerStore((state) => state.selectedWeek);
   const selectedDay = useTrackerStore((state) => state.selectedDay);
   const setSelectedWeek = useTrackerStore((state) => state.setSelectedWeek);
@@ -261,20 +266,21 @@ export function WorkoutPage() {
               id="workout-date"
               type="date"
               value={workoutDate}
+              disabled={trackerLoading}
               onChange={(event) => setWorkoutDate(event.target.value)}
             />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="week-select">{tCommon("week")}</Label>
-            <Input
+            <NumericInput
               id="week-select"
-              type="number"
               value={currentWeek?.weekNumber ?? 1}
+              allowDecimal={false}
               min={1}
               max={trainingPlan.weeks.length}
-              onChange={(event) => {
-                const value = Number(event.target.value) || 1;
+              disabled={trackerLoading}
+              onValueChange={(value) => {
                 const matchedWeek = trainingPlan.weeks.find((week) => week.weekNumber === value);
                 if (matchedWeek) {
                   setSelectedWeek(matchedWeek.weekNumber);
@@ -286,14 +292,14 @@ export function WorkoutPage() {
 
           <div className="space-y-2">
             <Label htmlFor="day-select">{tCommon("day")}</Label>
-            <Input
+            <NumericInput
               id="day-select"
-              type="number"
               value={currentDay?.dayNumber ?? 1}
+              allowDecimal={false}
               min={1}
               max={currentWeek?.days.length ?? 1}
-              onChange={(event) => {
-                const value = Number(event.target.value) || 1;
+              disabled={trackerLoading}
+              onValueChange={(value) => {
                 const matchedDay = currentWeek?.days.find((day) => day.dayNumber === value);
                 if (matchedDay) {
                   setSelectedDay(matchedDay.dayNumber);
@@ -312,6 +318,7 @@ export function WorkoutPage() {
           workoutDate={workoutDate}
           existingLog={existingLog}
           trainingPlanId={trainingPlan.id}
+          trackerLoading={trackerLoading}
           onSave={addWorkoutLog}
         />
       ) : (

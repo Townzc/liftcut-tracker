@@ -6,23 +6,20 @@ import { LoaderCircle, Trash2 } from "lucide-react";
 
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
+import { NumericInput } from "@/components/shared/numeric-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { compareDateAsc, todayString } from "@/lib/date";
+import { normalizeActionError } from "@/lib/error-utils";
 import {
   getAverageWeightByDays,
   getBodyTrendData,
   getWeeklyWeightChange,
 } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
-
-function parseNumber(value: string): number {
-  const next = Number(value);
-  return Number.isFinite(next) ? next : 0;
-}
 
 function average(values: number[]): number | null {
   if (values.length === 0) {
@@ -35,8 +32,10 @@ function average(values: number[]): number | null {
 export function BodyPage() {
   const t = useTranslations("body");
   const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
 
   const bodyMetricLogs = useTrackerStore((state) => state.bodyMetricLogs);
+  const trackerLoading = useTrackerStore((state) => state.loading);
   const addBodyMetricLog = useTrackerStore((state) => state.addBodyMetricLog);
   const deleteBodyMetricLog = useTrackerStore((state) => state.deleteBodyMetricLog);
 
@@ -97,7 +96,12 @@ export function BodyPage() {
       setMessage(t("saveSuccess"));
     } catch (saveError) {
       console.error(saveError);
-      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(saveError, {
+          fallback: t("saveFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -112,7 +116,12 @@ export function BodyPage() {
       setMessage(t("deleteSuccess"));
     } catch (deleteError) {
       console.error(deleteError);
-      setError(deleteError instanceof Error ? deleteError.message : t("deleteFailed"));
+      setError(
+        normalizeActionError(deleteError, {
+          fallback: t("deleteFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setDeletingId(null);
     }
@@ -165,14 +174,14 @@ export function BodyPage() {
             </div>
             <div className="space-y-1">
               <Label>{t("weight")}</Label>
-              <Input type="number" value={weight} onChange={(event) => setWeight(parseNumber(event.target.value))} />
+              <NumericInput value={weight} min={20} max={400} onValueChange={(value) => setWeight(value)} />
             </div>
             <div className="space-y-1">
               <Label>{t("waist")}</Label>
-              <Input type="number" value={waist} onChange={(event) => setWaist(parseNumber(event.target.value))} />
+              <NumericInput value={waist} min={30} max={200} onValueChange={(value) => setWaist(value)} />
             </div>
             <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder={t("optionalNote")} />
-            <Button className="w-full" onClick={handleSubmit} disabled={isSaving || deletingId !== null}>
+            <Button className="w-full" onClick={handleSubmit} disabled={isSaving || deletingId !== null || trackerLoading}>
               {isSaving ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t("save")}
             </Button>
@@ -235,7 +244,7 @@ export function BodyPage() {
                     })}
                   </p>
                 </div>
-                <Button size="icon" variant="ghost" onClick={() => handleDelete(log.id)} disabled={isSaving || deletingId !== null}>
+                <Button size="icon" variant="ghost" onClick={() => handleDelete(log.id)} disabled={isSaving || deletingId !== null || trackerLoading}>
                   {deletingId === log.id ? (
                     <LoaderCircle className="h-4 w-4 animate-spin text-rose-600" />
                   ) : (

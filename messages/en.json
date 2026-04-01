@@ -10,6 +10,7 @@
   },
   "common": {
     "loading": "Loading...",
+    "authRequired": "Please sign in first.",
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",

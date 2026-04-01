@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Download, FileJson, LoaderCircle, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { NumericInput } from "@/components/shared/numeric-input";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,16 +19,12 @@ import {
   ENGLISH_PLAN_TEXT_TEMPLATE,
 } from "@/lib/plan-parser";
 import { createBlankTrainingPlan } from "@/lib/plan";
+import { normalizeActionError } from "@/lib/error-utils";
 import { exportTrainingPlanPdf } from "@/services/plan-export";
 import { planImportService } from "@/services/plan-import";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { TrainingPlan } from "@/types";
-
-function parseNumber(value: string): number {
-  const next = Number(value);
-  return Number.isFinite(next) ? next : 0;
-}
 
 type PlanAction =
   | "create"
@@ -92,7 +89,8 @@ export function PlanPage() {
   const trainingPlanList = useTrackerStore((state) => state.trainingPlanList);
   const selectedWeek = useTrackerStore((state) => state.selectedWeek);
   const selectedDay = useTrackerStore((state) => state.selectedDay);
-  const userId = useTrackerStore((state) => state.userId);
+  const trackerLoading = useTrackerStore((state) => state.loading);
+  const ensureUserId = useTrackerStore((state) => state.ensureUserId);
   const setSelectedWeek = useTrackerStore((state) => state.setSelectedWeek);
   const setSelectedDay = useTrackerStore((state) => state.setSelectedDay);
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
@@ -131,16 +129,14 @@ export function PlanPage() {
     clearFeedback();
 
     try {
-      if (!userId) {
-        throw new Error(t("authRequired"));
-      }
+      const resolvedUserId = await ensureUserId();
 
       const normalizedWeeks = Math.min(12, Math.max(1, weeksInput || 1));
       const normalizedDays = Math.min(7, Math.max(1, daysInput || 1));
       const defaultPlanName = language === "zh-CN" ? "新训练计划" : "Untitled Plan";
 
       const nextPlan = createBlankTrainingPlan(
-        userId,
+        resolvedUserId,
         planName.trim() || defaultPlanName,
         normalizedWeeks,
         normalizedDays,
@@ -155,7 +151,12 @@ export function PlanPage() {
       setParseErrors([]);
     } catch (createError) {
       console.error(createError);
-      setError(createError instanceof Error ? createError.message : t("createFailed"));
+      setError(
+        normalizeActionError(createError, {
+          fallback: t("createFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -171,19 +172,22 @@ export function PlanPage() {
     clearFeedback();
 
     try {
-      if (!userId) {
-        throw new Error(t("authRequired"));
-      }
+      const resolvedUserId = await ensureUserId();
 
       const json = await readJsonFile(file);
-      const parsedPlan = validateTrainingPlan(json, { userId });
+      const parsedPlan = validateTrainingPlan(json, { userId: resolvedUserId });
       await setTrainingPlan(parsedPlan);
       setSelectedWeek(1);
       setSelectedDay(1);
       setMessage(t("importSuccess"));
     } catch (importError) {
       console.error(importError);
-      setError(importError instanceof Error ? importError.message : t("importFailed"));
+      setError(
+        normalizeActionError(importError, {
+          fallback: t("importFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       event.target.value = "";
       setLoadingAction(null);
@@ -225,16 +229,13 @@ export function PlanPage() {
     clearFeedback();
 
     try {
-      if (!userId) {
-        throw new Error(t("authRequired"));
-      }
-
       if (!textPlanInput.trim()) {
         throw new Error(t("reasonEmptyInput"));
       }
 
+      const resolvedUserId = await ensureUserId();
       const result = planImportService.parseFromText(textPlanInput, {
-        userId,
+        userId: resolvedUserId,
         planName: planName.trim() || (language === "zh-CN" ? "文本导入计划" : "Imported Text Plan"),
       });
 
@@ -252,7 +253,12 @@ export function PlanPage() {
     } catch (parseError) {
       console.error(parseError);
       setParsedPlanDraft(null);
-      setError(parseError instanceof Error ? parseError.message : t("parseFailed"));
+      setError(
+        normalizeActionError(parseError, {
+          fallback: t("parseFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -299,7 +305,12 @@ export function PlanPage() {
       setMessage(t("saveParsedSuccess"));
     } catch (saveError) {
       console.error(saveError);
-      setError(saveError instanceof Error ? saveError.message : t("saveParsedFailed"));
+      setError(
+        normalizeActionError(saveError, {
+          fallback: t("saveParsedFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -314,7 +325,12 @@ export function PlanPage() {
       setMessage(t("setActiveSuccess"));
     } catch (setActiveError) {
       console.error(setActiveError);
-      setError(setActiveError instanceof Error ? setActiveError.message : t("setActiveFailed"));
+      setError(
+        normalizeActionError(setActiveError, {
+          fallback: t("setActiveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setActivePlanLoadingId(null);
     }
@@ -322,6 +338,7 @@ export function PlanPage() {
 
   const renderLoadingIcon = (condition: boolean) =>
     condition ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null;
+  const isBusy = loadingAction !== null || trackerLoading;
 
   return (
     <div className="space-y-4">
@@ -434,24 +451,24 @@ export function PlanPage() {
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-2">
                 <Label htmlFor="weeks-input">{t("weeks")}</Label>
-                <Input
+                <NumericInput
                   id="weeks-input"
-                  type="number"
                   value={weeksInput}
+                  allowDecimal={false}
                   min={1}
                   max={12}
-                  onChange={(event) => setWeeksInput(parseNumber(event.target.value) || 1)}
+                  onValueChange={(value) => setWeeksInput(value)}
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="days-input">{t("daysPerWeek")}</Label>
-                <Input
+                <NumericInput
                   id="days-input"
-                  type="number"
                   value={daysInput}
+                  allowDecimal={false}
                   min={1}
                   max={7}
-                  onChange={(event) => setDaysInput(parseNumber(event.target.value) || 1)}
+                  onValueChange={(value) => setDaysInput(value)}
                 />
               </div>
             </div>
@@ -460,7 +477,7 @@ export function PlanPage() {
               type="button"
               className="w-full"
               onClick={handleCreatePlan}
-              disabled={loadingAction !== null}
+              disabled={isBusy}
             >
               {renderLoadingIcon(loadingAction === "create")}
               {t("createBlank")}
@@ -475,7 +492,7 @@ export function PlanPage() {
                 type="file"
                 accept="application/json"
                 onChange={handleImportJson}
-                disabled={loadingAction !== null}
+                disabled={isBusy}
               />
               {loadingAction === "import-json" ? (
                 <p className="inline-flex items-center text-xs text-slate-500">
@@ -489,7 +506,7 @@ export function PlanPage() {
               type="button"
               className="w-full"
               onClick={handleExportPdf}
-              disabled={loadingAction !== null}
+              disabled={isBusy}
             >
               {renderLoadingIcon(loadingAction === "export-pdf")}
               <Download className="mr-2 h-4 w-4" />
@@ -501,7 +518,7 @@ export function PlanPage() {
               variant="outline"
               className="w-full"
               onClick={handleExportJson}
-              disabled={loadingAction !== null}
+              disabled={isBusy}
             >
               {renderLoadingIcon(loadingAction === "export-json")}
               <FileJson className="mr-2 h-4 w-4" />
@@ -531,7 +548,7 @@ export function PlanPage() {
                     variant={planItem.isActive ? "default" : "outline"}
                     className="w-full justify-start"
                     onClick={() => handleSetActivePlan(planItem.id)}
-                    disabled={loadingAction !== null || activePlanLoadingId !== null}
+                    disabled={isBusy || activePlanLoadingId !== null}
                   >
                     {renderLoadingIcon(activePlanLoadingId === planItem.id)}
                     {planItem.name}
@@ -557,7 +574,7 @@ export function PlanPage() {
               type="button"
               variant="outline"
               onClick={() => setTextPlanInput(CHINESE_PLAN_TEXT_TEMPLATE)}
-              disabled={loadingAction !== null}
+              disabled={isBusy}
             >
               {t("loadTemplateZh")}
             </Button>
@@ -565,11 +582,11 @@ export function PlanPage() {
               type="button"
               variant="outline"
               onClick={() => setTextPlanInput(ENGLISH_PLAN_TEXT_TEMPLATE)}
-              disabled={loadingAction !== null}
+              disabled={isBusy}
             >
               {t("loadTemplateEn")}
             </Button>
-            <Button type="button" onClick={handleParseText} disabled={loadingAction !== null}>
+            <Button type="button" onClick={handleParseText} disabled={isBusy}>
               {renderLoadingIcon(loadingAction === "parse")}
               {t("parseButton")}
             </Button>
@@ -632,12 +649,13 @@ export function PlanPage() {
                                 })
                               }
                             />
-                            <Input
-                              type="number"
+                            <NumericInput
                               value={exercise.sets}
-                              onChange={(event) =>
+                              allowDecimal={false}
+                              min={1}
+                              onValueChange={(value) =>
                                 updateDraftExercise(weekIndex, dayIndex, exerciseIndex, {
-                                  sets: parseNumber(event.target.value),
+                                  sets: value,
                                 })
                               }
                             />
@@ -649,13 +667,14 @@ export function PlanPage() {
                                 })
                               }
                             />
-                            <Input
-                              type="number"
+                            <NumericInput
                               step="0.1"
                               value={exercise.targetRpe}
-                              onChange={(event) =>
+                              min={1}
+                              max={10}
+                              onValueChange={(value) =>
                                 updateDraftExercise(weekIndex, dayIndex, exerciseIndex, {
-                                  targetRpe: parseNumber(event.target.value),
+                                  targetRpe: value,
                                 })
                               }
                             />
@@ -686,7 +705,7 @@ export function PlanPage() {
                 </Card>
               ))}
 
-              <Button type="button" onClick={handleSaveParsedPlan} disabled={loadingAction !== null}>
+              <Button type="button" onClick={handleSaveParsedPlan} disabled={isBusy}>
                 {renderLoadingIcon(loadingAction === "save-parsed")}
                 {t("saveParsed")}
               </Button>

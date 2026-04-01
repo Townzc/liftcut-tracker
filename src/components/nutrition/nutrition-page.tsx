@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
+import { NumericInput } from "@/components/shared/numeric-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,15 +18,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { normalizeActionError } from "@/lib/error-utils";
 import { todayString } from "@/lib/date";
 import { getNutritionByDate } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import type { FoodLog, MealType, QuickFoodItem } from "@/types";
-
-function parseNumber(value: string): number {
-  const next = Number(value);
-  return Number.isFinite(next) ? next : 0;
-}
 
 export function NutritionPage() {
   const t = useTranslations("nutrition");
@@ -34,6 +31,7 @@ export function NutritionPage() {
 
   const foodLogs = useTrackerStore((state) => state.foodLogs);
   const quickFoods = useTrackerStore((state) => state.quickFoods);
+  const trackerLoading = useTrackerStore((state) => state.loading);
   const addFoodLog = useTrackerStore((state) => state.addFoodLog);
   const updateFoodLog = useTrackerStore((state) => state.updateFoodLog);
   const deleteFoodLog = useTrackerStore((state) => state.deleteFoodLog);
@@ -118,7 +116,12 @@ export function NutritionPage() {
       setMessage(t("quickAddSuccess", { name: quickFood.name }));
     } catch (quickError) {
       console.error(quickError);
-      setError(quickError instanceof Error ? quickError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(quickError, {
+          fallback: t("saveFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setQuickLoadingId(null);
     }
@@ -155,7 +158,12 @@ export function NutritionPage() {
       resetForm();
     } catch (submitError) {
       console.error(submitError);
-      setError(submitError instanceof Error ? submitError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(submitError, {
+          fallback: t("saveFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -181,7 +189,12 @@ export function NutritionPage() {
       setMessage(t("deleteSuccess"));
     } catch (deleteError) {
       console.error(deleteError);
-      setError(deleteError instanceof Error ? deleteError.message : t("deleteFailed"));
+      setError(
+        normalizeActionError(deleteError, {
+          fallback: t("deleteFailed"),
+          authMessage: tCommon("authRequired"),
+        }),
+      );
     } finally {
       setDeletingId(null);
     }
@@ -190,7 +203,7 @@ export function NutritionPage() {
   const mealTypeLabel = (value: MealType): string =>
     mealTypeOptions.find((item) => item.value === value)?.label ?? value;
 
-  const isBusy = submitting || quickLoadingId !== null || deletingId !== null;
+  const isBusy = submitting || quickLoadingId !== null || deletingId !== null || trackerLoading;
 
   return (
     <div className="space-y-4">
@@ -278,18 +291,20 @@ export function NutritionPage() {
           </div>
           <div className="space-y-2">
             <Label>{t("calories")}</Label>
-            <Input
-              type="number"
+            <NumericInput
               value={calories}
-              onChange={(event) => setCalories(parseNumber(event.target.value))}
+              allowDecimal={false}
+              min={0}
+              onValueChange={(value) => setCalories(value)}
             />
           </div>
           <div className="space-y-2">
             <Label>{t("protein")}</Label>
-            <Input
-              type="number"
+            <NumericInput
               value={protein}
-              onChange={(event) => setProtein(parseNumber(event.target.value))}
+              allowDecimal={false}
+              min={0}
+              onValueChange={(value) => setProtein(value)}
             />
           </div>
           <div className="flex items-end gap-2">

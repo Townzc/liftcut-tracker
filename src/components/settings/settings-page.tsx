@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { AlertTriangle, Download, LoaderCircle, Upload } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { NumericInput } from "@/components/shared/numeric-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,17 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { normalizeActionError } from "@/lib/error-utils";
 import { downloadJson, readJsonFile, validateTrainingPlan } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
 import { exportUserData } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { AppLocale, UserSettings } from "@/types";
-
-function numberOrZero(value: string): number {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : 0;
-}
 
 type SettingsAction =
   | "save"
@@ -44,6 +41,8 @@ export function SettingsPage() {
   const language = useUIStore((state) => state.language);
 
   const settings = useTrackerStore((state) => state.settings);
+  const trackerLoading = useTrackerStore((state) => state.loading);
+  const ensureUserId = useTrackerStore((state) => state.ensureUserId);
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const updateSettings = useTrackerStore((state) => state.updateSettings);
   const resetAllData = useTrackerStore((state) => state.resetAllData);
@@ -87,15 +86,22 @@ export function SettingsPage() {
         throw new Error(t("rangeInvalid"));
       }
 
+      const resolvedUserId = await ensureUserId();
+
       await updateSettings({
         ...parsed,
-        userId: settings.userId,
+        userId: resolvedUserId,
         updatedAt: new Date().toISOString(),
       });
       setMessage(t("saved"));
     } catch (saveError) {
       console.error(saveError);
-      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(saveError, {
+          fallback: t("saveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -103,7 +109,7 @@ export function SettingsPage() {
 
   const handleImportPlan = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file || !settings.userId) {
+    if (!file) {
       return;
     }
 
@@ -111,13 +117,19 @@ export function SettingsPage() {
     clearFeedback();
 
     try {
+      const resolvedUserId = await ensureUserId();
       const json = await readJsonFile(file);
-      const plan = validateTrainingPlan(json, { userId: settings.userId });
+      const plan = validateTrainingPlan(json, { userId: resolvedUserId });
       await setTrainingPlan(plan);
       setMessage(t("importPlanSuccess"));
     } catch (importError) {
       console.error(importError);
-      setError(importError instanceof Error ? importError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(importError, {
+          fallback: t("saveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       event.target.value = "";
       setLoadingAction(null);
@@ -129,17 +141,19 @@ export function SettingsPage() {
     clearFeedback();
 
     try {
-      if (!settings.userId) {
-        throw new Error(t("authRequired"));
-      }
-
-      const snapshot = await exportUserData(settings.userId);
+      const resolvedUserId = await ensureUserId();
+      const snapshot = await exportUserData(resolvedUserId);
       const date = new Date().toISOString().slice(0, 10);
       downloadJson(`liftcut-backup-${date}.json`, snapshot);
       setMessage(t("exportDataSuccess"));
     } catch (exportError) {
       console.error(exportError);
-      setError(exportError instanceof Error ? exportError.message : t("exportDataFailed"));
+      setError(
+        normalizeActionError(exportError, {
+          fallback: t("exportDataFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -154,7 +168,12 @@ export function SettingsPage() {
       setMessage(t("languageSaved"));
     } catch (languageError) {
       console.error(languageError);
-      setError(languageError instanceof Error ? languageError.message : t("saveFailed"));
+      setError(
+        normalizeActionError(languageError, {
+          fallback: t("saveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -168,7 +187,11 @@ export function SettingsPage() {
       await signOut();
     } catch (logoutError) {
       console.error(logoutError);
-      setError(logoutError instanceof Error ? logoutError.message : t("logoutFailed"));
+      setError(
+        normalizeActionError(logoutError, {
+          fallback: t("logoutFailed"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
@@ -190,13 +213,18 @@ export function SettingsPage() {
       setMessage(t("resetDone"));
     } catch (clearError) {
       console.error(clearError);
-      setError(clearError instanceof Error ? clearError.message : t("resetFailed"));
+      setError(
+        normalizeActionError(clearError, {
+          fallback: t("resetFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
     } finally {
       setLoadingAction(null);
     }
   };
 
-  const isBusy = loadingAction !== null;
+  const isBusy = loadingAction !== null || trackerLoading;
 
   return (
     <div className="space-y-4">
@@ -213,35 +241,35 @@ export function SettingsPage() {
         <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1">
             <Label>{t("height")}</Label>
-            <Input type="number" value={draft.height} onChange={(event) => updateField("height", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.height} onValueChange={(value) => updateField("height", value)} min={100} max={260} />
           </div>
           <div className="space-y-1">
             <Label>{t("currentWeight")}</Label>
-            <Input type="number" value={draft.currentWeight} onChange={(event) => updateField("currentWeight", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.currentWeight} onValueChange={(value) => updateField("currentWeight", value)} min={30} max={300} />
           </div>
           <div className="space-y-1">
             <Label>{t("targetWeight")}</Label>
-            <Input type="number" value={draft.targetWeight} onChange={(event) => updateField("targetWeight", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.targetWeight} onValueChange={(value) => updateField("targetWeight", value)} min={30} max={300} />
           </div>
           <div className="space-y-1">
             <Label>{t("weeklyTrainingDays")}</Label>
-            <Input type="number" value={draft.weeklyTrainingDays} onChange={(event) => updateField("weeklyTrainingDays", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.weeklyTrainingDays} allowDecimal={false} onValueChange={(value) => updateField("weeklyTrainingDays", value)} min={1} max={7} />
           </div>
           <div className="space-y-1">
             <Label>{t("calorieTarget")}</Label>
-            <Input type="number" value={draft.calorieTarget} onChange={(event) => updateField("calorieTarget", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.calorieTarget} allowDecimal={false} onValueChange={(value) => updateField("calorieTarget", value)} min={500} max={7000} />
           </div>
           <div className="space-y-1">
             <Label>{t("proteinTarget")}</Label>
-            <Input type="number" value={draft.proteinTarget} onChange={(event) => updateField("proteinTarget", numberOrZero(event.target.value))} />
+            <NumericInput value={draft.proteinTarget} allowDecimal={false} onValueChange={(value) => updateField("proteinTarget", value)} min={30} max={400} />
           </div>
           <div className="space-y-1">
             <Label>{t("weeklyLossMin")}</Label>
-            <Input type="number" step="0.1" value={draft.targetWeeklyLossMin} onChange={(event) => updateField("targetWeeklyLossMin", numberOrZero(event.target.value))} />
+            <NumericInput step="0.1" value={draft.targetWeeklyLossMin} onValueChange={(value) => updateField("targetWeeklyLossMin", value)} min={0} max={3} />
           </div>
           <div className="space-y-1">
             <Label>{t("weeklyLossMax")}</Label>
-            <Input type="number" step="0.1" value={draft.targetWeeklyLossMax} onChange={(event) => updateField("targetWeeklyLossMax", numberOrZero(event.target.value))} />
+            <NumericInput step="0.1" value={draft.targetWeeklyLossMax} onValueChange={(value) => updateField("targetWeeklyLossMax", value)} min={0} max={3} />
           </div>
         </CardContent>
       </Card>
