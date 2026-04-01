@@ -1,5 +1,6 @@
 export type AppLocale = "zh-CN" | "en";
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
+export type QuickFoodBasisType = "per_100g" | "per_serving";
 
 export interface UserProfile {
   id: string;
@@ -119,6 +120,10 @@ export interface QuickFoodItem {
   calories: number;
   protein: number;
   mealType: MealType;
+  basisType: QuickFoodBasisType;
+  servingSize: string;
+  unitLabel: string;
+  displayText: string;
 }
 
 export interface AppDataSnapshot {

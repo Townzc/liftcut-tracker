@@ -33,7 +33,7 @@ export const planDaySchema = z.object({
   weekId: z.string().optional().default(""),
   dayNumber: z.coerce.number().int().min(1),
   title: z.string().min(1),
-  exercises: z.array(exercisePlanSchema).min(1),
+  exercises: z.array(exercisePlanSchema),
   notes: z.string().default(""),
 });
 
@@ -41,7 +41,7 @@ export const planWeekSchema = z.object({
   id: z.string().min(1),
   trainingPlanId: z.string().optional().default(""),
   weekNumber: z.coerce.number().int().min(1),
-  days: z.array(planDaySchema).min(1),
+  days: z.array(planDaySchema),
 });
 
 export const trainingPlanSchema = z.object({
@@ -51,7 +51,7 @@ export const trainingPlanSchema = z.object({
   isActive: z.boolean().optional().default(true),
   createdAt: z.string().optional().default(""),
   updatedAt: z.string().optional().default(""),
-  weeks: z.array(planWeekSchema).min(1),
+  weeks: z.array(planWeekSchema),
 });
 
 export const exerciseLogSchema = z.object({
@@ -106,6 +106,10 @@ export const quickFoodItemSchema = z.object({
   calories: positiveNumber.max(5000),
   protein: positiveNumber.max(500),
   mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]),
+  basisType: z.enum(["per_100g", "per_serving"]),
+  servingSize: z.string().min(1),
+  unitLabel: z.string().min(1),
+  displayText: z.string().min(1),
 });
 
 export const appDataSnapshotSchema = z.object({

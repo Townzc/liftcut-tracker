@@ -154,12 +154,72 @@ const dayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exerc
 const nowIso = () => new Date().toISOString();
 
 export const defaultQuickFoods: QuickFoodItem[] = [
-  { id: "egg", name: "Egg", calories: 78, protein: 6, mealType: "breakfast" },
-  { id: "milk", name: "Milk", calories: 120, protein: 8, mealType: "breakfast" },
-  { id: "yogurt", name: "Greek Yogurt", calories: 90, protein: 9, mealType: "snack" },
-  { id: "whey", name: "Whey Protein", calories: 130, protein: 24, mealType: "snack" },
-  { id: "chicken", name: "Chicken Breast", calories: 165, protein: 31, mealType: "lunch" },
-  { id: "rice", name: "Rice", calories: 180, protein: 3, mealType: "dinner" },
+  {
+    id: "egg",
+    name: "鸡蛋 / Egg",
+    calories: 78,
+    protein: 6,
+    mealType: "breakfast",
+    basisType: "per_serving",
+    servingSize: "50g",
+    unitLabel: "每个 / per egg",
+    displayText: "每个（约50g）/ per egg (~50g)",
+  },
+  {
+    id: "milk",
+    name: "牛奶 / Milk",
+    calories: 120,
+    protein: 8,
+    mealType: "breakfast",
+    basisType: "per_serving",
+    servingSize: "250ml",
+    unitLabel: "每盒 / per box",
+    displayText: "每盒250ml / per box (250ml)",
+  },
+  {
+    id: "yogurt",
+    name: "无糖酸奶 / Greek Yogurt",
+    calories: 90,
+    protein: 9,
+    mealType: "snack",
+    basisType: "per_serving",
+    servingSize: "135g",
+    unitLabel: "每杯 / per cup",
+    displayText: "每杯135g / per cup (135g)",
+  },
+  {
+    id: "whey",
+    name: "蛋白粉 / Whey Protein",
+    calories: 120,
+    protein: 24,
+    mealType: "snack",
+    basisType: "per_serving",
+    servingSize: "30g",
+    unitLabel: "每勺 / per scoop",
+    displayText: "每勺30g / per scoop (30g)",
+  },
+  {
+    id: "chicken",
+    name: "鸡胸肉 / Chicken Breast",
+    calories: 165,
+    protein: 31,
+    mealType: "lunch",
+    basisType: "per_100g",
+    servingSize: "100g",
+    unitLabel: "每100g / per 100g",
+    displayText: "每100g / per 100g",
+  },
+  {
+    id: "rice",
+    name: "米饭 / Rice",
+    calories: 116,
+    protein: 2.6,
+    mealType: "dinner",
+    basisType: "per_100g",
+    servingSize: "100g",
+    unitLabel: "每100g / per 100g",
+    displayText: "每100g / per 100g",
+  },
 ];
 
 export function createDefaultSettings(userId: string): UserSettings {
@@ -215,6 +275,18 @@ export function createDemoTrainingPlan(userId: string): TrainingPlan {
     createdAt: nowIso(),
     updatedAt: nowIso(),
     weeks: Array.from({ length: 12 }, (_, idx) => buildWeek(idx + 1, planId)),
+  };
+}
+
+export function createEmptyTrainingPlan(userId: string): TrainingPlan {
+  return {
+    id: `plan-empty-${userId}`,
+    userId,
+    name: "No Active Plan",
+    isActive: false,
+    createdAt: nowIso(),
+    updatedAt: nowIso(),
+    weeks: [],
   };
 }
 
