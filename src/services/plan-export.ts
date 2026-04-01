@@ -19,6 +19,7 @@ class PlanExportError extends Error {
 const CJK_FONT_URL = "/fonts/NotoSansCJKsc-VF.ttf";
 const CJK_FONT_VFS_NAME = "NotoSansCJKsc-VF.ttf";
 const CJK_FONT_NAME = "NotoSansCJKsc";
+const CJK_FONT_ENCODING = "Identity-H";
 
 let cachedChineseFontBase64: string | null = null;
 
@@ -50,6 +51,14 @@ function sanitizeFilePart(value: string): string {
   return normalized || "plan";
 }
 
+function normalizePdfText(value: string): string {
+  return value
+    .replace(/\u00D7/g, "x")
+    .replace(/[–—−]/g, "-")
+    .replace(/\u00A0/g, " ")
+    .replace(/\u202F/g, " ");
+}
+
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
   const bytes = new Uint8Array(buffer);
   const chunkSize = 0x8000;
@@ -76,7 +85,8 @@ async function ensureChineseFont(pdf: jsPDF, locale: AppLocale): Promise<void> {
     }
 
     pdf.addFileToVFS(CJK_FONT_VFS_NAME, cachedChineseFontBase64);
-    pdf.addFont(CJK_FONT_VFS_NAME, CJK_FONT_NAME, "normal");
+    pdf.addFont(CJK_FONT_VFS_NAME, CJK_FONT_NAME, "normal", 400, CJK_FONT_ENCODING);
+    pdf.addFont(CJK_FONT_VFS_NAME, CJK_FONT_NAME, "bold", 700, CJK_FONT_ENCODING);
     pdf.setFont(CJK_FONT_NAME, "normal");
   } catch (error) {
     throw new PlanExportError(
@@ -88,11 +98,12 @@ async function ensureChineseFont(pdf: jsPDF, locale: AppLocale): Promise<void> {
 }
 
 function getTableHead(locale: AppLocale): string[][] {
-  return [
+  const columns =
     locale === "zh-CN"
       ? ["动作", "组数", "次数", "RPE", "备注", "替代动作"]
-      : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"],
-  ];
+      : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"];
+
+  return [columns.map((column) => normalizePdfText(column))];
 }
 
 function getWeekLabel(locale: AppLocale, weekNumber: number): string {
@@ -101,6 +112,14 @@ function getWeekLabel(locale: AppLocale, weekNumber: number): string {
 
 function getDayLabel(locale: AppLocale, dayNumber: number): string {
   return localize(locale, `第 ${dayNumber} 天`, `Day ${dayNumber}`);
+}
+
+function getPdfFont(locale: AppLocale): string {
+  return locale === "zh-CN" ? CJK_FONT_NAME : "helvetica";
+}
+
+function applyPdfFont(pdf: jsPDF, locale: AppLocale): void {
+  pdf.setFont(getPdfFont(locale), "normal");
 }
 
 export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocale): Promise<void> {
@@ -131,12 +150,14 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     const pageHeight = pdf.internal.pageSize.getHeight();
     const contentBottom = pageHeight - 24;
 
+    applyPdfFont(pdf, locale);
     pdf.setFontSize(18);
-    pdf.text(plan.name, left, 32);
+    pdf.text(normalizePdfText(plan.name), left, 32);
 
+    applyPdfFont(pdf, locale);
     pdf.setFontSize(10);
     pdf.text(
-      localize(locale, `导出日期：${formatDate(locale)}`, `Exported at: ${formatDate(locale)}`),
+      normalizePdfText(localize(locale, `导出日期：${formatDate(locale)}`, `Exported at: ${formatDate(locale)}`)),
       left,
       50,
     );
@@ -146,14 +167,13 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     for (const week of weeks) {
       if (cursorY > contentBottom - 80) {
         pdf.addPage();
-        if (locale === "zh-CN") {
-          pdf.setFont(CJK_FONT_NAME, "normal");
-        }
+        applyPdfFont(pdf, locale);
         cursorY = 32;
       }
 
+      applyPdfFont(pdf, locale);
       pdf.setFontSize(13);
-      pdf.text(getWeekLabel(locale, week.weekNumber), left, cursorY);
+      pdf.text(normalizePdfText(getWeekLabel(locale, week.weekNumber)), left, cursorY);
       cursorY += 12;
 
       const sortedDays = [...week.days].sort((a, b) => a.dayNumber - b.dayNumber);
@@ -161,31 +181,33 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
       for (const day of sortedDays) {
         if (cursorY > contentBottom - 120) {
           pdf.addPage();
-          if (locale === "zh-CN") {
-            pdf.setFont(CJK_FONT_NAME, "normal");
-          }
+          applyPdfFont(pdf, locale);
           cursorY = 32;
         }
 
+        applyPdfFont(pdf, locale);
         pdf.setFontSize(11);
-        pdf.text(`${getDayLabel(locale, day.dayNumber)} - ${day.title}`, left, cursorY);
+        pdf.text(normalizePdfText(`${getDayLabel(locale, day.dayNumber)} - ${day.title}`), left, cursorY);
         cursorY += 10;
 
+        applyPdfFont(pdf, locale);
         pdf.setFontSize(9);
-        const noteLine = localize(locale, "备注", "Notes");
-        pdf.text(`${noteLine}: ${day.notes || "-"}`, left, cursorY);
+        const noteLine = normalizePdfText(localize(locale, "备注", "Notes"));
+        pdf.text(normalizePdfText(`${noteLine}: ${day.notes || "-"}`), left, cursorY);
         cursorY += 6;
 
         const rows = day.exercises.length
           ? day.exercises.map((exercise) => [
-              exercise.name,
+              normalizePdfText(exercise.name),
               String(exercise.sets),
-              exercise.repRange,
+              normalizePdfText(exercise.repRange),
               String(exercise.targetRpe),
-              exercise.notes || "-",
-              exercise.alternativeExercises?.length ? exercise.alternativeExercises.join(" / ") : "-",
+              normalizePdfText(exercise.notes || "-"),
+              normalizePdfText(exercise.alternativeExercises?.length ? exercise.alternativeExercises.join(" / ") : "-"),
             ])
-          : [[localize(locale, "暂无动作", "No exercises"), "-", "-", "-", "-", "-"]];
+          : [[normalizePdfText(localize(locale, "暂无动作", "No exercises")), "-", "-", "-", "-", "-"]];
+
+        const tableFont = getPdfFont(locale);
 
         autoTable(pdf, {
           startY: cursorY,
@@ -194,19 +216,26 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
           theme: "grid",
           margin: { left, right },
           styles: {
-            font: locale === "zh-CN" ? CJK_FONT_NAME : "helvetica",
+            font: tableFont,
+            fontStyle: "normal",
             fontSize: 9,
             cellPadding: 4,
             lineColor: [203, 213, 225],
             lineWidth: 0.5,
           },
           headStyles: {
+            font: tableFont,
             fillColor: [241, 245, 249],
             textColor: [15, 23, 42],
-            fontStyle: "bold",
+            fontStyle: "normal",
           },
           bodyStyles: {
+            font: tableFont,
+            fontStyle: "normal",
             textColor: [30, 41, 59],
+          },
+          didParseCell: (hookData) => {
+            hookData.cell.text = hookData.cell.text.map((text) => normalizePdfText(String(text)));
           },
           pageBreak: "auto",
         });
