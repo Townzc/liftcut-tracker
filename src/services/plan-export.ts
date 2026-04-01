@@ -1,12 +1,37 @@
-﻿import type { AppLocale, PlanWeek, TrainingPlan } from "@/types";
+﻿import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+import type { AppLocale, TrainingPlan } from "@/types";
+
+type PlanExportErrorCode =
+  | "NO_PLAN"
+  | "FONT_LOAD_FAILED"
+  | "PDF_RENDER_FAILED"
+  | "PDF_SAVE_FAILED";
+
+class PlanExportError extends Error {
+  constructor(public readonly code: PlanExportErrorCode, message: string, public readonly cause?: unknown) {
+    super(message);
+    this.name = "PlanExportError";
+  }
+}
+
+const CJK_FONT_URL = "/fonts/NotoSansCJKsc-VF.ttf";
+const CJK_FONT_VFS_NAME = "NotoSansCJKsc-VF.ttf";
+const CJK_FONT_NAME = "NotoSansCJKsc";
+
+let cachedChineseFontBase64: string | null = null;
+
+function localize(locale: AppLocale, zh: string, en: string): string {
+  return locale === "zh-CN" ? zh : en;
+}
+
+function formatDate(locale: AppLocale): string {
+  return new Intl.DateTimeFormat(locale === "zh-CN" ? "zh-CN" : "en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
 }
 
 function sanitizeFilePart(value: string): string {
@@ -25,184 +50,68 @@ function sanitizeFilePart(value: string): string {
   return normalized || "plan";
 }
 
-function formatDate(locale: AppLocale): string {
-  return new Intl.DateTimeFormat(locale === "zh-CN" ? "zh-CN" : "en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
-}
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  let binary = "";
 
-function weekLabel(locale: AppLocale, weekNumber: number): string {
-  return locale === "zh-CN" ? `第${weekNumber}周` : `Week ${weekNumber}`;
-}
-
-function dayLabel(locale: AppLocale, dayNumber: number): string {
-  return locale === "zh-CN" ? `第${dayNumber}天` : `Day ${dayNumber}`;
-}
-
-function createRenderContainer(): HTMLDivElement {
-  const container = document.createElement("div");
-  container.style.position = "fixed";
-  container.style.left = "-10000px";
-  container.style.top = "0";
-  container.style.width = "920px";
-  container.style.background = "#ffffff";
-  container.style.padding = "24px";
-  container.style.fontFamily = "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif";
-  container.style.color = "#0f172a";
-  container.style.lineHeight = "1.45";
-
-  const style = document.createElement("style");
-  style.textContent = `
-    .pdf-section { margin-bottom: 12px; }
-    .pdf-header { margin-bottom: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
-    .pdf-header h1 { margin: 0 0 6px 0; font-size: 24px; }
-    .pdf-header p { margin: 0; font-size: 13px; color: #334155; }
-    .pdf-week-title { margin: 0 0 12px 0; font-size: 18px; color: #0f766e; }
-    .pdf-day { margin-bottom: 12px; page-break-inside: avoid; }
-    .pdf-day h3 { margin: 0 0 4px 0; font-size: 14px; }
-    .pdf-day-note { margin: 0 0 8px 0; font-size: 12px; color: #475569; }
-    table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
-    th, td { border: 1px solid #cbd5e1; padding: 6px; text-align: left; vertical-align: top; word-break: break-word; }
-    th { background: #f1f5f9; font-weight: 600; }
-  `;
-
-  container.appendChild(style);
-  return container;
-}
-
-function buildTableHeaders(locale: AppLocale): string {
-  const headers =
-    locale === "zh-CN"
-      ? ["动作", "组数", "次数", "RPE", "备注", "替代动作"]
-      : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"];
-
-  return headers.map((item) => `<th>${item}</th>`).join("");
-}
-
-function buildWeekSectionHtml(
-  plan: TrainingPlan,
-  week: PlanWeek,
-  locale: AppLocale,
-  showHeader: boolean,
-): string {
-  const exportedAtLabel = locale === "zh-CN" ? "导出日期" : "Exported At";
-  const noNotes = locale === "zh-CN" ? "无备注" : "No notes";
-  const noExercises = locale === "zh-CN" ? "暂无动作" : "No exercises";
-
-  const headerHtml = showHeader
-    ? `
-      <header class="pdf-header">
-        <h1>${escapeHtml(plan.name)}</h1>
-        <p>${exportedAtLabel}: ${formatDate(locale)}</p>
-      </header>
-    `
-    : "";
-
-  const dayHtml = [...week.days]
-    .sort((a, b) => a.dayNumber - b.dayNumber)
-    .map((day) => {
-      const rowsHtml = day.exercises.length
-        ? day.exercises
-            .map((exercise) => {
-              const alternatives = exercise.alternativeExercises?.length
-                ? exercise.alternativeExercises.join(" / ")
-                : "-";
-
-              return `
-            <tr>
-              <td>${escapeHtml(exercise.name)}</td>
-              <td>${exercise.sets}</td>
-              <td>${escapeHtml(exercise.repRange)}</td>
-              <td>${exercise.targetRpe}</td>
-              <td>${escapeHtml(exercise.notes || "-")}</td>
-              <td>${escapeHtml(alternatives)}</td>
-            </tr>
-          `;
-            })
-            .join("")
-        : `<tr><td colspan="6">${noExercises}</td></tr>`;
-
-      return `
-        <section class="pdf-day">
-          <h3>${dayLabel(locale, day.dayNumber)} - ${escapeHtml(day.title)}</h3>
-          <p class="pdf-day-note">${escapeHtml(day.notes || noNotes)}</p>
-          <table>
-            <thead>
-              <tr>${buildTableHeaders(locale)}</tr>
-            </thead>
-            <tbody>
-              ${rowsHtml}
-            </tbody>
-          </table>
-        </section>
-      `;
-    })
-    .join("");
-
-  return `
-    <section class="pdf-section">
-      ${headerHtml}
-      <h2 class="pdf-week-title">${weekLabel(locale, week.weekNumber)}</h2>
-      ${dayHtml}
-    </section>
-  `;
-}
-
-async function renderSectionCanvas(
-  html2canvas: typeof import("html2canvas").default,
-  container: HTMLDivElement,
-  sectionHtml: string,
-): Promise<HTMLCanvasElement> {
-  const section = document.createElement("div");
-  section.innerHTML = sectionHtml;
-  container.appendChild(section);
-
-  try {
-    return await html2canvas(section, {
-      scale: 2,
-      backgroundColor: "#ffffff",
-      useCORS: true,
-      logging: false,
-      windowWidth: section.scrollWidth,
-      windowHeight: section.scrollHeight,
-    });
-  } finally {
-    container.removeChild(section);
+  for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+    const chunk = bytes.subarray(offset, Math.min(offset + chunkSize, bytes.length));
+    binary += String.fromCharCode(...chunk);
   }
+
+  return btoa(binary);
 }
 
-function appendCanvasToPdf(
-  pdf: import("jspdf").jsPDF,
-  canvas: HTMLCanvasElement,
-  options: { margin: number; contentWidth: number; contentHeight: number },
-  state: { hasRendered: boolean },
-): void {
-  const imageData = canvas.toDataURL("image/png");
-  const imageHeight = (canvas.height * options.contentWidth) / canvas.width;
+async function ensureChineseFont(pdf: jsPDF, locale: AppLocale): Promise<void> {
+  try {
+    if (!cachedChineseFontBase64) {
+      const response = await fetch(CJK_FONT_URL);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
-  let consumedHeight = 0;
-  while (consumedHeight < imageHeight - 0.1) {
-    if (state.hasRendered) {
-      pdf.addPage();
+      const fontBuffer = await response.arrayBuffer();
+      cachedChineseFontBase64 = arrayBufferToBase64(fontBuffer);
     }
 
-    const y = options.margin - consumedHeight;
-    pdf.addImage(imageData, "PNG", options.margin, y, options.contentWidth, imageHeight);
-
-    consumedHeight += options.contentHeight;
-    state.hasRendered = true;
+    pdf.addFileToVFS(CJK_FONT_VFS_NAME, cachedChineseFontBase64);
+    pdf.addFont(CJK_FONT_VFS_NAME, CJK_FONT_NAME, "normal");
+    pdf.setFont(CJK_FONT_NAME, "normal");
+  } catch (error) {
+    throw new PlanExportError(
+      "FONT_LOAD_FAILED",
+      localize(locale, "中文字体加载失败，无法导出 PDF。", "Failed to load Chinese font for PDF export."),
+      error,
+    );
   }
+}
+
+function getTableHead(locale: AppLocale): string[][] {
+  return [
+    locale === "zh-CN"
+      ? ["动作", "组数", "次数", "RPE", "备注", "替代动作"]
+      : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"],
+  ];
+}
+
+function getWeekLabel(locale: AppLocale, weekNumber: number): string {
+  return localize(locale, `第 ${weekNumber} 周`, `Week ${weekNumber}`);
+}
+
+function getDayLabel(locale: AppLocale, dayNumber: number): string {
+  return localize(locale, `第 ${dayNumber} 天`, `Day ${dayNumber}`);
 }
 
 export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocale): Promise<void> {
   const weeks = [...plan.weeks].sort((a, b) => a.weekNumber - b.weekNumber);
-  if (!weeks.length) {
-    throw new Error(locale === "zh-CN" ? "当前计划为空，无法导出 PDF。" : "Current plan is empty. Unable to export PDF.");
-  }
 
-  const [{ jsPDF }, { default: html2canvas }] = await Promise.all([import("jspdf"), import("html2canvas")]);
+  if (!weeks.length) {
+    throw new PlanExportError(
+      "NO_PLAN",
+      localize(locale, "当前计划为空，无法导出 PDF。", "Current plan is empty. Unable to export PDF."),
+    );
+  }
 
   const pdf = new jsPDF({
     orientation: "portrait",
@@ -210,37 +119,137 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     format: "a4",
   });
 
-  const margin = 20;
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-  const contentWidth = pageWidth - margin * 2;
-  const contentHeight = pageHeight - margin * 2;
-
-  const container = createRenderContainer();
-  document.body.appendChild(container);
-
-  const renderState = { hasRendered: false };
-
   try {
-    for (let index = 0; index < weeks.length; index += 1) {
-      const week = weeks[index]!;
-      const sectionHtml = buildWeekSectionHtml(plan, week, locale, index === 0);
-      const canvas = await renderSectionCanvas(html2canvas, container, sectionHtml);
-      appendCanvasToPdf(pdf, canvas, { margin, contentWidth, contentHeight }, renderState);
+    if (locale === "zh-CN") {
+      await ensureChineseFont(pdf, locale);
+    } else {
+      pdf.setFont("helvetica", "normal");
     }
 
-    if (!renderState.hasRendered) {
-      throw new Error(locale === "zh-CN" ? "当前计划为空，无法导出 PDF。" : "Current plan is empty. Unable to export PDF.");
+    const left = 24;
+    const right = 24;
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const contentBottom = pageHeight - 24;
+
+    pdf.setFontSize(18);
+    pdf.text(plan.name, left, 32);
+
+    pdf.setFontSize(10);
+    pdf.text(
+      localize(locale, `导出日期：${formatDate(locale)}`, `Exported at: ${formatDate(locale)}`),
+      left,
+      50,
+    );
+
+    let cursorY = 68;
+
+    for (const week of weeks) {
+      if (cursorY > contentBottom - 80) {
+        pdf.addPage();
+        if (locale === "zh-CN") {
+          pdf.setFont(CJK_FONT_NAME, "normal");
+        }
+        cursorY = 32;
+      }
+
+      pdf.setFontSize(13);
+      pdf.text(getWeekLabel(locale, week.weekNumber), left, cursorY);
+      cursorY += 12;
+
+      const sortedDays = [...week.days].sort((a, b) => a.dayNumber - b.dayNumber);
+
+      for (const day of sortedDays) {
+        if (cursorY > contentBottom - 120) {
+          pdf.addPage();
+          if (locale === "zh-CN") {
+            pdf.setFont(CJK_FONT_NAME, "normal");
+          }
+          cursorY = 32;
+        }
+
+        pdf.setFontSize(11);
+        pdf.text(`${getDayLabel(locale, day.dayNumber)} - ${day.title}`, left, cursorY);
+        cursorY += 10;
+
+        pdf.setFontSize(9);
+        const noteLine = localize(locale, "备注", "Notes");
+        pdf.text(`${noteLine}: ${day.notes || "-"}`, left, cursorY);
+        cursorY += 6;
+
+        const rows = day.exercises.length
+          ? day.exercises.map((exercise) => [
+              exercise.name,
+              String(exercise.sets),
+              exercise.repRange,
+              String(exercise.targetRpe),
+              exercise.notes || "-",
+              exercise.alternativeExercises?.length ? exercise.alternativeExercises.join(" / ") : "-",
+            ])
+          : [[localize(locale, "暂无动作", "No exercises"), "-", "-", "-", "-", "-"]];
+
+        autoTable(pdf, {
+          startY: cursorY,
+          head: getTableHead(locale),
+          body: rows,
+          theme: "grid",
+          margin: { left, right },
+          styles: {
+            font: locale === "zh-CN" ? CJK_FONT_NAME : "helvetica",
+            fontSize: 9,
+            cellPadding: 4,
+            lineColor: [203, 213, 225],
+            lineWidth: 0.5,
+          },
+          headStyles: {
+            fillColor: [241, 245, 249],
+            textColor: [15, 23, 42],
+            fontStyle: "bold",
+          },
+          bodyStyles: {
+            textColor: [30, 41, 59],
+          },
+          pageBreak: "auto",
+        });
+
+        const autoTableState = pdf as jsPDF & {
+          lastAutoTable?: {
+            finalY: number;
+          };
+        };
+
+        cursorY = (autoTableState.lastAutoTable?.finalY ?? cursorY + 20) + 14;
+      }
     }
 
-    const fileName = `liftcut-plan-${sanitizeFilePart(plan.name)}.pdf`;
-    pdf.save(fileName);
+    try {
+      const fileName = `liftcut-plan-${sanitizeFilePart(plan.name)}.pdf`;
+      pdf.save(fileName);
+    } catch (saveError) {
+      throw new PlanExportError(
+        "PDF_SAVE_FAILED",
+        localize(locale, "PDF 文件保存失败。", "Failed to save PDF file."),
+        saveError,
+      );
+    }
   } catch (error) {
-    console.error("Failed to export training plan PDF:", error);
-    throw new Error(locale === "zh-CN" ? "导出 PDF 失败，请稍后重试。" : "Failed to export PDF. Please try again.");
-  } finally {
-    if (container.parentNode) {
-      container.parentNode.removeChild(container);
+    if (process.env.NODE_ENV !== "production") {
+      console.error("[plan-export] PDF export failed", {
+        locale,
+        planId: plan.id,
+        planName: plan.name,
+        weeks: plan.weeks.length,
+        error,
+      });
     }
+
+    if (error instanceof PlanExportError) {
+      throw error;
+    }
+
+    throw new PlanExportError(
+      "PDF_RENDER_FAILED",
+      localize(locale, "导出 PDF 失败，请稍后重试。", "Failed to export PDF. Please try again."),
+      error,
+    );
   }
 }
