@@ -3,10 +3,16 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { createDefaultSettings, createDemoTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
+import {
+  createDefaultSettings,
+  createDemoTrainingPlan,
+  createEmptyTrainingPlan,
+  defaultQuickFoods,
+} from "@/lib/demo-data";
 import { createAuthRequiredError } from "@/lib/error-utils";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
+  deleteTrainingPlan as removeTrainingPlan,
   fetchUserDataBundle,
   removeBodyMetricLog,
   removeFoodLog,
@@ -48,6 +54,72 @@ function createEmptySnapshot(userId: string): AppDataSnapshot {
     bodyMetricLogs: [],
     quickFoods: defaultQuickFoods,
   };
+}
+
+function sortWorkoutLogs(logs: WorkoutLog[]): WorkoutLog[] {
+  return [...logs].sort((a, b) => {
+    if (a.date === b.date) {
+      return b.createdAt.localeCompare(a.createdAt);
+    }
+
+    return b.date.localeCompare(a.date);
+  });
+}
+
+function sortFoodLogs(logs: FoodLog[]): FoodLog[] {
+  return [...logs].sort((a, b) => {
+    if (a.date === b.date) {
+      return b.createdAt.localeCompare(a.createdAt);
+    }
+
+    return b.date.localeCompare(a.date);
+  });
+}
+
+function sortBodyLogs(logs: BodyMetricLog[]): BodyMetricLog[] {
+  return [...logs].sort((a, b) => {
+    if (a.date === b.date) {
+      return b.createdAt.localeCompare(a.createdAt);
+    }
+
+    return b.date.localeCompare(a.date);
+  });
+}
+
+function toTrainingPlanSummary(plan: TrainingPlan): TrainingPlanSummary {
+  return {
+    id: plan.id,
+    userId: plan.userId,
+    name: plan.name,
+    isActive: plan.isActive,
+    createdAt: plan.createdAt,
+    updatedAt: plan.updatedAt,
+  };
+}
+
+function upsertSummaryList(
+  list: TrainingPlanSummary[],
+  nextItem: TrainingPlanSummary,
+  options?: { setActive?: boolean },
+): TrainingPlanSummary[] {
+  const filtered = list.filter((item) => item.id !== nextItem.id);
+  const normalizedNew = {
+    ...nextItem,
+    isActive: options?.setActive ? true : nextItem.isActive,
+  };
+
+  const merged = [normalizedNew, ...filtered].map((item) => {
+    if (!options?.setActive) {
+      return item;
+    }
+
+    return {
+      ...item,
+      isActive: item.id === normalizedNew.id,
+    };
+  });
+
+  return merged;
 }
 
 async function resolveUserId(userId: string | null): Promise<string> {
@@ -94,6 +166,7 @@ interface TrackerState extends AppDataSnapshot {
   updateSettings: (nextSettings: UserSettings) => Promise<void>;
   setTrainingPlan: (plan: TrainingPlan) => Promise<void>;
   setActivePlan: (planId: string) => Promise<void>;
+  deleteTrainingPlan: (planId: string) => Promise<void>;
   addWorkoutLog: (workoutLog: Omit<WorkoutLog, "id" | "userId" | "createdAt"> & { id?: string }) => Promise<void>;
   updateWorkoutLog: (workoutLog: WorkoutLog) => Promise<void>;
   addFoodLog: (foodLog: Omit<FoodLog, "id" | "userId" | "createdAt"> & { id?: string }) => Promise<void>;
@@ -149,6 +222,9 @@ export const useTrackerStore = create<TrackerState>()(
 
           set({
             ...bundle.snapshot,
+            workoutLogs: sortWorkoutLogs(bundle.snapshot.workoutLogs),
+            foodLogs: sortFoodLogs(bundle.snapshot.foodLogs),
+            bodyMetricLogs: sortBodyLogs(bundle.snapshot.bodyMetricLogs),
             trainingPlanList: bundle.planList,
             selectedWeek: matchedWeek?.weekNumber ?? 1,
             selectedDay: matchedDay?.dayNumber ?? 1,
@@ -181,6 +257,7 @@ export const useTrackerStore = create<TrackerState>()(
       },
       updateSettings: async (nextSettings) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousSettings = get().settings;
 
         const payload: UserSettings = {
           ...nextSettings,
@@ -189,10 +266,18 @@ export const useTrackerStore = create<TrackerState>()(
         };
 
         set({ settings: payload });
-        await upsertUserSettings(resolvedUserId, payload);
+
+        try {
+          await upsertUserSettings(resolvedUserId, payload);
+        } catch (error) {
+          set({ settings: previousSettings });
+          throw error;
+        }
       },
       setTrainingPlan: async (plan) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousPlan = get().trainingPlan;
+        const previousList = get().trainingPlanList;
 
         const payload: TrainingPlan = {
           ...plan,
@@ -202,18 +287,93 @@ export const useTrackerStore = create<TrackerState>()(
           createdAt: plan.createdAt || nowIso(),
         };
 
-        set({ trainingPlan: payload });
-        await saveTrainingPlan(resolvedUserId, payload);
-        await get().refreshUserData();
+        const firstWeek = payload.weeks[0];
+        const firstDay = firstWeek?.days[0];
+
+        set({
+          trainingPlan: payload,
+          trainingPlanList: upsertSummaryList(previousList, toTrainingPlanSummary(payload), { setActive: true }),
+          selectedWeek: firstWeek?.weekNumber ?? 1,
+          selectedDay: firstDay?.dayNumber ?? 1,
+        });
+
+        try {
+          await saveTrainingPlan(resolvedUserId, payload);
+        } catch (error) {
+          set({
+            trainingPlan: previousPlan,
+            trainingPlanList: previousList,
+          });
+          throw error;
+        }
       },
       setActivePlan: async (planId) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousList = get().trainingPlanList;
 
-        await setActiveTrainingPlan(resolvedUserId, planId);
-        await get().refreshUserData();
+        set({
+          trainingPlanList: previousList.map((item) => ({
+            ...item,
+            isActive: item.id === planId,
+          })),
+        });
+
+        try {
+          await setActiveTrainingPlan(resolvedUserId, planId);
+          if (get().trainingPlan.id !== planId) {
+            await get().initializeForUser(resolvedUserId);
+          }
+        } catch (error) {
+          set({ trainingPlanList: previousList });
+          throw error;
+        }
+      },
+      deleteTrainingPlan: async (planId) => {
+        const resolvedUserId = await get().ensureUserId();
+        const previousPlan = get().trainingPlan;
+        const previousList = get().trainingPlanList;
+        const previousWeek = get().selectedWeek;
+        const previousDay = get().selectedDay;
+        const nextList = previousList.filter((item) => item.id !== planId);
+
+        set({ trainingPlanList: nextList });
+
+        try {
+          const result = await removeTrainingPlan(resolvedUserId, planId);
+
+          if (!result.nextActivePlanId) {
+            set({
+              trainingPlan: createEmptyTrainingPlan(resolvedUserId),
+              trainingPlanList: [],
+              selectedWeek: 1,
+              selectedDay: 1,
+            });
+            return;
+          }
+
+          if (previousPlan.id === planId || previousPlan.id !== result.nextActivePlanId) {
+            await get().initializeForUser(resolvedUserId);
+            return;
+          }
+
+          set((state) => ({
+            trainingPlanList: state.trainingPlanList.map((item) => ({
+              ...item,
+              isActive: item.id === result.nextActivePlanId,
+            })),
+          }));
+        } catch (error) {
+          set({
+            trainingPlan: previousPlan,
+            trainingPlanList: previousList,
+            selectedWeek: previousWeek,
+            selectedDay: previousDay,
+          });
+          throw error;
+        }
       },
       addWorkoutLog: async (workoutLog) => {
-        const { trainingPlan } = get();
+        const { trainingPlan, workoutLogs } = get();
         const resolvedUserId = await get().ensureUserId();
 
         const workoutLogId = workoutLog.id ?? safeRandomId("workout");
@@ -240,14 +400,25 @@ export const useTrackerStore = create<TrackerState>()(
           })),
         };
 
-        await upsertWorkoutLog(resolvedUserId, payload);
-        await get().refreshUserData();
+        const nextLogs = sortWorkoutLogs([
+          payload,
+          ...workoutLogs.filter((item) => item.id !== payload.id),
+        ]);
+        set({ workoutLogs: nextLogs });
+
+        try {
+          await upsertWorkoutLog(resolvedUserId, payload);
+        } catch (error) {
+          set({ workoutLogs });
+          throw error;
+        }
       },
       updateWorkoutLog: async (workoutLog) => {
         await get().addWorkoutLog(workoutLog);
       },
       addFoodLog: async (foodLog) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousLogs = get().foodLogs;
 
         const payload: FoodLog = {
           id: foodLog.id ?? safeRandomId("food"),
@@ -260,23 +431,65 @@ export const useTrackerStore = create<TrackerState>()(
           createdAt: nowIso(),
         };
 
-        await upsertFoodLog(resolvedUserId, payload);
-        await get().refreshUserData();
+        set({
+          foodLogs: sortFoodLogs([
+            payload,
+            ...previousLogs.filter((item) => item.id !== payload.id),
+          ]),
+        });
+
+        try {
+          await upsertFoodLog(resolvedUserId, payload);
+        } catch (error) {
+          set({ foodLogs: previousLogs });
+          throw error;
+        }
       },
       updateFoodLog: async (foodLog) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousLogs = get().foodLogs;
+        const existing = previousLogs.find((item) => item.id === foodLog.id);
 
-        await upsertFoodLog(resolvedUserId, foodLog);
-        await get().refreshUserData();
+        const payload: FoodLog = {
+          id: foodLog.id,
+          userId: resolvedUserId,
+          date: foodLog.date,
+          mealType: foodLog.mealType,
+          foodName: foodLog.foodName,
+          calories: foodLog.calories,
+          protein: foodLog.protein,
+          createdAt: existing?.createdAt ?? nowIso(),
+        };
+
+        set({
+          foodLogs: sortFoodLogs([
+            payload,
+            ...previousLogs.filter((item) => item.id !== payload.id),
+          ]),
+        });
+
+        try {
+          await upsertFoodLog(resolvedUserId, payload);
+        } catch (error) {
+          set({ foodLogs: previousLogs });
+          throw error;
+        }
       },
       deleteFoodLog: async (id) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousLogs = get().foodLogs;
+        set({ foodLogs: previousLogs.filter((item) => item.id !== id) });
 
-        await removeFoodLog(resolvedUserId, id);
-        await get().refreshUserData();
+        try {
+          await removeFoodLog(resolvedUserId, id);
+        } catch (error) {
+          set({ foodLogs: previousLogs });
+          throw error;
+        }
       },
       addBodyMetricLog: async (log) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousLogs = get().bodyMetricLogs;
 
         const payload: BodyMetricLog = {
           id: log.id ?? safeRandomId("body"),
@@ -288,20 +501,34 @@ export const useTrackerStore = create<TrackerState>()(
           createdAt: nowIso(),
         };
 
-        await upsertBodyMetricLog(resolvedUserId, payload);
-        await get().refreshUserData();
+        set({
+          bodyMetricLogs: sortBodyLogs([
+            payload,
+            ...previousLogs.filter((item) => item.id !== payload.id),
+          ]),
+        });
+
+        try {
+          await upsertBodyMetricLog(resolvedUserId, payload);
+        } catch (error) {
+          set({ bodyMetricLogs: previousLogs });
+          throw error;
+        }
       },
       updateBodyMetricLog: async (log) => {
-        const resolvedUserId = await get().ensureUserId();
-
-        await upsertBodyMetricLog(resolvedUserId, log);
-        await get().refreshUserData();
+        await get().addBodyMetricLog(log);
       },
       deleteBodyMetricLog: async (id) => {
         const resolvedUserId = await get().ensureUserId();
+        const previousLogs = get().bodyMetricLogs;
+        set({ bodyMetricLogs: previousLogs.filter((item) => item.id !== id) });
 
-        await removeBodyMetricLog(resolvedUserId, id);
-        await get().refreshUserData();
+        try {
+          await removeBodyMetricLog(resolvedUserId, id);
+        } catch (error) {
+          set({ bodyMetricLogs: previousLogs });
+          throw error;
+        }
       },
       resetAllData: async () => {
         const resolvedUserId = await get().ensureUserId();

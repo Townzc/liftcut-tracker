@@ -290,7 +290,7 @@ export function SettingsPage() {
             ) : null}
             <Button variant="outline" className="w-full" onClick={handleExportAllData} disabled={isBusy}>
               {loadingAction === "export-data" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
-              {t("exportAll")}
+              {loadingAction === "export-data" ? t("exportingData") : t("exportAll")}
             </Button>
             <a
               href="/samples/sample-training-plan.json"
@@ -302,7 +302,7 @@ export function SettingsPage() {
             </a>
             <Button onClick={handleSaveSettings} className="w-full" disabled={isBusy}>
               {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {t("saveSettings")}
+              {loadingAction === "save" ? t("savingSettings") : t("saveSettings")}
             </Button>
           </CardContent>
         </Card>
@@ -330,7 +330,7 @@ export function SettingsPage() {
             </div>
             <Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
               {loadingAction === "logout" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {t("logout")}
+              {loadingAction === "logout" ? t("loggingOut") : t("logout")}
             </Button>
           </CardContent>
         </Card>
@@ -348,7 +348,7 @@ export function SettingsPage() {
           <CardContent className="space-y-3">
             <Button variant="destructive" className="w-full" onClick={handleClear} disabled={isBusy && loadingAction !== "reset"}>
               {loadingAction === "reset" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {confirmClear ? t("resetConfirm") : t("reset")}
+              {loadingAction === "reset" ? t("resetting") : confirmClear ? t("resetConfirm") : t("reset")}
             </Button>
             {confirmClear ? (
               <Button variant="outline" className="w-full" onClick={() => setConfirmClear(false)} disabled={isBusy}>

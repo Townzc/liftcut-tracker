@@ -1,4 +1,4 @@
-import type { AppLocale, PlanWeek, TrainingPlan } from "@/types";
+﻿import type { AppLocale, PlanWeek, TrainingPlan } from "@/types";
 
 function escapeHtml(value: string): string {
   return value
@@ -38,7 +38,7 @@ function weekLabel(locale: AppLocale, weekNumber: number): string {
 }
 
 function dayLabel(locale: AppLocale, dayNumber: number): string {
-  return locale === "zh-CN" ? `Day ${dayNumber}` : `Day ${dayNumber}`;
+  return locale === "zh-CN" ? `第${dayNumber}天` : `Day ${dayNumber}`;
 }
 
 function createRenderContainer(): HTMLDivElement {
@@ -49,7 +49,7 @@ function createRenderContainer(): HTMLDivElement {
   container.style.width = "920px";
   container.style.background = "#ffffff";
   container.style.padding = "24px";
-  container.style.fontFamily = "Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+  container.style.fontFamily = "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif";
   container.style.color = "#0f172a";
   container.style.lineHeight = "1.45";
 
@@ -73,9 +73,10 @@ function createRenderContainer(): HTMLDivElement {
 }
 
 function buildTableHeaders(locale: AppLocale): string {
-  const headers = locale === "zh-CN"
-    ? ["动作", "组数", "次数", "RPE", "备注", "替代动作"]
-    : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"];
+  const headers =
+    locale === "zh-CN"
+      ? ["动作", "组数", "次数", "RPE", "备注", "替代动作"]
+      : ["Exercise", "Sets", "Rep Range", "RPE", "Notes", "Alternatives"];
 
   return headers.map((item) => `<th>${item}</th>`).join("");
 }
@@ -103,12 +104,13 @@ function buildWeekSectionHtml(
     .sort((a, b) => a.dayNumber - b.dayNumber)
     .map((day) => {
       const rowsHtml = day.exercises.length
-        ? day.exercises.map((exercise) => {
-          const alternatives = exercise.alternativeExercises?.length
-            ? exercise.alternativeExercises.join(" / ")
-            : "-";
+        ? day.exercises
+            .map((exercise) => {
+              const alternatives = exercise.alternativeExercises?.length
+                ? exercise.alternativeExercises.join(" / ")
+                : "-";
 
-          return `
+              return `
             <tr>
               <td>${escapeHtml(exercise.name)}</td>
               <td>${exercise.sets}</td>
@@ -118,7 +120,8 @@ function buildWeekSectionHtml(
               <td>${escapeHtml(alternatives)}</td>
             </tr>
           `;
-        }).join("")
+            })
+            .join("")
         : `<tr><td colspan="6">${noExercises}</td></tr>`;
 
       return `
@@ -199,10 +202,7 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     throw new Error(locale === "zh-CN" ? "当前计划为空，无法导出 PDF。" : "Current plan is empty. Unable to export PDF.");
   }
 
-  const [{ jsPDF }, { default: html2canvas }] = await Promise.all([
-    import("jspdf"),
-    import("html2canvas"),
-  ]);
+  const [{ jsPDF }, { default: html2canvas }] = await Promise.all([import("jspdf"), import("html2canvas")]);
 
   const pdf = new jsPDF({
     orientation: "portrait",
@@ -226,12 +226,7 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
       const week = weeks[index]!;
       const sectionHtml = buildWeekSectionHtml(plan, week, locale, index === 0);
       const canvas = await renderSectionCanvas(html2canvas, container, sectionHtml);
-      appendCanvasToPdf(
-        pdf,
-        canvas,
-        { margin, contentWidth, contentHeight },
-        renderState,
-      );
+      appendCanvasToPdf(pdf, canvas, { margin, contentWidth, contentHeight }, renderState);
     }
 
     if (!renderState.hasRendered) {
@@ -244,6 +239,8 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     console.error("Failed to export training plan PDF:", error);
     throw new Error(locale === "zh-CN" ? "导出 PDF 失败，请稍后重试。" : "Failed to export PDF. Please try again.");
   } finally {
-    document.body.removeChild(container);
+    if (container.parentNode) {
+      container.parentNode.removeChild(container);
+    }
   }
 }
