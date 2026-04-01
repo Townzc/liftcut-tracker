@@ -86,6 +86,7 @@ export function NumericInput({
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     setIsEditing(true);
     setDraftValue(String(value));
+    event.currentTarget.select();
     onFocus?.(event);
   };
 
