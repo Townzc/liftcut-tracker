@@ -2,13 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle, Download, LoaderCircle, Upload } from "lucide-react";
+import { AlertTriangle, Download, LoaderCircle } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -18,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { normalizeActionError } from "@/lib/error-utils";
-import { downloadJson, readJsonFile, validateTrainingPlan } from "@/lib/import-export";
+import { downloadJson } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
 import { exportUserData } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
@@ -27,7 +26,6 @@ import type { AppLocale, UserSettings } from "@/types";
 
 type SettingsAction =
   | "save"
-  | "import-plan"
   | "export-data"
   | "language"
   | "logout"
@@ -43,7 +41,6 @@ export function SettingsPage() {
   const settings = useTrackerStore((state) => state.settings);
   const trackerLoading = useTrackerStore((state) => state.loading);
   const ensureUserId = useTrackerStore((state) => state.ensureUserId);
-  const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const updateSettings = useTrackerStore((state) => state.updateSettings);
   const resetAllData = useTrackerStore((state) => state.resetAllData);
 
@@ -103,35 +100,6 @@ export function SettingsPage() {
         }),
       );
     } finally {
-      setLoadingAction(null);
-    }
-  };
-
-  const handleImportPlan = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
-
-    setLoadingAction("import-plan");
-    clearFeedback();
-
-    try {
-      const resolvedUserId = await ensureUserId();
-      const json = await readJsonFile(file);
-      const plan = validateTrainingPlan(json, { userId: resolvedUserId });
-      await setTrainingPlan(plan);
-      setMessage(t("importPlanSuccess"));
-    } catch (importError) {
-      console.error(importError);
-      setError(
-        normalizeActionError(importError, {
-          fallback: t("saveFailed"),
-          authMessage: t("authRequired"),
-        }),
-      );
-    } finally {
-      event.target.value = "";
       setLoadingAction(null);
     }
   };
@@ -281,25 +249,10 @@ export function SettingsPage() {
             <CardDescription>{t("planAndExportDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Input type="file" accept="application/json" onChange={handleImportPlan} disabled={isBusy} />
-            {loadingAction === "import-plan" ? (
-              <p className="inline-flex items-center text-xs text-slate-500">
-                <LoaderCircle className="mr-1 h-3.5 w-3.5 animate-spin" />
-                {t("importingPlan")}
-              </p>
-            ) : null}
             <Button variant="outline" className="w-full" onClick={handleExportAllData} disabled={isBusy}>
               {loadingAction === "export-data" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
               {loadingAction === "export-data" ? t("exportingData") : t("exportAll")}
             </Button>
-            <a
-              href="/samples/sample-training-plan.json"
-              download
-              className="inline-flex w-full items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-            >
-              <Upload className="mr-2 h-4 w-4" />
-              {t("downloadSample")}
-            </a>
             <Button onClick={handleSaveSettings} className="w-full" disabled={isBusy}>
               {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {loadingAction === "save" ? t("savingSettings") : t("saveSettings")}

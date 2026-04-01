@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
-import { Download, FileJson, LoaderCircle, Trash2, Upload } from "lucide-react";
+import { Download, FileJson, LoaderCircle, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { NumericInput } from "@/components/shared/numeric-input";
@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { downloadJson, readJsonFile, validateTrainingPlan } from "@/lib/import-export";
+import { downloadJson } from "@/lib/import-export";
 import {
   CHINESE_PLAN_TEXT_TEMPLATE,
   ENGLISH_PLAN_TEXT_TEMPLATE,
@@ -29,7 +29,6 @@ import type { TrainingPlan } from "@/types";
 type PlanAction =
   | "create"
   | "delete-plan"
-  | "import-json"
   | "export-pdf"
   | "export-json"
   | "parse"
@@ -161,38 +160,6 @@ export function PlanPage() {
         }),
       );
     } finally {
-      setLoadingAction(null);
-    }
-  };
-
-  const handleImportJson = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
-
-    setLoadingAction("import-json");
-    clearFeedback();
-
-    try {
-      const resolvedUserId = await ensureUserId();
-
-      const json = await readJsonFile(file);
-      const parsedPlan = validateTrainingPlan(json, { userId: resolvedUserId });
-      await setTrainingPlan(parsedPlan);
-      setSelectedWeek(1);
-      setSelectedDay(1);
-      setMessage(t("importSuccess"));
-    } catch (importError) {
-      console.error(importError);
-      setError(
-        normalizeActionError(importError, {
-          fallback: t("importFailed"),
-          authMessage: t("authRequired"),
-        }),
-      );
-    } finally {
-      event.target.value = "";
       setLoadingAction(null);
     }
   };
@@ -373,6 +340,7 @@ export function PlanPage() {
   const renderLoadingIcon = (condition: boolean) =>
     condition ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null;
   const isBusy = loadingAction !== null || trackerLoading;
+  const hasPlan = trainingPlan.weeks.length > 0;
 
   return (
     <div className="space-y-4">
@@ -517,30 +485,11 @@ export function PlanPage() {
               {loadingAction === "create" ? t("creating") : t("createBlank")}
             </Button>
 
-            <div className="space-y-2">
-              <Label htmlFor="plan-import" className="text-sm">
-                {t("importJson")}
-              </Label>
-              <Input
-                id="plan-import"
-                type="file"
-                accept="application/json"
-                onChange={handleImportJson}
-                disabled={isBusy}
-              />
-              {loadingAction === "import-json" ? (
-                <p className="inline-flex items-center text-xs text-slate-500">
-                  <LoaderCircle className="mr-1 h-3.5 w-3.5 animate-spin" />
-                  {t("importing")}
-                </p>
-              ) : null}
-            </div>
-
             <Button
               type="button"
               className="w-full"
               onClick={handleExportPdf}
-              disabled={isBusy}
+              disabled={isBusy || !hasPlan}
             >
               {renderLoadingIcon(loadingAction === "export-pdf")}
               <Download className="mr-2 h-4 w-4" />
@@ -559,19 +508,7 @@ export function PlanPage() {
               {loadingAction === "export-json" ? t("exportingJson") : t("exportCurrent")}
             </Button>
 
-            <a
-              href="/samples/sample-training-plan.json"
-              download
-              className="inline-flex w-full items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-            >
-              <Upload className="mr-2 h-4 w-4" />
-              {t("downloadSample")}
-            </a>
-
-            <div className="inline-flex w-full items-center justify-center rounded-md border border-dashed border-slate-300 px-3 py-2 text-xs text-slate-500">
-              <Upload className="mr-2 h-3.5 w-3.5" />
-              {t("validationHint")}
-            </div>
+            {!hasPlan ? <p className="text-xs text-slate-500">{t("exportPdfNoPlan")}</p> : null}
 
             {trainingPlanList.length > 0 ? (
               <div className="space-y-2">
