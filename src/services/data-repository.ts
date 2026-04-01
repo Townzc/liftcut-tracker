@@ -1,4 +1,4 @@
-﻿import { createDefaultSettings, createDemoSnapshot, createDemoTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
+﻿import { createDefaultSettings, createDemoSnapshot, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type {
   AppDataSnapshot,
@@ -16,6 +16,11 @@ import type {
 export interface UserDataBundle {
   snapshot: AppDataSnapshot;
   planList: TrainingPlanSummary[];
+}
+
+export interface DeleteTrainingPlanResult {
+  deletedPlanId: string;
+  nextActivePlanId: string | null;
 }
 
 function nowIso(): string {
@@ -119,7 +124,7 @@ function buildTrainingPlan(
   exerciseRows: Record<string, unknown>[],
 ): TrainingPlan {
   if (!planRow) {
-    return createDemoTrainingPlan(userId);
+    return createEmptyTrainingPlan(userId);
   }
 
   const dayMap = new Map<string, Record<string, unknown>[]>();
@@ -374,6 +379,77 @@ export async function setActiveTrainingPlan(userId: string, planId: string): Pro
   }
 }
 
+export async function deleteTrainingPlan(userId: string, planId: string): Promise<DeleteTrainingPlanResult> {
+  const supabase = getSupabaseBrowserClient();
+
+  const { data: planRows, error: queryError } = await supabase
+    .from("training_plans")
+    .select("id, is_active, created_at")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (queryError) {
+    throw queryError;
+  }
+
+  const targetPlan = (planRows ?? []).find((row) => String(row.id) === planId);
+  if (!targetPlan) {
+    throw new Error("Training plan not found or already deleted.");
+  }
+
+  const { error: deleteError } = await supabase
+    .from("training_plans")
+    .delete()
+    .eq("id", planId)
+    .eq("user_id", userId);
+
+  if (deleteError) {
+    throw deleteError;
+  }
+
+  if (!targetPlan.is_active) {
+    const currentActive = (planRows ?? []).find(
+      (row) => Boolean(row.is_active) && String(row.id) !== planId,
+    );
+    return {
+      deletedPlanId: planId,
+      nextActivePlanId: currentActive ? String(currentActive.id) : null,
+    };
+  }
+
+  const fallbackPlan = (planRows ?? []).find((row) => String(row.id) !== planId);
+  if (!fallbackPlan) {
+    return {
+      deletedPlanId: planId,
+      nextActivePlanId: null,
+    };
+  }
+
+  const { error: clearError } = await supabase
+    .from("training_plans")
+    .update({ is_active: false, updated_at: nowIso() })
+    .eq("user_id", userId);
+
+  if (clearError) {
+    throw clearError;
+  }
+
+  const { error: setError } = await supabase
+    .from("training_plans")
+    .update({ is_active: true, updated_at: nowIso() })
+    .eq("id", fallbackPlan.id)
+    .eq("user_id", userId);
+
+  if (setError) {
+    throw setError;
+  }
+
+  return {
+    deletedPlanId: planId,
+    nextActivePlanId: String(fallbackPlan.id),
+  };
+}
+
 export async function upsertUserSettings(userId: string, settings: UserSettings): Promise<void> {
   const supabase = getSupabaseBrowserClient();
 
@@ -558,8 +634,10 @@ async function fetchPlanBundle(userId: string): Promise<{
 
   const activeRow = planRows?.find((row) => row.is_active) ?? planRows?.[0] ?? null;
   if (!activeRow) {
-    const fallback = createDemoTrainingPlan(userId);
-    return { activePlan: fallback, planList: [] };
+    return {
+      activePlan: createEmptyTrainingPlan(userId),
+      planList: [],
+    };
   }
 
   const { data: weekRows, error: weekError } = await supabase

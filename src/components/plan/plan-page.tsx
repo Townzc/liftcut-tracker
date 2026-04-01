@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
-import { Download, FileJson, LoaderCircle, Upload } from "lucide-react";
+import { Download, FileJson, LoaderCircle, Trash2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { NumericInput } from "@/components/shared/numeric-input";
@@ -28,6 +28,7 @@ import type { TrainingPlan } from "@/types";
 
 type PlanAction =
   | "create"
+  | "delete-plan"
   | "import-json"
   | "export-pdf"
   | "export-json"
@@ -95,6 +96,7 @@ export function PlanPage() {
   const setSelectedDay = useTrackerStore((state) => state.setSelectedDay);
   const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const setActivePlan = useTrackerStore((state) => state.setActivePlan);
+  const deleteTrainingPlan = useTrackerStore((state) => state.deleteTrainingPlan);
 
   const [planName, setPlanName] = useState("");
   const [weeksInput, setWeeksInput] = useState(12);
@@ -109,6 +111,7 @@ export function PlanPage() {
 
   const [loadingAction, setLoadingAction] = useState<PlanAction | null>(null);
   const [activePlanLoadingId, setActivePlanLoadingId] = useState<string | null>(null);
+  const [deletingPlanId, setDeletingPlanId] = useState<string | null>(null);
 
   const currentWeek = useMemo(
     () => trainingPlan.weeks.find((week) => week.weekNumber === selectedWeek) ?? trainingPlan.weeks[0],
@@ -199,6 +202,9 @@ export function PlanPage() {
     clearFeedback();
 
     try {
+      if (trainingPlan.weeks.length === 0) {
+        throw new Error(t("exportPdfNoPlan"));
+      }
       await exportTrainingPlanPdf(trainingPlan, language);
       setMessage(t("exportPdfSuccess"));
     } catch (exportError) {
@@ -333,6 +339,34 @@ export function PlanPage() {
       );
     } finally {
       setActivePlanLoadingId(null);
+    }
+  };
+
+  const handleDeletePlan = async (planId: string) => {
+    clearFeedback();
+
+    const confirmed = window.confirm(t("deleteConfirm"));
+    if (!confirmed) {
+      return;
+    }
+
+    setLoadingAction("delete-plan");
+    setDeletingPlanId(planId);
+
+    try {
+      await deleteTrainingPlan(planId);
+      setMessage(t("deleteSuccess"));
+    } catch (deleteError) {
+      console.error(deleteError);
+      setError(
+        normalizeActionError(deleteError, {
+          fallback: t("deleteFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
+    } finally {
+      setDeletingPlanId(null);
+      setLoadingAction(null);
     }
   };
 
@@ -480,7 +514,7 @@ export function PlanPage() {
               disabled={isBusy}
             >
               {renderLoadingIcon(loadingAction === "create")}
-              {t("createBlank")}
+              {loadingAction === "create" ? t("creating") : t("createBlank")}
             </Button>
 
             <div className="space-y-2">
@@ -510,7 +544,7 @@ export function PlanPage() {
             >
               {renderLoadingIcon(loadingAction === "export-pdf")}
               <Download className="mr-2 h-4 w-4" />
-              {t("exportPdf")}
+              {loadingAction === "export-pdf" ? t("exportingPdf") : t("exportPdf")}
             </Button>
 
             <Button
@@ -522,7 +556,7 @@ export function PlanPage() {
             >
               {renderLoadingIcon(loadingAction === "export-json")}
               <FileJson className="mr-2 h-4 w-4" />
-              {t("exportCurrent")}
+              {loadingAction === "export-json" ? t("exportingJson") : t("exportCurrent")}
             </Button>
 
             <a
@@ -542,20 +576,45 @@ export function PlanPage() {
             {trainingPlanList.length > 0 ? (
               <div className="space-y-2">
                 {trainingPlanList.map((planItem) => (
-                  <Button
+                  <div
                     key={planItem.id}
-                    type="button"
-                    variant={planItem.isActive ? "default" : "outline"}
-                    className="w-full justify-start"
-                    onClick={() => handleSetActivePlan(planItem.id)}
-                    disabled={isBusy || activePlanLoadingId !== null}
+                    className="rounded-lg border border-slate-200 bg-slate-50/70 p-2"
                   >
-                    {renderLoadingIcon(activePlanLoadingId === planItem.id)}
-                    {planItem.name}
-                  </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant={planItem.isActive ? "default" : "outline"}
+                        className="flex-1 justify-start"
+                        onClick={() => handleSetActivePlan(planItem.id)}
+                        disabled={isBusy || activePlanLoadingId !== null}
+                      >
+                        {renderLoadingIcon(activePlanLoadingId === planItem.id)}
+                        {planItem.name}
+                      </Button>
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => handleDeletePlan(planItem.id)}
+                        disabled={isBusy || deletingPlanId !== null}
+                        aria-label={tCommon("delete")}
+                      >
+                        {deletingPlanId === planItem.id ? (
+                          <LoaderCircle className="h-4 w-4 animate-spin text-rose-600" />
+                        ) : (
+                          <Trash2 className="h-4 w-4 text-rose-600" />
+                        )}
+                      </Button>
+                    </div>
+                    <p className="mt-1 text-[11px] text-slate-500">
+                      {planItem.isActive ? t("activePlanTag") : t("inactivePlanTag")}
+                    </p>
+                  </div>
                 ))}
               </div>
-            ) : null}
+            ) : (
+              <p className="text-xs text-slate-500">{t("plansEmpty")}</p>
+            )}
 
             {message ? <p className="text-xs text-emerald-700">{message}</p> : null}
             {error ? <p className="text-xs text-rose-700">{error}</p> : null}
@@ -588,7 +647,7 @@ export function PlanPage() {
             </Button>
             <Button type="button" onClick={handleParseText} disabled={isBusy}>
               {renderLoadingIcon(loadingAction === "parse")}
-              {t("parseButton")}
+              {loadingAction === "parse" ? t("parsing") : t("parseButton")}
             </Button>
           </div>
 
@@ -707,7 +766,7 @@ export function PlanPage() {
 
               <Button type="button" onClick={handleSaveParsedPlan} disabled={isBusy}>
                 {renderLoadingIcon(loadingAction === "save-parsed")}
-                {t("saveParsed")}
+                {loadingAction === "save-parsed" ? t("savingParsed") : t("saveParsed")}
               </Button>
             </div>
           ) : null}
