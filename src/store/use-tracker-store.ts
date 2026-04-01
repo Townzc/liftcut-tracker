@@ -4,7 +4,10 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { createDefaultSettings, createDemoTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
-import {  fetchUserDataBundle,
+import { createAuthRequiredError } from "@/lib/error-utils";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import {
+  fetchUserDataBundle,
   removeBodyMetricLog,
   removeFoodLog,
   saveTrainingPlan,
@@ -47,12 +50,30 @@ function createEmptySnapshot(userId: string): AppDataSnapshot {
   };
 }
 
-function requireUserId(userId: string | null): string {
-  if (!userId) {
-    throw new Error("You need to sign in before editing data.");
+async function resolveUserId(userId: string | null): Promise<string> {
+  if (userId) {
+    return userId;
   }
 
-  return userId;
+  const supabase = getSupabaseBrowserClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    if (error.message.toLowerCase().includes("auth session missing")) {
+      throw createAuthRequiredError();
+    }
+
+    throw error;
+  }
+
+  if (!user) {
+    throw createAuthRequiredError();
+  }
+
+  return user.id;
 }
 
 interface TrackerState extends AppDataSnapshot {
@@ -63,6 +84,7 @@ interface TrackerState extends AppDataSnapshot {
   hydrated: boolean;
   loading: boolean;
   error: string | null;
+  ensureUserId: () => Promise<string>;
   markHydrated: () => void;
   setSelectedWeek: (weekNumber: number) => void;
   setSelectedDay: (dayNumber: number) => void;
@@ -97,6 +119,22 @@ export const useTrackerStore = create<TrackerState>()(
       hydrated: false,
       loading: false,
       error: null,
+      ensureUserId: async () => {
+        const currentUserId = get().userId;
+        const resolvedUserId = await resolveUserId(currentUserId);
+
+        if (!currentUserId || currentUserId !== resolvedUserId) {
+          set((state) => ({
+            userId: resolvedUserId,
+            settings: {
+              ...state.settings,
+              userId: resolvedUserId,
+            },
+          }));
+        }
+
+        return resolvedUserId;
+      },
       markHydrated: () => set({ hydrated: true }),
       setSelectedWeek: (weekNumber) => set({ selectedWeek: weekNumber }),
       setSelectedDay: (dayNumber) => set({ selectedDay: dayNumber }),
@@ -138,13 +176,11 @@ export const useTrackerStore = create<TrackerState>()(
         });
       },
       refreshUserData: async () => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
         await get().initializeForUser(resolvedUserId);
       },
       updateSettings: async (nextSettings) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         const payload: UserSettings = {
           ...nextSettings,
@@ -156,8 +192,7 @@ export const useTrackerStore = create<TrackerState>()(
         await upsertUserSettings(resolvedUserId, payload);
       },
       setTrainingPlan: async (plan) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         const payload: TrainingPlan = {
           ...plan,
@@ -172,15 +207,14 @@ export const useTrackerStore = create<TrackerState>()(
         await get().refreshUserData();
       },
       setActivePlan: async (planId) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         await setActiveTrainingPlan(resolvedUserId, planId);
         await get().refreshUserData();
       },
       addWorkoutLog: async (workoutLog) => {
-        const { userId, trainingPlan } = get();
-        const resolvedUserId = requireUserId(userId);
+        const { trainingPlan } = get();
+        const resolvedUserId = await get().ensureUserId();
 
         const workoutLogId = workoutLog.id ?? safeRandomId("workout");
         const payload: WorkoutLog = {
@@ -213,8 +247,7 @@ export const useTrackerStore = create<TrackerState>()(
         await get().addWorkoutLog(workoutLog);
       },
       addFoodLog: async (foodLog) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         const payload: FoodLog = {
           id: foodLog.id ?? safeRandomId("food"),
@@ -231,22 +264,19 @@ export const useTrackerStore = create<TrackerState>()(
         await get().refreshUserData();
       },
       updateFoodLog: async (foodLog) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         await upsertFoodLog(resolvedUserId, foodLog);
         await get().refreshUserData();
       },
       deleteFoodLog: async (id) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         await removeFoodLog(resolvedUserId, id);
         await get().refreshUserData();
       },
       addBodyMetricLog: async (log) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         const payload: BodyMetricLog = {
           id: log.id ?? safeRandomId("body"),
@@ -262,22 +292,19 @@ export const useTrackerStore = create<TrackerState>()(
         await get().refreshUserData();
       },
       updateBodyMetricLog: async (log) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         await upsertBodyMetricLog(resolvedUserId, log);
         await get().refreshUserData();
       },
       deleteBodyMetricLog: async (id) => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         await removeBodyMetricLog(resolvedUserId, id);
         await get().refreshUserData();
       },
       resetAllData: async () => {
-        const { userId } = get();
-        const resolvedUserId = requireUserId(userId);
+        const resolvedUserId = await get().ensureUserId();
 
         const snapshot = createEmptySnapshot(resolvedUserId);
         await upsertUserSettings(resolvedUserId, snapshot.settings);

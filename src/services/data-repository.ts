@@ -610,8 +610,8 @@ async function fetchPlanBundle(userId: string): Promise<{
   };
 }
 
-export async function ensureUserBootstrap(userId: string, email: string): Promise<void> {
-  await ensureUserProfile(userId, email, "zh-CN");
+export async function ensureUserBootstrap(userId: string, email: string): Promise<UserProfile> {
+  const profile = await ensureUserProfile(userId, email, "zh-CN");
 
   const supabase = getSupabaseBrowserClient();
 
@@ -656,6 +656,8 @@ export async function ensureUserBootstrap(userId: string, email: string): Promis
       await upsertBodyMetricLog(userId, body);
     }
   }
+
+  return profile;
 }
 
 export async function fetchUserDataBundle(userId: string): Promise<UserDataBundle> {

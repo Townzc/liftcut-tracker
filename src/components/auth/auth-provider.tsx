@@ -7,13 +7,14 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
+import { createAuthRequiredError } from "@/lib/error-utils";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
   ensureUserBootstrap,
-  ensureUserProfile,
   updateUserPreferredLanguage,
 } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
@@ -38,23 +39,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const activeUserIdRef = useRef<string | null>(null);
+  const bootstrappingUserRef = useRef<string | null>(null);
 
   const bootstrapUser = useCallback(
     async (nextUser: User) => {
+      if (bootstrappingUserRef.current === nextUser.id) {
+        return;
+      }
+
+      bootstrappingUserRef.current = nextUser.id;
+      setLoading(true);
+
       try {
         const email = nextUser.email ?? "";
-        await ensureUserBootstrap(nextUser.id, email);
-        const nextProfile = await ensureUserProfile(nextUser.id, email);
+        const nextProfile = await ensureUserBootstrap(nextUser.id, email);
         setProfile(nextProfile);
         setLanguage(nextProfile.preferredLanguage);
-        await initializeForUser(nextUser.id);
       } catch (error) {
         console.error(error);
-        setProfile(null);
-        clearUserData();
+        setProfile((current) => {
+          if (current) {
+            return current;
+          }
+
+          return {
+            id: nextUser.id,
+            email: nextUser.email ?? "",
+            preferredLanguage: useUIStore.getState().language,
+            createdAt: new Date().toISOString(),
+          };
+        });
+      } finally {
+        try {
+          await initializeForUser(nextUser.id);
+          activeUserIdRef.current = nextUser.id;
+        } catch (initializeError) {
+          console.error(initializeError);
+          activeUserIdRef.current = nextUser.id;
+        } finally {
+          bootstrappingUserRef.current = null;
+          setLoading(false);
+        }
       }
     },
-    [clearUserData, initializeForUser, setLanguage],
+    [initializeForUser, setLanguage],
   );
 
   useEffect(() => {
@@ -74,13 +103,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } else {
           setProfile(null);
           clearUserData();
+          activeUserIdRef.current = null;
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
         setUser(null);
         setProfile(null);
         clearUserData();
-      } finally {
+        activeUserIdRef.current = null;
         setLoading(false);
       }
     };
@@ -96,6 +127,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!sessionUser) {
         setProfile(null);
         clearUserData();
+        activeUserIdRef.current = null;
+        setLoading(false);
+        return;
+      }
+
+      if (activeUserIdRef.current === sessionUser.id) {
         return;
       }
 
@@ -113,12 +150,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     clearUserData();
     setProfile(null);
     setUser(null);
+    activeUserIdRef.current = null;
+    bootstrappingUserRef.current = null;
   }, [clearUserData]);
 
   const setPreferredLanguage = useCallback(
     async (locale: AppLocale) => {
       if (!user) {
-        return;
+        throw createAuthRequiredError();
       }
 
       await updateUserPreferredLanguage(user.id, locale);
