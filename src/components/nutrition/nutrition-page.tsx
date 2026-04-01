@@ -24,6 +24,8 @@ import { getNutritionByDate } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import type { FoodLog, MealType, QuickFoodItem } from "@/types";
 
+const MEAL_ORDER: MealType[] = ["breakfast", "lunch", "dinner", "snack"];
+
 export function NutritionPage() {
   const t = useTranslations("nutrition");
   const tNav = useTranslations("nav");
@@ -49,19 +51,46 @@ export function NutritionPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const mealTypeOptions: Array<{ value: MealType; label: string }> = [
-    { value: "breakfast", label: t("meal_breakfast") },
-    { value: "lunch", label: t("meal_lunch") },
-    { value: "dinner", label: t("meal_dinner") },
-    { value: "snack", label: t("meal_snack") },
-  ];
+  const mealTypeOptions = useMemo<Array<{ value: MealType; label: string }>>(
+    () => [
+      { value: "breakfast", label: t("meal_breakfast") },
+      { value: "lunch", label: t("meal_lunch") },
+      { value: "dinner", label: t("meal_dinner") },
+      { value: "snack", label: t("meal_snack") },
+    ],
+    [t],
+  );
 
-  const dayLogs = useMemo(
+  const groupedDayLogs = useMemo(
     () =>
-      foodLogs
-        .filter((log) => log.date === selectedDate)
-        .sort((a, b) => a.mealType.localeCompare(b.mealType)),
-    [foodLogs, selectedDate],
+      MEAL_ORDER.map((meal) => {
+        const entries = foodLogs
+          .filter((log) => log.date === selectedDate && log.mealType === meal)
+          .sort((a, b) => {
+            if (a.createdAt === b.createdAt) {
+              return a.id.localeCompare(b.id);
+            }
+
+            return a.createdAt.localeCompare(b.createdAt);
+          });
+
+        const subtotal = entries.reduce(
+          (acc, item) => {
+            acc.calories += item.calories;
+            acc.protein += item.protein;
+            return acc;
+          },
+          { calories: 0, protein: 0 },
+        );
+
+        return {
+          mealType: meal,
+          mealLabel: mealTypeOptions.find((item) => item.value === meal)?.label ?? meal,
+          entries,
+          subtotal,
+        };
+      }),
+    [foodLogs, mealTypeOptions, selectedDate],
   );
   const nutritionSummary = useMemo(
     () => getNutritionByDate(foodLogs, selectedDate),
@@ -249,15 +278,18 @@ export function NutritionPage() {
               <Button
                 key={item.id}
                 variant="outline"
-                className="justify-between"
+                className="h-auto justify-between py-2"
                 onClick={() => applyQuickFood(item)}
                 disabled={isBusy}
               >
-                <span className="truncate">{item.name}</span>
-                <span className="inline-flex items-center text-xs text-slate-500">
-                  {quickLoadingId === item.id ? <LoaderCircle className="mr-1 h-3.5 w-3.5 animate-spin" /> : null}
-                  {item.calories} kcal / {item.protein}g
+                <span className="flex flex-col items-start truncate text-left">
+                  <span className="truncate">{item.name}</span>
+                  <span className="text-[11px] text-slate-500">
+                    {item.calories} kcal / {item.protein}g {t("proteinUnit")}
+                  </span>
+                  <span className="text-[11px] text-slate-500">{item.displayText}</span>
                 </span>
+                {quickLoadingId === item.id ? <LoaderCircle className="h-3.5 w-3.5 animate-spin text-slate-500" /> : null}
               </Button>
             ))}
           </CardContent>
@@ -310,7 +342,7 @@ export function NutritionPage() {
           <div className="flex items-end gap-2">
             <Button onClick={handleSubmit} className="w-full" disabled={isBusy}>
               {submitting ? <LoaderCircle className="mr-1 h-4 w-4 animate-spin" /> : <Plus className="mr-1 h-4 w-4" />}
-              {editingId ? t("saveEdit") : t("add")}
+              {submitting ? t("saving") : editingId ? t("saveEdit") : t("add")}
             </Button>
             {editingId ? (
               <Button type="button" variant="outline" onClick={resetForm} disabled={isBusy}>
@@ -328,38 +360,57 @@ export function NutritionPage() {
         <CardHeader>
           <CardTitle className="text-base">{t("dailyEntries")}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          {dayLogs.length === 0 ? (
+        <CardContent className="space-y-3">
+          {groupedDayLogs.every((group) => group.entries.length === 0) ? (
             <EmptyState title={t("noneTitle")} description={t("noneDesc")} />
           ) : (
-            dayLogs.map((log) => (
-              <div
-                key={log.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3"
-              >
-                <div>
-                  <p className="font-medium text-slate-900">{log.foodName}</p>
-                  <p className="text-xs text-slate-500">
-                    {t("entryMeta", {
-                      mealType: mealTypeLabel(log.mealType),
-                      calories: log.calories,
-                      protein: log.protein,
+            groupedDayLogs.map((group) => (
+              <div key={group.mealType} className="rounded-xl border border-slate-200 bg-slate-50/70 p-3">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <Badge variant="outline">{group.mealLabel}</Badge>
+                  <p className="text-xs text-slate-600">
+                    {t("mealSubtotal", {
+                      calories: group.subtotal.calories,
+                      protein: group.subtotal.protein,
                     })}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">{mealTypeLabel(log.mealType)}</Badge>
-                  <Button size="icon" variant="ghost" onClick={() => startEditing(log)} disabled={isBusy}>
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="ghost" onClick={() => handleDelete(log.id)} disabled={isBusy}>
-                    {deletingId === log.id ? (
-                      <LoaderCircle className="h-4 w-4 animate-spin text-rose-600" />
-                    ) : (
-                      <Trash2 className="h-4 w-4 text-rose-600" />
-                    )}
-                  </Button>
-                </div>
+
+                {group.entries.length === 0 ? (
+                  <p className="text-xs text-slate-500">{t("mealEmpty")}</p>
+                ) : (
+                  <div className="space-y-2">
+                    {group.entries.map((log) => (
+                      <div
+                        key={log.id}
+                        className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3"
+                      >
+                        <div>
+                          <p className="font-medium text-slate-900">{log.foodName}</p>
+                          <p className="text-xs text-slate-500">
+                            {t("entryMeta", {
+                              mealType: mealTypeLabel(log.mealType),
+                              calories: log.calories,
+                              protein: log.protein,
+                            })}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button size="icon" variant="ghost" onClick={() => startEditing(log)} disabled={isBusy}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button size="icon" variant="ghost" onClick={() => handleDelete(log.id)} disabled={isBusy}>
+                            {deletingId === log.id ? (
+                              <LoaderCircle className="h-4 w-4 animate-spin text-rose-600" />
+                            ) : (
+                              <Trash2 className="h-4 w-4 text-rose-600" />
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))
           )}
