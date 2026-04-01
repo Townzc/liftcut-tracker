@@ -2,14 +2,22 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, LoaderCircle, Save } from "lucide-react";
+import { CheckCircle2, Eye, LoaderCircle, Save } from "lucide-react";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -261,6 +269,7 @@ export function WorkoutPage() {
   const t = useTranslations("workout");
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
+  const { user, loading: authLoading } = useAuth();
 
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const workoutLogs = useTrackerStore((state) => state.workoutLogs);
@@ -272,6 +281,8 @@ export function WorkoutPage() {
   const addWorkoutLog = useTrackerStore((state) => state.addWorkoutLog);
 
   const [workoutDate, setWorkoutDate] = useState(todayString());
+  const [selectedRecentLogId, setSelectedRecentLogId] = useState<string | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const currentWeek = useMemo(
     () => trainingPlan.weeks.find((week) => week.weekNumber === selectedWeek) ?? trainingPlan.weeks[0],
@@ -293,8 +304,36 @@ export function WorkoutPage() {
     [currentDay?.dayNumber, currentWeek?.weekNumber, workoutDate, workoutLogs],
   );
   const recentLogs = useMemo(() => workoutLogs.slice(0, 5), [workoutLogs]);
+  const selectedRecentLog = useMemo(
+    () => workoutLogs.find((log) => log.id === selectedRecentLogId) ?? null,
+    [selectedRecentLogId, workoutLogs],
+  );
+  const detailState = useMemo<"loading" | "not-found" | "unauthorized" | "ready">(() => {
+    if (authLoading || trackerLoading) {
+      return "loading";
+    }
+
+    if (!user) {
+      return "unauthorized";
+    }
+
+    if (!selectedRecentLogId || !selectedRecentLog) {
+      return "not-found";
+    }
+
+    if (selectedRecentLog.userId !== user.id) {
+      return "unauthorized";
+    }
+
+    return "ready";
+  }, [authLoading, selectedRecentLog, selectedRecentLogId, trackerLoading, user]);
 
   const draftKey = `${workoutDate}-${currentWeek?.weekNumber ?? 1}-${currentDay?.dayNumber ?? 1}-${existingLog?.id ?? "new"}`;
+
+  const handleOpenLogDetail = (logId: string) => {
+    setSelectedRecentLogId(logId);
+    setIsDetailOpen(true);
+  };
 
   return (
     <div className="space-y-4 pb-20">
@@ -398,9 +437,11 @@ export function WorkoutPage() {
             <EmptyState title={t("recentLogsEmptyTitle")} description={t("recentLogsEmptyDesc")} />
           ) : (
             recentLogs.map((log) => (
-              <div
+              <button
                 key={log.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3"
+                type="button"
+                onClick={() => handleOpenLogDetail(log.id)}
+                className="flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3 text-left transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <div>
                   <p className="font-medium text-slate-900">{log.date}</p>
@@ -416,11 +457,104 @@ export function WorkoutPage() {
                 <Badge variant={log.completed ? "default" : "outline"}>
                   {log.completed ? t("statusCompleted") : t("statusPending")}
                 </Badge>
-              </div>
+                <span className="inline-flex items-center text-xs text-emerald-700">
+                  <Eye className="mr-1 h-3.5 w-3.5" />
+                  {t("recentLogsOpen")}
+                </span>
+              </button>
             ))
           )}
         </CardContent>
       </Card>
+
+      <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
+        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{t("detailTitle")}</DialogTitle>
+            <DialogDescription>{t("detailDesc")}</DialogDescription>
+          </DialogHeader>
+
+          {detailState === "loading" ? (
+            <div className="inline-flex items-center text-sm text-slate-600">
+              <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+              {t("detailLoading")}
+            </div>
+          ) : null}
+
+          {detailState === "not-found" ? (
+            <EmptyState title={t("detailNotFoundTitle")} description={t("detailNotFoundDesc")} />
+          ) : null}
+
+          {detailState === "unauthorized" ? (
+            <EmptyState title={t("detailUnauthorizedTitle")} description={t("detailUnauthorizedDesc")} />
+          ) : null}
+
+          {detailState === "ready" && selectedRecentLog ? (
+            <div className="space-y-3">
+              <div className="grid gap-2 sm:grid-cols-2">
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                  <p className="text-xs text-slate-500">{t("date")}</p>
+                  <p className="font-medium text-slate-900">{selectedRecentLog.date}</p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                  <p className="text-xs text-slate-500">{t("detailWeekDayLabel")}</p>
+                  <p className="font-medium text-slate-900">
+                    {t("detailWeekDayValue", {
+                      week: selectedRecentLog.weekNumber,
+                      day: selectedRecentLog.dayNumber,
+                    })}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                  <p className="text-xs text-slate-500">{t("duration")}</p>
+                  <p className="font-medium text-slate-900">
+                    {t("detailDurationValue", { minutes: selectedRecentLog.durationMinutes })}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                  <p className="text-xs text-slate-500">{t("sessionCompleted")}</p>
+                  <p className="font-medium text-slate-900">
+                    {selectedRecentLog.completed ? t("statusCompleted") : t("statusPending")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                <p className="text-xs text-slate-500">{t("notesTitle")}</p>
+                <p className="mt-1 text-slate-800">{selectedRecentLog.notes || tCommon("noNotes")}</p>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-slate-900">{t("detailExercisesTitle")}</p>
+                {selectedRecentLog.exercises.length === 0 ? (
+                  <EmptyState title={t("detailNoExerciseTitle")} description={t("detailNoExerciseDesc")} />
+                ) : (
+                  selectedRecentLog.exercises.map((exercise) => (
+                    <div
+                      key={exercise.id}
+                      className="rounded-lg border border-slate-200 bg-white p-3"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-medium text-slate-900">{exercise.name}</p>
+                        <Badge variant={exercise.completed ? "default" : "outline"}>
+                          {exercise.completed ? t("statusCompleted") : t("statusPending")}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-600">
+                        {t("detailExerciseMeta", {
+                          weight: exercise.actualWeight,
+                          reps: exercise.actualReps,
+                          rpe: exercise.actualRpe,
+                        })}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
