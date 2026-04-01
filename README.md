@@ -1,12 +1,19 @@
-﻿# LiftCut Tracker (V1.2)
+# LiftCut Tracker (V1.3)
 
 LiftCut Tracker 是一个极简、无广告、可日常使用的训练与减脂追踪 Web 应用。
 
-V1.2 在 V1.1 基础上重点提升了“可用性与可分享性”：
-- 修复多处 `新增 / 创建 / 保存 / 解析` 点击无响应问题
-- 训练计划主导出入口升级为 PDF（保留 JSON 备份导出）
-- 文本导入计划支持中英文双模板一键加载
-- 关键异步操作统一补齐 `loading / 成功 / 失败` 反馈
+V1.3 重点优化：
+- 计划管理新增删除计划（含确认与 active 兜底）
+- 训练记录页新增“保存后说明 + 最近训练记录”
+- 饮食记录按早餐/午餐/晚餐/加餐分组排序并显示分餐小计
+- 常用食物快捷添加增加营养单位基准说明
+- create/add/save 类操作增加更快反馈与局部状态更新，降低等待感
+
+V1.2 保留能力：
+- 文本导入计划（中英文模板 + 规则解析 + 可编辑预览）
+- 训练计划 PDF 导出主入口（保留 JSON 备份导出）
+- 全站中英文切换
+- Supabase Auth + Postgres 多用户隔离
 
 ---
 
@@ -38,110 +45,139 @@ V1.2 在 V1.1 基础上重点提升了“可用性与可分享性”：
 - `/register` 注册
 - `/forgot-password` 忘记密码
 
-受保护路由通过 `middleware.ts` 控制：未登录访问业务页会自动跳转到 `/login`。
+未登录访问业务页会通过 `middleware.ts` 跳转到 `/login`。
 
 ---
 
-## 3. 国际化说明（i18n）
+## 3. 国际化（i18n）
 
 - 默认语言：`zh-CN`
 - 支持语言：`zh-CN`、`en`
-- 语言包文件：
+- 语言包：
   - `messages/zh-CN.json`
   - `messages/en.json`
-- 语言切换入口：`/settings`
-- 语言偏好保存策略：
-  - Supabase `profiles.preferred_language`（跨设备）
-  - 本地 `localStorage`（刷新不丢失）
+- 切换入口：`/settings`
+- 偏好保存：
+  - `profiles.preferred_language`（Supabase）
+  - `localStorage`（避免刷新丢失）
 
 ---
 
-## 4. 文本导入训练计划（V1.2）
+## 4. 文本导入训练计划
 
-### 4.1 入口与流程
+入口：`/plan` -> 文本导入计划
 
-在 `/plan` 的“文本导入计划”区域：
+流程：
 1. 点击“加载中文示例”或“加载英文示例”
-2. 粘贴或修改计划文本
+2. 粘贴/编辑文本
 3. 点击“解析计划”（有 loading）
-4. 解析成功后进入“预览与编辑”
-5. 修正动作字段后点击“保存解析结果”
+4. 查看解析预览并可手动修改
+5. 点击“保存解析结果”生成正式计划
 
-### 4.2 双语模板
+支持格式：
+- 周：`Week 1` / `第1周`
+- 天：`Day 1` / `Day1` / `第1天`
+- 动作：`动作名 组数 x 次数 RPE 值`
 
-- 英文模板：`Week 1 / Day 1 / Bench Press 4 x 5 RPE 7`
-- 中文模板：`第1周 / Day1 / 卧推 4 × 5 RPE 7`
-
-两套模板都与当前规则解析器严格匹配，可直接解析成功。
-
-### 4.3 支持格式
-
-- 周：`Week 1` 或 `第1周`
-- 天：`Day 1` / `Day1` 或 `第1天`
-- 动作行：`动作名 组数 x 次数 RPE 数值`
-
-### 4.4 失败提示
-
-解析失败时会尽量给出：
-- 行号定位
-- 结构化原因（如缺组数、缺次数、RPE 格式错误）
+解析失败会尽量给出行号与原因（缺组数、缺次数、RPE 无效等）。
 
 ---
 
-## 5. 训练计划导出（PDF 主入口）
+## 5. 训练计划管理
 
-在 `/plan` 页面：
-- 主入口：`导出当前计划（PDF）`
-- 次入口：`导出当前计划（JSON）`（开发/备份）
+### 5.1 创建/导入/导出
 
-PDF 导出内容包括：
-- 计划名称
-- 导出日期
-- Week 分区
-- Day 小节
-- 表格字段：动作、组数、次数、RPE、备注、替代动作
+`/plan` 支持：
+- 创建空白计划
+- 导入 JSON 计划
+- 文本导入计划
+- 导出 PDF（主入口）
+- 导出 JSON（备份入口）
 
-导出文件名示例：
-- `liftcut-plan-my-plan.pdf`
+### 5.2 删除计划（V1.3）
+
+- 每个计划项右侧可删除
+- 删除前二次确认
+- 删除后列表立即刷新
+- 删除当前 active 计划时会自动切换到其他计划
+- 删除最后一个计划后进入空状态引导
+
+数据库层通过外键级联删除：
+- `training_plan_weeks`
+- `training_plan_days`
+- `training_plan_exercises`
 
 ---
 
-## 6. Supabase 配置
+## 6. 训练记录保存后的结果（V1.3）
 
-### 6.1 环境变量
+在 `/workout` 点击“保存训练记录”后会保存：
+- 日期
+- 周/天
+- 训练时长
+- 整次训练完成状态
+- 每个动作的实际重量/次数/RPE/完成状态
 
-复制 `.env.example` 为 `.env.local`，填写：
+保存后可见性：
+- 页面内“本次已保存”摘要卡
+- 页面底部“最近训练记录”列表
+- Dashboard 显示最近一次训练日期与完成状态
+
+---
+
+## 7. 饮食记录排序与分餐统计（V1.3）
+
+`/nutrition` 展示逻辑：
+- 固定顺序：早餐 -> 午餐 -> 晚餐 -> 加餐
+- 同一餐次内按创建时间稳定排序
+- 每个餐次显示小计（热量/蛋白）
+- 顶部保留全天总计（热量/蛋白）
+
+常用食物快捷项现显示单位基准，例如：
+- 每个（约50g）
+- 每勺（30g）
+- 每100g
+
+快捷添加默认按该单位添加 1 份。
+
+---
+
+## 8. 认证与 Supabase 配置
+
+### 8.1 环境变量
+
+复制 `.env.example` 到 `.env.local`：
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### 6.2 初始化数据库
+### 8.2 初始化数据库
 
-1. 在 Supabase 控制台创建项目
+1. 在 Supabase 创建项目
 2. 打开 SQL Editor
 3. 执行 `supabase/schema.sql`
 
 该 SQL 包含：
-- 核心业务表（设置/计划/训练日志/饮食/体重）
-- `profiles` 资料表
-- 全量 RLS 策略（按 `user_id`/所属关系隔离）
+- 核心业务表（设置/计划/训练日志/饮食/身体数据）
+- `profiles` 用户资料表
+- RLS 策略（按 `user_id` 隔离）
 
-### 6.3 Auth 配置
+### 8.3 Auth
 
-在 Supabase Auth 中启用 Email 登录（建议同时启用 Email Confirm）。
+启用 Supabase Email 注册/登录（建议开启邮箱验证）。
 
 ---
 
-## 7. 本地运行
+## 9. 本地运行
 
 ```bash
 npm install
 npm run dev
 ```
 
-检查：
+质量检查：
 
 ```bash
 npm run lint
@@ -150,93 +186,61 @@ npm run build
 
 ---
 
-## 8. 数据导入导出
+## 10. 导入导出说明
 
-### 8.1 训练计划导入
-
-- JSON 导入：`/plan` 或 `/settings`
-- 文本导入：`/plan`（规则解析 + 预览修正）
-- JSON 校验：基于 Zod（格式错误会显示友好提示）
-
-示例 JSON：
-- `public/samples/sample-training-plan.json`
-
-### 8.2 数据导出
-
+- 计划 JSON 导入：`/plan` 或 `/settings`
+- 计划文本导入：`/plan`
 - 计划 PDF 导出：`/plan`
 - 计划 JSON 导出：`/plan`
 - 全量数据 JSON 导出：`/settings`
 
----
-
-## 9. V1.2 已修复交互问题（摘要）
-
-- 修复“创建空白计划”无反馈问题
-- 修复“解析计划”无反馈问题，补齐 loading / 成功 / 错误提示
-- 修复“新增饮食记录”无反馈问题，补齐前端校验与保存反馈
-- 补齐训练记录、身体数据、设置模块关键按钮反馈
-- 修复多处用户未登录时的静默失败（改为明确错误提示）
-
-### 9.1 认证状态误判修复
-
-- 修复“已登录但提交时被误判为未登录”的问题（覆盖计划、饮食、设置、训练、身体数据写入链路）
-- 统一写操作的用户身份解析：优先使用 store 中的 `userId`，缺失时回退 Supabase session 获取
-- 区分错误类型：只有真实未登录才提示登录，其他写入失败显示真实错误信息
-
-### 9.2 数字输入体验优化
-
-- 所有关键表单数字输入已切换为统一 `NumericInput` 策略
-- 支持编辑态临时清空（可删到空、可全选覆盖、可重新输入）
-- 不再在输入过程中强制把空值回填成 `0`
-- 提交前仍保留原有业务校验，保证数据有效性
+示例计划文件：
+- `public/samples/sample-training-plan.json`
 
 ---
 
-## 10. 目录结构（核心）
+## 11. 响应速度优化（V1.3）
+
+本轮对关键 mutation 做了可感知提速：
+- 关键按钮点击后立即 loading 并禁用重复提交
+- 饮食/训练/身体数据写入改为局部更新优先
+- 异常时回滚状态并立即展示错误
+- 仅在必要场景执行全量刷新（如切换 active 计划）
+
+---
+
+## 12. 目录结构（核心）
 
 ```text
 src/
   app/
-    page.tsx
-    plan/page.tsx
-    workout/page.tsx
-    nutrition/page.tsx
-    body/page.tsx
-    settings/page.tsx
-    login/page.tsx
-    register/page.tsx
-    forgot-password/page.tsx
   components/
     auth/
+    body/
+    charts/
+    dashboard/
     i18n/
     layout/
-    dashboard/
-    plan/
-    workout/
     nutrition/
-    body/
+    plan/
     settings/
-    charts/
     shared/
     ui/
+    workout/
   i18n/
-    config.ts
-    messages.ts
   lib/
     plan-parser.ts
     plan-normalizer.ts
     plan-import-schema.ts
     supabase/
-    ...
   services/
     data-repository.ts
-    plan-import.ts
     plan-export.ts
+    plan-import.ts
   store/
     use-tracker-store.ts
     use-ui-store.ts
   types/
-    index.ts
 messages/
   zh-CN.json
   en.json
@@ -246,8 +250,8 @@ supabase/
 
 ---
 
-## 11. 后续扩展建议
+## 13. 后续扩展建议
 
 1. 增加训练日志组级明细（每组重量/次数/RPE）
-2. 增加计划版本管理（历史、回滚、对比）
-3. 将关键 mutation 逐步迁移至服务端 Action 提升一致性
+2. 增加计划版本历史与回滚
+3. 将更多 mutation 收敛到统一服务层并补自动化测试
