@@ -884,60 +884,93 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
     throw settingsError;
   }
 
-  const { activePlan, planList } = await fetchPlanBundle(userId);
-
-  const { data: workoutRows, error: workoutError } = await supabase
-    .from("workout_logs")
-    .select("*")
-    .eq("user_id", userId)
-    .order("date", { ascending: false });
-
-  if (workoutError) {
-    throw workoutError;
+  let activePlan = createEmptyTrainingPlan(userId);
+  let planList: TrainingPlanSummary[] = [];
+  try {
+    const bundle = await fetchPlanBundle(userId);
+    activePlan = bundle.activePlan;
+    planList = bundle.planList;
+  } catch (planError) {
+    console.error("[data-repository] fetchPlanBundle failed, fallback to empty plan", planError);
   }
 
-  const workoutIds = (workoutRows ?? []).map((row) => row.id);
-  const { data: workoutExerciseRows, error: workoutExerciseError } = workoutIds.length
-    ? await supabase
+  let workoutRows: Record<string, unknown>[] = [];
+  let workoutExerciseRows: Record<string, unknown>[] = [];
+  try {
+    const { data: rawWorkoutRows, error: workoutError } = await supabase
+      .from("workout_logs")
+      .select("*")
+      .eq("user_id", userId)
+      .order("date", { ascending: false });
+
+    if (workoutError) {
+      throw workoutError;
+    }
+
+    workoutRows = (rawWorkoutRows ?? []) as Record<string, unknown>[];
+
+    const workoutIds = workoutRows.map((row) => row.id);
+    if (workoutIds.length) {
+      const { data: rawWorkoutExerciseRows, error: workoutExerciseError } = await supabase
         .from("workout_log_exercises")
         .select("*")
-        .in("workout_log_id", workoutIds)
-    : { data: [], error: null };
+        .in("workout_log_id", workoutIds);
 
-  if (workoutExerciseError) {
-    throw workoutExerciseError;
+      if (workoutExerciseError) {
+        throw workoutExerciseError;
+      }
+
+      workoutExerciseRows = (rawWorkoutExerciseRows ?? []) as Record<string, unknown>[];
+    }
+  } catch (workoutQueryError) {
+    console.error("[data-repository] workout query failed, fallback to empty workout logs", workoutQueryError);
+    workoutRows = [];
+    workoutExerciseRows = [];
   }
 
-  const { data: foodRows, error: foodError } = await supabase
-    .from("food_logs")
-    .select("*")
-    .eq("user_id", userId)
-    .order("date", { ascending: false });
+  let foodRows: Record<string, unknown>[] = [];
+  try {
+    const { data: rawFoodRows, error: foodError } = await supabase
+      .from("food_logs")
+      .select("*")
+      .eq("user_id", userId)
+      .order("date", { ascending: false });
 
-  if (foodError) {
-    throw foodError;
+    if (foodError) {
+      throw foodError;
+    }
+
+    foodRows = (rawFoodRows ?? []) as Record<string, unknown>[];
+  } catch (foodQueryError) {
+    console.error("[data-repository] food query failed, fallback to empty nutrition logs", foodQueryError);
+    foodRows = [];
   }
 
-  const { data: bodyRows, error: bodyError } = await supabase
-    .from("body_metric_logs")
-    .select("*")
-    .eq("user_id", userId)
-    .order("date", { ascending: false });
+  let bodyRows: Record<string, unknown>[] = [];
+  try {
+    const { data: rawBodyRows, error: bodyError } = await supabase
+      .from("body_metric_logs")
+      .select("*")
+      .eq("user_id", userId)
+      .order("date", { ascending: false });
 
-  if (bodyError) {
-    throw bodyError;
+    if (bodyError) {
+      throw bodyError;
+    }
+
+    bodyRows = (rawBodyRows ?? []) as Record<string, unknown>[];
+  } catch (bodyQueryError) {
+    console.error("[data-repository] body query failed, fallback to empty body logs", bodyQueryError);
+    bodyRows = [];
   }
 
   return {
     snapshot: {
       settings: normalizeSettings(settingsRow as Record<string, unknown> | null, userId),
       trainingPlan: activePlan,
-      workoutLogs: mapWorkoutLogs(
-        (workoutRows ?? []) as Record<string, unknown>[],
-        (workoutExerciseRows ?? []) as Record<string, unknown>[],
-      ),
-      foodLogs: mapFoodLogs((foodRows ?? []) as Record<string, unknown>[]),
-      bodyMetricLogs: mapBodyLogs((bodyRows ?? []) as Record<string, unknown>[]),
+      workoutLogs: mapWorkoutLogs(workoutRows, workoutExerciseRows),
+      foodLogs: mapFoodLogs(foodRows),
+      bodyMetricLogs: mapBodyLogs(bodyRows),
       quickFoods: defaultQuickFoods,
     },
     planList,

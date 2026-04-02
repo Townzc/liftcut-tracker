@@ -233,12 +233,18 @@ export const useTrackerStore = create<TrackerState>()(
           });
         } catch (error) {
           console.error(error);
-          set({
-            ...createEmptySnapshot(userId),
-            trainingPlanList: [],
+          set((state) => ({
+            userId,
             error: error instanceof Error ? error.message : "Failed to load user data.",
             loading: false,
-          });
+            settings:
+              state.settings.userId === userId
+                ? state.settings
+                : {
+                    ...state.settings,
+                    userId,
+                  },
+          }));
         }
       },
       clearUserData: () => {
