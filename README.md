@@ -163,6 +163,23 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 `training_plans` 包含：
 - `notes`
 
+### 8.3.1 旧数据库升级（必须）
+
+如果你的项目在早期版本已经执行过旧 schema，需要补执行以下 SQL：
+
+```sql
+alter table public.profiles add column if not exists display_name text;
+alter table public.profiles add column if not exists avatar_url text;
+```
+
+建议同时确保 `updated_at` 也存在（新版本资料更新会写入该字段）：
+
+```sql
+alter table public.profiles add column if not exists updated_at timestamptz not null default now();
+```
+
+如果资料保存时出现“数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url）”，通常就是尚未执行上述迁移 SQL。
+
 ### 8.4 头像 bucket
 
 - bucket 名称：`avatars`（public）

@@ -369,7 +369,8 @@
     "avatarInvalidType": "Only PNG, JPEG, and WEBP images are supported.",
     "avatarTooLarge": "Image size must be 5MB or less.",
     "displayNameRequired": "Nickname is required.",
-    "displayNameTooLong": "Nickname must be 30 characters or fewer."
+    "displayNameTooLong": "Nickname must be 30 characters or fewer.",
+    "profileSchemaUpgradeRequired": "Profile fields are missing in your database. Please upgrade Supabase schema (profiles.display_name / profiles.avatar_url)."
   },
   "empty": {
     "title": "No data",

@@ -36,6 +36,7 @@ create table if not exists public.training_plans (
   updated_at timestamptz not null default now()
 );
 
+-- Backward-compatible migration for older projects (run safely multiple times)
 alter table public.profiles add column if not exists display_name text;
 alter table public.profiles add column if not exists avatar_url text;
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();

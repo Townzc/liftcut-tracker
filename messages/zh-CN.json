@@ -369,7 +369,8 @@
     "avatarInvalidType": "支持 PNG / JPEG / WEBP 图片格式。",
     "avatarTooLarge": "文件大小不超过 5MB。",
     "displayNameRequired": "昵称不能为空。",
-    "displayNameTooLong": "昵称长度不能超过 30 个字符。"
+    "displayNameTooLong": "昵称长度不能超过 30 个字符。",
+    "profileSchemaUpgradeRequired": "数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url）。"
   },
   "empty": {
     "title": "暂无数据",

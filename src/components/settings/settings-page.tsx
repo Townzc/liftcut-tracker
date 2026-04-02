@@ -111,6 +111,7 @@ export function SettingsPage() {
         normalizeActionError(profileError, {
           fallback: t("profileSaveFailed"),
           authMessage: t("authRequired"),
+          schemaMessage: t("profileSchemaUpgradeRequired"),
         }),
       );
     } finally {
@@ -147,6 +148,7 @@ export function SettingsPage() {
         normalizeActionError(uploadError, {
           fallback: t("avatarUploadFailed"),
           authMessage: t("authRequired"),
+          schemaMessage: t("profileSchemaUpgradeRequired"),
         }),
       );
     } finally {
@@ -169,6 +171,7 @@ export function SettingsPage() {
         normalizeActionError(removeError, {
           fallback: t("avatarRemoveFailed"),
           authMessage: t("authRequired"),
+          schemaMessage: t("profileSchemaUpgradeRequired"),
         }),
       );
     } finally {
