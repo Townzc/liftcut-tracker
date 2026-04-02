@@ -317,33 +317,38 @@ export function SettingsPage() {
               avatarUrl={profile?.avatarUrl}
               className="h-16 w-16 text-xl"
             />
-            <div className="flex flex-wrap items-center gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isBusy || loadingAction === "upload-avatar"}
-                onClick={() => avatarInputRef.current?.click()}
-              >
-                {loadingAction === "upload-avatar" ? (
-                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Upload className="mr-2 h-4 w-4" />
-                )}
-                {loadingAction === "upload-avatar" ? t("avatarUploading") : t("avatarUpload")}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isBusy || !profile?.avatarUrl}
-                onClick={handleAvatarRemove}
-              >
-                {loadingAction === "remove-avatar" ? (
-                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Trash2 className="mr-2 h-4 w-4" />
-                )}
-                {loadingAction === "remove-avatar" ? t("avatarRemoving") : t("avatarRemove")}
-              </Button>
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={isBusy || loadingAction === "upload-avatar"}
+                  onClick={() => avatarInputRef.current?.click()}
+                >
+                  {loadingAction === "upload-avatar" ? (
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Upload className="mr-2 h-4 w-4" />
+                  )}
+                  {loadingAction === "upload-avatar" ? t("avatarUploading") : t("avatarUpload")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={isBusy || !profile?.avatarUrl}
+                  onClick={handleAvatarRemove}
+                >
+                  {loadingAction === "remove-avatar" ? (
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="mr-2 h-4 w-4" />
+                  )}
+                  {loadingAction === "remove-avatar" ? t("avatarRemoving") : t("avatarRemove")}
+                </Button>
+              </div>
+              <p className="text-xs text-slate-500">
+                {t("avatarInvalidType")} {t("avatarTooLarge")}
+              </p>
             </div>
           </div>
 
