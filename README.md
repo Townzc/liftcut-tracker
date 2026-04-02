@@ -1,11 +1,12 @@
-﻿# LiftCut Tracker (V1.5)
+﻿# LiftCut Tracker (V1.6)
 
 LiftCut Tracker 是一个极简、无广告、可日常使用的训练与减脂追踪 Web 应用。
 
-V1.5 本轮重点：
-- 新增昵称与头像上传，增强“个人归属感”
-- 训练计划支持持续编辑（计划信息 + 动作增删改）
-- PDF 导出文本对比度优化（更黑、更清晰、更适合打印）
+V1.6 本轮重点：
+- 基础信息新增性别与年龄（`user_settings.gender/age`）
+- 新用户首次登录进入 onboarding 资料完善流程
+- 基础信息默认改为“未填写”（`0 / unknown`）
+- 移动端底部导航改为 icon + text
 
 ---
 
@@ -34,11 +35,12 @@ V1.5 本轮重点：
 - `/nutrition` 饮食记录
 - `/body` 体重与身体数据
 - `/settings` 设置与数据管理
+- `/onboarding` 首次资料填写
 - `/login` 登录
 - `/register` 注册
 - `/forgot-password` 忘记密码
 
-未登录访问业务页会通过 `middleware.ts` 跳转到 `/login`。
+未登录访问业务页会通过 `middleware.ts` 跳转到 `/login`。已登录但基础信息未完成会被引导到 `/onboarding`。
 
 ---
 
@@ -153,12 +155,16 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 2. 打开 SQL Editor
 3. 执行 `supabase/schema.sql`
 
-### 8.3 昵称与头像相关字段
+### 8.3 资料与设置字段
 
 `profiles` 包含：
 - `display_name`
 - `avatar_url`
 - `updated_at`
+
+`user_settings` 包含（新增）：
+- `gender`（`male | female | other | unknown`）
+- `age`（`0` 表示未填写）
 
 `training_plans` 包含：
 - `notes`
@@ -173,6 +179,11 @@ alter table public.profiles add column if not exists avatar_url text;
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
 update public.profiles set display_name = split_part(email, '@', 1) where display_name is null or btrim(display_name) = '';
 update public.profiles set updated_at = now() where updated_at is null;
+
+alter table public.user_settings add column if not exists gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown'));
+alter table public.user_settings add column if not exists age int not null default 0 check (age >= 0 and age <= 120);
+update public.user_settings set gender = 'unknown' where gender is null;
+update public.user_settings set age = 0 where age is null;
 ```
 
 如果资料保存时出现“数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url / profiles.updated_at）”，通常就是尚未执行上述迁移 SQL。
@@ -209,7 +220,18 @@ npm run build
 
 ---
 
-## 11. LLM 扩展预留（不接真实 API）
+## 11. Onboarding 与基础信息默认值
+
+- 新用户首次登录后会优先进入 `/onboarding`。
+- onboarding 需先完善：性别、年龄、身高、当前体重、目标体重、每周训练天数。
+- 默认基础信息使用未填写态：
+  - `gender = unknown`
+  - 数值字段默认 `0`
+- 若基础信息未完成，业务页会被 middleware 引导回 onboarding。
+
+---
+
+## 12. LLM 扩展预留（不接真实 API）
 
 本仓库保留了后续扩展骨架：
 - `src/types/llm.ts`
@@ -220,7 +242,7 @@ npm run build
 
 ---
 
-## 12. 目录结构（核心）
+## 13. 目录结构（核心）
 
 ```text
 src/

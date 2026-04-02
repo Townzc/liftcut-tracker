@@ -21,10 +21,11 @@ import { cn } from "@/lib/utils";
 interface NavItem {
   href: string;
   label: string;
+  shortLabel: string;
   icon: ComponentType<{ className?: string }>;
 }
 
-const authRoutes = ["/login", "/register", "/forgot-password"];
+const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding"];
 
 function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }) {
   const pathname = usePathname();
@@ -39,11 +40,15 @@ function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }
         active
           ? "bg-slate-900 text-white"
           : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
-        compact && "flex-1 justify-center px-2",
+        compact && "flex-1 min-w-0 flex-col justify-center gap-1 px-1 py-1.5",
       )}
     >
-      <Icon className={cn("h-4 w-4", compact && "h-5 w-5")} />
-      {!compact && <span>{item.label}</span>}
+      <Icon className={cn("h-4 w-4", compact && "h-4 w-4")} />
+      {compact ? (
+        <span className="w-full truncate text-center text-[10px] leading-tight">{item.shortLabel}</span>
+      ) : (
+        <span>{item.label}</span>
+      )}
     </Link>
   );
 }
@@ -58,15 +63,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   const displayName = profile?.displayName || email.split("@")[0] || "User";
 
   const navItems: NavItem[] = [
-    { href: "/", label: tNav("dashboard"), icon: Home },
-    { href: "/plan", label: tNav("plan"), icon: CalendarCheck },
-    { href: "/workout", label: tNav("workout"), icon: Dumbbell },
-    { href: "/nutrition", label: tNav("nutrition"), icon: Apple },
-    { href: "/body", label: tNav("body"), icon: Weight },
-    { href: "/settings", label: tNav("settings"), icon: Settings },
+    { href: "/", label: tNav("dashboard"), shortLabel: tNav("dashboardShort"), icon: Home },
+    { href: "/plan", label: tNav("plan"), shortLabel: tNav("planShort"), icon: CalendarCheck },
+    { href: "/workout", label: tNav("workout"), shortLabel: tNav("workoutShort"), icon: Dumbbell },
+    { href: "/nutrition", label: tNav("nutrition"), shortLabel: tNav("nutritionShort"), icon: Apple },
+    { href: "/body", label: tNav("body"), shortLabel: tNav("bodyShort"), icon: Weight },
+    { href: "/settings", label: tNav("settings"), shortLabel: tNav("settingsShort"), icon: Settings },
   ];
 
-  if (authRoutes.some((route) => pathname.startsWith(route))) {
+  if (shellFreeRoutes.some((route) => pathname.startsWith(route))) {
     return (
       <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,116,144,0.08),transparent_55%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
         <main className="mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-10 md:px-8">

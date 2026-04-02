@@ -1,6 +1,7 @@
 export type AppLocale = "zh-CN" | "en";
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 export type QuickFoodBasisType = "per_100g" | "per_serving";
+export type Gender = "male" | "female" | "other" | "unknown";
 
 export interface UserProfile {
   id: string;
@@ -14,6 +15,8 @@ export interface UserProfile {
 
 export interface UserSettings {
   userId: string;
+  gender: Gender;
+  age: number;
   height: number;
   currentWeight: number;
   targetWeight: number;

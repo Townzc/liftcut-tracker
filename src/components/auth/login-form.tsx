@@ -34,7 +34,7 @@ export function LoginForm() {
         return;
       }
 
-      router.replace("/");
+      router.replace("/onboarding");
       router.refresh();
     } catch {
       setError(t("genericError"));

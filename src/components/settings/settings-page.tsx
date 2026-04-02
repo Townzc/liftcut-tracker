@@ -76,6 +76,15 @@ export function SettingsPage() {
         : t("rangeInvalid"),
     [draft.targetWeeklyLossMax, draft.targetWeeklyLossMin, t],
   );
+  const genderOptions = useMemo<Array<{ value: UserSettings["gender"]; label: string }>>(
+    () => [
+      { value: "male", label: t("genderMale") },
+      { value: "female", label: t("genderFemale") },
+      { value: "other", label: t("genderOther") },
+      { value: "unknown", label: t("genderUnknown") },
+    ],
+    [t],
+  );
 
   const updateField = <K extends keyof UserSettings>(key: K, value: UserSettings[K]) => {
     setDraft((prev) => ({ ...prev, [key]: value }));
@@ -392,30 +401,59 @@ export function SettingsPage() {
           <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
           <CardDescription>{t("profileDesc")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="space-y-1">
+            <Label>{t("gender")}</Label>
+            <Select
+              value={draft.gender}
+              onValueChange={(value) => updateField("gender", value as UserSettings["gender"])}
+              disabled={isBusy}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {genderOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1">
+            <Label>{t("age")}</Label>
+            <NumericInput
+              value={draft.age}
+              allowDecimal={false}
+              onValueChange={(value) => updateField("age", value)}
+              min={0}
+              max={120}
+            />
+          </div>
           <div className="space-y-1">
             <Label>{t("height")}</Label>
-            <NumericInput value={draft.height} onValueChange={(value) => updateField("height", value)} min={100} max={260} />
+            <NumericInput value={draft.height} onValueChange={(value) => updateField("height", value)} min={0} max={260} />
           </div>
           <div className="space-y-1">
             <Label>{t("currentWeight")}</Label>
-            <NumericInput value={draft.currentWeight} onValueChange={(value) => updateField("currentWeight", value)} min={30} max={300} />
+            <NumericInput value={draft.currentWeight} onValueChange={(value) => updateField("currentWeight", value)} min={0} max={300} />
           </div>
           <div className="space-y-1">
             <Label>{t("targetWeight")}</Label>
-            <NumericInput value={draft.targetWeight} onValueChange={(value) => updateField("targetWeight", value)} min={30} max={300} />
+            <NumericInput value={draft.targetWeight} onValueChange={(value) => updateField("targetWeight", value)} min={0} max={300} />
           </div>
           <div className="space-y-1">
             <Label>{t("weeklyTrainingDays")}</Label>
-            <NumericInput value={draft.weeklyTrainingDays} allowDecimal={false} onValueChange={(value) => updateField("weeklyTrainingDays", value)} min={1} max={7} />
+            <NumericInput value={draft.weeklyTrainingDays} allowDecimal={false} onValueChange={(value) => updateField("weeklyTrainingDays", value)} min={0} max={7} />
           </div>
           <div className="space-y-1">
             <Label>{t("calorieTarget")}</Label>
-            <NumericInput value={draft.calorieTarget} allowDecimal={false} onValueChange={(value) => updateField("calorieTarget", value)} min={500} max={7000} />
+            <NumericInput value={draft.calorieTarget} allowDecimal={false} onValueChange={(value) => updateField("calorieTarget", value)} min={0} max={7000} />
           </div>
           <div className="space-y-1">
             <Label>{t("proteinTarget")}</Label>
-            <NumericInput value={draft.proteinTarget} allowDecimal={false} onValueChange={(value) => updateField("proteinTarget", value)} min={30} max={400} />
+            <NumericInput value={draft.proteinTarget} allowDecimal={false} onValueChange={(value) => updateField("proteinTarget", value)} min={0} max={400} />
           </div>
           <div className="space-y-1">
             <Label>{t("weeklyLossMin")}</Label>

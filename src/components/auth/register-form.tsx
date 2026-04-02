@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
@@ -12,6 +13,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function RegisterForm() {
   const t = useTranslations("auth");
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,7 @@ export function RegisterForm() {
     setLoading(true);
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -47,6 +49,11 @@ export function RegisterForm() {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+
+      if (signUpData.session) {
+        router.replace("/onboarding");
+        router.refresh();
+      }
     } catch {
       setError(t("genericError"));
     } finally {

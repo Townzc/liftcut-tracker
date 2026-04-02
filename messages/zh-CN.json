@@ -6,7 +6,13 @@
     "nutrition": "饮食记录",
     "body": "身体数据",
     "settings": "设置",
-    "subtitle": "极简训练与减脂追踪"
+    "subtitle": "极简训练与减脂追踪",
+    "dashboardShort": "首页",
+    "planShort": "计划",
+    "workoutShort": "训练",
+    "nutritionShort": "饮食",
+    "bodyShort": "身体",
+    "settingsShort": "设置"
   },
   "common": {
     "loading": "加载中...",
@@ -84,7 +90,13 @@
     "exerciseQueued": "共 {count} 个动作待完成",
     "defaultName": "用户",
     "welcomeSubtitle": "欢迎回来",
-    "welcomeTitle": "你好，{name}"
+    "welcomeTitle": "你好，{name}",
+    "profileIncompleteTitle": "先完善基础信息",
+    "profileIncompleteDesc": "完善基础信息后，系统的推荐与进度反馈会更准确。",
+    "goOnboarding": "去完善资料",
+    "nutritionTargetUnset": "热量/蛋白目标尚未设置，请先完善基础信息。",
+    "weeklyTrainingUnset": "每周训练天数尚未设置，请先完善基础信息。",
+    "lossTargetUnset": "每周减脂目标尚未设置，请先完善基础信息。"
   },
   "plan": {
     "title": "训练计划",
@@ -371,10 +383,34 @@
     "avatarTooLarge": "文件大小不超过 5MB。",
     "displayNameRequired": "昵称不能为空。",
     "displayNameTooLong": "昵称长度不能超过 30 个字符。",
-    "profileSchemaUpgradeRequired": "数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url / profiles.updated_at）。"
+    "profileSchemaUpgradeRequired": "数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url / profiles.updated_at）。",
+    "gender": "性别",
+    "age": "年龄",
+    "genderMale": "男",
+    "genderFemale": "女",
+    "genderOther": "其他",
+    "genderUnknown": "暂不填写"
   },
   "empty": {
     "title": "暂无数据",
     "description": "先添加第一条记录开始使用。"
+  },
+  "onboarding": {
+    "title": "完善基础信息",
+    "description": "先完成这一步，后续训练与饮食记录会更准确。",
+    "requiredHint": "请先填写性别、年龄、身高、当前体重、目标体重和每周训练天数。",
+    "gender": "性别",
+    "age": "年龄",
+    "height": "身高（cm）",
+    "currentWeight": "当前体重（kg）",
+    "targetWeight": "目标体重（kg）",
+    "weeklyTrainingDays": "每周训练天数",
+    "genderMale": "男",
+    "genderFemale": "女",
+    "genderOther": "其他",
+    "genderUnknown": "暂不填写",
+    "saveAndEnter": "保存并进入应用",
+    "saving": "正在保存...",
+    "saveFailed": "保存基础信息失败。"
   }
 }

@@ -1,17 +1,20 @@
 import { z } from "zod";
 
 const positiveNumber = z.coerce.number().finite().nonnegative();
+const genderSchema = z.enum(["male", "female", "other", "unknown"]);
 
 export const localeSchema = z.enum(["zh-CN", "en"]);
 
 export const userSettingsSchema = z.object({
   userId: z.string().min(1).optional().default(""),
-  height: positiveNumber.min(100).max(260),
-  currentWeight: positiveNumber.min(30).max(300),
-  targetWeight: positiveNumber.min(30).max(300),
-  weeklyTrainingDays: z.coerce.number().int().min(1).max(7),
-  calorieTarget: positiveNumber.min(500).max(7000),
-  proteinTarget: positiveNumber.min(30).max(400),
+  gender: genderSchema.default("unknown"),
+  age: z.coerce.number().int().min(0).max(120).default(0),
+  height: positiveNumber.min(0).max(260),
+  currentWeight: positiveNumber.min(0).max(300),
+  targetWeight: positiveNumber.min(0).max(300),
+  weeklyTrainingDays: z.coerce.number().int().min(0).max(7),
+  calorieTarget: positiveNumber.min(0).max(7000),
+  proteinTarget: positiveNumber.min(0).max(400),
   targetWeeklyLossMin: positiveNumber.min(0).max(3),
   targetWeeklyLossMax: positiveNumber.min(0).max(3),
   updatedAt: z.string().optional().default("")

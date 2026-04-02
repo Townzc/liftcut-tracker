@@ -6,7 +6,13 @@
     "nutrition": "Nutrition",
     "body": "Body",
     "settings": "Settings",
-    "subtitle": "Simple training and fat-loss tracker"
+    "subtitle": "Simple training and fat-loss tracker",
+    "dashboardShort": "Home",
+    "planShort": "Plan",
+    "workoutShort": "Workout",
+    "nutritionShort": "Food",
+    "bodyShort": "Body",
+    "settingsShort": "Settings"
   },
   "common": {
     "loading": "Loading...",
@@ -84,7 +90,13 @@
     "exerciseQueued": "{count} exercises queued",
     "defaultName": "User",
     "welcomeSubtitle": "Welcome back",
-    "welcomeTitle": "Hi, {name}"
+    "welcomeTitle": "Hi, {name}",
+    "profileIncompleteTitle": "Complete your basic profile first",
+    "profileIncompleteDesc": "Fill in your basic information to unlock accurate guidance and clearer progress feedback.",
+    "goOnboarding": "Complete basic profile",
+    "nutritionTargetUnset": "Calorie/protein targets are not set yet. Please complete your profile first.",
+    "weeklyTrainingUnset": "Weekly training days are not set yet. Please complete your profile first.",
+    "lossTargetUnset": "Weekly fat-loss target is not set yet. Please complete your profile first."
   },
   "plan": {
     "title": "Training Plan",
@@ -371,10 +383,34 @@
     "avatarTooLarge": "Image size must be 5MB or less.",
     "displayNameRequired": "Nickname is required.",
     "displayNameTooLong": "Nickname must be 30 characters or fewer.",
-    "profileSchemaUpgradeRequired": "Profile fields are missing in your database. Please upgrade Supabase schema (profiles.display_name / profiles.avatar_url / profiles.updated_at)."
+    "profileSchemaUpgradeRequired": "Profile fields are missing in your database. Please upgrade Supabase schema (profiles.display_name / profiles.avatar_url / profiles.updated_at).",
+    "gender": "Gender",
+    "age": "Age",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "genderUnknown": "Prefer not to say"
   },
   "empty": {
     "title": "No data",
     "description": "Start by adding your first record."
+  },
+  "onboarding": {
+    "title": "Complete your basic profile",
+    "description": "A quick setup helps keep your training and nutrition tracking accurate.",
+    "requiredHint": "Please complete gender, age, height, current weight, target weight, and weekly training days before continuing.",
+    "gender": "Gender",
+    "age": "Age",
+    "height": "Height (cm)",
+    "currentWeight": "Current Weight (kg)",
+    "targetWeight": "Target Weight (kg)",
+    "weeklyTrainingDays": "Weekly Training Days",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "genderUnknown": "Prefer not to say",
+    "saveAndEnter": "Save and enter app",
+    "saving": "Saving...",
+    "saveFailed": "Failed to save basic profile."
   }
 }

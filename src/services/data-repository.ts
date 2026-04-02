@@ -92,16 +92,24 @@ function normalizeSettings(row: Record<string, unknown> | null, userId: string):
     return createDefaultSettings(userId);
   }
 
+  const rawGender = String(row.gender ?? "unknown");
+  const gender: UserSettings["gender"] =
+    rawGender === "male" || rawGender === "female" || rawGender === "other" || rawGender === "unknown"
+      ? rawGender
+      : "unknown";
+
   return {
     userId,
-    height: Number(row.height ?? 176),
-    currentWeight: Number(row.current_weight ?? 78),
-    targetWeight: Number(row.target_weight ?? 72),
-    weeklyTrainingDays: Number(row.weekly_training_days ?? 3),
-    calorieTarget: Number(row.calorie_target ?? 2200),
-    proteinTarget: Number(row.protein_target ?? 160),
-    targetWeeklyLossMin: Number(row.target_weekly_loss_min ?? 0.3),
-    targetWeeklyLossMax: Number(row.target_weekly_loss_max ?? 0.8),
+    gender,
+    age: Number(row.age ?? 0),
+    height: Number(row.height ?? 0),
+    currentWeight: Number(row.current_weight ?? 0),
+    targetWeight: Number(row.target_weight ?? 0),
+    weeklyTrainingDays: Number(row.weekly_training_days ?? 0),
+    calorieTarget: Number(row.calorie_target ?? 0),
+    proteinTarget: Number(row.protein_target ?? 0),
+    targetWeeklyLossMin: Number(row.target_weekly_loss_min ?? 0),
+    targetWeeklyLossMax: Number(row.target_weekly_loss_max ?? 0),
     updatedAt: String(row.updated_at ?? nowIso()),
   };
 }
@@ -588,6 +596,8 @@ export async function upsertUserSettings(userId: string, settings: UserSettings)
   const { error } = await supabase.from("user_settings").upsert(
     {
       user_id: userId,
+      gender: settings.gender,
+      age: settings.age,
       height: settings.height,
       current_weight: settings.currentWeight,
       target_weight: settings.targetWeight,

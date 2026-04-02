@@ -21,6 +21,7 @@ import {
   getWeightChartData,
   getWeightGoalStatus,
 } from "@/lib/metrics";
+import { isBasicProfileComplete, toBasicProfileFieldsFromSettings } from "@/lib/profile-completion";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { cn } from "@/lib/utils";
 
@@ -72,6 +73,13 @@ export function DashboardPage() {
   );
   const email = profile?.email || user?.email || "";
   const displayName = profile?.displayName || email.split("@")[0] || t("defaultName");
+  const basicProfileComplete = useMemo(
+    () => isBasicProfileComplete(toBasicProfileFieldsFromSettings(settings)),
+    [settings],
+  );
+  const hasNutritionTargets = settings.calorieTarget > 0 && settings.proteinTarget > 0;
+  const hasWeeklyTrainingDays = settings.weeklyTrainingDays > 0;
+  const hasWeightLossTarget = settings.targetWeeklyLossMin > 0 || settings.targetWeeklyLossMax > 0;
 
   const calorieProgress = Math.min(
     100,
@@ -108,6 +116,20 @@ export function DashboardPage() {
           </div>
         </CardContent>
       </Card>
+
+      {!basicProfileComplete ? (
+        <Card className="border-amber-200/80 bg-amber-50/80">
+          <CardHeader>
+            <CardTitle className="text-base text-amber-900">{t("profileIncompleteTitle")}</CardTitle>
+            <CardDescription className="text-amber-800">{t("profileIncompleteDesc")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/onboarding" className={cn(buttonVariants(), "w-full md:w-auto")}>
+              {t("goOnboarding")}
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90">
@@ -151,37 +173,45 @@ export function DashboardPage() {
             <CardDescription>{t("nutritionDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">{t("calories")}</span>
-                <span className="font-medium text-slate-900">
-                  {nutritionSummary.calories} / {settings.calorieTarget} kcal
-                </span>
-              </div>
-              <Progress value={calorieProgress} />
-              <p className="text-xs text-slate-500">
-                {formatRemaining(nutritionSummary.remainingCalories, "kcal", t)}
-              </p>
-            </div>
+            {hasNutritionTargets ? (
+              <>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-600">{t("calories")}</span>
+                    <span className="font-medium text-slate-900">
+                      {nutritionSummary.calories} / {settings.calorieTarget} kcal
+                    </span>
+                  </div>
+                  <Progress value={calorieProgress} />
+                  <p className="text-xs text-slate-500">
+                    {formatRemaining(nutritionSummary.remainingCalories, "kcal", t)}
+                  </p>
+                </div>
 
-            <div className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-600">{t("protein")}</span>
-                <span className="font-medium text-slate-900">
-                  {nutritionSummary.protein} / {settings.proteinTarget} g
-                </span>
-              </div>
-              <Progress value={proteinProgress} />
-              <p className="text-xs text-slate-500">
-                {formatRemaining(nutritionSummary.remainingProtein, "g", t)}
-              </p>
-            </div>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-600">{t("protein")}</span>
+                    <span className="font-medium text-slate-900">
+                      {nutritionSummary.protein} / {settings.proteinTarget} g
+                    </span>
+                  </div>
+                  <Progress value={proteinProgress} />
+                  <p className="text-xs text-slate-500">
+                    {formatRemaining(nutritionSummary.remainingProtein, "g", t)}
+                  </p>
+                </div>
 
-            {nutritionSummary.calories === 0 && nutritionSummary.protein === 0 ? (
-              <Link href="/nutrition" className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
-                {t("goNutrition")}
-              </Link>
-            ) : null}
+                {nutritionSummary.calories === 0 && nutritionSummary.protein === 0 ? (
+                  <Link href="/nutrition" className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
+                    {t("goNutrition")}
+                  </Link>
+                ) : null}
+              </>
+            ) : (
+              <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                {t("nutritionTargetUnset")}
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -194,13 +224,19 @@ export function DashboardPage() {
             <CardDescription>{t("weeklyWorkoutDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="text-2xl font-semibold text-slate-900">
-              {weekWorkoutSummary.completedCount}/{weekWorkoutSummary.plannedCount}
-            </p>
-            <Progress value={weekWorkoutSummary.completionRate} />
-            <p className="text-xs text-slate-500">
-              {t("completion", { value: Math.round(weekWorkoutSummary.completionRate) })}
-            </p>
+            {hasWeeklyTrainingDays ? (
+              <>
+                <p className="text-2xl font-semibold text-slate-900">
+                  {weekWorkoutSummary.completedCount}/{weekWorkoutSummary.plannedCount}
+                </p>
+                <Progress value={weekWorkoutSummary.completionRate} />
+                <p className="text-xs text-slate-500">
+                  {t("completion", { value: Math.round(weekWorkoutSummary.completionRate) })}
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-amber-800">{t("weeklyTrainingUnset")}</p>
+            )}
             <div className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600">
               {latestWorkout ? (
                 <p>
@@ -268,7 +304,9 @@ export function DashboardPage() {
                     : t("statusInsufficient")}
             </Badge>
             <p className="text-sm leading-6 text-slate-600">
-              {weightStatus.status === "insufficient"
+              {!hasWeightLossTarget
+                ? t("lossTargetUnset")
+                : weightStatus.status === "insufficient"
                 ? t("statusMessageInsufficient")
                 : weightStatus.status === "too-fast"
                   ? t("statusMessageTooFast", { value: weeklyLossText })

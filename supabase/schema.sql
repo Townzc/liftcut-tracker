@@ -1,4 +1,4 @@
--- LiftCut Tracker V1.1 Supabase schema
+﻿-- LiftCut Tracker V1.6 Supabase schema
 -- Run in Supabase SQL editor
 
 create extension if not exists pgcrypto;
@@ -15,14 +15,16 @@ create table if not exists public.profiles (
 
 create table if not exists public.user_settings (
   user_id uuid primary key references auth.users(id) on delete cascade,
-  height numeric not null,
-  current_weight numeric not null,
-  target_weight numeric not null,
-  weekly_training_days int not null,
-  calorie_target int not null,
-  protein_target int not null,
-  target_weekly_loss_min numeric not null,
-  target_weekly_loss_max numeric not null,
+  gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown')),
+  age int not null default 0 check (age >= 0 and age <= 120),
+  height numeric not null default 0,
+  current_weight numeric not null default 0,
+  target_weight numeric not null default 0,
+  weekly_training_days int not null default 0,
+  calorie_target int not null default 0,
+  protein_target int not null default 0,
+  target_weekly_loss_min numeric not null default 0,
+  target_weekly_loss_max numeric not null default 0,
   updated_at timestamptz not null default now()
 );
 
@@ -36,7 +38,7 @@ create table if not exists public.training_plans (
   updated_at timestamptz not null default now()
 );
 
--- Backward-compatible migration for older projects (run safely multiple times)
+-- Backward-compatible migration for older projects (safe to run multiple times)
 alter table public.profiles add column if not exists display_name text;
 alter table public.profiles add column if not exists avatar_url text;
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
@@ -46,6 +48,16 @@ where display_name is null or btrim(display_name) = '';
 update public.profiles
 set updated_at = now()
 where updated_at is null;
+
+alter table public.user_settings add column if not exists gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown'));
+alter table public.user_settings add column if not exists age int not null default 0 check (age >= 0 and age <= 120);
+update public.user_settings
+set gender = 'unknown'
+where gender is null;
+update public.user_settings
+set age = 0
+where age is null;
+
 alter table public.training_plans add column if not exists notes text not null default '';
 
 create table if not exists public.training_plan_weeks (

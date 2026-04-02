@@ -225,14 +225,16 @@ export const defaultQuickFoods: QuickFoodItem[] = [
 export function createDefaultSettings(userId: string): UserSettings {
   return {
     userId,
-    height: 176,
-    currentWeight: 78,
-    targetWeight: 72,
-    weeklyTrainingDays: 3,
-    calorieTarget: 2200,
-    proteinTarget: 160,
-    targetWeeklyLossMin: 0.3,
-    targetWeeklyLossMax: 0.8,
+    gender: "unknown",
+    age: 0,
+    height: 0,
+    currentWeight: 0,
+    targetWeight: 0,
+    weeklyTrainingDays: 0,
+    calorieTarget: 0,
+    proteinTarget: 0,
+    targetWeeklyLossMin: 0,
+    targetWeeklyLossMax: 0,
     updatedAt: nowIso(),
   };
 }
