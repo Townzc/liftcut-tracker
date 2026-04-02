@@ -520,7 +520,7 @@ export function PlanPage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90 lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-base">{activePlanForView.name}</CardTitle>
+            <CardTitle className="text-base">{hasPlan ? activePlanForView.name : t("noActivePlanName")}</CardTitle>
             <CardDescription>
               {t("weeksTotal", { count: activePlanForView.weeks.length })}
             </CardDescription>

@@ -103,6 +103,7 @@
     "importFailed": "Import failed.",
     "dayMissingTitle": "No day found",
     "dayMissingDesc": "Create or import a plan with day data.",
+    "noActivePlanName": "No Active Plan",
     "weekMissingTitle": "No week found",
     "weekMissingDesc": "Create or import a training plan first.",
     "setsReps": "{sets} sets | {repRange} reps",
