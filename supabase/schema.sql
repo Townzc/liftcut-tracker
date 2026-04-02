@@ -40,6 +40,12 @@ create table if not exists public.training_plans (
 alter table public.profiles add column if not exists display_name text;
 alter table public.profiles add column if not exists avatar_url text;
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
+update public.profiles
+set display_name = split_part(email, '@', 1)
+where display_name is null or btrim(display_name) = '';
+update public.profiles
+set updated_at = now()
+where updated_at is null;
 alter table public.training_plans add column if not exists notes text not null default '';
 
 create table if not exists public.training_plan_weeks (

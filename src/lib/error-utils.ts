@@ -1,6 +1,6 @@
 export const AUTH_REQUIRED_ERROR_CODE = "AUTH_REQUIRED";
 const PROFILE_SCHEMA_ERROR_CODES = new Set(["42703", "PGRST204"]);
-const PROFILE_SCHEMA_COLUMNS = ["display_name", "avatar_url"];
+const PROFILE_SCHEMA_COLUMNS = ["display_name", "avatar_url", "updated_at"];
 
 type ErrorLike = {
   name?: unknown;

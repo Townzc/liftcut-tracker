@@ -170,15 +170,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```sql
 alter table public.profiles add column if not exists display_name text;
 alter table public.profiles add column if not exists avatar_url text;
-```
-
-建议同时确保 `updated_at` 也存在（新版本资料更新会写入该字段）：
-
-```sql
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
+update public.profiles set display_name = split_part(email, '@', 1) where display_name is null or btrim(display_name) = '';
+update public.profiles set updated_at = now() where updated_at is null;
 ```
 
-如果资料保存时出现“数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url）”，通常就是尚未执行上述迁移 SQL。
+如果资料保存时出现“数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url / profiles.updated_at）”，通常就是尚未执行上述迁移 SQL。
 
 ### 8.4 头像 bucket
 

@@ -370,7 +370,7 @@
     "avatarTooLarge": "Image size must be 5MB or less.",
     "displayNameRequired": "Nickname is required.",
     "displayNameTooLong": "Nickname must be 30 characters or fewer.",
-    "profileSchemaUpgradeRequired": "Profile fields are missing in your database. Please upgrade Supabase schema (profiles.display_name / profiles.avatar_url)."
+    "profileSchemaUpgradeRequired": "Profile fields are missing in your database. Please upgrade Supabase schema (profiles.display_name / profiles.avatar_url / profiles.updated_at)."
   },
   "empty": {
     "title": "No data",
