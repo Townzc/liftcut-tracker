@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
-import { Download, FileJson, LoaderCircle, Trash2 } from "lucide-react";
+import { Download, FileJson, LoaderCircle, Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { NumericInput } from "@/components/shared/numeric-input";
@@ -33,6 +33,7 @@ type PlanAction =
   | "export-json"
   | "parse"
   | "save-parsed"
+  | "save-edited"
   | "set-active";
 
 function getLocalizedParseReason(
@@ -105,6 +106,8 @@ export function PlanPage() {
 
   const [textPlanInput, setTextPlanInput] = useState("");
   const [parsedPlanDraft, setParsedPlanDraft] = useState<TrainingPlan | null>(null);
+  const [editablePlanDraft, setEditablePlanDraft] = useState<TrainingPlan | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [parseWarnings, setParseWarnings] = useState<string[]>([]);
   const [parseErrors, setParseErrors] = useState<Array<{ lineNumber: number; content: string; reason: string }>>([]);
 
@@ -112,9 +115,10 @@ export function PlanPage() {
   const [activePlanLoadingId, setActivePlanLoadingId] = useState<string | null>(null);
   const [deletingPlanId, setDeletingPlanId] = useState<string | null>(null);
 
+  const activePlanForView = isEditMode && editablePlanDraft ? editablePlanDraft : trainingPlan;
   const currentWeek = useMemo(
-    () => trainingPlan.weeks.find((week) => week.weekNumber === selectedWeek) ?? trainingPlan.weeks[0],
-    [selectedWeek, trainingPlan.weeks],
+    () => activePlanForView.weeks.find((week) => week.weekNumber === selectedWeek) ?? activePlanForView.weeks[0],
+    [activePlanForView.weeks, selectedWeek],
   );
   const currentDay = useMemo(
     () => currentWeek?.days.find((day) => day.dayNumber === selectedDay) ?? currentWeek?.days[0],
@@ -337,6 +341,170 @@ export function PlanPage() {
     }
   };
 
+  const clonePlan = (plan: TrainingPlan): TrainingPlan => {
+    if (typeof structuredClone === "function") {
+      return structuredClone(plan);
+    }
+
+    return JSON.parse(JSON.stringify(plan)) as TrainingPlan;
+  };
+
+  const enterEditMode = () => {
+    if (trainingPlan.weeks.length === 0) {
+      setError(t("editNoPlan"));
+      return;
+    }
+
+    clearFeedback();
+    setEditablePlanDraft(clonePlan(trainingPlan));
+    setIsEditMode(true);
+  };
+
+  const cancelEditMode = () => {
+    setEditablePlanDraft(null);
+    setIsEditMode(false);
+    setMessage(t("editCancelled"));
+  };
+
+  const updateEditablePlan = (updater: (draft: TrainingPlan) => TrainingPlan) => {
+    setEditablePlanDraft((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      return updater(prev);
+    });
+  };
+
+  const updateEditableExercise = (
+    weekNumber: number,
+    dayNumber: number,
+    exerciseId: string,
+    patch: Partial<TrainingPlan["weeks"][number]["days"][number]["exercises"][number]>,
+  ) => {
+    updateEditablePlan((draft) => ({
+      ...draft,
+      weeks: draft.weeks.map((week) =>
+        week.weekNumber !== weekNumber
+          ? week
+          : {
+              ...week,
+              days: week.days.map((day) =>
+                day.dayNumber !== dayNumber
+                  ? day
+                  : {
+                      ...day,
+                      exercises: day.exercises.map((exercise) =>
+                        exercise.id === exerciseId ? { ...exercise, ...patch } : exercise,
+                      ),
+                    },
+              ),
+            },
+      ),
+    }));
+  };
+
+  const addEditableExercise = (weekNumber: number, dayNumber: number) => {
+    updateEditablePlan((draft) => {
+      const nextId = `ex-${Date.now()}-${Math.random().toString(16).slice(2, 7)}`;
+
+      return {
+        ...draft,
+        weeks: draft.weeks.map((week) =>
+          week.weekNumber !== weekNumber
+            ? week
+            : {
+                ...week,
+                days: week.days.map((day) =>
+                  day.dayNumber !== dayNumber
+                    ? day
+                    : {
+                        ...day,
+                        exercises: [
+                          ...day.exercises,
+                          {
+                            id: nextId,
+                            dayId: day.id,
+                            name: "",
+                            sets: 3,
+                            repRange: "8-10",
+                            targetRpe: 7,
+                            notes: "",
+                            alternativeExercises: [],
+                          },
+                        ],
+                      },
+                ),
+              },
+        ),
+      };
+    });
+  };
+
+  const removeEditableExercise = (weekNumber: number, dayNumber: number, exerciseId: string) => {
+    const confirmed = window.confirm(t("deleteExerciseConfirm"));
+    if (!confirmed) {
+      return;
+    }
+
+    updateEditablePlan((draft) => ({
+      ...draft,
+      weeks: draft.weeks.map((week) =>
+        week.weekNumber !== weekNumber
+          ? week
+          : {
+              ...week,
+              days: week.days.map((day) =>
+                day.dayNumber !== dayNumber
+                  ? day
+                  : {
+                      ...day,
+                      exercises: day.exercises.filter((exercise) => exercise.id !== exerciseId),
+                    },
+              ),
+            },
+      ),
+    }));
+  };
+
+  const saveEditablePlan = async () => {
+    setLoadingAction("save-edited");
+    clearFeedback();
+
+    try {
+      if (!editablePlanDraft) {
+        throw new Error(t("editMissingDraft"));
+      }
+
+      const normalizedName = editablePlanDraft.name.trim();
+      if (!normalizedName) {
+        throw new Error(t("editNameRequired"));
+      }
+
+      const normalizedPlan: TrainingPlan = {
+        ...editablePlanDraft,
+        name: normalizedName,
+        notes: editablePlanDraft.notes || "",
+        updatedAt: new Date().toISOString(),
+      };
+
+      await setTrainingPlan(normalizedPlan);
+      setEditablePlanDraft(null);
+      setIsEditMode(false);
+      setMessage(t("editSaved"));
+    } catch (saveError) {
+      console.error(saveError);
+      setError(
+        normalizeActionError(saveError, {
+          fallback: t("editSaveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
   const renderLoadingIcon = (condition: boolean) =>
     condition ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null;
   const isBusy = loadingAction !== null || trackerLoading;
@@ -352,15 +520,66 @@ export function PlanPage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90 lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-base">{trainingPlan.name}</CardTitle>
+            <CardTitle className="text-base">{activePlanForView.name}</CardTitle>
             <CardDescription>
-              {t("weeksTotal", { count: trainingPlan.weeks.length })}
+              {t("weeksTotal", { count: activePlanForView.weeks.length })}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              {isEditMode ? (
+                <>
+                  <Button
+                    type="button"
+                    onClick={saveEditablePlan}
+                    disabled={isBusy || !editablePlanDraft}
+                  >
+                    {renderLoadingIcon(loadingAction === "save-edited")}
+                    <Save className="mr-2 h-4 w-4" />
+                    {loadingAction === "save-edited" ? t("editSaving") : t("editSave")}
+                  </Button>
+                  <Button type="button" variant="outline" onClick={cancelEditMode} disabled={isBusy}>
+                    <X className="mr-2 h-4 w-4" />
+                    {t("editCancel")}
+                  </Button>
+                </>
+              ) : (
+                <Button type="button" variant="outline" onClick={enterEditMode} disabled={isBusy || !hasPlan}>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  {t("editMode")}
+                </Button>
+              )}
+            </div>
+
+            {isEditMode && editablePlanDraft ? (
+              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 sm:grid-cols-2">
+                <div className="space-y-1">
+                  <Label htmlFor="edit-plan-name">{t("planName")}</Label>
+                  <Input
+                    id="edit-plan-name"
+                    value={editablePlanDraft.name}
+                    onChange={(event) =>
+                      updateEditablePlan((draft) => ({ ...draft, name: event.target.value }))
+                    }
+                  />
+                </div>
+                <div className="space-y-1 sm:col-span-2">
+                  <Label htmlFor="edit-plan-notes">{t("planNotes")}</Label>
+                  <Textarea
+                    id="edit-plan-notes"
+                    rows={2}
+                    value={editablePlanDraft.notes || ""}
+                    onChange={(event) =>
+                      updateEditablePlan((draft) => ({ ...draft, notes: event.target.value }))
+                    }
+                  />
+                </div>
+              </div>
+            ) : null}
+
             <ScrollArea className="w-full whitespace-nowrap">
               <div className="flex gap-2 pb-2">
-                {trainingPlan.weeks.map((week) => (
+                {activePlanForView.weeks.map((week) => (
                   <Button
                     key={week.weekNumber}
                     type="button"
@@ -396,8 +615,66 @@ export function PlanPage() {
                 {currentDay ? (
                   <div className="space-y-3">
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-900">{currentDay.title}</h3>
-                      <p className="text-sm text-slate-600">{currentDay.notes || "-"}</p>
+                      {isEditMode && editablePlanDraft ? (
+                        <div className="space-y-2">
+                          <Label htmlFor="edit-day-title">{t("dayTitle")}</Label>
+                          <Input
+                            id="edit-day-title"
+                            value={currentDay.title}
+                            onChange={(event) =>
+                              updateEditablePlan((draft) => ({
+                                ...draft,
+                                weeks: draft.weeks.map((week) =>
+                                  week.weekNumber !== currentWeek.weekNumber
+                                    ? week
+                                    : {
+                                        ...week,
+                                        days: week.days.map((day) =>
+                                          day.dayNumber !== currentDay.dayNumber
+                                            ? day
+                                            : {
+                                                ...day,
+                                                title: event.target.value,
+                                              },
+                                        ),
+                                      },
+                                ),
+                              }))
+                            }
+                          />
+                          <Label htmlFor="edit-day-notes">{t("dayNotes")}</Label>
+                          <Textarea
+                            id="edit-day-notes"
+                            rows={2}
+                            value={currentDay.notes || ""}
+                            onChange={(event) =>
+                              updateEditablePlan((draft) => ({
+                                ...draft,
+                                weeks: draft.weeks.map((week) =>
+                                  week.weekNumber !== currentWeek.weekNumber
+                                    ? week
+                                    : {
+                                        ...week,
+                                        days: week.days.map((day) =>
+                                          day.dayNumber !== currentDay.dayNumber
+                                            ? day
+                                            : {
+                                                ...day,
+                                                notes: event.target.value,
+                                              },
+                                        ),
+                                      },
+                                ),
+                              }))
+                            }
+                          />
+                        </div>
+                      ) : (
+                        <>
+                          <h3 className="text-lg font-semibold text-slate-900">{currentDay.title}</h3>
+                          <p className="text-sm text-slate-600">{currentDay.notes || "-"}</p>
+                        </>
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -409,25 +686,131 @@ export function PlanPage() {
                             key={exercise.id}
                             className="rounded-xl border border-slate-200 bg-slate-50/80 p-3"
                           >
-                            <div className="flex flex-wrap items-center justify-between gap-2">
-                              <p className="font-medium text-slate-900">{exercise.name}</p>
-                              <Badge variant="outline">RPE {exercise.targetRpe}</Badge>
-                            </div>
-                            <p className="mt-1 text-sm text-slate-600">
-                              {t("setsReps", { sets: exercise.sets, repRange: exercise.repRange })}
-                            </p>
-                            <p className="mt-1 text-xs text-slate-500">
-                              {t("notes", { value: exercise.notes || "-" })}
-                            </p>
-                            {exercise.alternativeExercises?.length ? (
-                              <p className="mt-1 text-xs text-slate-500">
-                                {t("alternatives", { value: exercise.alternativeExercises.join(" / ") })}
-                              </p>
-                            ) : null}
+                            {isEditMode && editablePlanDraft ? (
+                              <div className="grid gap-2 sm:grid-cols-2">
+                                <div className="space-y-1 sm:col-span-2">
+                                  <Label>{t("exerciseName")}</Label>
+                                  <Input
+                                    value={exercise.name}
+                                    onChange={(event) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        name: event.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <Label>{t("exerciseSets")}</Label>
+                                  <NumericInput
+                                    value={exercise.sets}
+                                    allowDecimal={false}
+                                    min={1}
+                                    max={20}
+                                    onValueChange={(value) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        sets: value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <Label>{t("exerciseRepRange")}</Label>
+                                  <Input
+                                    value={exercise.repRange}
+                                    onChange={(event) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        repRange: event.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <Label>{t("exerciseRpe")}</Label>
+                                  <NumericInput
+                                    value={exercise.targetRpe}
+                                    step="0.1"
+                                    min={1}
+                                    max={10}
+                                    onValueChange={(value) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        targetRpe: value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="space-y-1 sm:col-span-2">
+                                  <Label>{t("exerciseNotes")}</Label>
+                                  <Input
+                                    value={exercise.notes || ""}
+                                    onChange={(event) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        notes: event.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="space-y-1 sm:col-span-2">
+                                  <Label>{t("exerciseAlternatives")}</Label>
+                                  <Input
+                                    value={(exercise.alternativeExercises ?? []).join(", ")}
+                                    onChange={(event) =>
+                                      updateEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id, {
+                                        alternativeExercises: event.target.value
+                                          .split(",")
+                                          .map((item) => item.trim())
+                                          .filter(Boolean),
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="sm:col-span-2">
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="text-rose-700"
+                                    onClick={() =>
+                                      removeEditableExercise(currentWeek.weekNumber, currentDay.dayNumber, exercise.id)
+                                    }
+                                  >
+                                    <Trash2 className="mr-2 h-4 w-4" />
+                                    {t("deleteExercise")}
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <>
+                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                  <p className="font-medium text-slate-900">{exercise.name}</p>
+                                  <Badge variant="outline">RPE {exercise.targetRpe}</Badge>
+                                </div>
+                                <p className="mt-1 text-sm text-slate-600">
+                                  {t("setsReps", { sets: exercise.sets, repRange: exercise.repRange })}
+                                </p>
+                                <p className="mt-1 text-xs text-slate-500">
+                                  {t("notes", { value: exercise.notes || "-" })}
+                                </p>
+                                {exercise.alternativeExercises?.length ? (
+                                  <p className="mt-1 text-xs text-slate-500">
+                                    {t("alternatives", { value: exercise.alternativeExercises.join(" / ") })}
+                                  </p>
+                                ) : null}
+                              </>
+                            )}
                           </div>
                         ))
                       )}
                     </div>
+
+                    {isEditMode ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => addEditableExercise(currentWeek.weekNumber, currentDay.dayNumber)}
+                      >
+                        <Plus className="mr-2 h-4 w-4" />
+                        {t("addExercise")}
+                      </Button>
+                    ) : null}
                   </div>
                 ) : (
                   <EmptyState title={t("dayMissingTitle")} description={t("dayMissingDesc")} />
