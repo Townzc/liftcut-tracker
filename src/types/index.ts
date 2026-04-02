@@ -5,8 +5,11 @@ export type QuickFoodBasisType = "per_100g" | "per_serving";
 export interface UserProfile {
   id: string;
   email: string;
+  displayName?: string;
+  avatarUrl?: string;
   preferredLanguage: AppLocale;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface UserSettings {
@@ -53,6 +56,7 @@ export interface TrainingPlan {
   id: string;
   userId: string;
   name: string;
+  notes: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -63,6 +67,7 @@ export interface TrainingPlanSummary {
   id: string;
   userId: string;
   name: string;
+  notes: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

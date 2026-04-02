@@ -15,6 +15,8 @@ import { createAuthRequiredError } from "@/lib/error-utils";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
   ensureUserBootstrap,
+  ensureUserProfile,
+  updateUserProfile,
   updateUserPreferredLanguage,
 } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
@@ -27,6 +29,8 @@ interface AuthContextValue {
   loading: boolean;
   signOut: () => Promise<void>;
   setPreferredLanguage: (locale: AppLocale) => Promise<void>;
+  refreshProfile: () => Promise<void>;
+  updateProfile: (patch: { displayName?: string | null; avatarUrl?: string | null }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -66,8 +70,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return {
             id: nextUser.id,
             email: nextUser.email ?? "",
+            displayName: (nextUser.email ?? "").split("@")[0] || "User",
+            avatarUrl: undefined,
             preferredLanguage: useUIStore.getState().language,
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           };
         });
       } finally {
@@ -154,6 +161,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     bootstrappingUserRef.current = null;
   }, [clearUserData]);
 
+  const refreshProfile = useCallback(async () => {
+    if (!user) {
+      throw createAuthRequiredError();
+    }
+
+    const nextProfile = await ensureUserProfile(
+      user.id,
+      user.email ?? "",
+      profile?.preferredLanguage ?? useUIStore.getState().language,
+    );
+
+    setProfile(nextProfile);
+  }, [profile?.preferredLanguage, user]);
+
+  const updateProfilePatch = useCallback(
+    async (patch: { displayName?: string | null; avatarUrl?: string | null }) => {
+      if (!user) {
+        throw createAuthRequiredError();
+      }
+
+      await updateUserProfile(user.id, patch);
+      await refreshProfile();
+    },
+    [refreshProfile, user],
+  );
+
   const setPreferredLanguage = useCallback(
     async (locale: AppLocale) => {
       if (!user) {
@@ -170,6 +203,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return {
           ...current,
           preferredLanguage: locale,
+          updatedAt: new Date().toISOString(),
         };
       });
     },
@@ -183,8 +217,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loading,
       signOut,
       setPreferredLanguage,
+      refreshProfile,
+      updateProfile: updateProfilePatch,
     }),
-    [loading, profile, setPreferredLanguage, signOut, user],
+    [loading, profile, refreshProfile, setPreferredLanguage, signOut, updateProfilePatch, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

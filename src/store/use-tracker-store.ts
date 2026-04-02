@@ -91,6 +91,7 @@ function toTrainingPlanSummary(plan: TrainingPlan): TrainingPlanSummary {
     id: plan.id,
     userId: plan.userId,
     name: plan.name,
+    notes: plan.notes || "",
     isActive: plan.isActive,
     createdAt: plan.createdAt,
     updatedAt: plan.updatedAt,
@@ -282,6 +283,7 @@ export const useTrackerStore = create<TrackerState>()(
         const payload: TrainingPlan = {
           ...plan,
           userId: resolvedUserId,
+          notes: plan.notes || "",
           isActive: true,
           updatedAt: nowIso(),
           createdAt: plan.createdAt || nowIso(),

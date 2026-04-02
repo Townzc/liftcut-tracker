@@ -48,6 +48,7 @@ export const trainingPlanSchema = z.object({
   id: z.string().min(1),
   userId: z.string().optional().default(""),
   name: z.string().min(1),
+  notes: z.string().optional().default(""),
   isActive: z.boolean().optional().default(true),
   createdAt: z.string().optional().default(""),
   updatedAt: z.string().optional().default(""),

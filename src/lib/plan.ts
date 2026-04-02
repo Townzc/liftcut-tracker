@@ -35,6 +35,7 @@ export function createBlankTrainingPlan(userId: string, name: string, weeks = 12
     id,
     userId,
     name,
+    notes: "",
     isActive: true,
     createdAt: nowIso(),
     updatedAt: nowIso(),

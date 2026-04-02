@@ -5,6 +5,8 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowRight, Flame, Goal, Salad, TrendingDown } from "lucide-react";
 
+import { useAuth } from "@/components/auth/auth-provider";
+import { UserAvatar } from "@/components/shared/user-avatar";
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +43,7 @@ function formatRemaining(
 export function DashboardPage() {
   const t = useTranslations("dashboard");
   const tNav = useTranslations("nav");
+  const { profile, user } = useAuth();
 
   const settings = useTrackerStore((state) => state.settings);
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
@@ -67,6 +70,8 @@ export function DashboardPage() {
     () => getTodayPlanInfo(trainingPlan, settings.weeklyTrainingDays),
     [settings.weeklyTrainingDays, trainingPlan],
   );
+  const email = profile?.email || user?.email || "";
+  const displayName = profile?.displayName || email.split("@")[0] || t("defaultName");
 
   const calorieProgress = Math.min(
     100,
@@ -89,6 +94,20 @@ export function DashboardPage() {
         </div>
         <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">{t("badge")}</Badge>
       </div>
+
+      <Card className="border-slate-200/80 bg-white/90">
+        <CardContent className="flex items-center justify-between gap-3 p-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} />
+            <div className="min-w-0">
+              <p className="truncate text-sm text-slate-500">{t("welcomeSubtitle")}</p>
+              <p className="truncate text-lg font-semibold text-slate-900">
+                {t("welcomeTitle", { name: displayName })}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90">

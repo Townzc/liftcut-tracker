@@ -15,6 +15,7 @@ function normalizeTrainingPlan(parsed: ReturnType<typeof trainingPlanSchema.pars
     id: planId,
     userId: normalizedUserId,
     name: parsed.name,
+    notes: parsed.notes || "",
     isActive: parsed.isActive,
     createdAt: parsed.createdAt || nowIso(),
     updatedAt: parsed.updatedAt || nowIso(),

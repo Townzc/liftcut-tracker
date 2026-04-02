@@ -6,8 +6,11 @@ create extension if not exists pgcrypto;
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   email text not null,
+  display_name text,
+  avatar_url text,
   preferred_language text not null default 'zh-CN' check (preferred_language in ('zh-CN','en')),
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
 
 create table if not exists public.user_settings (
@@ -27,10 +30,16 @@ create table if not exists public.training_plans (
   id text primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
   name text not null,
+  notes text not null default '',
   is_active boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles add column if not exists display_name text;
+alter table public.profiles add column if not exists avatar_url text;
+alter table public.profiles add column if not exists updated_at timestamptz not null default now();
+alter table public.training_plans add column if not exists notes text not null default '';
 
 create table if not exists public.training_plan_weeks (
   id text primary key,
@@ -198,3 +207,35 @@ create policy "food_logs_self" on public.food_logs
 
 create policy "body_logs_self" on public.body_metric_logs
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+insert into storage.buckets (id, name, public)
+values ('avatars', 'avatars', true)
+on conflict (id) do nothing;
+
+create policy "avatar_public_read" on storage.objects
+  for select using (bucket_id = 'avatars');
+
+create policy "avatar_owner_insert" on storage.objects
+  for insert with check (
+    bucket_id = 'avatars'
+    and auth.uid() is not null
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+create policy "avatar_owner_update" on storage.objects
+  for update using (
+    bucket_id = 'avatars'
+    and auth.uid() is not null
+    and (storage.foldername(name))[1] = auth.uid()::text
+  ) with check (
+    bucket_id = 'avatars'
+    and auth.uid() is not null
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+create policy "avatar_owner_delete" on storage.objects
+  for delete using (
+    bucket_id = 'avatars'
+    and auth.uid() is not null
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );

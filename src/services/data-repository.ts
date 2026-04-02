@@ -13,6 +13,9 @@ import type {
   WorkoutLog,
 } from "@/types";
 
+const AVATAR_BUCKET = "avatars";
+const MAX_NICKNAME_LENGTH = 30;
+
 export interface UserDataBundle {
   snapshot: AppDataSnapshot;
   planList: TrainingPlanSummary[];
@@ -33,6 +36,55 @@ function generateId(prefix: string): string {
   }
 
   return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+}
+
+function getFallbackDisplayName(email: string): string {
+  const prefix = email.split("@")[0]?.trim();
+  return prefix || "User";
+}
+
+function normalizeDisplayName(value: string | null | undefined, fallbackEmail: string): string {
+  const trimmed = String(value ?? "").trim();
+  if (trimmed) {
+    return trimmed.slice(0, MAX_NICKNAME_LENGTH);
+  }
+
+  return getFallbackDisplayName(fallbackEmail);
+}
+
+function extractAvatarObjectPath(avatarUrl: string | null | undefined): string | null {
+  const raw = String(avatarUrl ?? "").trim();
+  if (!raw) {
+    return null;
+  }
+
+  const marker = `/storage/v1/object/public/${AVATAR_BUCKET}/`;
+  const markerIndex = raw.indexOf(marker);
+  if (markerIndex === -1) {
+    return null;
+  }
+
+  const pathWithQuery = raw.slice(markerIndex + marker.length);
+  const pathOnly = pathWithQuery.split("?")[0] ?? "";
+  const decoded = decodeURIComponent(pathOnly);
+  return decoded || null;
+}
+
+function getFileExtension(file: File): string {
+  const fromName = file.name.split(".").pop()?.toLowerCase() ?? "";
+  if (fromName) {
+    return fromName;
+  }
+
+  if (file.type === "image/png") {
+    return "png";
+  }
+
+  if (file.type === "image/webp") {
+    return "webp";
+  }
+
+  return "jpg";
 }
 
 function normalizeSettings(row: Record<string, unknown> | null, userId: string): UserSettings {
@@ -186,6 +238,7 @@ function buildTrainingPlan(
     id: String(planRow.id),
     userId,
     name: String(planRow.name ?? "Unnamed plan"),
+    notes: String(planRow.notes ?? ""),
     isActive: Boolean(planRow.is_active),
     createdAt: String(planRow.created_at ?? nowIso()),
     updatedAt: String(planRow.updated_at ?? nowIso()),
@@ -202,7 +255,7 @@ export async function ensureUserProfile(
 
   const { data: existing, error: existingError } = await supabase
     .from("profiles")
-    .select("id, email, preferred_language, created_at")
+    .select("id, email, display_name, avatar_url, preferred_language, created_at, updated_at")
     .eq("id", userId)
     .maybeSingle();
 
@@ -214,7 +267,10 @@ export async function ensureUserProfile(
     const { error: insertError } = await supabase.from("profiles").insert({
       id: userId,
       email,
+      display_name: normalizeDisplayName("", email),
+      avatar_url: null,
       preferred_language: preferredLanguage,
+      updated_at: nowIso(),
     });
 
     if (insertError) {
@@ -224,15 +280,18 @@ export async function ensureUserProfile(
     return {
       id: userId,
       email,
+      displayName: normalizeDisplayName("", email),
+      avatarUrl: undefined,
       preferredLanguage,
       createdAt: nowIso(),
+      updatedAt: nowIso(),
     };
   }
 
   if (String(existing.email ?? "") !== email) {
     const { error: updateEmailError } = await supabase
       .from("profiles")
-      .update({ email })
+      .update({ email, updated_at: nowIso() })
       .eq("id", userId);
 
     if (updateEmailError) {
@@ -243,8 +302,11 @@ export async function ensureUserProfile(
   return {
     id: String(existing.id),
     email: String(existing.email ?? email),
+    displayName: normalizeDisplayName(existing.display_name as string | null | undefined, email),
+    avatarUrl: existing.avatar_url ? String(existing.avatar_url) : undefined,
     preferredLanguage: String(existing.preferred_language ?? preferredLanguage) as AppLocale,
     createdAt: String(existing.created_at ?? nowIso()),
+    updatedAt: String(existing.updated_at ?? nowIso()),
   };
 }
 
@@ -252,11 +314,80 @@ export async function updateUserPreferredLanguage(userId: string, language: AppL
   const supabase = getSupabaseBrowserClient();
   const { error } = await supabase
     .from("profiles")
-    .update({ preferred_language: language })
+    .update({ preferred_language: language, updated_at: nowIso() })
     .eq("id", userId);
 
   if (error) {
     throw error;
+  }
+}
+
+export async function updateUserProfile(
+  userId: string,
+  patch: { displayName?: string | null; avatarUrl?: string | null },
+): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const payload: Record<string, unknown> = {
+    updated_at: nowIso(),
+  };
+
+  if ("displayName" in patch) {
+    payload.display_name = patch.displayName ? patch.displayName.trim().slice(0, MAX_NICKNAME_LENGTH) : null;
+  }
+
+  if ("avatarUrl" in patch) {
+    payload.avatar_url = patch.avatarUrl || null;
+  }
+
+  const { error } = await supabase.from("profiles").update(payload).eq("id", userId);
+  if (error) {
+    throw error;
+  }
+}
+
+export async function uploadUserAvatar(
+  userId: string,
+  file: File,
+  previousAvatarUrl?: string | null,
+): Promise<{ objectPath: string; avatarUrl: string }> {
+  const supabase = getSupabaseBrowserClient();
+  const extension = getFileExtension(file);
+  const objectPath = `${userId}/avatar-${Date.now()}.${extension}`;
+
+  const { error: uploadError } = await supabase.storage.from(AVATAR_BUCKET).upload(objectPath, file, {
+    cacheControl: "3600",
+    upsert: true,
+    contentType: file.type,
+  });
+
+  if (uploadError) {
+    throw uploadError;
+  }
+
+  const { data: publicData } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(objectPath);
+
+  const previousPath = extractAvatarObjectPath(previousAvatarUrl);
+  if (previousPath && previousPath !== objectPath) {
+    const { error: removeError } = await supabase.storage.from(AVATAR_BUCKET).remove([previousPath]);
+    if (removeError) {
+      console.warn("[profile] failed to remove previous avatar object", removeError);
+    }
+  }
+
+  return {
+    objectPath,
+    avatarUrl: publicData.publicUrl,
+  };
+}
+
+export async function clearUserAvatar(_userId: string, avatarUrl?: string | null): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const objectPath = extractAvatarObjectPath(avatarUrl);
+  if (objectPath) {
+    const { error: removeError } = await supabase.storage.from(AVATAR_BUCKET).remove([objectPath]);
+    if (removeError) {
+      console.warn("[profile] failed to remove old avatar object", removeError);
+    }
   }
 }
 
@@ -279,6 +410,7 @@ async function insertTrainingPlanRecords(userId: string, plan: TrainingPlan, set
       id: plan.id,
       user_id: userId,
       name: plan.name,
+      notes: plan.notes || "",
       is_active: setActive ? true : plan.isActive,
       created_at: plan.createdAt || nowIso(),
       updated_at: nowIso(),
@@ -615,7 +747,7 @@ async function fetchPlanBundle(userId: string): Promise<{
 
   const { data: planRows, error: planError } = await supabase
     .from("training_plans")
-    .select("id, user_id, name, is_active, created_at, updated_at")
+    .select("id, user_id, name, notes, is_active, created_at, updated_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
 
@@ -627,6 +759,7 @@ async function fetchPlanBundle(userId: string): Promise<{
     id: String(row.id),
     userId: String(row.user_id),
     name: String(row.name),
+    notes: String(row.notes ?? ""),
     isActive: Boolean(row.is_active),
     createdAt: String(row.created_at),
     updatedAt: String(row.updated_at),

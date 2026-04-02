@@ -15,6 +15,7 @@ export function normalizeParsedPlanToTrainingPlan(
     id,
     userId: options.userId,
     name: options.name?.trim() || parsed.name,
+    notes: "",
     isActive: true,
     createdAt: nowIso(),
     updatedAt: nowIso(),

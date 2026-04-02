@@ -15,6 +15,7 @@ import {
 import type { ComponentType, ReactNode } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { UserAvatar } from "@/components/shared/user-avatar";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -51,7 +52,10 @@ export function AppShell({ children }: { children: ReactNode }) {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
   const pathname = usePathname();
-  const { loading } = useAuth();
+  const { loading, profile, user } = useAuth();
+
+  const email = profile?.email || user?.email || "";
+  const displayName = profile?.displayName || email.split("@")[0] || "User";
 
   const navItems: NavItem[] = [
     { href: "/", label: tNav("dashboard"), icon: Home },
@@ -93,6 +97,14 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
+        <div className="mb-4 flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3">
+          <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-9 w-9" />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium text-slate-900">{displayName}</p>
+            <p className="truncate text-xs text-slate-500">{email || "-"}</p>
+          </div>
+        </div>
+
         <nav className="space-y-1">
           {navItems.map((item) => (
             <NavLink key={item.href} item={item} />
@@ -101,6 +113,15 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="pb-20 md:ml-64 md:pb-0">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 pt-4 md:hidden">
+          <div className="flex items-center gap-2">
+            <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-8 w-8" textClassName="text-xs" />
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-slate-900">{displayName}</p>
+              <p className="truncate text-xs text-slate-500">{email || "-"}</p>
+            </div>
+          </div>
+        </div>
         <main className="mx-auto w-full max-w-6xl p-4 md:p-8">{children}</main>
       </div>
 

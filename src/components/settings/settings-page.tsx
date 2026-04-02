@@ -1,13 +1,15 @@
 ﻿"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle, Download, LoaderCircle } from "lucide-react";
+import { AlertTriangle, Download, LoaderCircle, Trash2, Upload } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { NumericInput } from "@/components/shared/numeric-input";
+import { UserAvatar } from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -19,12 +21,15 @@ import {
 import { normalizeActionError } from "@/lib/error-utils";
 import { downloadJson } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
-import { exportUserData } from "@/services/data-repository";
+import { clearUserAvatar, exportUserData, uploadUserAvatar } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { AppLocale, UserSettings } from "@/types";
 
 type SettingsAction =
+  | "save-profile"
+  | "upload-avatar"
+  | "remove-avatar"
   | "save"
   | "export-data"
   | "language"
@@ -44,17 +49,25 @@ export function SettingsPage() {
   const updateSettings = useTrackerStore((state) => state.updateSettings);
   const resetAllData = useTrackerStore((state) => state.resetAllData);
 
-  const { user, profile, signOut, setPreferredLanguage } = useAuth();
+  const { user, profile, signOut, setPreferredLanguage, updateProfile } = useAuth();
 
   const [draft, setDraft] = useState<UserSettings>(settings);
+  const [displayName, setDisplayName] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmClear, setConfirmClear] = useState(false);
   const [loadingAction, setLoadingAction] = useState<SettingsAction | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setDraft(settings);
   }, [settings]);
+
+  useEffect(() => {
+    const email = profile?.email || user?.email || "";
+    const fallback = email.split("@")[0] || "";
+    setDisplayName(profile?.displayName || fallback);
+  }, [profile?.displayName, profile?.email, user?.email]);
 
   const weeklyLossHint = useMemo(
     () =>
@@ -68,9 +81,99 @@ export function SettingsPage() {
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
+  const avatarMaxSize = 5 * 1024 * 1024;
+  const supportedImageTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
+  const email = profile?.email || user?.email || "-";
+
   const clearFeedback = () => {
     setMessage(null);
     setError(null);
+  };
+
+  const handleSaveProfile = async () => {
+    setLoadingAction("save-profile");
+    clearFeedback();
+
+    try {
+      const trimmedName = displayName.trim();
+      if (!trimmedName) {
+        throw new Error(t("displayNameRequired"));
+      }
+      if (trimmedName.length > 30) {
+        throw new Error(t("displayNameTooLong"));
+      }
+
+      await updateProfile({ displayName: trimmedName });
+      setMessage(t("profileSaved"));
+    } catch (profileError) {
+      console.error(profileError);
+      setError(
+        normalizeActionError(profileError, {
+          fallback: t("profileSaveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
+  const handleAvatarFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.currentTarget.value = "";
+    if (!file) {
+      return;
+    }
+
+    setLoadingAction("upload-avatar");
+    clearFeedback();
+
+    try {
+      const resolvedUserId = await ensureUserId();
+      if (!supportedImageTypes.has(file.type)) {
+        throw new Error(t("avatarInvalidType"));
+      }
+
+      if (file.size > avatarMaxSize) {
+        throw new Error(t("avatarTooLarge"));
+      }
+
+      const { avatarUrl } = await uploadUserAvatar(resolvedUserId, file, profile?.avatarUrl);
+      await updateProfile({ avatarUrl });
+      setMessage(t("avatarUploadSuccess"));
+    } catch (uploadError) {
+      console.error(uploadError);
+      setError(
+        normalizeActionError(uploadError, {
+          fallback: t("avatarUploadFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
+  const handleAvatarRemove = async () => {
+    setLoadingAction("remove-avatar");
+    clearFeedback();
+
+    try {
+      const resolvedUserId = await ensureUserId();
+      await clearUserAvatar(resolvedUserId, profile?.avatarUrl);
+      await updateProfile({ avatarUrl: null });
+      setMessage(t("avatarRemoveSuccess"));
+    } catch (removeError) {
+      console.error(removeError);
+      setError(
+        normalizeActionError(removeError, {
+          fallback: t("avatarRemoveFailed"),
+          authMessage: t("authRequired"),
+        }),
+      );
+    } finally {
+      setLoadingAction(null);
+    }
   };
 
   const handleSaveSettings = async () => {
@@ -203,6 +306,81 @@ export function SettingsPage() {
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
+          <CardTitle className="text-base">{t("identityTitle")}</CardTitle>
+          <CardDescription>{t("identityDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <UserAvatar
+              displayName={profile?.displayName || displayName}
+              email={profile?.email || user?.email}
+              avatarUrl={profile?.avatarUrl}
+              className="h-16 w-16 text-xl"
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isBusy || loadingAction === "upload-avatar"}
+                onClick={() => avatarInputRef.current?.click()}
+              >
+                {loadingAction === "upload-avatar" ? (
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Upload className="mr-2 h-4 w-4" />
+                )}
+                {loadingAction === "upload-avatar" ? t("avatarUploading") : t("avatarUpload")}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isBusy || !profile?.avatarUrl}
+                onClick={handleAvatarRemove}
+              >
+                {loadingAction === "remove-avatar" ? (
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash2 className="mr-2 h-4 w-4" />
+                )}
+                {loadingAction === "remove-avatar" ? t("avatarRemoving") : t("avatarRemove")}
+              </Button>
+            </div>
+          </div>
+
+          <input
+            ref={avatarInputRef}
+            type="file"
+            className="hidden"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={handleAvatarFileChange}
+            disabled={isBusy}
+          />
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1">
+              <Label htmlFor="display-name">{t("displayName")}</Label>
+              <Input
+                id="display-name"
+                value={displayName}
+                maxLength={30}
+                onChange={(event) => setDisplayName(event.target.value)}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>{t("email")}</Label>
+              <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700">{email}</p>
+            </div>
+          </div>
+
+          <Button type="button" onClick={handleSaveProfile} disabled={isBusy}>
+            {loadingAction === "save-profile" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
+            {loadingAction === "save-profile" ? t("profileSaving") : t("profileSave")}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/80 bg-white/90">
+        <CardHeader>
           <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
           <CardDescription>{t("profileDesc")}</CardDescription>
         </CardHeader>
@@ -267,7 +445,7 @@ export function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700">
-              {profile?.email || user?.email || "-"}
+              {email}
             </p>
             <div className="space-y-1">
               <Label>{t("language")}</Label>
