@@ -20,6 +20,11 @@ const CJK_FONT_URL = "/fonts/NotoSansCJKsc-VF.ttf";
 const CJK_FONT_VFS_NAME = "NotoSansCJKsc-VF.ttf";
 const CJK_FONT_NAME = "NotoSansCJKsc";
 const CJK_FONT_ENCODING = "Identity-H";
+const PDF_TEXT_COLOR_TITLE: [number, number, number] = [0, 0, 0];
+const PDF_TEXT_COLOR_BODY: [number, number, number] = [17, 17, 17];
+const PDF_TEXT_COLOR_HEAD: [number, number, number] = [5, 5, 5];
+const PDF_HEAD_FILL: [number, number, number] = [232, 238, 247];
+const PDF_LINE_COLOR: [number, number, number] = [145, 155, 170];
 
 let cachedChineseFontBase64: string | null = null;
 
@@ -151,10 +156,12 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
     const contentBottom = pageHeight - 24;
 
     applyPdfFont(pdf, locale);
+    pdf.setTextColor(...PDF_TEXT_COLOR_TITLE);
     pdf.setFontSize(18);
     pdf.text(normalizePdfText(plan.name), left, 32);
 
     applyPdfFont(pdf, locale);
+    pdf.setTextColor(...PDF_TEXT_COLOR_BODY);
     pdf.setFontSize(10);
     pdf.text(
       normalizePdfText(localize(locale, `导出日期：${formatDate(locale)}`, `Exported at: ${formatDate(locale)}`)),
@@ -172,6 +179,7 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
       }
 
       applyPdfFont(pdf, locale);
+      pdf.setTextColor(...PDF_TEXT_COLOR_TITLE);
       pdf.setFontSize(13);
       pdf.text(normalizePdfText(getWeekLabel(locale, week.weekNumber)), left, cursorY);
       cursorY += 12;
@@ -186,11 +194,13 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
         }
 
         applyPdfFont(pdf, locale);
+        pdf.setTextColor(...PDF_TEXT_COLOR_BODY);
         pdf.setFontSize(11);
         pdf.text(normalizePdfText(`${getDayLabel(locale, day.dayNumber)} - ${day.title}`), left, cursorY);
         cursorY += 10;
 
         applyPdfFont(pdf, locale);
+        pdf.setTextColor(...PDF_TEXT_COLOR_BODY);
         pdf.setFontSize(9);
         const noteLine = normalizePdfText(localize(locale, "备注", "Notes"));
         pdf.text(normalizePdfText(`${noteLine}: ${day.notes || "-"}`), left, cursorY);
@@ -220,19 +230,20 @@ export async function exportTrainingPlanPdf(plan: TrainingPlan, locale: AppLocal
             fontStyle: "normal",
             fontSize: 9,
             cellPadding: 4,
-            lineColor: [203, 213, 225],
+            lineColor: PDF_LINE_COLOR,
             lineWidth: 0.5,
+            textColor: PDF_TEXT_COLOR_BODY,
           },
           headStyles: {
             font: tableFont,
-            fillColor: [241, 245, 249],
-            textColor: [15, 23, 42],
+            fillColor: PDF_HEAD_FILL,
+            textColor: PDF_TEXT_COLOR_HEAD,
             fontStyle: "normal",
           },
           bodyStyles: {
             font: tableFont,
             fontStyle: "normal",
-            textColor: [30, 41, 59],
+            textColor: PDF_TEXT_COLOR_BODY,
           },
           didParseCell: (hookData) => {
             hookData.cell.text = hookData.cell.text.map((text) => normalizePdfText(String(text)));
