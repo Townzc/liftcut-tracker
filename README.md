@@ -1,12 +1,11 @@
-﻿# LiftCut Tracker (V1.4)
+﻿# LiftCut Tracker (V1.5)
 
 LiftCut Tracker 是一个极简、无广告、可日常使用的训练与减脂追踪 Web 应用。
 
-V1.4 本轮重点：
-- 修复“最近训练记录可见但打不开”问题，新增页内详情弹窗
-- 重构训练计划 PDF 导出为 `jsPDF + autoTable`，并加入中文字体支持
-- 删除用户侧 JSON 训练计划导入入口，简化计划管理流程
-- 预留大模型训练计划生成/推荐接口骨架（不接真实 API）
+V1.5 本轮重点：
+- 新增昵称与头像上传，增强“个人归属感”
+- 训练计划支持持续编辑（计划信息 + 动作增删改）
+- PDF 导出文本对比度优化（更黑、更清晰、更适合打印）
 
 ---
 
@@ -22,6 +21,7 @@ V1.4 本轮重点：
 - Zod
 - next-intl（国际化）
 - Supabase Auth + Postgres（认证与数据持久化）
+- Supabase Storage（头像上传）
 - jsPDF + jspdf-autotable（训练计划 PDF 导出）
 
 ---
@@ -56,88 +56,89 @@ V1.4 本轮重点：
 
 ---
 
-## 4. 训练计划管理
+## 4. 用户资料（昵称 + 头像）
 
-### 4.1 计划创建与切换
+在 `/settings` 的“个人资料”区域支持：
+- 昵称编辑与保存（trim + 长度限制）
+- 头像上传 / 替换 / 删除
+- 上传后即时预览并写入 `profiles.avatar_url`
+
+展示联动：
+- 桌面侧边栏用户区
+- 移动端顶部用户条
+- Dashboard 欢迎卡片
+
+默认规则：
+- 未设置昵称时显示邮箱前缀
+- 无头像时显示首字母占位头像
+
+上传限制：
+- 格式：`png/jpeg/webp`
+- 大小：`<= 5MB`
+
+---
+
+## 5. 训练计划管理与编辑
 
 `/plan` 支持：
 - 创建空白计划
 - 文本导入计划（模板 -> 解析 -> 预览编辑 -> 保存）
 - 设置生效计划
-- 删除计划（带确认与 active 计划兜底）
+- 删除计划（带确认）
 
-### 4.2 导出当前计划（PDF 主入口）
+### 5.1 当前生效计划可编辑
 
-`/plan` 支持导出当前生效计划为 PDF：
+新增“编辑模式”，支持：
+- 计划名称
+- 计划备注
+- Day 标题与 Day 备注
+- 动作字段编辑：名称 / 组数 / 次数范围 / RPE / 备注 / 替代动作
+- 新增动作
+- 删除动作
+- 显式“保存计划修改”
+
+保存后写入：
+- `training_plans`
+- `training_plan_weeks`
+- `training_plan_days`
+- `training_plan_exercises`
+
+---
+
+## 6. 计划导出（PDF）
+
+`/plan` 的主导出入口为 PDF，内容包含：
 - 计划名称
 - 导出日期
 - Week 分区
 - Day 小节
 - 动作表格（动作、组数、次数、RPE、备注、替代动作）
 
-实现说明：
-- 使用 `jsPDF + jspdf-autotable` 数据驱动渲染
-- 不再依赖 DOM 截图（更稳定）
-- 中文导出通过内嵌字体文件支持（`public/fonts/NotoSansCJKsc-VF.ttf`）
+实现：
+- `jsPDF + jspdf-autotable`
+- 内嵌中文字体（`public/fonts/NotoSansCJKsc-VF.ttf`）
+- V1.5 调整了标题、表头、正文、边框对比度，观感更清晰
 
-### 4.3 已删除 JSON 导入
-
-为了降低普通用户认知负担，V1.4 已移除：
-- 计划页 JSON 导入入口
-- 设置页 JSON 导入入口
-- 面向用户的示例 JSON 下载入口
-
-当前用户导入链路仅保留：**文本导入计划**。
+说明：用户侧已移除 JSON 导入入口，保留文本导入主流程。
 
 ---
 
-## 5. 训练记录保存与查看（V1.4）
+## 7. 训练记录保存与查看
 
 在 `/workout`：
-- 点击“保存训练记录”会保存：
-  - 日期
-  - 周/天
-  - 训练时长
-  - 整次完成状态
-  - 每个动作的实际重量/次数/RPE/完成状态
+- 保存记录写入 `workout_logs` 与 `workout_log_exercises`
+- 页面提供“本次已保存”摘要
+- 提供“最近训练记录”列表并可打开详情弹窗
 
-保存后可见性：
-- “本次已保存”摘要卡
-- “最近训练记录”列表
-- Dashboard 的最近训练摘要
-
-### 最近训练记录详情查看
-
-- 点击“最近训练记录”任意卡片可打开页内详情弹窗
-- 弹窗展示：
-  - 日期
-  - 周/天
-  - 完成状态
-  - 训练时长
-  - 备注
-  - 动作明细
-- 包含状态处理：
-  - loading
-  - 记录不存在
-  - 无权限查看
+详情包含：
+- 日期、周/天、训练时长、完成状态、备注
+- 动作明细（重量/次数/RPE/完成状态）
 
 ---
 
-## 6. 饮食记录体验
+## 8. Supabase 配置
 
-`/nutrition`：
-- 固定顺序：早餐 -> 午餐 -> 晚餐 -> 加餐
-- 同餐次内稳定排序
-- 每个餐次展示小计（热量/蛋白）
-- 顶部展示全天总计
-
-常用食物快捷项含单位基准说明（例如每100g、每勺30g、每个约50g）。
-
----
-
-## 7. Supabase 配置
-
-### 7.1 环境变量
+### 8.1 环境变量
 
 复制 `.env.example` 到 `.env.local`：
 
@@ -146,17 +147,31 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### 7.2 初始化数据库
+### 8.2 初始化数据库
 
 1. 在 Supabase 创建项目
 2. 打开 SQL Editor
 3. 执行 `supabase/schema.sql`
 
-该 SQL 包含核心业务表、`profiles` 资料表与 RLS 隔离策略。
+### 8.3 昵称与头像相关字段
+
+`profiles` 包含：
+- `display_name`
+- `avatar_url`
+- `updated_at`
+
+`training_plans` 包含：
+- `notes`
+
+### 8.4 头像 bucket
+
+- bucket 名称：`avatars`（public）
+- 对象路径：`{userId}/avatar-{timestamp}.{ext}`
+- 建议直接使用 `supabase/schema.sql` 中的 storage policy 配置
 
 ---
 
-## 8. 本地运行
+## 9. 本地运行
 
 ```bash
 npm install
@@ -172,7 +187,7 @@ npm run build
 
 ---
 
-## 9. 数据导出
+## 10. 数据导出
 
 - 训练计划 PDF 导出：`/plan`
 - 训练计划 JSON 导出（备份）：`/plan`
@@ -180,26 +195,18 @@ npm run build
 
 ---
 
-## 10. LLM 扩展预留（V1.4）
+## 11. LLM 扩展预留（不接真实 API）
 
-本轮未接入真实模型 API，但已预留接口与服务骨架：
-
+本仓库保留了后续扩展骨架：
 - `src/types/llm.ts`
-  - `PlanGenerationInput`
-  - `PlanGenerationOutput`
-  - `PlanRecommendationInput`
-  - `PlanRecommendationOutput`
-- `src/services/llm-plan-generator.ts`（stub）
-- `src/services/llm-plan-recommender.ts`（stub）
+- `src/services/llm-plan-generator.ts`
+- `src/services/llm-plan-recommender.ts`
 
-后续接入建议：
-- 优先使用结构化输出（JSON schema / zod 对齐）
-- API key 不进入前端
-- 通过服务端 route/action 统一调用模型
+建议后续通过服务端 route/action 调模型，避免在前端暴露 API Key。
 
 ---
 
-## 11. 目录结构（核心）
+## 12. 目录结构（核心）
 
 ```text
 src/
