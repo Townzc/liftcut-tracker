@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -82,6 +83,41 @@ export function SettingsPage() {
       { value: "female", label: t("genderFemale") },
       { value: "other", label: t("genderOther") },
       { value: "unknown", label: t("genderUnknown") },
+    ],
+    [t],
+  );
+  const fitnessGoalOptions = useMemo<Array<{ value: UserSettings["fitnessGoal"]; label: string }>>(
+    () => [
+      { value: "fat_loss", label: t("fitnessGoalFatLoss") },
+      { value: "muscle_gain", label: t("fitnessGoalMuscleGain") },
+      { value: "maintenance", label: t("fitnessGoalMaintenance") },
+      { value: "recomposition", label: t("fitnessGoalRecomposition") },
+    ],
+    [t],
+  );
+  const trainingExperienceOptions = useMemo<Array<{ value: UserSettings["trainingExperience"]; label: string }>>(
+    () => [
+      { value: "beginner", label: t("trainingExperienceBeginner") },
+      { value: "intermediate", label: t("trainingExperienceIntermediate") },
+      { value: "advanced", label: t("trainingExperienceAdvanced") },
+    ],
+    [t],
+  );
+  const trainingLocationOptions = useMemo<Array<{ value: UserSettings["trainingLocation"]; label: string }>>(
+    () => [
+      { value: "gym", label: t("trainingLocationGym") },
+      { value: "home", label: t("trainingLocationHome") },
+      { value: "mixed", label: t("trainingLocationMixed") },
+    ],
+    [t],
+  );
+  const dietPreferenceOptions = useMemo<Array<{ value: UserSettings["dietPreference"]; label: string }>>(
+    () => [
+      { value: "none", label: t("dietPreferenceNone") },
+      { value: "high_protein", label: t("dietPreferenceHighProtein") },
+      { value: "vegetarian", label: t("dietPreferenceVegetarian") },
+      { value: "low_carb", label: t("dietPreferenceLowCarb") },
+      { value: "balanced", label: t("dietPreferenceBalanced") },
     ],
     [t],
   );
@@ -462,6 +498,137 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("weeklyLossMax")}</Label>
             <NumericInput step="0.1" value={draft.targetWeeklyLossMax} onValueChange={(value) => updateField("targetWeeklyLossMax", value)} min={0} max={3} />
+          </div>
+          <div className="space-y-1">
+            <Label>{t("fitnessGoal")}</Label>
+            <Select
+              value={draft.fitnessGoal}
+              onValueChange={(value) => updateField("fitnessGoal", value as UserSettings["fitnessGoal"])}
+              disabled={isBusy}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {fitnessGoalOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1">
+            <Label>{t("trainingExperience")}</Label>
+            <Select
+              value={draft.trainingExperience}
+              onValueChange={(value) =>
+                updateField("trainingExperience", value as UserSettings["trainingExperience"])
+              }
+              disabled={isBusy}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {trainingExperienceOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1">
+            <Label>{t("trainingLocation")}</Label>
+            <Select
+              value={draft.trainingLocation}
+              onValueChange={(value) => updateField("trainingLocation", value as UserSettings["trainingLocation"])}
+              disabled={isBusy}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {trainingLocationOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1">
+            <Label>{t("sessionDurationMinutes")}</Label>
+            <NumericInput
+              value={draft.sessionDurationMinutes}
+              allowDecimal={false}
+              onValueChange={(value) => updateField("sessionDurationMinutes", value)}
+              min={0}
+              max={300}
+            />
+          </div>
+          <div className="space-y-1 lg:col-span-2">
+            <Label>{t("availableEquipment")}</Label>
+            <Input
+              value={draft.availableEquipment.join(", ")}
+              onChange={(event) =>
+                updateField(
+                  "availableEquipment",
+                  event.target.value
+                    .split(",")
+                    .map((item) => item.trim())
+                    .filter(Boolean),
+                )
+              }
+              placeholder={t("availableEquipmentPlaceholder")}
+            />
+          </div>
+          <div className="space-y-1">
+            <Label>{t("dietPreference")}</Label>
+            <Select
+              value={draft.dietPreference}
+              onValueChange={(value) => updateField("dietPreference", value as UserSettings["dietPreference"])}
+              disabled={isBusy}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {dietPreferenceOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1 lg:col-span-5">
+            <Label>{t("foodRestrictions")}</Label>
+            <Textarea
+              rows={2}
+              value={draft.foodRestrictions}
+              onChange={(event) => updateField("foodRestrictions", event.target.value)}
+              placeholder={t("foodRestrictionsPlaceholder")}
+            />
+          </div>
+          <div className="space-y-1 lg:col-span-5">
+            <Label>{t("injuryNotes")}</Label>
+            <Textarea
+              rows={2}
+              value={draft.injuryNotes}
+              onChange={(event) => updateField("injuryNotes", event.target.value)}
+              placeholder={t("injuryNotesPlaceholder")}
+            />
+          </div>
+          <div className="space-y-1 lg:col-span-5">
+            <Label>{t("lifestyleNotes")}</Label>
+            <Textarea
+              rows={2}
+              value={draft.lifestyleNotes}
+              onChange={(event) => updateField("lifestyleNotes", event.target.value)}
+              placeholder={t("lifestyleNotesPlaceholder")}
+            />
           </div>
         </CardContent>
       </Card>

@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Download, FileJson, LoaderCircle, Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -828,6 +829,13 @@ export function PlanPage() {
             <CardDescription>{t("manageDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Link
+              href="/plan/ai"
+              className="inline-flex h-10 w-full items-center justify-center rounded-md border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+            >
+              {t("openAiPlanner")}
+            </Link>
+
             <div className="space-y-2">
               <Label htmlFor="plan-name">{t("planName")}</Label>
               <Input id="plan-name" value={planName} onChange={(event) => setPlanName(event.target.value)} />
