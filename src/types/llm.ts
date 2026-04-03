@@ -1,43 +1,43 @@
-﻿export type PlanGoal = "fat_loss" | "muscle_gain" | "strength" | "general_fitness";
-export type TrainingExperience = "beginner" | "intermediate" | "advanced";
+import type { FitnessGoal, Gender, TrainingExperience } from "@/types";
 
 export interface PlanGenerationInput {
   age: number;
-  sex?: "male" | "female" | "other";
+  sex?: Exclude<Gender, "unknown"> | "unknown";
   height: number;
   weight: number;
-  goal: PlanGoal;
+  goal: FitnessGoal;
   trainingDaysPerWeek: number;
   trainingExperience: TrainingExperience;
   preferredExercises: string[];
-  injuriesOrLimitations: string[];
+  injuriesOrLimitations: string;
   notes: string;
 }
 
-export interface GeneratedExercise {
+export interface PlanGenerationOutputExercise {
   name: string;
   sets: number;
   repRange: string;
   targetRpe: number;
-  notes?: string;
-  alternativeExercises?: string[];
+  notes: string;
+  alternativeExercises: string[];
 }
 
-export interface GeneratedPlanDay {
+export interface PlanGenerationOutputDay {
   dayNumber: number;
   title: string;
-  notes?: string;
-  exercises: GeneratedExercise[];
+  notes: string;
+  exercises: PlanGenerationOutputExercise[];
 }
 
-export interface GeneratedPlanWeek {
+export interface PlanGenerationOutputWeek {
   weekNumber: number;
-  days: GeneratedPlanDay[];
+  focus: string;
+  days: PlanGenerationOutputDay[];
 }
 
 export interface PlanGenerationOutput {
   planName: string;
-  weeks: GeneratedPlanWeek[];
+  weeks: PlanGenerationOutputWeek[];
   days: number;
   exercises: number;
   rationale?: string;
@@ -59,7 +59,7 @@ export interface PlanRecommendationInput {
     weeklyWeightChange?: number;
     weeklyWaistChange?: number;
   };
-  goal: PlanGoal;
+  goal: FitnessGoal;
 }
 
 export interface PlanRecommendationOutput {

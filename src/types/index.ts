@@ -2,6 +2,10 @@ export type AppLocale = "zh-CN" | "en";
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 export type QuickFoodBasisType = "per_100g" | "per_serving";
 export type Gender = "male" | "female" | "other" | "unknown";
+export type FitnessGoal = "fat_loss" | "muscle_gain" | "maintenance" | "recomposition";
+export type TrainingExperience = "beginner" | "intermediate" | "advanced";
+export type TrainingLocation = "gym" | "home" | "mixed";
+export type DietPreference = "none" | "high_protein" | "vegetarian" | "low_carb" | "balanced";
 
 export interface UserProfile {
   id: string;
@@ -17,6 +21,15 @@ export interface UserSettings {
   userId: string;
   gender: Gender;
   age: number;
+  fitnessGoal: FitnessGoal;
+  trainingExperience: TrainingExperience;
+  trainingLocation: TrainingLocation;
+  availableEquipment: string[];
+  sessionDurationMinutes: number;
+  dietPreference: DietPreference;
+  foodRestrictions: string;
+  injuryNotes: string;
+  lifestyleNotes: string;
   height: number;
   currentWeight: number;
   targetWeight: number;

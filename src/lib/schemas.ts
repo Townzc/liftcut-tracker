@@ -2,6 +2,10 @@ import { z } from "zod";
 
 const positiveNumber = z.coerce.number().finite().nonnegative();
 const genderSchema = z.enum(["male", "female", "other", "unknown"]);
+const fitnessGoalSchema = z.enum(["fat_loss", "muscle_gain", "maintenance", "recomposition"]);
+const trainingExperienceSchema = z.enum(["beginner", "intermediate", "advanced"]);
+const trainingLocationSchema = z.enum(["gym", "home", "mixed"]);
+const dietPreferenceSchema = z.enum(["none", "high_protein", "vegetarian", "low_carb", "balanced"]);
 
 export const localeSchema = z.enum(["zh-CN", "en"]);
 
@@ -9,6 +13,15 @@ export const userSettingsSchema = z.object({
   userId: z.string().min(1).optional().default(""),
   gender: genderSchema.default("unknown"),
   age: z.coerce.number().int().min(0).max(120).default(0),
+  fitnessGoal: fitnessGoalSchema.default("fat_loss"),
+  trainingExperience: trainingExperienceSchema.default("beginner"),
+  trainingLocation: trainingLocationSchema.default("mixed"),
+  availableEquipment: z.array(z.string().trim().min(1)).max(30).default([]),
+  sessionDurationMinutes: z.coerce.number().int().min(0).max(300).default(0),
+  dietPreference: dietPreferenceSchema.default("none"),
+  foodRestrictions: z.string().max(1000).default(""),
+  injuryNotes: z.string().max(1000).default(""),
+  lifestyleNotes: z.string().max(1000).default(""),
   height: positiveNumber.min(0).max(260),
   currentWeight: positiveNumber.min(0).max(300),
   targetWeight: positiveNumber.min(0).max(300),

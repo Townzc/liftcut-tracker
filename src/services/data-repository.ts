@@ -97,11 +97,51 @@ function normalizeSettings(row: Record<string, unknown> | null, userId: string):
     rawGender === "male" || rawGender === "female" || rawGender === "other" || rawGender === "unknown"
       ? rawGender
       : "unknown";
+  const rawFitnessGoal = String(row.fitness_goal ?? "fat_loss");
+  const fitnessGoal: UserSettings["fitnessGoal"] =
+    rawFitnessGoal === "fat_loss" ||
+    rawFitnessGoal === "muscle_gain" ||
+    rawFitnessGoal === "maintenance" ||
+    rawFitnessGoal === "recomposition"
+      ? rawFitnessGoal
+      : "fat_loss";
+  const rawTrainingExperience = String(row.training_experience ?? "beginner");
+  const trainingExperience: UserSettings["trainingExperience"] =
+    rawTrainingExperience === "beginner" ||
+    rawTrainingExperience === "intermediate" ||
+    rawTrainingExperience === "advanced"
+      ? rawTrainingExperience
+      : "beginner";
+  const rawTrainingLocation = String(row.training_location ?? "mixed");
+  const trainingLocation: UserSettings["trainingLocation"] =
+    rawTrainingLocation === "gym" || rawTrainingLocation === "home" || rawTrainingLocation === "mixed"
+      ? rawTrainingLocation
+      : "mixed";
+  const rawDietPreference = String(row.diet_preference ?? "none");
+  const dietPreference: UserSettings["dietPreference"] =
+    rawDietPreference === "none" ||
+    rawDietPreference === "high_protein" ||
+    rawDietPreference === "vegetarian" ||
+    rawDietPreference === "low_carb" ||
+    rawDietPreference === "balanced"
+      ? rawDietPreference
+      : "none";
 
   return {
     userId,
     gender,
     age: Number(row.age ?? 0),
+    fitnessGoal,
+    trainingExperience,
+    trainingLocation,
+    availableEquipment: Array.isArray(row.available_equipment)
+      ? row.available_equipment.map((item) => String(item).trim()).filter(Boolean)
+      : [],
+    sessionDurationMinutes: Number(row.session_duration_minutes ?? 0),
+    dietPreference,
+    foodRestrictions: String(row.food_restrictions ?? ""),
+    injuryNotes: String(row.injury_notes ?? ""),
+    lifestyleNotes: String(row.lifestyle_notes ?? ""),
     height: Number(row.height ?? 0),
     currentWeight: Number(row.current_weight ?? 0),
     targetWeight: Number(row.target_weight ?? 0),
@@ -598,6 +638,15 @@ export async function upsertUserSettings(userId: string, settings: UserSettings)
       user_id: userId,
       gender: settings.gender,
       age: settings.age,
+      fitness_goal: settings.fitnessGoal,
+      training_experience: settings.trainingExperience,
+      training_location: settings.trainingLocation,
+      available_equipment: settings.availableEquipment,
+      session_duration_minutes: settings.sessionDurationMinutes,
+      diet_preference: settings.dietPreference,
+      food_restrictions: settings.foodRestrictions,
+      injury_notes: settings.injuryNotes,
+      lifestyle_notes: settings.lifestyleNotes,
       height: settings.height,
       current_weight: settings.currentWeight,
       target_weight: settings.targetWeight,

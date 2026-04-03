@@ -9,6 +9,7 @@ const onboardingRoute = "/onboarding";
 
 function isStaticAsset(pathname: string): boolean {
   return (
+    pathname.startsWith("/api") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon.ico") ||
     pathname.startsWith("/samples") ||
