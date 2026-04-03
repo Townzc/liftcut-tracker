@@ -12,7 +12,9 @@
     "workoutShort": "Workout",
     "nutritionShort": "Food",
     "bodyShort": "Body",
-    "settingsShort": "Settings"
+    "settingsShort": "Settings",
+    "aiPlanner": "AI Planner",
+    "aiPlannerShort": "AI"
   },
   "common": {
     "loading": "Loading...",
@@ -192,7 +194,9 @@
     "editNameRequired": "Plan name is required.",
     "editSaved": "Plan changes saved successfully.",
     "editSaveFailed": "Failed to save plan changes.",
-    "openAiPlanner": "AI Plan Generator"
+    "openAiPlanner": "AI Plan Generator",
+    "aiEntry": "Generate with AI",
+    "aiEntryDesc": "Auto-generate editable training and nutrition plans from your profile and goals."
   },
   "workout": {
     "title": "Workout Logging",

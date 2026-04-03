@@ -12,7 +12,9 @@
     "workoutShort": "训练",
     "nutritionShort": "饮食",
     "bodyShort": "身体",
-    "settingsShort": "设置"
+    "settingsShort": "设置",
+    "aiPlanner": "AI计划",
+    "aiPlannerShort": "AI"
   },
   "common": {
     "loading": "加载中...",
@@ -192,7 +194,9 @@
     "editNameRequired": "计划名称不能为空。",
     "editSaved": "计划更改已成功保存。",
     "editSaveFailed": "保存计划更改失败。",
-    "openAiPlanner": "AI 生成计划"
+    "openAiPlanner": "AI 生成计划",
+    "aiEntry": "AI生成计划",
+    "aiEntryDesc": "根据你的资料与目标，自动生成可编辑训练/饮食计划。"
   },
   "workout": {
     "title": "训练记录",

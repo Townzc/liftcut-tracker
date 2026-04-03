@@ -10,6 +10,7 @@ import {
   Dumbbell,
   Home,
   Settings,
+  Sparkles,
   Weight,
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
@@ -23,6 +24,7 @@ interface NavItem {
   label: string;
   shortLabel: string;
   icon: ComponentType<{ className?: string }>;
+  showInMobile?: boolean;
 }
 
 const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding"];
@@ -65,6 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const navItems: NavItem[] = [
     { href: "/", label: tNav("dashboard"), shortLabel: tNav("dashboardShort"), icon: Home },
     { href: "/plan", label: tNav("plan"), shortLabel: tNav("planShort"), icon: CalendarCheck },
+    { href: "/plan/ai", label: tNav("aiPlanner"), shortLabel: tNav("aiPlannerShort"), icon: Sparkles, showInMobile: false },
     { href: "/workout", label: tNav("workout"), shortLabel: tNav("workoutShort"), icon: Dumbbell },
     { href: "/nutrition", label: tNav("nutrition"), shortLabel: tNav("nutritionShort"), icon: Apple },
     { href: "/body", label: tNav("body"), shortLabel: tNav("bodyShort"), icon: Weight },
@@ -131,7 +134,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       <nav className="fixed bottom-0 left-0 right-0 z-20 flex items-center gap-1 border-t border-slate-200 bg-white/95 p-2 backdrop-blur md:hidden">
-        {navItems.map((item) => (
+        {navItems.filter((item) => item.showInMobile !== false).map((item) => (
           <NavLink key={item.href} item={item} compact />
         ))}
       </nav>

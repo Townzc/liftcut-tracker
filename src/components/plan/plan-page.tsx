@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Download, FileJson, LoaderCircle, Pencil, Plus, Save, Trash2, X } from "lucide-react";
+import { Download, FileJson, LoaderCircle, Pencil, Plus, Save, Sparkles, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { NumericInput } from "@/components/shared/numeric-input";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -513,9 +513,18 @@ export function PlanPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("plan")}</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("plan")}</p>
+          <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+        </div>
+        <div className="flex max-w-xs flex-col items-stretch gap-2 sm:items-end">
+          <p className="text-xs text-slate-500 sm:text-right">{t("aiEntryDesc")}</p>
+          <Link href="/plan/ai" className={buttonVariants()}>
+            <Sparkles className="mr-2 h-4 w-4" />
+            {t("aiEntry")}
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -833,7 +842,7 @@ export function PlanPage() {
               href="/plan/ai"
               className="inline-flex h-10 w-full items-center justify-center rounded-md border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
             >
-              {t("openAiPlanner")}
+              {t("aiEntry")}
             </Link>
 
             <div className="space-y-2">
