@@ -1,12 +1,13 @@
-﻿# LiftCut Tracker (V1.6)
+﻿# LiftCut Tracker (V1.7)
 
-LiftCut Tracker 是一个极简、无广告、可日常使用的训练与减脂追踪 Web 应用。
+LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减脂追踪 Web 应用。
 
-V1.6 本轮重点：
-- 基础信息新增性别与年龄（`user_settings.gender/age`）
-- 新用户首次登录进入 onboarding 资料完善流程
-- 基础信息默认改为“未填写”（`0 / unknown`）
-- 移动端底部导航改为 icon + text
+本版本重点：
+- 基础信息支持 `gender / age`，默认未填写状态为 `unknown / 0`
+- 新用户首次登录进入 `/onboarding` 完成基础信息
+- 用户资料支持昵称与头像（Supabase Storage）
+- 训练计划支持文本导入、编辑、PDF 导出
+- 接入 DeepSeek（仅服务端调用）实现 AI 训练/饮食计划生成、预览、编辑、确认保存
 
 ---
 
@@ -16,14 +17,13 @@ V1.6 本轮重点：
 - TypeScript（strict）
 - Tailwind CSS
 - shadcn/ui
-- Recharts
-- Lucide React
 - Zustand
 - Zod
-- next-intl（国际化）
-- Supabase Auth + Postgres（认证与数据持久化）
-- Supabase Storage（头像上传）
-- jsPDF + jspdf-autotable（训练计划 PDF 导出）
+- next-intl
+- Supabase Auth + Postgres + Storage
+- Recharts
+- jsPDF + jspdf-autotable
+- OpenAI SDK（兼容方式调用 DeepSeek）
 
 ---
 
@@ -31,39 +31,37 @@ V1.6 本轮重点：
 
 - `/` Dashboard
 - `/plan` 训练计划
+- `/plan/ai` AI 计划生成与预览
 - `/workout` 训练记录
 - `/nutrition` 饮食记录
-- `/body` 体重与身体数据
-- `/settings` 设置与数据管理
+- `/body` 身体数据
+- `/settings` 设置
 - `/onboarding` 首次资料填写
-- `/login` 登录
-- `/register` 注册
-- `/forgot-password` 忘记密码
+- `/login` / `/register` / `/forgot-password`
 
-未登录访问业务页会通过 `middleware.ts` 跳转到 `/login`。已登录但基础信息未完成会被引导到 `/onboarding`。
+路由守卫：
+- 未登录访问业务页会重定向到 `/login`
+- 已登录但基础资料未完成会重定向到 `/onboarding`
 
 ---
 
-## 3. 国际化（i18n）
+## 3. 已有核心能力
 
-- 默认语言：`zh-CN`
-- 支持语言：`zh-CN`、`en`
-- 语言包：
-  - `messages/zh-CN.json`
-  - `messages/en.json`
-- 切换入口：`/settings`
-- 偏好保存：
-  - `profiles.preferred_language`（Supabase）
-  - `localStorage`（避免刷新丢失）
+- 训练计划：创建、文本导入、编辑、设为生效、删除、PDF 导出
+- 训练记录：按周/天录入动作实际数据并保存，支持最近记录查看详情
+- 饮食记录：新增/编辑/删除、常用食物快捷添加、分餐统计
+- 身体数据：体重/腰围记录与趋势图
+- 设置：用户资料、目标参数、语言切换、数据导出、登出
 
 ---
 
 ## 4. 用户资料（昵称 + 头像）
 
-在 `/settings` 的“个人资料”区域支持：
-- 昵称编辑与保存（trim + 长度限制）
+设置页支持：
+- 昵称编辑（1-30 字符，自动 trim）
 - 头像上传 / 替换 / 删除
-- 上传后即时预览并写入 `profiles.avatar_url`
+- 格式限制：`image/png` `image/jpeg` `image/webp`
+- 大小限制：`<= 5MB`
 
 展示联动：
 - 桌面侧边栏用户区
@@ -74,129 +72,137 @@ V1.6 本轮重点：
 - 未设置昵称时显示邮箱前缀
 - 无头像时显示首字母占位头像
 
-上传限制：
-- 格式：`png/jpeg/webp`
-- 大小：`<= 5MB`
+---
+
+## 5. DeepSeek AI 功能（服务端）
+
+### 5.1 设计原则
+
+- 仅服务端调用 DeepSeek，前端不直连
+- `DEEPSEEK_API_KEY` 仅在服务端环境变量使用
+- 使用 OpenAI 兼容调用方式（默认 `deepseek-chat`）
+- 所有 AI 输出先做 Zod 校验，失败不入库
+- 流程为：生成 -> 预览/编辑 -> 用户确认 -> 保存
+
+### 5.2 AI API
+
+- `POST /api/ai/generate-training-plan`
+- `POST /api/ai/generate-nutrition-plan`
+- `POST /api/ai/save-training-plan`
+- `POST /api/ai/save-nutrition-plan`
+- `GET /api/ai/history`
+
+### 5.3 AI 页面
+
+`/plan/ai` 提供：
+- 生成条件表单（目标、频率、时长、场地、器械、忌口、伤病等）
+- 训练计划 JSON 预览与编辑
+- 饮食计划 JSON 预览与编辑
+- 保存为正式计划
+- 最近生成历史回填
 
 ---
 
-## 5. 训练计划管理与编辑
-
-`/plan` 支持：
-- 创建空白计划
-- 文本导入计划（模板 -> 解析 -> 预览编辑 -> 保存）
-- 设置生效计划
-- 删除计划（带确认）
-
-### 5.1 当前生效计划可编辑
-
-新增“编辑模式”，支持：
-- 计划名称
-- 计划备注
-- Day 标题与 Day 备注
-- 动作字段编辑：名称 / 组数 / 次数范围 / RPE / 备注 / 替代动作
-- 新增动作
-- 删除动作
-- 显式“保存计划修改”
-
-保存后写入：
-- `training_plans`
-- `training_plan_weeks`
-- `training_plan_days`
-- `training_plan_exercises`
-
----
-
-## 6. 计划导出（PDF）
-
-`/plan` 的主导出入口为 PDF，内容包含：
-- 计划名称
-- 导出日期
-- Week 分区
-- Day 小节
-- 动作表格（动作、组数、次数、RPE、备注、替代动作）
-
-实现：
-- `jsPDF + jspdf-autotable`
-- 内嵌中文字体（`public/fonts/NotoSansCJKsc-VF.ttf`）
-- V1.5 调整了标题、表头、正文、边框对比度，观感更清晰
-
-说明：用户侧已移除 JSON 导入入口，保留文本导入主流程。
-
----
-
-## 7. 训练记录保存与查看
-
-在 `/workout`：
-- 保存记录写入 `workout_logs` 与 `workout_log_exercises`
-- 页面提供“本次已保存”摘要
-- 提供“最近训练记录”列表并可打开详情弹窗
-
-详情包含：
-- 日期、周/天、训练时长、完成状态、备注
-- 动作明细（重量/次数/RPE/完成状态）
-
----
-
-## 8. Supabase 配置
-
-### 8.1 环境变量
+## 6. 环境变量
 
 复制 `.env.example` 到 `.env.local`：
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Server-only AI config
+DEEPSEEK_API_KEY=your_deepseek_api_key
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+DEEPSEEK_MODEL=deepseek-chat
 ```
 
-### 8.2 初始化数据库
+未配置 AI 环境变量时：
+- 站点其他功能不受影响
+- AI 页面会提示“未配置 AI 服务”
 
-1. 在 Supabase 创建项目
-2. 打开 SQL Editor
-3. 执行 `supabase/schema.sql`
+---
 
-### 8.3 资料与设置字段
+## 7. Supabase Schema 与迁移
 
-`profiles` 包含：
-- `display_name`
-- `avatar_url`
-- `updated_at`
+初始化：执行 `supabase/schema.sql`。
 
-`user_settings` 包含（新增）：
-- `gender`（`male | female | other | unknown`）
-- `age`（`0` 表示未填写）
+### 7.1 关键新增/扩展
 
-`training_plans` 包含：
-- `notes`
+- `profiles`：`display_name` `avatar_url` `updated_at`
+- `user_settings`：
+  - 基础：`gender` `age`
+  - AI 相关：`fitness_goal` `training_experience` `training_location` `available_equipment` `session_duration_minutes` `diet_preference` `food_restrictions` `injury_notes` `lifestyle_notes`
+- AI 历史：
+  - `ai_training_plan_generations`
+  - `ai_nutrition_plan_generations`
+- 正式饮食计划：
+  - `nutrition_plans`
+  - `nutrition_plan_days`
+  - `nutrition_plan_meals`
 
-### 8.3.1 旧数据库升级（必须）
-
-如果你的项目在早期版本已经执行过旧 schema，需要补执行以下 SQL：
+### 7.2 旧库升级 SQL（可重复执行）
 
 ```sql
 alter table public.profiles add column if not exists display_name text;
 alter table public.profiles add column if not exists avatar_url text;
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
-update public.profiles set display_name = split_part(email, '@', 1) where display_name is null or btrim(display_name) = '';
+update public.profiles
+set display_name = split_part(email, '@', 1)
+where display_name is null or btrim(display_name) = '';
 update public.profiles set updated_at = now() where updated_at is null;
 
 alter table public.user_settings add column if not exists gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown'));
 alter table public.user_settings add column if not exists age int not null default 0 check (age >= 0 and age <= 120);
+alter table public.user_settings add column if not exists fitness_goal text not null default 'fat_loss' check (fitness_goal in ('fat_loss', 'muscle_gain', 'maintenance', 'recomposition'));
+alter table public.user_settings add column if not exists training_experience text not null default 'beginner' check (training_experience in ('beginner', 'intermediate', 'advanced'));
+alter table public.user_settings add column if not exists training_location text not null default 'mixed' check (training_location in ('gym', 'home', 'mixed'));
+alter table public.user_settings add column if not exists available_equipment text[] not null default '{}';
+alter table public.user_settings add column if not exists session_duration_minutes int not null default 0 check (session_duration_minutes >= 0 and session_duration_minutes <= 300);
+alter table public.user_settings add column if not exists diet_preference text not null default 'none' check (diet_preference in ('none', 'high_protein', 'vegetarian', 'low_carb', 'balanced'));
+alter table public.user_settings add column if not exists food_restrictions text not null default '';
+alter table public.user_settings add column if not exists injury_notes text not null default '';
+alter table public.user_settings add column if not exists lifestyle_notes text not null default '';
+
 update public.user_settings set gender = 'unknown' where gender is null;
 update public.user_settings set age = 0 where age is null;
+update public.user_settings set fitness_goal = 'fat_loss' where fitness_goal is null;
+update public.user_settings set training_experience = 'beginner' where training_experience is null;
+update public.user_settings set training_location = 'mixed' where training_location is null;
+update public.user_settings set available_equipment = '{}' where available_equipment is null;
+update public.user_settings set session_duration_minutes = 0 where session_duration_minutes is null;
+update public.user_settings set diet_preference = 'none' where diet_preference is null;
+update public.user_settings set food_restrictions = '' where food_restrictions is null;
+update public.user_settings set injury_notes = '' where injury_notes is null;
+update public.user_settings set lifestyle_notes = '' where lifestyle_notes is null;
 ```
 
-如果资料保存时出现“数据库缺少资料字段，请先升级 Supabase schema（profiles.display_name / profiles.avatar_url / profiles.updated_at）”，通常就是尚未执行上述迁移 SQL。
-
-### 8.4 头像 bucket
-
-- bucket 名称：`avatars`（public）
-- 对象路径：`{userId}/avatar-{timestamp}.{ext}`
-- 建议直接使用 `supabase/schema.sql` 中的 storage policy 配置
+> 完整新表、RLS、索引与 policy 请以 `supabase/schema.sql` 为准。
 
 ---
 
-## 9. 本地运行
+## 8. 训练计划 PDF 导出
+
+- 主入口：`/plan` -> 导出当前计划（PDF）
+- 导出结构：计划名、日期、Week/Day 分区、动作表格
+- 方案：`jsPDF + jspdf-autotable`
+- 已支持中文字体嵌入，避免中文乱码
+
+---
+
+## 9. AI JSON Schema 文件
+
+- `src/lib/ai/schemas.ts`
+  - `aiTrainingPlanSchema`
+  - `aiNutritionPlanSchema`
+  - 生成请求 schema 与保存请求 schema
+- `src/lib/ai/mappers.ts`
+  - AI 训练计划 -> 现有 `training_plans` 链路
+  - AI 饮食计划 -> `nutrition_plans / days / meals`
+
+---
+
+## 10. 本地运行与检查
 
 ```bash
 npm install
@@ -212,71 +218,46 @@ npm run build
 
 ---
 
-## 10. 数据导出
-
-- 训练计划 PDF 导出：`/plan`
-- 训练计划 JSON 导出（备份）：`/plan`
-- 全量数据 JSON 导出：`/settings`
-
----
-
-## 11. Onboarding 与基础信息默认值
-
-- 新用户首次登录后会优先进入 `/onboarding`。
-- onboarding 需先完善：性别、年龄、身高、当前体重、目标体重、每周训练天数。
-- 默认基础信息使用未填写态：
-  - `gender = unknown`
-  - 数值字段默认 `0`
-- 若基础信息未完成，业务页会被 middleware 引导回 onboarding。
-
----
-
-## 12. LLM 扩展预留（不接真实 API）
-
-本仓库保留了后续扩展骨架：
-- `src/types/llm.ts`
-- `src/services/llm-plan-generator.ts`
-- `src/services/llm-plan-recommender.ts`
-
-建议后续通过服务端 route/action 调模型，避免在前端暴露 API Key。
-
----
-
-## 13. 目录结构（核心）
+## 11. 目录结构（核心）
 
 ```text
 src/
   app/
+    api/ai/
   components/
     auth/
-    body/
-    charts/
     dashboard/
-    i18n/
     layout/
-    nutrition/
     plan/
     settings/
-    shared/
-    ui/
-    workout/
-  i18n/
+    ...
   lib/
+    ai/
+    schemas.ts
+    ...
   services/
+    ai/
     data-repository.ts
-    plan-export.ts
-    plan-import.ts
-    llm-plan-generator.ts
-    llm-plan-recommender.ts
+    ...
   store/
   types/
-    index.ts
-    llm.ts
 messages/
-  zh-CN.json
-  en.json
 supabase/
-  schema.sql
 public/
-  fonts/
 ```
+
+---
+
+## 12. 安全说明
+
+- 不要把 `DEEPSEEK_API_KEY` 写入前端代码
+- 不要提交 `.env.local`
+- 不要在日志中打印 API key
+
+---
+
+## 13. 后续迭代建议
+
+- 基于历史训练记录做周计划微调（仍保持结构化 JSON 输出）
+- 增加 AI 生成结果对比与版本回滚
+- 增加 nutrition plan 与每日 food log 的自动对照分析
