@@ -22,6 +22,7 @@ export const aiDietPreferenceSchema = z.enum([
   "low_carb",
   "balanced",
 ]);
+export const aiLocaleSchema = z.enum(["zh-CN", "en"]);
 
 export const aiTrainingExerciseSchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -113,6 +114,7 @@ export const aiNutritionGenerationConstraintsSchema = z.object({
 });
 
 export const generateTrainingPlanRequestSchema = z.object({
+  locale: aiLocaleSchema.default("zh-CN"),
   constraints: aiTrainingGenerationConstraintsSchema.default({
     available_equipment: [],
     injury_notes: "",
@@ -122,6 +124,7 @@ export const generateTrainingPlanRequestSchema = z.object({
 });
 
 export const generateNutritionPlanRequestSchema = z.object({
+  locale: aiLocaleSchema.default("zh-CN"),
   constraints: aiNutritionGenerationConstraintsSchema.default({
     food_restrictions: "",
     notes: "",
@@ -143,3 +146,4 @@ export type AiTrainingPlan = z.infer<typeof aiTrainingPlanSchema>;
 export type AiNutritionPlan = z.infer<typeof aiNutritionPlanSchema>;
 export type AiTrainingGenerationConstraints = z.infer<typeof aiTrainingGenerationConstraintsSchema>;
 export type AiNutritionGenerationConstraints = z.infer<typeof aiNutritionGenerationConstraintsSchema>;
+export type AiLocale = z.infer<typeof aiLocaleSchema>;

@@ -5,6 +5,7 @@ import { generateTrainingPlanRequestSchema } from "@/lib/ai/schemas";
 import { getDeepSeekConfigOptional } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import { generateTrainingPlanWithDeepSeek } from "@/services/ai/generate-training-plan";
+import { verifyTrainingPlanLanguage } from "@/services/ai/language-check";
 import {
   fetchAiProfileSnapshot,
   insertTrainingGenerationHistory,
@@ -68,13 +69,23 @@ export async function POST(request: Request) {
     const result = await generateTrainingPlanWithDeepSeek({
       profile,
       constraints: body.constraints,
+      locale: body.locale,
     });
+
+    const languageCheck = verifyTrainingPlanLanguage(body.locale, result.parsedPlan);
+    if (!languageCheck.matched) {
+      throw new AiServiceError(
+        "AI_LANGUAGE_MISMATCH",
+        "AI response language does not match current locale. Please regenerate.",
+        languageCheck.detail,
+      );
+    }
 
     const generationId = await insertTrainingGenerationHistory(supabase, {
       userId: user.id,
       goalType: body.constraints.goal_type || profile.fitnessGoal,
       profile,
-      constraints: body.constraints,
+      constraints: { ...body.constraints, locale: body.locale },
       modelName: result.modelName,
       promptVersion: result.promptVersion,
       rawResponse: result.rawResponse,
@@ -96,7 +107,7 @@ export async function POST(request: Request) {
       userId: user.id,
       goalType: body.constraints.goal_type || profile.fitnessGoal,
       profile,
-      constraints: body.constraints,
+      constraints: { ...body.constraints, locale: body.locale },
       modelName: config?.model || "deepseek-chat",
       promptVersion: TRAINING_PROMPT_VERSION,
       rawResponse: null,

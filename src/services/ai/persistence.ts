@@ -53,7 +53,7 @@ export async function insertTrainingGenerationHistory(
     userId: string;
     goalType: string;
     profile: AiProfileSnapshot;
-    constraints: AiTrainingGenerationConstraints;
+    constraints: AiTrainingGenerationConstraints & { locale?: string };
     modelName: string;
     promptVersion: string;
     rawResponse: unknown;
@@ -94,7 +94,7 @@ export async function insertNutritionGenerationHistory(
     userId: string;
     goalType: string;
     profile: AiProfileSnapshot;
-    constraints: AiNutritionGenerationConstraints;
+    constraints: AiNutritionGenerationConstraints & { locale?: string };
     modelName: string;
     promptVersion: string;
     rawResponse: unknown;

@@ -1,4 +1,5 @@
 import {
+  type AiLocale,
   aiNutritionPlanSchema,
   type AiNutritionGenerationConstraints,
   type AiNutritionPlan,
@@ -21,8 +22,9 @@ export interface NutritionGenerationResult {
 export async function generateNutritionPlanWithDeepSeek(input: {
   profile: AiProfileSnapshot;
   constraints: AiNutritionGenerationConstraints;
+  locale: AiLocale;
 }): Promise<NutritionGenerationResult> {
-  const prompt = buildNutritionPlanPrompt(input.profile, input.constraints);
+  const prompt = buildNutritionPlanPrompt(input.profile, input.constraints, input.locale);
   const response = await callDeepSeekForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,

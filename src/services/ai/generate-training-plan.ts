@@ -1,4 +1,5 @@
 import {
+  type AiLocale,
   aiTrainingPlanSchema,
   type AiTrainingGenerationConstraints,
   type AiTrainingPlan,
@@ -21,8 +22,9 @@ export interface TrainingGenerationResult {
 export async function generateTrainingPlanWithDeepSeek(input: {
   profile: AiProfileSnapshot;
   constraints: AiTrainingGenerationConstraints;
+  locale: AiLocale;
 }): Promise<TrainingGenerationResult> {
-  const prompt = buildTrainingPlanPrompt(input.profile, input.constraints);
+  const prompt = buildTrainingPlanPrompt(input.profile, input.constraints, input.locale);
   const response = await callDeepSeekForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,
