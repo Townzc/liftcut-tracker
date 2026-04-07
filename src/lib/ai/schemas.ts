@@ -24,6 +24,28 @@ export const aiDietPreferenceSchema = z.enum([
 ]);
 export const aiLocaleSchema = z.enum(["zh-CN", "en"]);
 
+export const aiProfileSnapshotSchema = z.object({
+  gender: z.enum(["male", "female", "other", "unknown"]).default("unknown"),
+  age: z.coerce.number().int().min(0).max(120).default(0),
+  height: z.coerce.number().min(0).max(260).default(0),
+  currentWeight: z.coerce.number().min(0).max(500).default(0),
+  targetWeight: z.coerce.number().min(0).max(500).default(0),
+  weeklyTrainingDays: z.coerce.number().int().min(0).max(7).default(0),
+  calorieTarget: z.coerce.number().min(0).max(7000).default(0),
+  proteinTarget: z.coerce.number().min(0).max(500).default(0),
+  targetWeeklyLossMin: z.coerce.number().min(0).max(3).default(0),
+  targetWeeklyLossMax: z.coerce.number().min(0).max(3).default(0),
+  fitnessGoal: aiGoalTypeSchema.default("fat_loss"),
+  trainingExperience: aiTrainingExperienceSchema.default("beginner"),
+  trainingLocation: aiTrainingLocationSchema.default("mixed"),
+  availableEquipment: z.array(z.string().trim().min(1).max(80)).default([]),
+  sessionDurationMinutes: z.coerce.number().int().min(0).max(300).default(0),
+  dietPreference: aiDietPreferenceSchema.default("none"),
+  foodRestrictions: z.string().max(1000).default(""),
+  injuryNotes: z.string().max(1000).default(""),
+  lifestyleNotes: z.string().max(1000).default(""),
+});
+
 export const aiTrainingExerciseSchema = z.object({
   name: z.string().trim().min(1).max(120),
   sets: z.coerce.number().int().min(1).max(10),
@@ -341,6 +363,7 @@ export const aiNutritionGenerationConstraintsSchema = z.object({
 
 export const generateTrainingPlanRequestSchema = z.object({
   locale: aiLocaleSchema.default("zh-CN"),
+  profile_snapshot: aiProfileSnapshotSchema.optional(),
   constraints: aiTrainingGenerationConstraintsSchema.default({
     available_equipment: [],
     injury_notes: "",
@@ -351,6 +374,7 @@ export const generateTrainingPlanRequestSchema = z.object({
 
 export const generateNutritionPlanRequestSchema = z.object({
   locale: aiLocaleSchema.default("zh-CN"),
+  profile_snapshot: aiProfileSnapshotSchema.optional(),
   constraints: aiNutritionGenerationConstraintsSchema.default({
     food_restrictions: "",
     notes: "",

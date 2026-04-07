@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { AlertTriangle, Download, LoaderCircle, Trash2, Upload } from "lucide-react";
@@ -7,7 +8,7 @@ import { AlertTriangle, Download, LoaderCircle, Trash2, Upload } from "lucide-re
 import { useAuth } from "@/components/auth/auth-provider";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { UserAvatar } from "@/components/shared/user-avatar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +23,7 @@ import {
 import { normalizeActionError } from "@/lib/error-utils";
 import { downloadJson } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
+import { cn } from "@/lib/utils";
 import { clearUserAvatar, exportUserData, uploadUserAvatar } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
@@ -41,6 +43,7 @@ export function SettingsPage() {
   const t = useTranslations("settings");
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
+  const tGuest = useTranslations("guest");
 
   const language = useUIStore((state) => state.language);
 
@@ -49,8 +52,18 @@ export function SettingsPage() {
   const ensureUserId = useTrackerStore((state) => state.ensureUserId);
   const updateSettings = useTrackerStore((state) => state.updateSettings);
   const resetAllData = useTrackerStore((state) => state.resetAllData);
+  const getSnapshot = useTrackerStore((state) => state.getSnapshot);
 
-  const { user, profile, signOut, setPreferredLanguage, updateProfile } = useAuth();
+  const {
+    user,
+    profile,
+    signOut,
+    setPreferredLanguage,
+    updateProfile,
+    authMode,
+    pendingGuestMigration,
+    migrateGuestData,
+  } = useAuth();
 
   const [draft, setDraft] = useState<UserSettings>(settings);
   const [displayName, setDisplayName] = useState("");
@@ -67,8 +80,8 @@ export function SettingsPage() {
   useEffect(() => {
     const email = profile?.email || user?.email || "";
     const fallback = email.split("@")[0] || "";
-    setDisplayName(profile?.displayName || fallback);
-  }, [profile?.displayName, profile?.email, user?.email]);
+    setDisplayName(authMode === "guest" ? tGuest("badge") : profile?.displayName || fallback);
+  }, [authMode, profile?.displayName, profile?.email, tGuest, user?.email]);
 
   const weeklyLossHint = useMemo(
     () =>
@@ -128,7 +141,7 @@ export function SettingsPage() {
 
   const avatarMaxSize = 5 * 1024 * 1024;
   const supportedImageTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
-  const email = profile?.email || user?.email || "-";
+  const email = authMode === "guest" ? tGuest("badge") : profile?.email || user?.email || "-";
 
   const clearFeedback = () => {
     setMessage(null);
@@ -136,6 +149,11 @@ export function SettingsPage() {
   };
 
   const handleSaveProfile = async () => {
+    if (authMode === "guest") {
+      setError(tGuest("guestAvatarDisabled"));
+      return;
+    }
+
     setLoadingAction("save-profile");
     clearFeedback();
 
@@ -165,6 +183,12 @@ export function SettingsPage() {
   };
 
   const handleAvatarFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (authMode === "guest") {
+      setError(tGuest("guestAvatarDisabled"));
+      event.currentTarget.value = "";
+      return;
+    }
+
     const file = event.target.files?.[0];
     event.currentTarget.value = "";
     if (!file) {
@@ -202,6 +226,11 @@ export function SettingsPage() {
   };
 
   const handleAvatarRemove = async () => {
+    if (authMode === "guest") {
+      setError(tGuest("guestAvatarDisabled"));
+      return;
+    }
+
     setLoadingAction("remove-avatar");
     clearFeedback();
 
@@ -260,6 +289,14 @@ export function SettingsPage() {
     clearFeedback();
 
     try {
+      if (authMode === "guest") {
+        const snapshot = getSnapshot();
+        const date = new Date().toISOString().slice(0, 10);
+        downloadJson(`liftcut-guest-backup-${date}.json`, snapshot);
+        setMessage(tGuest("exportGuestSuccess"));
+        return;
+      }
+
       const resolvedUserId = await ensureUserId();
       const snapshot = await exportUserData(resolvedUserId);
       const date = new Date().toISOString().slice(0, 10);
@@ -309,6 +346,25 @@ export function SettingsPage() {
       setError(
         normalizeActionError(logoutError, {
           fallback: t("logoutFailed"),
+        }),
+      );
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
+  const handleGuestMigration = async () => {
+    setLoadingAction("save");
+    clearFeedback();
+
+    try {
+      await migrateGuestData();
+      setMessage(tGuest("migrationSuccess"));
+    } catch (migrationError) {
+      console.error(migrationError);
+      setError(
+        normalizeActionError(migrationError, {
+          fallback: tGuest("migrationFailed"),
         }),
       );
     } finally {
@@ -370,7 +426,7 @@ export function SettingsPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  disabled={isBusy || loadingAction === "upload-avatar"}
+                  disabled={isBusy || loadingAction === "upload-avatar" || authMode === "guest"}
                   onClick={() => avatarInputRef.current?.click()}
                 >
                   {loadingAction === "upload-avatar" ? (
@@ -383,7 +439,7 @@ export function SettingsPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  disabled={isBusy || !profile?.avatarUrl}
+                  disabled={isBusy || !profile?.avatarUrl || authMode === "guest"}
                   onClick={handleAvatarRemove}
                 >
                   {loadingAction === "remove-avatar" ? (
@@ -397,6 +453,9 @@ export function SettingsPage() {
               <p className="text-xs text-slate-500">
                 {t("avatarInvalidType")} {t("avatarTooLarge")}
               </p>
+              {authMode === "guest" ? (
+                <p className="text-xs text-amber-700">{tGuest("guestAvatarDisabled")}</p>
+              ) : null}
             </div>
           </div>
 
@@ -431,6 +490,20 @@ export function SettingsPage() {
           </Button>
         </CardContent>
       </Card>
+
+      {authMode === "guest" ? (
+        <Card className="border-amber-200/80 bg-amber-50/80">
+          <CardHeader>
+            <CardTitle className="text-base text-amber-900">{tGuest("badge")}</CardTitle>
+            <CardDescription className="text-amber-800">{tGuest("localOnlyHint")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/register" className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
+              {tGuest("upgradeNow")}
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>
@@ -674,8 +747,14 @@ export function SettingsPage() {
             </div>
             <Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
               {loadingAction === "logout" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {loadingAction === "logout" ? t("loggingOut") : t("logout")}
+              {loadingAction === "logout" ? t("loggingOut") : authMode === "guest" ? tGuest("exitGuestMode") : t("logout")}
             </Button>
+            {authMode === "authenticated" && pendingGuestMigration ? (
+              <Button variant="outline" className="w-full" onClick={handleGuestMigration} disabled={isBusy}>
+                {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {loadingAction === "save" ? tGuest("migrating") : tGuest("migrationConfirm")}
+              </Button>
+            ) : null}
           </CardContent>
         </Card>
 
@@ -709,3 +788,6 @@ export function SettingsPage() {
     </div>
   );
 }
+
+
+

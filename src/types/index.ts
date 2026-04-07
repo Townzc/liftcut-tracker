@@ -1,4 +1,5 @@
 export type AppLocale = "zh-CN" | "en";
+export type AuthMode = "none" | "guest" | "authenticated";
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 export type QuickFoodBasisType = "per_100g" | "per_serving";
 export type Gender = "male" | "female" | "other" | "unknown";

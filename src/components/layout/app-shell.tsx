@@ -16,6 +16,7 @@ import {
 import type { ComponentType, ReactNode } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { cn } from "@/lib/utils";
 
@@ -58,11 +59,16 @@ function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }
 export function AppShell({ children }: { children: ReactNode }) {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
+  const tGuest = useTranslations("guest");
   const pathname = usePathname();
-  const { loading, profile, user } = useAuth();
+  const { loading, profile, user, authMode } = useAuth();
 
   const email = profile?.email || user?.email || "";
-  const displayName = profile?.displayName || email.split("@")[0] || "User";
+  const displayName =
+    authMode === "guest"
+      ? tGuest("badge")
+      : profile?.displayName || email.split("@")[0] || "User";
+  const secondaryLabel = authMode === "guest" ? tGuest("localOnlyHint") : email || "-";
 
   const navItems: NavItem[] = [
     { href: "/", label: tNav("dashboard"), shortLabel: tNav("dashboardShort"), icon: Home },
@@ -109,7 +115,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-9 w-9" />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-slate-900">{displayName}</p>
-            <p className="truncate text-xs text-slate-500">{email || "-"}</p>
+            <p className="truncate text-xs text-slate-500">{secondaryLabel}</p>
           </div>
         </div>
 
@@ -126,11 +132,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-8 w-8" textClassName="text-xs" />
             <div className="min-w-0">
               <p className="truncate text-sm font-medium text-slate-900">{displayName}</p>
-              <p className="truncate text-xs text-slate-500">{email || "-"}</p>
+              <p className="truncate text-xs text-slate-500">{secondaryLabel}</p>
             </div>
           </div>
         </div>
-        <main className="mx-auto w-full max-w-6xl p-4 md:p-8">{children}</main>
+        <main className="mx-auto w-full max-w-6xl space-y-3 p-4 md:p-8">
+          <GuestUpgradeBanner />
+          {children}
+        </main>
       </div>
 
       <nav className="fixed bottom-0 left-0 right-0 z-20 flex items-center gap-1 border-t border-slate-200 bg-white/95 p-2 backdrop-blur md:hidden">

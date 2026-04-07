@@ -5,7 +5,8 @@ export type AiErrorCode =
   | "AI_INVALID_JSON"
   | "AI_SCHEMA_VALIDATION_FAILED"
   | "AI_PROFILE_INCOMPLETE"
-  | "AI_LANGUAGE_MISMATCH";
+  | "AI_LANGUAGE_MISMATCH"
+  | "AI_GUEST_QUOTA_REACHED";
 
 const STATUS_BY_CODE: Record<AiErrorCode, number> = {
   AI_CONFIG_MISSING: 503,
@@ -15,6 +16,7 @@ const STATUS_BY_CODE: Record<AiErrorCode, number> = {
   AI_SCHEMA_VALIDATION_FAILED: 422,
   AI_PROFILE_INCOMPLETE: 400,
   AI_LANGUAGE_MISMATCH: 422,
+  AI_GUEST_QUOTA_REACHED: 429,
 };
 
 export class AiServiceError extends Error {

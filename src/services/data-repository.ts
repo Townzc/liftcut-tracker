@@ -1,5 +1,6 @@
 ﻿import { createDefaultSettings, createDemoSnapshot, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import type { GuestAiHistoryItem } from "@/lib/guest-mode";
 import type {
   AppDataSnapshot,
   AppLocale,
@@ -667,6 +668,67 @@ export async function upsertUserSettings(userId: string, settings: UserSettings)
 
 export async function saveTrainingPlan(userId: string, plan: TrainingPlan): Promise<void> {
   await insertTrainingPlanRecords(userId, plan, true);
+}
+
+export async function saveTrainingPlanAsInactive(userId: string, plan: TrainingPlan): Promise<void> {
+  await insertTrainingPlanRecords(userId, plan, false);
+}
+
+export async function appendAiGenerationHistoryForUser(
+  userId: string,
+  payload: {
+    training: GuestAiHistoryItem[];
+    nutrition: GuestAiHistoryItem[];
+    profileSnapshot?: Record<string, unknown>;
+  },
+): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const now = nowIso();
+  const profileJson = payload.profileSnapshot ?? {};
+
+  const trainingRows = payload.training.map((item) => ({
+    user_id: userId,
+    goal_type: item.goal_type ?? "fat_loss",
+    input_profile_json: profileJson,
+    input_constraints_json: {},
+    model_name: item.model_name || "deepseek-chat",
+    prompt_version: item.prompt_version || "GUEST_V1",
+    raw_response_json: item.raw_response_json ?? null,
+    parsed_plan_json: item.parsed_plan_json ?? null,
+    status: item.status || "success",
+    error_message: item.error_message ?? null,
+    created_at: item.created_at || now,
+    updated_at: now,
+  }));
+
+  if (trainingRows.length > 0) {
+    const { error } = await supabase.from("ai_training_plan_generations").insert(trainingRows);
+    if (error) {
+      throw error;
+    }
+  }
+
+  const nutritionRows = payload.nutrition.map((item) => ({
+    user_id: userId,
+    goal_type: item.goal_type ?? "fat_loss",
+    input_profile_json: profileJson,
+    input_constraints_json: {},
+    model_name: item.model_name || "deepseek-chat",
+    prompt_version: item.prompt_version || "GUEST_V1",
+    raw_response_json: item.raw_response_json ?? null,
+    parsed_plan_json: item.parsed_plan_json ?? null,
+    status: item.status || "success",
+    error_message: item.error_message ?? null,
+    created_at: item.created_at || now,
+    updated_at: now,
+  }));
+
+  if (nutritionRows.length > 0) {
+    const { error } = await supabase.from("ai_nutrition_plan_generations").insert(nutritionRows);
+    if (error) {
+      throw error;
+    }
+  }
 }
 
 export async function upsertWorkoutLog(userId: string, log: WorkoutLog): Promise<void> {

@@ -1,10 +1,11 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Copy, LoaderCircle, Plus, Save, Sparkles, Trash2 } from "lucide-react";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { mapAiTrainingPlanToTrainingPlan } from "@/lib/ai/mappers";
 import {
   aiNutritionPlanSchema,
   aiTrainingPlanSchema,
@@ -21,6 +23,16 @@ import {
   type AiTrainingPlan,
 } from "@/lib/ai/schemas";
 import { normalizeActionError } from "@/lib/error-utils";
+import {
+  canConsumeGuestAiQuota,
+  clearGuestAiHistory,
+  consumeGuestAiQuota,
+  deleteGuestAiHistoryItem,
+  getGuestAiHistory,
+  pushGuestNutritionHistory,
+  pushGuestTrainingHistory,
+  saveGuestNutritionPlan,
+} from "@/lib/guest-mode";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { DietPreference, FitnessGoal, TrainingLocation } from "@/types";
@@ -43,6 +55,7 @@ interface HistoryItem {
   parsed_plan_json: unknown;
   error_message?: string | null;
   created_at: string;
+  type?: "training" | "nutrition";
 }
 
 interface HistoryResponse {
@@ -101,15 +114,29 @@ async function requestJson(url: string, init?: RequestInit): Promise<Record<stri
   return data;
 }
 
+function getGuestQuotaRemaining(data: Record<string, unknown>): number | null {
+  const guestQuota = data.guestQuota;
+  if (typeof guestQuota !== "object" || guestQuota === null) {
+    return null;
+  }
+
+  const remaining = (guestQuota as { remaining?: unknown }).remaining;
+  return typeof remaining === "number" ? remaining : null;
+}
+
 export function AiPlanPage() {
   const t = useTranslations("ai");
   const tNav = useTranslations("nav");
   const tNutrition = useTranslations("nutrition");
   const locale = useLocale();
+  const { authMode } = useAuth();
   const settings = useTrackerStore((state) => state.settings);
   const refreshUserData = useTrackerStore((state) => state.refreshUserData);
+  const ensureUserId = useTrackerStore((state) => state.ensureUserId);
+  const setTrainingPlan = useTrackerStore((state) => state.setTrainingPlan);
   const language = useUIStore((state) => state.language);
   const requestLocale = locale === "zh-CN" || locale === "en" ? locale : language;
+  const guestAiLimit = 10;
 
   const [goalType, setGoalType] = useState<FitnessGoal>(settings.fitnessGoal);
   const [weeklyTrainingDays, setWeeklyTrainingDays] = useState(settings.weeklyTrainingDays || 3);
@@ -134,6 +161,30 @@ export function AiPlanPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const isDev = process.env.NODE_ENV !== "production";
+  const profileSnapshot = useMemo(
+    () => ({
+      gender: settings.gender,
+      age: settings.age,
+      height: settings.height,
+      currentWeight: settings.currentWeight,
+      targetWeight: settings.targetWeight,
+      weeklyTrainingDays: settings.weeklyTrainingDays,
+      calorieTarget: settings.calorieTarget,
+      proteinTarget: settings.proteinTarget,
+      targetWeeklyLossMin: settings.targetWeeklyLossMin,
+      targetWeeklyLossMax: settings.targetWeeklyLossMax,
+      fitnessGoal: settings.fitnessGoal,
+      trainingExperience: settings.trainingExperience,
+      trainingLocation: settings.trainingLocation,
+      availableEquipment: settings.availableEquipment,
+      sessionDurationMinutes: settings.sessionDurationMinutes,
+      dietPreference: settings.dietPreference,
+      foodRestrictions: settings.foodRestrictions,
+      injuryNotes: settings.injuryNotes,
+      lifestyleNotes: settings.lifestyleNotes,
+    }),
+    [settings],
+  );
 
   const goalOptions = useMemo(
     () => [
@@ -193,6 +244,14 @@ export function AiPlanPage() {
   const loadHistory = useCallback(async () => {
     setLoading("history");
     try {
+      if (authMode === "guest") {
+        const guestHistory = getGuestAiHistory();
+        setAiConfigured(true);
+        setHistoryTraining(guestHistory.training);
+        setHistoryNutrition(guestHistory.nutrition);
+        return;
+      }
+
       const data = (await requestJson("/api/ai/history")) as unknown as HistoryResponse;
       setAiConfigured(Boolean(data.aiConfigured));
       setHistoryTraining(data.training ?? []);
@@ -202,7 +261,7 @@ export function AiPlanPage() {
     } finally {
       setLoading(null);
     }
-  }, [t]);
+  }, [authMode, t]);
 
   useEffect(() => {
     void loadHistory();
@@ -252,13 +311,19 @@ export function AiPlanPage() {
   };
 
   const generateTraining = async () => {
-    setLoading("training");
     clearFeedback();
+    if (authMode === "guest" && !canConsumeGuestAiQuota(guestAiLimit)) {
+      setError(t("guestQuotaReached"));
+      return;
+    }
+
+    setLoading("training");
     try {
       const data = await requestJson("/api/ai/generate-training-plan", {
         method: "POST",
         body: JSON.stringify({
           locale: requestLocale,
+          profile_snapshot: profileSnapshot,
           constraints: {
             goal_type: goalType,
             weekly_training_days: weeklyTrainingDays,
@@ -271,13 +336,35 @@ export function AiPlanPage() {
         }),
       });
       const parsed = aiTrainingPlanSchema.parse(data.plan);
-      commitTrainingDraft(parsed, typeof data.generationId === "string" ? data.generationId : null);
-      setMessage(t("trainingGenerateSuccess"));
+      const modelName = typeof data.model === "string" ? data.model : "deepseek-chat";
+      const promptVersion = typeof data.promptVersion === "string" ? data.promptVersion : "TRAINING_PROMPT_V1";
+      let generationId = typeof data.generationId === "string" ? data.generationId : null;
+
+      if (authMode === "guest") {
+        const historyItem = pushGuestTrainingHistory({
+          modelName,
+          promptVersion,
+          parsedPlan: parsed,
+          rawResponse: data.plan,
+        });
+        generationId = historyItem.id;
+      }
+
+      commitTrainingDraft(parsed, generationId);
+      if (authMode === "guest") {
+        const quotaState = consumeGuestAiQuota(guestAiLimit);
+        const responseQuota = getGuestQuotaRemaining(data) ?? quotaState.remaining;
+        setMessage(t("trainingGenerateSuccessGuest", { remaining: responseQuota }));
+      } else {
+        setMessage(t("trainingGenerateSuccess"));
+      }
       await loadHistory();
     } catch (requestError) {
       const typedError = requestError as Error & { code?: string; detail?: string };
       if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
+      } else if (typedError.code === "AI_GUEST_QUOTA_REACHED") {
+        setError(t("guestQuotaReached"));
       } else if (typedError.code === "AI_SCHEMA_VALIDATION_FAILED" || typedError.code === "AI_INVALID_JSON") {
         setError(
           isDev && typedError.detail
@@ -293,13 +380,19 @@ export function AiPlanPage() {
   };
 
   const generateNutrition = async () => {
-    setLoading("nutrition");
     clearFeedback();
+    if (authMode === "guest" && !canConsumeGuestAiQuota(guestAiLimit)) {
+      setError(t("guestQuotaReached"));
+      return;
+    }
+
+    setLoading("nutrition");
     try {
       const data = await requestJson("/api/ai/generate-nutrition-plan", {
         method: "POST",
         body: JSON.stringify({
           locale: requestLocale,
+          profile_snapshot: profileSnapshot,
           constraints: {
             goal_type: goalType,
             diet_preference: dietPreference,
@@ -309,13 +402,35 @@ export function AiPlanPage() {
         }),
       });
       const parsed = aiNutritionPlanSchema.parse(data.plan);
-      commitNutritionDraft(parsed, typeof data.generationId === "string" ? data.generationId : null);
-      setMessage(t("nutritionGenerateSuccess"));
+      const modelName = typeof data.model === "string" ? data.model : "deepseek-chat";
+      const promptVersion = typeof data.promptVersion === "string" ? data.promptVersion : "NUTRITION_PROMPT_V1";
+      let generationId = typeof data.generationId === "string" ? data.generationId : null;
+
+      if (authMode === "guest") {
+        const historyItem = pushGuestNutritionHistory({
+          modelName,
+          promptVersion,
+          parsedPlan: parsed,
+          rawResponse: data.plan,
+        });
+        generationId = historyItem.id;
+      }
+
+      commitNutritionDraft(parsed, generationId);
+      if (authMode === "guest") {
+        const quotaState = consumeGuestAiQuota(guestAiLimit);
+        const responseQuota = getGuestQuotaRemaining(data) ?? quotaState.remaining;
+        setMessage(t("nutritionGenerateSuccessGuest", { remaining: responseQuota }));
+      } else {
+        setMessage(t("nutritionGenerateSuccess"));
+      }
       await loadHistory();
     } catch (requestError) {
       const typedError = requestError as Error & { code?: string; detail?: string };
       if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
+      } else if (typedError.code === "AI_GUEST_QUOTA_REACHED") {
+        setError(t("guestQuotaReached"));
       } else if (typedError.code === "AI_SCHEMA_VALIDATION_FAILED" || typedError.code === "AI_INVALID_JSON") {
         setError(
           isDev && typedError.detail
@@ -335,6 +450,17 @@ export function AiPlanPage() {
     clearFeedback();
     try {
       const parsed = aiTrainingPlanSchema.parse(trainingPlanDraft ?? JSON.parse(trainingJson));
+      if (authMode === "guest") {
+        const userId = await ensureUserId();
+        const mappedPlan = mapAiTrainingPlanToTrainingPlan({
+          userId,
+          plan: parsed,
+        });
+        await setTrainingPlan(mappedPlan);
+        setMessage(t("trainingSaveSuccess"));
+        return;
+      }
+
       await requestJson("/api/ai/save-training-plan", {
         method: "POST",
         body: JSON.stringify({ generation_id: trainingGenerationId, plan: parsed }),
@@ -353,6 +479,12 @@ export function AiPlanPage() {
     clearFeedback();
     try {
       const parsed = aiNutritionPlanSchema.parse(nutritionPlanDraft ?? JSON.parse(nutritionJson));
+      if (authMode === "guest") {
+        saveGuestNutritionPlan(parsed);
+        setMessage(t("nutritionSaveGuestSuccess"));
+        return;
+      }
+
       await requestJson("/api/ai/save-nutrition-plan", {
         method: "POST",
         body: JSON.stringify({ generation_id: nutritionGenerationId, plan: parsed, activate: true }),
@@ -365,6 +497,58 @@ export function AiPlanPage() {
     }
   };
 
+  const handleDeleteHistoryItem = async (type: "training" | "nutrition", id: string) => {
+    const confirmed = window.confirm(t("historyDeleteConfirm"));
+    if (!confirmed) {
+      return;
+    }
+
+    setLoading("history");
+    clearFeedback();
+    try {
+      if (authMode === "guest") {
+        deleteGuestAiHistoryItem(type, id);
+      } else {
+        await requestJson(`/api/ai/history?type=${type}&id=${encodeURIComponent(id)}`, {
+          method: "DELETE",
+        });
+      }
+
+      await loadHistory();
+      setMessage(t("historyDeleteSuccess"));
+    } catch (deleteError) {
+      setError(normalizeActionError(deleteError, { fallback: t("historyDeleteFailed") }));
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleClearHistory = async (type: "training" | "nutrition" | "all") => {
+    const confirmed = window.confirm(t("historyClearConfirm"));
+    if (!confirmed) {
+      return;
+    }
+
+    setLoading("history");
+    clearFeedback();
+    try {
+      if (authMode === "guest") {
+        clearGuestAiHistory(type);
+      } else {
+        await requestJson(`/api/ai/history?type=${type}`, {
+          method: "DELETE",
+        });
+      }
+
+      await loadHistory();
+      setMessage(t("historyClearSuccess"));
+    } catch (clearError) {
+      setError(normalizeActionError(clearError, { fallback: t("historyDeleteFailed") }));
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <div className="space-y-4 pb-8">
       <div className="flex items-center justify-between gap-3">
@@ -372,6 +556,7 @@ export function AiPlanPage() {
           <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("aiPlanner")}</p>
           <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
           <p className="mt-1 text-sm text-slate-600">{t("localeModeHint", { locale: localeLabel })}</p>
+          {authMode === "guest" ? <p className="text-xs text-amber-700">{t("guestModeHistoryHint")}</p> : null}
         </div>
         <Link href="/plan" className="text-sm text-emerald-700 hover:underline">
           {t("backToPlan")}
@@ -901,64 +1086,133 @@ export function AiPlanPage() {
           <CardTitle className="text-base">{t("historyTitle")}</CardTitle>
           <CardDescription>{t("historyDesc")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-3 lg:grid-cols-2">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-900">{t("historyTraining")}</p>
-            {historyTraining.slice(0, 8).map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className="w-full rounded-md border border-slate-200 bg-slate-50 p-2 text-left text-xs hover:bg-slate-100"
-                onClick={() => {
-                  if (!item.parsed_plan_json) {
-                    setError(item.error_message || t("historyLoadFailed"));
-                    return;
-                  }
-
-                  const parsed = aiTrainingPlanSchema.safeParse(item.parsed_plan_json);
-                  if (!parsed.success) {
-                    setError(t("invalidTrainingPlan"));
-                    return;
-                  }
-
-                  commitTrainingDraft(parsed.data, item.id);
-                  setMessage(t("historyLoaded"));
-                }}
-              >
-                <p>{item.created_at}</p>
-                <p className="text-slate-500">{item.model_name} · {item.prompt_version}</p>
-                <Badge variant="outline" className="mt-1">{item.status}</Badge>
-              </button>
-            ))}
+        <CardContent className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => void handleClearHistory("training")}
+              disabled={loading === "history" || historyTraining.length === 0}
+            >
+              {t("historyClearTraining")}
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => void handleClearHistory("nutrition")}
+              disabled={loading === "history" || historyNutrition.length === 0}
+            >
+              {t("historyClearNutrition")}
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => void handleClearHistory("all")}
+              disabled={loading === "history" || (historyTraining.length === 0 && historyNutrition.length === 0)}
+            >
+              {t("historyClearAll")}
+            </Button>
           </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-900">{t("historyNutrition")}</p>
-            {historyNutrition.slice(0, 8).map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className="w-full rounded-md border border-slate-200 bg-slate-50 p-2 text-left text-xs hover:bg-slate-100"
-                onClick={() => {
-                  if (!item.parsed_plan_json) {
-                    setError(item.error_message || t("historyLoadFailed"));
-                    return;
-                  }
 
-                  const parsed = aiNutritionPlanSchema.safeParse(item.parsed_plan_json);
-                  if (!parsed.success) {
-                    setError(t("invalidNutritionPlan"));
-                    return;
-                  }
+          <div className="grid gap-3 lg:grid-cols-2">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-900">{t("historyTraining")}</p>
+              {historyTraining.length === 0 ? <p className="text-xs text-slate-500">{t("historyEmpty")}</p> : null}
+              {historyTraining.slice(0, 8).map((item) => (
+                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs">
+                  <div className="flex items-start justify-between gap-2">
+                    <button
+                      type="button"
+                      className="flex-1 text-left hover:text-emerald-700"
+                      onClick={() => {
+                        if (!item.parsed_plan_json) {
+                          setError(item.error_message || t("historyLoadFailed"));
+                          return;
+                        }
 
-                  commitNutritionDraft(parsed.data, item.id);
-                  setMessage(t("historyLoaded"));
-                }}
-              >
-                <p>{item.created_at}</p>
-                <p className="text-slate-500">{item.model_name} · {item.prompt_version}</p>
-                <Badge variant="outline" className="mt-1">{item.status}</Badge>
-              </button>
-            ))}
+                        const parsed = aiTrainingPlanSchema.safeParse(item.parsed_plan_json);
+                        if (!parsed.success) {
+                          setError(t("invalidTrainingPlan"));
+                          return;
+                        }
+
+                        commitTrainingDraft(parsed.data, item.id);
+                        setMessage(t("historyLoaded"));
+                      }}
+                    >
+                      <p>{item.created_at}</p>
+                      <p className="text-slate-500">
+                        {item.model_name} / {item.prompt_version}
+                      </p>
+                      <Badge variant="outline" className="mt-1">
+                        {item.status}
+                      </Badge>
+                    </button>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7 text-rose-600 hover:text-rose-700"
+                      disabled={loading === "history"}
+                      onClick={() => void handleDeleteHistoryItem("training", item.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-900">{t("historyNutrition")}</p>
+              {historyNutrition.length === 0 ? <p className="text-xs text-slate-500">{t("historyEmpty")}</p> : null}
+              {historyNutrition.slice(0, 8).map((item) => (
+                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs">
+                  <div className="flex items-start justify-between gap-2">
+                    <button
+                      type="button"
+                      className="flex-1 text-left hover:text-emerald-700"
+                      onClick={() => {
+                        if (!item.parsed_plan_json) {
+                          setError(item.error_message || t("historyLoadFailed"));
+                          return;
+                        }
+
+                        const parsed = aiNutritionPlanSchema.safeParse(item.parsed_plan_json);
+                        if (!parsed.success) {
+                          setError(t("invalidNutritionPlan"));
+                          return;
+                        }
+
+                        commitNutritionDraft(parsed.data, item.id);
+                        setMessage(t("historyLoaded"));
+                      }}
+                    >
+                      <p>{item.created_at}</p>
+                      <p className="text-slate-500">
+                        {item.model_name} / {item.prompt_version}
+                      </p>
+                      <Badge variant="outline" className="mt-1">
+                        {item.status}
+                      </Badge>
+                    </button>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7 text-rose-600 hover:text-rose-700"
+                      disabled={loading === "history"}
+                      onClick={() => void handleDeleteHistoryItem("nutrition", item.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -968,3 +1222,5 @@ export function AiPlanPage() {
     </div>
   );
 }
+
+

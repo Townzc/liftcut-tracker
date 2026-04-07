@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,11 +15,13 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 export function LoginForm() {
   const t = useTranslations("auth");
   const router = useRouter();
+  const { startGuestMode } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +43,20 @@ export function LoginForm() {
       setError(t("genericError"));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGuestMode = async () => {
+    setGuestLoading(true);
+    setError(null);
+    try {
+      await startGuestMode();
+      router.replace("/onboarding");
+      router.refresh();
+    } catch {
+      setError(t("genericError"));
+    } finally {
+      setGuestLoading(false);
     }
   };
 
@@ -70,6 +87,10 @@ export function LoginForm() {
 
           <Button className="w-full" type="submit" disabled={loading}>
             {loading ? "..." : t("loginButton")}
+          </Button>
+
+          <Button className="w-full" type="button" variant="outline" onClick={handleGuestMode} disabled={guestLoading || loading}>
+            {guestLoading ? "..." : t("continueAsGuest")}
           </Button>
 
           <div className="space-y-1 text-sm">

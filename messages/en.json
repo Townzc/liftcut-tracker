@@ -48,7 +48,8 @@
     "passwordMismatch": "Passwords do not match.",
     "registerSuccess": "Account created. Please check your email for verification if enabled.",
     "forgotSuccess": "Password reset email sent.",
-    "genericError": "Operation failed, please try again."
+    "genericError": "Operation failed, please try again.",
+    "continueAsGuest": "Continue as Guest"
   },
   "dashboard": {
     "title": "Today at a glance",
@@ -566,6 +567,35 @@
     "jsonCopySuccess": "JSON copied.",
     "jsonCopyFailed": "Failed to copy JSON.",
     "languageMismatch": "Generated content language does not match current language mode. Please regenerate.",
-    "resultFormatRetry": "AI returned an unexpected format. Details were logged. Please try again."
+    "resultFormatRetry": "AI returned an unexpected format. Details were logged. Please try again.",
+    "guestModeHistoryHint": "Guest mode: history and drafts are stored on this device only.",
+    "guestQuotaReached": "Guest AI quota reached for today. Sign in to continue.",
+    "trainingGenerateSuccessGuest": "Training plan generated. Guest AI remaining today: {remaining}.",
+    "nutritionGenerateSuccessGuest": "Nutrition plan generated. Guest AI remaining today: {remaining}.",
+    "nutritionSaveGuestSuccess": "Saved locally in guest mode.",
+    "historyEmpty": "No history yet.",
+    "historyDeleteConfirm": "Delete this history item?",
+    "historyDeleteSuccess": "History item deleted.",
+    "historyDeleteFailed": "Failed to delete history item.",
+    "historyClearTraining": "Clear training history",
+    "historyClearNutrition": "Clear nutrition history",
+    "historyClearAll": "Clear all history",
+    "historyClearConfirm": "Clear selected history records? This cannot be undone.",
+    "historyClearSuccess": "History cleared successfully."
+  },
+  "guest": {
+    "badge": "Guest Mode",
+    "localOnlyHint": "Data is stored on this device only.",
+    "guestAvatarDisabled": "Avatar upload is not available in guest mode.",
+    "exportGuestSuccess": "Guest data exported successfully.",
+    "exitGuestMode": "Exit Guest Mode",
+    "upgradeNow": "Sign up and keep this data",
+    "migrationPromptTitle": "Guest data found on this device",
+    "migrationPromptDesc": "Migrate local guest data into your signed-in account now?",
+    "migrationConfirm": "Migrate guest data",
+    "migrationLater": "Later",
+    "migrating": "Migrating guest data...",
+    "migrationSuccess": "Guest data migrated successfully.",
+    "migrationFailed": "Failed to migrate guest data."
   }
 }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
+import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 export function RegisterForm() {
   const t = useTranslations("auth");
   const router = useRouter();
+  const { startGuestMode } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,7 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,6 +61,21 @@ export function RegisterForm() {
       setError(t("genericError"));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGuestMode = async () => {
+    setGuestLoading(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      await startGuestMode();
+      router.replace("/onboarding");
+      router.refresh();
+    } catch {
+      setError(t("genericError"));
+    } finally {
+      setGuestLoading(false);
     }
   };
 
@@ -99,6 +117,10 @@ export function RegisterForm() {
 
           <Button className="w-full" type="submit" disabled={loading}>
             {loading ? "..." : t("registerButton")}
+          </Button>
+
+          <Button className="w-full" type="button" variant="outline" onClick={handleGuestMode} disabled={guestLoading || loading}>
+            {guestLoading ? "..." : t("continueAsGuest")}
           </Button>
 
           <Link href="/login" className="text-sm text-emerald-700 hover:underline">

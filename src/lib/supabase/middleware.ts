@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { GUEST_COOKIE_NAME, GUEST_COOKIE_VALUE } from "@/lib/guest-mode";
 import { isBasicProfileComplete } from "@/lib/profile-completion";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
@@ -53,9 +54,14 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const guestEnabled = request.cookies.get(GUEST_COOKIE_NAME)?.value === GUEST_COOKIE_VALUE;
 
   const isAuthRoute = publicAuthRoutes.some((route) => pathname.startsWith(route));
   const isOnboardingRoute = pathname.startsWith(onboardingRoute);
+
+  if (!user && guestEnabled) {
+    return response;
+  }
 
   if (!user && isOnboardingRoute) {
     const redirectUrl = request.nextUrl.clone();
