@@ -89,8 +89,12 @@ async function requestJson(url: string, init?: RequestInit): Promise<Record<stri
 
   const data = (await response.json()) as Record<string, unknown>;
   if (!response.ok || data.ok === false) {
-    const requestError = new Error(String(data.message || "Request failed.")) as Error & { code?: string };
+    const requestError = new Error(String(data.message || "Request failed.")) as Error & {
+      code?: string;
+      detail?: string;
+    };
     requestError.code = typeof data.error === "string" ? data.error : undefined;
+    requestError.detail = typeof data.detail === "string" ? data.detail : undefined;
     throw requestError;
   }
 
@@ -129,6 +133,7 @@ export function AiPlanPage() {
   const [loading, setLoading] = useState<LoadingState>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const isDev = process.env.NODE_ENV !== "production";
 
   const goalOptions = useMemo(
     () => [
@@ -270,9 +275,15 @@ export function AiPlanPage() {
       setMessage(t("trainingGenerateSuccess"));
       await loadHistory();
     } catch (requestError) {
-      const typedError = requestError as Error & { code?: string };
+      const typedError = requestError as Error & { code?: string; detail?: string };
       if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
+      } else if (typedError.code === "AI_SCHEMA_VALIDATION_FAILED" || typedError.code === "AI_INVALID_JSON") {
+        setError(
+          isDev && typedError.detail
+            ? `${t("resultFormatRetry")} (${typedError.detail})`
+            : t("resultFormatRetry"),
+        );
       } else {
         setError(normalizeActionError(requestError, { fallback: t("trainingGenerateFailed") }));
       }
@@ -302,9 +313,15 @@ export function AiPlanPage() {
       setMessage(t("nutritionGenerateSuccess"));
       await loadHistory();
     } catch (requestError) {
-      const typedError = requestError as Error & { code?: string };
+      const typedError = requestError as Error & { code?: string; detail?: string };
       if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
+      } else if (typedError.code === "AI_SCHEMA_VALIDATION_FAILED" || typedError.code === "AI_INVALID_JSON") {
+        setError(
+          isDev && typedError.detail
+            ? `${t("resultFormatRetry")} (${typedError.detail})`
+            : t("resultFormatRetry"),
+        );
       } else {
         setError(normalizeActionError(requestError, { fallback: t("nutritionGenerateFailed") }));
       }

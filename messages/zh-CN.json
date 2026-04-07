@@ -565,6 +565,7 @@
     "jsonCopy": "复制 JSON",
     "jsonCopySuccess": "JSON 已复制。",
     "jsonCopyFailed": "复制 JSON 失败。",
-    "languageMismatch": "生成结果语言与当前语言模式不一致，请重新生成。"
+    "languageMismatch": "生成结果语言与当前语言模式不一致，请重新生成。",
+    "resultFormatRetry": "AI返回结果格式异常，已记录详细信息，请重试一次。"
   }
 }

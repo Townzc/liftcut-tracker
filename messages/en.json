@@ -565,6 +565,7 @@
     "jsonCopy": "Copy JSON",
     "jsonCopySuccess": "JSON copied.",
     "jsonCopyFailed": "Failed to copy JSON.",
-    "languageMismatch": "Generated content language does not match current language mode. Please regenerate."
+    "languageMismatch": "Generated content language does not match current language mode. Please regenerate.",
+    "resultFormatRetry": "AI returned an unexpected format. Details were logged. Please try again."
   }
 }

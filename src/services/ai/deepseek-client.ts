@@ -28,13 +28,65 @@ function getClient(): OpenAI {
   return cachedClient;
 }
 
-function stripCodeFence(raw: string): string {
+function trimCodeFence(raw: string): string {
   const text = raw.trim();
   if (!text.startsWith("```")) {
     return text;
   }
-
   return text.replace(/^```[a-zA-Z]*\s*/, "").replace(/```$/, "").trim();
+}
+
+export function sanitizeModelJsonText(rawText: string): string {
+  return trimCodeFence(rawText).trim();
+}
+
+// Extract the first complete JSON object from mixed model output text.
+export function extractJsonObjectFromText(rawText: string): string {
+  const text = sanitizeModelJsonText(rawText);
+  const start = text.indexOf("{");
+  if (start < 0) {
+    throw new AiServiceError("AI_INVALID_JSON", "AI response does not contain a JSON object.");
+  }
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = start; i < text.length; i += 1) {
+    const char = text[i];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (char === "\\") {
+        escaped = true;
+      } else if (char === "\"") {
+        inString = false;
+      }
+      continue;
+    }
+
+    if (char === "\"") {
+      inString = true;
+      continue;
+    }
+
+    if (char === "{") {
+      depth += 1;
+      continue;
+    }
+
+    if (char === "}") {
+      depth -= 1;
+      if (depth === 0) {
+        return text.slice(start, i + 1);
+      }
+    }
+  }
+
+  throw new AiServiceError("AI_INVALID_JSON", "Could not extract a complete JSON object from AI response.");
 }
 
 export interface DeepSeekJsonRequest {
@@ -45,6 +97,7 @@ export interface DeepSeekJsonRequest {
 export interface DeepSeekJsonResponse {
   model: string;
   rawText: string;
+  extractedJsonText: string;
   json: unknown;
 }
 
@@ -77,8 +130,10 @@ export async function callDeepSeekForJson(input: DeepSeekJsonRequest): Promise<D
   }
 
   let json: unknown;
+  let extractedJsonText = "";
   try {
-    json = JSON.parse(stripCodeFence(content));
+    extractedJsonText = extractJsonObjectFromText(content);
+    json = JSON.parse(extractedJsonText);
   } catch (error) {
     throw new AiServiceError(
       "AI_INVALID_JSON",
@@ -90,6 +145,7 @@ export async function callDeepSeekForJson(input: DeepSeekJsonRequest): Promise<D
   return {
     model: completion.model || config.model,
     rawText: content,
+    extractedJsonText,
     json,
   };
 }
