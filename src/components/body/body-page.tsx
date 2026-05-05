@@ -7,6 +7,7 @@ import { LoaderCircle, Trash2 } from "lucide-react";
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
+import { ActionFeedback } from "@/components/shared/action-feedback";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -189,8 +190,7 @@ export function BodyPage() {
         </Card>
       </div>
 
-      {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
-      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      <ActionFeedback message={message} error={error} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="border-slate-200/80 bg-white/90">

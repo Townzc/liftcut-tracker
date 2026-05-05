@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import { NumericInput } from "@/components/shared/numeric-input";
 import { EmptyState } from "@/components/shared/empty-state";
+import { ActionFeedback } from "@/components/shared/action-feedback";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -953,8 +954,7 @@ export function PlanPage() {
               <p className="text-xs text-slate-500">{t("plansEmpty")}</p>
             )}
 
-            {message ? <p className="text-xs text-emerald-700">{message}</p> : null}
-            {error ? <p className="text-xs text-rose-700">{error}</p> : null}
+            <ActionFeedback message={message} error={error} />
           </CardContent>
         </Card>
       </div>

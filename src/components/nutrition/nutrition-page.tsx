@@ -6,6 +6,7 @@ import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
+import { ActionFeedback } from "@/components/shared/action-feedback";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -353,8 +354,7 @@ export function NutritionPage() {
         </CardContent>
       </Card>
 
-      {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
-      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      <ActionFeedback message={message} error={error} />
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>

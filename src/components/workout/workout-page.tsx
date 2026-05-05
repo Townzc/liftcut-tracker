@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Eye, LoaderCircle, Save } from "lucide-react";
+import { Eye, LoaderCircle, Save } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { ActionFeedback } from "@/components/shared/action-feedback";
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { Badge } from "@/components/ui/badge";
@@ -223,13 +224,7 @@ function WorkoutDraftForm({
         {isSaving ? t("savingWorkout") : t("saveWorkout")}
       </Button>
 
-      {message ? (
-        <p className="inline-flex items-center text-sm text-emerald-700">
-          <CheckCircle2 className="mr-1 h-4 w-4" />
-          {message}
-        </p>
-      ) : null}
-      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      <ActionFeedback message={message} error={error} />
 
       {lastSavedSummary ? (
         <Card className="border-emerald-200 bg-emerald-50/60">
