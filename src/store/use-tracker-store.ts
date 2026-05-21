@@ -8,6 +8,7 @@ import {
   createDemoTrainingPlan,
   createEmptyTrainingPlan,
   defaultQuickFoods,
+  isDefaultAvailableEquipment,
 } from "@/lib/demo-data";
 import { createAuthRequiredError } from "@/lib/error-utils";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
@@ -34,6 +35,7 @@ import type {
   UserSettings,
   WorkoutLog,
 } from "@/types";
+import { useUIStore } from "@/store/use-ui-store";
 
 function nowIso(): string {
   return new Date().toISOString();
@@ -48,9 +50,11 @@ function safeRandomId(prefix: string): string {
 }
 
 function createEmptySnapshot(userId: string): AppDataSnapshot {
+  const language = useUIStore.getState().language;
+
   return {
-    settings: createDefaultSettings(userId),
-    trainingPlan: createDemoTrainingPlan(userId),
+    settings: createDefaultSettings(userId, language),
+    trainingPlan: createDemoTrainingPlan(userId, language),
     workoutLogs: [],
     foodLogs: [],
     bodyMetricLogs: [],
@@ -187,7 +191,7 @@ function hasMeaningfulGuestData(snapshot: AppDataSnapshot | null): boolean {
     snapshot.settings.weeklyTrainingDays > 0 ||
     snapshot.settings.calorieTarget > 0 ||
     snapshot.settings.proteinTarget > 0 ||
-    snapshot.settings.availableEquipment.length > 0 ||
+    !isDefaultAvailableEquipment(snapshot.settings.availableEquipment) ||
     snapshot.settings.foodRestrictions.trim().length > 0 ||
     snapshot.settings.injuryNotes.trim().length > 0 ||
     snapshot.settings.lifestyleNotes.trim().length > 0;
@@ -599,7 +603,7 @@ export const useTrackerStore = create<TrackerState>()(
             throw new Error("Training plan not found or already deleted.");
           }
 
-          const emptyPlan = createEmptyTrainingPlan(GUEST_USER_ID);
+          const emptyPlan = createEmptyTrainingPlan(GUEST_USER_ID, useUIStore.getState().language);
           set((state) => {
             const nextSnapshot = state.guestSnapshot
               ? {
@@ -644,7 +648,7 @@ export const useTrackerStore = create<TrackerState>()(
 
           if (!result.nextActivePlanId) {
             set({
-              trainingPlan: createEmptyTrainingPlan(resolvedUserId),
+              trainingPlan: createEmptyTrainingPlan(resolvedUserId, useUIStore.getState().language),
               trainingPlanList: [],
               selectedWeek: 1,
               selectedDay: 1,

@@ -12,10 +12,24 @@ import type {
   TrainingPlan,
   UserSettings,
   WorkoutLog,
+  AppLocale,
 } from "@/types";
 import { toDateString } from "@/lib/date";
 
 const DEMO_USER_ID = "demo-user";
+export const DEFAULT_EQUIPMENT_ZH = "常见器械均可使用";
+export const DEFAULT_EQUIPMENT_EN = "Common gym equipment available";
+
+export function getDefaultAvailableEquipment(locale: AppLocale = "zh-CN"): string[] {
+  return [locale === "zh-CN" ? DEFAULT_EQUIPMENT_ZH : DEFAULT_EQUIPMENT_EN];
+}
+
+export function isDefaultAvailableEquipment(equipment: string[]): boolean {
+  return (
+    equipment.length === 0 ||
+    equipment.every((item) => item === DEFAULT_EQUIPMENT_ZH || item === DEFAULT_EQUIPMENT_EN)
+  );
+}
 
 const dayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exercises: Omit<ExercisePlan, "id" | "dayId">[] }> = [
   {
@@ -151,6 +165,140 @@ const dayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exerc
   },
 ];
 
+const zhDayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exercises: Omit<ExercisePlan, "id" | "dayId">[] }> = [
+  {
+    dayNumber: 1,
+    title: "下肢 + 推",
+    notes: "复合动作保留 1-2 次余力。",
+    exercises: [
+      {
+        name: "杠铃深蹲",
+        sets: 4,
+        repRange: "5-8",
+        targetRpe: 7,
+        notes: "每周小幅加重",
+        alternativeExercises: ["高脚杯深蹲", "哈克深蹲"],
+      },
+      {
+        name: "卧推",
+        sets: 4,
+        repRange: "5-8",
+        targetRpe: 7,
+        notes: "停顿并保持稳定",
+        alternativeExercises: ["哑铃卧推", "器械推胸"],
+      },
+      {
+        name: "罗马尼亚硬拉",
+        sets: 3,
+        repRange: "6-10",
+        targetRpe: 7.5,
+        notes: "控制离心阶段",
+      },
+      {
+        name: "上斜哑铃卧推",
+        sets: 3,
+        repRange: "8-12",
+        targetRpe: 8,
+        notes: "避免借力",
+      },
+      {
+        name: "绳索下压",
+        sets: 3,
+        repRange: "10-15",
+        targetRpe: 8,
+        notes: "顶峰收缩稍作停顿",
+      },
+    ],
+  },
+  {
+    dayNumber: 2,
+    title: "拉 + 核心",
+    notes: "优先保证动作质量。",
+    exercises: [
+      {
+        name: "硬拉",
+        sets: 3,
+        repRange: "3-5",
+        targetRpe: 7,
+        notes: "每组重新调整起始姿势",
+        alternativeExercises: ["六角杠硬拉", "架上硬拉"],
+      },
+      {
+        name: "引体向上",
+        sets: 4,
+        repRange: "6-10",
+        targetRpe: 8,
+        notes: "根据能力选择负重或辅助",
+      },
+      {
+        name: "俯身划船",
+        sets: 3,
+        repRange: "8-12",
+        targetRpe: 8,
+        notes: "保持躯干稳定",
+      },
+      {
+        name: "坐姿绳索划船",
+        sets: 3,
+        repRange: "10-15",
+        targetRpe: 8,
+        notes: "肘部向后向下发力",
+      },
+      {
+        name: "平板支撑",
+        sets: 3,
+        repRange: "40-60 秒",
+        targetRpe: 7,
+        notes: "保持骨盆中立",
+      },
+    ],
+  },
+  {
+    dayNumber: 3,
+    title: "下肢 + 肩",
+    notes: "控制每一次动作节奏。",
+    exercises: [
+      {
+        name: "前蹲",
+        sets: 4,
+        repRange: "4-6",
+        targetRpe: 7.5,
+        notes: "核心收紧",
+        alternativeExercises: ["腿举", "安全杠深蹲"],
+      },
+      {
+        name: "腿弯举",
+        sets: 3,
+        repRange: "10-15",
+        targetRpe: 8,
+        notes: "离心放慢",
+      },
+      {
+        name: "站姿推举",
+        sets: 4,
+        repRange: "5-8",
+        targetRpe: 7.5,
+        notes: "避免腰椎过度后伸",
+        alternativeExercises: ["阿诺德推举", "器械肩推"],
+      },
+      {
+        name: "侧平举",
+        sets: 4,
+        repRange: "12-20",
+        targetRpe: 8.5,
+        notes: "全程控制",
+      },
+      {
+        name: "农夫行走",
+        sets: 3,
+        repRange: "30-45 米",
+        targetRpe: 8,
+        notes: "保持身体直立",
+      },
+    ],
+  },
+];
+
 const nowIso = () => new Date().toISOString();
 
 export const defaultQuickFoods: QuickFoodItem[] = [
@@ -222,7 +370,7 @@ export const defaultQuickFoods: QuickFoodItem[] = [
   },
 ];
 
-export function createDefaultSettings(userId: string): UserSettings {
+export function createDefaultSettings(userId: string, locale: AppLocale = "zh-CN"): UserSettings {
   return {
     userId,
     gender: "unknown",
@@ -230,7 +378,7 @@ export function createDefaultSettings(userId: string): UserSettings {
     fitnessGoal: "fat_loss",
     trainingExperience: "beginner",
     trainingLocation: "mixed",
-    availableEquipment: [],
+    availableEquipment: getDefaultAvailableEquipment(locale),
     sessionDurationMinutes: 0,
     dietPreference: "none",
     foodRestrictions: "",
@@ -248,22 +396,26 @@ export function createDefaultSettings(userId: string): UserSettings {
   };
 }
 
-function buildWeek(weekNumber: number, trainingPlanId: string): PlanWeek {
+function buildWeek(weekNumber: number, trainingPlanId: string, locale: AppLocale = "zh-CN"): PlanWeek {
   const blockProgression = Math.floor((weekNumber - 1) / 4) * 0.5;
   const weekId = `${trainingPlanId}-w${weekNumber}`;
+  const templates = locale === "zh-CN" ? zhDayTemplates : dayTemplates;
 
   return {
     id: weekId,
     trainingPlanId,
     weekNumber,
-    days: dayTemplates.map((day) => {
+    days: templates.map((day) => {
       const dayId = `${weekId}-d${day.dayNumber}`;
       return {
         id: dayId,
         weekId,
         dayNumber: day.dayNumber,
         title: day.title,
-        notes: `${day.notes} Week ${weekNumber}: add small load or reps if quality stays high.`,
+        notes:
+          locale === "zh-CN"
+            ? `${day.notes} 第 ${weekNumber} 周：如果动作质量稳定，可小幅增加重量或次数。`
+            : `${day.notes} Week ${weekNumber}: add small load or reps if quality stays high.`,
         exercises: day.exercises.map((exercise, exerciseIndex) => ({
           ...exercise,
           id: `${dayId}-e${exerciseIndex + 1}`,
@@ -275,26 +427,26 @@ function buildWeek(weekNumber: number, trainingPlanId: string): PlanWeek {
   };
 }
 
-export function createDemoTrainingPlan(userId: string): TrainingPlan {
+export function createDemoTrainingPlan(userId: string, locale: AppLocale = "zh-CN"): TrainingPlan {
   const planId = `plan-${userId}-demo`;
 
   return {
     id: planId,
     userId,
-    name: "12 Week Fat Loss Strength Plan (Demo)",
-    notes: "Demo plan for onboarding and preview.",
+    name: locale === "zh-CN" ? "12 周减脂力量训练计划（演示）" : "12 Week Fat Loss Strength Plan (Demo)",
+    notes: locale === "zh-CN" ? "用于上手和预览的演示计划。" : "Demo plan for onboarding and preview.",
     isActive: true,
     createdAt: nowIso(),
     updatedAt: nowIso(),
-    weeks: Array.from({ length: 12 }, (_, idx) => buildWeek(idx + 1, planId)),
+    weeks: Array.from({ length: 12 }, (_, idx) => buildWeek(idx + 1, planId, locale)),
   };
 }
 
-export function createEmptyTrainingPlan(userId: string): TrainingPlan {
+export function createEmptyTrainingPlan(userId: string, locale: AppLocale = "zh-CN"): TrainingPlan {
   return {
     id: `plan-empty-${userId}`,
     userId,
-    name: "No Active Plan",
+    name: locale === "zh-CN" ? "暂无活跃计划" : "No Active Plan",
     notes: "",
     isActive: false,
     createdAt: nowIso(),
@@ -404,11 +556,11 @@ function buildFoodLogs(userId: string): FoodLog[] {
   ];
 }
 
-export function createDemoSnapshot(userId = DEMO_USER_ID): AppDataSnapshot {
-  const trainingPlan = createDemoTrainingPlan(userId);
+export function createDemoSnapshot(userId = DEMO_USER_ID, locale: AppLocale = "zh-CN"): AppDataSnapshot {
+  const trainingPlan = createDemoTrainingPlan(userId, locale);
 
   return {
-    settings: createDefaultSettings(userId),
+    settings: createDefaultSettings(userId, locale),
     trainingPlan,
     workoutLogs: buildWorkoutLogs(userId, trainingPlan),
     foodLogs: buildFoodLogs(userId),

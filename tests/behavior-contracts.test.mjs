@@ -37,3 +37,20 @@ test("guest migration keeps the active user plan inactive when importing guest p
   assert.match(migration, /saveTrainingPlanAsInactive/);
   assert.match(migration, /appendAiGenerationHistoryForUser/);
 });
+
+test("default demo and equipment support Chinese-first onboarding", () => {
+  const demo = read("src/lib/demo-data.ts");
+  assert.match(demo, /12 周减脂力量训练计划/);
+  assert.match(demo, /杠铃深蹲/);
+  assert.match(demo, /常见器械均可使用/);
+});
+
+test("workout page shows estimated calorie burn without changing the database schema", () => {
+  const helper = read("src/lib/workout-calories.ts");
+  const workout = read("src/components/workout/workout-page.tsx");
+  assert.match(helper, /estimateWorkoutCalories/);
+  assert.match(helper, /bodyWeightKg/);
+  assert.match(helper, /actualWeight/);
+  assert.match(helper, /sets/);
+  assert.match(workout, /estimatedCaloriesTitle/);
+});

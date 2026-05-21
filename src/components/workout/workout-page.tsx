@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Eye, LoaderCircle, Save } from "lucide-react";
+import { Eye, Flame, LoaderCircle, Save } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { ActionFeedback } from "@/components/shared/action-feedback";
@@ -24,8 +24,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { todayString } from "@/lib/date";
 import { normalizeActionError } from "@/lib/error-utils";
+import { estimateWorkoutCalories } from "@/lib/workout-calories";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import type { ExerciseLog, PlanDay, WorkoutLog } from "@/types";
+import type { ExerciseLog, ExercisePlan, PlanDay, TrainingPlan, WorkoutLog } from "@/types";
 
 function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): ExerciseLog[] {
   return currentDay.exercises.map((exercise) => {
@@ -46,6 +47,14 @@ function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): Exerc
   });
 }
 
+function findPlanExercisesForLog(plan: TrainingPlan, log: WorkoutLog): ExercisePlan[] {
+  const day = plan.weeks
+    .find((week) => week.weekNumber === log.weekNumber)
+    ?.days.find((planDay) => planDay.dayNumber === log.dayNumber);
+
+  return day?.exercises ?? [];
+}
+
 function WorkoutDraftForm({
   currentWeekNumber,
   currentDay,
@@ -54,6 +63,7 @@ function WorkoutDraftForm({
   onSave,
   trainingPlanId,
   trackerLoading,
+  bodyWeightKg,
 }: {
   currentWeekNumber: number;
   currentDay: PlanDay;
@@ -61,6 +71,7 @@ function WorkoutDraftForm({
   existingLog?: WorkoutLog;
   trainingPlanId: string;
   trackerLoading: boolean;
+  bodyWeightKg: number;
   onSave: (
     payload: Omit<WorkoutLog, "id" | "userId" | "createdAt"> & { id?: string },
   ) => Promise<void>;
@@ -84,7 +95,19 @@ function WorkoutDraftForm({
     durationMinutes: number;
     completed: boolean;
     exerciseCount: number;
+    estimatedCalories: number;
   } | null>(null);
+
+  const estimatedCalories = useMemo(
+    () =>
+      estimateWorkoutCalories({
+        bodyWeightKg,
+        durationMinutes,
+        exercises: exerciseRows,
+        planExercises: currentDay.exercises,
+      }),
+    [bodyWeightKg, currentDay.exercises, durationMinutes, exerciseRows],
+  );
 
   const updateRow = (index: number, patch: Partial<ExerciseLog>) => {
     setExerciseRows((rows) => rows.map((row, rowIndex) => (rowIndex === index ? { ...row, ...patch } : row)));
@@ -115,6 +138,7 @@ function WorkoutDraftForm({
         durationMinutes,
         completed,
         exerciseCount: exerciseRows.length,
+        estimatedCalories,
       });
     } catch (saveError) {
       console.error(saveError);
@@ -215,6 +239,23 @@ function WorkoutDraftForm({
         </CardContent>
       </Card>
 
+      <Card className="border-orange-200 bg-orange-50/70">
+        <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
+          <div className="flex items-center gap-3">
+            <div className="rounded-xl bg-orange-100 p-2 text-orange-700">
+              <Flame className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-orange-950">{t("estimatedCaloriesTitle")}</p>
+              <p className="text-xs text-orange-800">{t("estimatedCaloriesDesc")}</p>
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-orange-950">
+            {t("estimatedCaloriesValue", { calories: estimatedCalories })}
+          </p>
+        </CardContent>
+      </Card>
+
       <Button
         className="fixed bottom-24 left-4 right-4 z-20 h-12 md:static md:h-10"
         onClick={handleSaveWorkout}
@@ -253,6 +294,9 @@ function WorkoutDraftForm({
             <p>
               {t("savedSummaryExercises", { count: lastSavedSummary.exerciseCount })}
             </p>
+            <p>
+              {t("savedSummaryCalories", { calories: lastSavedSummary.estimatedCalories })}
+            </p>
           </CardContent>
         </Card>
       ) : null}
@@ -267,6 +311,7 @@ export function WorkoutPage() {
   const { user, loading: authLoading } = useAuth();
 
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
+  const settings = useTrackerStore((state) => state.settings);
   const workoutLogs = useTrackerStore((state) => state.workoutLogs);
   const trackerLoading = useTrackerStore((state) => state.loading);
   const selectedWeek = useTrackerStore((state) => state.selectedWeek);
@@ -303,6 +348,18 @@ export function WorkoutPage() {
     () => workoutLogs.find((log) => log.id === selectedRecentLogId) ?? null,
     [selectedRecentLogId, workoutLogs],
   );
+  const selectedRecentCalories = useMemo(() => {
+    if (!selectedRecentLog) {
+      return 0;
+    }
+
+    return estimateWorkoutCalories({
+      bodyWeightKg: settings.currentWeight,
+      durationMinutes: selectedRecentLog.durationMinutes,
+      exercises: selectedRecentLog.exercises,
+      planExercises: findPlanExercisesForLog(trainingPlan, selectedRecentLog),
+    });
+  }, [selectedRecentLog, settings.currentWeight, trainingPlan]);
   const detailState = useMemo<"loading" | "not-found" | "unauthorized" | "ready">(() => {
     if (authLoading || trackerLoading) {
       return "loading";
@@ -416,6 +473,7 @@ export function WorkoutPage() {
           existingLog={existingLog}
           trainingPlanId={trainingPlan.id}
           trackerLoading={trackerLoading}
+          bodyWeightKg={settings.currentWeight}
           onSave={addWorkoutLog}
         />
       ) : (
@@ -510,6 +568,12 @@ export function WorkoutPage() {
                   <p className="text-xs text-slate-500">{t("sessionCompleted")}</p>
                   <p className="font-medium text-slate-900">
                     {selectedRecentLog.completed ? t("statusCompleted") : t("statusPending")}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm sm:col-span-2">
+                  <p className="text-xs text-orange-700">{t("estimatedCaloriesTitle")}</p>
+                  <p className="font-medium text-orange-950">
+                    {t("estimatedCaloriesValue", { calories: selectedRecentCalories })}
                   </p>
                 </div>
               </div>

@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { normalizeActionError } from "@/lib/error-utils";
+import { getDefaultAvailableEquipment } from "@/lib/demo-data";
 import { downloadJson } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
@@ -74,8 +75,12 @@ export function SettingsPage() {
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setDraft(settings);
-  }, [settings]);
+    setDraft({
+      ...settings,
+      availableEquipment:
+        settings.availableEquipment.length > 0 ? settings.availableEquipment : getDefaultAvailableEquipment(language),
+    });
+  }, [language, settings]);
 
   useEffect(() => {
     const email = profile?.email || user?.email || "";

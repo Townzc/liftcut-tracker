@@ -23,6 +23,7 @@ import {
   type AiTrainingPlan,
 } from "@/lib/ai/schemas";
 import { normalizeActionError } from "@/lib/error-utils";
+import { getDefaultAvailableEquipment } from "@/lib/demo-data";
 import {
   canConsumeGuestAiQuota,
   clearGuestAiHistory,
@@ -142,11 +143,17 @@ export function AiPlanPage() {
   const [weeklyTrainingDays, setWeeklyTrainingDays] = useState(settings.weeklyTrainingDays || 3);
   const [sessionDurationMinutes, setSessionDurationMinutes] = useState(settings.sessionDurationMinutes || 60);
   const [trainingLocation, setTrainingLocation] = useState<TrainingLocation>(settings.trainingLocation);
-  const [availableEquipment, setAvailableEquipment] = useState(settings.availableEquipment.join(", "));
+  const [availableEquipment, setAvailableEquipment] = useState(
+    (settings.availableEquipment.length > 0 ? settings.availableEquipment : getDefaultAvailableEquipment(language)).join(", "),
+  );
   const [injuryNotes, setInjuryNotes] = useState(settings.injuryNotes || "");
   const [dietPreference, setDietPreference] = useState<DietPreference>(settings.dietPreference);
   const [foodRestrictions, setFoodRestrictions] = useState(settings.foodRestrictions || "");
   const [extraNotes, setExtraNotes] = useState("");
+  const effectiveAvailableEquipment = useMemo(
+    () => normalizeCommaList(availableEquipment),
+    [availableEquipment],
+  );
 
   const [aiConfigured, setAiConfigured] = useState(true);
   const [historyTraining, setHistoryTraining] = useState<HistoryItem[]>([]);
@@ -204,11 +211,11 @@ export function AiPlanPage() {
     if (settings.currentWeight <= 0) fields.push(t("profileFieldCurrentWeight"));
     if (settings.targetWeight <= 0) fields.push(t("profileFieldTargetWeight"));
     if (settings.weeklyTrainingDays <= 0) fields.push(t("profileFieldWeeklyTrainingDays"));
-    if (settings.availableEquipment.length === 0) fields.push(t("profileFieldEquipment"));
+    if (effectiveAvailableEquipment.length === 0) fields.push(t("profileFieldEquipment"));
     if (!settings.foodRestrictions.trim()) fields.push(t("profileFieldFoodRestrictions"));
     if (!settings.injuryNotes.trim()) fields.push(t("profileFieldInjuryNotes"));
     return fields;
-  }, [settings, t]);
+  }, [effectiveAvailableEquipment.length, settings, t]);
   const profileQualityStatus = missingProfileFields.length === 0 ? t("profileQualityStrong") : t("profileQualityPartial");
   const profileQualityDesc =
     authMode === "guest"
@@ -348,7 +355,7 @@ export function AiPlanPage() {
             weekly_training_days: weeklyTrainingDays,
             session_duration_minutes: sessionDurationMinutes,
             training_location: trainingLocation,
-            available_equipment: normalizeCommaList(availableEquipment),
+            available_equipment: effectiveAvailableEquipment,
             injury_notes: injuryNotes,
             notes: extraNotes,
           },

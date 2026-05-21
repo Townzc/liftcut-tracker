@@ -1,5 +1,6 @@
 import type { AppDataSnapshot, UserSettings } from "@/types";
 import type { GuestAiHistoryState } from "@/lib/guest-mode";
+import { isDefaultAvailableEquipment } from "@/lib/demo-data";
 import {
   appendAiGenerationHistoryForUser,
   fetchUserDataBundle,
@@ -48,7 +49,7 @@ function mergeSettingsForMigration(target: UserSettings, guest: UserSettings): U
       target.trainingExperience === "beginner" ? guest.trainingExperience : target.trainingExperience,
     trainingLocation: target.trainingLocation === "mixed" ? guest.trainingLocation : target.trainingLocation,
     availableEquipment:
-      target.availableEquipment.length > 0 ? target.availableEquipment : guest.availableEquipment,
+      !isDefaultAvailableEquipment(target.availableEquipment) ? target.availableEquipment : guest.availableEquipment,
     sessionDurationMinutes: pickNumber(target.sessionDurationMinutes, guest.sessionDurationMinutes),
     dietPreference: target.dietPreference === "none" ? guest.dietPreference : target.dietPreference,
     foodRestrictions: pickString(target.foodRestrictions, guest.foodRestrictions),
