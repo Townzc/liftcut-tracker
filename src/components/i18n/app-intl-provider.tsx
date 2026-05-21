@@ -10,7 +10,7 @@ export function AppIntlProvider({ children }: { children: ReactNode }) {
   const language = useUIStore((state) => state.language);
 
   return (
-    <NextIntlClientProvider locale={language} messages={appMessages[language]}>
+    <NextIntlClientProvider locale={language} messages={appMessages[language]} timeZone="Asia/Shanghai">
       {children}
     </NextIntlClientProvider>
   );

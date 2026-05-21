@@ -6,18 +6,18 @@ import { getDeepSeekConfigOptional } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import { generateNutritionPlanWithDeepSeek } from "@/services/ai/generate-nutrition-plan";
 import { verifyNutritionPlanLanguage } from "@/services/ai/language-check";
-import {
-  fetchAiProfileSnapshot,
-  insertNutritionGenerationHistory,
-} from "@/services/ai/persistence";
+import { insertNutritionGenerationHistory } from "@/services/ai/persistence";
 import { NUTRITION_PROMPT_VERSION } from "@/services/ai/prompts";
 import {
   aiConfigStatus,
   consumeGuestAiQuotaFromRequest,
   requireApiContext,
   toAiErrorResponse,
-  withGuestAiProfileDefaults,
 } from "@/app/api/ai/_lib";
+import {
+  assertNutritionProfileComplete,
+  resolveAiProfileForRequest,
+} from "@/app/api/ai/_profile";
 
 export async function POST(request: Request) {
   const auth = await requireApiContext(request);
@@ -42,41 +42,25 @@ export async function POST(request: Request) {
     );
   }
 
-  let profile = body.profile_snapshot;
-  if (auth.mode === "authenticated" && auth.user) {
-    try {
-      profile = await fetchAiProfileSnapshot(supabase, auth.user.id);
-    } catch {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "PROFILE_LOAD_FAILED",
-          message: "Failed to load profile settings before AI generation.",
-        },
-        { status: 500 },
-      );
-    }
+  const profileResult = await resolveAiProfileForRequest({
+    mode: auth.mode,
+    supabase,
+    user: auth.user,
+    requestProfile: body.profile_snapshot,
+  });
+  if (profileResult.errorResponse) {
+    return profileResult.errorResponse;
   }
-  profile = withGuestAiProfileDefaults(profile, auth.mode);
 
+  const profile = profileResult.profile;
   if (!profile) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "PROFILE_LOAD_FAILED",
-        message: "Please complete your profile before generating AI plans.",
-      },
-      { status: 400 },
-    );
+    return NextResponse.json({ ok: false, error: "PROFILE_LOAD_FAILED" }, { status: 400 });
   }
 
-  if (profile.currentWeight <= 0 || profile.targetWeight <= 0) {
-    return toAiErrorResponse(
-      new AiServiceError(
-        "AI_PROFILE_INCOMPLETE",
-        "Please complete current and target weight before generating nutrition plans.",
-      ),
-    );
+  try {
+    assertNutritionProfileComplete(profile);
+  } catch (error) {
+    return toAiErrorResponse(error);
   }
 
   let quotaToken = null;

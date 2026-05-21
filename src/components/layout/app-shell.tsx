@@ -17,6 +17,7 @@ import type { ComponentType, ReactNode } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
+import { GuestModeStatus } from "@/components/shared/guest-mode-status";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { cn } from "@/lib/utils";
 
@@ -137,6 +138,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </div>
         <main className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-8">
+          <GuestModeStatus />
           <GuestUpgradeBanner />
           {children}
         </main>

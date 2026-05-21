@@ -197,6 +197,25 @@ export function AiPlanPage() {
   );
 
   const localeLabel = requestLocale === "zh-CN" ? t("localeZh") : t("localeEn");
+  const missingProfileFields = useMemo(() => {
+    const fields: string[] = [];
+    if (settings.age <= 0) fields.push(t("profileFieldAge"));
+    if (settings.height <= 0) fields.push(t("profileFieldHeight"));
+    if (settings.currentWeight <= 0) fields.push(t("profileFieldCurrentWeight"));
+    if (settings.targetWeight <= 0) fields.push(t("profileFieldTargetWeight"));
+    if (settings.weeklyTrainingDays <= 0) fields.push(t("profileFieldWeeklyTrainingDays"));
+    if (settings.availableEquipment.length === 0) fields.push(t("profileFieldEquipment"));
+    if (!settings.foodRestrictions.trim()) fields.push(t("profileFieldFoodRestrictions"));
+    if (!settings.injuryNotes.trim()) fields.push(t("profileFieldInjuryNotes"));
+    return fields;
+  }, [settings, t]);
+  const profileQualityStatus = missingProfileFields.length === 0 ? t("profileQualityStrong") : t("profileQualityPartial");
+  const profileQualityDesc =
+    authMode === "guest"
+      ? t("profileQualityGuestDesc")
+      : missingProfileFields.length === 0
+        ? t("profileQualityStrongDesc")
+        : t("profileQualityMissingDesc", { fields: missingProfileFields.slice(0, 5).join("、") });
 
   const clearFeedback = () => {
     setMessage(null);
@@ -568,6 +587,27 @@ export function AiPlanPage() {
           <CardContent className="py-3 text-sm text-amber-800">{t("configMissing")}</CardContent>
         </Card>
       ) : null}
+
+      <Card className="border-emerald-200/80 bg-emerald-50/70">
+        <CardHeader className="pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <CardTitle className="text-base text-emerald-950">{t("profileQualityTitle")}</CardTitle>
+            <Badge className="bg-white text-emerald-800 hover:bg-white">{profileQualityStatus}</Badge>
+          </div>
+          <CardDescription className="text-emerald-800">{profileQualityDesc}</CardDescription>
+        </CardHeader>
+        {missingProfileFields.length > 0 ? (
+          <CardContent className="pt-0">
+            <div className="flex flex-wrap gap-2">
+              {missingProfileFields.slice(0, 8).map((field) => (
+                <Badge key={field} variant="outline" className="border-emerald-300 bg-white/70 text-emerald-900">
+                  {field}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        ) : null}
+      </Card>
 
       <Card className="border-slate-200/80 bg-white/90">
         <CardHeader>

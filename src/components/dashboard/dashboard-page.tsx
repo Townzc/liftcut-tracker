@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, Flame, Goal, Salad, TrendingDown } from "lucide-react";
+import { ArrowRight, CalendarCheck, Flame, Goal, Salad, Sparkles, TrendingDown, Weight } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { UserAvatar } from "@/components/shared/user-avatar";
@@ -130,6 +130,35 @@ export function DashboardPage() {
           </CardContent>
         </Card>
       ) : null}
+
+      <Card className="border-slate-200/80 bg-white/90">
+        <CardHeader>
+          <CardTitle className="text-base">{t("actionCenterTitle")}</CardTitle>
+          <CardDescription>{t("actionCenterDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-3 md:grid-cols-4">
+          <Link href={todayPlan ? "/workout" : "/plan/ai"} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-200 hover:bg-emerald-50">
+            <CalendarCheck className="mb-3 h-5 w-5 text-emerald-700" />
+            <p className="text-sm font-semibold text-slate-950">{todayPlan ? t("actionWorkoutTitle") : t("actionPlanTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{todayPlan ? t("actionWorkoutDesc") : t("actionPlanDesc")}</p>
+          </Link>
+          <Link href="/nutrition" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-orange-200 hover:bg-orange-50">
+            <Salad className="mb-3 h-5 w-5 text-orange-700" />
+            <p className="text-sm font-semibold text-slate-950">{t("actionNutritionTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionNutritionDesc")}</p>
+          </Link>
+          <Link href="/body" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-cyan-200 hover:bg-cyan-50">
+            <Weight className="mb-3 h-5 w-5 text-cyan-700" />
+            <p className="text-sm font-semibold text-slate-950">{t("actionBodyTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionBodyDesc")}</p>
+          </Link>
+          <Link href="/plan/ai" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-lime-200 hover:bg-lime-50">
+            <Sparkles className="mb-3 h-5 w-5 text-lime-700" />
+            <p className="text-sm font-semibold text-slate-950">{t("actionAiTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionAiDesc")}</p>
+          </Link>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="border-slate-200/80 bg-white/90">

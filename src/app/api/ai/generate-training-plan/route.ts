@@ -6,18 +6,18 @@ import { getDeepSeekConfigOptional } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import { generateTrainingPlanWithDeepSeek } from "@/services/ai/generate-training-plan";
 import { verifyTrainingPlanLanguage } from "@/services/ai/language-check";
-import {
-  fetchAiProfileSnapshot,
-  insertTrainingGenerationHistory,
-} from "@/services/ai/persistence";
+import { insertTrainingGenerationHistory } from "@/services/ai/persistence";
 import { TRAINING_PROMPT_VERSION } from "@/services/ai/prompts";
 import {
   aiConfigStatus,
   consumeGuestAiQuotaFromRequest,
   requireApiContext,
   toAiErrorResponse,
-  withGuestAiProfileDefaults,
 } from "@/app/api/ai/_lib";
+import {
+  assertTrainingProfileComplete,
+  resolveAiProfileForRequest,
+} from "@/app/api/ai/_profile";
 
 export async function POST(request: Request) {
   const auth = await requireApiContext(request);
@@ -42,47 +42,25 @@ export async function POST(request: Request) {
     );
   }
 
-  let profile = body.profile_snapshot;
-  if (auth.mode === "authenticated" && auth.user) {
-    try {
-      profile = await fetchAiProfileSnapshot(supabase, auth.user.id);
-    } catch {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "PROFILE_LOAD_FAILED",
-          message: "Failed to load profile settings before AI generation.",
-        },
-        { status: 500 },
-      );
-    }
+  const profileResult = await resolveAiProfileForRequest({
+    mode: auth.mode,
+    supabase,
+    user: auth.user,
+    requestProfile: body.profile_snapshot,
+  });
+  if (profileResult.errorResponse) {
+    return profileResult.errorResponse;
   }
-  profile = withGuestAiProfileDefaults(profile, auth.mode);
 
+  const profile = profileResult.profile;
   if (!profile) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "PROFILE_LOAD_FAILED",
-        message: "Please complete your profile before generating AI plans.",
-      },
-      { status: 400 },
-    );
+    return NextResponse.json({ ok: false, error: "PROFILE_LOAD_FAILED" }, { status: 400 });
   }
 
-  if (
-    profile.age <= 0 ||
-    profile.height <= 0 ||
-    profile.currentWeight <= 0 ||
-    profile.targetWeight <= 0 ||
-    (body.constraints.weekly_training_days ?? profile.weeklyTrainingDays) <= 0
-  ) {
-    return toAiErrorResponse(
-      new AiServiceError(
-        "AI_PROFILE_INCOMPLETE",
-        "Please complete your basic profile before generating AI plans.",
-      ),
-    );
+  try {
+    assertTrainingProfileComplete(profile, body.constraints.weekly_training_days ?? profile.weeklyTrainingDays);
+  } catch (error) {
+    return toAiErrorResponse(error);
   }
 
   let quotaToken = null;
