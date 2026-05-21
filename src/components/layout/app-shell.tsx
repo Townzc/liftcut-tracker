@@ -39,10 +39,10 @@ function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }
     <Link
       href={item.href}
       className={cn(
-        "flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors",
+        "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
         active
-          ? "bg-slate-900 text-white"
-          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+          ? "bg-[#18251f] text-lime-100 shadow-sm"
+          : "text-slate-600 hover:bg-white hover:text-slate-950",
         compact && "flex-1 min-w-0 flex-col justify-center gap-1 px-1 py-1.5",
       )}
     >
@@ -82,8 +82,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   if (shellFreeRoutes.some((route) => pathname.startsWith(route))) {
     return (
-      <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,116,144,0.08),transparent_55%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
-        <main className="mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-10 md:px-8">
+      <div className="relative min-h-screen bg-[#eef4ed]">
+        <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 md:px-8">
           {children}
         </main>
       </div>
@@ -99,10 +99,10 @@ export function AppShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="relative min-h-screen bg-[radial-gradient(circle_at_top,rgba(14,116,144,0.08),transparent_55%),linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
-      <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-slate-200/70 bg-white/90 p-4 backdrop-blur md:block">
+    <div className="relative min-h-screen bg-[#f4f7f2]">
+      <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-slate-200/70 bg-[#eef4ed]/95 p-4 backdrop-blur md:block">
         <div className="mb-6 flex items-center gap-2 px-2">
-          <div className="rounded-lg bg-emerald-600 p-2 text-white">
+          <div className="rounded-xl bg-[#18251f] p-2 text-lime-200">
             <Activity className="h-4 w-4" />
           </div>
           <div>
@@ -111,7 +111,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </div>
 
-        <div className="mb-4 flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3">
+        <div className="mb-4 flex items-center gap-3 rounded-2xl border border-white/80 bg-white/75 p-3 shadow-sm">
           <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-9 w-9" />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-slate-900">{displayName}</p>
@@ -136,13 +136,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
           </div>
         </div>
-        <main className="mx-auto w-full max-w-6xl space-y-3 p-4 md:p-8">
+        <main className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-8">
           <GuestUpgradeBanner />
           {children}
         </main>
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-20 flex items-center gap-1 border-t border-slate-200 bg-white/95 p-2 backdrop-blur md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-20 flex items-center gap-1 border-t border-slate-200 bg-white/95 p-2 shadow-[0_-10px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
         {navItems.filter((item) => item.showInMobile !== false).map((item) => (
           <NavLink key={item.href} item={item} compact />
         ))}

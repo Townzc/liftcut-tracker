@@ -49,7 +49,17 @@
     "registerSuccess": "Account created. Please check your email for verification if enabled.",
     "forgotSuccess": "Password reset email sent.",
     "genericError": "Operation failed, please try again.",
-    "continueAsGuest": "Continue as Guest"
+    "continueAsGuest": "Continue as Guest",
+    "productKicker": "Training, food, and trends in one place",
+    "heroEyebrow": "Clearer fat-loss and strength tracking",
+    "heroTitle": "Keep your plan, meals, and body changes on the same timeline.",
+    "heroDesc": "Less spreadsheet energy, more useful signal. LiftCut helps you see what to do today and whether the long-term trend is actually moving.",
+    "heroMetricTrend": "Weight, waist, and completion trends",
+    "heroMetricLocal": "Local",
+    "heroMetricGuest": "Guest mode lets you try the core flow first",
+    "loginDesc": "Sign in to sync your workout, nutrition, body metrics, and AI generation history.",
+    "registerDesc": "Create an account to keep local data and continue long-term tracking.",
+    "forgotDesc": "Enter your email and we will send a password reset link."
   },
   "dashboard": {
     "title": "Today at a glance",

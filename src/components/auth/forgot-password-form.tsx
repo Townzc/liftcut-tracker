@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { LoaderCircle, MailCheck } from "lucide-react";
 
+import { AuthExperience } from "@/components/auth/auth-experience";
+import { ActionFeedback } from "@/components/shared/action-feedback";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -45,30 +47,31 @@ export function ForgotPasswordForm() {
   };
 
   return (
-    <Card className="mx-auto w-full max-w-md border-slate-200/80 bg-white/95">
-      <CardHeader>
-        <CardTitle>{t("forgotTitle")}</CardTitle>
-        <CardDescription>LiftCut Tracker</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+    <AuthExperience title={t("forgotTitle")} description={t("forgotDesc")}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="space-y-1.5">
             <Label htmlFor="email">{t("email")}</Label>
-            <Input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+            <Input
+              id="email"
+              className="h-11 bg-slate-50"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
           </div>
 
-          {error ? <p className="text-sm text-rose-700">{error}</p> : null}
-          {success ? <p className="text-sm text-emerald-700">{success}</p> : null}
+          <ActionFeedback message={success} error={error} />
 
-          <Button className="w-full" type="submit" disabled={loading}>
-            {loading ? "..." : t("forgotButton")}
+          <Button className="h-11 w-full bg-slate-950 text-white hover:bg-slate-800" type="submit" disabled={loading}>
+            {loading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <MailCheck className="mr-2 h-4 w-4" />}
+            {t("forgotButton")}
           </Button>
 
-          <Link href="/login" className="text-sm text-emerald-700 hover:underline">
+          <Link href="/login" className="text-sm font-medium text-emerald-700 hover:text-emerald-900">
             {t("toLogin")}
           </Link>
         </form>
-      </CardContent>
-    </Card>
+    </AuthExperience>
   );
 }

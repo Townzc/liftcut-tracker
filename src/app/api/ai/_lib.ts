@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import type { z } from "zod";
 
 import { GUEST_COOKIE_NAME, GUEST_COOKIE_VALUE } from "@/lib/guest-mode";
+import { aiProfileSnapshotSchema } from "@/lib/ai/schemas";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { AiServiceError } from "@/services/ai/errors";
 import { getDeepSeekConfigOptional } from "@/services/ai/config";
@@ -9,7 +11,8 @@ import { normalizeAiError } from "@/services/ai/errors";
 const GUEST_AI_QUOTA_COOKIE_NAME = "liftcut_guest_ai_quota";
 const GUEST_AI_DAILY_LIMIT = 10;
 
-type ApiAuthMode = "authenticated" | "guest" | "none";
+export type ApiAuthMode = "authenticated" | "guest" | "none";
+type AiProfileSnapshot = z.infer<typeof aiProfileSnapshotSchema>;
 
 function getTodayKey(): string {
   return new Date().toISOString().slice(0, 10);
@@ -91,6 +94,32 @@ export async function consumeGuestAiQuotaFromRequest(
         sameSite: "lax",
       });
     },
+  };
+}
+
+export function withGuestAiProfileDefaults(
+  profile: AiProfileSnapshot | undefined,
+  mode: ApiAuthMode,
+): AiProfileSnapshot | undefined {
+  if (mode !== "guest") {
+    return profile;
+  }
+
+  const base = profile ?? aiProfileSnapshotSchema.parse({});
+  const targetWeightFallback = base.fitnessGoal === "muscle_gain" ? 78 : 70;
+
+  return {
+    ...base,
+    age: base.age > 0 ? base.age : 30,
+    height: base.height > 0 ? base.height : 170,
+    currentWeight: base.currentWeight > 0 ? base.currentWeight : 75,
+    targetWeight: base.targetWeight > 0 ? base.targetWeight : targetWeightFallback,
+    weeklyTrainingDays: base.weeklyTrainingDays > 0 ? base.weeklyTrainingDays : 3,
+    calorieTarget: base.calorieTarget > 0 ? base.calorieTarget : 2200,
+    proteinTarget: base.proteinTarget > 0 ? base.proteinTarget : 130,
+    targetWeeklyLossMin: base.targetWeeklyLossMin > 0 ? base.targetWeeklyLossMin : 0.25,
+    targetWeeklyLossMax: base.targetWeeklyLossMax > 0 ? base.targetWeeklyLossMax : 0.75,
+    sessionDurationMinutes: base.sessionDurationMinutes > 0 ? base.sessionDurationMinutes : 60,
   };
 }
 

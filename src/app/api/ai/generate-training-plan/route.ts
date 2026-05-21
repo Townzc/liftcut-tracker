@@ -16,6 +16,7 @@ import {
   consumeGuestAiQuotaFromRequest,
   requireApiContext,
   toAiErrorResponse,
+  withGuestAiProfileDefaults,
 } from "@/app/api/ai/_lib";
 
 export async function POST(request: Request) {
@@ -56,6 +57,7 @@ export async function POST(request: Request) {
       );
     }
   }
+  profile = withGuestAiProfileDefaults(profile, auth.mode);
 
   if (!profile) {
     return NextResponse.json(

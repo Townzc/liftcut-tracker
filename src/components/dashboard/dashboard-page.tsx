@@ -44,7 +44,7 @@ function formatRemaining(
 export function DashboardPage() {
   const t = useTranslations("dashboard");
   const tNav = useTranslations("nav");
-  const { profile, user } = useAuth();
+  const { authMode, profile, user } = useAuth();
 
   const settings = useTrackerStore((state) => state.settings);
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
@@ -117,7 +117,7 @@ export function DashboardPage() {
         </CardContent>
       </Card>
 
-      {!basicProfileComplete ? (
+      {authMode !== "guest" && !basicProfileComplete ? (
         <Card className="border-amber-200/80 bg-amber-50/80">
           <CardHeader>
             <CardTitle className="text-base text-amber-900">{t("profileIncompleteTitle")}</CardTitle>

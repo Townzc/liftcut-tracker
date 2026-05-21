@@ -49,7 +49,17 @@
     "registerSuccess": "注册成功。如开启邮箱验证，请先前往邮箱完成验证。",
     "forgotSuccess": "重置密码邮件已发送。",
     "genericError": "操作失败，请稍后重试。",
-    "continueAsGuest": "以游客身份继续"
+    "continueAsGuest": "以游客身份继续",
+    "productKicker": "训练、饮食、趋势一处管理",
+    "heroEyebrow": "更清晰的减脂与力量追踪",
+    "heroTitle": "把训练计划、饮食记录和身体变化放在同一条线索里。",
+    "heroDesc": "少一点表格感，多一点判断力。LiftCut 帮你看见今天该做什么，也看见长期趋势有没有真的往前走。",
+    "heroMetricTrend": "体重、腰围与完成率趋势",
+    "heroMetricLocal": "本地",
+    "heroMetricGuest": "游客模式可先体验核心流程",
+    "loginDesc": "登录后同步你的训练、饮食、身体数据和 AI 生成历史。",
+    "registerDesc": "创建账号后可以保留本地数据，并继续完善长期追踪。",
+    "forgotDesc": "输入邮箱，我们会发送一封密码重置邮件。"
   },
   "dashboard": {
     "title": "今日概览",
