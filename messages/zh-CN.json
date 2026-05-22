@@ -295,6 +295,7 @@
     "addEditTitle": "新增 / 编辑饮食",
     "addEditDesc": "支持当天多条记录",
     "foodName": "食物名称",
+    "foodNamePlaceholder": "例如：鸡胸肉",
     "mealType": "餐次",
     "add": "新增",
     "saving": "正在保存...",

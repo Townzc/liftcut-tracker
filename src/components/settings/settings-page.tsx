@@ -519,6 +519,7 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("gender")}</Label>
             <Select
+              items={genderOptions}
               value={draft.gender}
               onValueChange={(value) => updateField("gender", value as UserSettings["gender"])}
               disabled={isBusy}
@@ -580,6 +581,7 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("fitnessGoal")}</Label>
             <Select
+              items={fitnessGoalOptions}
               value={draft.fitnessGoal}
               onValueChange={(value) => updateField("fitnessGoal", value as UserSettings["fitnessGoal"])}
               disabled={isBusy}
@@ -599,6 +601,7 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("trainingExperience")}</Label>
             <Select
+              items={trainingExperienceOptions}
               value={draft.trainingExperience}
               onValueChange={(value) =>
                 updateField("trainingExperience", value as UserSettings["trainingExperience"])
@@ -620,6 +623,7 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("trainingLocation")}</Label>
             <Select
+              items={trainingLocationOptions}
               value={draft.trainingLocation}
               onValueChange={(value) => updateField("trainingLocation", value as UserSettings["trainingLocation"])}
               disabled={isBusy}
@@ -665,6 +669,7 @@ export function SettingsPage() {
           <div className="space-y-1">
             <Label>{t("dietPreference")}</Label>
             <Select
+              items={dietPreferenceOptions}
               value={draft.dietPreference}
               onValueChange={(value) => updateField("dietPreference", value as UserSettings["dietPreference"])}
               disabled={isBusy}
@@ -740,7 +745,15 @@ export function SettingsPage() {
             </p>
             <div className="space-y-1">
               <Label>{t("language")}</Label>
-              <Select value={language} onValueChange={(value) => handleLanguageChange(value as AppLocale)} disabled={isBusy}>
+              <Select
+                items={[
+                  { value: "zh-CN", label: t("languageZh") },
+                  { value: "en", label: t("languageEn") },
+                ]}
+                value={language}
+                onValueChange={(value) => handleLanguageChange(value as AppLocale)}
+                disabled={isBusy}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

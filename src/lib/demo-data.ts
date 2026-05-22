@@ -301,74 +301,169 @@ const zhDayTemplates: Array<Omit<PlanDay, "id" | "weekId" | "exercises"> & { exe
 
 const nowIso = () => new Date().toISOString();
 
-export const defaultQuickFoods: QuickFoodItem[] = [
-  {
-    id: "egg",
-    name: "鸡蛋 / Egg",
-    calories: 78,
-    protein: 6,
-    mealType: "breakfast",
-    basisType: "per_serving",
-    servingSize: "50g",
-    unitLabel: "每个 / per egg",
-    displayText: "每个（约50g）/ per egg (~50g)",
+const quickFoodTemplates: Record<AppLocale, QuickFoodItem[]> = {
+  "zh-CN": [
+    {
+      id: "egg",
+      name: "鸡蛋",
+      calories: 78,
+      protein: 6,
+      mealType: "breakfast",
+      basisType: "per_serving",
+      servingSize: "50g",
+      unitLabel: "每个",
+      displayText: "每个（约 50g）",
+    },
+    {
+      id: "milk",
+      name: "牛奶",
+      calories: 120,
+      protein: 8,
+      mealType: "breakfast",
+      basisType: "per_serving",
+      servingSize: "250ml",
+      unitLabel: "每盒",
+      displayText: "每盒 250ml",
+    },
+    {
+      id: "yogurt",
+      name: "无糖酸奶",
+      calories: 90,
+      protein: 9,
+      mealType: "snack",
+      basisType: "per_serving",
+      servingSize: "135g",
+      unitLabel: "每杯",
+      displayText: "每杯 135g",
+    },
+    {
+      id: "whey",
+      name: "蛋白粉",
+      calories: 120,
+      protein: 24,
+      mealType: "snack",
+      basisType: "per_serving",
+      servingSize: "30g",
+      unitLabel: "每勺",
+      displayText: "每勺 30g",
+    },
+    {
+      id: "chicken",
+      name: "鸡胸肉",
+      calories: 165,
+      protein: 31,
+      mealType: "lunch",
+      basisType: "per_100g",
+      servingSize: "100g",
+      unitLabel: "每 100g",
+      displayText: "每 100g",
+    },
+    {
+      id: "rice",
+      name: "米饭",
+      calories: 116,
+      protein: 2.6,
+      mealType: "dinner",
+      basisType: "per_100g",
+      servingSize: "100g",
+      unitLabel: "每 100g",
+      displayText: "每 100g",
+    },
+  ],
+  en: [
+    {
+      id: "egg",
+      name: "Egg",
+      calories: 78,
+      protein: 6,
+      mealType: "breakfast",
+      basisType: "per_serving",
+      servingSize: "50g",
+      unitLabel: "per egg",
+      displayText: "per egg (~50g)",
+    },
+    {
+      id: "milk",
+      name: "Milk",
+      calories: 120,
+      protein: 8,
+      mealType: "breakfast",
+      basisType: "per_serving",
+      servingSize: "250ml",
+      unitLabel: "per box",
+      displayText: "per box (250ml)",
+    },
+    {
+      id: "yogurt",
+      name: "Greek Yogurt",
+      calories: 90,
+      protein: 9,
+      mealType: "snack",
+      basisType: "per_serving",
+      servingSize: "135g",
+      unitLabel: "per cup",
+      displayText: "per cup (135g)",
+    },
+    {
+      id: "whey",
+      name: "Whey Protein",
+      calories: 120,
+      protein: 24,
+      mealType: "snack",
+      basisType: "per_serving",
+      servingSize: "30g",
+      unitLabel: "per scoop",
+      displayText: "per scoop (30g)",
+    },
+    {
+      id: "chicken",
+      name: "Chicken Breast",
+      calories: 165,
+      protein: 31,
+      mealType: "lunch",
+      basisType: "per_100g",
+      servingSize: "100g",
+      unitLabel: "per 100g",
+      displayText: "per 100g",
+    },
+    {
+      id: "rice",
+      name: "Rice",
+      calories: 116,
+      protein: 2.6,
+      mealType: "dinner",
+      basisType: "per_100g",
+      servingSize: "100g",
+      unitLabel: "per 100g",
+      displayText: "per 100g",
+    },
+  ],
+};
+
+export function getDefaultQuickFoods(locale: AppLocale = "zh-CN"): QuickFoodItem[] {
+  return quickFoodTemplates[locale].map((item) => ({ ...item }));
+}
+
+export const defaultQuickFoods: QuickFoodItem[] = getDefaultQuickFoods("zh-CN");
+
+const demoFoodNames: Record<AppLocale, Record<string, string>> = {
+  "zh-CN": {
+    egg: "鸡蛋",
+    milk: "牛奶",
+    chicken: "鸡胸肉",
+    rice: "米饭",
+    whey: "蛋白粉",
+    yogurt: "无糖酸奶",
   },
-  {
-    id: "milk",
-    name: "牛奶 / Milk",
-    calories: 120,
-    protein: 8,
-    mealType: "breakfast",
-    basisType: "per_serving",
-    servingSize: "250ml",
-    unitLabel: "每盒 / per box",
-    displayText: "每盒250ml / per box (250ml)",
+  en: {
+    egg: "Egg",
+    milk: "Milk",
+    chicken: "Chicken Breast",
+    rice: "Rice",
+    whey: "Whey Protein",
+    yogurt: "Greek Yogurt",
   },
-  {
-    id: "yogurt",
-    name: "无糖酸奶 / Greek Yogurt",
-    calories: 90,
-    protein: 9,
-    mealType: "snack",
-    basisType: "per_serving",
-    servingSize: "135g",
-    unitLabel: "每杯 / per cup",
-    displayText: "每杯135g / per cup (135g)",
-  },
-  {
-    id: "whey",
-    name: "蛋白粉 / Whey Protein",
-    calories: 120,
-    protein: 24,
-    mealType: "snack",
-    basisType: "per_serving",
-    servingSize: "30g",
-    unitLabel: "每勺 / per scoop",
-    displayText: "每勺30g / per scoop (30g)",
-  },
-  {
-    id: "chicken",
-    name: "鸡胸肉 / Chicken Breast",
-    calories: 165,
-    protein: 31,
-    mealType: "lunch",
-    basisType: "per_100g",
-    servingSize: "100g",
-    unitLabel: "每100g / per 100g",
-    displayText: "每100g / per 100g",
-  },
-  {
-    id: "rice",
-    name: "米饭 / Rice",
-    calories: 116,
-    protein: 2.6,
-    mealType: "dinner",
-    basisType: "per_100g",
-    servingSize: "100g",
-    unitLabel: "每100g / per 100g",
-    displayText: "每100g / per 100g",
-  },
-];
+};
 
 export function createDefaultSettings(userId: string, locale: AppLocale = "zh-CN"): UserSettings {
   return {
@@ -541,18 +636,19 @@ function buildFoodLog(
   };
 }
 
-function buildFoodLogs(userId: string): FoodLog[] {
+function buildFoodLogs(userId: string, locale: AppLocale = "zh-CN"): FoodLog[] {
   const today = toDateString(new Date());
   const yesterday = toDateString(subDays(new Date(), 1));
+  const names = demoFoodNames[locale];
 
   return [
-    buildFoodLog(userId, today, "Egg", 156, 12, "breakfast"),
-    buildFoodLog(userId, today, "Milk", 120, 8, "breakfast"),
-    buildFoodLog(userId, today, "Chicken Breast", 230, 42, "lunch"),
-    buildFoodLog(userId, today, "Rice", 180, 3, "lunch"),
-    buildFoodLog(userId, today, "Whey Protein", 130, 24, "snack"),
-    buildFoodLog(userId, yesterday, "Greek Yogurt", 90, 9, "snack"),
-    buildFoodLog(userId, yesterday, "Chicken Breast", 200, 38, "dinner"),
+    buildFoodLog(userId, today, names.egg, 156, 12, "breakfast"),
+    buildFoodLog(userId, today, names.milk, 120, 8, "breakfast"),
+    buildFoodLog(userId, today, names.chicken, 230, 42, "lunch"),
+    buildFoodLog(userId, today, names.rice, 180, 3, "lunch"),
+    buildFoodLog(userId, today, names.whey, 130, 24, "snack"),
+    buildFoodLog(userId, yesterday, names.yogurt, 90, 9, "snack"),
+    buildFoodLog(userId, yesterday, names.chicken, 200, 38, "dinner"),
   ];
 }
 
@@ -563,8 +659,8 @@ export function createDemoSnapshot(userId = DEMO_USER_ID, locale: AppLocale = "z
     settings: createDefaultSettings(userId, locale),
     trainingPlan,
     workoutLogs: buildWorkoutLogs(userId, trainingPlan),
-    foodLogs: buildFoodLogs(userId),
+    foodLogs: buildFoodLogs(userId, locale),
     bodyMetricLogs: buildBodyLogs(userId),
-    quickFoods: defaultQuickFoods,
+    quickFoods: getDefaultQuickFoods(locale),
   };
 }

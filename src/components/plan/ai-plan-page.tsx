@@ -202,6 +202,24 @@ export function AiPlanPage() {
     ] satisfies Array<{ value: FitnessGoal; label: string }>,
     [t],
   );
+  const trainingLocationOptions = useMemo(
+    () => [
+      { value: "gym", label: t("locationGym") },
+      { value: "home", label: t("locationHome") },
+      { value: "mixed", label: t("locationMixed") },
+    ] satisfies Array<{ value: TrainingLocation; label: string }>,
+    [t],
+  );
+  const dietPreferenceOptions = useMemo(
+    () => [
+      { value: "none", label: t("dietNone") },
+      { value: "high_protein", label: t("dietHighProtein") },
+      { value: "vegetarian", label: t("dietVegetarian") },
+      { value: "low_carb", label: t("dietLowCarb") },
+      { value: "balanced", label: t("dietBalanced") },
+    ] satisfies Array<{ value: DietPreference; label: string }>,
+    [t],
+  );
 
   const localeLabel = requestLocale === "zh-CN" ? t("localeZh") : t("localeEn");
   const missingProfileFields = useMemo(() => {
@@ -624,7 +642,7 @@ export function AiPlanPage() {
         <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-1">
             <Label>{t("goalType")}</Label>
-            <Select value={goalType} onValueChange={(value) => setGoalType(value as FitnessGoal)}>
+            <Select items={goalOptions} value={goalType} onValueChange={(value) => setGoalType(value as FitnessGoal)}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -647,14 +665,20 @@ export function AiPlanPage() {
           </div>
           <div className="space-y-1">
             <Label>{t("trainingLocation")}</Label>
-            <Select value={trainingLocation} onValueChange={(value) => setTrainingLocation(value as TrainingLocation)}>
+            <Select
+              items={trainingLocationOptions}
+              value={trainingLocation}
+              onValueChange={(value) => setTrainingLocation(value as TrainingLocation)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="gym">{t("locationGym")}</SelectItem>
-                <SelectItem value="home">{t("locationHome")}</SelectItem>
-                <SelectItem value="mixed">{t("locationMixed")}</SelectItem>
+                {trainingLocationOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -668,16 +692,20 @@ export function AiPlanPage() {
           </div>
           <div className="space-y-1">
             <Label>{t("dietPreference")}</Label>
-            <Select value={dietPreference} onValueChange={(value) => setDietPreference(value as DietPreference)}>
+            <Select
+              items={dietPreferenceOptions}
+              value={dietPreference}
+              onValueChange={(value) => setDietPreference(value as DietPreference)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">{t("dietNone")}</SelectItem>
-                <SelectItem value="high_protein">{t("dietHighProtein")}</SelectItem>
-                <SelectItem value="vegetarian">{t("dietVegetarian")}</SelectItem>
-                <SelectItem value="low_carb">{t("dietLowCarb")}</SelectItem>
-                <SelectItem value="balanced">{t("dietBalanced")}</SelectItem>
+                {dietPreferenceOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -734,6 +762,7 @@ export function AiPlanPage() {
                     <div className="space-y-1">
                       <Label>{t("goalType")}</Label>
                       <Select
+                        items={goalOptions}
                         value={trainingPlanDraft.goal_type}
                         onValueChange={(value) => updateTrainingDraft((draft) => { draft.goal_type = value as AiTrainingPlan["goal_type"]; })}
                       >
@@ -945,7 +974,11 @@ export function AiPlanPage() {
                     </div>
                     <div className="space-y-1">
                       <Label>{t("goalType")}</Label>
-                      <Select value={nutritionPlanDraft.goal_type} onValueChange={(value) => updateNutritionDraft((draft) => { draft.goal_type = value as AiNutritionPlan["goal_type"]; })}>
+                      <Select
+                        items={goalOptions}
+                        value={nutritionPlanDraft.goal_type}
+                        onValueChange={(value) => updateNutritionDraft((draft) => { draft.goal_type = value as AiNutritionPlan["goal_type"]; })}
+                      >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>

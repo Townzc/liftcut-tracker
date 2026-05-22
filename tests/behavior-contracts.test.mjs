@@ -43,6 +43,24 @@ test("default demo and equipment support Chinese-first onboarding", () => {
   assert.match(demo, /12 周减脂力量训练计划/);
   assert.match(demo, /杠铃深蹲/);
   assert.match(demo, /常见器械均可使用/);
+  assert.match(demo, /getDefaultQuickFoods/);
+  assert.match(demo, /鸡胸肉/);
+  assert.match(demo, /demoFoodNames/);
+});
+
+test("localized selects display labels instead of raw enum values", () => {
+  const nutrition = read("src/components/nutrition/nutrition-page.tsx");
+  const settings = read("src/components/settings/settings-page.tsx");
+  const ai = read("src/components/plan/ai-plan-page.tsx");
+  const zh = read("messages/zh-CN.json");
+  assert.match(nutrition, /placeholder=\{t\("foodNamePlaceholder"\)\}/);
+  assert.match(nutrition, /<Select items=\{mealTypeOptions\}/);
+  assert.match(settings, /items=\{fitnessGoalOptions\}/);
+  assert.match(settings, /items=\{trainingExperienceOptions\}/);
+  assert.match(settings, /items=\{trainingLocationOptions\}/);
+  assert.match(settings, /items=\{dietPreferenceOptions\}/);
+  assert.match(ai, /items=\{goalOptions\}/);
+  assert.match(zh, /例如：鸡胸肉/);
 });
 
 test("workout page shows estimated calorie burn without changing the database schema", () => {

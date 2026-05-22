@@ -305,11 +305,11 @@ export function NutritionPage() {
         <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <div className="space-y-2 lg:col-span-2">
             <Label>{t("foodName")}</Label>
-            <Input value={foodName} onChange={(event) => setFoodName(event.target.value)} placeholder="Chicken Breast" />
+            <Input value={foodName} onChange={(event) => setFoodName(event.target.value)} placeholder={t("foodNamePlaceholder")} />
           </div>
           <div className="space-y-2">
             <Label>{t("mealType")}</Label>
-            <Select value={mealType} onValueChange={(value) => setMealType(value as MealType)}>
+            <Select items={mealTypeOptions} value={mealType} onValueChange={(value) => setMealType(value as MealType)}>
               <SelectTrigger>
                 <SelectValue placeholder={t("mealType")} />
               </SelectTrigger>

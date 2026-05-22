@@ -295,6 +295,7 @@
     "addEditTitle": "Add / Edit Food Log",
     "addEditDesc": "Support multiple entries per day",
     "foodName": "Food Name",
+    "foodNamePlaceholder": "e.g. Chicken Breast",
     "mealType": "Meal Type",
     "add": "Add",
     "saving": "Saving...",

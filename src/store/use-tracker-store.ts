@@ -7,7 +7,7 @@ import {
   createDefaultSettings,
   createDemoTrainingPlan,
   createEmptyTrainingPlan,
-  defaultQuickFoods,
+  getDefaultQuickFoods,
   isDefaultAvailableEquipment,
 } from "@/lib/demo-data";
 import { createAuthRequiredError } from "@/lib/error-utils";
@@ -58,7 +58,7 @@ function createEmptySnapshot(userId: string): AppDataSnapshot {
     workoutLogs: [],
     foodLogs: [],
     bodyMetricLogs: [],
-    quickFoods: defaultQuickFoods,
+    quickFoods: getDefaultQuickFoods(language),
   };
 }
 
