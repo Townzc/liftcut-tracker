@@ -465,6 +465,32 @@ const demoFoodNames: Record<AppLocale, Record<string, string>> = {
   },
 };
 
+const commonFoodNameToKey = new Map(
+  Object.entries(demoFoodNames).flatMap(([, names]) =>
+    Object.entries(names).map(([key, name]) => [name.trim().toLowerCase(), key] as const),
+  ),
+);
+
+export function getLocalizedFoodName(foodName: string, locale: AppLocale = "zh-CN"): string {
+  const key = commonFoodNameToKey.get(foodName.trim().toLowerCase());
+  return key ? demoFoodNames[locale][key] : foodName;
+}
+
+export function getLocalizedQuickFood(quickFood: QuickFoodItem, locale: AppLocale = "zh-CN"): QuickFoodItem {
+  const template = quickFoodTemplates[locale].find((item) => item.id === quickFood.id);
+
+  if (!template) {
+    return quickFood;
+  }
+
+  return {
+    ...quickFood,
+    name: template.name,
+    unitLabel: template.unitLabel,
+    displayText: template.displayText,
+  };
+}
+
 export function createDefaultSettings(userId: string, locale: AppLocale = "zh-CN"): UserSettings {
   return {
     userId,

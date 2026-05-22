@@ -23,7 +23,7 @@ import {
   type AiTrainingPlan,
 } from "@/lib/ai/schemas";
 import { normalizeActionError } from "@/lib/error-utils";
-import { getDefaultAvailableEquipment } from "@/lib/demo-data";
+import { getDefaultAvailableEquipment, isDefaultAvailableEquipment } from "@/lib/demo-data";
 import {
   canConsumeGuestAiQuota,
   clearGuestAiHistory,
@@ -144,7 +144,7 @@ export function AiPlanPage() {
   const [sessionDurationMinutes, setSessionDurationMinutes] = useState(settings.sessionDurationMinutes || 60);
   const [trainingLocation, setTrainingLocation] = useState<TrainingLocation>(settings.trainingLocation);
   const [availableEquipment, setAvailableEquipment] = useState(
-    (settings.availableEquipment.length > 0 ? settings.availableEquipment : getDefaultAvailableEquipment(language)).join(", "),
+    (isDefaultAvailableEquipment(settings.availableEquipment) ? getDefaultAvailableEquipment(language) : settings.availableEquipment).join(", "),
   );
   const [injuryNotes, setInjuryNotes] = useState(settings.injuryNotes || "");
   const [dietPreference, setDietPreference] = useState<DietPreference>(settings.dietPreference);
@@ -310,6 +310,21 @@ export function AiPlanPage() {
   useEffect(() => {
     void loadHistory();
   }, [loadHistory]);
+
+  useEffect(() => {
+    const settingsEquipment = isDefaultAvailableEquipment(settings.availableEquipment)
+      ? getDefaultAvailableEquipment(language)
+      : settings.availableEquipment;
+
+    setAvailableEquipment((current) => {
+      const currentEquipment = normalizeCommaList(current);
+      if (current.trim().length === 0 || isDefaultAvailableEquipment(currentEquipment) || isDefaultAvailableEquipment(settings.availableEquipment)) {
+        return settingsEquipment.join(", ");
+      }
+
+      return current;
+    });
+  }, [language, settings.availableEquipment]);
 
   const applyTrainingJson = async () => {
     setLoading("apply-training-json");

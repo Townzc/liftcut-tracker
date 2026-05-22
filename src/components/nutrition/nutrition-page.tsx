@@ -21,8 +21,10 @@ import {
 } from "@/components/ui/select";
 import { normalizeActionError } from "@/lib/error-utils";
 import { todayString } from "@/lib/date";
+import { getLocalizedFoodName, getLocalizedQuickFood } from "@/lib/demo-data";
 import { getNutritionByDate } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { useUIStore } from "@/store/use-ui-store";
 import type { FoodLog, MealType, QuickFoodItem } from "@/types";
 
 const MEAL_ORDER: MealType[] = ["breakfast", "lunch", "dinner", "snack"];
@@ -31,6 +33,7 @@ export function NutritionPage() {
   const t = useTranslations("nutrition");
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
+  const language = useUIStore((state) => state.language);
 
   const foodLogs = useTrackerStore((state) => state.foodLogs);
   const quickFoods = useTrackerStore((state) => state.quickFoods);
@@ -60,6 +63,10 @@ export function NutritionPage() {
       { value: "snack", label: t("meal_snack") },
     ],
     [t],
+  );
+  const localizedQuickFoods = useMemo(
+    () => quickFoods.map((item) => getLocalizedQuickFood(item, language)),
+    [language, quickFoods],
   );
 
   const groupedDayLogs = useMemo(
@@ -132,18 +139,19 @@ export function NutritionPage() {
   };
 
   const applyQuickFood = async (quickFood: QuickFoodItem) => {
+    const localizedQuickFood = getLocalizedQuickFood(quickFood, language);
     setQuickLoadingId(quickFood.id);
     clearFeedback();
 
     try {
       await addFoodLog({
         date: selectedDate,
-        mealType: quickFood.mealType,
-        foodName: quickFood.name,
+        mealType: localizedQuickFood.mealType,
+        foodName: localizedQuickFood.name,
         calories: quickFood.calories,
         protein: quickFood.protein,
       });
-      setMessage(t("quickAddSuccess", { name: quickFood.name }));
+      setMessage(t("quickAddSuccess", { name: localizedQuickFood.name }));
     } catch (quickError) {
       console.error(quickError);
       setError(
@@ -204,7 +212,7 @@ export function NutritionPage() {
     setEditingId(log.id);
     setSelectedDate(log.date);
     setMealType(log.mealType);
-    setFoodName(log.foodName);
+    setFoodName(getLocalizedFoodName(log.foodName, language));
     setCalories(log.calories);
     setProtein(log.protein);
     setMessage(t("editingState"));
@@ -275,7 +283,7 @@ export function NutritionPage() {
             <CardDescription>{t("quickDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-2">
-            {quickFoods.map((item) => (
+            {localizedQuickFoods.map((item) => (
               <Button
                 key={item.id}
                 variant="outline"
@@ -386,7 +394,7 @@ export function NutritionPage() {
                         className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3"
                       >
                         <div>
-                          <p className="font-medium text-slate-900">{log.foodName}</p>
+                          <p className="font-medium text-slate-900">{getLocalizedFoodName(log.foodName, language)}</p>
                           <p className="text-xs text-slate-500">
                             {t("entryMeta", {
                               mealType: mealTypeLabel(log.mealType),

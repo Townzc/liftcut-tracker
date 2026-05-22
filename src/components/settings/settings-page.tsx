@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { normalizeActionError } from "@/lib/error-utils";
-import { getDefaultAvailableEquipment } from "@/lib/demo-data";
+import { getDefaultAvailableEquipment, isDefaultAvailableEquipment } from "@/lib/demo-data";
 import { downloadJson } from "@/lib/import-export";
 import { userSettingsSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
@@ -78,7 +78,7 @@ export function SettingsPage() {
     setDraft({
       ...settings,
       availableEquipment:
-        settings.availableEquipment.length > 0 ? settings.availableEquipment : getDefaultAvailableEquipment(language),
+        isDefaultAvailableEquipment(settings.availableEquipment) ? getDefaultAvailableEquipment(language) : settings.availableEquipment,
     });
   }, [language, settings]);
 

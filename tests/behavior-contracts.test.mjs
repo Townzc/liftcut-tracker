@@ -44,6 +44,8 @@ test("default demo and equipment support Chinese-first onboarding", () => {
   assert.match(demo, /杠铃深蹲/);
   assert.match(demo, /常见器械均可使用/);
   assert.match(demo, /getDefaultQuickFoods/);
+  assert.match(demo, /getLocalizedQuickFood/);
+  assert.match(demo, /getLocalizedFoodName/);
   assert.match(demo, /鸡胸肉/);
   assert.match(demo, /demoFoodNames/);
 });
@@ -53,12 +55,17 @@ test("localized selects display labels instead of raw enum values", () => {
   const settings = read("src/components/settings/settings-page.tsx");
   const ai = read("src/components/plan/ai-plan-page.tsx");
   const zh = read("messages/zh-CN.json");
+  assert.match(nutrition, /useUIStore/);
+  assert.match(nutrition, /localizedQuickFoods/);
+  assert.match(nutrition, /getLocalizedFoodName\(log\.foodName, language\)/);
   assert.match(nutrition, /placeholder=\{t\("foodNamePlaceholder"\)\}/);
   assert.match(nutrition, /<Select items=\{mealTypeOptions\}/);
+  assert.match(settings, /isDefaultAvailableEquipment\(settings\.availableEquipment\)/);
   assert.match(settings, /items=\{fitnessGoalOptions\}/);
   assert.match(settings, /items=\{trainingExperienceOptions\}/);
   assert.match(settings, /items=\{trainingLocationOptions\}/);
   assert.match(settings, /items=\{dietPreferenceOptions\}/);
+  assert.match(ai, /isDefaultAvailableEquipment\(settings\.availableEquipment\)/);
   assert.match(ai, /items=\{goalOptions\}/);
   assert.match(zh, /例如：鸡胸肉/);
 });
