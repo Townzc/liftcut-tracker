@@ -612,10 +612,10 @@ export function AiPlanPage() {
     <div className="space-y-4 pb-8">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("aiPlanner")}</p>
-          <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
-          <p className="mt-1 text-sm text-slate-600">{t("localeModeHint", { locale: localeLabel })}</p>
-          {authMode === "guest" ? <p className="text-xs text-amber-700">{t("guestModeHistoryHint")}</p> : null}
+          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("aiPlanner")}</p>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{t("localeModeHint", { locale: localeLabel })}</p>
+          {authMode === "guest" ? <p className="text-xs text-amber-700 dark:text-amber-400">{t("guestModeHistoryHint")}</p> : null}
         </div>
         <Link href="/plan" className="text-sm text-emerald-700 hover:underline">
           {t("backToPlan")}
@@ -623,24 +623,24 @@ export function AiPlanPage() {
       </div>
 
       {!aiConfigured ? (
-        <Card className="border-amber-200 bg-amber-50/70">
-          <CardContent className="py-3 text-sm text-amber-800">{t("configMissing")}</CardContent>
+        <Card className="border-amber-200 bg-amber-50/70 dark:border-amber-800/50 dark:bg-amber-900/20">
+          <CardContent className="py-3 text-sm text-amber-800 dark:text-amber-300">{t("configMissing")}</CardContent>
         </Card>
       ) : null}
 
-      <Card className="border-emerald-200/80 bg-emerald-50/70">
+      <Card className="border-emerald-200/80 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-900/20">
         <CardHeader className="pb-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <CardTitle className="text-base text-emerald-950">{t("profileQualityTitle")}</CardTitle>
-            <Badge className="bg-white text-emerald-800 hover:bg-white">{profileQualityStatus}</Badge>
+            <CardTitle className="text-base text-emerald-950 dark:text-emerald-100">{t("profileQualityTitle")}</CardTitle>
+            <Badge className="bg-white text-emerald-800 hover:bg-white dark:bg-slate-800 dark:text-emerald-400 dark:hover:bg-slate-800">{profileQualityStatus}</Badge>
           </div>
-          <CardDescription className="text-emerald-800">{profileQualityDesc}</CardDescription>
+          <CardDescription className="text-emerald-800 dark:text-emerald-300">{profileQualityDesc}</CardDescription>
         </CardHeader>
         {missingProfileFields.length > 0 ? (
           <CardContent className="pt-0">
             <div className="flex flex-wrap gap-2">
               {missingProfileFields.slice(0, 8).map((field) => (
-                <Badge key={field} variant="outline" className="border-emerald-300 bg-white/70 text-emerald-900">
+                <Badge key={field} variant="outline" className="border-emerald-300 bg-white/70 text-emerald-900 dark:border-emerald-700 dark:bg-slate-800/50 dark:text-emerald-300">
                   {field}
                 </Badge>
               ))}
@@ -649,7 +649,7 @@ export function AiPlanPage() {
         ) : null}
       </Card>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("constraintsTitle")}</CardTitle>
           <CardDescription>{t("constraintsDesc")}</CardDescription>
@@ -753,7 +753,7 @@ export function AiPlanPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("trainingStructuredTitle")}</CardTitle>
           <CardDescription>{t("trainingStructuredDesc")}</CardDescription>
@@ -766,7 +766,7 @@ export function AiPlanPage() {
             </TabsList>
             <TabsContent value="structured" className="space-y-3">
               {!trainingPlanDraft ? (
-                <p className="text-sm text-slate-500">{t("trainingStructuredEmpty")}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{t("trainingStructuredEmpty")}</p>
               ) : (
                 <>
                   <div className="grid gap-3 md:grid-cols-2">
@@ -814,16 +814,16 @@ export function AiPlanPage() {
 
                   <div className="space-y-3">
                     {trainingPlanDraft.weeks.map((week, weekIndex) => (
-                      <details key={`${week.week_number}-${weekIndex}`} open className="rounded-md border border-slate-200 bg-slate-50/50">
-                        <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-slate-900">{t("weekHeading", { week: week.week_number })}</summary>
-                        <div className="space-y-3 border-t border-slate-200 p-3">
+                      <details key={`${week.week_number}-${weekIndex}`} open className="rounded-md border border-slate-200 bg-slate-50/50 dark:border-slate-700 dark:bg-slate-800/50">
+                        <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-slate-900 dark:text-slate-100">{t("weekHeading", { week: week.week_number })}</summary>
+                        <div className="space-y-3 border-t border-slate-200 p-3 dark:border-slate-700">
                           <div className="space-y-1">
                             <Label>{t("weekFocus")}</Label>
                             <Input value={week.focus} onChange={(event) => updateTrainingDraft((draft) => { draft.weeks[weekIndex].focus = event.target.value; })} />
                           </div>
 
                           {week.days.map((day, dayIndex) => (
-                            <Card key={`${day.day_number}-${dayIndex}`} className="border-slate-200">
+                            <Card key={`${day.day_number}-${dayIndex}`} className="border-slate-200 dark:border-slate-700">
                               <CardHeader className="space-y-1 pb-3">
                                 <CardTitle className="text-sm">{t("dayHeading", { day: day.day_number })}</CardTitle>
                               </CardHeader>
@@ -851,7 +851,7 @@ export function AiPlanPage() {
 
                                 <div className="space-y-2">
                                   <div className="flex flex-wrap items-center justify-between gap-2">
-                                    <p className="text-sm font-medium text-slate-900">{t("exerciseListTitle")}</p>
+                                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("exerciseListTitle")}</p>
                                     <Button
                                       type="button"
                                       size="sm"
@@ -874,9 +874,9 @@ export function AiPlanPage() {
                                   </div>
 
                                   {day.exercises.map((exercise, exerciseIndex) => (
-                                    <div key={`${exercise.name}-${exerciseIndex}`} className="space-y-2 rounded-md border border-slate-200 bg-white p-3">
+                                    <div key={`${exercise.name}-${exerciseIndex}`} className="space-y-2 rounded-md border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50">
                                       <div className="flex items-center justify-between gap-2">
-                                        <p className="text-sm font-medium text-slate-900">{t("exerciseItem", { index: exerciseIndex + 1 })}</p>
+                                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("exerciseItem", { index: exerciseIndex + 1 })}</p>
                                         <Button
                                           type="button"
                                           size="icon"
@@ -949,7 +949,7 @@ export function AiPlanPage() {
             </TabsContent>
 
             <TabsContent value="json" className="space-y-2">
-              <p className="text-xs text-slate-500">{t("advancedModeDesc")}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t("advancedModeDesc")}</p>
               <Textarea rows={18} value={trainingJson} onChange={(event) => setTrainingJson(event.target.value)} placeholder={t("trainingPreviewPlaceholder")} />
               <div className="flex flex-wrap gap-2">
                 <Button variant="outline" onClick={applyTrainingJson} disabled={!trainingJson || Boolean(loading)}>
@@ -966,7 +966,7 @@ export function AiPlanPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("nutritionStructuredTitle")}</CardTitle>
           <CardDescription>{t("nutritionStructuredDesc")}</CardDescription>
@@ -979,7 +979,7 @@ export function AiPlanPage() {
             </TabsList>
             <TabsContent value="structured" className="space-y-3">
               {!nutritionPlanDraft ? (
-                <p className="text-sm text-slate-500">{t("nutritionStructuredEmpty")}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{t("nutritionStructuredEmpty")}</p>
               ) : (
                 <>
                   <div className="grid gap-3 md:grid-cols-2">
@@ -1022,23 +1022,23 @@ export function AiPlanPage() {
                   </div>
 
                   <div className="grid gap-2 md:grid-cols-5">
-                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2">
+                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800/50">
                       <Label>{t("dailyCalories")}</Label>
                       <NumericInput value={nutritionPlanDraft.daily_targets.calories} allowDecimal={false} min={1200} max={5000} onValueChange={(value) => updateNutritionDraft((draft) => { draft.daily_targets.calories = value; })} />
                     </div>
-                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2">
+                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800/50">
                       <Label>{t("dailyProtein")}</Label>
                       <NumericInput value={nutritionPlanDraft.daily_targets.protein_g} min={40} max={400} onValueChange={(value) => updateNutritionDraft((draft) => { draft.daily_targets.protein_g = value; })} />
                     </div>
-                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2">
+                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800/50">
                       <Label>{t("dailyCarbs")}</Label>
                       <NumericInput value={nutritionPlanDraft.daily_targets.carbs_g} min={30} max={700} onValueChange={(value) => updateNutritionDraft((draft) => { draft.daily_targets.carbs_g = value; })} />
                     </div>
-                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2">
+                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800/50">
                       <Label>{t("dailyFat")}</Label>
                       <NumericInput value={nutritionPlanDraft.daily_targets.fat_g} min={20} max={200} onValueChange={(value) => updateNutritionDraft((draft) => { draft.daily_targets.fat_g = value; })} />
                     </div>
-                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2">
+                    <div className="space-y-1 rounded-md border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800/50">
                       <Label>{t("dailyWater")}</Label>
                       <NumericInput value={nutritionPlanDraft.daily_targets.water_ml} allowDecimal={false} min={1000} max={6000} onValueChange={(value) => updateNutritionDraft((draft) => { draft.daily_targets.water_ml = value; })} />
                     </div>
@@ -1046,16 +1046,16 @@ export function AiPlanPage() {
 
                   <div className="space-y-3">
                     {nutritionPlanDraft.days.map((day, dayIndex) => (
-                      <details key={`${day.day_number}-${dayIndex}`} open className="rounded-md border border-slate-200 bg-slate-50/50">
-                        <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-slate-900">{t("dayHeading", { day: day.day_number })}</summary>
-                        <div className="space-y-3 border-t border-slate-200 p-3">
+                      <details key={`${day.day_number}-${dayIndex}`} open className="rounded-md border border-slate-200 bg-slate-50/50 dark:border-slate-700 dark:bg-slate-800/50">
+                        <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-slate-900 dark:text-slate-100">{t("dayHeading", { day: day.day_number })}</summary>
+                        <div className="space-y-3 border-t border-slate-200 p-3 dark:border-slate-700">
                           <div className="space-y-1">
                             <Label>{t("fieldNotes")}</Label>
                             <Textarea rows={2} value={day.notes} onChange={(event) => updateNutritionDraft((draft) => { draft.days[dayIndex].notes = event.target.value; })} />
                           </div>
 
                           {day.meals.map((meal, mealIndex) => (
-                            <Card key={`${meal.meal_type}-${mealIndex}`} className="border-slate-200">
+                            <Card key={`${meal.meal_type}-${mealIndex}`} className="border-slate-200 dark:border-slate-700">
                               <CardHeader className="space-y-1 pb-3">
                                 <CardTitle className="flex items-center justify-between gap-2 text-sm">
                                   <span>{tNutrition(`meal_${meal.meal_type}`)}</span>
@@ -1070,7 +1070,7 @@ export function AiPlanPage() {
 
                                 <div className="space-y-2">
                                   <div className="flex flex-wrap items-center justify-between gap-2">
-                                    <p className="text-sm font-medium text-slate-900">{t("foodListTitle")}</p>
+                                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("foodListTitle")}</p>
                                     <Button
                                       type="button"
                                       size="sm"
@@ -1092,9 +1092,9 @@ export function AiPlanPage() {
                                   </div>
 
                                   {meal.foods.map((food, foodIndex) => (
-                                    <div key={`${food.name}-${foodIndex}`} className="space-y-2 rounded-md border border-slate-200 bg-white p-3">
+                                    <div key={`${food.name}-${foodIndex}`} className="space-y-2 rounded-md border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50">
                                       <div className="flex items-center justify-between gap-2">
-                                        <p className="text-sm font-medium text-slate-900">{t("foodItem", { index: foodIndex + 1 })}</p>
+                                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("foodItem", { index: foodIndex + 1 })}</p>
                                         <Button
                                           type="button"
                                           size="icon"
@@ -1159,7 +1159,7 @@ export function AiPlanPage() {
             </TabsContent>
 
             <TabsContent value="json" className="space-y-2">
-              <p className="text-xs text-slate-500">{t("advancedModeDesc")}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t("advancedModeDesc")}</p>
               <Textarea rows={18} value={nutritionJson} onChange={(event) => setNutritionJson(event.target.value)} placeholder={t("nutritionPreviewPlaceholder")} />
               <div className="flex flex-wrap gap-2">
                 <Button variant="outline" onClick={applyNutritionJson} disabled={!nutritionJson || Boolean(loading)}>
@@ -1176,7 +1176,7 @@ export function AiPlanPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("historyTitle")}</CardTitle>
           <CardDescription>{t("historyDesc")}</CardDescription>
@@ -1214,10 +1214,10 @@ export function AiPlanPage() {
 
           <div className="grid gap-3 lg:grid-cols-2">
             <div className="space-y-2">
-              <p className="text-sm font-medium text-slate-900">{t("historyTraining")}</p>
-              {historyTraining.length === 0 ? <p className="text-xs text-slate-500">{t("historyEmpty")}</p> : null}
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("historyTraining")}</p>
+              {historyTraining.length === 0 ? <p className="text-xs text-slate-500 dark:text-slate-400">{t("historyEmpty")}</p> : null}
               {historyTraining.slice(0, 8).map((item) => (
-                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs">
+                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs dark:border-slate-700 dark:bg-slate-800/50">
                   <div className="flex items-start justify-between gap-2">
                     <button
                       type="button"
@@ -1239,7 +1239,7 @@ export function AiPlanPage() {
                       }}
                     >
                       <p>{item.created_at}</p>
-                      <p className="text-slate-500">
+                      <p className="text-slate-500 dark:text-slate-400">
                         {item.model_name} / {item.prompt_version}
                       </p>
                       <Badge variant="outline" className="mt-1">
@@ -1262,10 +1262,10 @@ export function AiPlanPage() {
             </div>
 
             <div className="space-y-2">
-              <p className="text-sm font-medium text-slate-900">{t("historyNutrition")}</p>
-              {historyNutrition.length === 0 ? <p className="text-xs text-slate-500">{t("historyEmpty")}</p> : null}
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{t("historyNutrition")}</p>
+              {historyNutrition.length === 0 ? <p className="text-xs text-slate-500 dark:text-slate-400">{t("historyEmpty")}</p> : null}
               {historyNutrition.slice(0, 8).map((item) => (
-                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs">
+                <div key={item.id} className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs dark:border-slate-700 dark:bg-slate-800/50">
                   <div className="flex items-start justify-between gap-2">
                     <button
                       type="button"
@@ -1287,7 +1287,7 @@ export function AiPlanPage() {
                       }}
                     >
                       <p>{item.created_at}</p>
-                      <p className="text-slate-500">
+                      <p className="text-slate-500 dark:text-slate-400">
                         {item.model_name} / {item.prompt_version}
                       </p>
                       <Badge variant="outline" className="mt-1">
@@ -1312,8 +1312,8 @@ export function AiPlanPage() {
         </CardContent>
       </Card>
 
-      {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
-      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      {message ? <p className="text-sm text-emerald-700 dark:text-emerald-400">{message}</p> : null}
+      {error ? <p className="text-sm text-rose-700 dark:text-rose-400">{error}</p> : null}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Eye, Flame, LoaderCircle, Save } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { RestTimer } from "@/components/workout/rest-timer";
 import { ActionFeedback } from "@/components/shared/action-feedback";
 import { EmptyState } from "@/components/shared/empty-state";
 import { NumericInput } from "@/components/shared/numeric-input";
@@ -155,7 +156,7 @@ function WorkoutDraftForm({
 
   return (
     <div className="space-y-3">
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-lg">{currentDay.title}</CardTitle>
           <CardDescription>{currentDay.notes || "-"}</CardDescription>
@@ -163,7 +164,7 @@ function WorkoutDraftForm({
       </Card>
 
       {exerciseRows.map((exercise, index) => (
-        <Card key={exercise.exercisePlanId} className="border-slate-200/80 bg-white/90">
+        <Card key={exercise.exercisePlanId} className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{exercise.name}</CardTitle>
             <CardDescription>{t("exerciseLabel", { index: index + 1 })}</CardDescription>
@@ -208,7 +209,9 @@ function WorkoutDraftForm({
         </Card>
       ))}
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <RestTimer />
+
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("notesTitle")}</CardTitle>
         </CardHeader>
@@ -239,18 +242,18 @@ function WorkoutDraftForm({
         </CardContent>
       </Card>
 
-      <Card className="border-orange-200 bg-orange-50/70">
+      <Card className="border-orange-200 bg-orange-50/70 dark:border-orange-800/50 dark:bg-orange-900/20">
         <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
           <div className="flex items-center gap-3">
-            <div className="rounded-xl bg-orange-100 p-2 text-orange-700">
+            <div className="rounded-xl bg-orange-100 p-2 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">
               <Flame className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-orange-950">{t("estimatedCaloriesTitle")}</p>
-              <p className="text-xs text-orange-800">{t("estimatedCaloriesDesc")}</p>
+              <p className="text-sm font-semibold text-orange-950 dark:text-orange-100">{t("estimatedCaloriesTitle")}</p>
+              <p className="text-xs text-orange-800 dark:text-orange-300">{t("estimatedCaloriesDesc")}</p>
             </div>
           </div>
-          <p className="text-2xl font-semibold text-orange-950">
+          <p className="text-2xl font-semibold text-orange-950 dark:text-orange-100">
             {t("estimatedCaloriesValue", { calories: estimatedCalories })}
           </p>
         </CardContent>
@@ -268,12 +271,12 @@ function WorkoutDraftForm({
       <ActionFeedback message={message} error={error} />
 
       {lastSavedSummary ? (
-        <Card className="border-emerald-200 bg-emerald-50/60">
+        <Card className="border-emerald-200 bg-emerald-50/60 dark:border-emerald-800/50 dark:bg-emerald-900/20">
           <CardHeader>
-            <CardTitle className="text-sm text-emerald-900">{t("savedSummaryTitle")}</CardTitle>
+            <CardTitle className="text-sm text-emerald-900 dark:text-emerald-100">{t("savedSummaryTitle")}</CardTitle>
             <CardDescription>{t("savedSummaryDesc")}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-1 text-xs text-emerald-900">
+          <CardContent className="space-y-1 text-xs text-emerald-900 dark:text-emerald-100">
             <p>
               {t("savedSummaryDate", { date: lastSavedSummary.date })}
             </p>
@@ -390,11 +393,11 @@ export function WorkoutPage() {
   return (
     <div className="space-y-4 pb-20">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("workout")}</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("workout")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("selectorTitle")}</CardTitle>
           <CardDescription>{t("selectorDesc")}</CardDescription>
@@ -450,12 +453,12 @@ export function WorkoutPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("whereSavedTitle")}</CardTitle>
           <CardDescription>{t("whereSavedDesc")}</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-1 text-sm text-slate-600">
+        <CardContent className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
           <p>{t("whereSavedItemDate")}</p>
           <p>{t("whereSavedItemWeekDay")}</p>
           <p>{t("whereSavedItemDuration")}</p>
@@ -480,7 +483,7 @@ export function WorkoutPage() {
         <EmptyState title={t("noDayTitle")} description={t("noDayDesc")} />
       )}
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("recentLogsTitle")}</CardTitle>
           <CardDescription>{t("recentLogsDesc")}</CardDescription>
@@ -494,11 +497,11 @@ export function WorkoutPage() {
                 key={log.id}
                 type="button"
                 onClick={() => handleOpenLogDetail(log.id)}
-                className="flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3 text-left transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3 text-left transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:bg-slate-700/50"
               >
                 <div>
-                  <p className="font-medium text-slate-900">{log.date}</p>
-                  <p className="text-xs text-slate-600">
+                  <p className="font-medium text-slate-900 dark:text-slate-100">{log.date}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     {t("recentLogMeta", {
                       week: log.weekNumber,
                       day: log.dayNumber,
@@ -510,7 +513,7 @@ export function WorkoutPage() {
                 <Badge variant={log.completed ? "default" : "outline"}>
                   {log.completed ? t("statusCompleted") : t("statusPending")}
                 </Badge>
-                <span className="inline-flex items-center text-xs text-emerald-700">
+                <span className="inline-flex items-center text-xs text-emerald-700 dark:text-emerald-400">
                   <Eye className="mr-1 h-3.5 w-3.5" />
                   {t("recentLogsOpen")}
                 </span>
@@ -528,7 +531,7 @@ export function WorkoutPage() {
           </DialogHeader>
 
           {detailState === "loading" ? (
-            <div className="inline-flex items-center text-sm text-slate-600">
+            <div className="inline-flex items-center text-sm text-slate-600 dark:text-slate-400">
               <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
               {t("detailLoading")}
             </div>
@@ -545,61 +548,61 @@ export function WorkoutPage() {
           {detailState === "ready" && selectedRecentLog ? (
             <div className="space-y-3">
               <div className="grid gap-2 sm:grid-cols-2">
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-                  <p className="text-xs text-slate-500">{t("date")}</p>
-                  <p className="font-medium text-slate-900">{selectedRecentLog.date}</p>
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("date")}</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">{selectedRecentLog.date}</p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-                  <p className="text-xs text-slate-500">{t("detailWeekDayLabel")}</p>
-                  <p className="font-medium text-slate-900">
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("detailWeekDayLabel")}</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">
                     {t("detailWeekDayValue", {
                       week: selectedRecentLog.weekNumber,
                       day: selectedRecentLog.dayNumber,
                     })}
                   </p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-                  <p className="text-xs text-slate-500">{t("duration")}</p>
-                  <p className="font-medium text-slate-900">
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("duration")}</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">
                     {t("detailDurationValue", { minutes: selectedRecentLog.durationMinutes })}
                   </p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-                  <p className="text-xs text-slate-500">{t("sessionCompleted")}</p>
-                  <p className="font-medium text-slate-900">
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("sessionCompleted")}</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">
                     {selectedRecentLog.completed ? t("statusCompleted") : t("statusPending")}
                   </p>
                 </div>
-                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm sm:col-span-2">
-                  <p className="text-xs text-orange-700">{t("estimatedCaloriesTitle")}</p>
-                  <p className="font-medium text-orange-950">
+                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm dark:border-orange-800/50 dark:bg-orange-900/20 sm:col-span-2">
+                  <p className="text-xs text-orange-700 dark:text-orange-400">{t("estimatedCaloriesTitle")}</p>
+                  <p className="font-medium text-orange-950 dark:text-orange-100">
                     {t("estimatedCaloriesValue", { calories: selectedRecentCalories })}
                   </p>
                 </div>
               </div>
 
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
-                <p className="text-xs text-slate-500">{t("notesTitle")}</p>
-                <p className="mt-1 text-slate-800">{selectedRecentLog.notes || tCommon("noNotes")}</p>
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-800/50">
+                <p className="text-xs text-slate-500 dark:text-slate-400">{t("notesTitle")}</p>
+                <p className="mt-1 text-slate-800 dark:text-slate-200">{selectedRecentLog.notes || tCommon("noNotes")}</p>
               </div>
 
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-slate-900">{t("detailExercisesTitle")}</p>
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t("detailExercisesTitle")}</p>
                 {selectedRecentLog.exercises.length === 0 ? (
                   <EmptyState title={t("detailNoExerciseTitle")} description={t("detailNoExerciseDesc")} />
                 ) : (
                   selectedRecentLog.exercises.map((exercise) => (
                     <div
                       key={exercise.id}
-                      className="rounded-lg border border-slate-200 bg-white p-3"
+                      className="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <p className="font-medium text-slate-900">{exercise.name}</p>
+                        <p className="font-medium text-slate-900 dark:text-slate-100">{exercise.name}</p>
                         <Badge variant={exercise.completed ? "default" : "outline"}>
                           {exercise.completed ? t("statusCompleted") : t("statusPending")}
                         </Badge>
                       </div>
-                      <p className="mt-1 text-xs text-slate-600">
+                      <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                         {t("detailExerciseMeta", {
                           weight: exercise.actualWeight,
                           reps: exercise.actualReps,

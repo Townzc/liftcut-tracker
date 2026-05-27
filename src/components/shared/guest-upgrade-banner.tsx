@@ -36,9 +36,9 @@ export function GuestUpgradeBanner() {
   };
 
   return (
-    <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-      <p className="text-sm font-medium text-emerald-900">{t("migrationPromptTitle")}</p>
-      <p className="mt-1 text-xs text-emerald-800">{t("migrationPromptDesc")}</p>
+    <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800/50 dark:bg-emerald-900/20">
+      <p className="text-sm font-medium text-emerald-900 dark:text-emerald-100">{t("migrationPromptTitle")}</p>
+      <p className="mt-1 text-xs text-emerald-800 dark:text-emerald-300">{t("migrationPromptDesc")}</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <Button type="button" size="sm" onClick={handleMigrate} disabled={loading}>
           {loading ? <LoaderCircle className="mr-2 h-3.5 w-3.5 animate-spin" /> : null}
@@ -48,7 +48,7 @@ export function GuestUpgradeBanner() {
           {t("migrationLater")}
         </Button>
       </div>
-      {error ? <p className="mt-2 text-xs text-rose-700">{error}</p> : null}
+      {error ? <p className="mt-2 text-xs text-rose-700 dark:text-rose-400">{error}</p> : null}
     </div>
   );
 }

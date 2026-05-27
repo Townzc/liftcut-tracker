@@ -27,7 +27,7 @@ import { userSettingsSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { clearUserAvatar, exportUserData, uploadUserAvatar } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import { useUIStore } from "@/store/use-ui-store";
+import { useUIStore, type ThemeMode } from "@/store/use-ui-store";
 import type { AppLocale, UserSettings } from "@/types";
 
 type SettingsAction =
@@ -47,6 +47,8 @@ export function SettingsPage() {
   const tGuest = useTranslations("guest");
 
   const language = useUIStore((state) => state.language);
+  const theme = useUIStore((state) => state.theme);
+  const setTheme = useUIStore((state) => state.setTheme);
 
   const settings = useTrackerStore((state) => state.settings);
   const trackerLoading = useTrackerStore((state) => state.loading);
@@ -409,11 +411,11 @@ export function SettingsPage() {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("settings")}</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("settings")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("identityTitle")}</CardTitle>
           <CardDescription>{t("identityDesc")}</CardDescription>
@@ -455,11 +457,11 @@ export function SettingsPage() {
                   {loadingAction === "remove-avatar" ? t("avatarRemoving") : t("avatarRemove")}
                 </Button>
               </div>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {t("avatarInvalidType")} {t("avatarTooLarge")}
               </p>
               {authMode === "guest" ? (
-                <p className="text-xs text-amber-700">{tGuest("guestAvatarDisabled")}</p>
+                <p className="text-xs text-amber-700 dark:text-amber-400">{tGuest("guestAvatarDisabled")}</p>
               ) : null}
             </div>
           </div>
@@ -485,7 +487,7 @@ export function SettingsPage() {
             </div>
             <div className="space-y-1">
               <Label>{t("email")}</Label>
-              <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700">{email}</p>
+              <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300">{email}</p>
             </div>
           </div>
 
@@ -497,10 +499,10 @@ export function SettingsPage() {
       </Card>
 
       {authMode === "guest" ? (
-        <Card className="border-amber-200/80 bg-amber-50/80">
+        <Card className="border-amber-200/80 bg-amber-50/80 dark:border-amber-800/50 dark:bg-amber-900/20">
           <CardHeader>
-            <CardTitle className="text-base text-amber-900">{tGuest("badge")}</CardTitle>
-            <CardDescription className="text-amber-800">{tGuest("localOnlyHint")}</CardDescription>
+            <CardTitle className="text-base text-amber-900 dark:text-amber-100">{tGuest("badge")}</CardTitle>
+            <CardDescription className="text-amber-800 dark:text-amber-300">{tGuest("localOnlyHint")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/register" className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
@@ -510,7 +512,7 @@ export function SettingsPage() {
         </Card>
       ) : null}
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
           <CardDescription>{t("profileDesc")}</CardDescription>
@@ -717,7 +719,7 @@ export function SettingsPage() {
       </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("planAndExportTitle")}</CardTitle>
             <CardDescription>{t("planAndExportDesc")}</CardDescription>
@@ -734,13 +736,13 @@ export function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("accountTitle")}</CardTitle>
             <CardDescription>{t("email")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700">
+            <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300">
               {email}
             </p>
             <div className="space-y-1">
@@ -763,6 +765,28 @@ export function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-1">
+              <Label>{t("theme")}</Label>
+              <Select
+                items={[
+                  { value: "light", label: t("themeLight") },
+                  { value: "dark", label: t("themeDark") },
+                  { value: "system", label: t("themeSystem") },
+                ]}
+                value={theme}
+                onValueChange={(value) => setTheme(value as ThemeMode)}
+                disabled={isBusy}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">{t("themeLight")}</SelectItem>
+                  <SelectItem value="dark">{t("themeDark")}</SelectItem>
+                  <SelectItem value="system">{t("themeSystem")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
               {loadingAction === "logout" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {loadingAction === "logout" ? t("loggingOut") : authMode === "guest" ? tGuest("exitGuestMode") : t("logout")}
@@ -776,13 +800,13 @@ export function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-rose-200/80 bg-rose-50/70">
+        <Card className="border-rose-200/80 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-900/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base text-rose-800">
+            <CardTitle className="flex items-center gap-2 text-base text-rose-800 dark:text-rose-300">
               <AlertTriangle className="h-4 w-4" />
               {t("dangerTitle")}
             </CardTitle>
-            <CardDescription className="text-rose-700">
+            <CardDescription className="text-rose-700 dark:text-rose-400">
               {t("dangerDesc")}
             </CardDescription>
           </CardHeader>
@@ -796,13 +820,13 @@ export function SettingsPage() {
                 {tCommon("cancel")}
               </Button>
             ) : null}
-            <p className="text-xs text-rose-700">{t("status", { value: weeklyLossHint })}</p>
+            <p className="text-xs text-rose-700 dark:text-rose-400">{t("status", { value: weeklyLossHint })}</p>
           </CardContent>
         </Card>
       </div>
 
-      {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
-      {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      {message ? <p className="text-sm text-emerald-700 dark:text-emerald-400">{message}</p> : null}
+      {error ? <p className="text-sm text-rose-700 dark:text-rose-400">{error}</p> : null}
     </div>
   );
 }

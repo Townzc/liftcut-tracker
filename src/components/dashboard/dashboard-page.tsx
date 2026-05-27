@@ -9,6 +9,7 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { SimpleLineChart } from "@/components/charts/simple-line-chart";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PRHighlights } from "@/components/dashboard/pr-highlights";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -97,19 +98,19 @@ export function DashboardPage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("dashboard")}</p>
-          <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("dashboard")}</p>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
         </div>
-        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">{t("badge")}</Badge>
+        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/30">{t("badge")}</Badge>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardContent className="flex items-center justify-between gap-3 p-4">
           <div className="flex min-w-0 items-center gap-3">
             <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} />
             <div className="min-w-0">
-              <p className="truncate text-sm text-slate-500">{t("welcomeSubtitle")}</p>
-              <p className="truncate text-lg font-semibold text-slate-900">
+              <p className="truncate text-sm text-slate-500 dark:text-slate-400">{t("welcomeSubtitle")}</p>
+              <p className="truncate text-lg font-semibold text-slate-900 dark:text-slate-100">
                 {t("welcomeTitle", { name: displayName })}
               </p>
             </div>
@@ -118,10 +119,10 @@ export function DashboardPage() {
       </Card>
 
       {authMode !== "guest" && !basicProfileComplete ? (
-        <Card className="border-amber-200/80 bg-amber-50/80">
+        <Card className="border-amber-200/80 bg-amber-50/80 dark:border-amber-800/50 dark:bg-amber-900/20">
           <CardHeader>
-            <CardTitle className="text-base text-amber-900">{t("profileIncompleteTitle")}</CardTitle>
-            <CardDescription className="text-amber-800">{t("profileIncompleteDesc")}</CardDescription>
+            <CardTitle className="text-base text-amber-900 dark:text-amber-100">{t("profileIncompleteTitle")}</CardTitle>
+            <CardDescription className="text-amber-800 dark:text-amber-300">{t("profileIncompleteDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/onboarding" className={cn(buttonVariants(), "w-full md:w-auto")}>
@@ -131,37 +132,37 @@ export function DashboardPage() {
         </Card>
       ) : null}
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("actionCenterTitle")}</CardTitle>
           <CardDescription>{t("actionCenterDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-4">
-          <Link href={todayPlan ? "/workout" : "/plan/ai"} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-200 hover:bg-emerald-50">
-            <CalendarCheck className="mb-3 h-5 w-5 text-emerald-700" />
-            <p className="text-sm font-semibold text-slate-950">{todayPlan ? t("actionWorkoutTitle") : t("actionPlanTitle")}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{todayPlan ? t("actionWorkoutDesc") : t("actionPlanDesc")}</p>
+          <Link href={todayPlan ? "/workout" : "/plan/ai"} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-200 hover:bg-emerald-50 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-emerald-800/50 dark:hover:bg-emerald-900/20">
+            <CalendarCheck className="mb-3 h-5 w-5 text-emerald-700 dark:text-emerald-400" />
+            <p className="text-sm font-semibold text-slate-950 dark:text-slate-50">{todayPlan ? t("actionWorkoutTitle") : t("actionPlanTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{todayPlan ? t("actionWorkoutDesc") : t("actionPlanDesc")}</p>
           </Link>
-          <Link href="/nutrition" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-orange-200 hover:bg-orange-50">
-            <Salad className="mb-3 h-5 w-5 text-orange-700" />
-            <p className="text-sm font-semibold text-slate-950">{t("actionNutritionTitle")}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionNutritionDesc")}</p>
+          <Link href="/nutrition" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-orange-200 hover:bg-orange-50 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-orange-800/50 dark:hover:bg-orange-900/20">
+            <Salad className="mb-3 h-5 w-5 text-orange-700 dark:text-orange-400" />
+            <p className="text-sm font-semibold text-slate-950 dark:text-slate-50">{t("actionNutritionTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{t("actionNutritionDesc")}</p>
           </Link>
-          <Link href="/body" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-cyan-200 hover:bg-cyan-50">
-            <Weight className="mb-3 h-5 w-5 text-cyan-700" />
-            <p className="text-sm font-semibold text-slate-950">{t("actionBodyTitle")}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionBodyDesc")}</p>
+          <Link href="/body" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-cyan-200 hover:bg-cyan-50 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-cyan-800/50 dark:hover:bg-cyan-900/20">
+            <Weight className="mb-3 h-5 w-5 text-cyan-700 dark:text-cyan-400" />
+            <p className="text-sm font-semibold text-slate-950 dark:text-slate-50">{t("actionBodyTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{t("actionBodyDesc")}</p>
           </Link>
-          <Link href="/plan/ai" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-lime-200 hover:bg-lime-50">
-            <Sparkles className="mb-3 h-5 w-5 text-lime-700" />
-            <p className="text-sm font-semibold text-slate-950">{t("actionAiTitle")}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{t("actionAiDesc")}</p>
+          <Link href="/plan/ai" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-lime-200 hover:bg-lime-50 dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-lime-800/50 dark:hover:bg-lime-900/20">
+            <Sparkles className="mb-3 h-5 w-5 text-lime-700 dark:text-lime-400" />
+            <p className="text-sm font-semibold text-slate-950 dark:text-slate-50">{t("actionAiTitle")}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{t("actionAiDesc")}</p>
           </Link>
         </CardContent>
       </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Goal className="h-4 w-4 text-emerald-600" />
@@ -172,16 +173,16 @@ export function DashboardPage() {
           <CardContent>
             {todayPlan ? (
               <div className="space-y-3">
-                <p className="text-sm text-slate-700">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
                   {t("weekDayLabel", { week: todayPlan.weekNumber, day: todayPlan.dayNumber })}
                 </p>
-                <p className="text-lg font-semibold text-slate-900">{todayPlan.title}</p>
-                <p className="text-sm text-slate-600">
+                <p className="text-lg font-semibold text-slate-900 dark:text-slate-100">{todayPlan.title}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   {t("exerciseQueued", { count: todayPlan.exerciseCount })}
                 </p>
                 <Link
                   href="/workout"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-emerald-700"
+                  className="inline-flex items-center gap-1 text-sm font-medium text-emerald-700 dark:text-emerald-400"
                 >
                   {t("goWorkout")}
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -193,7 +194,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Salad className="h-4 w-4 text-orange-600" />
@@ -206,26 +207,26 @@ export function DashboardPage() {
               <>
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">{t("calories")}</span>
-                    <span className="font-medium text-slate-900">
+                    <span className="text-slate-600 dark:text-slate-400">{t("calories")}</span>
+                    <span className="font-medium text-slate-900 dark:text-slate-100">
                       {nutritionSummary.calories} / {settings.calorieTarget} kcal
                     </span>
                   </div>
                   <Progress value={calorieProgress} />
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {formatRemaining(nutritionSummary.remainingCalories, "kcal", t)}
                   </p>
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">{t("protein")}</span>
-                    <span className="font-medium text-slate-900">
+                    <span className="text-slate-600 dark:text-slate-400">{t("protein")}</span>
+                    <span className="font-medium text-slate-900 dark:text-slate-100">
                       {nutritionSummary.protein} / {settings.proteinTarget} g
                     </span>
                   </div>
                   <Progress value={proteinProgress} />
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {formatRemaining(nutritionSummary.remainingProtein, "g", t)}
                   </p>
                 </div>
@@ -237,14 +238,14 @@ export function DashboardPage() {
                 ) : null}
               </>
             ) : (
-              <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+              <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-800/50 dark:bg-amber-900/20 dark:text-amber-300">
                 {t("nutritionTargetUnset")}
               </div>
             )}
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Flame className="h-4 w-4 text-rose-600" />
@@ -255,18 +256,18 @@ export function DashboardPage() {
           <CardContent className="space-y-3">
             {hasWeeklyTrainingDays ? (
               <>
-                <p className="text-2xl font-semibold text-slate-900">
+                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                   {weekWorkoutSummary.completedCount}/{weekWorkoutSummary.plannedCount}
                 </p>
                 <Progress value={weekWorkoutSummary.completionRate} />
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   {t("completion", { value: Math.round(weekWorkoutSummary.completionRate) })}
                 </p>
               </>
             ) : (
-              <p className="text-sm text-amber-800">{t("weeklyTrainingUnset")}</p>
+              <p className="text-sm text-amber-800 dark:text-amber-300">{t("weeklyTrainingUnset")}</p>
             )}
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600">
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-400">
               {latestWorkout ? (
                 <p>
                   {t("latestWorkout", {
@@ -283,10 +284,10 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90 lg:col-span-2">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90 lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
-              <TrendingDown className="h-4 w-4 text-cyan-700" />
+              <TrendingDown className="h-4 w-4 text-cyan-700 dark:text-cyan-400" />
               {t("weightTrendTitle")}
             </CardTitle>
             <CardDescription>{t("weightTrendDesc")}</CardDescription>
@@ -303,25 +304,25 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("weeklyStatusTitle")}</CardTitle>
             <CardDescription>{t("weeklyStatusDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="text-sm text-slate-600">{t("avgWeight")}</p>
-            <p className="text-2xl font-semibold text-slate-900">
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t("avgWeight")}</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
               {sevenDayAverage !== null ? `${sevenDayAverage.toFixed(1)} kg` : t("statusInsufficient")}
             </p>
             <Badge
               className={
                 weightStatus.status === "on-track"
-                  ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-100"
+                  ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/30"
                   : weightStatus.status === "too-fast"
-                    ? "bg-amber-100 text-amber-700 hover:bg-amber-100"
+                    ? "bg-amber-100 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/30"
                     : weightStatus.status === "too-slow"
-                      ? "bg-rose-100 text-rose-700 hover:bg-rose-100"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-100"
+                      ? "bg-rose-100 text-rose-700 hover:bg-rose-100 dark:bg-rose-900/30 dark:text-rose-400 dark:hover:bg-rose-900/30"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-100 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:bg-slate-800/50"
               }
             >
               {weightStatus.status === "on-track"
@@ -332,7 +333,7 @@ export function DashboardPage() {
                     ? t("statusTooSlow")
                     : t("statusInsufficient")}
             </Badge>
-            <p className="text-sm leading-6 text-slate-600">
+            <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
               {!hasWeightLossTarget
                 ? t("lossTargetUnset")
                 : weightStatus.status === "insufficient"
@@ -346,6 +347,8 @@ export function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <PRHighlights />
     </div>
   );
 }

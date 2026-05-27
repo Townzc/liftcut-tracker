@@ -84,13 +84,13 @@ export function OnboardingPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl py-2">
-      <Card className="border-slate-200/80 bg-white/95">
+      <Card className="border-slate-200/80 bg-white/95 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle>{t("title")}</CardTitle>
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-slate-600">{t("requiredHint")}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{t("requiredHint")}</p>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1">
@@ -151,7 +151,7 @@ export function OnboardingPage() {
             {loading ? t("saving") : t("saveAndEnter")}
           </Button>
 
-          {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+          {error ? <p className="text-sm text-rose-700 dark:text-rose-400">{error}</p> : null}
         </CardContent>
       </Card>
     </div>

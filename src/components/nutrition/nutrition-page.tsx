@@ -246,38 +246,38 @@ export function NutritionPage() {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("nutrition")}</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("nutrition")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90 lg:col-span-2">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90 lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-base">{t("summaryTitle")}</CardTitle>
             <CardDescription>{t("summaryDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-xl bg-orange-50 p-3">
-              <p className="text-xs text-orange-700">{t("date")}</p>
+            <div className="rounded-xl bg-orange-50 p-3 dark:bg-orange-900/20">
+              <p className="text-xs text-orange-700 dark:text-orange-400">{t("date")}</p>
               <Input
-                className="mt-2 border-orange-200 bg-white"
+                className="mt-2 border-orange-200 bg-white dark:border-orange-800/50 dark:bg-slate-800"
                 type="date"
                 value={selectedDate}
                 onChange={(event) => setSelectedDate(event.target.value)}
               />
             </div>
-            <div className="rounded-xl bg-orange-50 p-3">
-              <p className="text-xs text-orange-700">{t("calories")}</p>
-              <p className="mt-2 text-2xl font-semibold text-orange-900">{nutritionSummary.calories} kcal</p>
+            <div className="rounded-xl bg-orange-50 p-3 dark:bg-orange-900/20">
+              <p className="text-xs text-orange-700 dark:text-orange-400">{t("calories")}</p>
+              <p className="mt-2 text-2xl font-semibold text-orange-900 dark:text-orange-100">{nutritionSummary.calories} kcal</p>
             </div>
-            <div className="rounded-xl bg-orange-50 p-3">
-              <p className="text-xs text-orange-700">{t("protein")}</p>
-              <p className="mt-2 text-2xl font-semibold text-orange-900">{nutritionSummary.protein} g</p>
+            <div className="rounded-xl bg-orange-50 p-3 dark:bg-orange-900/20">
+              <p className="text-xs text-orange-700 dark:text-orange-400">{t("protein")}</p>
+              <p className="mt-2 text-2xl font-semibold text-orange-900 dark:text-orange-100">{nutritionSummary.protein} g</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("quickTitle")}</CardTitle>
             <CardDescription>{t("quickDesc")}</CardDescription>
@@ -293,10 +293,10 @@ export function NutritionPage() {
               >
                 <span className="flex flex-col items-start truncate text-left">
                   <span className="truncate">{item.name}</span>
-                  <span className="text-[11px] text-slate-500">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     {item.calories} kcal / {item.protein}g {t("proteinUnit")}
                   </span>
-                  <span className="text-[11px] text-slate-500">{item.displayText}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">{item.displayText}</span>
                 </span>
                 {quickLoadingId === item.id ? <LoaderCircle className="h-3.5 w-3.5 animate-spin text-slate-500" /> : null}
               </Button>
@@ -305,7 +305,7 @@ export function NutritionPage() {
         </Card>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("addEditTitle")}</CardTitle>
           <CardDescription>{t("addEditDesc")}</CardDescription>
@@ -364,7 +364,7 @@ export function NutritionPage() {
 
       <ActionFeedback message={message} error={error} />
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("dailyEntries")}</CardTitle>
         </CardHeader>
@@ -373,10 +373,10 @@ export function NutritionPage() {
             <EmptyState title={t("noneTitle")} description={t("noneDesc")} />
           ) : (
             groupedDayLogs.map((group) => (
-              <div key={group.mealType} className="rounded-xl border border-slate-200 bg-slate-50/70 p-3">
+              <div key={group.mealType} className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-700 dark:bg-slate-800/50">
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                   <Badge variant="outline">{group.mealLabel}</Badge>
-                  <p className="text-xs text-slate-600">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     {t("mealSubtotal", {
                       calories: group.subtotal.calories,
                       protein: group.subtotal.protein,
@@ -385,17 +385,17 @@ export function NutritionPage() {
                 </div>
 
                 {group.entries.length === 0 ? (
-                  <p className="text-xs text-slate-500">{t("mealEmpty")}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t("mealEmpty")}</p>
                 ) : (
                   <div className="space-y-2">
                     {group.entries.map((log) => (
                       <div
                         key={log.id}
-                        className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3"
+                        className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50"
                       >
                         <div>
-                          <p className="font-medium text-slate-900">{getLocalizedFoodName(log.foodName, language)}</p>
-                          <p className="text-xs text-slate-500">
+                          <p className="font-medium text-slate-900 dark:text-slate-100">{getLocalizedFoodName(log.foodName, language)}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             {t("entryMeta", {
                               mealType: mealTypeLabel(log.mealType),
                               calories: log.calories,

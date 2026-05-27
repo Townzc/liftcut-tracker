@@ -131,39 +131,39 @@ export function BodyPage() {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("body")}</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("body")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-4">
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardDescription>{t("avg7")}</CardDescription>
-            <CardTitle className="text-2xl text-slate-900">
+            <CardTitle className="text-2xl text-slate-900 dark:text-slate-100">
               {recent7DayAverage !== null ? `${recent7DayAverage.toFixed(1)} kg` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardDescription>{t("weeklyTrend")}</CardDescription>
-            <CardTitle className="text-2xl text-slate-900">
+            <CardTitle className="text-2xl text-slate-900 dark:text-slate-100">
               {weeklyWeightDelta !== null ? `${weeklyWeightDelta > 0 ? "-" : "+"}${Math.abs(weeklyWeightDelta).toFixed(2)} kg` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardDescription>{t("waistAvg7")}</CardDescription>
-            <CardTitle className="text-2xl text-slate-900">
+            <CardTitle className="text-2xl text-slate-900 dark:text-slate-100">
               {recentWaistAvg !== null ? `${recentWaistAvg.toFixed(1)} cm` : "-"}
             </CardTitle>
           </CardHeader>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("addEntryTitle")}</CardTitle>
             <CardDescription>{t("addEntryDesc")}</CardDescription>
@@ -193,7 +193,7 @@ export function BodyPage() {
       <ActionFeedback message={message} error={error} />
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("weightTrend")}</CardTitle>
           </CardHeader>
@@ -206,7 +206,7 @@ export function BodyPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("waistTrend")}</CardTitle>
           </CardHeader>
@@ -220,7 +220,7 @@ export function BodyPage() {
         </Card>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("historyTitle")}</CardTitle>
           <CardDescription>{t("historyDesc")}</CardDescription>
@@ -232,11 +232,11 @@ export function BodyPage() {
             sortedLogs.map((log) => (
               <div
                 key={log.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-700 dark:bg-slate-800/50"
               >
                 <div>
-                  <p className="font-medium text-slate-900">{log.date}</p>
-                  <p className="text-xs text-slate-600">
+                  <p className="font-medium text-slate-900 dark:text-slate-100">{log.date}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     {t("historyLine", {
                       weight: log.weight,
                       waist: log.waist,

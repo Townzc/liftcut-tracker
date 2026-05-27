@@ -121,7 +121,14 @@
     "actionBodyTitle": "Update body data",
     "actionBodyDesc": "Record weight, waist, and notes.",
     "actionAiTitle": "Tune AI plans",
-    "actionAiDesc": "Regenerate training or nutrition based on your goals."
+    "actionAiDesc": "Regenerate training or nutrition based on your goals.",
+    "prHighlightsTitle": "Personal Records",
+    "prHighlightsDesc": "Your recent personal bests",
+    "prWeight": "Weight",
+    "prReps": "Reps",
+    "pr1RM": "Est. 1RM",
+    "prNoData": "No personal records yet. Complete some workouts to track your progress!",
+    "prNew": "New PR!"
   },
   "plan": {
     "title": "Training Plan",
@@ -280,7 +287,14 @@
     "noDayTitle": "No training day found",
     "noDayDesc": "Create or import a plan first.",
     "exerciseLabel": "Exercise {index}",
-    "saveFailed": "Failed to save workout log."
+    "saveFailed": "Failed to save workout log.",
+    "restTimer": "Rest Timer",
+    "restTimerStart": "Start",
+    "restTimerPause": "Pause",
+    "restTimerReset": "Reset",
+    "restTimerDone": "Time's up!",
+    "restTimerPresets": "Presets",
+    "restTimerCustom": "Custom"
   },
   "nutrition": {
     "title": "Nutrition Logging",
@@ -386,6 +400,10 @@
     "languageZh": "Simplified Chinese",
     "languageEn": "English",
     "languageSaved": "Language preference updated.",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
     "accountTitle": "Account",
     "email": "Email",
     "logout": "Sign Out",

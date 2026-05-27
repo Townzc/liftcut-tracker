@@ -16,7 +16,7 @@ export function AuthExperience({
   const t = useTranslations("auth");
 
   return (
-    <section className="grid min-h-[720px] w-full overflow-hidden rounded-3xl border border-white/70 bg-white shadow-[0_30px_90px_rgba(15,23,42,0.14)] lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="grid min-h-[720px] w-full overflow-hidden rounded-3xl border border-white/70 bg-white shadow-[0_30px_90px_rgba(15,23,42,0.14)] dark:border-slate-700 dark:bg-slate-800 lg:grid-cols-[1.05fr_0.95fr]">
       <div className="relative hidden flex-col justify-between overflow-hidden bg-[#16251f] p-10 text-white lg:flex">
         <div className="absolute inset-x-0 bottom-0 h-72 bg-[radial-gradient(circle_at_35%_30%,rgba(250,204,21,0.22),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.24),transparent_30%),linear-gradient(140deg,rgba(255,255,255,0.08),transparent_42%)]" />
         <div className="relative z-10">
@@ -62,15 +62,15 @@ export function AuthExperience({
             <div className="mb-4 inline-flex rounded-2xl bg-slate-900 p-2.5 text-lime-200">
               <Activity className="h-5 w-5" />
             </div>
-            <p className="text-sm font-semibold text-slate-500">LiftCut Tracker</p>
+            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">LiftCut Tracker</p>
           </div>
-          <div className="rounded-3xl border border-slate-200/80 bg-white/[0.92] p-6 shadow-[0_20px_55px_rgba(15,23,42,0.08)] sm:p-8">
+          <div className="rounded-3xl border border-slate-200/80 bg-white/[0.92] p-6 shadow-[0_20px_55px_rgba(15,23,42,0.08)] dark:border-slate-700/50 dark:bg-slate-800/90 sm:p-8">
             <div className="mb-6">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-700">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-700 dark:text-emerald-400">
                 LiftCut Tracker
               </p>
-              <h2 className="text-3xl font-semibold tracking-normal text-slate-950">{title}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+              <h2 className="text-3xl font-semibold tracking-normal text-slate-950 dark:text-slate-50">{title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">{description}</p>
             </div>
             {children}
           </div>

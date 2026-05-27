@@ -516,11 +516,11 @@ export function PlanPage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700">{tNav("plan")}</p>
-          <h1 className="text-2xl font-semibold text-slate-900">{t("title")}</h1>
+          <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("plan")}</p>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
         </div>
         <div className="flex max-w-xs flex-col items-stretch gap-2 sm:items-end">
-          <p className="text-xs text-slate-500 sm:text-right">{t("aiEntryDesc")}</p>
+          <p className="text-xs text-slate-500 sm:text-right dark:text-slate-400">{t("aiEntryDesc")}</p>
           <Link href="/plan/ai" className={buttonVariants()}>
             <Sparkles className="mr-2 h-4 w-4" />
             {t("aiEntry")}
@@ -529,7 +529,7 @@ export function PlanPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90 lg:col-span-2">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90 lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-base">{hasPlan ? activePlanForView.name : t("noActivePlanName")}</CardTitle>
             <CardDescription>
@@ -563,7 +563,7 @@ export function PlanPage() {
             </div>
 
             {isEditMode && editablePlanDraft ? (
-              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 sm:grid-cols-2">
+              <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/50 sm:grid-cols-2">
                 <div className="space-y-1">
                   <Label htmlFor="edit-plan-name">{t("planName")}</Label>
                   <Input
@@ -682,8 +682,8 @@ export function PlanPage() {
                         </div>
                       ) : (
                         <>
-                          <h3 className="text-lg font-semibold text-slate-900">{currentDay.title}</h3>
-                          <p className="text-sm text-slate-600">{currentDay.notes || "-"}</p>
+                          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{currentDay.title}</h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-400">{currentDay.notes || "-"}</p>
                         </>
                       )}
                     </div>
@@ -695,7 +695,7 @@ export function PlanPage() {
                         currentDay.exercises.map((exercise) => (
                           <div
                             key={exercise.id}
-                            className="rounded-xl border border-slate-200 bg-slate-50/80 p-3"
+                            className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-700 dark:bg-slate-800/50"
                           >
                             {isEditMode && editablePlanDraft ? (
                               <div className="grid gap-2 sm:grid-cols-2">
@@ -791,17 +791,17 @@ export function PlanPage() {
                             ) : (
                               <>
                                 <div className="flex flex-wrap items-center justify-between gap-2">
-                                  <p className="font-medium text-slate-900">{exercise.name}</p>
+                                  <p className="font-medium text-slate-900 dark:text-slate-100">{exercise.name}</p>
                                   <Badge variant="outline">RPE {exercise.targetRpe}</Badge>
                                 </div>
-                                <p className="mt-1 text-sm text-slate-600">
+                                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                                   {t("setsReps", { sets: exercise.sets, repRange: exercise.repRange })}
                                 </p>
-                                <p className="mt-1 text-xs text-slate-500">
+                                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                                   {t("notes", { value: exercise.notes || "-" })}
                                 </p>
                                 {exercise.alternativeExercises?.length ? (
-                                  <p className="mt-1 text-xs text-slate-500">
+                                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                                     {t("alternatives", { value: exercise.alternativeExercises.join(" / ") })}
                                   </p>
                                 ) : null}
@@ -833,7 +833,7 @@ export function PlanPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/80 bg-white/90">
+        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
           <CardHeader>
             <CardTitle className="text-base">{t("manageTitle")}</CardTitle>
             <CardDescription>{t("manageDesc")}</CardDescription>
@@ -841,7 +841,7 @@ export function PlanPage() {
           <CardContent className="space-y-4">
             <Link
               href="/plan/ai"
-              className="inline-flex h-10 w-full items-center justify-center rounded-md border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+              className="inline-flex h-10 w-full items-center justify-center rounded-md border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
             >
               {t("aiEntry")}
             </Link>
@@ -909,14 +909,14 @@ export function PlanPage() {
               {loadingAction === "export-json" ? t("exportingJson") : t("exportCurrent")}
             </Button>
 
-            {!hasPlan ? <p className="text-xs text-slate-500">{t("exportPdfNoPlan")}</p> : null}
+            {!hasPlan ? <p className="text-xs text-slate-500 dark:text-slate-400">{t("exportPdfNoPlan")}</p> : null}
 
             {trainingPlanList.length > 0 ? (
               <div className="space-y-2">
                 {trainingPlanList.map((planItem) => (
                   <div
                     key={planItem.id}
-                    className="rounded-lg border border-slate-200 bg-slate-50/70 p-2"
+                    className="rounded-lg border border-slate-200 bg-slate-50/70 p-2 dark:border-slate-700 dark:bg-slate-800/50"
                   >
                     <div className="flex items-center gap-2">
                       <Button
@@ -944,14 +944,14 @@ export function PlanPage() {
                         )}
                       </Button>
                     </div>
-                    <p className="mt-1 text-[11px] text-slate-500">
+                    <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
                       {planItem.isActive ? t("activePlanTag") : t("inactivePlanTag")}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-slate-500">{t("plansEmpty")}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t("plansEmpty")}</p>
             )}
 
             <ActionFeedback message={message} error={error} />
@@ -959,7 +959,7 @@ export function PlanPage() {
         </Card>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90">
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
         <CardHeader>
           <CardTitle className="text-base">{t("textImportTitle")}</CardTitle>
           <CardDescription>{t("textImportDesc")}</CardDescription>
@@ -999,7 +999,7 @@ export function PlanPage() {
           </div>
 
           {parseWarnings.length > 0 ? (
-            <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+            <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-800/50 dark:bg-amber-900/20 dark:text-amber-300">
               {parseWarnings.map((warning) => (
                 <p key={warning}>{getLocalizedParseWarning(warning, t)}</p>
               ))}
@@ -1007,7 +1007,7 @@ export function PlanPage() {
           ) : null}
 
           {parseErrors.length > 0 ? (
-            <div className="rounded-md border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">
+            <div className="rounded-md border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 dark:border-rose-800/50 dark:bg-rose-900/20 dark:text-rose-300">
               <p className="mb-1 font-medium">{t("parseErrors")}</p>
               {parseErrors.map((parseIssue) => (
                 <p key={`${parseIssue.lineNumber}-${parseIssue.content}`}>
@@ -1024,13 +1024,13 @@ export function PlanPage() {
             <div className="space-y-3">
               <h3 className="text-base font-semibold">{t("previewTitle")}</h3>
               {parsedPlanDraft.weeks.map((week, weekIndex) => (
-                <Card key={week.id} className="border-slate-200/80 bg-slate-50/60">
+                <Card key={week.id} className="border-slate-200/80 bg-slate-50/60 dark:border-slate-700/50 dark:bg-slate-800/50">
                   <CardHeader>
                     <CardTitle className="text-sm">{tCommon("week")} {week.weekNumber}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {week.days.map((day, dayIndex) => (
-                      <div key={day.id} className="space-y-2 rounded-md border border-slate-200 bg-white p-3">
+                      <div key={day.id} className="space-y-2 rounded-md border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50">
                         <p className="text-sm font-medium">
                           {tCommon("day")} {day.dayNumber}: {day.title}
                         </p>
