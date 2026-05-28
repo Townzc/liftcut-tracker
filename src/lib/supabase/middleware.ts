@@ -5,7 +5,7 @@ import { GUEST_COOKIE_NAME, GUEST_COOKIE_VALUE } from "@/lib/guest-mode";
 import { isBasicProfileComplete } from "@/lib/profile-completion";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
-const publicAuthRoutes = ["/login", "/register", "/forgot-password"];
+const publicAuthRoutes = ["/login", "/register", "/forgot-password", "/auth/callback"];
 const onboardingRoute = "/onboarding";
 
 function isStaticAsset(pathname: string): boolean {
