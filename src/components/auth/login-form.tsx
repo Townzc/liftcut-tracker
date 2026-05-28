@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { LoaderCircle, LogIn, UserRound } from "lucide-react";
+import { LoaderCircle, LogIn, MessageCircle, UserRound } from "lucide-react";
 
 import { AuthExperience } from "@/components/auth/auth-experience";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -14,9 +14,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
+const wechatEnabled = process.env.NEXT_PUBLIC_WECHAT_LOGIN_ENABLED === "true";
+
+const oauthErrorMap: Record<string, string> = {
+  oauth_cancelled: "oauthCancelled",
+  missing_oauth_code: "oauthMissingCode",
+  oauth_exchange_failed: "oauthExchangeFailed",
+};
+
 export function LoginForm() {
   const t = useTranslations("auth");
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { startGuestMode } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -24,6 +33,14 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
+  const [wechatLoading, setWechatLoading] = useState(false);
+
+  useEffect(() => {
+    const oauthError = searchParams.get("error");
+    if (oauthError && oauthErrorMap[oauthError]) {
+      setError(t(oauthErrorMap[oauthError] as never));
+    }
+  }, [searchParams, t]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,6 +79,31 @@ export function LoginForm() {
     }
   };
 
+  const handleWechatLogin = async () => {
+    setWechatLoading(true);
+    setError(null);
+
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: "custom:wechat",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        },
+      });
+
+      if (oauthError) {
+        setError(oauthError.message);
+        setWechatLoading(false);
+      }
+    } catch {
+      setError(t("genericError"));
+      setWechatLoading(false);
+    }
+  };
+
+  const isBusy = loading || guestLoading || wechatLoading;
+
   return (
     <AuthExperience title={t("loginTitle")} description={t("loginDesc")}>
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -90,12 +132,19 @@ export function LoginForm() {
 
           <ActionFeedback error={error} />
 
-          <Button className="h-11 w-full bg-slate-950 text-white hover:bg-slate-800" type="submit" disabled={loading}>
+          <Button className="h-11 w-full bg-slate-950 text-white hover:bg-slate-800" type="submit" disabled={isBusy}>
             {loading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
             {t("loginButton")}
           </Button>
 
-          <Button className="h-11 w-full border-emerald-200 bg-emerald-50 text-emerald-900 hover:bg-emerald-100" type="button" variant="outline" onClick={handleGuestMode} disabled={guestLoading || loading}>
+          {wechatEnabled ? (
+            <Button className="h-11 w-full border-emerald-200 bg-emerald-50 text-emerald-900 hover:bg-emerald-100" type="button" variant="outline" onClick={handleWechatLogin} disabled={isBusy}>
+              {wechatLoading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <MessageCircle className="mr-2 h-4 w-4" />}
+              {t("loginWithWechat")}
+            </Button>
+          ) : null}
+
+          <Button className="h-11 w-full border-slate-200 bg-white text-slate-900 hover:bg-slate-50" type="button" variant="outline" onClick={handleGuestMode} disabled={isBusy}>
             {guestLoading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <UserRound className="mr-2 h-4 w-4" />}
             {t("continueAsGuest")}
           </Button>
