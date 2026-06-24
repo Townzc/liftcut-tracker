@@ -1,0 +1,16 @@
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+stage: sft
+do_train: true
+finetuning_type: lora
+dataset: liftcut_sft
+template: qwen
+cutoff_len: 8192
+learning_rate: 2.0e-5
+num_train_epochs: 2
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+output_dir: outputs/liftcut-coach-qwen7b-lora
+logging_steps: 10
+save_steps: 200
+plot_loss: true
+bf16: true

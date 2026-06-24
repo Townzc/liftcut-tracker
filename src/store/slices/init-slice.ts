@@ -2,7 +2,6 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { AppDataSnapshot } from "@/types";
 import {
   GUEST_USER_ID,
   createEmptySnapshot,

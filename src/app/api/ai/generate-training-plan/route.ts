@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { generateTrainingPlanRequestSchema } from "@/lib/ai/schemas";
-import { getDeepSeekConfigOptional } from "@/services/ai/config";
+import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
-import { generateTrainingPlanWithDeepSeek } from "@/services/ai/generate-training-plan";
 import { verifyTrainingPlanLanguage } from "@/services/ai/language-check";
 import { insertTrainingGenerationHistory } from "@/services/ai/persistence";
+import { generateStructuredTrainingPlan } from "@/services/ai/provider";
 import { TRAINING_PROMPT_VERSION } from "@/services/ai/prompts";
 import {
   aiConfigStatus,
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await generateTrainingPlanWithDeepSeek({
+    const result = await generateStructuredTrainingPlan({
       profile,
       constraints: body.constraints,
       locale: body.locale,
@@ -106,6 +106,7 @@ export async function POST(request: Request) {
       aiConfigured: aiConfigStatus().configured,
       mode: auth.mode,
       generationId,
+      provider: result.provider,
       model: result.modelName,
       promptVersion: result.promptVersion,
       plan: result.parsedPlan,
@@ -118,13 +119,13 @@ export async function POST(request: Request) {
     return response;
   } catch (error) {
     if (auth.mode === "authenticated" && auth.user) {
-      const config = getDeepSeekConfigOptional();
+      const config = getAiProviderConfig();
       await insertTrainingGenerationHistory(supabase, {
         userId: auth.user.id,
         goalType: body.constraints.goal_type || profile.fitnessGoal,
         profile,
         constraints: { ...body.constraints, locale: body.locale },
-        modelName: config?.model || "deepseek-chat",
+        modelName: config?.model || "unconfigured",
         promptVersion: TRAINING_PROMPT_VERSION,
         rawResponse: null,
         parsedPlan: null,

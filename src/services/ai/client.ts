@@ -1,30 +1,42 @@
+import "server-only";
+
 import OpenAI from "openai";
 
-import { getDeepSeekConfig } from "@/services/ai/config";
+import { requireAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
+import type {
+  AiProviderConfig,
+  AiProviderName,
+} from "@/services/ai/types";
 
 let cachedClient: OpenAI | null = null;
-let cachedKey = "";
-let cachedBaseUrl = "";
+let cachedConfigKey = "";
 
-function getClient(): OpenAI {
-  const config = getDeepSeekConfig();
-  if (
-    cachedClient &&
-    cachedKey === config.apiKey &&
-    cachedBaseUrl === config.baseUrl
-  ) {
+function getConfigCacheKey(config: AiProviderConfig): string {
+  return JSON.stringify([
+    config.provider,
+    config.baseURL,
+    config.apiKey,
+    config.model,
+  ]);
+}
+
+export function createAiClient(config: AiProviderConfig): OpenAI {
+  return new OpenAI({
+    apiKey: config.apiKey,
+    baseURL: config.baseURL,
+    timeout: 30_000,
+  });
+}
+
+function getAiClient(config: AiProviderConfig): OpenAI {
+  const configKey = getConfigCacheKey(config);
+  if (cachedClient && cachedConfigKey === configKey) {
     return cachedClient;
   }
 
-  cachedKey = config.apiKey;
-  cachedBaseUrl = config.baseUrl;
-  cachedClient = new OpenAI({
-    apiKey: config.apiKey,
-    baseURL: config.baseUrl,
-    timeout: 30_000,
-  });
-
+  cachedClient = createAiClient(config);
+  cachedConfigKey = configKey;
   return cachedClient;
 }
 
@@ -45,7 +57,10 @@ export function extractJsonObjectFromText(rawText: string): string {
   const text = sanitizeModelJsonText(rawText);
   const start = text.indexOf("{");
   if (start < 0) {
-    throw new AiServiceError("AI_INVALID_JSON", "AI response does not contain a JSON object.");
+    throw new AiServiceError(
+      "AI_INVALID_JSON",
+      "AI response does not contain a JSON object.",
+    );
   }
 
   let depth = 0;
@@ -86,24 +101,38 @@ export function extractJsonObjectFromText(rawText: string): string {
     }
   }
 
-  throw new AiServiceError("AI_INVALID_JSON", "Could not extract a complete JSON object from AI response.");
+  throw new AiServiceError(
+    "AI_INVALID_JSON",
+    "Could not extract a complete JSON object from AI response.",
+  );
 }
 
-export interface DeepSeekJsonRequest {
+function safeErrorDetail(error: unknown, apiKey: string): string {
+  const detail = error instanceof Error ? error.message : String(error);
+  if (!apiKey) {
+    return detail;
+  }
+  return detail.split(apiKey).join("[redacted]");
+}
+
+export interface AiJsonRequest {
   systemPrompt: string;
   userPrompt: string;
 }
 
-export interface DeepSeekJsonResponse {
+export interface AiJsonResponse {
+  provider: AiProviderName;
   model: string;
   rawText: string;
   extractedJsonText: string;
   json: unknown;
 }
 
-export async function callDeepSeekForJson(input: DeepSeekJsonRequest): Promise<DeepSeekJsonResponse> {
-  const client = getClient();
-  const config = getDeepSeekConfig();
+export async function callAiProviderForJson(
+  input: AiJsonRequest,
+): Promise<AiJsonResponse> {
+  const config = requireAiProviderConfig();
+  const client = getAiClient(config);
 
   let completion: Awaited<ReturnType<typeof client.chat.completions.create>>;
   try {
@@ -120,7 +149,7 @@ export async function callDeepSeekForJson(input: DeepSeekJsonRequest): Promise<D
     throw new AiServiceError(
       "AI_REQUEST_FAILED",
       "Failed to request AI service.",
-      error instanceof Error ? error.message : String(error),
+      safeErrorDetail(error, config.apiKey),
     );
   }
 
@@ -138,11 +167,12 @@ export async function callDeepSeekForJson(input: DeepSeekJsonRequest): Promise<D
     throw new AiServiceError(
       "AI_INVALID_JSON",
       "AI returned invalid JSON.",
-      error instanceof Error ? error.message : String(error),
+      safeErrorDetail(error, config.apiKey),
     );
   }
 
   return {
+    provider: config.provider,
     model: completion.model || config.model,
     rawText: content,
     extractedJsonText,

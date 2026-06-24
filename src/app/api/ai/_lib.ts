@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 import { GUEST_COOKIE_NAME, GUEST_COOKIE_VALUE } from "@/lib/guest-mode";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
-import { getDeepSeekConfigOptional } from "@/services/ai/config";
 import { normalizeAiError } from "@/services/ai/errors";
 
 const GUEST_AI_QUOTA_COOKIE_NAME = "liftcut_guest_ai_quota";
@@ -164,8 +164,10 @@ export async function requireApiUser() {
 }
 
 export function aiConfigStatus() {
+  const config = getAiProviderConfig();
   return {
-    configured: Boolean(getDeepSeekConfigOptional()),
+    configured: Boolean(config),
+    provider: config?.provider ?? null,
   };
 }
 

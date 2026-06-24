@@ -6,6 +6,15 @@ import type {
   TrainingLocation,
 } from "@/types";
 
+export type AiProviderName = "deepseek" | "local" | "openai_compatible";
+
+export interface AiProviderConfig {
+  provider: AiProviderName;
+  baseURL: string;
+  apiKey: string;
+  model: string;
+}
+
 export interface AiProfileSnapshot {
   gender: Gender;
   age: number;

@@ -6,15 +6,19 @@ import {
   type AiTrainingGenerationConstraints,
   type AiTrainingPlan,
 } from "@/lib/ai/schemas";
-import { callDeepSeekForJson } from "@/services/ai/deepseek-client";
+import { callAiProviderForJson } from "@/services/ai/client";
 import { AiServiceError } from "@/services/ai/errors";
 import {
   buildTrainingPlanPrompt,
   TRAINING_PROMPT_VERSION,
 } from "@/services/ai/prompts";
-import type { AiProfileSnapshot } from "@/services/ai/types";
+import type {
+  AiProfileSnapshot,
+  AiProviderName,
+} from "@/services/ai/types";
 
 export interface TrainingGenerationResult {
+  provider: AiProviderName;
   modelName: string;
   promptVersion: string;
   rawResponse: unknown;
@@ -48,13 +52,15 @@ function formatIssues(issues: Array<{ path: PropertyKey[]; message: string }>): 
     .join(" | ");
 }
 
-export async function generateTrainingPlanWithDeepSeek(input: {
+export async function generateStructuredTrainingPlan(input: {
   profile: AiProfileSnapshot;
   constraints: AiTrainingGenerationConstraints;
   locale: AiLocale;
+  logValidationFailures?: boolean;
 }): Promise<TrainingGenerationResult> {
+  const logValidationFailures = input.logValidationFailures ?? true;
   const prompt = buildTrainingPlanPrompt(input.profile, input.constraints, input.locale);
-  const response = await callDeepSeekForJson({
+  const response = await callAiProviderForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,
   });
@@ -65,13 +71,15 @@ export async function generateTrainingPlanWithDeepSeek(input: {
       path: issue.path,
       message: issue.message,
     }));
-    console.error("[ai/training] schema validation failed at raw schema", {
-      schema: "training_raw",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      issues,
-    });
+    if (logValidationFailures) {
+      console.error("[ai/training] schema validation failed at raw schema", {
+        schema: "training_raw",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        issues,
+      });
+    }
 
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
@@ -84,13 +92,15 @@ export async function generateTrainingPlanWithDeepSeek(input: {
   try {
     normalized = normalizeAiTrainingPlan(rawParsed.data);
   } catch (error) {
-    console.error("[ai/training] normalization failed", {
-      schema: "training_normalize",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      message: error instanceof Error ? error.message : String(error),
-    });
+    if (logValidationFailures) {
+      console.error("[ai/training] normalization failed", {
+        schema: "training_normalize",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        message: error instanceof Error ? error.message : String(error),
+      });
+    }
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
       "AI output failed schema validation.",
@@ -104,14 +114,16 @@ export async function generateTrainingPlanWithDeepSeek(input: {
       path: issue.path,
       message: issue.message,
     }));
-    console.error("[ai/training] schema validation failed at final schema", {
-      schema: "training_final",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      normalizedPreview: previewJson(normalized),
-      issues,
-    });
+    if (logValidationFailures) {
+      console.error("[ai/training] schema validation failed at final schema", {
+        schema: "training_final",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        normalizedPreview: previewJson(normalized),
+        issues,
+      });
+    }
 
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
@@ -121,6 +133,7 @@ export async function generateTrainingPlanWithDeepSeek(input: {
   }
 
   return {
+    provider: response.provider,
     modelName: response.model,
     promptVersion: TRAINING_PROMPT_VERSION,
     rawResponse: normalized,

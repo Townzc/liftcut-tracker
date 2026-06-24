@@ -6,15 +6,19 @@ import {
   type AiNutritionGenerationConstraints,
   type AiNutritionPlan,
 } from "@/lib/ai/schemas";
-import { callDeepSeekForJson } from "@/services/ai/deepseek-client";
+import { callAiProviderForJson } from "@/services/ai/client";
 import { AiServiceError } from "@/services/ai/errors";
 import {
   buildNutritionPlanPrompt,
   NUTRITION_PROMPT_VERSION,
 } from "@/services/ai/prompts";
-import type { AiProfileSnapshot } from "@/services/ai/types";
+import type {
+  AiProfileSnapshot,
+  AiProviderName,
+} from "@/services/ai/types";
 
 export interface NutritionGenerationResult {
+  provider: AiProviderName;
   modelName: string;
   promptVersion: string;
   rawResponse: unknown;
@@ -48,13 +52,15 @@ function formatIssues(issues: Array<{ path: PropertyKey[]; message: string }>): 
     .join(" | ");
 }
 
-export async function generateNutritionPlanWithDeepSeek(input: {
+export async function generateStructuredNutritionPlan(input: {
   profile: AiProfileSnapshot;
   constraints: AiNutritionGenerationConstraints;
   locale: AiLocale;
+  logValidationFailures?: boolean;
 }): Promise<NutritionGenerationResult> {
+  const logValidationFailures = input.logValidationFailures ?? true;
   const prompt = buildNutritionPlanPrompt(input.profile, input.constraints, input.locale);
-  const response = await callDeepSeekForJson({
+  const response = await callAiProviderForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,
   });
@@ -65,13 +71,15 @@ export async function generateNutritionPlanWithDeepSeek(input: {
       path: issue.path,
       message: issue.message,
     }));
-    console.error("[ai/nutrition] schema validation failed at raw schema", {
-      schema: "nutrition_raw",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      issues,
-    });
+    if (logValidationFailures) {
+      console.error("[ai/nutrition] schema validation failed at raw schema", {
+        schema: "nutrition_raw",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        issues,
+      });
+    }
 
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
@@ -84,13 +92,15 @@ export async function generateNutritionPlanWithDeepSeek(input: {
   try {
     normalized = normalizeAiNutritionPlan(rawParsed.data);
   } catch (error) {
-    console.error("[ai/nutrition] normalization failed", {
-      schema: "nutrition_normalize",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      message: error instanceof Error ? error.message : String(error),
-    });
+    if (logValidationFailures) {
+      console.error("[ai/nutrition] normalization failed", {
+        schema: "nutrition_normalize",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        message: error instanceof Error ? error.message : String(error),
+      });
+    }
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
       "AI output failed schema validation.",
@@ -104,14 +114,16 @@ export async function generateNutritionPlanWithDeepSeek(input: {
       path: issue.path,
       message: issue.message,
     }));
-    console.error("[ai/nutrition] schema validation failed at final schema", {
-      schema: "nutrition_final",
-      rawTextPreview: previewText(response.rawText),
-      extractedJsonPreview: previewText(response.extractedJsonText),
-      parsedJsonPreview: previewJson(response.json),
-      normalizedPreview: previewJson(normalized),
-      issues,
-    });
+    if (logValidationFailures) {
+      console.error("[ai/nutrition] schema validation failed at final schema", {
+        schema: "nutrition_final",
+        rawTextPreview: previewText(response.rawText),
+        extractedJsonPreview: previewText(response.extractedJsonText),
+        parsedJsonPreview: previewJson(response.json),
+        normalizedPreview: previewJson(normalized),
+        issues,
+      });
+    }
 
     throw new AiServiceError(
       "AI_SCHEMA_VALIDATION_FAILED",
@@ -121,6 +133,7 @@ export async function generateNutritionPlanWithDeepSeek(input: {
   }
 
   return {
+    provider: response.provider,
     modelName: response.model,
     promptVersion: NUTRITION_PROMPT_VERSION,
     rawResponse: normalized,

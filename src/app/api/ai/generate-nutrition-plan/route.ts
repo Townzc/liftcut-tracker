@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { generateNutritionPlanRequestSchema } from "@/lib/ai/schemas";
-import { getDeepSeekConfigOptional } from "@/services/ai/config";
+import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
-import { generateNutritionPlanWithDeepSeek } from "@/services/ai/generate-nutrition-plan";
 import { verifyNutritionPlanLanguage } from "@/services/ai/language-check";
 import { insertNutritionGenerationHistory } from "@/services/ai/persistence";
+import { generateStructuredNutritionPlan } from "@/services/ai/provider";
 import { NUTRITION_PROMPT_VERSION } from "@/services/ai/prompts";
 import {
   aiConfigStatus,
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await generateNutritionPlanWithDeepSeek({
+    const result = await generateStructuredNutritionPlan({
       profile,
       constraints: body.constraints,
       locale: body.locale,
@@ -106,6 +106,7 @@ export async function POST(request: Request) {
       aiConfigured: aiConfigStatus().configured,
       mode: auth.mode,
       generationId,
+      provider: result.provider,
       model: result.modelName,
       promptVersion: result.promptVersion,
       plan: result.parsedPlan,
@@ -118,13 +119,13 @@ export async function POST(request: Request) {
     return response;
   } catch (error) {
     if (auth.mode === "authenticated" && auth.user) {
-      const config = getDeepSeekConfigOptional();
+      const config = getAiProviderConfig();
       await insertNutritionGenerationHistory(supabase, {
         userId: auth.user.id,
         goalType: body.constraints.goal_type || profile.fitnessGoal,
         profile,
         constraints: { ...body.constraints, locale: body.locale },
-        modelName: config?.model || "deepseek-chat",
+        modelName: config?.model || "unconfigured",
         promptVersion: NUTRITION_PROMPT_VERSION,
         rawResponse: null,
         parsedPlan: null,
