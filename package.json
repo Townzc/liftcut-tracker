@@ -11,6 +11,7 @@
     "research:validate": "node --conditions=react-server --import tsx research/liftcut-coach/scripts/validate_dataset.ts",
     "research:split": "node --conditions=react-server --import tsx research/liftcut-coach/scripts/split_dataset.ts",
     "research:build-sft": "node --conditions=react-server --import tsx research/liftcut-coach/scripts/build_sft_from_examples.ts",
+    "research:generate": "node --conditions=react-server --import tsx research/liftcut-coach/scripts/generate_dataset_from_cases.ts",
     "research:eval": "node --conditions=react-server --import tsx research/liftcut-coach/scripts/eval_ai_provider.ts"
   },
   "dependencies": {
