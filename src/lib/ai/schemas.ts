@@ -238,10 +238,56 @@ function normalizeGoalType(value: unknown): z.infer<typeof aiGoalTypeSchema> {
 }
 
 function normalizeMealType(value: unknown): z.infer<typeof aiNutritionMealSchema.shape.meal_type> {
-  const raw = toText(value).toLowerCase();
+  const rawText = toText(value).trim();
+  const raw = rawText.toLowerCase();
+
   if (raw === "breakfast" || raw === "lunch" || raw === "dinner" || raw === "snack") {
     return raw;
   }
+
+  const compact = rawText.replace(/\s+/g, "");
+
+  // Exact Chinese aliases
+  if (compact === "早餐" || compact === "早饭" || compact === "早") {
+    return "breakfast";
+  }
+  if (compact === "午餐" || compact === "午饭" || compact === "中餐" || compact === "中饭") {
+    return "lunch";
+  }
+  if (compact === "晚餐" || compact === "晚饭") {
+    return "dinner";
+  }
+  if (
+    compact === "加餐" ||
+    compact === "上午加餐" ||
+    compact === "下午加餐" ||
+    compact === "训练前加餐" ||
+    compact === "训练后加餐" ||
+    compact === "零食" ||
+    compact === "点心"
+  ) {
+    return "snack";
+  }
+
+  // Contains Chinese keywords
+  if (rawText.includes("早餐") || rawText.includes("早饭")) {
+    return "breakfast";
+  }
+  if (rawText.includes("午餐") || rawText.includes("午饭") || rawText.includes("中餐") || rawText.includes("中饭")) {
+    return "lunch";
+  }
+  if (rawText.includes("晚餐") || rawText.includes("晚饭")) {
+    return "dinner";
+  }
+  if (
+    rawText.includes("加餐") ||
+    rawText.includes("零食") ||
+    rawText.includes("点心")
+  ) {
+    return "snack";
+  }
+
+  // Fallback to snack
   return "snack";
 }
 
