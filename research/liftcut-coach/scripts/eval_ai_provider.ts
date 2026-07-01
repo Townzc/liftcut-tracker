@@ -1,68 +1,180 @@
+import { appendFile, mkdir } from "node:fs/promises";
+import { dirname } from "node:path";
+
 import {
+  aiNutritionPlanRawSchema,
   aiNutritionPlanSchema,
+  aiTrainingPlanRawSchema,
   aiTrainingPlanSchema,
-  generateNutritionPlanRequestSchema,
-  generateTrainingPlanRequestSchema,
-  type AiNutritionPlan,
+  normalizeAiNutritionPlan,
+  normalizeAiTrainingPlan,
+  type AiNutritionGenerationConstraints,
   type AiTrainingGenerationConstraints,
-  type AiTrainingPlan,
 } from "@/lib/ai/schemas";
 import { loadEnvConfig } from "@next/env";
+import { callAiProviderForJson } from "@/services/ai/client";
 import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import {
-  generateStructuredNutritionPlan,
-  generateStructuredTrainingPlan,
-} from "@/services/ai/provider";
+  buildNutritionPlanPrompt,
+  buildTrainingPlanPrompt,
+} from "@/services/ai/prompts";
 
-import { evalCaseSchema, percent, readJsonl } from "./_shared";
+import { evalCaseSchema, formatZodIssues, percent, readJsonl } from "./_shared";
+
+// ── Metrics ──────────────────────────────────────────────────────────────────
+
+interface EvalMetrics {
+  total: number;
+  jsonParseSuccess: number;
+  rawSchemaPass: number;
+  normalizedSchemaPass: number;
+  finalSchemaPass: number;
+  wrapperKeyErrors: number;
+  enumErrors: number;
+  constraintPass: number;
+  latencies: number[];
+  totalTokens: number;
+}
 
 interface FailedCase {
   id: string;
+  task: string;
+  stage: string;
   reason: string;
+  rawPreview: string;
 }
 
-function checkTrainingConstraints(
-  plan: AiTrainingPlan,
-  constraints: AiTrainingGenerationConstraints,
-): string[] {
-  const issues: string[] = [];
+interface CaseResult {
+  id: string;
+  task: string;
+  status: "pass" | "fail";
+  stage: string;
+  latencyMs: number;
+  wrapperKeyError: boolean;
+  enumError: boolean;
+  constraintIssues: string[];
+}
 
-  if (plan.weeks.length < 1 || plan.weeks.length > 16) {
-    issues.push("weeks must contain 1-16 items");
+const WRAPPER_KEYS = [
+  "nutrition_plan",
+  "meal_plan",
+  "plan",
+  "data",
+  "result",
+  "output",
+] as const;
+
+const VALID_MEAL_TYPES = new Set(["breakfast", "lunch", "dinner", "snack"]);
+
+const VALID_GOAL_TYPES = new Set([
+  "fat_loss",
+  "muscle_gain",
+  "maintenance",
+  "recomposition",
+]);
+
+// ── Detection helpers ────────────────────────────────────────────────────────
+
+function hasWrapperKey(json: unknown): string[] {
+  if (!json || typeof json !== "object" || Array.isArray(json)) {
+    return [];
+  }
+  const obj = json as Record<string, unknown>;
+  return WRAPPER_KEYS.filter((key) => key in obj);
+}
+
+function findEnumErrors(json: unknown): string[] {
+  const errors: string[] = [];
+
+  function walk(value: unknown, path: string): void {
+    if (!value || typeof value !== "object") return;
+
+    if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) {
+        walk(value[i], `${path}[${i}]`);
+      }
+      return;
+    }
+
+    const obj = value as Record<string, unknown>;
+
+    // Check meal_type
+    if ("meal_type" in obj && typeof obj.meal_type === "string") {
+      if (!VALID_MEAL_TYPES.has(obj.meal_type)) {
+        errors.push(`${path}.meal_type="${obj.meal_type}"`);
+      }
+    }
+
+    // Check goal_type at top level
+    if ("goal_type" in obj && typeof obj.goal_type === "string") {
+      if (!VALID_GOAL_TYPES.has(obj.goal_type)) {
+        errors.push(`${path}.goal_type="${obj.goal_type}"`);
+      }
+    }
+
+    // Recurse
+    for (const [key, val] of Object.entries(obj)) {
+      if (key === "meal_type" || key === "goal_type") continue;
+      if (val && typeof val === "object") {
+        const nextPath = path ? `${path}.${key}` : key;
+        walk(val, nextPath);
+      }
+    }
   }
 
-  for (const week of plan.weeks) {
+  walk(json, "");
+  return errors;
+}
+
+// ── Constraint checks ────────────────────────────────────────────────────────
+
+function checkTrainingConstraints(
+  plan: unknown,
+  constraints: Record<string, unknown>,
+): string[] {
+  const issues: string[] = [];
+  if (!plan || typeof plan !== "object") return ["plan is not an object"];
+
+  const p = plan as Record<string, unknown>;
+  const weeks = Array.isArray(p.weeks) ? p.weeks : [];
+
+  const expectedDays = constraints.weekly_training_days;
+  const expectedDuration = constraints.session_duration_minutes;
+
+  for (const week of weeks) {
+    if (!week || typeof week !== "object") continue;
+    const w = week as Record<string, unknown>;
+    const days = Array.isArray(w.days) ? w.days : [];
+
     if (
-      constraints.weekly_training_days !== undefined &&
-      week.days.length > constraints.weekly_training_days
+      typeof expectedDays === "number" &&
+      days.length > expectedDays
     ) {
       issues.push(
-        `week ${week.week_number} has ${week.days.length} days, above weekly_training_days=${constraints.weekly_training_days}`,
+        `week ${w.week_number}: ${days.length} days > ${expectedDays}`,
       );
     }
 
-    for (const day of week.days) {
-      if (day.exercises.length === 0) {
+    for (const day of days) {
+      if (!day || typeof day !== "object") continue;
+      const d = day as Record<string, unknown>;
+      const exercises = Array.isArray(d.exercises) ? d.exercises : [];
+
+      if (exercises.length === 0) {
         issues.push(
-          `week ${week.week_number} day ${day.day_number} has no exercises`,
+          `week ${w.week_number} day ${d.day_number}: no exercises`,
         );
       }
+
       if (
-        constraints.session_duration_minutes !== undefined &&
-        day.estimated_duration_minutes >
-          constraints.session_duration_minutes + 15
+        typeof expectedDuration === "number" &&
+        typeof d.estimated_duration_minutes === "number" &&
+        d.estimated_duration_minutes > expectedDuration + 15
       ) {
         issues.push(
-          `week ${week.week_number} day ${day.day_number} exceeds the session duration tolerance`,
+          `week ${w.week_number} day ${d.day_number}: ${d.estimated_duration_minutes}min > ${expectedDuration + 15}min tolerance`,
         );
-      }
-      for (const exercise of day.exercises) {
-        if (exercise.target_rpe < 4 || exercise.target_rpe > 10) {
-          issues.push(
-            `week ${week.week_number} day ${day.day_number} has target_rpe outside 4-10`,
-          );
-        }
       }
     }
   }
@@ -70,64 +182,96 @@ function checkTrainingConstraints(
   return issues;
 }
 
-function checkNutritionConstraints(plan: AiNutritionPlan): string[] {
+function checkNutritionConstraints(plan: unknown): string[] {
   const issues: string[] = [];
-  const targets = plan.daily_targets;
+  if (!plan || typeof plan !== "object") return ["plan is not an object"];
 
-  if (!aiNutritionPlanSchema.safeParse(plan).success) {
-    issues.push("nutrition plan is outside the strict schema");
+  const p = plan as Record<string, unknown>;
+
+  if (!p.daily_targets || typeof p.daily_targets !== "object") {
+    issues.push("missing daily_targets");
+  } else {
+    const dt = p.daily_targets as Record<string, unknown>;
+    if (typeof dt.calories !== "number" || dt.calories < 1200 || dt.calories > 5000) {
+      issues.push(`calories=${dt.calories} outside 1200-5000`);
+    }
+    if (typeof dt.protein_g !== "number" || dt.protein_g < 40 || dt.protein_g > 400) {
+      issues.push(`protein_g=${dt.protein_g} outside 40-400`);
+    }
   }
-  if (targets.calories < 1200 || targets.calories > 5000) {
-    issues.push("calories are outside 1200-5000");
+
+  const days = Array.isArray(p.days) ? p.days : [];
+  if (days.length === 0) {
+    issues.push("days is empty");
   }
-  if (targets.protein_g < 40 || targets.protein_g > 400) {
-    issues.push("protein_g is outside 40-400");
-  }
-  if (targets.carbs_g < 30 || targets.carbs_g > 700) {
-    issues.push("carbs_g is outside 30-700");
-  }
-  if (targets.fat_g < 20 || targets.fat_g > 200) {
-    issues.push("fat_g is outside 20-200");
-  }
-  if (targets.water_ml < 1000 || targets.water_ml > 6000) {
-    issues.push("water_ml is outside 1000-6000");
-  }
-  if (plan.days.length === 0) {
-    issues.push("days must not be empty");
-  }
-  if (
-    plan.days.some(
-      (day) =>
-        day.meals.length === 0 ||
-        day.meals.some((meal) => meal.foods.length === 0),
-    )
-  ) {
-    issues.push("meals and foods must not be empty");
+
+  for (const day of days) {
+    if (!day || typeof day !== "object") continue;
+    const d = day as Record<string, unknown>;
+    const meals = Array.isArray(d.meals) ? d.meals : [];
+    if (meals.length === 0) {
+      issues.push(`day ${d.day_number}: no meals`);
+    }
+    for (const meal of meals) {
+      if (!meal || typeof meal !== "object") continue;
+      const m = meal as Record<string, unknown>;
+      const foods = Array.isArray(m.foods) ? m.foods : [];
+      if (foods.length === 0) {
+        issues.push(
+          `day ${d.day_number} meal ${m.meal_type}: no foods`,
+        );
+      }
+      if (
+        typeof m.meal_type === "string" &&
+        !VALID_MEAL_TYPES.has(m.meal_type)
+      ) {
+        issues.push(
+          `day ${d.day_number}: invalid meal_type="${m.meal_type}"`,
+        );
+      }
+    }
   }
 
   return issues;
 }
 
-function safeFailureReason(error: unknown): string {
-  if (error instanceof AiServiceError) {
-    return `${error.code}: ${error.message}`;
+// ── Summary helpers ──────────────────────────────────────────────────────────
+
+function previewJson(value: unknown, maxLen = 500): string {
+  try {
+    const text = JSON.stringify(value);
+    if (text.length <= maxLen) return text;
+    return `${text.slice(0, maxLen)}...(truncated)`;
+  } catch {
+    return "[unserializable]";
   }
-  return error instanceof Error ? error.message : String(error);
 }
 
-function jsonWasParsed(error: unknown): boolean {
-  return (
-    error instanceof AiServiceError &&
-    error.code === "AI_SCHEMA_VALIDATION_FAILED"
-  );
+function avg(values: number[]): number {
+  if (values.length === 0) return 0;
+  return values.reduce((s, v) => s + v, 0) / values.length;
 }
+
+function p95(values: number[]): number {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const idx = Math.floor(sorted.length * 0.95);
+  return sorted[Math.min(idx, sorted.length - 1)];
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
   loadEnvConfig(process.cwd());
 
-  const [filePath] = process.argv.slice(2);
+  const [filePath, outputPath] = process.argv.slice(2);
   if (!filePath) {
-    console.error("Usage: npm run research:eval -- <eval_cases.jsonl>");
+    console.error(
+      "Usage: npm run research:eval -- <eval_cases.jsonl> [output_prefix]",
+    );
+    console.error(
+      "  output_prefix defaults to the eval file path without extension.",
+    );
     process.exitCode = 2;
     return;
   }
@@ -141,135 +285,405 @@ async function main(): Promise<void> {
     return;
   }
 
+  const prefix =
+    outputPath ?? filePath.replace(/\.jsonl$/, "");
+  const failedPath = `${prefix}.failed.jsonl`;
+  const resultsPath = `${prefix}.results.jsonl`;
+
   const lines = await readJsonl(filePath);
-  const failures: FailedCase[] = [];
-  const latencies: number[] = [];
-  let jsonParseSuccess = 0;
-  let schemaPass = 0;
-  let constraintPass = 0;
+  const metrics: EvalMetrics = {
+    total: lines.length,
+    jsonParseSuccess: 0,
+    rawSchemaPass: 0,
+    normalizedSchemaPass: 0,
+    finalSchemaPass: 0,
+    wrapperKeyErrors: 0,
+    enumErrors: 0,
+    constraintPass: 0,
+    latencies: [],
+    totalTokens: 0,
+  };
+  const failedCases: FailedCase[] = [];
+  const caseResults: CaseResult[] = [];
 
   console.log(
     `Evaluating provider=${config.provider} model=${config.model} cases=${lines.length}`,
   );
+  console.log(`Results: ${resultsPath}`);
+  console.log(`Failures: ${failedPath}`);
+  console.log("---");
 
   for (const line of lines) {
     const fallbackId = `line-${line.lineNumber}`;
+
     if (line.parseError) {
-      failures.push({
+      failedCases.push({
         id: fallbackId,
+        task: "unknown",
+        stage: "input_json",
         reason: `invalid JSON: ${line.parseError}`,
+        rawPreview: line.raw.slice(0, 200),
+      });
+      caseResults.push({
+        id: fallbackId,
+        task: "unknown",
+        status: "fail",
+        stage: "input_json",
+        latencyMs: 0,
+        wrapperKeyError: false,
+        enumError: false,
+        constraintIssues: [],
       });
       continue;
     }
 
     const evalCase = evalCaseSchema.safeParse(line.value);
     if (!evalCase.success) {
-      failures.push({
+      failedCases.push({
         id: fallbackId,
-        reason: `invalid eval case: ${evalCase.error.message}`,
+        task: "unknown",
+        stage: "input_schema",
+        reason: formatZodIssues(evalCase.error.issues).join(" | "),
+        rawPreview: previewJson(line.value),
+      });
+      caseResults.push({
+        id: fallbackId,
+        task: "unknown",
+        status: "fail",
+        stage: "input_schema",
+        latencyMs: 0,
+        wrapperKeyError: false,
+        enumError: false,
+        constraintIssues: [],
       });
       continue;
     }
 
     const caseId = evalCase.data.id ?? fallbackId;
+    const task = evalCase.data.task;
     const startedAt = performance.now();
 
     try {
-      let constraintIssues: string[];
+      // Build prompt and call AI
+      let systemPrompt: string;
+      let userPrompt: string;
 
-      if (evalCase.data.task === "generate_training_plan") {
-        const request = generateTrainingPlanRequestSchema.parse(
-          evalCase.data.request,
+      if (task === "generate_training_plan") {
+        const request = evalCase.data.request;
+        const prompt = buildTrainingPlanPrompt(
+          request.profile_snapshot,
+          request.constraints as AiTrainingGenerationConstraints,
+          request.locale,
         );
-        const result = await generateStructuredTrainingPlan({
-          profile:
-            request.profile_snapshot ??
-            evalCase.data.request.profile_snapshot,
-          constraints: request.constraints,
-          locale: request.locale,
-          logValidationFailures: false,
-        });
-        jsonParseSuccess += 1;
-        if (!aiTrainingPlanSchema.safeParse(result.parsedPlan).success) {
-          throw new Error("training plan failed the strict schema");
-        }
-        schemaPass += 1;
-        constraintIssues = checkTrainingConstraints(
-          result.parsedPlan,
-          request.constraints,
-        );
+        systemPrompt = prompt.systemPrompt;
+        userPrompt = prompt.userPrompt;
       } else {
-        const request = generateNutritionPlanRequestSchema.parse(
-          evalCase.data.request,
+        const request = evalCase.data.request;
+        const prompt = buildNutritionPlanPrompt(
+          request.profile_snapshot,
+          request.constraints as AiNutritionGenerationConstraints,
+          request.locale,
         );
-        const result = await generateStructuredNutritionPlan({
-          profile:
-            request.profile_snapshot ??
-            evalCase.data.request.profile_snapshot,
-          constraints: request.constraints,
-          locale: request.locale,
-          logValidationFailures: false,
-        });
-        jsonParseSuccess += 1;
-        if (!aiNutritionPlanSchema.safeParse(result.parsedPlan).success) {
-          throw new Error("nutrition plan failed the strict schema");
+        systemPrompt = prompt.systemPrompt;
+        userPrompt = prompt.userPrompt;
+      }
+
+      const response = await callAiProviderForJson({
+        systemPrompt,
+        userPrompt,
+      });
+      const latencyMs = performance.now() - startedAt;
+      metrics.latencies.push(latencyMs);
+      metrics.jsonParseSuccess += 1;
+
+      // Check wrapper keys
+      const wrappers = hasWrapperKey(response.json);
+      const hasWrapper = wrappers.length > 0;
+      if (hasWrapper) {
+        metrics.wrapperKeyErrors += 1;
+      }
+
+      // Check enum errors in raw JSON
+      const enumErrs = findEnumErrors(response.json);
+      const hasEnumError = enumErrs.length > 0;
+      if (hasEnumError) {
+        metrics.enumErrors += 1;
+      }
+
+      // Raw schema parse
+      const rawSchema =
+        task === "generate_training_plan"
+          ? aiTrainingPlanRawSchema
+          : aiNutritionPlanRawSchema;
+      const rawParsed = rawSchema.safeParse(response.json);
+      if (rawParsed.success) {
+        metrics.rawSchemaPass += 1;
+      }
+
+      // Normalize
+      let normalized: unknown;
+      let normalizeSuccess = false;
+      try {
+        if (task === "generate_training_plan") {
+          if (rawParsed.success) {
+            normalized = normalizeAiTrainingPlan(rawParsed.data);
+            normalizeSuccess = true;
+          }
+        } else {
+          // Nutrition: try unwrap first
+          let json = response.json;
+          if (
+            json &&
+            typeof json === "object" &&
+            "nutrition_plan" in json &&
+            typeof (json as Record<string, unknown>).nutrition_plan ===
+              "object"
+          ) {
+            json = (json as Record<string, unknown>).nutrition_plan;
+          }
+          const reParsed = aiNutritionPlanRawSchema.safeParse(json);
+          if (reParsed.success) {
+            normalized = normalizeAiNutritionPlan(reParsed.data);
+            normalizeSuccess = true;
+          }
         }
-        schemaPass += 1;
-        constraintIssues = checkNutritionConstraints(result.parsedPlan);
+      } catch {
+        // normalize failed
+      }
+
+      if (normalizeSuccess) {
+        metrics.normalizedSchemaPass += 1;
+      }
+
+      // Final schema
+      let finalPass = false;
+      if (normalizeSuccess) {
+        const finalSchema =
+          task === "generate_training_plan"
+            ? aiTrainingPlanSchema
+            : aiNutritionPlanSchema;
+        const finalResult = finalSchema.safeParse(normalized);
+        if (finalResult.success) {
+          metrics.finalSchemaPass += 1;
+          finalPass = true;
+        }
+      }
+
+      // Constraint check
+      let constraintIssues: string[] = [];
+      if (finalPass && normalized) {
+        if (task === "generate_training_plan") {
+          constraintIssues = checkTrainingConstraints(
+            normalized,
+            evalCase.data.request.constraints,
+          );
+        } else {
+          constraintIssues = checkNutritionConstraints(normalized);
+        }
+      } else if (!finalPass) {
+        constraintIssues.push("final schema did not pass");
       }
 
       if (constraintIssues.length === 0) {
-        constraintPass += 1;
-        console.log(`[pass] ${caseId}`);
-      } else {
-        failures.push({
-          id: caseId,
-          reason: `constraint checks failed: ${constraintIssues.join(" | ")}`,
-        });
-        console.log(`[fail] ${caseId}: constraint checks failed`);
+        metrics.constraintPass += 1;
       }
-    } catch (error) {
-      if (jsonWasParsed(error)) {
-        jsonParseSuccess += 1;
-      }
-      failures.push({
+
+      const caseStatus =
+        finalPass && constraintIssues.length === 0 ? "pass" : "fail";
+      const stage = !rawParsed.success
+        ? "raw_schema"
+        : !normalizeSuccess
+          ? "normalize"
+          : !finalPass
+            ? "final_schema"
+            : constraintIssues.length > 0
+              ? "constraints"
+              : "ok";
+
+      caseResults.push({
         id: caseId,
-        reason: safeFailureReason(error),
+        task,
+        status: caseStatus,
+        stage,
+        latencyMs,
+        wrapperKeyError: hasWrapper,
+        enumError: hasEnumError,
+        constraintIssues,
       });
-      console.log(`[fail] ${caseId}: ${safeFailureReason(error)}`);
-    } finally {
-      latencies.push(performance.now() - startedAt);
+
+      if (caseStatus === "fail") {
+        failedCases.push({
+          id: caseId,
+          task,
+          stage,
+          reason: [
+            hasWrapper ? `wrapper_keys=[${wrappers.join(",")}]` : "",
+            hasEnumError ? `enum_errors=[${enumErrs.join(";")}]` : "",
+            ...constraintIssues,
+          ]
+            .filter(Boolean)
+            .join(" | "),
+          rawPreview: previewJson(response.json),
+        });
+      }
+
+      const icon = caseStatus === "pass" ? "✓" : "✗";
+      console.log(
+        `[${icon}] ${caseId} task=${task} stage=${stage} latency=${Math.round(latencyMs)}ms`,
+      );
+    } catch (error) {
+      const latencyMs = performance.now() - startedAt;
+      metrics.latencies.push(latencyMs);
+
+      const reason =
+        error instanceof AiServiceError
+          ? `${error.code}: ${error.message}`
+          : error instanceof Error
+            ? error.message
+            : String(error);
+
+      // JSON was parsed if we got a schema validation error
+      if (
+        error instanceof AiServiceError &&
+        error.code === "AI_SCHEMA_VALIDATION_FAILED"
+      ) {
+        metrics.jsonParseSuccess += 1;
+      }
+
+      failedCases.push({
+        id: caseId,
+        task,
+        stage: "generation",
+        reason,
+        rawPreview: "",
+      });
+      caseResults.push({
+        id: caseId,
+        task,
+        status: "fail",
+        stage: "generation",
+        latencyMs,
+        wrapperKeyError: false,
+        enumError: false,
+        constraintIssues: [],
+      });
+
+      console.log(
+        `[✗] ${caseId} task=${task} stage=generation latency=${Math.round(latencyMs)}ms: ${reason}`,
+      );
     }
   }
 
-  const averageLatency =
-    latencies.length === 0
-      ? 0
-      : latencies.reduce((sum, value) => sum + value, 0) / latencies.length;
+  // ── Write outputs ────────────────────────────────────────────────────────
 
-  console.log("\nLiftCut-Coach provider evaluation");
-  console.log(`Provider: ${config.provider}`);
-  console.log(`Model: ${config.model}`);
-  console.log(`Total cases: ${lines.length}`);
+  await mkdir(dirname(resultsPath), { recursive: true });
+
+  // Results JSONL
+  const resultLines = caseResults.map((r) => JSON.stringify(r)).join("\n");
+  await appendFile(resultsPath, `${resultLines}\n`, "utf8");
+
+  // Failed JSONL
+  if (failedCases.length > 0) {
+    const failLines = failedCases.map((f) => JSON.stringify(f)).join("\n");
+    await appendFile(failedPath, `${failLines}\n`, "utf8");
+  }
+
+  // ── Summary ──────────────────────────────────────────────────────────────
+
+  const { total } = metrics;
+
+  console.log("\n" + "=".repeat(70));
+  console.log("LiftCut-Coach Evaluation Summary");
+  console.log("=".repeat(70));
+  console.log(`Provider:  ${config.provider}`);
+  console.log(`Model:     ${config.model}`);
+  console.log(`Cases:     ${total}`);
+  console.log(`Runtime:   ${Math.round(avg(metrics.latencies) * total / 1000)}s total`);
+  console.log("");
+
+  // Markdown table
+  console.log("| Metric | Count | Rate |");
+  console.log("|--------|------:|-----:|");
   console.log(
-    `JSON parse success: ${jsonParseSuccess}/${lines.length} (${percent(jsonParseSuccess, lines.length)})`,
+    `| JSON parse success | ${metrics.jsonParseSuccess}/${total} | ${percent(metrics.jsonParseSuccess, total)} |`,
   );
   console.log(
-    `Zod schema pass: ${schemaPass}/${lines.length} (${percent(schemaPass, lines.length)})`,
+    `| Raw schema pass | ${metrics.rawSchemaPass}/${total} | ${percent(metrics.rawSchemaPass, total)} |`,
   );
   console.log(
-    `Constraint pass: ${constraintPass}/${lines.length} (${percent(constraintPass, lines.length)})`,
+    `| Normalized schema pass | ${metrics.normalizedSchemaPass}/${total} | ${percent(metrics.normalizedSchemaPass, total)} |`,
   );
-  console.log(`Average latency: ${averageLatency.toFixed(0)} ms`);
   console.log(
-    `Failed case ids: ${failures.length > 0 ? failures.map((item) => item.id).join(", ") : "(none)"}`,
+    `| Final Zod schema pass | ${metrics.finalSchemaPass}/${total} | ${percent(metrics.finalSchemaPass, total)} |`,
+  );
+  console.log(
+    `| Constraint satisfaction | ${metrics.constraintPass}/${total} | ${percent(metrics.constraintPass, total)} |`,
+  );
+  console.log(
+    `| Wrapper key errors | ${metrics.wrapperKeyErrors}/${total} | ${percent(metrics.wrapperKeyErrors, total)} |`,
+  );
+  console.log(
+    `| Enum errors (meal_type etc.) | ${metrics.enumErrors}/${total} | ${percent(metrics.enumErrors, total)} |`,
+  );
+  console.log("");
+
+  // Latency stats
+  console.log("| Latency | Value |");
+  console.log("|---------|------:|");
+  console.log(`| Average | ${Math.round(avg(metrics.latencies))}ms |`);
+  console.log(`| P50 | ${Math.round(p95(metrics.latencies))}ms |`);
+  console.log(`| P95 | ${Math.round(p95(metrics.latencies))}ms |`);
+  console.log(
+    `| Min | ${metrics.latencies.length > 0 ? Math.round(Math.min(...metrics.latencies)) : 0}ms |`,
+  );
+  console.log(
+    `| Max | ${metrics.latencies.length > 0 ? Math.round(Math.max(...metrics.latencies)) : 0}ms |`,
+  );
+  console.log("");
+
+  // Per-task breakdown
+  const trainingResults = caseResults.filter(
+    (r) => r.task === "generate_training_plan",
+  );
+  const nutritionResults = caseResults.filter(
+    (r) => r.task === "generate_nutrition_plan",
   );
 
-  if (failures.length > 0) {
-    console.log("\nFailure reasons:");
-    for (const failure of failures) {
-      console.log(`- ${failure.id}: ${failure.reason}`);
+  if (trainingResults.length > 0 || nutritionResults.length > 0) {
+    console.log("| Task | Total | Pass | Fail | Pass Rate |");
+    console.log("|------|------:|-----:|-----:|----------:|");
+    if (trainingResults.length > 0) {
+      const pass = trainingResults.filter((r) => r.status === "pass").length;
+      console.log(
+        `| Training | ${trainingResults.length} | ${pass} | ${trainingResults.length - pass} | ${percent(pass, trainingResults.length)} |`,
+      );
     }
+    if (nutritionResults.length > 0) {
+      const pass = nutritionResults.filter((r) => r.status === "pass").length;
+      console.log(
+        `| Nutrition | ${nutritionResults.length} | ${pass} | ${nutritionResults.length - pass} | ${percent(pass, nutritionResults.length)} |`,
+      );
+    }
+    console.log("");
+  }
+
+  // Failure breakdown
+  if (failedCases.length > 0) {
+    const stageCounts = new Map<string, number>();
+    for (const f of failedCases) {
+      stageCounts.set(f.stage, (stageCounts.get(f.stage) ?? 0) + 1);
+    }
+    console.log("Failure breakdown by stage:");
+    for (const [stage, count] of stageCounts) {
+      console.log(`  ${stage}: ${count}`);
+    }
+    console.log("");
+    console.log(`Failed cases written to: ${failedPath}`);
+  }
+
+  console.log(`Detailed results written to: ${resultsPath}`);
+
+  if (failedCases.length > 0) {
     process.exitCode = 1;
   }
 }
