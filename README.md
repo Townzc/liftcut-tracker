@@ -29,6 +29,99 @@ LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减�
 
 ---
 
+## System Architecture
+
+```mermaid
+flowchart TB
+  User["Users<br/>browser / mobile"]:::actor
+
+  subgraph Client["Client experience"]
+    direction TB
+    Shell["Next.js App Router<br/>layouts + route pages"]:::app
+    Features["Product surfaces<br/>dashboard · plan · workout · nutrition · body · settings"]:::app
+    Store["Zustand store<br/>UI state + guest localStorage"]:::client
+    I18n["next-intl messages<br/>zh-CN / en"]:::client
+
+    Shell --> Features
+    Features <--> Store
+    Shell --> I18n
+  end
+
+  subgraph Boundary["Access and data boundary"]
+    direction TB
+    Middleware["middleware.ts<br/>auth + onboarding guard"]:::server
+    Repository["data-repository.ts<br/>CRUD + guest migration"]:::server
+    BrowserSupabase["Supabase browser client<br/>session-aware data access"]:::data
+  end
+
+  subgraph AiRuntime["Server-side AI runtime"]
+    direction TB
+    Api["/api/ai/* routes<br/>generate · save · history"]:::server
+    Profile["Profile snapshot resolver<br/>authenticated user or guest payload"]:::server
+    Quota["Guest AI quota<br/>local counter + server cookie"]:::server
+    Services["Pure generation services<br/>training plan + nutrition plan"]:::ai
+    Provider["AI Provider adapter<br/>DeepSeek · local · OpenAI-compatible"]:::ai
+    Model["External or local model<br/>DeepSeek API / vLLM / Ollama / llama.cpp"]:::external
+    Validation["Zod validation pipeline<br/>raw schema → normalize → strict schema"]:::schema
+    History["AI generation history<br/>success / failed generations"]:::data
+
+    Api --> Profile
+    Api --> Quota
+    Profile --> Services
+    Quota --> Services
+    Services --> Provider --> Model --> Validation
+    Validation -->|"validated JSON plan"| Api
+    Api -->|"generation audit trail"| History
+  end
+
+  subgraph Supabase["Supabase backend"]
+    direction TB
+    Auth["Auth"]:::data
+    Postgres["Postgres<br/>profiles · settings · plans · workout · food · body · AI histories"]:::data
+    Storage["Storage<br/>avatars"]:::data
+  end
+
+  subgraph Research["LiftCut-Coach research loop"]
+    direction TB
+    Cases["JSONL cases / examples"]:::research
+    Scripts["Research scripts<br/>validate · split · build-sft · eval"]:::research
+    Artifacts["Training and evaluation artifacts<br/>SFT JSONL · LoRA config · eval reports"]:::research
+    Feedback["Prompt / schema / model improvements"]:::research
+
+    Cases --> Scripts --> Artifacts --> Feedback
+  end
+
+  User --> Middleware --> Shell
+  Features --> Repository --> BrowserSupabase
+  BrowserSupabase --> Auth
+  BrowserSupabase --> Postgres
+  BrowserSupabase --> Storage
+  Features -->|"AI request / preview / save"| Api
+  Api -->|"confirmed plan writes + history reads"| Postgres
+  History --> Postgres
+  Validation -->|"preview + editable structured plan"| Features
+  Scripts -.->|"reuse provider"| Services
+  Scripts -.->|"reuse schemas"| Validation
+  Feedback -.->|"improve prompts / local model"| Provider
+
+  classDef actor fill:#f8fafc,stroke:#0f172a,stroke-width:1.5px,color:#0f172a
+  classDef app fill:#eff6ff,stroke:#2563eb,stroke-width:1.2px,color:#0f172a
+  classDef client fill:#eef2ff,stroke:#4f46e5,stroke-width:1.2px,color:#111827
+  classDef server fill:#ecfeff,stroke:#0891b2,stroke-width:1.2px,color:#0f172a
+  classDef ai fill:#f5f3ff,stroke:#7c3aed,stroke-width:1.2px,color:#111827
+  classDef schema fill:#fff7ed,stroke:#ea580c,stroke-width:1.2px,color:#111827
+  classDef data fill:#ecfdf5,stroke:#059669,stroke-width:1.2px,color:#0f172a
+  classDef external fill:#fef2f2,stroke:#dc2626,stroke-width:1.2px,color:#111827
+  classDef research fill:#fdf4ff,stroke:#c026d3,stroke-width:1.2px,color:#111827
+```
+
+设计重点：
+- 前端只负责表单、预览、编辑、确认保存；AI Key 永远留在服务端。
+- 训练计划和饮食计划共用同一套 AI Provider、prompt、normalize 和 Zod schema 校验链路。
+- `research/liftcut-coach` 不直接写生产库，只复用 Provider 与 schema 做样本校验、SFT 构建和评测，形成独立的研究反馈回路。
+
+---
+
 ## 2. 页面与路由
 
 - `/` Dashboard
