@@ -18,6 +18,7 @@ function getConfigCacheKey(config: AiProviderConfig): string {
     config.baseURL,
     config.apiKey,
     config.model,
+    config.timeoutMs,
   ]);
 }
 
@@ -25,7 +26,7 @@ export function createAiClient(config: AiProviderConfig): OpenAI {
   return new OpenAI({
     apiKey: config.apiKey,
     baseURL: config.baseURL,
-    timeout: 30_000,
+    timeout: config.timeoutMs,
   });
 }
 

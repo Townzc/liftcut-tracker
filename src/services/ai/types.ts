@@ -13,6 +13,7 @@ export interface AiProviderConfig {
   baseURL: string;
   apiKey: string;
   model: string;
+  timeoutMs: number;
 }
 
 export interface AiProfileSnapshot {

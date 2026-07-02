@@ -12,8 +12,40 @@ const DEFAULT_LOCAL_BASE_URL = "http://127.0.0.1:8000/v1";
 const DEFAULT_LOCAL_API_KEY = "EMPTY";
 const DEFAULT_LOCAL_MODEL = "liftcut-coach";
 
+const DEFAULT_TIMEOUT_MS = 30_000;
+const DEFAULT_LOCAL_TIMEOUT_MS = 120_000;
+
 function readEnv(name: string): string {
   return process.env[name]?.trim() ?? "";
+}
+
+function readTimeoutMs(provider: AiProviderName): number {
+  // 1. Provider-specific env override
+  const specificKey =
+    provider === "local"
+      ? "LOCAL_AI_REQUEST_TIMEOUT_MS"
+      : provider === "deepseek"
+        ? "DEEPSEEK_REQUEST_TIMEOUT_MS"
+        : "AI_REQUEST_TIMEOUT_MS";
+  const specific = readEnv(specificKey);
+  if (specific) {
+    const parsed = Number(specific);
+    if (Number.isFinite(parsed) && parsed > 0) {
+      return parsed;
+    }
+  }
+
+  // 2. Generic env override
+  const generic = readEnv("AI_REQUEST_TIMEOUT_MS");
+  if (generic) {
+    const parsed = Number(generic);
+    if (Number.isFinite(parsed) && parsed > 0) {
+      return parsed;
+    }
+  }
+
+  // 3. Provider-specific default
+  return provider === "local" ? DEFAULT_LOCAL_TIMEOUT_MS : DEFAULT_TIMEOUT_MS;
 }
 
 export function getSelectedAiProvider(): AiProviderName | null {
@@ -44,6 +76,7 @@ export function getAiProviderConfig(): AiProviderConfig | null {
       apiKey,
       baseURL: readEnv("DEEPSEEK_BASE_URL") || DEFAULT_DEEPSEEK_BASE_URL,
       model: readEnv("DEEPSEEK_MODEL") || DEFAULT_DEEPSEEK_MODEL,
+      timeoutMs: readTimeoutMs(provider),
     };
   }
 
@@ -53,6 +86,7 @@ export function getAiProviderConfig(): AiProviderConfig | null {
       apiKey: readEnv("LOCAL_AI_API_KEY") || DEFAULT_LOCAL_API_KEY,
       baseURL: readEnv("LOCAL_AI_BASE_URL") || DEFAULT_LOCAL_BASE_URL,
       model: readEnv("LOCAL_AI_MODEL") || DEFAULT_LOCAL_MODEL,
+      timeoutMs: readTimeoutMs(provider),
     };
   }
 
@@ -68,6 +102,7 @@ export function getAiProviderConfig(): AiProviderConfig | null {
     apiKey,
     baseURL,
     model,
+    timeoutMs: readTimeoutMs(provider),
   };
 }
 
