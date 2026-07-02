@@ -252,11 +252,14 @@ function avg(values: number[]): number {
   return values.reduce((s, v) => s + v, 0) / values.length;
 }
 
-function p95(values: number[]): number {
+function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0;
   const sorted = [...values].sort((a, b) => a - b);
-  const idx = Math.floor(sorted.length * 0.95);
-  return sorted[Math.min(idx, sorted.length - 1)];
+  const idx = Math.min(
+    Math.floor(sorted.length * p),
+    sorted.length - 1,
+  );
+  return sorted[idx];
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -631,8 +634,8 @@ async function main(): Promise<void> {
   console.log("| Latency | Value |");
   console.log("|---------|------:|");
   console.log(`| Average | ${Math.round(avg(metrics.latencies))}ms |`);
-  console.log(`| P50 | ${Math.round(p95(metrics.latencies))}ms |`);
-  console.log(`| P95 | ${Math.round(p95(metrics.latencies))}ms |`);
+  console.log(`| P50 | ${Math.round(percentile(metrics.latencies, 0.50))}ms |`);
+  console.log(`| P95 | ${Math.round(percentile(metrics.latencies, 0.95))}ms |`);
   console.log(
     `| Min | ${metrics.latencies.length > 0 ? Math.round(Math.min(...metrics.latencies)) : 0}ms |`,
   );
