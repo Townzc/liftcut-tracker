@@ -1,343 +1,233 @@
-﻿# LiftCut Tracker (V1.7)
+# LiftCut Tracker
 
-LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减脂追踪 Web 应用。
+AI-powered fitness and fat-loss tracking platform with structured AI plan generation, provider abstraction, and a local LoRA-based LiftCut-Coach backend.
 
-本版本重点：
-- 基础信息支持 `gender / age`，默认未填写状态为 `unknown / 0`
-- 新用户首次登录进入 `/onboarding` 完成基础信息
-- 用户资料支持昵称与头像（Supabase Storage）
-- 训练计划支持文本导入、编辑、PDF 导出
-- 接入可配置的服务端 AI Provider（默认 DeepSeek）实现训练/饮食计划生成、预览、编辑、确认保存
-- 新增游客模式（本地数据）+ 游客转正式账号迁移
-- AI 历史支持单条删除与清空
+## Highlights
 
----
+- Full-stack fitness and nutrition tracking web app (Next.js + Supabase)
+- AI-generated training and nutrition plans with structured preview, edit, and confirm-save flow
+- Strict Zod schema validation for reliable structured output from LLMs
+- Multi-provider AI backend: DeepSeek, OpenAI-compatible, local vLLM
+- LiftCut-Coach LoRA fine-tuned on Qwen2.5-14B-Instruct — **100% Final Schema Pass** on 293 held-out eval cases
+- Research evaluation pipeline measuring schema pass rate, constraint satisfaction, and latency
+- vLLM OpenAI-compatible local model serving
 
-## 1. 技术栈
+## Evaluation Results
 
-- Next.js 16（App Router）
-- TypeScript（strict）
-- Tailwind CSS
-- shadcn/ui
-- Zustand
-- Zod
-- next-intl
-- Supabase Auth + Postgres + Storage
-- Recharts
-- jsPDF + jspdf-autotable
-- OpenAI SDK（兼容方式调用 DeepSeek）
+| Model | JSON Parse | Final Schema | Constraint Pass | Avg Latency | P50 | P95 |
+|---|---:|---:|---:|---:|---:|---:|
+| DeepSeek v4 Pro | 99.66% | 97.95% | 97.95% | 147.7s | 133.6s | 277.4s |
+| MiMo v2.5 Pro | 99.32% | 98.29% | 97.27% | 38.7s | 35.3s | 65.6s |
+| **LiftCut-Coach LoRA** | **100.00%** | **100.00%** | **99.66%** | **36.8s** | **33.0s** | **63.3s** |
 
----
+> In 293 held-out evaluation cases, LiftCut-Coach LoRA achieved 100% Final Zod Schema Pass and 99.66% Constraint Pass, with zero wrapper-key and enum errors. Compared with DeepSeek v4 Pro and MiMo v2.5 Pro, the LoRA model showed the strongest structured-output stability while maintaining latency close to MiMo.
 
-## 2. 页面与路由
+## Tech Stack
 
-- `/` Dashboard
-- `/plan` 训练计划
-- `/plan/ai` AI 计划生成与预览
-- `/workout` 训练记录
-- `/nutrition` 饮食记录
-- `/body` 身体数据
-- `/settings` 设置
-- `/onboarding` 首次资料填写
-- `/login` / `/register` / `/forgot-password`
+**Frontend:** Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Zustand, next-intl, Recharts
 
-路由守卫：
-- 未登录且非游客访问业务页会重定向到 `/login`
-- 已登录但基础资料未完成会重定向到 `/onboarding`
-- 游客模式可访问业务页与 `/onboarding`
+**Backend:** Next.js API routes, Supabase Auth, Supabase Postgres, Supabase Storage, Zod
 
----
+**AI:** DeepSeek API, MiMo / OpenAI-compatible API, Qwen2.5-14B-Instruct, LoRA, vLLM, LLaMA-Factory
 
-## 3. 已有核心能力
+## System Architecture
 
-- 训练计划：创建、文本导入、编辑、设为生效、删除、PDF 导出
-- 训练记录：按周/天录入动作实际数据并保存，支持最近记录查看详情
-- 饮食记录：新增/编辑/删除、常用食物快捷添加、分餐统计
-- 身体数据：体重/腰围记录与趋势图
-- 设置：用户资料、目标参数、语言切换、数据导出、登出
-- 游客模式：无账号即可体验，数据仅本机保存，可升级并迁移数据
-
----
-
-## 4. 用户资料（昵称 + 头像）
-
-设置页支持：
-- 昵称编辑（1-30 字符，自动 trim）
-- 头像上传 / 替换 / 删除
-- 格式限制：`image/png` `image/jpeg` `image/webp`
-- 大小限制：`<= 5MB`
-
-展示联动：
-- 桌面侧边栏用户区
-- 移动端顶部用户条
-- Dashboard 欢迎卡片
-
-默认规则：
-- 未设置昵称时显示邮箱前缀
-- 无头像时显示首字母占位头像
-
----
-
-## 5. AI 功能（服务端）
-
-### 5.1 设计原则
-
-- 仅服务端调用 AI Provider，前端不直连
-- API Key 仅在服务端环境变量使用
-- 默认使用 DeepSeek，也支持本地或通用 OpenAI-compatible 服务
-- 所有 AI 输出先做 Zod 校验，失败不入库
-- 流程为：生成 -> 预览/编辑 -> 用户确认 -> 保存
-
-### 5.2 AI API
-
-- `POST /api/ai/generate-training-plan`
-- `POST /api/ai/generate-nutrition-plan`
-- `POST /api/ai/save-training-plan`
-- `POST /api/ai/save-nutrition-plan`
-- `GET /api/ai/history`
-- `DELETE /api/ai/history`（单条删除 / 按类型清空 / 全部清空）
-
-### 5.3 AI 页面
-
-`/plan/ai` 提供：
-- 生成条件表单（目标、频率、时长、场地、器械、忌口、伤病等）
-- 训练计划结构化预览与编辑（JSON 仅高级模式）
-- 饮食计划结构化预览与编辑（JSON 仅高级模式）
-- 保存为正式计划
-- 最近生成历史回填、删除单条、清空历史
-
-### 5.4 游客模式（MVP）
-
-- 登录页支持“继续以游客身份使用”
-- 游客数据保存在当前设备（Zustand persist + localStorage）
-- 游客 AI 每日配额：10 次（本地计数 + 服务端 cookie 双重限制）
-- 游客 AI 历史保存在本地，可删除单条/清空全部
-- 登录后可一键迁移游客数据到正式账号：
-  - settings：只填充账号空白字段
-  - 训练计划：保留账号当前 active，游客计划以 inactive 导入
-  - workout / food / body / AI histories：追加导入
-
----
-
-## 6. 环境变量
-
-复制 `.env.example` 到 `.env.local`：
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Default production provider
-AI_PROVIDER=deepseek
-DEEPSEEK_API_KEY=your_deepseek_api_key
-DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
-
-# Local research provider
-LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
-LOCAL_AI_API_KEY=EMPTY
-LOCAL_AI_MODEL=liftcut-coach
-
-# Generic OpenAI-compatible provider
-AI_BASE_URL=
-AI_API_KEY=
-AI_MODEL=
+```mermaid
+flowchart TD
+  User[User] --> Web[Next.js Web App]
+  Web --> API[Next.js API Routes]
+  API --> Provider[AI Provider Layer]
+  Provider --> DeepSeek[DeepSeek API]
+  Provider --> MiMo[OpenAI-compatible MiMo API]
+  Provider --> Local[vLLM Local API]
+  Local --> LoRA[Qwen2.5-14B + LiftCut-Coach LoRA]
+  API --> Pipeline[Structured Output Pipeline]
+  Pipeline --> Extract[JSON Extraction]
+  Extract --> Unwrap[Wrapper Key Unwrap]
+  Unwrap --> Normalize[Enum & Field Normalization]
+  Normalize --> Zod[Zod Schema Validation]
+  Zod --> Constraint[Constraint Checking]
+  Constraint --> Supabase[(Supabase)]
 ```
 
-未配置 AI 环境变量时：
-- 站点其他功能不受影响
-- AI 页面会提示“未配置 AI 服务”
+## AI Structured Output Pipeline
 
----
+Every AI-generated plan goes through a multi-stage pipeline to ensure reliability:
 
-## AI Provider Modes
-
-`AI_PROVIDER` 支持以下模式：
-
-- `deepseek`：默认值，适合线上生产；读取 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`
-- `local`：用于科研或演示；读取 `LOCAL_AI_BASE_URL`、`LOCAL_AI_API_KEY`、`LOCAL_AI_MODEL`
-- `openai_compatible`：用于其他兼容 OpenAI Chat Completions API 的服务；读取 `AI_BASE_URL`、`AI_API_KEY`、`AI_MODEL`
-
-生产环境建议继续使用 DeepSeek：
-
-```env
-AI_PROVIDER=deepseek
-DEEPSEEK_API_KEY=your_server_only_key
-DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
+```
+Prompt construction (strict schema instructions)
+→ Model generation (JSON mode)
+→ JSON extraction (trim code fences, find first complete JSON object)
+→ Wrapper unwrapping (handle nutrition_plan / meal_plan / data wrappers)
+→ Normalization (Chinese meal_type → English enum, goal_type cleanup)
+→ Final Zod schema validation (strict, not relaxed)
+→ Constraint satisfaction checking (training days, duration, macros)
+→ Save / return to frontend
 ```
 
-科研演示时，可以将 Next.js 服务连接到同机运行的 vLLM、Ollama 或 llama.cpp OpenAI-compatible 服务：
+## Pages & Routes
+
+| Route | Description |
+|---|---|
+| `/` | Dashboard |
+| `/plan` | Training plan management |
+| `/plan/ai` | AI plan generation, preview, edit, save |
+| `/workout` | Workout tracking |
+| `/nutrition` | Nutrition tracking |
+| `/body` | Body metrics |
+| `/settings` | User profile, goals, language |
+| `/login` `/register` | Auth |
+
+Route guards: unauthenticated users are redirected to `/login`; users with incomplete profiles go to `/onboarding`. Guest mode allows access without an account.
+
+## AI Provider Configuration
+
+`AI_PROVIDER` supports three modes:
+
+| Mode | Description | Key Env Vars |
+|---|---|---|
+| `deepseek` | Default for production | `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_MODEL` |
+| `local` | For research / demo with vLLM | `LOCAL_AI_BASE_URL`, `LOCAL_AI_API_KEY`, `LOCAL_AI_MODEL` |
+| `openai_compatible` | Generic OpenAI-compatible service | `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL` |
+
+### Provider-Specific Timeout
+
+Each provider has a configurable request timeout (in ms), with sensible defaults:
+
+| Provider | Default Timeout | Env Override |
+|---|---:|---|
+| `deepseek` | 30,000ms | `DEEPSEEK_REQUEST_TIMEOUT_MS` |
+| `local` | 120,000ms | `LOCAL_AI_REQUEST_TIMEOUT_MS` |
+| `openai_compatible` | 30,000ms | `AI_REQUEST_TIMEOUT_MS` |
+
+Generic override: `AI_REQUEST_TIMEOUT_MS` applies to all providers unless a provider-specific value is set.
+
+### Example: Local LoRA
 
 ```env
 AI_PROVIDER=local
 LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
 LOCAL_AI_API_KEY=EMPTY
 LOCAL_AI_MODEL=liftcut-coach
+LOCAL_AI_REQUEST_TIMEOUT_MS=120000
 ```
 
-切换 Provider 不改变前端的生成、预览、编辑、确认保存流程。所有 Provider 输出仍会经过 tolerant raw schema、normalize 和 strict Zod schema 三阶段校验。
-
-不要在客户端代码、日志、Git 提交或公开文档中写入真实 API Key。除 `NEXT_PUBLIC_` 变量外，AI 配置均为 server-only。
-
-## LiftCut-Coach Research Pipeline
-
-`research/liftcut-coach` 提供独立的本地模型科研管线，不影响 Next.js 主应用构建：
-
-- 使用主应用 Zod Schema 校验训练和饮食黄金样本
-- 使用固定随机种子切分 train / val / test
-- 将黄金样本转换为 LLaMA-Factory Alpaca JSONL
-- 提供 LoRA 配置与 vLLM OpenAI-compatible serving 示例
-- 使用同一 Provider 层评测 DeepSeek、local 或其他兼容服务
-
-常用命令：
+### Example: vLLM Serving
 
 ```bash
-npm run research:validate -- research/liftcut-coach/data/examples/training_plan_sample.jsonl
-npm run research:build-sft -- output.jsonl input.jsonl
-npm run research:split -- input.jsonl output_dir 0.8 0.1 0.1
-npm run research:eval -- research/liftcut-coach/data/eval_cases.jsonl
+python -m vllm.entrypoints.openai.api_server \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --model /path/to/Qwen2.5-14B-Instruct \
+  --served-model-name qwen14b-base \
+  --enable-lora \
+  --lora-modules liftcut-coach=/path/to/lora_adapter \
+  --max-model-len 4096 \
+  --gpu-memory-utilization 0.85
 ```
 
-完整说明见 [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md)。线上环境建议继续使用 DeepSeek；本地模型主要用于 research/demo 和可控实验。
+## Environment Variables
 
----
+| Variable | Description |
+|---|---|
+| `AI_PROVIDER` | `deepseek`, `local`, or `openai_compatible` |
+| `DEEPSEEK_API_KEY` | DeepSeek API key |
+| `DEEPSEEK_BASE_URL` | DeepSeek API base URL |
+| `DEEPSEEK_MODEL` | DeepSeek model name |
+| `DEEPSEEK_REQUEST_TIMEOUT_MS` | Optional DeepSeek timeout override |
+| `LOCAL_AI_BASE_URL` | Local vLLM OpenAI-compatible URL |
+| `LOCAL_AI_API_KEY` | Local API key, often `EMPTY` |
+| `LOCAL_AI_MODEL` | Local served model name |
+| `LOCAL_AI_REQUEST_TIMEOUT_MS` | Local timeout override |
+| `AI_BASE_URL` | Generic OpenAI-compatible base URL |
+| `AI_API_KEY` | Generic OpenAI-compatible API key |
+| `AI_MODEL` | Generic OpenAI-compatible model name |
+| `AI_REQUEST_TIMEOUT_MS` | Generic timeout override |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
 
-## 7. Supabase Schema 与迁移
+## Research Workflow
 
-初始化：执行 `supabase/schema.sql`。
+### Evaluation
 
-### 7.1 关键新增/扩展
-
-- `profiles`：`display_name` `avatar_url` `updated_at`
-- `user_settings`：
-  - 基础：`gender` `age`
-  - AI 相关：`fitness_goal` `training_experience` `training_location` `available_equipment` `session_duration_minutes` `diet_preference` `food_restrictions` `injury_notes` `lifestyle_notes`
-- AI 历史：
-  - `ai_training_plan_generations`
-  - `ai_nutrition_plan_generations`
-- 正式饮食计划：
-  - `nutrition_plans`
-  - `nutrition_plan_days`
-  - `nutrition_plan_meals`
-
-### 7.2 旧库升级 SQL（可重复执行）
-
-```sql
-alter table public.profiles add column if not exists display_name text;
-alter table public.profiles add column if not exists avatar_url text;
-alter table public.profiles add column if not exists updated_at timestamptz not null default now();
-update public.profiles
-set display_name = split_part(email, '@', 1)
-where display_name is null or btrim(display_name) = '';
-update public.profiles set updated_at = now() where updated_at is null;
-
-alter table public.user_settings add column if not exists gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown'));
-alter table public.user_settings add column if not exists age int not null default 0 check (age >= 0 and age <= 120);
-alter table public.user_settings add column if not exists fitness_goal text not null default 'fat_loss' check (fitness_goal in ('fat_loss', 'muscle_gain', 'maintenance', 'recomposition'));
-alter table public.user_settings add column if not exists training_experience text not null default 'beginner' check (training_experience in ('beginner', 'intermediate', 'advanced'));
-alter table public.user_settings add column if not exists training_location text not null default 'mixed' check (training_location in ('gym', 'home', 'mixed'));
-alter table public.user_settings add column if not exists available_equipment text[] not null default '{}';
-alter table public.user_settings add column if not exists session_duration_minutes int not null default 0 check (session_duration_minutes >= 0 and session_duration_minutes <= 300);
-alter table public.user_settings add column if not exists diet_preference text not null default 'none' check (diet_preference in ('none', 'high_protein', 'vegetarian', 'low_carb', 'balanced'));
-alter table public.user_settings add column if not exists food_restrictions text not null default '';
-alter table public.user_settings add column if not exists injury_notes text not null default '';
-alter table public.user_settings add column if not exists lifestyle_notes text not null default '';
-
-update public.user_settings set gender = 'unknown' where gender is null;
-update public.user_settings set age = 0 where age is null;
-update public.user_settings set fitness_goal = 'fat_loss' where fitness_goal is null;
-update public.user_settings set training_experience = 'beginner' where training_experience is null;
-update public.user_settings set training_location = 'mixed' where training_location is null;
-update public.user_settings set available_equipment = '{}' where available_equipment is null;
-update public.user_settings set session_duration_minutes = 0 where session_duration_minutes is null;
-update public.user_settings set diet_preference = 'none' where diet_preference is null;
-update public.user_settings set food_restrictions = '' where food_restrictions is null;
-update public.user_settings set injury_notes = '' where injury_notes is null;
-update public.user_settings set lifestyle_notes = '' where lifestyle_notes is null;
-```
-
-> 完整新表、RLS、索引与 policy 请以 `supabase/schema.sql` 为准。
-
----
-
-## 8. 训练计划 PDF 导出
-
-- 主入口：`/plan` -> 导出当前计划（PDF）
-- 导出结构：计划名、日期、Week/Day 分区、动作表格
-- 方案：`jsPDF + jspdf-autotable`
-- 已支持中文字体嵌入，避免中文乱码
-
----
-
-## 9. AI JSON Schema 文件
-
-- `src/lib/ai/schemas.ts`
-  - `aiTrainingPlanSchema`
-  - `aiNutritionPlanSchema`
-  - 生成请求 schema 与保存请求 schema
-- `src/lib/ai/mappers.ts`
-  - AI 训练计划 -> 现有 `training_plans` 链路
-  - AI 饮食计划 -> `nutrition_plans / days / meals`
-
----
-
-## 10. 本地运行与检查
+Convert test set to eval format, then run evaluation:
 
 ```bash
-npm install
-npm run dev
+npm run research:split-convert -- <test.jsonl> <eval_cases.jsonl>
+npm run research:eval -- <eval_cases.jsonl> <output_prefix>
 ```
 
-质量检查：
+### Dataset Generation
 
 ```bash
-npm run lint
-npm run build
+npm run research:generate -- <cases.jsonl> <output.jsonl>
+npm run research:build-sft -- <output.jsonl> <examples.jsonl>
+npm run research:split -- <sft.jsonl> <output_dir> 0.8 0.1 0.1
+npm run research:validate -- <dataset.jsonl>
 ```
 
----
+See [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md) for full details.
 
-## 11. 目录结构（核心）
+## Project Structure
 
 ```text
 src/
-  app/
-    api/ai/
-  components/
-    auth/
-    dashboard/
-    layout/
-    plan/
-    settings/
-    ...
+  app/                    # Next.js App Router pages and API routes
+    api/ai/               # AI generation and history endpoints
+  components/             # React UI components
   lib/
-    ai/
-    schemas.ts
-    ...
+    ai/schemas.ts         # Zod schemas for training/nutrition plans
   services/
-    ai/
-    data-repository.ts
-    ...
-  store/
-  types/
-messages/
-supabase/
-public/
+    ai/                   # AI provider, prompts, generation, config
+  stores/                 # Zustand state management
+research/
+  liftcut-coach/
+    scripts/              # Eval, seed generation, SFT conversion
+    train/                # LoRA training configs (examples only)
+tests/                    # Unit tests
+docs/                     # Technical report, interview Q&A
 ```
 
----
+## Testing
 
-## 12. 安全说明
+```bash
+npm test        # 35/35 pass
+npm run lint    # 0 errors, 2 warnings
+npm run build   # compiled successfully
+```
 
-- 不要把 `DEEPSEEK_API_KEY`、`LOCAL_AI_API_KEY` 或 `AI_API_KEY` 写入前端代码
-- 不要提交 `.env.local`
-- 不要在日志中打印 API key
+## Supabase Schema
 
----
+Initialize with `supabase/schema.sql`. Key tables:
 
-## 13. 后续迭代建议
+- `profiles` — user display name, avatar
+- `user_settings` — fitness goals, training preferences, AI profile
+- `ai_training_plan_generations` — AI training plan history
+- `ai_nutrition_plan_generations` — AI nutrition plan history
+- `nutrition_plans` / `nutrition_plan_days` / `nutrition_plan_meals` — saved nutrition plans
 
-- 基于历史训练记录做周计划微调（仍保持结构化 JSON 输出）
-- 增加 AI 生成结果对比与版本回滚
-- 增加 nutrition plan 与每日 food log 的自动对照分析
+## Limitations
+
+- LoRA local deployment requires a GPU (tested on A800-80GB).
+- Web App end-to-end smoke test requires valid Supabase env vars.
+- Evaluation results are from 293 held-out cases and should be further validated with real users.
+- Local LoRA latency is acceptable for demos but may need optimization for production scale.
+
+## Roadmap
+
+- Add screenshots and public demo video
+- Re-run Web App smoke test with Supabase env configured
+- Audit normalize metric definition
+- Add smaller 7B / 3B LoRA variant for cheaper deployment
+- Add streaming generation
+- Add user feedback loop for AI plan quality
+
+## Documentation
+
+- [Technical Report](docs/LiftCut-Coach-Technical-Report.md)
+- [Interview Q&A](docs/Interview-QA.md)
+- [Project Structure](docs/Project-Structure.md)
+
+## License
+
+Private project.
