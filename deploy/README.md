@@ -2,6 +2,54 @@
 
 此配置会在同一台阿里云上海轻量服务器上运行应用容器和 Caddy 反向代理。应用端口 `3000` 不对公网开放；Caddy 只暴露 `80`、`443`，并在域名解析切换后自动申请和续期 HTTPS 证书。
 
+> 当前国内 Docker Hub 网络不稳定时，优先使用下方的「原生 Node.js + Nginx」方案。它不依赖 Docker Hub，适合此服务器的单站点部署。
+
+## 原生 Node.js + Nginx（推荐）
+
+安装 Node.js 24 与 Nginx：
+
+```bash
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg nginx
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
+sudo apt-get install -y nodejs
+```
+
+构建独立运行包并安装 systemd 服务：
+
+```bash
+cd /opt/liftcut-tracker
+npm ci
+NODE_OPTIONS=--max-old-space-size=1536 npm run build
+cp -a public .next/standalone/public
+mkdir -p .next/standalone/.next
+cp -a .next/static .next/standalone/.next/static
+sudo cp deploy/liftcut-tracker.service /etc/systemd/system/liftcut-tracker.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now liftcut-tracker
+```
+
+将 Nginx 配置为仅代理到本机应用端口：
+
+```bash
+sudo cp deploy/nginx/liftcut-tracker.conf /etc/nginx/sites-available/liftcut-tracker
+sudo ln -s /etc/nginx/sites-available/liftcut-tracker /etc/nginx/sites-enabled/liftcut-tracker
+sudo unlink /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl restart nginx
+curl -I http://127.0.0.1:3000/
+```
+
+确认 DNS 已指向本机、阿里云防火墙已放行 TCP `80` 和 `443` 后，为两个域名签发证书：
+
+```bash
+sudo apt-get install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d liftcuttracker.com -d www.liftcuttracker.com
+```
+
 ## 1. 服务器准备
 
 在服务器上以有 `sudo` 权限的用户执行：
