@@ -1,0 +1,12 @@
+.git
+.next
+.vercel
+node_modules
+.env*
+!.env.example
+npm-debug.log*
+research/liftcut-coach/outputs
+research/liftcut-coach/checkpoints
+research/liftcut-coach/data/raw
+research/liftcut-coach/data/generated
+research/liftcut-coach/data/splits
