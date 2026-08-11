@@ -19,6 +19,11 @@ import {
   resolveAiProfileForRequest,
 } from "@/app/api/ai/_profile";
 
+// A complete seven-day JSON plan can take longer than a typical CRUD request.
+// Keep the platform deadline above the provider's 120-second hard timeout so the
+// route can return a structured error instead of dropping the connection.
+export const maxDuration = 180;
+
 export async function POST(request: Request) {
   const auth = await requireApiContext(request);
   if (auth.errorResponse) {

@@ -13,7 +13,7 @@ const DEFAULT_LOCAL_API_KEY = "EMPTY";
 const DEFAULT_LOCAL_MODEL = "liftcut-coach";
 
 const DEFAULT_TIMEOUT_MS = 30_000;
-const DEFAULT_DEEPSEEK_TIMEOUT_MS = 45_000;
+const DEFAULT_DEEPSEEK_TIMEOUT_MS = 120_000;
 const DEFAULT_LOCAL_TIMEOUT_MS = 120_000;
 
 function readEnv(name: string): string {

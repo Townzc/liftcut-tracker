@@ -159,7 +159,18 @@ export async function callAiProviderForJson(
         ? { thinking: { type: "disabled" as const } }
         : {}),
     };
-    completion = await client.chat.completions.create(request);
+    // The SDK-level timeout primarily protects connection setup. A response body can
+    // still stall after headers arrive, so pass an explicit abort signal as a hard
+    // end-to-end deadline as well.
+    const abortController = new AbortController();
+    const timeoutHandle = setTimeout(() => abortController.abort(), config.timeoutMs);
+    try {
+      completion = await client.chat.completions.create(request, {
+        signal: abortController.signal,
+      });
+    } finally {
+      clearTimeout(timeoutHandle);
+    }
   } catch (error) {
     throw new AiServiceError(
       "AI_REQUEST_FAILED",

@@ -19,6 +19,8 @@ import {
   resolveAiProfileForRequest,
 } from "@/app/api/ai/_profile";
 
+export const maxDuration = 180;
+
 export async function POST(request: Request) {
   const auth = await requireApiContext(request);
   if (auth.errorResponse) {
