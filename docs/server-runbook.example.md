@@ -40,7 +40,7 @@ npm run build
 AI_PROVIDER=deepseek
 DEEPSEEK_API_KEY=<SERVER_ONLY_KEY>
 DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_MODEL=deepseek-v4-flash
 ```
 
 ## 本地模型研究模式

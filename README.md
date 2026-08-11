@@ -241,7 +241,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 AI_PROVIDER=deepseek
 DEEPSEEK_API_KEY=your_deepseek_api_key
 DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_MODEL=deepseek-v4-flash
 
 # Local research provider
 LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
@@ -274,7 +274,7 @@ AI_MODEL=
 AI_PROVIDER=deepseek
 DEEPSEEK_API_KEY=your_server_only_key
 DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_MODEL=deepseek-v4-flash
 ```
 
 科研演示时，可以将 Next.js 服务连接到同机运行的 vLLM、Ollama 或 llama.cpp OpenAI-compatible 服务：

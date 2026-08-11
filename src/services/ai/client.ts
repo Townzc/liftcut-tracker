@@ -139,6 +139,7 @@ export async function callAiProviderForJson(
     completion = await client.chat.completions.create({
       model: config.model,
       temperature: 0.4,
+      max_tokens: 16_384,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: input.systemPrompt },
