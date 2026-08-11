@@ -1,49 +1,53 @@
 ﻿# LiftCut Tracker (V1.7)
 
-> 面向健身新手的开源训练、饮食与身体趋势追踪器。先用清晰、安全意识强的引导完成第一次训练，再把每次进步留在同一条时间线上。
+<p align="center">
+  <a href="https://www.liftcuttracker.com/">
+    <img src="docs/assets/liftcut-readme-hero.png" alt="LiftCut Tracker connects beginner-friendly exercise, nutrition, body progress, and intelligent coaching" width="100%" />
+  </a>
+</p>
 
-**[🌐 官方网站：www.liftcuttracker.com](https://www.liftcuttracker.com/)** · **[🧭 免登录新手动作 Demo](https://www.liftcuttracker.com/demo)**
+<p align="center">
+  <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
+  面向健身新手的开源训练、饮食与身体趋势追踪器。
+</p>
 
-LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减脂追踪 Web 应用。
+<p align="center">
+  <strong><a href="https://www.liftcuttracker.com/">🌐 官方网站 · www.liftcuttracker.com</a></strong>
+  ·
+  <strong><a href="https://www.liftcuttracker.com/demo">🏋️ 免登录动作 Demo</a></strong>
+  ·
+  <a href="docs/AI_COACH_AGENT.md">🤖 AI Coach 蓝图</a>
+</p>
 
-本版本重点：
-- 基础信息支持 `gender / age`，默认未填写状态为 `unknown / 0`
-- 新用户首次登录进入 `/onboarding` 完成基础信息
-- 用户资料支持昵称与头像（Supabase Storage）
-- 训练计划支持文本导入、编辑、PDF 导出
-- 接入可配置的服务端 AI Provider（默认 DeepSeek）实现训练/饮食计划生成、预览、编辑、确认保存
-- 新增游客模式（本地数据）+ 游客转正式账号迁移
-- AI 历史支持单条删除与清空
+<p align="center">
+  <a href="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://www.liftcuttracker.com/"><img alt="Live demo" src="https://img.shields.io/badge/live-liftcuttracker.com-65a30d" /></a>
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2563eb" /></a>
+  <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-111827" />
+  <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6" />
+</p>
 
----
+> **LiftCut Tracker** is an open-source, beginner-friendly fitness companion that keeps training, nutrition, and body-progress records on one timeline—and turns them into clear, conservative next steps.
 
-## 1. 技术栈
+## Why LiftCut?
 
-- Next.js 16（App Router）
-- TypeScript（strict）
-- Tailwind CSS
-- shadcn/ui
-- Zustand
-- Zod
-- next-intl
-- Supabase Auth + Postgres + Storage
-- Recharts
-- jsPDF + jspdf-autotable
-- OpenAI SDK（兼容方式调用 DeepSeek）
+| 🏋️ Start safely | 🥗 Build sustainable habits | 📈 See the trend | 🤖 Grow into an AI Coach |
+| --- | --- | --- | --- |
+| Bilingual beginner demo, easier variations, coaching cues, and conservative starting doses. | Daily food logging and editable AI nutrition plans, without pretending that one menu fits everyone. | Workout completion, volume, calories, protein, weight, and waist trends in one product. | Structured AI plans today; a conversational, memory-aware coach with evidence and confirmation gates is on the roadmap. |
 
----
+The full app includes guest mode, onboarding, editable training plans, PDF export, Supabase-backed accounts, AI generation history, and a configurable server-side AI provider. Health content is general educational guidance—not diagnosis or a replacement for a doctor, physical therapist, or qualified coach.
 
-## Live Demo & Open Source
+The public `/demo` adapts a small MIT-licensed **text** subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). LiftCut's hero artwork is original; the reference repository's separately licensed images and videos are not copied. See [third-party notices](THIRD_PARTY_NOTICES.md).
 
-**[Official website: www.liftcuttracker.com](https://www.liftcuttracker.com/)** · **[No-sign-in beginner demo](https://www.liftcuttracker.com/demo)** · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [MIT License](LICENSE)
+## Explore the project
 
-[![CI](https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml)
-[![Live demo](https://img.shields.io/badge/live-www.liftcuttracker.com-65a30d)](https://www.liftcuttracker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+- **Use it:** [official website](https://www.liftcuttracker.com/) · [no-sign-in beginner demo](https://www.liftcuttracker.com/demo)
+- **Build with it:** [contributing guide](CONTRIBUTING.md) · [security policy](SECURITY.md) · [MIT license](LICENSE)
+- **Follow the next milestone:** [conversational AI Coach architecture and implementation roadmap](docs/AI_COACH_AGENT.md)
 
-LiftCut is designed to help beginners complete a safe, understandable first session and then keep training, nutrition, and body-progress records on one timeline. The public bilingual `/demo` includes six starter movements, body-area filters, easier variations, conservative starting doses, and clear health-information boundaries.
+## Tech stack
 
-The demo adapts a small MIT-licensed text subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). It does not copy the reference repository's separately licensed images or videos. See [third-party notices](THIRD_PARTY_NOTICES.md).
+Next.js 16 App Router · TypeScript strict · Tailwind CSS · shadcn/ui · Zustand · Zod · next-intl · Supabase Auth/Postgres/Storage · Recharts · jsPDF · OpenAI-compatible SDK with DeepSeek
 
 ## System Architecture
 
@@ -451,6 +455,7 @@ public/
 
 ## 13. 后续迭代建议
 
-- 基于历史训练记录做周计划微调（仍保持结构化 JSON 输出）
-- 增加 AI 生成结果对比与版本回滚
+- 推进 [`LiftCut AI Coach Agent`](docs/AI_COACH_AGENT.md)：先做带证据的每日建议，再增加对话、可控记忆与确认后写入
+- 增加 AI 生成结果对比、版本回滚与 prompt/model 评测面板
 - 增加 nutrition plan 与每日 food log 的自动对照分析
+- 为健康安全边界、跨用户 RLS、过期记忆和 prompt injection 建立公开回归用例

@@ -12,6 +12,15 @@ import type {
 let cachedClient: OpenAI | null = null;
 let cachedConfigKey = "";
 
+const AI_REQUEST_TIMEOUT_MS = 45_000;
+const AI_MAX_RETRIES = 0;
+const AI_MAX_OUTPUT_TOKENS = 16_384;
+
+type DeepSeekJsonCompletionRequest =
+  OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming & {
+    thinking?: { type: "disabled" };
+  };
+
 function getConfigCacheKey(config: AiProviderConfig): string {
   return JSON.stringify([
     config.provider,
@@ -25,7 +34,8 @@ export function createAiClient(config: AiProviderConfig): OpenAI {
   return new OpenAI({
     apiKey: config.apiKey,
     baseURL: config.baseURL,
-    timeout: 30_000,
+    timeout: AI_REQUEST_TIMEOUT_MS,
+    maxRetries: AI_MAX_RETRIES,
   });
 }
 
@@ -136,16 +146,20 @@ export async function callAiProviderForJson(
 
   let completion: Awaited<ReturnType<typeof client.chat.completions.create>>;
   try {
-    completion = await client.chat.completions.create({
+    const request: DeepSeekJsonCompletionRequest = {
       model: config.model,
       temperature: 0.4,
-      max_tokens: 16_384,
+      max_tokens: AI_MAX_OUTPUT_TOKENS,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: input.systemPrompt },
         { role: "user", content: input.userPrompt },
       ],
-    });
+      ...(config.provider === "deepseek"
+        ? { thinking: { type: "disabled" as const } }
+        : {}),
+    };
+    completion = await client.chat.completions.create(request);
   } catch (error) {
     throw new AiServiceError(
       "AI_REQUEST_FAILED",
