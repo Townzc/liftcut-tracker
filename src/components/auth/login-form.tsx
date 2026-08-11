@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { LoaderCircle, LogIn, MessageCircle, UserRound } from "lucide-react";
+import { ArrowUpRight, LoaderCircle, LogIn, MessageCircle, UserRound } from "lucide-react";
 
 import { AuthExperience } from "@/components/auth/auth-experience";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -148,6 +148,17 @@ export function LoginForm() {
             {guestLoading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <UserRound className="mr-2 h-4 w-4" />}
             {t("continueAsGuest")}
           </Button>
+
+          <Link
+            href="/demo"
+            className="flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900 transition hover:border-emerald-200 hover:bg-emerald-100"
+          >
+            <span>
+              <span className="block">{t("beginnerDemo")}</span>
+              <span className="mt-0.5 block text-xs font-normal text-emerald-700">{t("beginnerDemoHint")}</span>
+            </span>
+            <ArrowUpRight className="h-4 w-4 shrink-0" />
+          </Link>
 
           <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
             <Link href="/register" className="font-medium text-emerald-700 hover:text-emerald-900">

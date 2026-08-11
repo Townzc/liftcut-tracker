@@ -29,7 +29,7 @@ interface NavItem {
   showInMobile?: boolean;
 }
 
-const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding"];
+const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding", "/demo"];
 
 function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }) {
   const pathname = usePathname();

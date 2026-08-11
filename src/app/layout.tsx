@@ -20,8 +20,25 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LiftCut Tracker",
-  description: "Minimal training plan and fat-loss tracker MVP",
+  metadataBase: new URL("https://www.liftcuttracker.com"),
+  title: {
+    default: "LiftCut Tracker",
+    template: "%s | LiftCut Tracker",
+  },
+  description:
+    "A beginner-friendly, open-source training, nutrition, and body-progress tracker with guest mode and configurable AI planning.",
+  applicationName: "LiftCut Tracker",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "LiftCut Tracker",
+    description:
+      "Beginner-friendly training, nutrition, and body-progress tracking in one open-source app.",
+    url: "https://www.liftcuttracker.com/",
+    siteName: "LiftCut Tracker",
+    type: "website",
+  },
 };
 
 const themeScript = `

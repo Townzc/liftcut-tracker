@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a reproducible problem in LiftCut Tracker.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve LiftCut Tracker. Do not include API keys, passwords, or personal health data.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Tell us what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. See ...
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Session mode
+      options:
+        - Guest
+        - Signed in
+        - Public demo
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: Chrome on Windows 11, iPhone Safari, etc.
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add screenshots or logs only after removing private data and secrets.

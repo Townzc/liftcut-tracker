@@ -1,5 +1,9 @@
 ﻿# LiftCut Tracker (V1.7)
 
+> 面向健身新手的开源训练、饮食与身体趋势追踪器。先用清晰、安全意识强的引导完成第一次训练，再把每次进步留在同一条时间线上。
+
+**[🌐 官方网站：www.liftcuttracker.com](https://www.liftcuttracker.com/)** · **[🧭 免登录新手动作 Demo](https://www.liftcuttracker.com/demo)**
+
 LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减脂追踪 Web 应用。
 
 本版本重点：
@@ -28,6 +32,18 @@ LiftCut Tracker 是一个极简、无广告、面向日常使用的训练与减�
 - OpenAI SDK（兼容方式调用 DeepSeek）
 
 ---
+
+## Live Demo & Open Source
+
+**[Official website: www.liftcuttracker.com](https://www.liftcuttracker.com/)** · **[No-sign-in beginner demo](https://www.liftcuttracker.com/demo)** · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [MIT License](LICENSE)
+
+[![CI](https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/live-www.liftcuttracker.com-65a30d)](https://www.liftcuttracker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+LiftCut is designed to help beginners complete a safe, understandable first session and then keep training, nutrition, and body-progress records on one timeline. The public bilingual `/demo` includes six starter movements, body-area filters, easier variations, conservative starting doses, and clear health-information boundaries.
+
+The demo adapts a small MIT-licensed text subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). It does not copy the reference repository's separately licensed images or videos. See [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ## System Architecture
 
@@ -133,6 +149,7 @@ flowchart TB
 - `/settings` 设置
 - `/onboarding` 首次资料填写
 - `/login` / `/register` / `/forgot-password`
+- `/demo` public bilingual beginner exercise explorer (no sign-in required)
 
 路由守卫：
 - 未登录且非游客访问业务页会重定向到 `/login`
@@ -426,6 +443,9 @@ public/
 - 不要把 `DEEPSEEK_API_KEY`、`LOCAL_AI_API_KEY` 或 `AI_API_KEY` 写入前端代码
 - 不要提交 `.env.local`
 - 不要在日志中打印 API key
+- 健康相关内容仅用于一般教育与记录，不做诊断，也不替代医生、物理治疗师或持证教练的个体化建议
+
+动作数据与健康参考资料的来源和许可见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
 
 ---
 

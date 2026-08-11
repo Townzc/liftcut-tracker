@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest a focused improvement for users or maintainers.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Who has this problem, and what are they trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: Describe the smallest useful outcome, not only a technical implementation.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Beginner experience
+        - Training plans and workouts
+        - Nutrition
+        - Body metrics and trends
+        - AI planning and research
+        - Accessibility and localization
+        - Deployment and maintenance
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety, privacy, or licensing considerations
+      description: Note any health claims, user data, third-party content, or new permissions involved.

@@ -54,6 +54,8 @@
     "oauthMissingCode": "登录回调缺少授权码，请重新尝试。",
     "oauthExchangeFailed": "第三方登录失败，请稍后重试。",
     "continueAsGuest": "以游客身份继续",
+    "beginnerDemo": "先看新手动作 Demo",
+    "beginnerDemoHint": "无需登录，约 1 分钟即可体验",
     "productKicker": "训练、饮食、趋势一处管理",
     "heroEyebrow": "更清晰的减脂与力量追踪",
     "heroTitle": "把训练计划、饮食记录和身体变化放在同一条线索里。",
