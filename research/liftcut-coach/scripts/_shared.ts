@@ -16,15 +16,25 @@ export const researchTaskSchema = z.enum([
 
 const jsonObjectSchema = z.record(z.string(), z.unknown());
 
+const researchInputSchema = z.object({
+  locale: aiLocaleSchema.default("zh-CN"),
+  profile_snapshot: aiProfileSnapshotSchema,
+  constraints: jsonObjectSchema.default({}),
+});
+
+export const researchRequestCaseSchema = z.object({
+  id: z.string().trim().min(1),
+  task: researchTaskSchema,
+  instruction: z.string().trim().min(1),
+  input: researchInputSchema,
+});
+
 export const researchExampleSchema = z
   .object({
+    id: z.string().trim().min(1).optional(),
     task: researchTaskSchema,
     instruction: z.string().trim().min(1),
-    input: z.object({
-      locale: aiLocaleSchema.default("zh-CN"),
-      profile_snapshot: aiProfileSnapshotSchema,
-      constraints: jsonObjectSchema.default({}),
-    }),
+    input: researchInputSchema,
     output: z.unknown(),
   })
   .superRefine((value, context) => {

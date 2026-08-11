@@ -17,6 +17,18 @@ import type {
   AiProviderName,
 } from "@/services/ai/types";
 
+function unwrapNutritionPlanCandidate(value: unknown): unknown {
+  if (
+    value &&
+    typeof value === "object" &&
+    "nutrition_plan" in value &&
+    typeof (value as Record<string, unknown>).nutrition_plan === "object"
+  ) {
+    return (value as Record<string, unknown>).nutrition_plan;
+  }
+  return value;
+}
+
 export interface NutritionGenerationResult {
   provider: AiProviderName;
   modelName: string;
@@ -65,7 +77,8 @@ export async function generateStructuredNutritionPlan(input: {
     userPrompt: prompt.userPrompt,
   });
 
-  const rawParsed = aiNutritionPlanRawSchema.safeParse(response.json);
+  const unwrappedJson = unwrapNutritionPlanCandidate(response.json);
+  const rawParsed = aiNutritionPlanRawSchema.safeParse(unwrappedJson);
   if (!rawParsed.success) {
     const issues = rawParsed.error.issues.map((issue) => ({
       path: issue.path,

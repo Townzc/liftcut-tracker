@@ -46,6 +46,10 @@ research/liftcut-coach/checkpoints/
 research/liftcut-coach/data/raw/
 research/liftcut-coach/data/generated/
 research/liftcut-coach/data/splits/
+research/liftcut-coach/data/
+*.results.jsonl
+*.failed.jsonl
+train.log
 *.safetensors
 *.gguf
 *.ckpt

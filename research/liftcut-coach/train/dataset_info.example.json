@@ -1,0 +1,18 @@
+{
+  "liftcut_sft_v2": {
+    "file_name": "/path/to/seed_full_splits_v2/train.jsonl",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output"
+    }
+  },
+  "liftcut_sft_v2_val": {
+    "file_name": "/path/to/seed_full_splits_v2/val.jsonl",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output"
+    }
+  }
+}

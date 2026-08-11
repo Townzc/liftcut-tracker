@@ -1,4 +1,4 @@
-﻿# LiftCut Tracker (V1.7)
+# LiftCut Tracker
 
 <p align="center">
   <a href="https://www.liftcuttracker.com/">
@@ -8,454 +8,215 @@
 
 <p align="center">
   <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
-  面向健身新手的开源训练、饮食与身体趋势追踪器。
+  An open-source, beginner-friendly fitness companion for training, nutrition, body trends, and structured AI guidance.
 </p>
 
 <p align="center">
-  <strong><a href="https://www.liftcuttracker.com/">🌐 官方网站 · www.liftcuttracker.com</a></strong>
+  <strong><a href="https://www.liftcuttracker.com/">🌐 Official website · www.liftcuttracker.com</a></strong>
   ·
-  <strong><a href="https://www.liftcuttracker.com/demo">🏋️ 免登录动作 Demo</a></strong>
+  <strong><a href="https://www.liftcuttracker.com/demo">🏋️ No-sign-in beginner demo</a></strong>
   ·
-  <a href="docs/AI_COACH_AGENT.md">🤖 AI Coach 蓝图</a>
+  <a href="docs/AI_COACH_AGENT.md">🤖 AI Coach blueprint</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg" /></a>
-  <a href="https://www.liftcuttracker.com/"><img alt="Live demo" src="https://img.shields.io/badge/live-liftcuttracker.com-65a30d" /></a>
+  <a href="https://www.liftcuttracker.com/"><img alt="Live" src="https://img.shields.io/badge/live-liftcuttracker.com-65a30d" /></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2563eb" /></a>
   <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-111827" />
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6" />
 </p>
 
-> **LiftCut Tracker** is an open-source, beginner-friendly fitness companion that keeps training, nutrition, and body-progress records on one timeline—and turns them into clear, conservative next steps.
+LiftCut keeps workout completion, exercise performance, food logs, calories, protein, weight, waist, and AI-generated plans on one timeline. The product is designed to help a beginner understand the next useful step without pretending that a general-purpose app can replace individualized medical or coaching care.
 
 ## Why LiftCut?
 
-| 🏋️ Start safely | 🥗 Build sustainable habits | 📈 See the trend | 🤖 Grow into an AI Coach |
+| Start safely | Build sustainable habits | See the trend | Get reliable AI output |
 | --- | --- | --- | --- |
-| Bilingual beginner demo, easier variations, coaching cues, and conservative starting doses. | Daily food logging and editable AI nutrition plans, without pretending that one menu fits everyone. | Workout completion, volume, calories, protein, weight, and waist trends in one product. | Structured AI plans today; a conversational, memory-aware coach with evidence and confirmation gates is on the roadmap. |
+| Bilingual movement demo, easier variations, coaching cues, and conservative starting doses. | Editable plans and daily logs instead of a rigid one-size-fits-all program. | Training, nutrition, and body data stay connected rather than scattered across apps. | Model output is extracted, normalized, strictly validated, previewed, and only saved after confirmation. |
 
-The full app includes guest mode, onboarding, editable training plans, PDF export, Supabase-backed accounts, AI generation history, and a configurable server-side AI provider. Health content is general educational guidance—not diagnosis or a replacement for a doctor, physical therapist, or qualified coach.
+### What works today
 
-The public `/demo` adapts a small MIT-licensed **text** subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). LiftCut's hero artwork is original; the reference repository's separately licensed images and videos are not copied. See [third-party notices](THIRD_PARTY_NOTICES.md).
+- public bilingual `/demo` with body-area filters, six starter movements, regressions, cues, and safety boundaries;
+- account onboarding plus a local-first guest mode that can later migrate data to Supabase;
+- editable training plans, text import, workout logging, personal records, and PDF export;
+- food logging, nutrition summaries, body measurements, and trend charts;
+- server-side AI training and nutrition generation with structured preview/edit/confirm-save flow;
+- DeepSeek, generic OpenAI-compatible, and local vLLM provider modes;
+- versioned prompts, Zod schemas, generation history, evaluation scripts, and local LoRA research assets.
 
-## Explore the project
+The demo adapts a small MIT-licensed **text** subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). LiftCut's hero artwork is original; the reference repository's separately licensed images and videos are not copied. See [third-party notices](THIRD_PARTY_NOTICES.md).
 
-- **Use it:** [official website](https://www.liftcuttracker.com/) · [no-sign-in beginner demo](https://www.liftcuttracker.com/demo)
-- **Build with it:** [contributing guide](CONTRIBUTING.md) · [security policy](SECURITY.md) · [MIT license](LICENSE)
-- **Follow the next milestone:** [conversational AI Coach architecture and implementation roadmap](docs/AI_COACH_AGENT.md)
+## Structured-output research
 
-## Tech stack
+The repository includes a reproducible LiftCut-Coach research pipeline for dataset validation, train/validation/test splitting, SFT conversion, provider evaluation, and local LoRA serving.
 
-Next.js 16 App Router · TypeScript strict · Tailwind CSS · shadcn/ui · Zustand · Zod · next-intl · Supabase Auth/Postgres/Storage · Recharts · jsPDF · OpenAI-compatible SDK with DeepSeek
+| Model | JSON Parse | Final Schema | Constraint Pass | Avg Latency | P50 | P95 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DeepSeek v4 Pro | 99.66% | 97.95% | 97.95% | 147.7s | 133.6s | 277.4s |
+| MiMo v2.5 Pro | 99.32% | 98.29% | 97.27% | 38.7s | 35.3s | 65.6s |
+| **LiftCut-Coach LoRA** | **100.00%** | **100.00%** | **99.66%** | **36.8s** | **33.0s** | **63.3s** |
 
-## System Architecture
+These results come from 293 held-out evaluation cases and should be read as a structured-output engineering benchmark, not as evidence of clinical effectiveness. Methodology and limitations are documented in the [technical report](docs/LiftCut-Coach-Technical-Report.md).
+
+## System architecture
 
 ```mermaid
 flowchart TB
-  User["Users<br/>browser / mobile"]:::actor
+  User["Browser / mobile user"] --> Guard["Auth + onboarding guard"]
+  Guard --> App["Next.js App Router"]
+  App --> Features["Dashboard · plans · workout · nutrition · body · demo"]
+  Features <--> Store["Zustand + guest localStorage"]
+  Features --> Repo["Data repository"]
+  Repo --> Supabase["Supabase Auth · Postgres · Storage"]
 
-  subgraph Client["Client experience"]
-    direction TB
-    Shell["Next.js App Router<br/>layouts + route pages"]:::app
-    Features["Product surfaces<br/>dashboard · plan · workout · nutrition · body · settings"]:::app
-    Store["Zustand store<br/>UI state + guest localStorage"]:::client
-    I18n["next-intl messages<br/>zh-CN / en"]:::client
+  Features --> API["Server-side /api/ai/*"]
+  API --> Context["Profile + constraints + guest quota"]
+  Context --> Provider["Provider abstraction"]
+  Provider --> DeepSeek["DeepSeek V4 Flash"]
+  Provider --> Compatible["OpenAI-compatible provider"]
+  Provider --> Local["vLLM + LiftCut-Coach LoRA"]
+  DeepSeek --> Pipeline["Extract · unwrap · normalize · strict Zod · constraints"]
+  Compatible --> Pipeline
+  Local --> Pipeline
+  Pipeline --> Preview["Editable preview"]
+  Preview -->|"user confirms"| Supabase
 
-    Shell --> Features
-    Features <--> Store
-    Shell --> I18n
-  end
-
-  subgraph Boundary["Access and data boundary"]
-    direction TB
-    Middleware["middleware.ts<br/>auth + onboarding guard"]:::server
-    Repository["data-repository.ts<br/>CRUD + guest migration"]:::server
-    BrowserSupabase["Supabase browser client<br/>session-aware data access"]:::data
-  end
-
-  subgraph AiRuntime["Server-side AI runtime"]
-    direction TB
-    Api["/api/ai/* routes<br/>generate · save · history"]:::server
-    Profile["Profile snapshot resolver<br/>authenticated user or guest payload"]:::server
-    Quota["Guest AI quota<br/>local counter + server cookie"]:::server
-    Services["Pure generation services<br/>training plan + nutrition plan"]:::ai
-    Provider["AI Provider adapter<br/>DeepSeek · local · OpenAI-compatible"]:::ai
-    Model["External or local model<br/>DeepSeek API / vLLM / Ollama / llama.cpp"]:::external
-    Validation["Zod validation pipeline<br/>raw schema → normalize → strict schema"]:::schema
-    History["AI generation history<br/>success / failed generations"]:::data
-
-    Api --> Profile
-    Api --> Quota
-    Profile --> Services
-    Quota --> Services
-    Services --> Provider --> Model --> Validation
-    Validation -->|"validated JSON plan"| Api
-    Api -->|"generation audit trail"| History
-  end
-
-  subgraph Supabase["Supabase backend"]
-    direction TB
-    Auth["Auth"]:::data
-    Postgres["Postgres<br/>profiles · settings · plans · workout · food · body · AI histories"]:::data
-    Storage["Storage<br/>avatars"]:::data
-  end
-
-  subgraph Research["LiftCut-Coach research loop"]
-    direction TB
-    Cases["JSONL cases / examples"]:::research
-    Scripts["Research scripts<br/>validate · split · build-sft · eval"]:::research
-    Artifacts["Training and evaluation artifacts<br/>SFT JSONL · LoRA config · eval reports"]:::research
-    Feedback["Prompt / schema / model improvements"]:::research
-
-    Cases --> Scripts --> Artifacts --> Feedback
-  end
-
-  User --> Middleware --> Shell
-  Features --> Repository --> BrowserSupabase
-  BrowserSupabase --> Auth
-  BrowserSupabase --> Postgres
-  BrowserSupabase --> Storage
-  Features -->|"AI request / preview / save"| Api
-  Api -->|"confirmed plan writes + history reads"| Postgres
-  History --> Postgres
-  Validation -->|"preview + editable structured plan"| Features
-  Scripts -.->|"reuse provider"| Services
-  Scripts -.->|"reuse schemas"| Validation
-  Feedback -.->|"improve prompts / local model"| Provider
-
-  classDef actor fill:#f8fafc,stroke:#0f172a,stroke-width:1.5px,color:#0f172a
-  classDef app fill:#eff6ff,stroke:#2563eb,stroke-width:1.2px,color:#0f172a
-  classDef client fill:#eef2ff,stroke:#4f46e5,stroke-width:1.2px,color:#111827
-  classDef server fill:#ecfeff,stroke:#0891b2,stroke-width:1.2px,color:#0f172a
-  classDef ai fill:#f5f3ff,stroke:#7c3aed,stroke-width:1.2px,color:#111827
-  classDef schema fill:#fff7ed,stroke:#ea580c,stroke-width:1.2px,color:#111827
-  classDef data fill:#ecfdf5,stroke:#059669,stroke-width:1.2px,color:#0f172a
-  classDef external fill:#fef2f2,stroke:#dc2626,stroke-width:1.2px,color:#111827
-  classDef research fill:#fdf4ff,stroke:#c026d3,stroke-width:1.2px,color:#111827
+  Research["JSONL cases · SFT · eval"] -.-> Provider
+  Research -.-> Pipeline
 ```
 
-设计重点：
-- 前端只负责表单、预览、编辑、确认保存；AI Key 永远留在服务端。
-- 训练计划和饮食计划共用同一套 AI Provider、prompt、normalize 和 Zod schema 校验链路。
-- `research/liftcut-coach` 不直接写生产库，只复用 Provider 与 schema 做样本校验、SFT 构建和评测，形成独立的研究反馈回路。
+## AI reliability pipeline
 
----
+Every generated plan follows the same deterministic boundary:
 
-## 2. 页面与路由
+```text
+strict prompt + schema example
+→ provider JSON mode
+→ first-complete-object extraction
+→ wrapper-key unwrapping
+→ enum and field normalization
+→ strict final Zod validation
+→ business-constraint checks
+→ editable preview
+→ user-confirmed save
+```
 
-- `/` Dashboard
-- `/plan` 训练计划
-- `/plan/ai` AI 计划生成与预览
-- `/workout` 训练记录
-- `/nutrition` 饮食记录
-- `/body` 身体数据
-- `/settings` 设置
-- `/onboarding` 首次资料填写
-- `/login` / `/register` / `/forgot-password`
-- `/demo` public bilingual beginner exercise explorer (no sign-in required)
+DeepSeek V4 requests explicitly use non-thinking mode for bounded structured generation, a provider-specific timeout, no hidden SDK retry loop, and a maximum output-token limit. API keys remain server-only and error details redact the active key.
 
-路由守卫：
-- 未登录且非游客访问业务页会重定向到 `/login`
-- 已登录但基础资料未完成会重定向到 `/onboarding`
-- 游客模式可访问业务页与 `/onboarding`
+## Conversational AI Coach roadmap
 
----
+The next milestone is not an unlimited chatbot. It is a bounded agent that can explain which LiftCut records it used and propose the next training or recovery step.
 
-## 3. 已有核心能力
+| Phase | Deliverable | Write access |
+| --- | --- | --- |
+| 1 | Read-only “Today” recommendation from recent training, nutrition, and body trends | None |
+| 2 | Conversation threads, rolling context, and user-controlled durable memory | Memory only after confirmation |
+| 3 | Typed tools that propose plan adjustments or check-ins | Every mutation previewed and confirmed |
+| 4 | Safety, stale-memory, cross-user RLS, prompt-injection, and schema regression evals | Audited |
 
-- 训练计划：创建、文本导入、编辑、设为生效、删除、PDF 导出
-- 训练记录：按周/天录入动作实际数据并保存，支持最近记录查看详情
-- 饮食记录：新增/编辑/删除、常用食物快捷添加、分餐统计
-- 身体数据：体重/腰围记录与趋势图
-- 设置：用户资料、目标参数、语言切换、数据导出、登出
-- 游客模式：无账号即可体验，数据仅本机保存，可升级并迁移数据
+See the complete [AI Coach Agent blueprint](docs/AI_COACH_AGENT.md) for the memory model, tool boundary, structured response contract, RLS requirements, safety rules, and MVP acceptance criteria.
 
----
+## Pages and routes
 
-## 4. 用户资料（昵称 + 头像）
+| Route | Purpose |
+| --- | --- |
+| `/` | Daily dashboard and trends |
+| `/demo` | Public beginner movement explorer |
+| `/plan` | Training plan management and PDF export |
+| `/plan/ai` | AI plan generation, structured preview, edit, and save |
+| `/workout` | Workout execution and history |
+| `/nutrition` | Food logging and daily nutrition summary |
+| `/body` | Weight and waist trends |
+| `/settings` | Profile, goals, preferences, language, and data controls |
+| `/onboarding` | First-run profile setup |
 
-设置页支持：
-- 昵称编辑（1-30 字符，自动 trim）
-- 头像上传 / 替换 / 删除
-- 格式限制：`image/png` `image/jpeg` `image/webp`
-- 大小限制：`<= 5MB`
+## Tech stack
 
-展示联动：
-- 桌面侧边栏用户区
-- 移动端顶部用户条
-- Dashboard 欢迎卡片
+**Product:** Next.js 16 App Router, TypeScript strict, Tailwind CSS, shadcn/ui, Zustand, next-intl, Recharts, jsPDF
 
-默认规则：
-- 未设置昵称时显示邮箱前缀
-- 无头像时显示首字母占位头像
+**Backend:** Next.js server routes, Supabase Auth, Postgres, Storage, Row Level Security, Zod
 
----
+**AI and research:** OpenAI-compatible SDK, DeepSeek V4, vLLM, Qwen2.5-14B-Instruct, LoRA, LLaMA-Factory, JSONL evaluation tooling
 
-## 5. AI 功能（服务端）
-
-### 5.1 设计原则
-
-- 仅服务端调用 AI Provider，前端不直连
-- API Key 仅在服务端环境变量使用
-- 默认使用 DeepSeek，也支持本地或通用 OpenAI-compatible 服务
-- 所有 AI 输出先做 Zod 校验，失败不入库
-- 流程为：生成 -> 预览/编辑 -> 用户确认 -> 保存
-
-### 5.2 AI API
-
-- `POST /api/ai/generate-training-plan`
-- `POST /api/ai/generate-nutrition-plan`
-- `POST /api/ai/save-training-plan`
-- `POST /api/ai/save-nutrition-plan`
-- `GET /api/ai/history`
-- `DELETE /api/ai/history`（单条删除 / 按类型清空 / 全部清空）
-
-### 5.3 AI 页面
-
-`/plan/ai` 提供：
-- 生成条件表单（目标、频率、时长、场地、器械、忌口、伤病等）
-- 训练计划结构化预览与编辑（JSON 仅高级模式）
-- 饮食计划结构化预览与编辑（JSON 仅高级模式）
-- 保存为正式计划
-- 最近生成历史回填、删除单条、清空历史
-
-### 5.4 游客模式（MVP）
-
-- 登录页支持“继续以游客身份使用”
-- 游客数据保存在当前设备（Zustand persist + localStorage）
-- 游客 AI 每日配额：10 次（本地计数 + 服务端 cookie 双重限制）
-- 游客 AI 历史保存在本地，可删除单条/清空全部
-- 登录后可一键迁移游客数据到正式账号：
-  - settings：只填充账号空白字段
-  - 训练计划：保留账号当前 active，游客计划以 inactive 导入
-  - workout / food / body / AI histories：追加导入
-
----
-
-## 6. 环境变量
-
-复制 `.env.example` 到 `.env.local`：
+## Quick start
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Default production provider
-AI_PROVIDER=deepseek
-DEEPSEEK_API_KEY=your_deepseek_api_key
-DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-v4-flash
-
-# Local research provider
-LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
-LOCAL_AI_API_KEY=EMPTY
-LOCAL_AI_MODEL=liftcut-coach
-
-# Generic OpenAI-compatible provider
-AI_BASE_URL=
-AI_API_KEY=
-AI_MODEL=
+git clone https://github.com/Townzc/liftcut-tracker.git
+cd liftcut-tracker
+npm install
+copy .env.example .env.local
+npm run dev
 ```
 
-未配置 AI 环境变量时：
-- 站点其他功能不受影响
-- AI 页面会提示“未配置 AI 服务”
+Open `http://localhost:3000`. The public demo and most guest tracking flows can be explored without an AI key.
 
----
-
-## AI Provider Modes
-
-`AI_PROVIDER` 支持以下模式：
-
-- `deepseek`：默认值，适合线上生产；读取 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`
-- `local`：用于科研或演示；读取 `LOCAL_AI_BASE_URL`、`LOCAL_AI_API_KEY`、`LOCAL_AI_MODEL`
-- `openai_compatible`：用于其他兼容 OpenAI Chat Completions API 的服务；读取 `AI_BASE_URL`、`AI_API_KEY`、`AI_MODEL`
-
-生产环境建议继续使用 DeepSeek：
+### Minimum environment
 
 ```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_publishable_or_anon_key
+
 AI_PROVIDER=deepseek
 DEEPSEEK_API_KEY=your_server_only_key
 DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
 DEEPSEEK_MODEL=deepseek-v4-flash
+DEEPSEEK_REQUEST_TIMEOUT_MS=45000
 ```
 
-科研演示时，可以将 Next.js 服务连接到同机运行的 vLLM、Ollama 或 llama.cpp OpenAI-compatible 服务：
+Provider modes:
 
-```env
-AI_PROVIDER=local
-LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
-LOCAL_AI_API_KEY=EMPTY
-LOCAL_AI_MODEL=liftcut-coach
-```
+| `AI_PROVIDER` | Use case | Main variables |
+| --- | --- | --- |
+| `deepseek` | hosted production model | `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL`, `DEEPSEEK_REQUEST_TIMEOUT_MS` |
+| `local` | research/demo with vLLM | `LOCAL_AI_BASE_URL`, `LOCAL_AI_MODEL`, `LOCAL_AI_REQUEST_TIMEOUT_MS` |
+| `openai_compatible` | another compatible service | `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL`, `AI_REQUEST_TIMEOUT_MS` |
 
-切换 Provider 不改变前端的生成、预览、编辑、确认保存流程。所有 Provider 输出仍会经过 tolerant raw schema、normalize 和 strict Zod schema 三阶段校验。
+Never put a real AI key in a `NEXT_PUBLIC_` variable, browser code, logs, fixtures, commits, or screenshots.
 
-不要在客户端代码、日志、Git 提交或公开文档中写入真实 API Key。除 `NEXT_PUBLIC_` 变量外，AI 配置均为 server-only。
-
-## LiftCut-Coach Research Pipeline
-
-`research/liftcut-coach` 提供独立的本地模型科研管线，不影响 Next.js 主应用构建：
-
-- 使用主应用 Zod Schema 校验训练和饮食黄金样本
-- 使用固定随机种子切分 train / val / test
-- 将黄金样本转换为 LLaMA-Factory Alpaca JSONL
-- 提供 LoRA 配置与 vLLM OpenAI-compatible serving 示例
-- 使用同一 Provider 层评测 DeepSeek、local 或其他兼容服务
-
-常用命令：
+## Research workflow
 
 ```bash
+# Validate examples or generated data against the production schemas
 npm run research:validate -- research/liftcut-coach/data/examples/training_plan_sample.jsonl
+
+# Build SFT data and deterministic splits
 npm run research:build-sft -- output.jsonl input.jsonl
 npm run research:split -- input.jsonl output_dir 0.8 0.1 0.1
-npm run research:eval -- research/liftcut-coach/data/eval_cases.jsonl
+
+# Generate cases and evaluate the selected provider
+npm run research:generate -- cases.jsonl output.jsonl
+npm run research:split-convert -- test.jsonl eval_cases.jsonl
+npm run research:eval -- eval_cases.jsonl output_prefix
 ```
 
-完整说明见 [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md)。线上环境建议继续使用 DeepSeek；本地模型主要用于 research/demo 和可控实验。
+Full instructions: [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md).
 
----
-
-## 7. Supabase Schema 与迁移
-
-初始化：执行 `supabase/schema.sql`。
-
-### 7.1 关键新增/扩展
-
-- `profiles`：`display_name` `avatar_url` `updated_at`
-- `user_settings`：
-  - 基础：`gender` `age`
-  - AI 相关：`fitness_goal` `training_experience` `training_location` `available_equipment` `session_duration_minutes` `diet_preference` `food_restrictions` `injury_notes` `lifestyle_notes`
-- AI 历史：
-  - `ai_training_plan_generations`
-  - `ai_nutrition_plan_generations`
-- 正式饮食计划：
-  - `nutrition_plans`
-  - `nutrition_plan_days`
-  - `nutrition_plan_meals`
-
-### 7.2 旧库升级 SQL（可重复执行）
-
-```sql
-alter table public.profiles add column if not exists display_name text;
-alter table public.profiles add column if not exists avatar_url text;
-alter table public.profiles add column if not exists updated_at timestamptz not null default now();
-update public.profiles
-set display_name = split_part(email, '@', 1)
-where display_name is null or btrim(display_name) = '';
-update public.profiles set updated_at = now() where updated_at is null;
-
-alter table public.user_settings add column if not exists gender text not null default 'unknown' check (gender in ('male', 'female', 'other', 'unknown'));
-alter table public.user_settings add column if not exists age int not null default 0 check (age >= 0 and age <= 120);
-alter table public.user_settings add column if not exists fitness_goal text not null default 'fat_loss' check (fitness_goal in ('fat_loss', 'muscle_gain', 'maintenance', 'recomposition'));
-alter table public.user_settings add column if not exists training_experience text not null default 'beginner' check (training_experience in ('beginner', 'intermediate', 'advanced'));
-alter table public.user_settings add column if not exists training_location text not null default 'mixed' check (training_location in ('gym', 'home', 'mixed'));
-alter table public.user_settings add column if not exists available_equipment text[] not null default '{}';
-alter table public.user_settings add column if not exists session_duration_minutes int not null default 0 check (session_duration_minutes >= 0 and session_duration_minutes <= 300);
-alter table public.user_settings add column if not exists diet_preference text not null default 'none' check (diet_preference in ('none', 'high_protein', 'vegetarian', 'low_carb', 'balanced'));
-alter table public.user_settings add column if not exists food_restrictions text not null default '';
-alter table public.user_settings add column if not exists injury_notes text not null default '';
-alter table public.user_settings add column if not exists lifestyle_notes text not null default '';
-
-update public.user_settings set gender = 'unknown' where gender is null;
-update public.user_settings set age = 0 where age is null;
-update public.user_settings set fitness_goal = 'fat_loss' where fitness_goal is null;
-update public.user_settings set training_experience = 'beginner' where training_experience is null;
-update public.user_settings set training_location = 'mixed' where training_location is null;
-update public.user_settings set available_equipment = '{}' where available_equipment is null;
-update public.user_settings set session_duration_minutes = 0 where session_duration_minutes is null;
-update public.user_settings set diet_preference = 'none' where diet_preference is null;
-update public.user_settings set food_restrictions = '' where food_restrictions is null;
-update public.user_settings set injury_notes = '' where injury_notes is null;
-update public.user_settings set lifestyle_notes = '' where lifestyle_notes is null;
-```
-
-> 完整新表、RLS、索引与 policy 请以 `supabase/schema.sql` 为准。
-
----
-
-## 8. 训练计划 PDF 导出
-
-- 主入口：`/plan` -> 导出当前计划（PDF）
-- 导出结构：计划名、日期、Week/Day 分区、动作表格
-- 方案：`jsPDF + jspdf-autotable`
-- 已支持中文字体嵌入，避免中文乱码
-
----
-
-## 9. AI JSON Schema 文件
-
-- `src/lib/ai/schemas.ts`
-  - `aiTrainingPlanSchema`
-  - `aiNutritionPlanSchema`
-  - 生成请求 schema 与保存请求 schema
-- `src/lib/ai/mappers.ts`
-  - AI 训练计划 -> 现有 `training_plans` 链路
-  - AI 饮食计划 -> `nutrition_plans / days / meals`
-
----
-
-## 10. 本地运行与检查
+## Quality checks
 
 ```bash
-npm install
-npm run dev
-```
-
-质量检查：
-
-```bash
+npm test
 npm run lint
 npm run build
 ```
 
----
+The CI workflow runs against `main` and `aliyun`. AI plans are validated before persistence; guest AI usage is quota-limited; Supabase tables use ownership-based RLS policies.
 
-## 11. 目录结构（核心）
+Health content is general educational information. LiftCut does not diagnose injuries or medical conditions and does not replace a doctor, registered dietitian, physical therapist, or qualified coach.
 
-```text
-src/
-  app/
-    api/ai/
-  components/
-    auth/
-    dashboard/
-    layout/
-    plan/
-    settings/
-    ...
-  lib/
-    ai/
-    schemas.ts
-    ...
-  services/
-    ai/
-    data-repository.ts
-    ...
-  store/
-  types/
-messages/
-supabase/
-public/
-```
+## Documentation
 
----
+- [AI Coach Agent blueprint](docs/AI_COACH_AGENT.md)
+- [LiftCut-Coach technical report](docs/LiftCut-Coach-Technical-Report.md)
+- [Project structure](docs/Project-Structure.md)
+- [Interview Q&A](docs/Interview-QA.md)
+- [Server runbook example](docs/server-runbook.example.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-## 12. 安全说明
+## Contributing and license
 
-- 不要把 `DEEPSEEK_API_KEY`、`LOCAL_AI_API_KEY` 或 `AI_API_KEY` 写入前端代码
-- 不要提交 `.env.local`
-- 不要在日志中打印 API key
-- 健康相关内容仅用于一般教育与记录，不做诊断，也不替代医生、物理治疗师或持证教练的个体化建议
+Issues and focused pull requests are welcome. Good first contributions include demo accessibility, exercise-data review, AI safety fixtures, schema regression cases, translations, and smaller local-model experiments.
 
-动作数据与健康参考资料的来源和许可见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
-
----
-
-## 13. 后续迭代建议
-
-- 推进 [`LiftCut AI Coach Agent`](docs/AI_COACH_AGENT.md)：先做带证据的每日建议，再增加对话、可控记忆与确认后写入
-- 增加 AI 生成结果对比、版本回滚与 prompt/model 评测面板
-- 增加 nutrition plan 与每日 food log 的自动对照分析
-- 为健康安全边界、跨用户 RLS、过期记忆和 prompt injection 建立公开回归用例
+LiftCut Tracker is released under the [MIT License](LICENSE).

@@ -12,7 +12,6 @@ import type {
 let cachedClient: OpenAI | null = null;
 let cachedConfigKey = "";
 
-const AI_REQUEST_TIMEOUT_MS = 45_000;
 const AI_MAX_RETRIES = 0;
 const AI_MAX_OUTPUT_TOKENS = 16_384;
 
@@ -27,6 +26,7 @@ function getConfigCacheKey(config: AiProviderConfig): string {
     config.baseURL,
     config.apiKey,
     config.model,
+    config.timeoutMs,
   ]);
 }
 
@@ -34,7 +34,7 @@ export function createAiClient(config: AiProviderConfig): OpenAI {
   return new OpenAI({
     apiKey: config.apiKey,
     baseURL: config.baseURL,
-    timeout: AI_REQUEST_TIMEOUT_MS,
+    timeout: config.timeoutMs,
     maxRetries: AI_MAX_RETRIES,
   });
 }

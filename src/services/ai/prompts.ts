@@ -6,7 +6,7 @@ import type {
 import type { AiProfileSnapshot } from "@/services/ai/types";
 
 export const TRAINING_PROMPT_VERSION = "TRAINING_PROMPT_V1";
-export const NUTRITION_PROMPT_VERSION = "NUTRITION_PROMPT_V1";
+export const NUTRITION_PROMPT_VERSION = "NUTRITION_PROMPT_V2_STRICT_SCHEMA";
 
 function localeRequirements(locale: AiLocale): string[] {
   if (locale === "zh-CN") {
@@ -245,6 +245,12 @@ export function buildNutritionPlanPrompt(
     "Respect diet preference and food restrictions.",
     "All numeric fields must be JSON numbers, not strings.",
     "All list fields must be JSON arrays, not comma-joined strings.",
+    "Return exactly one top-level JSON object that matches the required schema.",
+    "The top-level JSON object must NOT be wrapped inside nutrition_plan, meal_plan, plan, data, result, output, or any other container key.",
+    "Required top-level keys are: plan_name, goal_type, summary, warnings, daily_targets, days.",
+    "goal_type must be one of: fat_loss, muscle_gain, maintenance, recomposition.",
+    "meal_type must be one of these exact English enum values: breakfast, lunch, dinner, snack.",
+    "Do not use 早餐, 午餐, 晚餐, 加餐 as meal_type values.",
     ...localeRequirements(locale),
   ].join(" ");
 
@@ -275,10 +281,17 @@ export function buildNutritionPlanPrompt(
         "days[].meals[].foods[].notes",
         "days[].meals[].foods[].alternatives",
       ],
+      forbidden_top_level_keys: ["nutrition_plan", "meal_plan", "plan", "data", "result", "output"],
+      enum_requirements: {
+        goal_type: ["fat_loss", "muscle_gain", "maintenance", "recomposition"],
+        meal_type: ["breakfast", "lunch", "dinner", "snack"],
+      },
       hard_requirements: [
         "days must contain at least 1 day.",
         "each meal must contain at least 1 food item.",
         "calories and macros should be realistic and executable.",
+        "Return the schema fields directly at the top level. Do not wrap them inside nutrition_plan, meal_plan, plan, data, result, or output.",
+        "meal_type must use only breakfast, lunch, dinner, or snack, even when locale is zh-CN.",
       ],
       required_output_schema_example: nutritionSchemaExample(locale),
     },

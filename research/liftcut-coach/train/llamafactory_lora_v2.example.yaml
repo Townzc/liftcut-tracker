@@ -1,0 +1,36 @@
+### model
+model_name_or_path: /path/to/Qwen2.5-14B-Instruct
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_target: all
+
+### dataset
+dataset_dir: /path/to/liftcut-coach/train
+dataset: liftcut_sft_v2
+eval_dataset: liftcut_sft_v2_val
+template: qwen
+cutoff_len: 8192
+overwrite_cache: true
+
+### output
+output_dir: /path/to/outputs/liftcut-coach-qwen14b-lora-v2
+logging_steps: 10
+save_steps: 200
+eval_steps: 200
+plot_loss: true
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-5
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000
+resume_from_checkpoint: null
