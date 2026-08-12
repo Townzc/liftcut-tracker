@@ -1,52 +1,66 @@
 # LiftCut-Coach Research Pipeline
 
-LiftCut-Coach 是 LiftCut Tracker 的科研与展示管线。线上正式用户默认继续使用 DeepSeek；本地模型用于可控实验、课程展示和结构化输出评测，不作为当前生产模型的替代品。
+LiftCut-Coach 是 LiftCut Tracker 的科研与演示管线。线上产品默认使用托管模型；本地模型用于可控实验、结构化输出评测和课程展示，不是当前生产模型的替代品。
 
-模型目标不是在通用能力上超越 DeepSeek，而是：
+研究目标不是在通用能力上超过大型模型，而是：
 
-- 更稳定地产生符合 LiftCut Zod Schema 的 JSON。
-- 更好遵守训练天数、时长、器械、目标、饮食偏好等约束。
-- 支持本地部署、可复现数据切分和量化评测。
+- 稳定生成符合 LiftCut 严格 Zod Schema 的 JSON；
+- 遵守训练天数、时长、器械、目标、伤病提示和饮食偏好等约束；
+- 支持本地部署、可复现数据切分和量化评测；
+- 保持生产验证边界与研究评测标准一致。
 
-推荐使用 LoRA 或 QLoRA 微调现有指令模型，不建议从零训练基础模型。
+推荐使用 LoRA 或 QLoRA 微调已有指令模型，不建议从零训练基础模型。
 
-## 目录
+## Directory
 
 ```text
 research/liftcut-coach/
   data/
-    examples/
+    examples/       reviewed examples
+    generated/      generated datasets, normally ignored
+    splits/         deterministic train/val/test outputs
     eval_cases.jsonl
   prompts/
   scripts/
   train/
 ```
 
-该目录不被 Next.js 应用运行时引用。只有 `research:eval` 会复用主应用的服务端 Provider 和 Zod Schema。
+该目录不会被 Next.js 客户端运行时引用。评测脚本会复用主应用的服务端 Provider、Prompt 和 Zod Schema，以减少“研究通过、生产失败”的偏差。
 
-## 推荐数据路线
+## Recommended data lifecycle
 
-1. 编写少量人工黄金样本。
-2. 使用公开动作库、训练规则和营养数据库辅助构造输入。
+1. 编写少量人工审核的黄金样本。
+2. 使用公开许可的动作知识、训练规则和营养信息构造输入。
 3. 使用强模型生成候选样本。
-4. 通过 LiftCut Zod Schema 自动过滤。
+4. 通过 LiftCut Zod Schema 自动过滤无效输出。
 5. 人工抽查安全性、可执行性和约束遵守情况。
-6. 保留独立评测集，禁止将其用于训练或提示词调优。
+6. 使用固定随机种子生成训练、验证和测试切分。
+7. 冻结独立评测集，禁止将其用于训练或提示词调优。
 
-不要使用未经脱敏的真实用户资料。
+不要使用未经授权或未充分脱敏的真实用户资料。
 
-## 校验黄金样本
+## Validate JSONL
 
 ```bash
 npm run research:validate -- research/liftcut-coach/data/examples/training_plan_sample.jsonl
 npm run research:validate -- research/liftcut-coach/data/examples/nutrition_plan_sample.jsonl
 ```
 
-脚本检查 JSONL 格式、任务信封和对应的严格 Zod 输出 Schema。存在无效记录时退出码为 `1`。
+校验内容包括 JSONL 格式、任务信封、严格输出 Schema 和必要业务约束。存在无效记录时脚本以退出码 `1` 结束。
 
-## 构建 SFT 数据
+## Generate cases
 
-将 LiftCut 黄金样本转换为 LLaMA-Factory 可使用的 Alpaca JSONL：
+```bash
+npm run research:generate -- \
+  research/liftcut-coach/data/cases.jsonl \
+  research/liftcut-coach/data/generated/candidates.jsonl
+```
+
+生成过程应记录 Provider、模型和 Prompt 版本，但不得打印或保存 API Key。对托管模型生成的候选样本仍需执行 Schema 校验和抽样审核。
+
+## Build SFT data
+
+将 LiftCut 黄金样本转换为 LLaMA-Factory 可读取的 Alpaca JSONL：
 
 ```bash
 npm run research:build-sft -- \
@@ -55,9 +69,9 @@ npm run research:build-sft -- \
   research/liftcut-coach/data/examples/nutrition_plan_sample.jsonl
 ```
 
-输出字段为 `instruction`、`input` 和 `output`。在 LLaMA-Factory 的 `dataset_info.json` 中将该文件注册为 `liftcut_sft` 后，可使用示例 YAML。
+输出字段为 `instruction`、`input` 和 `output`。可参考 `train/dataset_info.example.json` 注册数据集。
 
-## 可复现切分
+## Deterministic split
 
 ```bash
 npm run research:split -- \
@@ -66,34 +80,37 @@ npm run research:split -- \
   0.8 0.1 0.1
 ```
 
-输出：
+输出为 `train.jsonl`、`val.jsonl` 和 `test.jsonl`。脚本使用固定随机种子，相同输入会得到相同切分。
 
-- `train.jsonl`
-- `val.jsonl`
-- `test.jsonl`
+将测试集转换为独立评测信封：
 
-脚本使用固定随机种子 `20260624`，相同输入会得到相同切分。
+```bash
+npm run research:split-convert -- \
+  research/liftcut-coach/data/splits/test.jsonl \
+  research/liftcut-coach/data/eval_cases.jsonl
+```
 
-## LoRA 示例
+## LoRA configuration
 
-配置文件：
+配置示例：
 
 ```text
 train/llamafactory_lora_example.yaml
+train/llamafactory_lora_v2.example.yaml
 ```
 
-这是参数模板，不保证服务器已经安装 LLaMA-Factory，也不代表推荐的唯一基础模型。请根据 GPU 显存、模型许可和数据规模调整 batch size、量化方式、训练轮数及上下文长度。
+这些文件只是参数模板。请根据 GPU 显存、模型许可证和数据规模调整 batch size、量化方式、训练轮数和上下文长度。
 
-大模型权重、LoRA 输出和 checkpoint 不得提交到 GitHub。
+基础模型权重、LoRA 输出和 checkpoint 不得提交到 GitHub。
 
-## 使用 vLLM 提供 OpenAI-compatible 服务
+## Serve with vLLM
 
 ```bash
 cd research/liftcut-coach
 bash train/vllm_serve_lora_example.sh
 ```
 
-默认提供名称为 `liftcut-coach`、端口为 `8000` 的服务。可以通过环境变量覆盖：
+默认提供名称为 `liftcut-coach`、端口为 `8000` 的 OpenAI-compatible 服务。可以通过环境变量覆盖：
 
 ```bash
 BASE_MODEL=<BASE_MODEL> \
@@ -103,33 +120,39 @@ PORT=8000 \
 bash train/vllm_serve_lora_example.sh
 ```
 
-如果 Next.js 和 vLLM 在同一主机或容器中：
+Next.js 连接本地服务的示例：
 
 ```env
 AI_PROVIDER=local
 LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
 LOCAL_AI_API_KEY=EMPTY
 LOCAL_AI_MODEL=liftcut-coach
+LOCAL_AI_REQUEST_TIMEOUT_MS=120000
 ```
 
-如果二者运行在不同容器中，`LOCAL_AI_BASE_URL` 应填写容器网络内可达的服务名或地址，不要把私有地址提交到仓库。
+如果服务运行在另一个容器或主机，使用网络内部可达地址，不要把私有地址或凭证提交到仓库。
 
-## Provider 评测
-
-先在 `.env.local` 中选择 DeepSeek、local 或其他 OpenAI-compatible Provider，然后执行：
+## Provider evaluation
 
 ```bash
-npm run research:eval -- research/liftcut-coach/data/eval_cases.jsonl
+npm run research:eval -- \
+  research/liftcut-coach/data/eval_cases.jsonl \
+  research/liftcut-coach/data/results/provider-run
 ```
 
-脚本自动加载项目环境变量，并输出：
+评测输出包括：
 
-- JSON parse success rate
-- Zod schema pass rate
-- constraint satisfaction pass rate
-- average latency
-- failed case ids
+- JSON parse success rate；
+- final Zod schema pass rate；
+- constraint satisfaction pass rate；
+- average、P50 和 P95 latency；
+- 失败用例 ID 与可复查的非敏感诊断。
 
-评测不会打印 API Key、完整请求、用户资料或模型原始输出。出现失败用例时退出码为 `1`。
+评测不会打印 API Key、完整用户资料或未经处理的敏感模型输出。比较不同 Provider 时，应保持相同评测集、Prompt 版本、Schema 版本和约束。
 
-比较不同 Provider 时，应保持同一份评测集、相同提示词版本和相同约束。
+## Research boundaries
+
+- 结构化输出通过率不等于训练方案的临床有效性。
+- 自动化指标不能替代专业人士对安全性和可执行性的审核。
+- 任何涉及伤病、疾病、孕期、进食障碍或高风险症状的建议都应升级为专业咨询提示。
+- AI Agent 的记忆和计划修改必须可解释、可删除，并在写入前由用户确认。
