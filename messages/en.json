@@ -54,6 +54,8 @@
     "oauthMissingCode": "The login callback is missing an authorization code. Please try again.",
     "oauthExchangeFailed": "Third-party login failed. Please try again later.",
     "continueAsGuest": "Continue as Guest",
+    "beginnerDemo": "Try the beginner movement demo",
+    "beginnerDemoHint": "No sign-in; explore it in about a minute",
     "productKicker": "Training, food, and trends in one place",
     "heroEyebrow": "Clearer fat-loss and strength tracking",
     "heroTitle": "Keep your plan, meals, and body changes on the same timeline.",

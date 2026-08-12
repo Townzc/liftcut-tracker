@@ -1,233 +1,222 @@
 # LiftCut Tracker
 
-AI-powered fitness and fat-loss tracking platform with structured AI plan generation, provider abstraction, and a local LoRA-based LiftCut-Coach backend.
+<p align="center">
+  <a href="https://www.liftcuttracker.com/">
+    <img src="docs/assets/liftcut-readme-hero.png" alt="LiftCut Tracker connects beginner-friendly exercise, nutrition, body progress, and intelligent coaching" width="100%" />
+  </a>
+</p>
 
-## Highlights
+<p align="center">
+  <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
+  An open-source, beginner-friendly fitness companion for training, nutrition, body trends, and structured AI guidance.
+</p>
 
-- Full-stack fitness and nutrition tracking web app (Next.js + Supabase)
-- AI-generated training and nutrition plans with structured preview, edit, and confirm-save flow
-- Strict Zod schema validation for reliable structured output from LLMs
-- Multi-provider AI backend: DeepSeek, OpenAI-compatible, local vLLM
-- LiftCut-Coach LoRA fine-tuned on Qwen2.5-14B-Instruct — **100% Final Schema Pass** on 293 held-out eval cases
-- Research evaluation pipeline measuring schema pass rate, constraint satisfaction, and latency
-- vLLM OpenAI-compatible local model serving
+<p align="center">
+  <strong><a href="https://www.liftcuttracker.com/">🌐 Official website · www.liftcuttracker.com</a></strong>
+  ·
+  <strong><a href="https://www.liftcuttracker.com/demo">🏋️ No-sign-in beginner demo</a></strong>
+  ·
+  <a href="docs/AI_COACH_AGENT.md">🤖 AI Coach blueprint</a>
+</p>
 
-## Evaluation Results
+<p align="center">
+  <a href="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://www.liftcuttracker.com/"><img alt="Live" src="https://img.shields.io/badge/live-liftcuttracker.com-65a30d" /></a>
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2563eb" /></a>
+  <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-111827" />
+  <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6" />
+</p>
+
+LiftCut keeps workout completion, exercise performance, food logs, calories, protein, weight, waist, and AI-generated plans on one timeline. The product is designed to help a beginner understand the next useful step without pretending that a general-purpose app can replace individualized medical or coaching care.
+
+## Why LiftCut?
+
+| Start safely | Build sustainable habits | See the trend | Get reliable AI output |
+| --- | --- | --- | --- |
+| Bilingual movement demo, easier variations, coaching cues, and conservative starting doses. | Editable plans and daily logs instead of a rigid one-size-fits-all program. | Training, nutrition, and body data stay connected rather than scattered across apps. | Model output is extracted, normalized, strictly validated, previewed, and only saved after confirmation. |
+
+### What works today
+
+- public bilingual `/demo` with body-area filters, six starter movements, regressions, cues, and safety boundaries;
+- account onboarding plus a local-first guest mode that can later migrate data to Supabase;
+- editable training plans, text import, workout logging, personal records, and PDF export;
+- food logging, nutrition summaries, body measurements, and trend charts;
+- server-side AI training and nutrition generation with structured preview/edit/confirm-save flow;
+- DeepSeek, generic OpenAI-compatible, and local vLLM provider modes;
+- versioned prompts, Zod schemas, generation history, evaluation scripts, and local LoRA research assets.
+
+The demo adapts a small MIT-licensed **text** subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). LiftCut's hero artwork is original; the reference repository's separately licensed images and videos are not copied. See [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## Structured-output research
+
+The repository includes a reproducible LiftCut-Coach research pipeline for dataset validation, train/validation/test splitting, SFT conversion, provider evaluation, and local LoRA serving.
 
 | Model | JSON Parse | Final Schema | Constraint Pass | Avg Latency | P50 | P95 |
-|---|---:|---:|---:|---:|---:|---:|
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | DeepSeek v4 Pro | 99.66% | 97.95% | 97.95% | 147.7s | 133.6s | 277.4s |
 | MiMo v2.5 Pro | 99.32% | 98.29% | 97.27% | 38.7s | 35.3s | 65.6s |
 | **LiftCut-Coach LoRA** | **100.00%** | **100.00%** | **99.66%** | **36.8s** | **33.0s** | **63.3s** |
 
-> In 293 held-out evaluation cases, LiftCut-Coach LoRA achieved 100% Final Zod Schema Pass and 99.66% Constraint Pass, with zero wrapper-key and enum errors. Compared with DeepSeek v4 Pro and MiMo v2.5 Pro, the LoRA model showed the strongest structured-output stability while maintaining latency close to MiMo.
+These results come from 293 held-out evaluation cases and should be read as a structured-output engineering benchmark, not as evidence of clinical effectiveness. Methodology and limitations are documented in the [technical report](docs/LiftCut-Coach-Technical-Report.md).
 
-## Tech Stack
-
-**Frontend:** Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Zustand, next-intl, Recharts
-
-**Backend:** Next.js API routes, Supabase Auth, Supabase Postgres, Supabase Storage, Zod
-
-**AI:** DeepSeek API, MiMo / OpenAI-compatible API, Qwen2.5-14B-Instruct, LoRA, vLLM, LLaMA-Factory
-
-## System Architecture
+## System architecture
 
 ```mermaid
-flowchart TD
-  User[User] --> Web[Next.js Web App]
-  Web --> API[Next.js API Routes]
-  API --> Provider[AI Provider Layer]
-  Provider --> DeepSeek[DeepSeek API]
-  Provider --> MiMo[OpenAI-compatible MiMo API]
-  Provider --> Local[vLLM Local API]
-  Local --> LoRA[Qwen2.5-14B + LiftCut-Coach LoRA]
-  API --> Pipeline[Structured Output Pipeline]
-  Pipeline --> Extract[JSON Extraction]
-  Extract --> Unwrap[Wrapper Key Unwrap]
-  Unwrap --> Normalize[Enum & Field Normalization]
-  Normalize --> Zod[Zod Schema Validation]
-  Zod --> Constraint[Constraint Checking]
-  Constraint --> Supabase[(Supabase)]
+flowchart TB
+  User["Browser / mobile user"] --> Guard["Auth + onboarding guard"]
+  Guard --> App["Next.js App Router"]
+  App --> Features["Dashboard · plans · workout · nutrition · body · demo"]
+  Features <--> Store["Zustand + guest localStorage"]
+  Features --> Repo["Data repository"]
+  Repo --> Supabase["Supabase Auth · Postgres · Storage"]
+
+  Features --> API["Server-side /api/ai/*"]
+  API --> Context["Profile + constraints + guest quota"]
+  Context --> Provider["Provider abstraction"]
+  Provider --> DeepSeek["DeepSeek V4 Flash"]
+  Provider --> Compatible["OpenAI-compatible provider"]
+  Provider --> Local["vLLM + LiftCut-Coach LoRA"]
+  DeepSeek --> Pipeline["Extract · unwrap · normalize · strict Zod · constraints"]
+  Compatible --> Pipeline
+  Local --> Pipeline
+  Pipeline --> Preview["Editable preview"]
+  Preview -->|"user confirms"| Supabase
+
+  Research["JSONL cases · SFT · eval"] -.-> Provider
+  Research -.-> Pipeline
 ```
 
-## AI Structured Output Pipeline
+## AI reliability pipeline
 
-Every AI-generated plan goes through a multi-stage pipeline to ensure reliability:
-
-```
-Prompt construction (strict schema instructions)
-→ Model generation (JSON mode)
-→ JSON extraction (trim code fences, find first complete JSON object)
-→ Wrapper unwrapping (handle nutrition_plan / meal_plan / data wrappers)
-→ Normalization (Chinese meal_type → English enum, goal_type cleanup)
-→ Final Zod schema validation (strict, not relaxed)
-→ Constraint satisfaction checking (training days, duration, macros)
-→ Save / return to frontend
-```
-
-## Pages & Routes
-
-| Route | Description |
-|---|---|
-| `/` | Dashboard |
-| `/plan` | Training plan management |
-| `/plan/ai` | AI plan generation, preview, edit, save |
-| `/workout` | Workout tracking |
-| `/nutrition` | Nutrition tracking |
-| `/body` | Body metrics |
-| `/settings` | User profile, goals, language |
-| `/login` `/register` | Auth |
-
-Route guards: unauthenticated users are redirected to `/login`; users with incomplete profiles go to `/onboarding`. Guest mode allows access without an account.
-
-## AI Provider Configuration
-
-`AI_PROVIDER` supports three modes:
-
-| Mode | Description | Key Env Vars |
-|---|---|---|
-| `deepseek` | Default for production | `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_MODEL` |
-| `local` | For research / demo with vLLM | `LOCAL_AI_BASE_URL`, `LOCAL_AI_API_KEY`, `LOCAL_AI_MODEL` |
-| `openai_compatible` | Generic OpenAI-compatible service | `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL` |
-
-### Provider-Specific Timeout
-
-Each provider has a configurable request timeout (in ms), with sensible defaults:
-
-| Provider | Default Timeout | Env Override |
-|---|---:|---|
-| `deepseek` | 30,000ms | `DEEPSEEK_REQUEST_TIMEOUT_MS` |
-| `local` | 120,000ms | `LOCAL_AI_REQUEST_TIMEOUT_MS` |
-| `openai_compatible` | 30,000ms | `AI_REQUEST_TIMEOUT_MS` |
-
-Generic override: `AI_REQUEST_TIMEOUT_MS` applies to all providers unless a provider-specific value is set.
-
-### Example: Local LoRA
-
-```env
-AI_PROVIDER=local
-LOCAL_AI_BASE_URL=http://127.0.0.1:8000/v1
-LOCAL_AI_API_KEY=EMPTY
-LOCAL_AI_MODEL=liftcut-coach
-LOCAL_AI_REQUEST_TIMEOUT_MS=120000
-```
-
-### Example: vLLM Serving
-
-```bash
-python -m vllm.entrypoints.openai.api_server \
-  --host 0.0.0.0 \
-  --port 8000 \
-  --model /path/to/Qwen2.5-14B-Instruct \
-  --served-model-name qwen14b-base \
-  --enable-lora \
-  --lora-modules liftcut-coach=/path/to/lora_adapter \
-  --max-model-len 4096 \
-  --gpu-memory-utilization 0.85
-```
-
-## Environment Variables
-
-| Variable | Description |
-|---|---|
-| `AI_PROVIDER` | `deepseek`, `local`, or `openai_compatible` |
-| `DEEPSEEK_API_KEY` | DeepSeek API key |
-| `DEEPSEEK_BASE_URL` | DeepSeek API base URL |
-| `DEEPSEEK_MODEL` | DeepSeek model name |
-| `DEEPSEEK_REQUEST_TIMEOUT_MS` | Optional DeepSeek timeout override |
-| `LOCAL_AI_BASE_URL` | Local vLLM OpenAI-compatible URL |
-| `LOCAL_AI_API_KEY` | Local API key, often `EMPTY` |
-| `LOCAL_AI_MODEL` | Local served model name |
-| `LOCAL_AI_REQUEST_TIMEOUT_MS` | Local timeout override |
-| `AI_BASE_URL` | Generic OpenAI-compatible base URL |
-| `AI_API_KEY` | Generic OpenAI-compatible API key |
-| `AI_MODEL` | Generic OpenAI-compatible model name |
-| `AI_REQUEST_TIMEOUT_MS` | Generic timeout override |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
-
-## Research Workflow
-
-### Evaluation
-
-Convert test set to eval format, then run evaluation:
-
-```bash
-npm run research:split-convert -- <test.jsonl> <eval_cases.jsonl>
-npm run research:eval -- <eval_cases.jsonl> <output_prefix>
-```
-
-### Dataset Generation
-
-```bash
-npm run research:generate -- <cases.jsonl> <output.jsonl>
-npm run research:build-sft -- <output.jsonl> <examples.jsonl>
-npm run research:split -- <sft.jsonl> <output_dir> 0.8 0.1 0.1
-npm run research:validate -- <dataset.jsonl>
-```
-
-See [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md) for full details.
-
-## Project Structure
+Every generated plan follows the same deterministic boundary:
 
 ```text
-src/
-  app/                    # Next.js App Router pages and API routes
-    api/ai/               # AI generation and history endpoints
-  components/             # React UI components
-  lib/
-    ai/schemas.ts         # Zod schemas for training/nutrition plans
-  services/
-    ai/                   # AI provider, prompts, generation, config
-  stores/                 # Zustand state management
-research/
-  liftcut-coach/
-    scripts/              # Eval, seed generation, SFT conversion
-    train/                # LoRA training configs (examples only)
-tests/                    # Unit tests
-docs/                     # Technical report, interview Q&A
+strict prompt + schema example
+→ provider JSON mode
+→ first-complete-object extraction
+→ wrapper-key unwrapping
+→ enum and field normalization
+→ strict final Zod validation
+→ business-constraint checks
+→ editable preview
+→ user-confirmed save
 ```
 
-## Testing
+DeepSeek V4 requests explicitly use non-thinking mode for bounded structured generation, a provider-specific timeout, no hidden SDK retry loop, and a maximum output-token limit. API keys remain server-only and error details redact the active key.
+
+## Conversational AI Coach roadmap
+
+The next milestone is not an unlimited chatbot. It is a bounded agent that can explain which LiftCut records it used and propose the next training or recovery step.
+
+| Phase | Deliverable | Write access |
+| --- | --- | --- |
+| 1 | Read-only “Today” recommendation from recent training, nutrition, and body trends | None |
+| 2 | Conversation threads, rolling context, and user-controlled durable memory | Memory only after confirmation |
+| 3 | Typed tools that propose plan adjustments or check-ins | Every mutation previewed and confirmed |
+| 4 | Safety, stale-memory, cross-user RLS, prompt-injection, and schema regression evals | Audited |
+
+See the complete [AI Coach Agent blueprint](docs/AI_COACH_AGENT.md) for the memory model, tool boundary, structured response contract, RLS requirements, safety rules, and MVP acceptance criteria.
+
+## Pages and routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Daily dashboard and trends |
+| `/demo` | Public beginner movement explorer |
+| `/plan` | Training plan management and PDF export |
+| `/plan/ai` | AI plan generation, structured preview, edit, and save |
+| `/workout` | Workout execution and history |
+| `/nutrition` | Food logging and daily nutrition summary |
+| `/body` | Weight and waist trends |
+| `/settings` | Profile, goals, preferences, language, and data controls |
+| `/onboarding` | First-run profile setup |
+
+## Tech stack
+
+**Product:** Next.js 16 App Router, TypeScript strict, Tailwind CSS, shadcn/ui, Zustand, next-intl, Recharts, jsPDF
+
+**Backend:** Next.js server routes, Supabase Auth, Postgres, Storage, Row Level Security, Zod
+
+**AI and research:** OpenAI-compatible SDK, DeepSeek V4, vLLM, Qwen2.5-14B-Instruct, LoRA, LLaMA-Factory, JSONL evaluation tooling
+
+## Quick start
 
 ```bash
-npm test        # 35/35 pass
-npm run lint    # 0 errors, 2 warnings
-npm run build   # compiled successfully
+git clone https://github.com/Townzc/liftcut-tracker.git
+cd liftcut-tracker
+npm install
+copy .env.example .env.local
+npm run dev
 ```
 
-## Supabase Schema
+Open `http://localhost:3000`. The public demo and most guest tracking flows can be explored without an AI key.
 
-Initialize with `supabase/schema.sql`. Key tables:
+### Minimum environment
 
-- `profiles` — user display name, avatar
-- `user_settings` — fitness goals, training preferences, AI profile
-- `ai_training_plan_generations` — AI training plan history
-- `ai_nutrition_plan_generations` — AI nutrition plan history
-- `nutrition_plans` / `nutrition_plan_days` / `nutrition_plan_meals` — saved nutrition plans
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_publishable_or_anon_key
 
-## Limitations
+AI_PROVIDER=deepseek
+DEEPSEEK_API_KEY=your_server_only_key
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+DEEPSEEK_MODEL=deepseek-v4-flash
+DEEPSEEK_REQUEST_TIMEOUT_MS=45000
+```
 
-- LoRA local deployment requires a GPU (tested on A800-80GB).
-- Web App end-to-end smoke test requires valid Supabase env vars.
-- Evaluation results are from 293 held-out cases and should be further validated with real users.
-- Local LoRA latency is acceptable for demos but may need optimization for production scale.
+Provider modes:
 
-## Roadmap
+| `AI_PROVIDER` | Use case | Main variables |
+| --- | --- | --- |
+| `deepseek` | hosted production model | `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL`, `DEEPSEEK_REQUEST_TIMEOUT_MS` |
+| `local` | research/demo with vLLM | `LOCAL_AI_BASE_URL`, `LOCAL_AI_MODEL`, `LOCAL_AI_REQUEST_TIMEOUT_MS` |
+| `openai_compatible` | another compatible service | `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL`, `AI_REQUEST_TIMEOUT_MS` |
 
-- Add screenshots and public demo video
-- Re-run Web App smoke test with Supabase env configured
-- Audit normalize metric definition
-- Add smaller 7B / 3B LoRA variant for cheaper deployment
-- Add streaming generation
-- Add user feedback loop for AI plan quality
+Never put a real AI key in a `NEXT_PUBLIC_` variable, browser code, logs, fixtures, commits, or screenshots.
+
+## Research workflow
+
+```bash
+# Validate examples or generated data against the production schemas
+npm run research:validate -- research/liftcut-coach/data/examples/training_plan_sample.jsonl
+
+# Build SFT data and deterministic splits
+npm run research:build-sft -- output.jsonl input.jsonl
+npm run research:split -- input.jsonl output_dir 0.8 0.1 0.1
+
+# Generate cases and evaluate the selected provider
+npm run research:generate -- cases.jsonl output.jsonl
+npm run research:split-convert -- test.jsonl eval_cases.jsonl
+npm run research:eval -- eval_cases.jsonl output_prefix
+```
+
+Full instructions: [`research/liftcut-coach/README.md`](research/liftcut-coach/README.md).
+
+## Quality checks
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+The CI workflow runs against `main` and `aliyun`. AI plans are validated before persistence; guest AI usage is quota-limited; Supabase tables use ownership-based RLS policies.
+
+Health content is general educational information. LiftCut does not diagnose injuries or medical conditions and does not replace a doctor, registered dietitian, physical therapist, or qualified coach.
 
 ## Documentation
 
-- [Technical Report](docs/LiftCut-Coach-Technical-Report.md)
+- [AI Coach Agent blueprint](docs/AI_COACH_AGENT.md)
+- [LiftCut-Coach technical report](docs/LiftCut-Coach-Technical-Report.md)
+- [Project structure](docs/Project-Structure.md)
 - [Interview Q&A](docs/Interview-QA.md)
-- [Project Structure](docs/Project-Structure.md)
+- [Server runbook example](docs/server-runbook.example.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-## License
+## Contributing and license
 
-Private project.
+Issues and focused pull requests are welcome. Good first contributions include demo accessibility, exercise-data review, AI safety fixtures, schema regression cases, translations, and smaller local-model experiments.
+
+LiftCut Tracker is released under the [MIT License](LICENSE).

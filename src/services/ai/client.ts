@@ -12,6 +12,14 @@ import type {
 let cachedClient: OpenAI | null = null;
 let cachedConfigKey = "";
 
+const AI_MAX_RETRIES = 0;
+const AI_MAX_OUTPUT_TOKENS = 16_384;
+
+type DeepSeekJsonCompletionRequest =
+  OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming & {
+    thinking?: { type: "disabled" };
+  };
+
 function getConfigCacheKey(config: AiProviderConfig): string {
   return JSON.stringify([
     config.provider,
@@ -27,6 +35,7 @@ export function createAiClient(config: AiProviderConfig): OpenAI {
     apiKey: config.apiKey,
     baseURL: config.baseURL,
     timeout: config.timeoutMs,
+    maxRetries: AI_MAX_RETRIES,
   });
 }
 
@@ -137,15 +146,31 @@ export async function callAiProviderForJson(
 
   let completion: Awaited<ReturnType<typeof client.chat.completions.create>>;
   try {
-    completion = await client.chat.completions.create({
+    const request: DeepSeekJsonCompletionRequest = {
       model: config.model,
       temperature: 0.4,
+      max_tokens: AI_MAX_OUTPUT_TOKENS,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: input.systemPrompt },
         { role: "user", content: input.userPrompt },
       ],
-    });
+      ...(config.provider === "deepseek"
+        ? { thinking: { type: "disabled" as const } }
+        : {}),
+    };
+    // The SDK-level timeout primarily protects connection setup. A response body can
+    // still stall after headers arrive, so pass an explicit abort signal as a hard
+    // end-to-end deadline as well.
+    const abortController = new AbortController();
+    const timeoutHandle = setTimeout(() => abortController.abort(), config.timeoutMs);
+    try {
+      completion = await client.chat.completions.create(request, {
+        signal: abortController.signal,
+      });
+    } finally {
+      clearTimeout(timeoutHandle);
+    }
   } catch (error) {
     throw new AiServiceError(
       "AI_REQUEST_FAILED",

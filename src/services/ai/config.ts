@@ -7,12 +7,13 @@ import type {
 } from "@/services/ai/types";
 
 const DEFAULT_DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1";
-const DEFAULT_DEEPSEEK_MODEL = "deepseek-chat";
+const DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash";
 const DEFAULT_LOCAL_BASE_URL = "http://127.0.0.1:8000/v1";
 const DEFAULT_LOCAL_API_KEY = "EMPTY";
 const DEFAULT_LOCAL_MODEL = "liftcut-coach";
 
 const DEFAULT_TIMEOUT_MS = 30_000;
+const DEFAULT_DEEPSEEK_TIMEOUT_MS = 120_000;
 const DEFAULT_LOCAL_TIMEOUT_MS = 120_000;
 
 function readEnv(name: string): string {
@@ -45,7 +46,13 @@ function readTimeoutMs(provider: AiProviderName): number {
   }
 
   // 3. Provider-specific default
-  return provider === "local" ? DEFAULT_LOCAL_TIMEOUT_MS : DEFAULT_TIMEOUT_MS;
+  if (provider === "local") {
+    return DEFAULT_LOCAL_TIMEOUT_MS;
+  }
+  if (provider === "deepseek") {
+    return DEFAULT_DEEPSEEK_TIMEOUT_MS;
+  }
+  return DEFAULT_TIMEOUT_MS;
 }
 
 export function getSelectedAiProvider(): AiProviderName | null {

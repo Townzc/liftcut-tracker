@@ -56,3 +56,8 @@ train.log
 *.pth
 *.pt
 *.bin
+
+.vercel
+.env*
+!.env.example
+/api.txt

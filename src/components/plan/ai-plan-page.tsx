@@ -395,7 +395,7 @@ export function AiPlanPage() {
         }),
       });
       const parsed = aiTrainingPlanSchema.parse(data.plan);
-      const modelName = typeof data.model === "string" ? data.model : "deepseek-chat";
+      const modelName = typeof data.model === "string" ? data.model : "deepseek-v4-flash";
       const promptVersion = typeof data.promptVersion === "string" ? data.promptVersion : "TRAINING_PROMPT_V1";
       let generationId = typeof data.generationId === "string" ? data.generationId : null;
 
@@ -461,7 +461,7 @@ export function AiPlanPage() {
         }),
       });
       const parsed = aiNutritionPlanSchema.parse(data.plan);
-      const modelName = typeof data.model === "string" ? data.model : "deepseek-chat";
+      const modelName = typeof data.model === "string" ? data.model : "deepseek-v4-flash";
       const promptVersion = typeof data.promptVersion === "string" ? data.promptVersion : "NUTRITION_PROMPT_V1";
       let generationId = typeof data.generationId === "string" ? data.generationId : null;
 
@@ -1317,5 +1317,4 @@ export function AiPlanPage() {
     </div>
   );
 }
-
 

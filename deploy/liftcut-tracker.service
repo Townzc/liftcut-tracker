@@ -1,0 +1,18 @@
+[Unit]
+Description=LiftCut Tracker Next.js application
+After=network.target
+
+[Service]
+Type=simple
+User=admin
+WorkingDirectory=/opt/liftcut-tracker
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+EnvironmentFile=/opt/liftcut-tracker/.env.production
+ExecStart=/usr/bin/node .next/standalone/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

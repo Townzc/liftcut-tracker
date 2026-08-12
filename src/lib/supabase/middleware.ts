@@ -6,6 +6,7 @@ import { isBasicProfileComplete } from "@/lib/profile-completion";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
 const publicAuthRoutes = ["/login", "/register", "/forgot-password", "/auth/callback"];
+const publicContentRoutes = ["/demo"];
 const onboardingRoute = "/onboarding";
 
 function isStaticAsset(pathname: string): boolean {
@@ -57,7 +58,12 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   const guestEnabled = request.cookies.get(GUEST_COOKIE_NAME)?.value === GUEST_COOKIE_VALUE;
 
   const isAuthRoute = publicAuthRoutes.some((route) => pathname.startsWith(route));
+  const isPublicContentRoute = publicContentRoutes.some((route) => pathname.startsWith(route));
   const isOnboardingRoute = pathname.startsWith(onboardingRoute);
+
+  if (isPublicContentRoute) {
+    return response;
+  }
 
   if (!user && guestEnabled) {
     return response;
