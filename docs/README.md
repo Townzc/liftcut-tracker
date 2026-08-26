@@ -1,5 +1,11 @@
 # LiftCut Documentation
 
-- [Technical Report](./LiftCut-Coach-Technical-Report.md) — 中文技术报告，覆盖架构设计、结构化输出、LoRA 训练、评测结果
-- [Interview Q&A](./Interview-QA.md) — 45 个面试问题与回答，涵盖基础、工程、模型训练、评测、高级五个方向
-- [Project Structure](./Project-Structure.md) — 项目目录结构详细说明
+| Document | Purpose |
+| --- | --- |
+| [LiftCut-Coach Technical Report](./LiftCut-Coach-Technical-Report.md) | Architecture, structured-output pipeline, LoRA training, evaluation methodology, results, and limitations |
+| [AI Coach Agent Blueprint](./AI_COACH_AGENT.md) | Proposed memory model, tool boundaries, safety rules, and phased delivery plan for a conversational coach |
+| [Project Structure](./Project-Structure.md) | Guide to the application, data, services, research, and test directories |
+| [Interview Q&A](./Interview-QA.md) | Engineering and research discussion questions covering the product, model training, and evaluation |
+| [Server Runbook Example](./server-runbook.example.md) | Example operational notes for local model serving and deployment |
+
+Start with the [repository README](../README.md) for the product overview, live demo, setup instructions, and current benchmark summary.

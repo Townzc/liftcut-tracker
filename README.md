@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
-  An open-source, beginner-friendly fitness companion for training, nutrition, body trends, and structured AI guidance.
+  An open-source fitness tracker and structured AI planning research project by <a href="https://townzc.github.io/">Zhice Tang</a>.
 </p>
 
 <p align="center">
@@ -16,7 +16,9 @@
   ·
   <strong><a href="https://www.liftcuttracker.com/demo">🏋️ No-sign-in beginner demo</a></strong>
   ·
-  <a href="docs/AI_COACH_AGENT.md">🤖 AI Coach blueprint</a>
+  <a href="docs/LiftCut-Coach-Technical-Report.md">📄 Technical report</a>
+  ·
+  <a href="https://townzc.github.io/">👤 Author</a>
 </p>
 
 <p align="center">
@@ -27,7 +29,15 @@
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6" />
 </p>
 
-LiftCut keeps workout completion, exercise performance, food logs, calories, protein, weight, waist, and AI-generated plans on one timeline. The product is designed to help a beginner understand the next useful step without pretending that a general-purpose app can replace individualized medical or coaching care.
+LiftCut brings workout completion, exercise performance, food logs, body trends, and AI-generated plans into one bilingual product. Its AI layer treats model output as untrusted structured data: every plan is extracted, normalized, strictly validated, shown in an editable preview, and saved only after user confirmation.
+
+## Project at a glance
+
+| Product | AI system | Research result | Delivery |
+| --- | --- | --- | --- |
+| Training, nutrition, body trends, onboarding, guest mode, and PDF export | DeepSeek, OpenAI-compatible APIs, or local vLLM behind one provider layer | LiftCut-Coach LoRA: **100% final schema pass** and **99.66% constraint pass** on 293 held-out cases | Deployed Next.js app with Supabase Auth, Postgres, Storage, and RLS |
+
+> **Try it first:** the [public beginner demo](https://www.liftcuttracker.com/demo) works without an account or AI key.
 
 ## Why LiftCut?
 
@@ -35,7 +45,7 @@ LiftCut keeps workout completion, exercise performance, food logs, calories, pro
 | --- | --- | --- | --- |
 | Bilingual movement demo, easier variations, coaching cues, and conservative starting doses. | Editable plans and daily logs instead of a rigid one-size-fits-all program. | Training, nutrition, and body data stay connected rather than scattered across apps. | Model output is extracted, normalized, strictly validated, previewed, and only saved after confirmation. |
 
-### What works today
+### What is implemented
 
 - public bilingual `/demo` with body-area filters, six starter movements, regressions, cues, and safety boundaries;
 - account onboarding plus a local-first guest mode that can later migrate data to Supabase;
@@ -214,6 +224,10 @@ Health content is general educational information. LiftCut does not diagnose inj
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
+
+## Maintainer
+
+LiftCut is designed, implemented, and maintained by [Zhice Tang](https://townzc.github.io/), an undergraduate AI researcher at Chongqing University and a Fall 2026 exchange student at UC Berkeley. Research and engineering details are available in the [technical report](docs/LiftCut-Coach-Technical-Report.md); project questions and focused contributions are welcome through GitHub Issues.
 
 ## Contributing and license
 
