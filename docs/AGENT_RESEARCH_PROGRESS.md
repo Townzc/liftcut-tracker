@@ -9,6 +9,7 @@ P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/l
 Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftcut-tracker/pull/9).
 Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townzc/liftcut-tracker/pull/10).
 Protocol revision, data/tokenizer audit and remote checks: [PR #11](https://github.com/Townzc/liftcut-tracker/pull/11).
+Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://github.com/Townzc/liftcut-tracker/pull/12).
 
 ## Implemented in the first increment
 
@@ -194,6 +195,11 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
   SSH closed and a follow-up connection was refused. Approximate GPU fee CNY 1.77,
   no expansion; actual provider bill remains unverified. Added a guard fix for the
   platform's no-shebang shell script; the original timer was not a verified hard cap.
+
+The stopped server retains experiment checkouts `d399e8e` and `ef865ed`. The final
+offline audit/runbook/shutdown guard were committed after shutdown. On the next
+boot, prepare the reviewed full commit from main before using the updated guard;
+do not assume the cloned instance automatically pulled newer GitHub code.
 
 Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gpu-pilot.md).
 
