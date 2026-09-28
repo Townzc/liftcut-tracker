@@ -152,9 +152,30 @@ with a conservative rate-based cost estimate of $0.0052893. Its raw responses an
 trace are checked in for offline replay. This is provider integration evidence,
 not a general model benchmark. Details are in the [progress log](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
+## Hosted baseline and offline spending audit
+
+The first full hosted development run passed **8/14** with `deepseek-flash`
+(non-thinking, temperature 0). Five failures returned two tools where the adapter
+required one; a sixth used the wrong terminal label while awaiting approval and
+made no write. All 14 records replay, including failures. The 70 requests cost an
+estimated $0.0433947 using configured conservative rates. This is public dev data,
+not generalization or training evidence.
+
+```sh
+python research/liftcut-agent/audit.py --run-dir research/liftcut-agent/reports/deepseek-pilot-2026-09-28 --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28
+```
+
+The audit verifies complete artifacts through offline replay, recomputes metrics,
+rejects duplicate runs, and keeps missing usage unknown. It adds spending across
+distinct runs, never accuracy across overlapping scenarios. No network or API
+credentials are used. `--output NEW_PATH` saves a ledger without overwriting.
+Exit 0 means valid evidence, including evidence of failed tasks. See the
+[experiment and diagnosis](../../docs/research/2026-09-28-development-baseline.md).
+
 ## Next increment
 
-Inspect a small live pilot before expanding a model-policy comparison. Choose a
-trainable small-model baseline for future same-base SFT. Expand and independently
-review grouped scenarios before collecting trajectories; keep the public seeds
-as regression fixtures. A hosted capability reference cannot establish SFT gains.
+Version and test provider-compatible tool handling and clarify pending-approval
+termination before another frozen comparison. Keep the original strict baseline
+unchanged; adapter fixes are not SFT gains. Then select a trainable small model
+and independently review grouped scenarios before collecting trajectories. No
+GPU is needed for the immediate protocol work.

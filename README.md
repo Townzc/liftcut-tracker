@@ -128,10 +128,12 @@ python -m unittest discover -s research/liftcut-agent/tests -v
 
 The fixed workflow completes 14/14 interactive seeds; ignoring memory completes 12/14 and disabling retries completes 11/14. These are scripted development checks of the environment, **not LLM, training, or generalization results**. The fixtures use artificial exercise blocks and time costs. See the [experiment record](docs/research/2026-09-28-interactive-environment.md).
 
+The first full hosted reference (`deepseek-flash`, non-thinking) passed **8/14 public development tasks** in 70 calls: five single-call protocol mismatches and one terminal-label failure were retained. All trajectories replay offline. The conservative cost estimate is $0.0433947; this is not a reconciled bill or training gain. See the [baseline, failure analysis and cost audit](docs/research/2026-09-28-development-baseline.md).
+
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
 | P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
-| P1 · environment and model adapter implemented | Resettable tools, replay, clarification, memory, recovery; native model calls, budgets and response records; model comparison pending | Simulated confirmation boundary |
+| P1 · hosted development baseline recorded | Tools, replay, memory, recovery; 8/14 hosted reference, auditable failures and spending; trainable-model comparison pending | Simulated confirmation boundary |
 | P2–P3 · planned | Verified trajectories, Base/SFT comparisons, ablations and research report | Offline research |
 | P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 
