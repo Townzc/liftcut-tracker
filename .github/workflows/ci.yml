@@ -52,6 +52,38 @@ jobs:
       - name: Audit hosted artifacts and cost ledger without network calls
         run: python research/liftcut-agent/audit.py --run-dir research/liftcut-agent/reports/deepseek-pilot-2026-09-28 --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28
 
+      - name: Exercise the complete protocol matrix and decision export offline
+        run: |
+          python research/liftcut-agent/protocol_experiment.py mock --output-dir research/liftcut-agent/outputs/ci-protocol-matrix
+          python research/liftcut-agent/compare_protocols.py --run-root research/liftcut-agent/outputs/ci-protocol-matrix
+          python research/liftcut-agent/export_trajectories.py --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28 --output-dir research/liftcut-agent/outputs/ci-decisions
+
+  tokenizer-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: research/liftcut-agent/requirements-tokenizer.txt
+      - name: Install tokenizer-only dependencies (no training framework)
+        run: pip install -r research/liftcut-agent/requirements-tokenizer.txt
+      - name: Fetch hash-pinned public tokenizer files (no weights or paid API)
+        run: python research/liftcut-agent/fetch_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-tokenizer
+      - name: Reproduce the real tokenizer loss-mask audit on CPU
+        run: |
+          python research/liftcut-agent/tokenize_decisions.py --decisions-dir research/liftcut-agent/reports/development-decisions-2026-09-28 --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-mask --max-length 4096
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('research/liftcut-agent')
+          expected = json.loads((root / 'reports/qwen-mask-audit-2026-09-28.json').read_text())
+          actual = json.loads((root / 'outputs/ci-mask/report.json').read_text())
+          assert actual == expected, 'CPU tokenizer audit differs from published evidence'
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

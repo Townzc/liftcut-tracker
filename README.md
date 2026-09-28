@@ -130,11 +130,14 @@ The fixed workflow completes 14/14 interactive seeds; ignoring memory completes 
 
 The first full hosted reference (`deepseek-flash`, non-thinking) passed **8/14 public development tasks** in 70 calls: five single-call protocol mismatches and one terminal-label failure were retained. All trajectories replay offline. The conservative cost estimate is $0.0433947; this is not a reconciled bill or training gain. See the [baseline, failure analysis and cost audit](docs/research/2026-09-28-development-baseline.md).
 
+The next protocol version supports bounded read-only batches and a separately tested pending-approval instruction. Its four-arm live comparison is still pending; 8/14 remains the measured live result. Data preparation now exports **59 verified development decisions** and validates **2,766 assistant target tokens** with a pinned Qwen3-4B tokenizer on CPU. No model weights or training are involved. See the [protocol and data pipeline](docs/research/2026-09-28-protocol-and-data-pipeline.md).
+
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
 | P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
 | P1 · hosted development baseline recorded | Tools, replay, memory, recovery; 8/14 hosted reference, auditable failures and spending; trainable-model comparison pending | Simulated confirmation boundary |
-| P2–P3 · planned | Verified trajectories, Base/SFT comparisons, ablations and research report | Offline research |
+| P2 · data preparation implemented; training pending | Verified dev decision export, tokenizer/loss-mask audit; grouped dataset and Base/SFT still pending | Offline research |
+| P3 · planned | Matched-token ablation, research report and minimal demonstration | Offline research |
 | P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 
 Read the [research quickstart](research/liftcut-agent/README.md), [technical roadmap](docs/AGENT_RESEARCH_ROADMAP.md), and [current progress](docs/AGENT_RESEARCH_PROGRESS.md). The earlier [AI Coach blueprint](docs/AI_COACH_AGENT.md) remains a product integration reference; the research roadmap defines implementation order.

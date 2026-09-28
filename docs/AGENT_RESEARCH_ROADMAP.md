@@ -51,6 +51,14 @@ trainable small-model comparison. See the
 [model adapter](research/2026-09-28-model-policy.md) and
 [baseline diagnosis](research/2026-09-28-development-baseline.md).
 
+The protocol revision now supports bounded read-only batches and a separate
+pending-approval prompt factor. Four offline profiles are verified; the frozen
+paid comparison has not executed because of an execution-policy rejection.
+P2 preparation now includes verified development-decision export and a real CPU
+tokenizer/mask audit for pinned Qwen3-4B-Instruct-2507. This is not inference or
+training. See the [pipeline delivery](research/2026-09-28-protocol-and-data-pipeline.md)
+and [unexecuted GPU pilot plan](research/2026-09-28-small-model-pilot-plan.md).
+
 ## Data and evaluation policy
 
 - Start with 30 authored proposal seeds and 14 interactive seeds. These are public

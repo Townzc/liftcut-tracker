@@ -174,8 +174,25 @@ Exit 0 means valid evidence, including evidence of failed tasks. See the
 
 ## Next increment
 
-Version and test provider-compatible tool handling and clarify pending-approval
-termination before another frozen comparison. Keep the original strict baseline
-unchanged; adapter fixes are not SFT gains. Then select a trainable small model
-and independently review grouped scenarios before collecting trajectories. No
-GPU is needed for the immediate protocol work.
+Bounded read-only batching and a separate pending-approval prompt revision are
+implemented, preserving legacy replay. Four workflow-mock profiles pass 14/14;
+this is not an updated live score. The paid four-arm comparison has not executed
+because the execution environment rejected its launch after budget approval.
+
+```sh
+python research/liftcut-agent/protocol_experiment.py preflight
+python research/liftcut-agent/protocol_experiment.py mock --output-dir research/liftcut-agent/outputs/protocol-smoke
+python research/liftcut-agent/compare_protocols.py --run-root research/liftcut-agent/outputs/protocol-smoke
+python research/liftcut-agent/export_trajectories.py --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28 --output-dir research/liftcut-agent/outputs/decisions
+```
+
+The existing live run yields 59 verified development decisions from eight
+successful episodes. Known-invalid decisions in recovery traces remain context
+and are excluded as positive targets. A real pinned Qwen3-4B tokenizer verified
+2,766 supervised tokens, masked all context and avoided truncation at 4,096.
+Weights, SFT and frozen held-out data are not part of this result. See the
+[pipeline walkthrough and reproduction](../../docs/research/2026-09-28-protocol-and-data-pipeline.md).
+
+Next: complete the frozen live comparison in a permitted environment, independently
+review grouped data, validate small-model serving and execute the separately
+budgeted [GPU compatibility pilot](../../docs/research/2026-09-28-small-model-pilot-plan.md).

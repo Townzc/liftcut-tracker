@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 from liftcut_agent.benchmark import load_catalog, read_json, read_jsonl, sha256
 from liftcut_agent.interactive import validate_scenarios
-from liftcut_agent.model_policy import ModelConfig, encode, money
+from liftcut_agent.model_policy import encode, money
 from liftcut_agent.protocol import load_config
 from liftcut_agent.model_runner import replay_model_suite, run_model_suite
 from liftcut_agent.model_transport import HttpTransport, MockWorkflowTransport, endpoint_url

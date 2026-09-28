@@ -1,0 +1,448 @@
+{
+  "scope": "CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation",
+  "mask_version": "final-assistant-prefix-v0.1",
+  "implementation_sha256": "764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272",
+  "source_run_id": "8ad5e73c33e531936b29778d4c8a011580a144f2f2d3187b587dec180d46c4a1",
+  "decisions_sha256": "e24df9cf0ff89a28c87bf643ab4be08d3a7e1b288d65ae5f5cf19537487cbe49",
+  "tokenizer_provenance": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "file_sha256": {
+      "tokenizer_config.json": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "config.json": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+    },
+    "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+    "weights_downloaded": false
+  },
+  "chat_template_sha256": "64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326",
+  "libraries": {
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "decisions": 59,
+  "prompt_tokens": 104177,
+  "supervised_tokens": 2766,
+  "max_sequence_tokens": 2973,
+  "max_length": 4096,
+  "truncated_decisions": 0,
+  "all_prefix_tokens_masked": true,
+  "examples": [
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 0,
+      "prompt_tokens": 1308,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 1,
+      "prompt_tokens": 1467,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 2,
+      "prompt_tokens": 1518,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 3,
+      "prompt_tokens": 1678,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-001\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 4,
+      "prompt_tokens": 1803,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-001\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-001",
+      "call_index": 5,
+      "prompt_tokens": 2026,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"previewed\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 0,
+      "prompt_tokens": 1306,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 1,
+      "prompt_tokens": 1463,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 2,
+      "prompt_tokens": 1514,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 3,
+      "prompt_tokens": 1674,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-002\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 4,
+      "prompt_tokens": 1799,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-002\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 5,
+      "prompt_tokens": 2073,
+      "target_tokens": 88,
+      "decoded_target": "<tool_call>\n{\"name\": \"apply_plan\", \"arguments\": {\"proposal_id\": \"6cdbfd81e113410698364ea9e766c5be:p1\", \"idempotency_key\": \"6cdbfd81e113410698364ea9e766c5be:p1\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-002",
+      "call_index": 6,
+      "prompt_tokens": 2293,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"applied\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 0,
+      "prompt_tokens": 1304,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 1,
+      "prompt_tokens": 1454,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 2,
+      "prompt_tokens": 1505,
+      "target_tokens": 24,
+      "decoded_target": "<tool_call>\n{\"name\": \"request_clarification\", \"arguments\": {\"fields\": [\"equipment\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 3,
+      "prompt_tokens": 1600,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 4,
+      "prompt_tokens": 1757,
+      "target_tokens": 25,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 5,
+      "prompt_tokens": 1867,
+      "target_tokens": 91,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"dumbbell-a\", \"dumbbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"dumbbell-b\", \"dumbbell-c\"]}], \"evidence_ids\": [\"source-003\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 6,
+      "prompt_tokens": 1994,
+      "target_tokens": 92,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"dumbbell-a\", \"dumbbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"dumbbell-b\", \"dumbbell-c\"]}], \"evidence_ids\": [\"source-003\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-003",
+      "call_index": 7,
+      "prompt_tokens": 2218,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"previewed\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 0,
+      "prompt_tokens": 1307,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 1,
+      "prompt_tokens": 1462,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 2,
+      "prompt_tokens": 1610,
+      "target_tokens": 25,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 3,
+      "prompt_tokens": 1720,
+      "target_tokens": 91,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"dumbbell-a\", \"dumbbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"dumbbell-b\", \"dumbbell-c\"]}], \"evidence_ids\": [\"source-006\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 4,
+      "prompt_tokens": 1847,
+      "target_tokens": 92,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"dumbbell-a\", \"dumbbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"dumbbell-b\", \"dumbbell-c\"]}], \"evidence_ids\": [\"source-006\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-006",
+      "call_index": 5,
+      "prompt_tokens": 2072,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"previewed\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 0,
+      "prompt_tokens": 1312,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 1,
+      "prompt_tokens": 1475,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 2,
+      "prompt_tokens": 1526,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 3,
+      "prompt_tokens": 1593,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 4,
+      "prompt_tokens": 1753,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-007\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 5,
+      "prompt_tokens": 1878,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-007\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-007",
+      "call_index": 6,
+      "prompt_tokens": 2100,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"previewed\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 0,
+      "prompt_tokens": 1309,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 1,
+      "prompt_tokens": 1469,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 2,
+      "prompt_tokens": 1520,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 3,
+      "prompt_tokens": 1680,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-008\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 4,
+      "prompt_tokens": 1805,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-008\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 5,
+      "prompt_tokens": 2081,
+      "target_tokens": 92,
+      "decoded_target": "<tool_call>\n{\"name\": \"apply_plan\", \"arguments\": {\"proposal_id\": \"7aabb1888da84e798c6fb0780471d7e9:p1\", \"idempotency_key\": \"apply-7aabb1888da84e798c6fb0780471d7e9-p1\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 6,
+      "prompt_tokens": 2211,
+      "target_tokens": 92,
+      "decoded_target": "<tool_call>\n{\"name\": \"apply_plan\", \"arguments\": {\"proposal_id\": \"7aabb1888da84e798c6fb0780471d7e9:p1\", \"idempotency_key\": \"apply-7aabb1888da84e798c6fb0780471d7e9-p1\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-008",
+      "call_index": 7,
+      "prompt_tokens": 2437,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"applied\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 0,
+      "prompt_tokens": 1308,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 1,
+      "prompt_tokens": 1467,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 2,
+      "prompt_tokens": 1518,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 3,
+      "prompt_tokens": 1678,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-009\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 4,
+      "prompt_tokens": 1803,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-009\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-009",
+      "call_index": 5,
+      "prompt_tokens": 2084,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"declined\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 0,
+      "prompt_tokens": 1310,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 1,
+      "prompt_tokens": 1471,
+      "target_tokens": 18,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_memories\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 2,
+      "prompt_tokens": 1522,
+      "target_tokens": 29,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"bodyweight\", \"dumbbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 3,
+      "prompt_tokens": 1682,
+      "target_tokens": 89,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-013\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 4,
+      "prompt_tokens": 1807,
+      "target_tokens": 90,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"bodyweight-a\", \"dumbbell-a\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"bodyweight-b\", \"dumbbell-b\"]}], \"evidence_ids\": [\"source-013\"]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 5,
+      "prompt_tokens": 2067,
+      "target_tokens": 17,
+      "decoded_target": "<tool_call>\n{\"name\": \"get_context\", \"arguments\": {}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 6,
+      "prompt_tokens": 2233,
+      "target_tokens": 24,
+      "decoded_target": "<tool_call>\n{\"name\": \"search_exercises\", \"arguments\": {\"equipment\": [\"barbell\"]}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 7,
+      "prompt_tokens": 2321,
+      "target_tokens": 87,
+      "decoded_target": "<tool_call>\n{\"name\": \"validate_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"evidence_ids\": [\"source-013\"], \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"barbell-a\", \"barbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"barbell-a\", \"barbell-b\"]}]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 8,
+      "prompt_tokens": 2444,
+      "target_tokens": 88,
+      "decoded_target": "<tool_call>\n{\"name\": \"propose_plan\", \"arguments\": {\"plan\": {\"action\": \"propose_plan\", \"evidence_ids\": [\"source-013\"], \"sessions\": [{\"day\": \"tue\", \"exercise_ids\": [\"barbell-a\", \"barbell-b\"]}, {\"day\": \"fri\", \"exercise_ids\": [\"barbell-a\", \"barbell-b\"]}]}}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 9,
+      "prompt_tokens": 2722,
+      "target_tokens": 96,
+      "decoded_target": "<tool_call>\n{\"name\": \"apply_plan\", \"arguments\": {\"proposal_id\": \"8188472c6cc94146b54d27c189b3267f:p2\", \"idempotency_key\": \"8188472c6cc94146b54d27c189b3267f:p2\"}}\n</tool_call><|im_end|>\n"
+    },
+    {
+      "scenario_id": "interactive-013",
+      "call_index": 10,
+      "prompt_tokens": 2952,
+      "target_tokens": 21,
+      "decoded_target": "<tool_call>\n{\"name\": \"finish\", \"arguments\": {\"outcome\": \"applied\"}}\n</tool_call><|im_end|>\n"
+    }
+  ],
+  "tokens_sha256": "094ecbbf94c3e9e163b503934cc8c8b841bd0460e11f2e92a10c2c7ed39b0354"
+}
