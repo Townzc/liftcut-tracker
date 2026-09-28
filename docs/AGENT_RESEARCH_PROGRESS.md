@@ -6,6 +6,7 @@ Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftcut-tracker/pull/9).
+Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townzc/liftcut-tracker/pull/10).
 
 ## Implemented in the first increment
 
