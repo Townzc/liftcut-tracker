@@ -117,6 +117,30 @@ def feasible(inputs: dict[str, Any], catalog: dict[str, dict[str, Any]]) -> bool
     )
 
 
+def validate_inputs(inputs: Any, catalog: dict[str, dict[str, Any]]) -> None:
+    _require(isinstance(inputs, dict) and set(inputs) == {"request", "constraints", "records"},
+             "invalid policy input fields")
+    _require(isinstance(inputs["request"], str) and bool(inputs["request"].strip()), "empty request")
+    c = inputs["constraints"]
+    _require(isinstance(c, dict) and set(c) == FIELDS, "invalid constraints")
+    for key, options in (("available_days", DAYS), ("equipment", EQUIPMENT)):
+        value = c[key]
+        _require(value is None or (_strings(value) and set(value) <= options), f"invalid {key}")
+    for key, maximum in (("sessions_per_week", 7), ("max_minutes", 180), ("min_exercises", 10)):
+        _require(c[key] is None or _integer(c[key], 1, maximum), f"invalid {key}")
+    _require(_strings(c["excluded_exercise_ids"]), "invalid exclusions")
+    _require(set(c["excluded_exercise_ids"]) <= catalog.keys(), "unknown excluded block")
+    records = inputs["records"]
+    _require(isinstance(records, list), "invalid records")
+    record_ids = []
+    for record in records:
+        _require(isinstance(record, dict) and set(record) == {"id", "summary"}, "invalid record")
+        _require(all(isinstance(record[key], str) and record[key].strip()
+                     for key in ("id", "summary")), "empty record")
+        record_ids.append(record["id"])
+    _require(len(record_ids) == len(set(record_ids)), "duplicate evidence record")
+
+
 def validate_cases(cases: list[dict[str, Any]], catalog: dict[str, dict[str, Any]]) -> None:
     _require(bool(cases), "no scenarios")
     ids: set[str] = set()
@@ -139,27 +163,7 @@ def validate_cases(cases: list[dict[str, Any]], catalog: dict[str, dict[str, Any
                      f"cross-split group leakage: {key}={case[key]}")
             groups[group] = split
         inputs = case["input"]
-        _require(isinstance(inputs, dict) and set(inputs) == {"request", "constraints", "records"},
-                 "invalid policy input fields")
-        _require(isinstance(inputs["request"], str) and bool(inputs["request"].strip()), "empty request")
-        c = inputs["constraints"]
-        _require(isinstance(c, dict) and set(c) == FIELDS, "invalid constraints")
-        for key, options in (("available_days", DAYS), ("equipment", EQUIPMENT)):
-            value = c[key]
-            _require(value is None or (_strings(value) and set(value) <= options), f"invalid {key}")
-        for key, maximum in (("sessions_per_week", 7), ("max_minutes", 180), ("min_exercises", 10)):
-            _require(c[key] is None or _integer(c[key], 1, maximum), f"invalid {key}")
-        _require(_strings(c["excluded_exercise_ids"]), "invalid exclusions")
-        _require(set(c["excluded_exercise_ids"]) <= catalog.keys(), "unknown excluded block")
-        records = inputs["records"]
-        _require(isinstance(records, list), "invalid records")
-        record_ids = []
-        for record in records:
-            _require(isinstance(record, dict) and set(record) == {"id", "summary"}, "invalid record")
-            _require(all(isinstance(record[key], str) and record[key].strip()
-                         for key in ("id", "summary")), "empty record")
-            record_ids.append(record["id"])
-        _require(len(record_ids) == len(set(record_ids)), "duplicate evidence record")
+        validate_inputs(inputs, catalog)
         fingerprint = json.dumps(inputs, sort_keys=True, ensure_ascii=False)
         _require(fingerprint not in fingerprints or fingerprints[fingerprint] == split,
                  "identical input across splits")

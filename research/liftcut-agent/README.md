@@ -1,11 +1,14 @@
-# LiftCut-AgentLab: measurement foundation
+# LiftCut-AgentLab: offline evaluation and interactive environment
 
-**Implemented:** 30 synthetic development fixtures, a strict structured-proposal
-evaluator, a deterministic baseline and regression tests. Python 3.11+ standard
-library only; no GPU, model/API credentials, package installation or web app needed.
+**Implemented:** 30 proposal development fixtures, 14 interactive development
+scenarios, a strict proposal evaluator, eight typed tools, temporal preferences,
+user approval transitions, failure injection, fixed workflows and trace replay.
+Python 3.11+ standard library only; no GPU, model/API credentials, package
+installation or web app needed.
 
-**Not yet implemented:** an interactive tool environment, model-driven agent,
-temporal memory, authorization transitions, training or held-out model evaluation.
+**Not yet implemented:** a model-driven policy, trajectory training, product
+integration or held-out model evaluation. The offline confirmation state is a
+research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
@@ -32,7 +35,7 @@ task failures, `2` invalid input or command. A valid empty prediction file score
 zero success; omitted individual predictions stay in the denominator. Duplicate
 or unknown case IDs and malformed JSON reject the run rather than dropping rows.
 
-## Contract
+## Proposal contract (P0)
 
 Cases contain `id`, `family_id`, `persona_id`, `split`, `category`, `input`, and
 `expected_action`. Pass **only `input`** to a policy. Metadata and oracle labels
@@ -74,13 +77,62 @@ semantic relevance, content entailment, chronology or memory retrieval.
   is an evaluator sanity check, not an LLM, Agent, safety or generalization result.
 - The baseline shares low-level constraint helpers with the evaluator. Mutation,
   boundary and alternative-valid-answer tests provide additional checks; independent
-  human review and a separate execution environment are still needed for P1.
-- There are no tool failures, multi-turn state, medical-quality labels or real user
-  outcomes here. Those must receive separate task definitions and measurements.
+  human review and independent evaluation are still needed.
+- P0 has no tool failures or multi-turn state. Those are covered by the separate
+  interactive contract below. Neither suite measures medical quality or real
+  user outcomes.
+
+## Interactive environment (P1, offline portion)
+
+```sh
+python research/liftcut-agent/benchmark/build_interactive_seeds.py --check
+python research/liftcut-agent/interact.py validate
+python research/liftcut-agent/interact.py run --write-traces research/liftcut-agent/outputs/session.jsonl --output research/liftcut-agent/outputs/session-report.json
+python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/outputs/session.jsonl
+```
+
+Replay the checked-in evidence directly:
+
+```sh
+python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/reports/interactive-fixed-traces-2026-09-28.jsonl
+```
+
+The fixtures are authored by `benchmark/build_interactive_seeds.py`; all 14 are
+public **development data**, not unseen evaluation. `--scenario interactive-008`
+selects the write-timeout example. `--policy no-memory` or `--policy no-retry`
+disables one fixed-workflow behavior as a harness control; these commands currently
+exit `1` because their task failures are intentional.
+
+Run exit codes: `0` all tasks passed, `1` task failures, `2` invalid input.
+Replay exit codes: `0` all traces are consistent, `1` missing traces, `2` invalid
+or inconsistent traces. **Valid replay does not imply task success**; inspect
+`task_passed` separately. Missing traces remain in the total. Duplicate/unknown
+IDs, changed input hashes, forged user events, or mismatched observations reject
+the replay. Output files are never overwritten.
+
+The workflow receives copied observations, tool schemas and user events. The
+harness owns scenario labels, scripted user answers, fault schedules and scoring.
+Every attempted call uses one step; timeout recovery retries at most twice with
+the same action. No subprocess isolation, live models or API billing is involved.
+
+| Tool | Purpose |
+| --- | --- |
+| `get_context` | Read structured input, user corrections and active plan |
+| `get_memories` | Read versioned, confirmed/expired preferences |
+| `search_exercises` | Look up artificial blocks by equipment |
+| `request_clarification` | Request missing required fields |
+| `validate_plan` | Return actionable constraint feedback |
+| `propose_plan` | Store an immutable preview without writing a plan |
+| `apply_plan` | Apply the approved preview with idempotent receipts |
+| `finish` | End the episode; terminal state is scored independently |
+
+See the [environment walkthrough and actual experiment results](../../docs/research/2026-09-28-interactive-environment.md)
+for approval binding, memory precedence, trace structure and limitations.
 
 ## Next increment
 
-Build a resettable environment that exposes only observations and typed tools to
-the policy. Add trace replay, preview/approval transitions, tool-failure injection,
-and stale-memory tasks before collecting any training trajectories. Preserve this
-small proposal contract as a fast regression suite.
+Add an untrained model policy behind the same observation/tool interface, with
+bounded calls, strict parsing and usage accounting. First verify the adapter with
+mock responses, then measure a small live pilot after model access and a spending
+limit are established. Expand and independently review grouped scenarios before
+collecting SFT trajectories; keep these public seeds as regression fixtures.

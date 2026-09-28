@@ -116,20 +116,22 @@ DeepSeek V4 requests explicitly use non-thinking mode for bounded structured gen
 
 ## Agent research: evaluation before training
 
-LiftCut-AgentLab studies tool use and post-training for plan adjustments under changing constraints. The first implemented increment is a dependency-free Python evaluation foundation: **30 synthetic development scenarios**, strict proposal grading, a deterministic baseline, and regression tests. It runs without GPU or API access.
+LiftCut-AgentLab studies tool use and post-training for plan adjustments under changing constraints. The dependency-free Python lab now includes **30 proposal development cases and 14 interactive development scenarios**, eight typed tools, versioned user confirmation, temporal preferences, controlled timeouts, and executable trace replay. It runs without GPU or API access.
 
 ```bash
 python research/liftcut-agent/run.py validate
 python research/liftcut-agent/run.py baseline
+python research/liftcut-agent/interact.py run
+python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/reports/interactive-fixed-traces-2026-09-28.jsonl
 python -m unittest discover -s research/liftcut-agent/tests -v
 ```
 
-The rule baseline solves the explicit toy constraints; its score checks the evaluator and fixtures. It is not a trained-model or multi-turn Agent result. The fixtures use artificial exercise blocks and time costs.
+The fixed workflow completes 14/14 interactive seeds; ignoring memory completes 12/14 and disabling retries completes 11/14. These are scripted development checks of the environment, **not LLM, training, or generalization results**. The fixtures use artificial exercise blocks and time costs. See the [experiment record](docs/research/2026-09-28-interactive-environment.md).
 
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
 | P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
-| P1 · next | Resettable tools, action traces, missing information, stale memory and failure recovery | Simulated confirmation boundary |
+| P1 · offline environment implemented | Resettable tools, replay, clarification, temporal memory, failure recovery; untrained model policy still pending | Simulated confirmation boundary |
 | P2–P3 · planned | Verified trajectories, Base/SFT comparisons, ablations and research report | Offline research |
 | P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 

@@ -1,0 +1,212 @@
+{
+  "total": 14,
+  "replayed": 14,
+  "task_passed": 14,
+  "traces_sha256": "1b0d7e421bd994479511c840afcb96a20dfb327bc3cd5642c51a72983555dedf",
+  "results": [
+    {
+      "scenario_id": "interactive-001",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-002",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "applied",
+        "steps": 7,
+        "writes": 1,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-003",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 9,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-004",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "awaiting_user",
+        "steps": 4,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-005",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-006",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-007",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 7,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {
+          "tool_timeout": 1
+        },
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-008",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "applied",
+        "steps": 8,
+        "writes": 1,
+        "blocked_write_attempts": 0,
+        "tool_errors": {
+          "tool_timeout": 1
+        },
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-009",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "declined",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-010",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "declined",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-011",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "infeasible",
+        "steps": 4,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-012",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "previewed",
+        "steps": 10,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {
+          "tool_timeout": 1
+        },
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-013",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "applied",
+        "steps": 12,
+        "writes": 1,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    },
+    {
+      "scenario_id": "interactive-014",
+      "replay_valid": true,
+      "score": {
+        "passed": true,
+        "issues": [],
+        "outcome": "awaiting_user",
+        "steps": 6,
+        "writes": 0,
+        "blocked_write_attempts": 0,
+        "tool_errors": {},
+        "clean_completion": true
+      }
+    }
+  ],
+  "cases_sha256": "e2863f54f30fa7cd09a4ea4f993af0effac7a48936ba305019ac1d3bf5e04482",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478"
+}
