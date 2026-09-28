@@ -246,6 +246,10 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 Plan, exact controls, budget and commands:
 [recovery-data pilot](research/2026-09-28-recovery-experiment.md).
+Implementation: [PR #13](https://github.com/Townzc/liftcut-tracker/pull/13).
+CPU CI verified 179 Python tests and reproduced the paired tokenizer/data report;
+the local upload archive also has all 13 prepared file hashes verified. No new
+GPU or paid API execution is included in this milestone.
 
 ## Decision log
 
