@@ -101,10 +101,11 @@ No model/API or paid GPU training was used in the first two increments.
 
 ## Limitations and open evidence gaps
 
-- The hosted reference has one complete public-development run. Repeated runs,
-  trainable small-model comparison, held-out evaluation, SFT, DPO and online RL
-  remain pending. Protocol failures prevented five original tasks from reaching
-  decisions. The revised protocol has offline evidence only.
+- The hosted reference has one complete public-development run. A real 20-step
+  QLoRA compatibility pilot and corrected local-model development comparison have
+  run; neither establishes generalization. Repeated training, a larger SFT data
+  study, external evaluation, DPO and online RL remain pending. The revised
+  protocol has local GPU evidence; its paid hosted four-arm matrix remains blocked.
 - The environment is an in-process synthetic harness. It is not a production
   authorization layer or a sandbox for untrusted Python policies.
 - Structured constraints are supplied; natural-language extraction is not measured.
@@ -112,9 +113,10 @@ No model/API or paid GPU training was used in the first two increments.
 - The baseline shares constraint helpers with the grader. Regression mutations and
   alternate valid answers test the contract, but are not an independent research
   validation or an expert review of the scenario design.
-- All 30 proposal and 14 interactive seeds are public dev data. No independent
-  held-out set has been frozen. Interactive requests may describe desired recovery
-  behavior; the scripted user is intentionally simple.
+- All 30 proposal and 14 original interactive seeds remain public dev data.
+  Recovery-v1 now freezes 24 train / 8 dev / 16 test scenarios by constraint/persona
+  bundles, but shares author, behavior templates and catalog. It is not external
+  independent/OOD validation. The scripted user is intentionally simple.
 - Token usage and latency instrumentation is implemented; mock values are
   synthetic. Repeated live-model reliability remains unmeasured. Fixed-workflow
   controls are not model ablations.
@@ -205,20 +207,49 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Resolve the paid-run execution gate or obtain artifacts from a permitted manual
-   run of `protocol_experiment.py live`. Keep the frozen four-arm plan and all
-   failures. Audit every arm before interpreting differences. Authorization is
-   recorded locally; permission was not the unresolved user decision.
-2. Independently review the pending-approval contract and expand grouped scenarios;
-   freeze held-out evaluation before dataset generation. The 59 public development
-   decisions are only a pipeline smoke sample.
-3. Diagnose the complete local development rollouts, then freeze grouped unseen
-   scenarios before generating training trajectories. The 20-step pilot is not
-   the formal unadapted/SFT or recovery-data ablation.
-4. Estimate the next GPU window from actual generated token totals and measured
-   throughput; retain the 4090 until an actual memory test motivates a larger GPU.
-   The next proposed window is at most two hours / CNY 10 including buffer, subject
-   to final data size and the actual quote; no next run is scheduled or rented.
+1. After the maintainer starts the server, prepare the full merged commit and
+   verify the retained model/environment and the reviewed recovery-v1 CPU artifacts.
+   Run the [prepared bounded recovery pilot](research/2026-09-28-recovery-experiment.md):
+   two adapters, then 72 fixed evaluation episodes across three arms. At the known
+   CNY 2.18/hour quote, max two hours from boot / compute CNY 4.36, total planning
+   ceiling CNY 10 including buffer. No new server or GPU job has been started.
+2. Verify backup, automatic shutdown and full artifact audit. Report success and
+   blocked writes separately; do not promote from terminal accuracy alone. If
+   partial, preserve the failed run instead of silently narrowing the comparison.
+3. Use the predeclared interpretation rules to choose more bundles/seeds, stronger
+   independent labels, or an external benchmark. The new pilot still cannot
+   establish broad generalization or replace the larger P2 data study.
+4. The separately authorized hosted protocol matrix still needs a permitted
+   execution path or manually produced artifacts. Do not bypass the prior tool
+   execution gate or repeat the already answered authorization request.
+
+## Implemented in the seventh increment
+
+- [x] Re-audited all 32 prior GPU episodes and diagnosed the four adapter failures.
+  Case012 fails before reaching its timeout: one missing field and one known field
+  are requested together, causing 22 whole-request rejections.
+- [x] Committed 48 grouped scenarios in `491276b` before demonstration generation.
+  All labels are realizable by the scripted workflow; semantic/group leakage and
+  held-out target exports are rejected. Same-author/template limitations retained.
+- [x] Generated and replayed 24 clean + 24 perturbed training episodes offline.
+  Excluded 24 rejected decisions from targets while keeping them in later context.
+  These are programmatic demonstrations, not new model-generated trajectories.
+- [x] Reproduced real CPU tokenization twice: 150 paired correct decisions, exact
+  per-target token equality; each arm uses 300 decisions / 38 optimizer steps /
+  12,758 supervised tokens. Clean/mixed input totals 520,538 / 526,216; longest
+  sequences 2,540 / 2,611. Only 75 mixed decisions change error history.
+- [x] Prepared new training, arbitrary ordered dev/test local rollouts, fixed
+  three-arm replay/comparison audit, boot-relative deadline, archive/backup
+  acknowledgment and completion/failure shutdown. GPU paths remain unexecuted.
+- [x] Added CPU regression and tokenizer CI coverage. The complete new AutoDL
+  window still needs its first observed execution; offline checks are not GPU proof.
+
+Plan, exact controls, budget and commands:
+[recovery-data pilot](research/2026-09-28-recovery-experiment.md).
+Implementation: [PR #13](https://github.com/Townzc/liftcut-tracker/pull/13).
+CPU CI verified 179 Python tests and reproduced the paired tokenizer/data report;
+the local upload archive also has all 13 prepared file hashes verified. No new
+GPU or paid API execution is included in this milestone.
 
 ## Decision log
 
@@ -242,6 +273,8 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 | 2026-09-28 | Use the maintainer's existing 4090 at CNY 2.18/hour, without disk expansion | Actual 50GB disk fits pinned 4B weights and pilot checkpoints; no A800 evidence |
 | 2026-09-28 | Fix native assistant-content mapping in a separate source commit and rerun diagnostics | Initial pure-tool parser rejected a valid call preceded by prose; keep that failure separate from training effects |
 | 2026-09-28 | Reuse the image's Torch in a separate Python 3.12 venv, then reverify CPU artifacts | Avoid global package changes; server token audit matched the original Python 3.11 result exactly |
+| 2026-09-28 | Prepare a paired recovery-context pilot before renting more compute | Existing 6/14 to 10/14 gain is entirely net training overlap; three blocked writes and 22 repeated clarification failures motivate the intervention |
+| 2026-09-28 | Match every assistant target and sampler position across SFT arms | Isolate error history while exactly matching supervised tokens and optimizer steps; disclose extra context compute and shared-template holdout limits |
 
 ## Update protocol
 

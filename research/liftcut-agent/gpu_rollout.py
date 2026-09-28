@@ -1,4 +1,4 @@
-"""Evaluate the fixed local model/adapter interface on public development cases only."""
+"""Evaluate the fixed local interface on explicitly supplied dev/test cases."""
 
 import argparse
 from dataclasses import asdict
@@ -10,8 +10,9 @@ import sys
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 from liftcut_agent.benchmark import load_catalog, read_jsonl
-from liftcut_agent.model_policy import encode
-from liftcut_agent.model_runner import replay_model_suite, run_model_suite
+from liftcut_agent.interactive import digest, validate_scenarios
+from liftcut_agent.model_policy import RunBudget, encode
+from liftcut_agent.model_runner import replay_model_suite, run_model_episode, run_model_suite, summarize
 from liftcut_agent.protocol import ProtocolConfig
 from liftcut_agent.qwen_transport import QwenTransport
 from server_workspace import command, dump_new, sha256
@@ -23,6 +24,7 @@ def main():
     parser.add_argument("--model-manifest", type=Path, required=True)
     parser.add_argument("--adapter-dir", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--cases", type=Path, action="append", help="Ordered dev/test files; repeat for multiple splits")
     parser.add_argument("--allow-gpu", action="store_true")
     args = parser.parse_args()
     if not args.allow_gpu:
@@ -31,8 +33,19 @@ def main():
         raise ValueError("output directory already exists")
     if command(["git", "status", "--porcelain"], ROOT):
         raise ValueError("commit code before GPU execution")
+    case_files = args.cases or [ROOT / "benchmark/interactive-dev.jsonl"]
+    scenarios = [row for path in case_files for row in read_jsonl(path)]
+    catalog = load_catalog(ROOT / "benchmark/catalog.json")
+    validate_scenarios(scenarios, catalog)
+    if not scenarios or any(row["split"] not in {"dev", "test"} for row in scenarios):
+        raise ValueError("evaluation requires nonempty dev/test cases")
+    scope = ("Local GPU on frozen synthetic dev/test cases; shared templates; not external generalization evidence"
+             if args.cases else "Local GPU on 14 public dev cases; training overlap; not generalization evidence")
     pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
     manifest = json.loads(args.model_manifest.read_text(encoding="utf-8"))
+    reviewed_model = json.loads((ROOT / "reports/qwen-gpu-pilot-2026-09-28/model-files.json").read_text(encoding="utf-8"))
+    if manifest["files"] != reviewed_model["files"]:
+        raise ValueError("model file inventory differs from pinned pilot weights")
     if manifest["revision"] != pinned["revision"] or manifest["model_id"] != pinned["model_id"]:
         raise ValueError("model identity mismatch")
     for name, expected in manifest["files"].items():
@@ -45,8 +58,8 @@ def main():
     dump_new(args.output_dir / "manifest.json", {"started_at_utc": datetime.now(timezone.utc).isoformat(),
         "code_commit": command(["git", "rev-parse", "HEAD"], ROOT), "model": manifest,
         "adapter_sha256": adapter, "parser_version": "qwen-native-content-v2",
-        "scope": "All 14 public development cases; adapter saw eight of these cases; not held-out",
-        "cases_sha256": sha256(ROOT / "benchmark/interactive-dev.jsonl"),
+        "scope": scope,
+        "case_files": [{"name": path.name, "sha256": sha256(path)} for path in case_files],
         "catalog_sha256": sha256(ROOT / "benchmark/catalog.json"),
         "precision": "NF4/BF16 compute; prepare_model_for_kbit_training fp32 nonquantized layers for both arms"})
     import torch
@@ -65,21 +78,31 @@ def main():
     model.eval()
     model.config.use_cache = True
     config = ProtocolConfig(model=pinned["model_id"], revision=pinned["revision"], temperature=0,
-        max_output_tokens=512, max_requests=336, max_reserved_output_tokens=172032,
+        max_output_tokens=512, max_requests=sum(s["max_steps"] for s in scenarios),
+        max_reserved_output_tokens=512 * sum(s["max_steps"] for s in scenarios),
         tool_protocol="read_batch", prompt_revision="pending_approval_v1",
         pricing_note="Local rented GPU; no API charge; GPU uptime accounted separately in CNY")
     dump_new(args.output_dir / "config.json", asdict(config))
-    scenarios = read_jsonl(ROOT / "benchmark/interactive-dev.jsonl")
-    catalog = load_catalog(ROOT / "benchmark/catalog.json")
     with (args.output_dir / "generations.jsonl").open("x", encoding="utf-8") as generations, \
             (args.output_dir / "episodes.jsonl").open("x", encoding="utf-8") as episodes_file:
         def save(stream, row):
             stream.write(encode(row) + "\n")
             stream.flush()
         transport = QwenTransport(model, tokenizer, config, lambda row: save(generations, row))
-        report, episodes = run_model_suite(scenarios, catalog, config, lambda: transport,
-            mode="live", on_episode=lambda row: save(episodes_file, row))
-    report["scope"] = "Local GPU on 14 public dev cases; training overlap; not generalization evidence"
+        if args.cases:
+            # Equal scenario-dependent proposal IDs across arms remove random
+            # UUID spelling as an unintended tokenization/inference factor.
+            budget, episodes = RunBudget(config), []
+            for scenario in scenarios:
+                episode = run_model_episode(scenario, catalog, config, transport, budget,
+                                            episode_id=digest(scenario)[:32])
+                episodes.append(episode)
+                save(episodes_file, episode)
+            report = summarize(scenarios, catalog, config, episodes, budget, mode="live")
+        else:
+            report, episodes = run_model_suite(scenarios, catalog, config, lambda: transport,
+                mode="live", on_episode=lambda row: save(episodes_file, row))
+    report["scope"] = scope
     report["cost_note"] = "No API spend; rented GPU uptime billed separately in CNY"
     report["replay"] = replay_model_suite(scenarios, catalog, config, episodes)
     dump_new(args.output_dir / "report.json", report)
