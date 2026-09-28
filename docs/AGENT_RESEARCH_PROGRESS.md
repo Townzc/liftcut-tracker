@@ -1,11 +1,12 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P1: model adapter and one-case hosted
-pilot delivered; broader model comparison pending**.
+Last updated: 2026-09-28. Active milestone: **P1: full hosted development baseline
+recorded; protocol refinement and trainable-model comparison pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftcut-tracker/pull/9).
+Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townzc/liftcut-tracker/pull/10).
 
 ## Implemented in the first increment
 
@@ -22,7 +23,7 @@ Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftc
 ## Verification evidence
 
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
-  96 tests passed locally (24 P0, 41 interactive and 31 model/transport/CLI tests).
+  114 tests passed locally (24 P0, 41 interactive, 31 model/transport/CLI and 18 audit tests).
 - `python research/liftcut-agent/benchmark/build_dev_seeds.py --check`: authored
   definitions match all 30 checked-in rows.
 - `python research/liftcut-agent/run.py validate`: 30 valid cases, all in `dev`.
@@ -43,10 +44,19 @@ Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftc
   output tokens; conservative rate-based cost estimate $0.0052893, reservation
   $0.0371136 against a $0.30 guard. This is not a reconciled bill or broad model result.
   [Protocol, executed experiment and raw evidence](research/2026-09-28-model-policy.md)
-- `npm test`: 47 existing product tests passed locally.
-- `npm run lint`: zero errors; two existing unused-variable warnings in the legacy
+- Full hosted development run: **8/14 passed**, fixed workflow 14/14; 70 API calls,
+  129,573 input and 3,769 output tokens, estimated $0.0433947, reserved $0.3177774
+  against a $0.75 guard. All 14 raw-response/environment traces replay, including
+  failures. Five responses violated the single-call contract; one termination
+  label failed without a write. No prompt/grader changes or reruns during the run.
+  [Full analysis](research/2026-09-28-development-baseline.md)
+- Offline audit of pilot and full run: 78 distinct requests, usage complete,
+  combined estimate $0.0486840. Accuracy stays separate per run. This is neither
+  a provider bill nor an account balance; duplicated artifacts are rejected.
+- Previous increment's local product checks: `npm test` passed 47 existing tests.
+- Previous local `npm run lint`: zero errors; two existing unused-variable warnings in the legacy
   `generate_seed_cases.ts` script.
-- `npm run build`: successful production build, including TypeScript and 21 pages,
+- Previous local `npm run build`: successful production build, including TypeScript and 21 pages,
   using public placeholder authentication configuration.
 - Relative documentation links and `git diff --check` passed. Remote verification
   is recorded by the pull request's `agent-research` and `quality` CI jobs.
@@ -72,8 +82,9 @@ No model/API or paid GPU training was used in the first two increments.
 
 ## Limitations and open evidence gaps
 
-- A model-policy adapter is implemented and validated offline. Broad live-model
-  evaluation, SFT, DPO and online RL remain pending.
+- The hosted reference has one complete public-development run. Repeated runs,
+  trainable small-model comparison, held-out evaluation, SFT, DPO and online RL
+  remain pending. Protocol failures prevented five tasks from reaching decisions.
 - The environment is an in-process synthetic harness. It is not a production
   authorization layer or a sandbox for untrusted Python policies.
 - Structured constraints are supplied; natural-language extraction is not measured.
@@ -108,19 +119,34 @@ No model/API or paid GPU training was used in the first two increments.
 
 Detailed protocol, commands and limits: [model adapter](research/2026-09-28-model-policy.md).
 
-## Next concrete work: P1 model-policy comparison
+## Implemented in the fourth increment
 
-1. Evaluate the hosted reference across the remaining development categories with
-   an explicit aggregate run budget; keep the single-case pilot separate from a
-   broader baseline and account for all requests/failures.
-2. Select an accessible trainable small model for the same-base Base/SFT comparison.
-   A hosted capability reference is a separate baseline, not a training control.
-3. Compare model policies to the fixed workflow on the same tools and step budget. Preserve
-   parse failures, timeouts and blocked actions in failure reporting.
-4. Expand development families from actual failures and request independent human
-   review of task labels. Construct and freeze grouped evaluation before SFT.
-5. Only then collect executable success/recovery trajectories for the matched-token
-   SFT experiment. No GPU rental is needed for the next adapter implementation.
+- [x] Committed protocol/config before the full 14-case hosted run; unchanged
+  prompt, tools, scoring and task order; preserve all original failures.
+- [x] Saved all 70 raw response records and 14 traces from clean source
+  `e9ebb2111c09cc8d2b995b52275d8b9ae497eab8`; full offline replay is consistent.
+- [x] Diagnosed five initial `get_context` + `get_memories` responses rejected by
+  the single-call parser, plus a pending-approval outcome-label failure.
+- [x] Added replay-backed report audit and deduplicated spending ledger; no pooled
+  task accuracy, mock spending, or zero-cost substitution for unknown usage.
+- [x] Added 18 audit regression tests and credential-free CI artifact auditing.
+
+## Next concrete work: P1 protocol compatibility, then model comparison
+
+1. Preserve the strict 8/14 baseline. Version bounded multi-call handling; every
+   executed tool still consumes a step and retains its call ID. Validate replay,
+   argument checks and confirmation boundaries offline before a new paid run.
+2. Review the pending-approval label contract and clarify its visible instructions
+   separately. Do not change old scores or attribute protocol fixes to training.
+3. Freeze the next experiment/config and reservation guard before execution.
+   Retain every selected task and failed request. Repeated reliability is still
+   unmeasured; temperature 0 and a mutable hosted alias do not ensure it.
+4. Independently review/expand grouped scenarios and freeze held-out evaluation.
+   Select an accessible trainable small model for matched Base/SFT experiments;
+   the hosted reference is not a training control.
+5. Collect executable success/recovery trajectories only after those checks. The
+   immediate protocol work needs no GPU. Before rental, present model revision,
+   GPU/VRAM, pilot, time/cost estimate, spending cap, checkpoint and shutdown plan.
 
 ## Decision log
 
@@ -136,6 +162,8 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
 | 2026-09-28 | Check in complete synthetic fixed-workflow traces | Let readers replay the reported result, including response loss after a committed write |
 | 2026-09-28 | Separate API failures and unknown usage from runtime tool errors | Avoid silently retrying paid calls or scoring unavailable usage as zero cost |
 | 2026-09-28 | Use a one-scenario hosted reference before broader rollouts | Validate provider compatibility and cost before generating trajectories |
+| 2026-09-28 | Preserve a failed full-suite baseline and prioritize protocol compatibility | Five of six failures occurred before task decisions because the model emitted two read calls; the sixth exposed pending-approval label ambiguity |
+| 2026-09-28 | Audit complete saved runs before adding costs | Replay and log/report cross-checks prevent accidental missing or duplicated spending; account balance remains unverified |
 
 ## Update protocol
 

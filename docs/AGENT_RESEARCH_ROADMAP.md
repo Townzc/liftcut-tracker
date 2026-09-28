@@ -43,9 +43,13 @@ P0 evaluates structured proposals only. The offline portion of P1 is implemented
 ahead of the target window: 14 interactive development scenarios cover tools,
 approvals, memory and retries, with a fixed workflow and replay. The untrained
 model adapter is now implemented, with offline protocol validation, shared budgets
-and raw response replay. Broad model comparison remains pending; P1 is not fully
-complete. See the [environment experiment](research/2026-09-28-interactive-environment.md)
-and [model adapter](research/2026-09-28-model-policy.md).
+and raw response replay. The first full hosted development run passed 8/14; five
+failures were initial multi-call protocol mismatches and one was a terminal-label
+mismatch. All records replay. P1 still requires protocol refinement and a
+trainable small-model comparison. See the
+[environment experiment](research/2026-09-28-interactive-environment.md),
+[model adapter](research/2026-09-28-model-policy.md) and
+[baseline diagnosis](research/2026-09-28-development-baseline.md).
 
 ## Data and evaluation policy
 
@@ -61,6 +65,9 @@ and [model adapter](research/2026-09-28-model-policy.md).
   model decisions from runtime repair, blocked actions, and final accepted output.
 - Count missing predictions, timeouts, parse errors, and failed tools in the
   denominator. Reject invalid evaluation files rather than silently dropping rows.
+- Diagnose interface failures separately from task decisions that were never
+  reached. Version protocol/prompt changes, preserve original scores, and never
+  attribute adapter or instruction repairs to post-training gains.
 - Report task success by category, evidence grounding, unnecessary calls, repeated
   run reliability, P50/P95, and total cost per successful task as those capabilities
   are implemented. P0 evidence checking only verifies IDs, not semantic entailment.
