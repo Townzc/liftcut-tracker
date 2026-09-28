@@ -1,0 +1,219 @@
+{
+  "evaluator_version": "proposal-v0.1",
+  "scope": "structured_proposal_dev_contract; not model or multi-turn agent performance",
+  "total": 30,
+  "passed": 30,
+  "success_rate": 1.0,
+  "by_category": {
+    "equipment": {
+      "total": 5,
+      "passed": 5
+    },
+    "evidence_ids": {
+      "total": 5,
+      "passed": 5
+    },
+    "infeasible": {
+      "total": 5,
+      "passed": 5
+    },
+    "missing_information": {
+      "total": 5,
+      "passed": 5
+    },
+    "schedule": {
+      "total": 5,
+      "passed": 5
+    },
+    "time_budget": {
+      "total": 5,
+      "passed": 5
+    }
+  },
+  "failure_counts": {},
+  "results": [
+    {
+      "case_id": "seed-001",
+      "category": "schedule",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-002",
+      "category": "schedule",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-003",
+      "category": "schedule",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-004",
+      "category": "schedule",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-005",
+      "category": "schedule",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-006",
+      "category": "equipment",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-007",
+      "category": "equipment",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-008",
+      "category": "equipment",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-009",
+      "category": "equipment",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-010",
+      "category": "equipment",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-011",
+      "category": "time_budget",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-012",
+      "category": "time_budget",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-013",
+      "category": "time_budget",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-014",
+      "category": "time_budget",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-015",
+      "category": "time_budget",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-016",
+      "category": "missing_information",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-017",
+      "category": "missing_information",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-018",
+      "category": "missing_information",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-019",
+      "category": "missing_information",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-020",
+      "category": "missing_information",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-021",
+      "category": "infeasible",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-022",
+      "category": "infeasible",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-023",
+      "category": "infeasible",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-024",
+      "category": "infeasible",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-025",
+      "category": "infeasible",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-026",
+      "category": "evidence_ids",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-027",
+      "category": "evidence_ids",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-028",
+      "category": "evidence_ids",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-029",
+      "category": "evidence_ids",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "seed-030",
+      "category": "evidence_ids",
+      "passed": true,
+      "issues": []
+    }
+  ],
+  "cases_sha256": "bbbc7b2f72cd0d7bb41ae55c6420b6c589b1329c5b34e1e0054d020ce97bd721",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478",
+  "policy": "deterministic-structured-baseline"
+}

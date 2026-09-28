@@ -1,0 +1,12 @@
+[
+  {"id": "bodyweight-a", "equipment": ["bodyweight"], "minutes": 6},
+  {"id": "bodyweight-b", "equipment": ["bodyweight"], "minutes": 7},
+  {"id": "bodyweight-c", "equipment": ["bodyweight"], "minutes": 10},
+  {"id": "dumbbell-a", "equipment": ["dumbbell"], "minutes": 8},
+  {"id": "dumbbell-b", "equipment": ["dumbbell"], "minutes": 10},
+  {"id": "dumbbell-c", "equipment": ["dumbbell"], "minutes": 12},
+  {"id": "barbell-a", "equipment": ["barbell"], "minutes": 10},
+  {"id": "barbell-b", "equipment": ["barbell"], "minutes": 15},
+  {"id": "machine-a", "equipment": ["machine"], "minutes": 12},
+  {"id": "machine-b", "equipment": ["machine"], "minutes": 16}
+]

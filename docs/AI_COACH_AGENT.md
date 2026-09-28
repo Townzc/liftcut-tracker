@@ -2,6 +2,8 @@
 
 Status: proposed roadmap. The current production feature generates structured training and nutrition plans; the conversational agent described here is not shipped yet.
 
+Implementation order updated 2026-09-28: follow the [Agent research roadmap](AGENT_RESEARCH_ROADMAP.md) and [progress log](AGENT_RESEARCH_PROGRESS.md). Evaluation and an offline environment now precede conversational product integration. This document remains the product boundary reference.
+
 ## Product goal
 
 Turn LiftCut from a one-shot plan generator into a coach that can answer questions, remember useful user-approved facts, and recommend today's or the next training session from the user's own history.

@@ -61,3 +61,10 @@ train.log
 .env*
 !.env.example
 /api.txt
+
+# Local career planning and generated AgentLab artifacts
+/docs/Agent-PostTraining-Career-Roadmap.md
+/research/liftcut-agent/outputs/
+__pycache__/
+*.py[cod]
+.venv/

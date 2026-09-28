@@ -67,7 +67,7 @@ The repository includes a reproducible LiftCut-Coach research pipeline for datas
 | MiMo v2.5 Pro | 99.32% | 98.29% | 97.27% | 38.7s | 35.3s | 65.6s |
 | **LiftCut-Coach LoRA** | **100.00%** | **100.00%** | **99.66%** | **36.8s** | **33.0s** | **63.3s** |
 
-These results come from 293 held-out evaluation cases and should be read as a structured-output engineering benchmark, not as evidence of clinical effectiveness. Methodology and limitations are documented in the [technical report](docs/LiftCut-Coach-Technical-Report.md).
+These historical reported results cover 293 held-out evaluation cases and should be read as a structured-output engineering benchmark, not as evidence of clinical effectiveness. The complete original evaluation artifacts are not checked in and have not been reproduced by the new AgentLab work. See the [technical report](docs/LiftCut-Coach-Technical-Report.md) and [measurement audit](docs/research/2026-09-28-evaluation-audit.md) for definitions, evidence gaps, and follow-up checks.
 
 ## System architecture
 
@@ -114,18 +114,26 @@ strict prompt + schema example
 
 DeepSeek V4 requests explicitly use non-thinking mode for bounded structured generation, a provider-specific timeout, no hidden SDK retry loop, and a maximum output-token limit. API keys remain server-only and error details redact the active key.
 
-## Conversational AI Coach roadmap
+## Agent research: evaluation before training
 
-The next milestone is not an unlimited chatbot. It is a bounded agent that can explain which LiftCut records it used and propose the next training or recovery step.
+LiftCut-AgentLab studies tool use and post-training for plan adjustments under changing constraints. The first implemented increment is a dependency-free Python evaluation foundation: **30 synthetic development scenarios**, strict proposal grading, a deterministic baseline, and regression tests. It runs without GPU or API access.
+
+```bash
+python research/liftcut-agent/run.py validate
+python research/liftcut-agent/run.py baseline
+python -m unittest discover -s research/liftcut-agent/tests -v
+```
+
+The rule baseline solves the explicit toy constraints; its score checks the evaluator and fixtures. It is not a trained-model or multi-turn Agent result. The fixtures use artificial exercise blocks and time costs.
 
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
-| 1 | Read-only “Today” recommendation from recent training, nutrition, and body trends | None |
-| 2 | Conversation threads, rolling context, and user-controlled durable memory | Memory only after confirmation |
-| 3 | Typed tools that propose plan adjustments or check-ins | Every mutation previewed and confirmed |
-| 4 | Safety, stale-memory, cross-user RLS, prompt-injection, and schema regression evals | Audited |
+| P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
+| P1 · next | Resettable tools, action traces, missing information, stale memory and failure recovery | Simulated confirmation boundary |
+| P2–P3 · planned | Verified trajectories, Base/SFT comparisons, ablations and research report | Offline research |
+| P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 
-See the complete [AI Coach Agent blueprint](docs/AI_COACH_AGENT.md) for the memory model, tool boundary, structured response contract, RLS requirements, safety rules, and MVP acceptance criteria.
+Read the [research quickstart](research/liftcut-agent/README.md), [technical roadmap](docs/AGENT_RESEARCH_ROADMAP.md), and [current progress](docs/AGENT_RESEARCH_PROGRESS.md). The earlier [AI Coach blueprint](docs/AI_COACH_AGENT.md) remains a product integration reference; the research roadmap defines implementation order.
 
 ## Pages and routes
 
