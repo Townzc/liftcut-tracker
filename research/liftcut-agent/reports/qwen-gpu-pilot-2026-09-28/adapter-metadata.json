@@ -1,0 +1,10 @@
+{
+  "scope": "Final adapter metadata read from the verified local backup; weights are not in Git",
+  "adapter_tensors": 504,
+  "adapter_parameters": 33030144,
+  "file_sha256": {
+    "adapter_config.json": "d2e58548dcf53f1c820ce9075e5271d67b123b236142c1d391c2ac4bab06e660",
+    "adapter_model.safetensors": "32c35eeb7c3196071cc1bdb9a8f836dda93bee70875342d81fe82774d9323d19"
+  },
+  "adapter_bytes": 132187888
+}

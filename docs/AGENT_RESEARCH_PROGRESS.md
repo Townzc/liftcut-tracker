@@ -1,13 +1,15 @@
 # Agent research progress and handoff
 
 Last updated: 2026-09-28. Active milestone: **P1 protocol revision implemented;
-P2 data/tokenizer preparation verified; live protocol comparison still pending**.
+P2 GPU compatibility pilot verified; grouped training/evaluation data and the hosted
+protocol comparison still pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftcut-tracker/pull/9).
 Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townzc/liftcut-tracker/pull/10).
 Protocol revision, data/tokenizer audit and remote checks: [PR #11](https://github.com/Townzc/liftcut-tracker/pull/11).
+Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://github.com/Townzc/liftcut-tracker/pull/12).
 
 ## Implemented in the first increment
 
@@ -24,8 +26,9 @@ Protocol revision, data/tokenizer audit and remote checks: [PR #11](https://gith
 ## Verification evidence
 
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
-  145 tests passed locally (24 P0, 41 interactive, 31 model, 18 audit,
-  14 protocol and 17 data/comparison).
+  155 tests passed locally and on AutoDL Python 3.12.3 before shutdown. Subsequent
+  offline audit and shutdown-path regressions expand the local suite to 161;
+  neither suite needs GPU execution for unit tests.
 - `python research/liftcut-agent/benchmark/build_dev_seeds.py --check`: authored
   definitions match all 30 checked-in rows.
 - `python research/liftcut-agent/run.py validate`: 30 valid cases, all in `dev`.
@@ -64,7 +67,8 @@ Protocol revision, data/tokenizer audit and remote checks: [PR #11](https://gith
 - Pinned Qwen3-4B-Instruct-2507 tokenizer revision
   `cdbee75f17c01a7cc42f958dc650907174af0554`: CPU audit verified 104,177 masked prompt
   tokens and 2,766 supervised tokens across 59 decisions; max sequence 2,973/4,096,
-  no truncation. No weights or training job. [Pipeline evidence](research/2026-09-28-protocol-and-data-pipeline.md)
+  no truncation. That increment used no weights or training job; the subsequent
+  GPU pilot is described below. [Pipeline evidence](research/2026-09-28-protocol-and-data-pipeline.md)
 - The four-arm paid comparison was blocked before process creation by the local
   execution-policy gate, including after budget confirmation. It has no live
   results or additional spend; the previous 8/14 baseline is unchanged.
@@ -159,10 +163,45 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
 - [x] Actual CPU tokenizer/mask check with hash-pinned public files and isolated
   dependencies; optional CI job reproduces the published report without weights.
 - [x] Detailed [GPU pilot and budget](research/2026-09-28-small-model-pilot-plan.md):
-  proposed 4090/24GB, four-hour maximum, CNY 30 ceiling; not rented or trained.
+  proposed 4090/24GB, four-hour maximum, CNY 30 ceiling. Subsequently executed on
+  a maintainer-started instance as recorded in the sixth increment.
 - [ ] Execute the frozen paid protocol matrix: already authorized aggregate USD
   2.40 reservation, but the execution environment rejected launch twice. Do not
   repeatedly request the same authorization or work around the execution gate.
+
+## Implemented in the sixth increment
+
+- [x] Connected to the maintainer-started 4090; verified 16 vCPU / 120GiB cgroup
+  limits, 50GB data disk, CUDA/BF16 and pinned isolated dependencies.
+- [x] Immutable per-commit server checkouts, push-disabled origin, relative cache
+  setup, environment inspection and explicit data/run SHA-256 handoff manifests.
+  SSH endpoint configuration stays locally ignored; no credentials in Git.
+- [x] Downloaded 8.06GB of pinned public model files; checked LFS hashes and
+  reproduced the exact 59-decision tokenizer report on server Python 3.12.
+- [x] Ran 20 NF4/QLoRA steps in 218.47s; 504 adapter tensors updated, finite loss/
+  gradients, 11.50GiB peak allocated memory (23.04GiB reserved), identical logits
+  after adapter reload. This is compatibility evidence, not generalization.
+- [x] Preserved the initial native-interface defect and its raw outputs; fixed
+  mapping of assistant prose plus tool calls without repairing free-form actions.
+- [x] Backed up the final adapter, optimizer/RNG state and experiment inputs/logs
+  off-instance; verified both archive SHA-256s and all 39 selected artifact hashes.
+- [x] Corrected native-interface development replay: unadapted 6/14; adapter 10/14.
+  Training-overlap group: 4/8 to 8/8; remaining public dev group: 2/6 to 2/6.
+  Adapter adds three blocked write attempts and repeated unnecessary clarifications;
+  do not claim generalization or uniformly improved reliability.
+- [x] All 32 saved episodes replay; offline audit links raw generations, messages,
+  token/report counts, adapter identity and deterministic training sampler totals.
+- [x] Executed platform shutdown through Bash at 22:50 UTC; command returned 0,
+  SSH closed and a follow-up connection was refused. Approximate GPU fee CNY 1.77,
+  no expansion; actual provider bill remains unverified. Added a guard fix for the
+  platform's no-shebang shell script; the original timer was not a verified hard cap.
+
+The stopped server retains experiment checkouts `d399e8e` and `ef865ed`. The final
+offline audit/runbook/shutdown guard were committed after shutdown. On the next
+boot, prepare the reviewed full commit from main before using the updated guard;
+do not assume the cloned instance automatically pulled newer GitHub code.
+
+Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gpu-pilot.md).
 
 ## Next concrete work
 
@@ -173,12 +212,13 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
 2. Independently review the pending-approval contract and expand grouped scenarios;
    freeze held-out evaluation before dataset generation. The 59 public development
    decisions are only a pipeline smoke sample.
-3. Prepare and verify model serving/tool parsing plus a training dependency lock
-   for pinned Qwen3-4B-Instruct-2507. Tokenization success is not model inference
-   or a completed SFT pipeline.
-4. Review the concrete GPU quote and shutdown path before renting the proposed
-   four-hour pilot. Measure memory/throughput and validate final-assistant labels
-   through an actual optimizer batch before budgeting full Base/SFT experiments.
+3. Diagnose the complete local development rollouts, then freeze grouped unseen
+   scenarios before generating training trajectories. The 20-step pilot is not
+   the formal unadapted/SFT or recovery-data ablation.
+4. Estimate the next GPU window from actual generated token totals and measured
+   throughput; retain the 4090 until an actual memory test motivates a larger GPU.
+   The next proposed window is at most two hours / CNY 10 including buffer, subject
+   to final data size and the actual quote; no next run is scheduled or rented.
 
 ## Decision log
 
@@ -199,6 +239,9 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
 | 2026-09-28 | Separate batch acceptance from pending-approval instruction in four frozen arms | Distinguish interface changes from instruction changes; preserve original 8/14 result |
 | 2026-09-28 | Continue with offline data and CPU tokenizer work after paid launch rejection | No new live claims or spend; the execution gate remained after explicit budget approval |
 | 2026-09-28 | Exclude known-invalid decisions from positive recovery targets | Preserve error context for learning repair without teaching the rejected action as a correct target |
+| 2026-09-28 | Use the maintainer's existing 4090 at CNY 2.18/hour, without disk expansion | Actual 50GB disk fits pinned 4B weights and pilot checkpoints; no A800 evidence |
+| 2026-09-28 | Fix native assistant-content mapping in a separate source commit and rerun diagnostics | Initial pure-tool parser rejected a valid call preceded by prose; keep that failure separate from training effects |
+| 2026-09-28 | Reuse the image's Torch in a separate Python 3.12 venv, then reverify CPU artifacts | Avoid global package changes; server token audit matched the original Python 3.11 result exactly |
 
 ## Update protocol
 

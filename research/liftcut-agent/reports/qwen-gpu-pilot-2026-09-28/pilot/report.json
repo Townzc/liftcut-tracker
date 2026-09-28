@@ -1,0 +1,53 @@
+{
+  "scope": "Compatibility only; public dev data, no held-out test or SFT improvement claim",
+  "steps": 20,
+  "dataset_decisions": 59,
+  "processed": {
+    "input_tokens": 289613,
+    "supervised_tokens": 7451,
+    "decisions": 160
+  },
+  "training_seconds_including_checkpoints": 218.4708418175578,
+  "input_tokens_per_second": 1325.6368565735288,
+  "supervised_tokens_per_second": 34.105237742536985,
+  "first_step_loss": 0.17874277294301724,
+  "last_step_loss": 0.0037071321139107985,
+  "all_losses_finite": true,
+  "changed_adapter_tensors": 504,
+  "peak_allocated_bytes": 12351741952,
+  "peak_reserved_bytes": 24744296448,
+  "reload_max_logit_difference": 0.0,
+  "reload_close": true,
+  "before": {
+    "total": 2,
+    "passed": 0,
+    "requests": 12,
+    "policy_failures": {
+      "expected_single_tool_call": 2
+    },
+    "replay": {
+      "total": 2,
+      "replayed": 2,
+      "task_passed": 0
+    }
+  },
+  "after": {
+    "total": 2,
+    "passed": 2,
+    "requests": 15,
+    "policy_failures": {},
+    "replay": {
+      "total": 2,
+      "replayed": 2,
+      "task_passed": 2
+    }
+  },
+  "libraries": {
+    "torch": "2.8.0+cu128",
+    "transformers": "4.57.6",
+    "peft": "0.17.1",
+    "accelerate": "1.10.1",
+    "bitsandbytes": "0.47.0"
+  },
+  "finished_at_utc": "2026-09-28T22:28:24.292004+00:00"
+}

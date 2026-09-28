@@ -1,0 +1,9 @@
+# Validated against the AutoDL PyTorch 2.8.0+cu128 / Python 3.12 image.
+# Reuse its Torch in a separate --system-site-packages venv; never upgrade global packages.
+torch==2.8.0+cu128
+transformers==4.57.6
+tokenizers==0.22.2
+Jinja2==3.1.6
+peft==0.17.1
+accelerate==1.10.1
+bitsandbytes==0.47.0

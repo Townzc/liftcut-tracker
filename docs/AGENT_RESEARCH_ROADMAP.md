@@ -19,7 +19,7 @@ training → held-out analysis**. Product work should support that loop.
 | Stage | Target window | Deliverable | Exit evidence |
 | --- | --- | --- | --- |
 | P0: measurement foundation | September 28–October 4 | Historical evaluation audit; 30 synthetic development seeds; executable contracts and rule baseline | Tests, reproducible commands, explicit evaluator limitations |
-| P1: interactive environment | October 5–11 | Resettable environment, 6–8 typed tools, fixed workflow and untrained model policy | Replayable action/observation traces; terminal-state scoring; failure taxonomy |
+| P1: interactive environment | October 5–11 | Resettable environment, 6–8 typed tools, fixed workflow and unadapted model policy | Replayable action/observation traces; terminal-state scoring; failure taxonomy |
 | P2: trajectory SFT | October 12–25 | Verified rollouts, small-model LoRA SFT, Base/SFT and recovery-data comparison | Validation curves, loss-mask inspection, paired evaluation, cost log |
 | P3: first research release | October 26–November 1 | Reproduction bundle, technical report, minimal product demonstration | Results traceable to frozen data/configs; one substantive ablation |
 | P4: preference optimization | November | DPO, memory experiments, external tool-use evaluation | Same-context preference audit, SFT/DPO comparison, transfer/forgetting analysis |
@@ -41,12 +41,12 @@ Do not interpret task success as an effective or medically appropriate workout.
 
 P0 evaluates structured proposals only. The offline portion of P1 is implemented
 ahead of the target window: 14 interactive development scenarios cover tools,
-approvals, memory and retries, with a fixed workflow and replay. The untrained
+approvals, memory and retries, with a fixed workflow and replay. The unadapted
 model adapter is now implemented, with offline protocol validation, shared budgets
 and raw response replay. The first full hosted development run passed 8/14; five
 failures were initial multi-call protocol mismatches and one was a terminal-label
-mismatch. All records replay. P1 still requires protocol refinement and a
-trainable small-model comparison. See the
+mismatch. All records replay. A later 4090 pilot also exercised the trainable
+small model; protocol diagnostics and broader grouped evaluation remain. See the
 [environment experiment](research/2026-09-28-interactive-environment.md),
 [model adapter](research/2026-09-28-model-policy.md) and
 [baseline diagnosis](research/2026-09-28-development-baseline.md).
@@ -54,10 +54,12 @@ trainable small-model comparison. See the
 The protocol revision now supports bounded read-only batches and a separate
 pending-approval prompt factor. Four offline profiles are verified; the frozen
 paid comparison has not executed because of an execution-policy rejection.
-P2 preparation now includes verified development-decision export and a real CPU
-tokenizer/mask audit for pinned Qwen3-4B-Instruct-2507. This is not inference or
-training. See the [pipeline delivery](research/2026-09-28-protocol-and-data-pipeline.md)
-and [unexecuted GPU pilot plan](research/2026-09-28-small-model-pilot-plan.md).
+P2 preparation includes verified decision export, a real tokenizer/mask audit and
+an executed 20-step QLoRA compatibility pilot for pinned Qwen3-4B-Instruct-2507.
+The formal data study and held-out comparison are still pending. See the
+[data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
+[GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
+[budget plan](research/2026-09-28-small-model-pilot-plan.md).
 
 ## Data and evaluation policy
 
@@ -85,7 +87,7 @@ and [unexecuted GPU pilot plan](research/2026-09-28-small-model-pilot-plan.md).
 ## Baselines and experiments
 
 1. Deterministic workflow: checks whether dynamic decisions are needed.
-2. Untrained base model with the same tool interface and budget.
+2. Unadapted instruction model (no project-specific SFT) with the same tool interface and budget.
 3. The same base model after verified multi-turn trajectory SFT.
 4. The same SFT model after DPO using audited preferences.
 5. A strong hosted model as a capability reference, not a causal LoRA comparison.
@@ -135,6 +137,13 @@ and health outcomes are not automatic ground truth.
   a measured failure justifies it.
 - Preserve historical LoRA work as a separately labeled baseline. Recover original
   data, configurations, and outputs before declaring its results reproduced.
+- The first 4090 QLoRA compatibility pilot ran on 2026-09-28: 20 optimizer steps,
+  final-assistant-only labels and identical logits after adapter reload. This is
+  pipeline evidence on 59 public development decisions, not a completed P2 data
+  study or a held-out improvement. See the [GPU pilot](research/2026-09-28-gpu-pilot.md).
+- Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
+  when AutoDL instances change; keep model caches separate and copy critical
+  checkpoints off-instance before shutdown/release.
 - Measure a small rollout and training pilot before renting substantial compute.
   Record generation, GPU, development evaluation, final evaluation, and storage
   costs separately. Do not start paid jobs without an agreed budget.

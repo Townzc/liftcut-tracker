@@ -52,6 +52,9 @@ jobs:
       - name: Audit hosted artifacts and cost ledger without network calls
         run: python research/liftcut-agent/audit.py --run-dir research/liftcut-agent/reports/deepseek-pilot-2026-09-28 --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28
 
+      - name: Audit GPU pilot and local development traces without weights or GPU
+        run: python research/liftcut-agent/audit_gpu.py
+
       - name: Exercise the complete protocol matrix and decision export offline
         run: |
           python research/liftcut-agent/protocol_experiment.py mock --output-dir research/liftcut-agent/outputs/ci-protocol-matrix

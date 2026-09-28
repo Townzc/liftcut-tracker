@@ -1,0 +1,15 @@
+{
+  "shutdown_requested_at_utc": "2026-09-28T22:50:05.874569+00:00",
+  "method": "bash /usr/bin/shutdown",
+  "first_attempt": "Direct subprocess execution failed: platform shell script had no shebang; original timer invocation had the same defect and was not a verified hard cap",
+  "command_returncode": 0,
+  "ssh_closed_by_remote_host": true,
+  "followup_ssh_probe": "Connection refused",
+  "hourly_cny": 2.18,
+  "estimated_online_minutes": 48.84,
+  "estimated_gpu_fee_cny": 1.7745,
+  "timing_basis": "Approximate instance initialization from platform-generated shutdown-script mtime; not provider billing",
+  "actual_provider_bill_verified": false,
+  "disk_expanded": false,
+  "off_instance_backup_files_verified": 39
+}

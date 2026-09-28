@@ -193,6 +193,28 @@ and are excluded as positive targets. A real pinned Qwen3-4B tokenizer verified
 Weights, SFT and frozen held-out data are not part of this result. See the
 [pipeline walkthrough and reproduction](../../docs/research/2026-09-28-protocol-and-data-pipeline.md).
 
-Next: complete the frozen live comparison in a permitted environment, independently
-review grouped data, validate small-model serving and execute the separately
-budgeted [GPU compatibility pilot](../../docs/research/2026-09-28-small-model-pilot-plan.md).
+The separately budgeted [GPU compatibility pilot](../../docs/research/2026-09-28-gpu-pilot.md)
+has now run. Next: diagnose the local model's complete development traces,
+independently review grouped data and freeze new held-out evaluation. The frozen
+hosted comparison remains pending its execution gate.
+
+## Portable GPU workspace
+
+AutoDL setup and instance migration use immutable commit directories, separate
+model/data/run storage, an isolated Python environment and explicit artifact
+SHA-256 manifests. Public code can be cloned without GitHub write credentials;
+the server checkout disables pushes. See the [server runbook](../../docs/research/AUTODL_RUNBOOK.md)
+for prepare/doctor/snapshot/verify commands, environment recreation and backup.
+
+`gpu_pilot.py` is a bounded 1–20 step QLoRA compatibility check using the reviewed
+59 public development decisions. It verifies mask provenance, records actual
+optimizer updates and memory/throughput, saves adapters and optimizer state,
+compares reloaded logits, and preserves two predetermined development rollouts
+before/after. It does not implement a held-out evaluation or claim an SFT gain.
+Core tests stay CPU-only; running the pilot requires explicit `--allow-gpu`.
+
+Replay the checked-in GPU evidence without weights, credentials or a GPU:
+
+```sh
+python research/liftcut-agent/audit_gpu.py
+```

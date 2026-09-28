@@ -1,0 +1,20 @@
+{
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "token_limit_field": "max_completion_tokens",
+  "thinking_mode": null,
+  "temperature": 0,
+  "send_parallel_tool_calls": true,
+  "max_output_tokens": 512,
+  "max_requests": 48,
+  "max_reserved_output_tokens": 24576,
+  "max_request_bytes": 100000,
+  "max_response_bytes": 1000000,
+  "timeout_seconds": 60,
+  "input_usd_per_million": "0",
+  "output_usd_per_million": "0",
+  "max_reserved_usd": "0",
+  "pricing_note": "Local rented GPU; no API charge; instance cost recorded separately in CNY",
+  "tool_protocol": "read_batch",
+  "prompt_revision": "pending_approval_v1"
+}
