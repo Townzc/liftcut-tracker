@@ -147,7 +147,10 @@ the denominator, including those not attempted after budget exhaustion.
 
 See [model protocol and budget documentation](../../docs/research/2026-09-28-model-policy.md)
 for commands, artifacts, replay semantics and the prepared hosted-model pilot.
-Current live results, if any, are in the [progress log](../../docs/AGENT_RESEARCH_PROGRESS.md).
+The first authorized live pilot passed one development scenario in 8 requests,
+with a conservative rate-based cost estimate of $0.0052893. Its raw responses and
+trace are checked in for offline replay. This is provider integration evidence,
+not a general model benchmark. Details are in the [progress log](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
 ## Next increment
 

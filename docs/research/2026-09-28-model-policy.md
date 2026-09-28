@@ -127,7 +127,48 @@ python research/liftcut-agent/model.py live --allow-live --config research/liftc
 credentials out of config files and commands. The generic example contains
 placeholders and is intentionally rejected by live mode until reviewed.
 
-## Evidence and next step
+## Executed hosted pilot
+
+After maintainer authorization, the one-scenario pilot ran from clean code commit
+`f84e9657c33366a416865ff67c7fb69be4f8f9ce` on 2026-09-28. All eight API replies
+reported `model: deepseek-flash`; the API did not pin an immutable weight revision.
+The model called context, memories, candidate search, validation, preview, apply,
+the same apply again after the injected timeout, and finish.
+
+| Measurement | Observed result |
+| --- | --- |
+| Selected development scenario | `interactive-008` only |
+| Task / recorded-response replay | 1/1 passed / 1/1 consistent |
+| Model requests / environment steps | 8 / 8 |
+| Writes / blocked write attempts | 1 / 0 |
+| Injected tool timeout / API failures | 1 / 0 |
+| Provider-reported input / output tokens | 15,579 / 513 |
+| Rate-based estimated cost | $0.0052893 |
+| Reserved cost / authorized reservation guard | $0.0371136 / $0.30 |
+| Request latency P50 / P95 | 1.078 s / 1.656 s |
+
+The cost estimate uses the recorded peak cache-miss rates, not a reconciled bill;
+discounts can make the actual charge lower. All requests supplied usage. The fixed
+workflow also passed this scenario. This single easy public dev case establishes
+working provider/tool/replay integration, **not an advantage over the workflow,
+held-out reliability, or a post-training improvement**. No extra paid requests
+were made after the pilot.
+
+Checked-in synthetic-only evidence:
+
+- [Report](../../research/liftcut-agent/reports/deepseek-pilot-2026-09-28/report.json)
+- [Run manifest](../../research/liftcut-agent/reports/deepseek-pilot-2026-09-28/manifest.json)
+- [Configuration](../../research/liftcut-agent/reports/deepseek-pilot-2026-09-28/config.json)
+- [Raw request/response records](../../research/liftcut-agent/reports/deepseek-pilot-2026-09-28/calls.jsonl)
+- [Episode including model responses and environment trace](../../research/liftcut-agent/reports/deepseek-pilot-2026-09-28/episodes.jsonl)
+
+Replay this evidence without a key or network call:
+
+```sh
+python research/liftcut-agent/model.py replay --config research/liftcut-agent/reports/deepseek-pilot-2026-09-28/config.json --scenario interactive-008 --episodes research/liftcut-agent/reports/deepseek-pilot-2026-09-28/episodes.jsonl
+```
+
+## Verification and next step
 
 96 tests cover the existing environment plus parser failures, preserved user
 events, shared budgets, unknown-cost accounting, local HTTP behavior, credential
@@ -135,8 +176,7 @@ redaction, request/trace tampering and CLI operation. The offline smoke complete
 14/14 scenarios through 97 synthetic replies; all replay. CI repeats this without
 credentials. This is adapter validation, not a live model result.
 
-The [progress log](../AGENT_RESEARCH_PROGRESS.md) records whether a live pilot has
-actually run. First inspect its failures, model identity, usage and replay. Broader
-rollouts require an explicit budget and should be paired with the same fixed
-workflow. Then select an accessible trainable small model, expand independently
-reviewed scenario families and freeze grouped evaluation before trajectory SFT.
+Next, evaluate a broader set of development scenarios under an explicit run budget
+and the same fixed-workflow comparison. Select an accessible trainable small model,
+expand independently reviewed scenario families and freeze grouped evaluation
+before trajectory SFT. Current decisions live in the [progress log](../AGENT_RESEARCH_PROGRESS.md).

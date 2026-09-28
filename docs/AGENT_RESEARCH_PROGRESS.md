@@ -1,7 +1,7 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P1: model adapter implemented;
-live pilot and broader model comparison in progress**.
+Last updated: 2026-09-28. Active milestone: **P1: model adapter and one-case hosted
+pilot delivered; broader model comparison pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
@@ -35,6 +35,13 @@ P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/l
   checks, **not model performance or training ablations**.
 - All 14 saved traces replay with identical observations, state digests and scores.
   [Experiment and artifacts](research/2026-09-28-interactive-environment.md)
+- Model adapter: 14/14 offline smoke tasks and replay, through 97 synthetic replies.
+- Authorized hosted pilot: `deepseek-flash`, non-thinking, `interactive-008` only:
+  1/1 passed and replayed, 8 API calls, one write, no blocked attempts, and recovery
+  from the injected response-loss timeout. Reported usage: 15,579 input and 513
+  output tokens; conservative rate-based cost estimate $0.0052893, reservation
+  $0.0371136 against a $0.30 guard. This is not a reconciled bill or broad model result.
+  [Protocol, executed experiment and raw evidence](research/2026-09-28-model-policy.md)
 - `npm test`: 47 existing product tests passed locally.
 - `npm run lint`: zero errors; two existing unused-variable warnings in the legacy
   `generate_seed_cases.ts` script.
@@ -94,15 +101,17 @@ No model/API or paid GPU training was used in the first two increments.
   paired fixed-workflow counts and failure categories are reported.
 - [x] 14/14 mock tasks and replay through 97 synthetic responses; local loopback
   HTTP and failure tests; credential-free CI smoke and replay.
-- [x] Prepared and locally preflighted a hosted reference pilot for interactive-008.
-  The maintainer authorized this limited run with a $0.30 reservation guard.
+- [x] Preflighted, executed and replayed a hosted reference pilot for interactive-008
+  under the maintainer-authorized $0.30 reservation guard. Saved all eight request/
+  response records and the environment trace from a clean source commit.
 
 Detailed protocol, commands and limits: [model adapter](research/2026-09-28-model-policy.md).
 
 ## Next concrete work: P1 model-policy comparison
 
-1. Execute and replay the authorized one-scenario hosted-model pilot; record actual
-   results, provider identity, failures and usage before any broader rollout.
+1. Evaluate the hosted reference across the remaining development categories with
+   an explicit aggregate run budget; keep the single-case pilot separate from a
+   broader baseline and account for all requests/failures.
 2. Select an accessible trainable small model for the same-base Base/SFT comparison.
    A hosted capability reference is a separate baseline, not a training control.
 3. Compare model policies to the fixed workflow on the same tools and step budget. Preserve

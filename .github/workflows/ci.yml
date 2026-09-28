@@ -47,6 +47,7 @@ jobs:
         run: |
           python research/liftcut-agent/model.py mock --output-dir research/liftcut-agent/outputs/ci-model
           python research/liftcut-agent/model.py replay --config research/liftcut-agent/outputs/ci-model/config.json --episodes research/liftcut-agent/outputs/ci-model/episodes.jsonl
+          python research/liftcut-agent/model.py replay --config research/liftcut-agent/reports/deepseek-pilot-2026-09-28/config.json --scenario interactive-008 --episodes research/liftcut-agent/reports/deepseek-pilot-2026-09-28/episodes.jsonl
 
   quality:
     runs-on: ubuntu-latest

@@ -141,6 +141,9 @@ The [model-policy adapter](docs/research/2026-09-28-model-policy.md) adds strict
 function calling, request/token/cost reservation limits, raw response and usage
 records, and offline response replay. Its credential-free mock verifies the
 protocol; it is not a live-model or training benchmark.
+An initial `deepseek-flash` pilot passed one development scenario in 8 requests;
+its complete response records replay offline. Broader model comparisons remain
+pending; see the adapter report for cost and limitations.
 
 ## Pages and routes
 
