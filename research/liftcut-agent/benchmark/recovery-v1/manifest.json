@@ -1,0 +1,18 @@
+{
+  "version": "recovery-v1",
+  "scope": "same-author synthetic bundle holdout; shared behavior templates",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478",
+  "files": {
+    "train.jsonl": "337519545e1d488c5f27d42dbd66565d9846e02ed86a51b286b1d58a4e1b8795",
+    "dev.jsonl": "e4c11a6b32990c62095cb9ffbd0caf28cb15c63e1bcff8d2699ba45d92f41e03",
+    "test.jsonl": "9f706212b54e8dd2772b804641b7a4ce58cea1a28e95e33fdd96fa10a17fc685"
+  },
+  "counts": {
+    "train": 24,
+    "dev": 8,
+    "test": 16
+  },
+  "grouping": "All eight behaviors of one constraint/persona bundle remain in one split",
+  "test_rule": "Freeze before demonstration generation. No checkpoint selection on test. Report all 16 cases.",
+  "external_validation": false
+}
