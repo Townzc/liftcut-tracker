@@ -39,13 +39,23 @@ class QwenTransport:
         self.number = 0
 
     def complete(self, payload):
-        import torch
         self.number += 1
         start = time.monotonic()
         ids = self.tokenizer.apply_chat_template(normalize_messages(payload["messages"]),
             tools=payload["tools"], tokenize=True, add_generation_prompt=True)
         if len(ids) + self.config.max_output_tokens > self.max_context:
-            return Reply(None, None, "context_limit", time.monotonic() - start)
+            # A local pre-generation rejection has known zero usage. It must not
+            # activate the hosted-provider unknown-usage halt for later cases.
+            elapsed = time.monotonic() - start
+            self.on_generation({"request_number": self.number, "raw_text": None, "output_ids": [],
+                "prompt_tokens": 0, "requested_prompt_tokens": len(ids), "model_called": False,
+                "parse_error": "context_limit", "eos_reached": False, "elapsed_seconds": elapsed})
+            body = {"model": self.config.model, "local_guard": "context_limit",
+                "choices": [{"index": 0, "finish_reason": "local_context_limit",
+                             "message": {"role": "assistant", "content": None, "tool_calls": []}}],
+                "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+            return Reply(encode(body), 200, None, elapsed)
+        import torch
         input_ids = torch.tensor([ids], device="cuda")
         with torch.inference_mode():
             generated = self.model.generate(input_ids=input_ids, attention_mask=torch.ones_like(input_ids),
@@ -67,6 +77,6 @@ class QwenTransport:
                           "total_tokens": len(ids) + len(output_ids)}}
         elapsed = time.monotonic() - start
         self.on_generation({"request_number": self.number, "raw_text": raw, "output_ids": output_ids,
-                            "prompt_tokens": len(ids), "parse_error": error, "eos_reached": ended,
+                            "prompt_tokens": len(ids), "model_called": True, "parse_error": error, "eos_reached": ended,
                             "elapsed_seconds": elapsed})
         return Reply(encode(body), 200, None, elapsed)

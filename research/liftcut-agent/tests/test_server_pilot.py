@@ -11,7 +11,10 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 import server_workspace as workspace
 from gpu_pilot import validate_tokens
-from liftcut_agent.qwen_transport import parse_tool_message
+from liftcut_agent.qwen_transport import QwenTransport, parse_tool_message
+from liftcut_agent.benchmark import load_catalog, read_jsonl
+from liftcut_agent.model_runner import run_model_suite
+from liftcut_agent.protocol import ProtocolConfig
 
 
 class PilotTests(unittest.TestCase):
@@ -52,6 +55,20 @@ class PilotTests(unittest.TestCase):
                 validate_tokens([bad])
         with self.assertRaises(ValueError):
             validate_tokens([row], max_length=3)
+
+    def test_local_context_rejection_has_zero_usage_and_does_not_halt_next_case(self):
+        class Tokenizer:
+            def apply_chat_template(self, *args, **kwargs):
+                return [1, 2]
+        config = ProtocolConfig(max_output_tokens=3)
+        generations = []
+        transport = QwenTransport(None, Tokenizer(), config, generations.append, max_context=3)
+        report, _ = run_model_suite(read_jsonl(ROOT / "benchmark/interactive-dev.jsonl")[:2],
+            load_catalog(ROOT / "benchmark/catalog.json"), config, lambda: transport, mode="live")
+        self.assertEqual(report["requests"], 2)
+        self.assertEqual(report["unknown_usage_requests"], 0)
+        self.assertEqual(report["observed_prompt_tokens"], 0)
+        self.assertTrue(all(not row["model_called"] for row in generations))
 
     def test_artifact_integrity_after_move_and_after_tampering(self):
         with tempfile.TemporaryDirectory() as directory:
