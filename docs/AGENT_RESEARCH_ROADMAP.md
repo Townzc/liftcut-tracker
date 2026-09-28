@@ -42,8 +42,10 @@ Do not interpret task success as an effective or medically appropriate workout.
 P0 evaluates structured proposals only. The offline portion of P1 is implemented
 ahead of the target window: 14 interactive development scenarios cover tools,
 approvals, memory and retries, with a fixed workflow and replay. The untrained
-model policy and its comparison remain pending; P1 is not fully complete. See the
-[environment experiment](research/2026-09-28-interactive-environment.md).
+model adapter is now implemented, with offline protocol validation, shared budgets
+and raw response replay. Broad model comparison remains pending; P1 is not fully
+complete. See the [environment experiment](research/2026-09-28-interactive-environment.md)
+and [model adapter](research/2026-09-28-model-policy.md).
 
 ## Data and evaluation policy
 

@@ -1,0 +1,18 @@
+{
+  "model": "SET_MODEL_ID",
+  "revision": "ALIAS_UNPINNED: replace with a snapshot/revision when available",
+  "token_limit_field": "max_completion_tokens",
+  "thinking_mode": null,
+  "temperature": null,
+  "send_parallel_tool_calls": true,
+  "max_output_tokens": 1024,
+  "max_requests": 24,
+  "max_reserved_output_tokens": 24576,
+  "max_request_bytes": 30000,
+  "max_response_bytes": 1000000,
+  "timeout_seconds": 60,
+  "input_usd_per_million": "0",
+  "output_usd_per_million": "0",
+  "max_reserved_usd": "0",
+  "pricing_note": "REPLACE with verified pricing URL/date, currency conversion if needed; zero prices here are placeholders"
+}
