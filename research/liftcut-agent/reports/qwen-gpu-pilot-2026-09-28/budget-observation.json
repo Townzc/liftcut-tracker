@@ -1,0 +1,13 @@
+{
+  "hourly_cny": 2.18,
+  "authorized_max_hours": 4,
+  "authorized_total_cny": 30,
+  "disk_expanded": false,
+  "timing_proxy_start_utc": "2026-09-28T22:01:15.432048+00:00",
+  "observed_at_utc": "2026-09-28T22:47:54.833459+00:00",
+  "gpu_fee_estimate_to_observation_cny": 1.6952,
+  "timing_basis": "Platform-generated shutdown-script modification time is an approximate instance initialization time, not a provider billing record",
+  "shutdown_guard_deadline_utc": "2026-09-29T02:00:00+00:00",
+  "actual_provider_bill_verified": false,
+  "new_hosted_api_calls": 0
+}

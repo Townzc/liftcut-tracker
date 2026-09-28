@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import sys
@@ -15,9 +16,25 @@ from liftcut_agent.qwen_transport import QwenTransport, parse_tool_message
 from liftcut_agent.benchmark import load_catalog, read_jsonl
 from liftcut_agent.model_runner import run_model_suite
 from liftcut_agent.protocol import ProtocolConfig
+from shutdown_guard import remaining_seconds, shutdown_command
 
 
 class PilotTests(unittest.TestCase):
+    def test_platform_shutdown_snippet_uses_shell_without_executing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "shutdown"
+            path.write_bytes(b"echo platform placeholder\n")
+            self.assertEqual(shutdown_command(path), ["/bin/bash", str(path)])
+            path.write_bytes(b"#!/bin/bash\necho placeholder\n")
+            self.assertEqual(shutdown_command(path), [str(path)])
+
+    def test_shutdown_deadline_is_explicit_and_bounded(self):
+        now = datetime(2026, 9, 28, 22, tzinfo=timezone.utc)
+        self.assertEqual(remaining_seconds("2026-09-28T23:00:00+00:00", now), 3600)
+        for deadline in ("2026-09-28T23:00:00", "2026-09-28T21:00:00+00:00", "2026-09-29T03:00:00+00:00"):
+            with self.assertRaises(ValueError):
+                remaining_seconds(deadline, now)
+
     def test_native_tool_calls_keep_arguments_and_unique_ids(self):
         text = '<tool_call>{"name":"get_context","arguments":{}}</tool_call>\n<tool_call>{"name":"get_memories","arguments":{}}</tool_call><|im_end|>'
         message = parse_tool_message(text, 3)

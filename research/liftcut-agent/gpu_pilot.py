@@ -73,16 +73,16 @@ def main():
     commit = command(["git", "rev-parse", "HEAD"], ROOT)
     if command(["git", "status", "--porcelain"], ROOT):
         raise ValueError("commit code before GPU execution")
-    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text())
-    manifest = json.loads(args.model_manifest.read_text())
+    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
+    manifest = json.loads(args.model_manifest.read_text(encoding="utf-8"))
     if manifest["revision"] != pinned["revision"] or manifest["model_id"] != pinned["model_id"]:
         raise ValueError("model identity mismatch")
     for name, expected in manifest["files"].items():
         if Path(name).name != name or sha256(args.model_dir / name) != expected["sha256"]:
             raise ValueError("model integrity mismatch")
     tokens_file = args.tokens_dir / "tokens.jsonl"
-    audit = json.loads((args.tokens_dir / "report.json").read_text())
-    expected_audit = json.loads((ROOT / "reports/qwen-mask-audit-2026-09-28.json").read_text())
+    audit = json.loads((args.tokens_dir / "report.json").read_text(encoding="utf-8"))
+    expected_audit = json.loads((ROOT / "reports/qwen-mask-audit-2026-09-28.json").read_text(encoding="utf-8"))
     if audit != expected_audit or sha256(tokens_file) != audit["tokens_sha256"]:
         raise ValueError("token data must reproduce the reviewed CPU audit exactly")
     rows = read_jsonl(tokens_file)

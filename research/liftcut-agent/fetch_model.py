@@ -20,7 +20,7 @@ def main():
     args.cache_dir.mkdir(parents=True, exist_ok=True)
     if shutil.disk_usage(args.cache_dir).free < 20 * 1024**3:
         raise ValueError("need 20 GiB free for download and pilot outputs; do not auto-expand disk")
-    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text())
+    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
     from huggingface_hub import HfApi, snapshot_download
     info = HfApi().model_info(pinned["model_id"], revision=pinned["revision"], files_metadata=True, token=False)
     if info.sha != pinned["revision"]:

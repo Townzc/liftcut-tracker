@@ -31,8 +31,8 @@ def main():
         raise ValueError("output directory already exists")
     if command(["git", "status", "--porcelain"], ROOT):
         raise ValueError("commit code before GPU execution")
-    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text())
-    manifest = json.loads(args.model_manifest.read_text())
+    pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
+    manifest = json.loads(args.model_manifest.read_text(encoding="utf-8"))
     if manifest["revision"] != pinned["revision"] or manifest["model_id"] != pinned["model_id"]:
         raise ValueError("model identity mismatch")
     for name, expected in manifest["files"].items():

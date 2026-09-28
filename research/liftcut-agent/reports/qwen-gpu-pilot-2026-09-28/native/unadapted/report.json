@@ -1,0 +1,380 @@
+{
+  "scope": "Local GPU on 14 public dev cases; training overlap; not generalization evidence",
+  "mode": "live",
+  "model_manifest": {
+    "adapter_version": "model-policy-v0.2",
+    "config": {
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "token_limit_field": "max_completion_tokens",
+      "thinking_mode": null,
+      "temperature": 0,
+      "send_parallel_tool_calls": true,
+      "max_output_tokens": 512,
+      "max_requests": 336,
+      "max_reserved_output_tokens": 172032,
+      "max_request_bytes": 100000,
+      "max_response_bytes": 1000000,
+      "timeout_seconds": 60,
+      "input_usd_per_million": "0",
+      "output_usd_per_million": "0",
+      "max_reserved_usd": "0",
+      "pricing_note": "Local rented GPU; no API charge; GPU uptime accounted separately in CNY",
+      "tool_protocol": "read_batch",
+      "prompt_revision": "pending_approval_v1"
+    },
+    "prompt_sha256": "262a1fe12ba55574557a61e0b34e161a695089b37d762853d1fd7aefe78c0990",
+    "max_read_batch": 4,
+    "read_batch_tools": [
+      "get_context",
+      "get_memories",
+      "search_exercises",
+      "validate_plan"
+    ]
+  },
+  "scenario_digest": "8f26a60805959213d94b617957bd98daf85e4269b33bb42e25f9bc51d605ea72",
+  "catalog_digest": "7918794b3a604b4c2f63ae8353110a527da12fe7bfa2d8fd05ee4fe41d462a64",
+  "total": 14,
+  "passed": 6,
+  "clean_completions": 5,
+  "requests": 87,
+  "reserved_output_tokens": 44544,
+  "reserved_usd": "0",
+  "accounted_requests": 87,
+  "unknown_usage_requests": 0,
+  "usage_complete": true,
+  "observed_prompt_tokens": 155045,
+  "observed_completion_tokens": 9208,
+  "known_usage_cost_usd": "0",
+  "estimated_cost_usd": "0",
+  "estimated_cost_per_success_usd": "0",
+  "request_latency_p50_seconds": 3.802653493359685,
+  "request_latency_p95_seconds": 18.25904175080359,
+  "policy_failures": {
+    "expected_single_tool_call": 4,
+    "output_truncated": 1
+  },
+  "tool_errors": {
+    "tool_timeout": 2,
+    "invalid_plan": 2,
+    "unnecessary_clarification": 1
+  },
+  "blocked_write_attempts": 0,
+  "by_category": {
+    "approved_apply": {
+      "total": 1,
+      "passed": 1
+    },
+    "clarification": {
+      "total": 1,
+      "passed": 0
+    },
+    "combined_recovery": {
+      "total": 1,
+      "passed": 0
+    },
+    "constraint_update": {
+      "total": 1,
+      "passed": 0
+    },
+    "declined": {
+      "total": 1,
+      "passed": 1
+    },
+    "infeasible": {
+      "total": 1,
+      "passed": 1
+    },
+    "memory_expiry": {
+      "total": 1,
+      "passed": 1
+    },
+    "memory_supersession": {
+      "total": 1,
+      "passed": 1
+    },
+    "pending_approval": {
+      "total": 1,
+      "passed": 0
+    },
+    "preview": {
+      "total": 1,
+      "passed": 0
+    },
+    "read_timeout": {
+      "total": 1,
+      "passed": 1
+    },
+    "revoked": {
+      "total": 1,
+      "passed": 0
+    },
+    "unanswered": {
+      "total": 1,
+      "passed": 0
+    },
+    "write_timeout": {
+      "total": 1,
+      "passed": 0
+    }
+  },
+  "paired_with_fixed": {
+    "both_passed": 6,
+    "model_only": 0,
+    "fixed_only": 8,
+    "both_failed": 0
+  },
+  "results": [
+    {
+      "scenario_id": "interactive-001",
+      "category": "preview",
+      "passed": false,
+      "issues": [
+        "missing_preview"
+      ],
+      "outcome": "previewed",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-002",
+      "category": "approved_apply",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-003",
+      "category": "clarification",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 8,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 9,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-004",
+      "category": "unanswered",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 1,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 2,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-005",
+      "category": "memory_supersession",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 7,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-006",
+      "category": "memory_expiry",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-007",
+      "category": "read_timeout",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 7,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-008",
+      "category": "write_timeout",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 8,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 9,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-009",
+      "category": "declined",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 8,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "invalid_plan": 1
+      },
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 8,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-010",
+      "category": "revoked",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "missing_user_decline",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 3,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 4,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-011",
+      "category": "infeasible",
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-012",
+      "category": "combined_recovery",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 3,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "unnecessary_clarification": 1
+      },
+      "clean_completion": false,
+      "policy_failure": "output_truncated",
+      "requests": 4,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-013",
+      "category": "constraint_update",
+      "passed": false,
+      "issues": [
+        "expected_one_applied_plan",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-014",
+      "category": "pending_approval",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "previewed",
+      "steps": 8,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "invalid_plan": 1
+      },
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 8,
+      "fixed_passed": true
+    }
+  ],
+  "cost_note": "No API spend; rented GPU uptime billed separately in CNY",
+  "replay": {
+    "total": 14,
+    "replayed": 14,
+    "task_passed": 6
+  }
+}

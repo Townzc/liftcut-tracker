@@ -1,0 +1,49 @@
+{
+  "scope": "Descriptive paired development analysis; no held-out or statistical generalization claim",
+  "paired": {
+    "both_passed": 5,
+    "adapter_only": 5,
+    "unadapted_only": 1,
+    "both_failed": 3
+  },
+  "training_overlap_groups": {
+    "in_smoke_training": {
+      "scenario_ids": [
+        "interactive-001",
+        "interactive-002",
+        "interactive-003",
+        "interactive-006",
+        "interactive-007",
+        "interactive-008",
+        "interactive-009",
+        "interactive-013"
+      ],
+      "total": 8,
+      "unadapted_passed": 4,
+      "adapter_passed": 8
+    },
+    "not_in_smoke_training_but_public_dev": {
+      "scenario_ids": [
+        "interactive-004",
+        "interactive-005",
+        "interactive-010",
+        "interactive-011",
+        "interactive-012",
+        "interactive-014"
+      ],
+      "total": 6,
+      "unadapted_passed": 2,
+      "adapter_passed": 2
+    }
+  },
+  "unadapted_only_ids": [
+    "interactive-005"
+  ],
+  "adapter_only_ids": [
+    "interactive-001",
+    "interactive-003",
+    "interactive-004",
+    "interactive-008",
+    "interactive-013"
+  ]
+}

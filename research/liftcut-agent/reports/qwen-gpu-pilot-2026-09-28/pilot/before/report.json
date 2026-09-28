@@ -1,0 +1,123 @@
+{
+  "scope": "Local GPU compatibility on two selected public dev cases; not held-out or a causal SFT comparison",
+  "mode": "live",
+  "model_manifest": {
+    "adapter_version": "model-policy-v0.2",
+    "config": {
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "token_limit_field": "max_completion_tokens",
+      "thinking_mode": null,
+      "temperature": 0,
+      "send_parallel_tool_calls": true,
+      "max_output_tokens": 512,
+      "max_requests": 48,
+      "max_reserved_output_tokens": 24576,
+      "max_request_bytes": 100000,
+      "max_response_bytes": 1000000,
+      "timeout_seconds": 60,
+      "input_usd_per_million": "0",
+      "output_usd_per_million": "0",
+      "max_reserved_usd": "0",
+      "pricing_note": "Local rented GPU; no API charge; instance cost recorded separately in CNY",
+      "tool_protocol": "read_batch",
+      "prompt_revision": "pending_approval_v1"
+    },
+    "prompt_sha256": "262a1fe12ba55574557a61e0b34e161a695089b37d762853d1fd7aefe78c0990",
+    "max_read_batch": 4,
+    "read_batch_tools": [
+      "get_context",
+      "get_memories",
+      "search_exercises",
+      "validate_plan"
+    ]
+  },
+  "scenario_digest": "d7f712a19f5df2f5ce81b5c6f8d800ac4abfa6af7bffbc5962a1cd5d2a90fb22",
+  "catalog_digest": "7918794b3a604b4c2f63ae8353110a527da12fe7bfa2d8fd05ee4fe41d462a64",
+  "total": 2,
+  "passed": 0,
+  "clean_completions": 0,
+  "requests": 12,
+  "reserved_output_tokens": 6144,
+  "reserved_usd": "0",
+  "accounted_requests": 12,
+  "unknown_usage_requests": 0,
+  "usage_complete": true,
+  "observed_prompt_tokens": 20582,
+  "observed_completion_tokens": 720,
+  "known_usage_cost_usd": "0",
+  "estimated_cost_usd": "0",
+  "estimated_cost_per_success_usd": null,
+  "request_latency_p50_seconds": 1.510492879897356,
+  "request_latency_p95_seconds": 15.08558015525341,
+  "policy_failures": {
+    "expected_single_tool_call": 2
+  },
+  "tool_errors": {
+    "tool_timeout": 1
+  },
+  "blocked_write_attempts": 0,
+  "by_category": {
+    "approved_apply": {
+      "total": 1,
+      "passed": 0
+    },
+    "write_timeout": {
+      "total": 1,
+      "passed": 0
+    }
+  },
+  "paired_with_fixed": {
+    "both_passed": 0,
+    "model_only": 0,
+    "fixed_only": 2,
+    "both_failed": 0
+  },
+  "results": [
+    {
+      "scenario_id": "interactive-002",
+      "category": "approved_apply",
+      "passed": false,
+      "issues": [
+        "expected_one_applied_plan",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 3,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 4,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "interactive-008",
+      "category": "write_timeout",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 8,
+      "fixed_passed": true
+    }
+  ],
+  "cost_note": "USD fields cover API requests only (none); GPU uptime is billed separately in CNY",
+  "replay": {
+    "total": 2,
+    "replayed": 2,
+    "task_passed": 0
+  }
+}
