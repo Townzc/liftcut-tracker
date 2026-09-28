@@ -1,5 +1,7 @@
 # LiftCut-Coach 技术报告
 
+> 2026-09-28 评测审计：下列数字为历史报告结果，本轮未重新训练或重跑完整 293 条评测。完整原始产物需要恢复，同基座未微调对照、分组防泄漏和原始输出/修复后输出分离仍待补齐。详见[审计记录](research/2026-09-28-evaluation-audit.md)。
+
 ## 摘要
 
 LiftCut-Coach 是 LiftCut Tracker 项目中的 AI 训练/饮食计划生成子系统。本文记录了从云端 API 调用到本地 LoRA 微调模型部署的完整技术路线，包括：多 Provider 抽象设计、结构化输出稳定性保障（strict prompt + wrapper unwrap + enum normalize + Zod schema validation）、Qwen2.5-14B-Instruct 上的 LoRA 微调（rank=16, 0.46% 参数）、vLLM OpenAI-compatible 本地部署、以及覆盖 DeepSeek / MiMo / LoRA 三个模型的 evaluation pipeline。在 293 条 held-out evaluation cases 上，LiftCut-Coach LoRA 达到 100% Final Zod Schema Pass 和 99.66% Constraint Pass，wrapper key / enum error 均为 0。
@@ -344,8 +346,8 @@ python -m vllm.entrypoints.openai.api_server \
 
 ### 11.3 研究角度
 
-- LoRA 微调（rank=16, 0.46% 参数）显著提升结构化输出稳定性
-- 本地小模型（14B + LoRA）在特定任务上可超越云端大模型
+- 历史报告中的 LoRA 配置（rank=16, 0.46% 参数）取得了较高的结构化输出通过率；微调的因果增益仍需同基座对照
+- 14B + LoRA 在该评测的部分指标上优于所比较的托管模型；不能推广为通用模型能力或临床效果结论
 - 建立了可复现的 eval pipeline 和数据切分方案
 
 ---

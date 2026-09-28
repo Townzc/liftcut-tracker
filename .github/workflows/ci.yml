@@ -9,6 +9,30 @@ permissions:
   contents: read
 
 jobs:
+  agent-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Check authored fixtures
+        run: python research/liftcut-agent/benchmark/build_dev_seeds.py --check
+
+      - name: Validate development scenarios
+        run: python research/liftcut-agent/run.py validate
+
+      - name: Run evaluator regression tests
+        run: python -m unittest discover -s research/liftcut-agent/tests -v
+
+      - name: Run deterministic contract baseline
+        run: python research/liftcut-agent/run.py baseline
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
