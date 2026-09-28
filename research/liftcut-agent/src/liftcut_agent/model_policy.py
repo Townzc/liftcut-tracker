@@ -218,16 +218,28 @@ class ModelPolicy:
         self.seen_ids = set()
         self.on_call = on_call
 
-    def act(self, observation: dict) -> dict:
+    def prompt(self):
+        return PROMPT
+
+    def observe(self, observation: dict):
         if not self.messages:
             self.tools = [{"type": "function", "function": deepcopy(tool)} for tool in observation["tools"]]
             initial = {key: value for key, value in observation.items() if key != "tools"}
-            self.messages = [{"role": "system", "content": PROMPT}, {"role": "user", "content": encode(initial)}]
+            self.messages = [{"role": "system", "content": self.prompt()}, {"role": "user", "content": encode(initial)}]
         else:
             self.messages.append({"role": "tool", "tool_call_id": self.messages[-1]["tool_calls"][0]["id"],
                                   "content": encode(observation["tool_result"])})
             if observation["user_events"]:
                 self.messages.append({"role": "user", "content": encode({"user_events": observation["user_events"]})})
+
+    def decode(self, data):
+        return parse_action(data, self.seen_ids)
+
+    def record_action(self, record, action):
+        record["action"] = deepcopy(action)
+
+    def act(self, observation: dict) -> dict:
+        self.observe(observation)
         payload = {"model": self.config.model, "messages": deepcopy(self.messages), "tools": self.tools,
                    "tool_choice": "required", "stream": False,
                    self.config.token_limit_field: self.config.max_output_tokens}
@@ -268,8 +280,8 @@ class ModelPolicy:
                     or usage["completion_tokens"] > self.config.max_output_tokens):
                 self.budget.halted = True
                 raise PolicyFailure("provider_usage_exceeds_reservation")
-            action, assistant = parse_action(data, self.seen_ids)
-            record["action"] = deepcopy(action)
+            action, assistant = self.decode(data)
+            self.record_action(record, action)
             self.messages.append(assistant)
             return action
         except PolicyFailure as error:

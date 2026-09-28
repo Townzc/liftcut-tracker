@@ -13,7 +13,8 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 from liftcut_agent.benchmark import load_catalog, read_json, read_jsonl, sha256
 from liftcut_agent.interactive import validate_scenarios
-from liftcut_agent.model_policy import ModelConfig, encode, money
+from liftcut_agent.model_policy import encode, money
+from liftcut_agent.protocol import load_config
 from liftcut_agent.model_runner import replay_model_suite, run_model_suite
 from liftcut_agent.model_transport import HttpTransport, MockWorkflowTransport, endpoint_url
 
@@ -60,12 +61,12 @@ def main():
         data = read_json(args.config.read_text(encoding="utf-8")) if args.config else {}
         if not isinstance(data, dict):
             raise ValueError("configuration must be an object")
-        config = ModelConfig(**data)
+        config = load_config(data)
         if args.command == "mock" and (config.model != "mock-workflow" or
                 money(config.input_usd_per_million) != 0 or money(config.output_usd_per_million) != 0):
             raise ValueError("mock requires mock-workflow and zero prices")
         if args.command == "live":
-            required = set(asdict(ModelConfig()))
+            required = set(asdict(config))
             if set(data) != required or config.model in {"mock-workflow", "SET_MODEL_ID"} or config.pricing_note.startswith("REPLACE"):
                 raise ValueError("live requires a complete, reviewed configuration with model and pricing provenance")
         catalog = load_catalog(args.catalog)

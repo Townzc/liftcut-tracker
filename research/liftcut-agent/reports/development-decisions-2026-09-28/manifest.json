@@ -1,0 +1,103 @@
+{
+  "format_version": "development-decisions-v0.1",
+  "scope": "verified successful development decisions; not training or held-out evaluation",
+  "source_run_id": "8ad5e73c33e531936b29778d4c8a011580a144f2f2d3187b587dec180d46c4a1",
+  "source_episodes_sha256": "6c2e9dc91b530139950543992f060994ea8e85f609243bbb531e1685db7e10e1",
+  "source_model": "deepseek-flash",
+  "source_mode": "live",
+  "selected_episodes": 14,
+  "included_scenario_ids": [
+    "interactive-001",
+    "interactive-002",
+    "interactive-003",
+    "interactive-006",
+    "interactive-007",
+    "interactive-008",
+    "interactive-009",
+    "interactive-013"
+  ],
+  "excluded": [
+    {
+      "scenario_id": "interactive-004",
+      "policy_failure": "expected_single_tool_call",
+      "issues": [
+        "missing_clarification_request",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ]
+    },
+    {
+      "scenario_id": "interactive-005",
+      "policy_failure": "expected_single_tool_call",
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ]
+    },
+    {
+      "scenario_id": "interactive-010",
+      "policy_failure": "expected_single_tool_call",
+      "issues": [
+        "missing_preview",
+        "missing_user_decline",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ]
+    },
+    {
+      "scenario_id": "interactive-011",
+      "policy_failure": "expected_single_tool_call",
+      "issues": [
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ]
+    },
+    {
+      "scenario_id": "interactive-012",
+      "policy_failure": "expected_single_tool_call",
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ]
+    },
+    {
+      "scenario_id": "interactive-014",
+      "policy_failure": null,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ]
+    }
+  ],
+  "excluded_decisions": [],
+  "decision_rows": 59,
+  "families": [
+    "interactive-approved_apply",
+    "interactive-clarification",
+    "interactive-constraint_update",
+    "interactive-declined",
+    "interactive-memory_expiry",
+    "interactive-preview",
+    "interactive-read_timeout",
+    "interactive-write_timeout"
+  ],
+  "decisions_by_category": {
+    "preview": 6,
+    "approved_apply": 7,
+    "clarification": 8,
+    "memory_expiry": 6,
+    "read_timeout": 7,
+    "write_timeout": 8,
+    "declined": 6,
+    "constraint_update": 11
+  },
+  "recovery_episode_ids": [
+    "interactive-007",
+    "interactive-008"
+  ],
+  "rows_digest": "b779ddbfcf5aba524a2e2253ed46289fdb7237bdcf3b5a4d4034d4d1fe3cc3bf",
+  "tokenizer_masks_verified": false,
+  "training_readiness": "blocked_on_independent_labels_grouped_splits_and_model_specific_validation",
+  "decisions_sha256": "e24df9cf0ff89a28c87bf643ab4be08d3a7e1b288d65ae5f5cf19537487cbe49"
+}

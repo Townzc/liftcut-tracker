@@ -1,12 +1,13 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P1: full hosted development baseline
-recorded; protocol refinement and trainable-model comparison pending**.
+Last updated: 2026-09-28. Active milestone: **P1 protocol revision implemented;
+P2 data/tokenizer preparation verified; live protocol comparison still pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 Model adapter and hosted pilot delivery: [PR #9](https://github.com/Townzc/liftcut-tracker/pull/9).
 Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townzc/liftcut-tracker/pull/10).
+Protocol revision, data/tokenizer audit and remote checks: [PR #11](https://github.com/Townzc/liftcut-tracker/pull/11).
 
 ## Implemented in the first increment
 
@@ -23,7 +24,8 @@ Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townz
 ## Verification evidence
 
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
-  114 tests passed locally (24 P0, 41 interactive, 31 model/transport/CLI and 18 audit tests).
+  145 tests passed locally (24 P0, 41 interactive, 31 model, 18 audit,
+  14 protocol and 17 data/comparison).
 - `python research/liftcut-agent/benchmark/build_dev_seeds.py --check`: authored
   definitions match all 30 checked-in rows.
 - `python research/liftcut-agent/run.py validate`: 30 valid cases, all in `dev`.
@@ -53,6 +55,19 @@ Full hosted baseline, audit and remote checks: [PR #10](https://github.com/Townz
 - Offline audit of pilot and full run: 78 distinct requests, usage complete,
   combined estimate $0.0486840. Accuracy stays separate per run. This is neither
   a provider bill nor an account balance; duplicated artifacts are rejected.
+- Four protocol profiles each completed 14/14 workflow mock tasks through 97
+  synthetic responses; all four arms audited and compared offline. The mock emits
+  single calls; separate protocol tests exercise accepted/rejected real batches.
+- Exported 59 development decision rows from eight verified successful hosted
+  episodes; six failed episodes remain excluded. Invalid decisions in otherwise
+  successful recovery traces remain context, not positive targets.
+- Pinned Qwen3-4B-Instruct-2507 tokenizer revision
+  `cdbee75f17c01a7cc42f958dc650907174af0554`: CPU audit verified 104,177 masked prompt
+  tokens and 2,766 supervised tokens across 59 decisions; max sequence 2,973/4,096,
+  no truncation. No weights or training job. [Pipeline evidence](research/2026-09-28-protocol-and-data-pipeline.md)
+- The four-arm paid comparison was blocked before process creation by the local
+  execution-policy gate, including after budget confirmation. It has no live
+  results or additional spend; the previous 8/14 baseline is unchanged.
 - Previous increment's local product checks: `npm test` passed 47 existing tests.
 - Previous local `npm run lint`: zero errors; two existing unused-variable warnings in the legacy
   `generate_seed_cases.ts` script.
@@ -84,7 +99,8 @@ No model/API or paid GPU training was used in the first two increments.
 
 - The hosted reference has one complete public-development run. Repeated runs,
   trainable small-model comparison, held-out evaluation, SFT, DPO and online RL
-  remain pending. Protocol failures prevented five tasks from reaching decisions.
+  remain pending. Protocol failures prevented five original tasks from reaching
+  decisions. The revised protocol has offline evidence only.
 - The environment is an in-process synthetic harness. It is not a production
   authorization layer or a sandbox for untrusted Python policies.
 - Structured constraints are supplied; natural-language extraction is not measured.
@@ -131,22 +147,38 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
   task accuracy, mock spending, or zero-cost substitution for unknown usage.
 - [x] Added 18 audit regression tests and credential-free CI artifact auditing.
 
-## Next concrete work: P1 protocol compatibility, then model comparison
+## Implemented in the fifth increment
 
-1. Preserve the strict 8/14 baseline. Version bounded multi-call handling; every
-   executed tool still consumes a step and retains its call ID. Validate replay,
-   argument checks and confirmation boundaries offline before a new paid run.
-2. Review the pending-approval label contract and clarify its visible instructions
-   separately. Do not change old scores or attribute protocol fixes to training.
-3. Freeze the next experiment/config and reservation guard before execution.
-   Retain every selected task and failed request. Repeated reliability is still
-   unmeasured; temperature 0 and a mutable hosted alias do not ensure it.
-4. Independently review/expand grouped scenarios and freeze held-out evaluation.
-   Select an accessible trainable small model for matched Base/SFT experiments;
-   the hosted reference is not a training control.
-5. Collect executable success/recovery trajectories only after those checks. The
-   immediate protocol work needs no GPU. Before rental, present model revision,
-   GPU/VRAM, pilot, time/cost estimate, spending cap, checkpoint and shutdown plan.
+- [x] Backward-compatible versioned single/read-batch protocols and separate
+  pending-approval prompt factor; one tool step per call, no batched mutations.
+- [x] Frozen four-arm experiment, aggregate-budget preflight, sequential runner,
+  unknown-usage stop, complete-arm audits and paired comparison CLI.
+- [x] Offline workflow matrix, historical replay and 14 protocol regression tests.
+- [x] Replay-verified decision export, family/persona lineage and positive-target
+  filtering; 17 data/comparison tests, including invalid-decision recovery.
+- [x] Actual CPU tokenizer/mask check with hash-pinned public files and isolated
+  dependencies; optional CI job reproduces the published report without weights.
+- [x] Detailed [GPU pilot and budget](research/2026-09-28-small-model-pilot-plan.md):
+  proposed 4090/24GB, four-hour maximum, CNY 30 ceiling; not rented or trained.
+- [ ] Execute the frozen paid protocol matrix: already authorized aggregate USD
+  2.40 reservation, but the execution environment rejected launch twice. Do not
+  repeatedly request the same authorization or work around the execution gate.
+
+## Next concrete work
+
+1. Resolve the paid-run execution gate or obtain artifacts from a permitted manual
+   run of `protocol_experiment.py live`. Keep the frozen four-arm plan and all
+   failures. Audit every arm before interpreting differences. Authorization is
+   recorded locally; permission was not the unresolved user decision.
+2. Independently review the pending-approval contract and expand grouped scenarios;
+   freeze held-out evaluation before dataset generation. The 59 public development
+   decisions are only a pipeline smoke sample.
+3. Prepare and verify model serving/tool parsing plus a training dependency lock
+   for pinned Qwen3-4B-Instruct-2507. Tokenization success is not model inference
+   or a completed SFT pipeline.
+4. Review the concrete GPU quote and shutdown path before renting the proposed
+   four-hour pilot. Measure memory/throughput and validate final-assistant labels
+   through an actual optimizer batch before budgeting full Base/SFT experiments.
 
 ## Decision log
 
@@ -164,6 +196,9 @@ Detailed protocol, commands and limits: [model adapter](research/2026-09-28-mode
 | 2026-09-28 | Use a one-scenario hosted reference before broader rollouts | Validate provider compatibility and cost before generating trajectories |
 | 2026-09-28 | Preserve a failed full-suite baseline and prioritize protocol compatibility | Five of six failures occurred before task decisions because the model emitted two read calls; the sixth exposed pending-approval label ambiguity |
 | 2026-09-28 | Audit complete saved runs before adding costs | Replay and log/report cross-checks prevent accidental missing or duplicated spending; account balance remains unverified |
+| 2026-09-28 | Separate batch acceptance from pending-approval instruction in four frozen arms | Distinguish interface changes from instruction changes; preserve original 8/14 result |
+| 2026-09-28 | Continue with offline data and CPU tokenizer work after paid launch rejection | No new live claims or spend; the execution gate remained after explicit budget approval |
+| 2026-09-28 | Exclude known-invalid decisions from positive recovery targets | Preserve error context for learning repair without teaching the rejected action as a correct target |
 
 ## Update protocol
 
