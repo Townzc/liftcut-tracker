@@ -22,16 +22,26 @@ jobs:
           python-version: "3.11"
 
       - name: Check authored fixtures
-        run: python research/liftcut-agent/benchmark/build_dev_seeds.py --check
+        run: |
+          python research/liftcut-agent/benchmark/build_dev_seeds.py --check
+          python research/liftcut-agent/benchmark/build_interactive_seeds.py --check
 
       - name: Validate development scenarios
-        run: python research/liftcut-agent/run.py validate
+        run: |
+          python research/liftcut-agent/run.py validate
+          python research/liftcut-agent/interact.py validate
 
       - name: Run evaluator regression tests
         run: python -m unittest discover -s research/liftcut-agent/tests -v
 
       - name: Run deterministic contract baseline
         run: python research/liftcut-agent/run.py baseline
+
+      - name: Run and replay interactive workflow
+        run: |
+          python research/liftcut-agent/interact.py run --write-traces research/liftcut-agent/outputs/ci-traces.jsonl
+          python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/outputs/ci-traces.jsonl
+          python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/reports/interactive-fixed-traces-2026-09-28.jsonl
 
   quality:
     runs-on: ubuntu-latest

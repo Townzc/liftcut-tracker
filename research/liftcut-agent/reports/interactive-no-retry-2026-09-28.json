@@ -1,0 +1,260 @@
+{
+  "environment_version": "interactive-v0.1",
+  "policy": "no-retry",
+  "scope": "scripted interactive development fixtures; no LLM or training result",
+  "scenario_digest": "8f26a60805959213d94b617957bd98daf85e4269b33bb42e25f9bc51d605ea72",
+  "catalog_digest": "7918794b3a604b4c2f63ae8353110a527da12fe7bfa2d8fd05ee4fe41d462a64",
+  "total": 14,
+  "passed": 11,
+  "clean_completions": 11,
+  "mean_steps": 6.5,
+  "writes": 3,
+  "blocked_write_attempts": 0,
+  "tool_errors": {
+    "tool_timeout": 3
+  },
+  "by_category": {
+    "preview": {
+      "total": 1,
+      "passed": 1
+    },
+    "approved_apply": {
+      "total": 1,
+      "passed": 1
+    },
+    "clarification": {
+      "total": 1,
+      "passed": 1
+    },
+    "unanswered": {
+      "total": 1,
+      "passed": 1
+    },
+    "memory_supersession": {
+      "total": 1,
+      "passed": 1
+    },
+    "memory_expiry": {
+      "total": 1,
+      "passed": 1
+    },
+    "read_timeout": {
+      "total": 1,
+      "passed": 0
+    },
+    "write_timeout": {
+      "total": 1,
+      "passed": 0
+    },
+    "declined": {
+      "total": 1,
+      "passed": 1
+    },
+    "revoked": {
+      "total": 1,
+      "passed": 1
+    },
+    "infeasible": {
+      "total": 1,
+      "passed": 1
+    },
+    "combined_recovery": {
+      "total": 1,
+      "passed": 0
+    },
+    "constraint_update": {
+      "total": 1,
+      "passed": 1
+    },
+    "pending_approval": {
+      "total": 1,
+      "passed": 1
+    }
+  },
+  "results": [
+    {
+      "scenario_id": "interactive-001",
+      "category": "preview",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-002",
+      "category": "approved_apply",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-003",
+      "category": "clarification",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 9,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-004",
+      "category": "unanswered",
+      "passed": true,
+      "issues": [],
+      "outcome": "awaiting_user",
+      "steps": 4,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-005",
+      "category": "memory_supersession",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-006",
+      "category": "memory_expiry",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-007",
+      "category": "read_timeout",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "awaiting_user",
+      "steps": 4,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "interactive-008",
+      "category": "write_timeout",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "awaiting_user",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "interactive-009",
+      "category": "declined",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-010",
+      "category": "revoked",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-011",
+      "category": "infeasible",
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 4,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-012",
+      "category": "combined_recovery",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "awaiting_user",
+      "steps": 8,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {
+        "tool_timeout": 1
+      },
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "interactive-013",
+      "category": "constraint_update",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 12,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "interactive-014",
+      "category": "pending_approval",
+      "passed": true,
+      "issues": [],
+      "outcome": "awaiting_user",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    }
+  ],
+  "cases_sha256": "e2863f54f30fa7cd09a4ea4f993af0effac7a48936ba305019ac1d3bf5e04482",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478"
+}

@@ -39,13 +39,16 @@ The initial offline fixtures use **synthetic exercise blocks and artificial time
 costs**. They test software constraints, not exercise physiology or clinical safety.
 Do not interpret task success as an effective or medically appropriate workout.
 
-P0 evaluates structured proposals only. Multi-turn behavior, tools, approvals,
-memory, retries, and model training require P1 and later evidence.
+P0 evaluates structured proposals only. The offline portion of P1 is implemented
+ahead of the target window: 14 interactive development scenarios cover tools,
+approvals, memory and retries, with a fixed workflow and replay. The untrained
+model policy and its comparison remain pending; P1 is not fully complete. See the
+[environment experiment](research/2026-09-28-interactive-environment.md).
 
 ## Data and evaluation policy
 
-- Start with 30 authored development seeds. P0 seeds are public development data,
-  never a frozen or unseen test set.
+- Start with 30 authored proposal seeds and 14 interactive seeds. These are public
+  development data, never a frozen or unseen test set.
 - Target roughly 100 development and 150 independently constructed test scenarios
   for the first model experiments, subject to audit quality and cost.
 - Assign user/template/task-family groups before generating completions or

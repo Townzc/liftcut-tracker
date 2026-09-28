@@ -1,8 +1,10 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P0 measurement foundation**.
+Last updated: 2026-09-28. Active milestone: **P1: offline environment delivered;
+untrained model policy pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
-Delivery and remote check status: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
+P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
+P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 
 ## Implemented in the first increment
 
@@ -19,13 +21,20 @@ Delivery and remote check status: [PR #7](https://github.com/Townzc/liftcut-trac
 ## Verification evidence
 
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
-  24 tests passed locally.
+  65 tests passed locally (24 P0 tests plus 41 interactive tests).
 - `python research/liftcut-agent/benchmark/build_dev_seeds.py --check`: authored
   definitions match all 30 checked-in rows.
 - `python research/liftcut-agent/run.py validate`: 30 valid cases, all in `dev`.
 - `python research/liftcut-agent/run.py baseline`: 30/30 deterministic contract
   checks passed. This is **not model or multi-turn Agent performance**.
   [Saved report](../research/liftcut-agent/reports/proposal-contract-baseline-2026-09-28.json)
+- `python research/liftcut-agent/benchmark/build_interactive_seeds.py --check`:
+  all 14 authored interactive development fixtures match.
+- `python research/liftcut-agent/interact.py run`: fixed workflow 14/14 passed;
+  no-memory control 12/14; no-retry control 11/14. These are scripted environment
+  checks, **not model performance or training ablations**.
+- All 14 saved traces replay with identical observations, state digests and scores.
+  [Experiment and artifacts](research/2026-09-28-interactive-environment.md)
 - `npm test`: 47 existing product tests passed locally.
 - `npm run lint`: zero errors; two existing unused-variable warnings in the legacy
   `generate_seed_cases.ts` script.
@@ -36,35 +45,54 @@ Delivery and remote check status: [PR #7](https://github.com/Townzc/liftcut-trac
 
 The seed suite covers schedule, equipment, time budgets, missing information,
 infeasible constraints, and evidence IDs. Catalogue time costs are artificial.
-No model/API or paid GPU training was used in this increment.
+No model/API or paid GPU training was used in either increment.
+
+## Implemented in the second increment
+
+- [x] Reset/step/observation/terminal-state contract with bounded agent steps.
+- [x] Eight typed tools for context, memory, lookup, clarification, validation,
+  preview, confirmed application and termination.
+- [x] Separate simulated user events; confirmation bound to preview/context
+  versions, revocation, and idempotent application after response loss.
+- [x] Highest confirmed unexpired preference revision, with explicit user
+  corrections taking precedence.
+- [x] Before-call and after-commit timeout injection with bounded workflow retry.
+- [x] Full action/observation traces, strict replay and separate reporting of
+  attempted invalid calls, blocked writes, tool errors and final outcomes.
+- [x] Fixed workflow and intentionally limited controls; checked-in reports and
+  full fixed-workflow traces; CI run/replay checks.
 
 ## Limitations and open evidence gaps
 
-- No interactive environment, tool execution, approval state, temporal memory,
-  model-driven policy, SFT, DPO or online RL has been implemented in AgentLab yet.
+- No model-driven policy, SFT, DPO or online RL has been implemented in AgentLab.
+- The environment is an in-process synthetic harness. It is not a production
+  authorization layer or a sandbox for untrusted Python policies.
 - Structured constraints are supplied; natural-language extraction is not measured.
 - Evidence IDs are checked for existence, not semantic relevance or entailment.
 - The baseline shares constraint helpers with the grader. Regression mutations and
   alternate valid answers test the contract, but are not an independent research
   validation or an expert review of the scenario design.
-- All 30 seeds are public dev data. No independent held-out set has been frozen.
+- All 30 proposal and 14 interactive seeds are public dev data. No independent
+  held-out set has been frozen. Interactive requests may describe desired recovery
+  behavior; the scripted user is intentionally simple.
+- Token usage, model cost/latency and repeated model-run reliability remain
+  unmeasured. Fixed-workflow controls are not model ablations.
 - Historical 293-case results and training artifacts remain unreproduced in this
   increment; follow the audit recovery checklist before using stronger claims.
 
-## Next concrete work: P1 interactive environment
+## Next concrete work: P1 model-policy comparison
 
-1. Define reset/step/observation/terminal-state contracts, with hidden scoring
-   metadata unavailable to the policy.
-2. Add narrow read, candidate lookup, validation, clarification, proposal and
-   confirmed-application tools. Keep approved proposal versions and idempotency
-   keys in the environment, not under model control.
-3. Record replayable action/observation trajectories and separate attempted invalid
-   actions from runtime blocks and final state.
-4. Add stale-preference, missing-information, timeout/recovery and revoked-approval
-   scenarios, with deterministic initial states and controlled failure injection.
-5. Compare a fixed workflow and an untrained model policy after the offline
-   environment passes contract checks; measure API cost before generating data.
-6. Construct independently authored grouped evaluation scenarios before SFT.
+1. Implement a model adapter against the existing observation/tool interface, with
+   strict response parsing, model/config identity, bounded requests/output tokens,
+   raw responses, usage and latency records. Start with offline mocked responses.
+2. Select an accessible untrained model and establish a small live-run spending
+   cap before any paid calls. Model access and spending limit are not yet agreed.
+3. Compare it to the fixed workflow on the same tools and step budget. Preserve
+   parse failures, timeouts and blocked actions in failure reporting.
+4. Expand development families from actual failures and request independent human
+   review of task labels. Construct and freeze grouped evaluation before SFT.
+5. Only then collect executable success/recovery trajectories for the matched-token
+   SFT experiment. No GPU rental is needed for the next adapter implementation.
 
 ## Decision log
 
@@ -75,6 +103,9 @@ No model/API or paid GPU training was used in this increment.
 | 2026-09-28 | Label seed data as development-only | Avoid claiming generalization from fixtures used to implement the evaluator |
 | 2026-09-28 | Keep the historical research branch intact; branch from current main | Preserve separate README work and base this increment on the latest product tree |
 | 2026-09-28 | Publish technical milestones; keep personal preparation local | Make public research reproducible while retaining private career context |
+| 2026-09-28 | Implement the offline P1 environment before any model rollout | Deterministic replay and mutation tests establish the interface before API spending |
+| 2026-09-28 | Keep P1 partially complete until an untrained model comparison runs | Fixed-workflow 14/14 only demonstrates fixture coverage and environment behavior |
+| 2026-09-28 | Check in complete synthetic fixed-workflow traces | Let readers replay the reported result, including response loss after a committed write |
 
 ## Update protocol
 
