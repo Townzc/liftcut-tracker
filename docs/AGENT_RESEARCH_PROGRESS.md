@@ -2,6 +2,7 @@
 
 Last updated: 2026-09-28. Active milestone: **P0 measurement foundation**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
+Delivery and remote check status: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 
 ## Implemented in the first increment
 
