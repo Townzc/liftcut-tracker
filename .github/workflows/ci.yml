@@ -25,6 +25,7 @@ jobs:
         run: |
           python research/liftcut-agent/benchmark/build_dev_seeds.py --check
           python research/liftcut-agent/benchmark/build_interactive_seeds.py --check
+          python research/liftcut-agent/recovery_dataset.py check
 
       - name: Validate development scenarios
         run: |
@@ -86,6 +87,8 @@ jobs:
           actual = json.loads((root / 'outputs/ci-mask/report.json').read_text())
           assert actual == expected, 'CPU tokenizer audit differs from published evidence'
           PY
+      - name: Reproduce paired recovery decisions and exact token budgets on CPU
+        run: python research/liftcut-agent/prepare_recovery.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-recovery-prepared
 
   quality:
     runs-on: ubuntu-latest

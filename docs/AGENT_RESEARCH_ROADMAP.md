@@ -141,6 +141,13 @@ and health outcomes are not automatic ground truth.
   final-assistant-only labels and identical logits after adapter reload. This is
   pipeline evidence on 59 public development decisions, not a completed P2 data
   study or a held-out improvement. See the [GPU pilot](research/2026-09-28-gpu-pilot.md).
+- The [next recovery-context pilot](research/2026-09-28-recovery-experiment.md) is
+  prepared offline: 24 train / 8 dev / 16 test cases grouped by constraint/persona
+  bundle, paired scripted demonstrations, identical 12,758 supervised tokens per
+  adapter, then a fixed three-arm comparison. Shared templates, single seed and
+  two test bundles limit its interpretation; independent labels and external
+  validation remain later gates. GPU execution is pending a maintainer-started
+  two-hour window, with compute CNY 4.36 at the current quote and CNY 10 total buffer.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.
