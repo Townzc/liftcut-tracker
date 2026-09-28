@@ -8,13 +8,14 @@ from .model_policy import Reply, encode
 from .trajectories import normalize_messages
 
 
-def parse_tool_text(text, request_number):
+def parse_tool_message(text, request_number):
     text = text.strip()
     if text.endswith("<|im_end|>"):
         text = text[:-len("<|im_end|>")].strip()
     matches = list(re.finditer(r"<tool_call>\s*(.*?)\s*</tool_call>", text, re.DOTALL))
-    if not matches or re.sub(r"<tool_call>\s*.*?\s*</tool_call>", "", text, flags=re.DOTALL).strip():
-        raise ValueError("non-tool text or incomplete tool call")
+    content = re.sub(r"<tool_call>\s*.*?\s*</tool_call>", "", text, flags=re.DOTALL).strip()
+    if not matches or any(marker in content for marker in ("<tool_call>", "</tool_call>", "<|im_end|>")):
+        raise ValueError("missing or incomplete tool call")
     if len(matches) > 4:
         raise ValueError("too many tool calls")
     calls = []
@@ -26,7 +27,9 @@ def parse_tool_text(text, request_number):
             raise ValueError("invalid Qwen tool object")
         calls.append({"id": f"qwen-{request_number}-{index}", "type": "function",
                       "function": {"name": item["name"], "arguments": encode(item["arguments"])}})
-    return calls
+    # Native assistant messages may contain both prose and tool_calls. Preserve
+    # prose as content; do not convert free-form JSON/prose into a tool action.
+    return {"role": "assistant", "content": content or None, "tool_calls": calls}
 
 
 class QwenTransport:
@@ -53,13 +56,13 @@ class QwenTransport:
         ended = bool(output_ids) and output_ids[-1] == self.tokenizer.eos_token_id
         error = None
         try:
-            calls = parse_tool_text(raw, self.number) if ended else []
+            message = parse_tool_message(raw, self.number) if ended else None
         except ValueError as exc:
-            calls, error = [], str(exc)
+            message, error = None, str(exc)
         # Invalid text is kept verbatim in content and fails the existing policy.
-        message = {"role": "assistant", "content": None if calls else raw, "tool_calls": calls}
+        message = message or {"role": "assistant", "content": raw, "tool_calls": []}
         body = {"model": self.config.model, "choices": [{"index": 0, "message": message,
-                "finish_reason": "tool_calls" if calls else "stop" if ended else "length"}],
+                "finish_reason": "tool_calls" if message["tool_calls"] else "stop" if ended else "length"}],
                 "usage": {"prompt_tokens": len(ids), "completion_tokens": len(output_ids),
                           "total_tokens": len(ids) + len(output_ids)}}
         elapsed = time.monotonic() - start

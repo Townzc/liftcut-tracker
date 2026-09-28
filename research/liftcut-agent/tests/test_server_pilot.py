@@ -11,19 +11,26 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 import server_workspace as workspace
 from gpu_pilot import validate_tokens
-from liftcut_agent.qwen_transport import parse_tool_text
+from liftcut_agent.qwen_transport import parse_tool_message
 
 
 class PilotTests(unittest.TestCase):
     def test_native_tool_calls_keep_arguments_and_unique_ids(self):
         text = '<tool_call>{"name":"get_context","arguments":{}}</tool_call>\n<tool_call>{"name":"get_memories","arguments":{}}</tool_call><|im_end|>'
-        calls = parse_tool_text(text, 3)
+        message = parse_tool_message(text, 3)
+        calls = message["tool_calls"]
         self.assertEqual([call["id"] for call in calls], ["qwen-3-0", "qwen-3-1"])
         self.assertEqual(json.loads(calls[1]["function"]["arguments"]), {})
+        self.assertIsNone(message["content"])
+
+    def test_prose_is_preserved_alongside_native_tool_calls(self):
+        message = parse_tool_message('I will validate.\n<tool_call>{"name":"get_context","arguments":{}}</tool_call><|im_end|>', 1)
+        self.assertEqual(message["content"], "I will validate.")
+        self.assertEqual(message["tool_calls"][0]["function"]["name"], "get_context")
 
     def test_malformed_generation_is_not_repaired(self):
         invalid = [
-            'Here is a tool: <tool_call>{"name":"get_context","arguments":{}}</tool_call>',
+            '{"outcome":"applied"}<|im_end|>',
             '<tool_call>{"name":"get_context","arguments":{}}',
             '<tool_call>{"name":"get_context","name":"finish","arguments":{}}</tool_call>',
             '<tool_call>{"name":"get_context","arguments":{"x":NaN}}</tool_call>',
@@ -32,7 +39,7 @@ class PilotTests(unittest.TestCase):
         ]
         for text in invalid:
             with self.subTest(text=text), self.assertRaises(ValueError):
-                parse_tool_text(text, 1)
+                parse_tool_message(text, 1)
 
     def test_masks_reject_supervised_context_and_dropped_target(self):
         row = {"input_ids": [1, 2, 3, 4], "attention_mask": [1, 1, 1, 1],
