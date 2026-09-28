@@ -8,6 +8,7 @@ import math
 from .environment import PlanEnvironment, ScriptedUser
 from .interactive import digest, validate_scenarios
 from .model_policy import ModelConfig, ModelPolicy, PolicyFailure, Reply, RunBudget
+from .protocol import ProtocolConfig, ProtocolPolicy
 from .workflow import FixedWorkflow, replay_trace, run_episode
 
 ARTIFACT_VERSION = "model-episode-v0.1"
@@ -18,7 +19,8 @@ def run_model_episode(scenario, catalog, config, transport, budget, *, episode_i
     if episode_id is not None:
         environment.reset(episode_id=episode_id)
     user = ScriptedUser(scenario)
-    policy = ModelPolicy(config, transport, budget, on_call=on_call)
+    policy_type = ProtocolPolicy if isinstance(config, ProtocolConfig) else ModelPolicy
+    policy = policy_type(config, transport, budget, on_call=on_call)
     observation = environment.initial_observation()
     failure = None
     while not environment.done:

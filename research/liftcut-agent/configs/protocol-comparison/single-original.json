@@ -1,0 +1,20 @@
+{
+  "model": "deepseek-flash",
+  "revision": "ALIAS_UNPINNED: official pricing page identifies DeepSeek-V4.1-Flash on 2026-09-28",
+  "token_limit_field": "max_tokens",
+  "thinking_mode": "disabled",
+  "temperature": 0,
+  "send_parallel_tool_calls": false,
+  "max_output_tokens": 1024,
+  "max_requests": 336,
+  "max_reserved_output_tokens": 344064,
+  "max_request_bytes": 30000,
+  "max_response_bytes": 1000000,
+  "timeout_seconds": 60,
+  "input_usd_per_million": "0.30",
+  "output_usd_per_million": "1.20",
+  "max_reserved_usd": "0.60",
+  "pricing_note": "https://api-docs.deepseek.com/quick_start/pricing/ rechecked 2026-09-28; USD peak cache-miss input and peak output rates; ignores discounts; reservation estimate is not a provider billing guarantee",
+  "tool_protocol": "single",
+  "prompt_revision": "original"
+}

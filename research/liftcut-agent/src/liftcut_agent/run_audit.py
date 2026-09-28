@@ -11,7 +11,8 @@ from pathlib import Path
 
 from .benchmark import read_json, read_jsonl, sha256
 from .interactive import digest
-from .model_policy import ModelConfig, RunBudget
+from .model_policy import RunBudget
+from .protocol import load_config
 from .model_runner import replay_model_suite, summarize
 
 VERSION = "run-audit-v0.1"
@@ -80,7 +81,7 @@ def episode_metrics(scenario, episode):
 
 def audit_run(run_dir: Path, scenarios: list[dict], catalog: dict, *, cases_sha256: str, catalog_sha256: str):
     config_data = _object(run_dir / "config.json")
-    config = ModelConfig(**config_data)
+    config = load_config(config_data)
     manifest = _object(run_dir / "manifest.json")
     report = _object(run_dir / "report.json")
     episodes = read_jsonl(run_dir / "episodes.jsonl", allow_empty=True)
