@@ -4,6 +4,7 @@ Last updated: 2026-09-28. Active milestone: **P1: offline environment delivered;
 untrained model policy pending**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
+P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
 
 ## Implemented in the first increment
 
