@@ -43,6 +43,11 @@ jobs:
           python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/outputs/ci-traces.jsonl
           python research/liftcut-agent/interact.py replay --traces research/liftcut-agent/reports/interactive-fixed-traces-2026-09-28.jsonl
 
+      - name: Run and replay model protocol smoke without credentials
+        run: |
+          python research/liftcut-agent/model.py mock --output-dir research/liftcut-agent/outputs/ci-model
+          python research/liftcut-agent/model.py replay --config research/liftcut-agent/outputs/ci-model/config.json --episodes research/liftcut-agent/outputs/ci-model/episodes.jsonl
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

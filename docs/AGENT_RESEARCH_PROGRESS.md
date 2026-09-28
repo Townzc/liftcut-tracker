@@ -1,7 +1,7 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P1: offline environment delivered;
-untrained model policy pending**.
+Last updated: 2026-09-28. Active milestone: **P1: model adapter implemented;
+live pilot and broader model comparison in progress**.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
@@ -21,7 +21,7 @@ P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/l
 ## Verification evidence
 
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
-  65 tests passed locally (24 P0 tests plus 41 interactive tests).
+  96 tests passed locally (24 P0, 41 interactive and 31 model/transport/CLI tests).
 - `python research/liftcut-agent/benchmark/build_dev_seeds.py --check`: authored
   definitions match all 30 checked-in rows.
 - `python research/liftcut-agent/run.py validate`: 30 valid cases, all in `dev`.
@@ -45,7 +45,7 @@ P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/l
 
 The seed suite covers schedule, equipment, time budgets, missing information,
 infeasible constraints, and evidence IDs. Catalogue time costs are artificial.
-No model/API or paid GPU training was used in either increment.
+No model/API or paid GPU training was used in the first two increments.
 
 ## Implemented in the second increment
 
@@ -64,7 +64,8 @@ No model/API or paid GPU training was used in either increment.
 
 ## Limitations and open evidence gaps
 
-- No model-driven policy, SFT, DPO or online RL has been implemented in AgentLab.
+- A model-policy adapter is implemented and validated offline. Broad live-model
+  evaluation, SFT, DPO and online RL remain pending.
 - The environment is an in-process synthetic harness. It is not a production
   authorization layer or a sandbox for untrusted Python policies.
 - Structured constraints are supplied; natural-language extraction is not measured.
@@ -75,19 +76,36 @@ No model/API or paid GPU training was used in either increment.
 - All 30 proposal and 14 interactive seeds are public dev data. No independent
   held-out set has been frozen. Interactive requests may describe desired recovery
   behavior; the scripted user is intentionally simple.
-- Token usage, model cost/latency and repeated model-run reliability remain
-  unmeasured. Fixed-workflow controls are not model ablations.
+- Token usage and latency instrumentation is implemented; mock values are
+  synthetic. Repeated live-model reliability remains unmeasured. Fixed-workflow
+  controls are not model ablations.
 - Historical 293-case results and training artifacts remain unreproduced in this
   increment; follow the audit recovery checklist before using stronger claims.
 
+## Implemented in the third increment
+
+- [x] Native single-function-call model policy; strict JSON parsing without repair,
+  truncation/refusal/multiple-call errors and unchanged environment arguments.
+- [x] Shared request, output-token and monetary reservation limits; unknown usage
+  stops further requests without disappearing from task denominators.
+- [x] Credential-redacted raw responses, request histories, model/config identity,
+  usage, estimated cost, latency and per-request incremental logging.
+- [x] Recorded-response replay rebuilds requests and environment transitions;
+  paired fixed-workflow counts and failure categories are reported.
+- [x] 14/14 mock tasks and replay through 97 synthetic responses; local loopback
+  HTTP and failure tests; credential-free CI smoke and replay.
+- [x] Prepared and locally preflighted a hosted reference pilot for interactive-008.
+  The maintainer authorized this limited run with a $0.30 reservation guard.
+
+Detailed protocol, commands and limits: [model adapter](research/2026-09-28-model-policy.md).
+
 ## Next concrete work: P1 model-policy comparison
 
-1. Implement a model adapter against the existing observation/tool interface, with
-   strict response parsing, model/config identity, bounded requests/output tokens,
-   raw responses, usage and latency records. Start with offline mocked responses.
-2. Select an accessible untrained model and establish a small live-run spending
-   cap before any paid calls. Model access and spending limit are not yet agreed.
-3. Compare it to the fixed workflow on the same tools and step budget. Preserve
+1. Execute and replay the authorized one-scenario hosted-model pilot; record actual
+   results, provider identity, failures and usage before any broader rollout.
+2. Select an accessible trainable small model for the same-base Base/SFT comparison.
+   A hosted capability reference is a separate baseline, not a training control.
+3. Compare model policies to the fixed workflow on the same tools and step budget. Preserve
    parse failures, timeouts and blocked actions in failure reporting.
 4. Expand development families from actual failures and request independent human
    review of task labels. Construct and freeze grouped evaluation before SFT.
@@ -106,6 +124,8 @@ No model/API or paid GPU training was used in either increment.
 | 2026-09-28 | Implement the offline P1 environment before any model rollout | Deterministic replay and mutation tests establish the interface before API spending |
 | 2026-09-28 | Keep P1 partially complete until an untrained model comparison runs | Fixed-workflow 14/14 only demonstrates fixture coverage and environment behavior |
 | 2026-09-28 | Check in complete synthetic fixed-workflow traces | Let readers replay the reported result, including response loss after a committed write |
+| 2026-09-28 | Separate API failures and unknown usage from runtime tool errors | Avoid silently retrying paid calls or scoring unavailable usage as zero cost |
+| 2026-09-28 | Use a one-scenario hosted reference before broader rollouts | Validate provider compatibility and cost before generating trajectories |
 
 ## Update protocol
 

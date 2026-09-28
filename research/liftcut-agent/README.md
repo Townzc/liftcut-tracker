@@ -6,8 +6,10 @@ user approval transitions, failure injection, fixed workflows and trace replay.
 Python 3.11+ standard library only; no GPU, model/API credentials, package
 installation or web app needed.
 
-**Not yet implemented:** a model-driven policy, trajectory training, product
-integration or held-out model evaluation. The offline confirmation state is a
+**Also implemented:** a native function-calling model adapter, strict parsing,
+shared run budgets, usage/latency records and model-response replay. Its mock
+transport needs no credentials. Trajectory training, product integration and
+held-out model evaluation remain pending. The offline confirmation state is a
 research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
@@ -129,10 +131,27 @@ the same action. No subprocess isolation, live models or API billing is involved
 See the [environment walkthrough and actual experiment results](../../docs/research/2026-09-28-interactive-environment.md)
 for approval binding, memory precedence, trace structure and limitations.
 
+## Model-policy adapter
+
+```sh
+python research/liftcut-agent/model.py mock --output-dir research/liftcut-agent/outputs/model-smoke
+python research/liftcut-agent/model.py replay --config research/liftcut-agent/outputs/model-smoke/config.json --episodes research/liftcut-agent/outputs/model-smoke/episodes.jsonl
+```
+
+The mock completes 14/14 scenarios through 97 synthetic responses. Its token
+counts and latency are test values, not measurements of an LLM. Live mode requires
+an explicit endpoint, complete reviewed configuration, credential environment
+variable and `--allow-live`; output directories are never reused. Unknown usage
+halts the shared run and remains unknown cost. Every selected scenario stays in
+the denominator, including those not attempted after budget exhaustion.
+
+See [model protocol and budget documentation](../../docs/research/2026-09-28-model-policy.md)
+for commands, artifacts, replay semantics and the prepared hosted-model pilot.
+Current live results, if any, are in the [progress log](../../docs/AGENT_RESEARCH_PROGRESS.md).
+
 ## Next increment
 
-Add an untrained model policy behind the same observation/tool interface, with
-bounded calls, strict parsing and usage accounting. First verify the adapter with
-mock responses, then measure a small live pilot after model access and a spending
-limit are established. Expand and independently review grouped scenarios before
-collecting SFT trajectories; keep these public seeds as regression fixtures.
+Inspect a small live pilot before expanding a model-policy comparison. Choose a
+trainable small-model baseline for future same-base SFT. Expand and independently
+review grouped scenarios before collecting trajectories; keep the public seeds
+as regression fixtures. A hosted capability reference cannot establish SFT gains.

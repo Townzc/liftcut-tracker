@@ -131,11 +131,16 @@ The fixed workflow completes 14/14 interactive seeds; ignoring memory completes 
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
 | P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
-| P1 · offline environment implemented | Resettable tools, replay, clarification, temporal memory, failure recovery; untrained model policy still pending | Simulated confirmation boundary |
+| P1 · environment and model adapter implemented | Resettable tools, replay, clarification, memory, recovery; native model calls, budgets and response records; model comparison pending | Simulated confirmation boundary |
 | P2–P3 · planned | Verified trajectories, Base/SFT comparisons, ablations and research report | Offline research |
 | P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 
 Read the [research quickstart](research/liftcut-agent/README.md), [technical roadmap](docs/AGENT_RESEARCH_ROADMAP.md), and [current progress](docs/AGENT_RESEARCH_PROGRESS.md). The earlier [AI Coach blueprint](docs/AI_COACH_AGENT.md) remains a product integration reference; the research roadmap defines implementation order.
+
+The [model-policy adapter](docs/research/2026-09-28-model-policy.md) adds strict native
+function calling, request/token/cost reservation limits, raw response and usage
+records, and offline response replay. Its credential-free mock verifies the
+protocol; it is not a live-model or training benchmark.
 
 ## Pages and routes
 
