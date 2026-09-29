@@ -1,0 +1,41 @@
+{
+  "archives": [
+    {
+      "part": "s0",
+      "path": "training/s0.tar.gz",
+      "archive": "s0.tar.gz",
+      "bytes": 122414736,
+      "sha256": "70577699b59d66fa18ac59b6c069d8ddf86e28ab5f0684ea0f346c1a286567a7"
+    },
+    {
+      "part": "t",
+      "path": "training/t.tar.gz",
+      "archive": "t.tar.gz",
+      "bytes": 122408670,
+      "sha256": "a450cc6d4de44c5887eca605e7c9ea3f8161fd2bab06b2be510b9ef8c405d687"
+    },
+    {
+      "part": "m",
+      "path": "training/m.tar.gz",
+      "archive": "m.tar.gz",
+      "bytes": 122430495,
+      "sha256": "5f196ae5be4fc43472a5f321cef5119aaf023cd3aa9c0befc515f78915329e22"
+    },
+    {
+      "part": "tm",
+      "path": "training/tm.tar.gz",
+      "archive": "tm.tar.gz",
+      "bytes": 122445715,
+      "sha256": "7bf3b33a48fd3597c95f851d0911baa36cc1a11f9df4da4b6c22252a13142214"
+    },
+    {
+      "part": "evidence",
+      "path": "evidence.tar.gz",
+      "archive": "evidence.tar.gz",
+      "bytes": 454825,
+      "sha256": "a345c2727ea38374e6147d3721bf2a63321ee3dfd80c82307554a6ef74c83cd6"
+    }
+  ],
+  "status": "complete",
+  "inventory_digest": "fb8cf374f2d0c206299cc7a2a2af7571a91ee35b2452baca291873214cdf5ab9"
+}

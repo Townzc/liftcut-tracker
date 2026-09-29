@@ -1,0 +1,22 @@
+{
+  "arm": "s0",
+  "steps": 126,
+  "processed": {
+    "input_tokens": 1827888,
+    "supervised_tokens": 41788,
+    "decisions": 1008
+  },
+  "training_seconds_including_checkpoints": 1402.435231788084,
+  "first_step_loss": 0.32113059294510465,
+  "last_step_loss": 0.012538180900530766,
+  "changed_adapter_tensors": 504,
+  "peak_allocated_bytes": 11462622208,
+  "peak_reserved_bytes": 14589886464,
+  "reload_close": true,
+  "reload_max_logit_difference": 0.0,
+  "adapter_sha256": {
+    "adapter_config.json": "a2fbe29b0298155820a5e9a6cd9f6d2e495300e7debc3c9472f2683c55c265f6",
+    "adapter_model.safetensors": "f5f23a183ce0302a70ed5e0e64af5fa5ede275d0bf50ce172c7fca5abf69593c"
+  },
+  "finished_at_utc": "2026-09-29T06:52:43.598131+00:00"
+}

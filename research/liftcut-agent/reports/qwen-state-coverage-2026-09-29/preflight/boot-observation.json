@@ -1,0 +1,6 @@
+{
+  "booted_at_proxy": "2026-09-29T06:21:39.310000+00:00",
+  "observed_at": "2026-09-29T06:23:21.320502+00:00",
+  "source": "container PID1 create_time",
+  "deadline": "2026-09-29T09:21:39.310000+00:00"
+}

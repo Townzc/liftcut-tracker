@@ -75,10 +75,14 @@ completed 38 continuations: C/R consent 5/10 and 6/10, memory 2/9 and 1/9.
 These first-decision development probes expose history and memory sensitivity.
 A retrospective training-coverage audit motivates a
 [2×2 state-coverage study](research/2026-09-29-state-coverage-next-plan.md);
-its four-arm CPU preparation now reproduces exactly. Each arm uses 41,788 matched
-target tokens and 126 updates. The next server window is bounded to three hours
-(CNY 6.54 compute proxy / CNY 8 reserve), after CI and maintainer startup; no new
-GPU result is claimed. See the [execution specification](research/2026-09-29-state-coverage-experiment.md).
+its four arms have now trained with 41,788 matched target tokens and 126 updates each.
+[Completed results](research/2026-09-29-state-coverage-results.md): normal S0/T/M/TM
+10/12, 9/12, 11/12, 9/12; read-history consent 0/3, 3/3, 1/3, 2/3; main memory
+6/8, 4/8, 3/8, 5/8. Only S0→T passes T screening; M fails both pairs. TM adds
+three blocked unapproved-write attempts and is not a reliability promotion candidate.
+All 124 episodes and actual weights were restored; 407 generations pass token replay.
+Next: [CPU preparation for seed43/44 stability](research/2026-09-29-coverage-replication-plan.md),
+then frozen-candidate and independent validation. Original gates remain unchanged.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the
@@ -185,8 +189,11 @@ and health outcomes are not automatic ground truth.
   compute proxy CNY 0.42. Findings and the exact old training pools motivated the
   four-arm coverage study. Its two CPU preparations agree, with 1,008 sampled
   decisions, 41,788 supervised tokens and 126 updates per arm, seed42 only.
-  Proposed next 4090 window: three hours from boot, CNY 6.54 compute proxy / CNY 8
-  reserve, including 30 minutes for backup. No reserved test or additional seed.
+  The completed four-arm window restored five archives / 88 files before ACK.
+  Connections closed and a follow-up was refused; compute proxy CNY 4.75, below the
+  CNY 6.54 cap / CNY 8 reserve, with no independent provider power/billing confirmation.
+  Two further three-hour windows for seed43/44 are proposed at CNY 13.08 compute /
+  CNY 16 reserve; versioned CPU/Git preparation and updated pricing come first.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.

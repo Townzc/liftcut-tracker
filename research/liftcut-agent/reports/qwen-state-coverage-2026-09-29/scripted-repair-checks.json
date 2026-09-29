@@ -1,0 +1,313 @@
+{
+  "scope": "Post-hoc scripted validation diagnostics, not new model successes or deployable automatic repair",
+  "cases": [
+    {
+      "arm": "t",
+      "episodes_sha256": "8e05ce67a1b4d62f866e18298b623fe5287005151aaca4a2410c731e2be7c44c",
+      "scenario_id": "r2-05-missing_time",
+      "prefix_last_event_index": 7,
+      "prefix_events_digest": "ebd8b33971b3a7f5d5665370c5650935c64744b0e0dc44183862f3c7b8069abe",
+      "repair_origin": "operator_script_not_model",
+      "original_issues": [
+        "unknown_evidence"
+      ],
+      "edited_plan_field": "evidence_ids",
+      "observed_basis": {
+        "known_ids_from_observed_tools": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "rejected_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9",
+          "dumbbell-a",
+          "dumbbell-b"
+        ]
+      },
+      "scripted_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "validation": {
+        "ok": true,
+        "result": {
+          "valid": true,
+          "issues": []
+        },
+        "done": false,
+        "steps_remaining": 16
+      },
+      "model_calls": 0,
+      "writes_added": 0,
+      "complete_task_success_claimed": false,
+      "limit": "A valid proposal can be constructed from already observed information; the model did not perform this repair"
+    },
+    {
+      "arm": "t",
+      "episodes_sha256": "8e05ce67a1b4d62f866e18298b623fe5287005151aaca4a2410c731e2be7c44c",
+      "scenario_id": "r2-05-missing_equipment",
+      "prefix_last_event_index": 7,
+      "prefix_events_digest": "09817cf84703c07695345eaea2468c9ba1624f070ec48c71f500fc86d9acad01",
+      "repair_origin": "operator_script_not_model",
+      "original_issues": [
+        "unknown_evidence"
+      ],
+      "edited_plan_field": "evidence_ids",
+      "observed_basis": {
+        "known_ids_from_observed_tools": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "rejected_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9",
+          "dumbbell-a",
+          "dumbbell-b"
+        ]
+      },
+      "scripted_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "validation": {
+        "ok": true,
+        "result": {
+          "valid": true,
+          "issues": []
+        },
+        "done": false,
+        "steps_remaining": 16
+      },
+      "model_calls": 0,
+      "writes_added": 0,
+      "complete_task_success_claimed": false,
+      "limit": "A valid proposal can be constructed from already observed information; the model did not perform this repair"
+    },
+    {
+      "arm": "t",
+      "episodes_sha256": "8e05ce67a1b4d62f866e18298b623fe5287005151aaca4a2410c731e2be7c44c",
+      "scenario_id": "r2-05-missing_days",
+      "prefix_last_event_index": 6,
+      "prefix_events_digest": "b8632bb2b89512e6f1e41d488c735ec7bd8e2354fd3edf08a8a4663119a3dd10",
+      "repair_origin": "operator_script_not_model",
+      "original_issues": [
+        "unknown_evidence"
+      ],
+      "edited_plan_field": "evidence_ids",
+      "observed_basis": {
+        "known_ids_from_observed_tools": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "rejected_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9",
+          "memory-0"
+        ]
+      },
+      "scripted_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "validation": {
+        "ok": true,
+        "result": {
+          "valid": true,
+          "issues": []
+        },
+        "done": false,
+        "steps_remaining": 17
+      },
+      "model_calls": 0,
+      "writes_added": 0,
+      "complete_task_success_claimed": false,
+      "limit": "A valid proposal can be constructed from already observed information; the model did not perform this repair"
+    },
+    {
+      "arm": "m",
+      "episodes_sha256": "4c19ad96fc0f066a2b5f9aa0e9ddd6f3669239fac6febe0f084703bd609ba1cd",
+      "scenario_id": "r2-05-missing_days",
+      "prefix_last_event_index": 8,
+      "prefix_events_digest": "bab5f431c32dc1d20d939ba9f8c1b60b6c185f02757b0b95ea89091246c3b375",
+      "repair_origin": "operator_script_not_model",
+      "original_issues": [
+        "session_count_mismatch"
+      ],
+      "edited_plan_field": "sessions",
+      "observed_basis": {
+        "sessions_per_week_from_observed_context": 2
+      },
+      "rejected_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "sat",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "scripted_plan": {
+        "action": "propose_plan",
+        "sessions": [
+          {
+            "day": "wed",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          },
+          {
+            "day": "thu",
+            "exercise_ids": [
+              "dumbbell-a",
+              "dumbbell-b"
+            ]
+          }
+        ],
+        "evidence_ids": [
+          "record-b4f5e3604ae9"
+        ]
+      },
+      "validation": {
+        "ok": true,
+        "result": {
+          "valid": true,
+          "issues": []
+        },
+        "done": false,
+        "steps_remaining": 15
+      },
+      "model_calls": 0,
+      "writes_added": 0,
+      "complete_task_success_claimed": false,
+      "limit": "A valid proposal can be constructed from already observed information; the model did not perform this repair"
+    }
+  ],
+  "new_model_calls": 0,
+  "new_complete_task_successes": 0
+}

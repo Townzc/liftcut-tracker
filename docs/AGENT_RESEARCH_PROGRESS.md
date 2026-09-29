@@ -1,31 +1,44 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **four-arm state-coverage study
-running on the maintainer-started AutoDL instance; complete results pending**.
-S0/T/M/TM each have 72 training scenarios, 504 paired exported decisions, 41,788
-supervised tokens, 1,008 sampled decisions and 126 updates. Actual target-token
-sequences and sampler indices match; longest sequence 2,995/4,096, no truncation.
-All 264 frozen-source server tests passed in 106.980 seconds. Server preparation
-matches the CPU-frozen hashes; pinned CUDA/BF16 environment is verified. Immutable
-execution source is merged `30fd396`; the controller guard armed at 06:28:45 UTC.
-Container boot proxy is 06:21:39.310 UTC, work cutoff 08:51:39.310, hard shutdown
-09:21:39.310. At 08:10 UTC, S0/T/M are trained, backed up and independently replayed;
-TM training is active. Their normal results are 10/12, 9/12 and 11/12; read-history
-consent 0/3, 3/3 and 1/3; main memory 6/8, 4/8 and 3/8. These are partial-study
-observations, not a complete four-arm result. All three saved adapters pass actual
-file/counter checks; their 93 episodes and 305 native generations also pass CPU
-environment and pinned-tokenizer replay. No full-study backup acknowledgment yet.
-Next: finish TM, restore all adapters and 124 traces, verify, then acknowledge
-shutdown. At ¥2.18/hour:
-¥6.54 compute proxy / ¥8 planning reserve, storage billed separately.
-See the [execution specification](research/2026-09-29-state-coverage-experiment.md)
-and [research journal](research/EXPERIMENT_LOG.md).
-The [external transfer preflight](research/2026-09-29-external-transfer-preflight.md)
-records a future independent-source validation option; no external dataset/model run
-is part of this active GPU window.
-The [results draft](research/2026-09-29-state-coverage-results.md) preserves regressions
-as well as gains; [replication planning](research/2026-09-29-coverage-replication-plan.md)
-is a future CPU/Git preparation task, not an additional authorized GPU job here.
+Last updated: 2026-09-29 UTC. Active milestone: **four-arm state-coverage study completed,
+restored and reviewed; next work is CPU preparation for stability testing**.
+
+| Arm | Complete dev task | Read-history consent | Main memory | Autonomous blocked writes |
+| --- | ---: | ---: | ---: | ---: |
+| S0 | 10/12 | 0/3 | 6/8 | 0 |
+| T | 9/12 | 3/3 | 4/8 | 0 |
+| M | 11/12 | 1/3 | 3/8 | 0 |
+| TM | 9/12 | 2/3 | 5/8 | 3 |
+
+Only S0→T passes the original T screening gate; neither M pair passes. TM attempts
+unapproved writes in three related pending cases, all blocked by the environment;
+do not promote TM as a reliability candidate. Complete-task regressions, all paired
+gains/losses and descriptive interactions are retained. Single seed42 and reused
+development states remain limitations; the 48 reserved tests are unopened.
+
+All four adapters have 126 updates and 41,788 exactly matched target tokens each.
+Five archives / 88 files, actual weights and 124 native/environment replays passed
+off-instance verification before ACK upload by 08:31:34 UTC. All 407 actual generations
+also pass pinned-tokenizer prompt reconstruction/output decoding; no context guards.
+The server executed immutable `30fd396` and passed 264 tests. Publication/analysis
+code passed **281 local tests in 95.671 seconds**; its changes were not deployed into
+the running GPU experiment. Four explicit scripted proposal repairs pass validation
+but add zero model successes or writes.
+
+SSH/SFTP closed after ACK; a subsequent connection was refused by the 08:32:21 UTC
+observation. ACK consumption, shutdown return and provider power/bill were not
+independently observed. Boot-proxy-to-check compute proxy ≈¥4.75 at ¥2.18/hour,
+within the three-hour ¥6.54 compute cap / ¥8 reserve; storage unknown and separate.
+No server job or connection remains under management; do not reopen for CPU work.
+
+Read the [full results](research/2026-09-29-state-coverage-results.md),
+[what/why/result/next journal](research/EXPERIMENT_LOG.md) and
+[case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md).
+The [replication proposal](research/2026-09-29-coverage-replication-plan.md) needs
+versioned seed43/44 implementation and CPU/CI gates before another server window.
+Two proposed three-hour windows imply ¥13.08 compute / ¥16 reserve, not new spending.
+[External transfer preflight](research/2026-09-29-external-transfer-preflight.md)
+remains a future independent-source validation option; no external dataset/model run.
 
 Previous fixed-state diagnostics are completed, restored and reviewed.
 C/R consent decisions: 5/10 and 6/10; memory decisions: 2/9 and 1/9. These are
@@ -38,7 +51,7 @@ That increment passed 248 local CPU tests; the executed frozen server code passe
 Read the [research journal](research/EXPERIMENT_LOG.md),
 [results](research/2026-09-29-state-diagnostic-results.md) and
 [next design](research/2026-09-29-state-coverage-next-plan.md).
-The design is now implemented as the four-arm preparation above; model results remain pending.
+That design has now executed as the four-arm study above; its new results do not rewrite earlier conclusions.
 See the [release criteria and schedule](research/2026-09-29-research-release-criteria.md)
 for the remaining 3–5 week first-release estimate and evidence gates.
 
@@ -73,7 +86,11 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 264 CPU tests pass (16 new). Four training arms execute
+- Current publication: all 281 CPU tests pass. All 124 real episodes and 407 native
+  generations replay, five archives / 88 files and actual weights were verified off-instance.
+  Public inventory excludes weights; tokenizer CI independently checks every saved prompt
+  and output ID. Grounding/session-count script repairs explicitly add no model success.
+- Previous CPU-preparation increment: all 264 tests pass (16 new). Four training arms execute
   and replay 72 scripted episodes each, with 504 identical correct targets. T/TM
   add 80 context-only reads and 64 terminal/apply targets after reads; M/TM balance
   position × invalidity at eight scenarios per cell (two per training bundle).
@@ -298,19 +315,17 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Execute the [frozen four-arm study](research/2026-09-29-state-coverage-experiment.md)
-   after branch CI/merge and maintainer startup. Check endpoint, retained disk/model,
-   actual boot proxy and hourly quote; deploy to a fresh immutable push-disabled checkout.
-   Preserve all prior data/adapters. Reproduce CPU preparation before any GPU phase.
-2. Use the three-hour-from-boot / ¥8 planning window (¥6.54 compute proxy), replacing
-   the preliminary two-hour/¥6 design estimate after measuring actual token volume.
-   Refuse launch after minute ten, stop experiment phases at minute 150, transfer four
-   adapter archives plus evidence, then verify all 124 replays and actual weights before
-   acknowledgment and early shutdown. Partial/failed backups must stay explicitly partial.
-3. Keep the 48 reserved tests unopened and the unmet v2 recovery gate unchanged.
-   Use the [case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md) and maintain the
-   [what/why/result/next journal](research/EXPERIMENT_LOG.md) for each increment.
-   Additional seeds, independent evaluation and DPO/RL remain conditional later work.
+1. Prepare the [seed43/44 replication](research/2026-09-29-coverage-replication-plan.md)
+   on CPU, preserving historical frozen source hashes. Pair all four arms within each seed;
+   initialization, sampler order, provenance, backup and ACK must bind seed and arm.
+2. Recalculate each window from the completed study's actual timing and transfer costs.
+   Proposed two three-hour 4090 windows: ¥13.08 compute proxy / ¥16 reserve at the quoted
+   rate, storage separate. Finish CPU reproduction, tests and Git/CI before requesting startup.
+   TM's unapproved-write regression is an explicit replication target, not a deployment candidate.
+3. Keep the 48 reserved tests unopened and the unmet v2 recovery gate unchanged. Freeze a
+   candidate only after stability review, then prepare one-time reserved and independent-source
+   evaluation. Preserve the [learning cases](research/2026-09-29-state-coverage-results.md)
+   and [journal](research/EXPERIMENT_LOG.md); do not add prompts/data/DPO mid-comparison.
 4. The separately authorized hosted protocol matrix still needs a permitted
    execution path or manually produced artifacts. Do not bypass the prior tool
    execution gate or repeat the already answered authorization request.
@@ -467,7 +482,11 @@ Publication and analysis: [PR #18](https://github.com/Townzc/liftcut-tracker/pul
 - [x] Added versioned GPU training/evaluation, paired gates, raw-response audit,
   three-hour controller and five-archive actual-weight restore before acknowledgment.
 - [x] All 264 local tests pass; synthetic operational tests are not model evidence.
-- [ ] Execute the first four-arm GPU development window after CI and maintainer startup.
+- [x] Execute all four arms; restore actual adapters and 124 evaluations before ACK.
+- [x] Publish exact evidence inventory, 407-generation token audit, paired regressions,
+  training curves, five learning cases and four explicitly scripted proposal diagnostics.
+- [x] Close the GPU window after verified backup; follow-up connection refused.
+- [ ] Prepare independent seeds and frozen-candidate validation; no new server window ready.
 
 Specification: [execution and budget](research/2026-09-29-state-coverage-experiment.md).
 Implementation and remote verification: [PR #19](https://github.com/Townzc/liftcut-tracker/pull/19).
@@ -509,6 +528,8 @@ Implementation and remote verification: [PR #19](https://github.com/Townzc/liftc
 | 2026-09-29 | Maintain a what/why/result/next journal and concrete learning cases | Maintainer requested continuous records to independently understand and explain the project; observations, interpretations and pending experiments stay separate |
 | 2026-09-29 | Freeze four matched state-coverage arms before GPU execution | 72 train scenarios/504 paired decisions per arm; actual target sequences identical; context-only reads and memory permutations isolated within the new common data |
 | 2026-09-29 | Revise the proposed window from two hours/¥6 to three hours/¥8 | Actual inputs imply about 93 training minutes, 112 with 20% margin; evaluation/setup/backup bring the estimate to about 177 minutes; hard deadline remains boot-relative |
+| 2026-09-29 | Keep the narrow T screening result and reject TM promotion | Only S0→T passes; M misses both pairs, and TM adds three blocked unapproved-write attempts; no aggregate score or system interception hides model behavior |
+| 2026-09-29 | Reproduce current factors before adding a repair intervention | Single-seed outcomes trade off across task, consent and memory; all-four-arm seed43/44 work remains a CPU preparation proposal |
 
 ## Update protocol
 
