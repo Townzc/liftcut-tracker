@@ -95,6 +95,7 @@ get_context 后目标全部是 get_memories，没有重读后应 finish 的目�
 正常任务与固定状态评测、配对评分、预算控制和五份归档恢复。实现入口为
 [state_coverage.py](../../research/liftcut-agent/state_coverage.py)，参数与命令见
 [执行规格](2026-09-29-state-coverage-experiment.md)。
+代码、冻结数据与远端检查：[PR #19](https://github.com/Townzc/liftcut-tracker/pull/19)。
 
 T 只在真实预览后的正确决策前加入工具读取；额外读取是上下文，不多给训练目标。
 M 只调整同一批记录的排列覆盖。公共数据把四种来源值区分开，因此四组之间的差异

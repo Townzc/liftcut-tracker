@@ -456,6 +456,7 @@ Publication and analysis: [PR #18](https://github.com/Townzc/liftcut-tracker/pul
 - [ ] Execute the first four-arm GPU development window after CI and maintainer startup.
 
 Specification: [execution and budget](research/2026-09-29-state-coverage-experiment.md).
+Implementation and remote verification: [PR #19](https://github.com/Townzc/liftcut-tracker/pull/19).
 
 ## Decision log
 
