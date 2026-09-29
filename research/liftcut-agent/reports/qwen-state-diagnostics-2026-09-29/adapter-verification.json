@@ -1,0 +1,14 @@
+{
+  "scope": "Actual off-instance v2 adapter files rehashed before this publication",
+  "files_verified": {
+    "clean": {
+      "adapter_config.json": "d3b05d929b2173d3ad80b681458654049615c2e8d01f767553ca20d528872bf5",
+      "adapter_model.safetensors": "518e8ea0c67df2410ee62f89995d47b1bb2cf6765a0d05d9feaf5a1cf8ef5583"
+    },
+    "mixed": {
+      "adapter_config.json": "729df50ac9517275deccb94a284a78ab30371535435dc0a05f258028ff6352bd",
+      "adapter_model.safetensors": "80063f56303516c3282fc63d63ec4dbe7bcd7128e10d4b7b8cf7d0451e09bb1e"
+    }
+  },
+  "weights_published": false
+}

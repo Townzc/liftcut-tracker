@@ -1,0 +1,7 @@
+{
+  "booted_at_proxy": "2026-09-29T05:14:59.020000+00:00",
+  "observed_at_utc": "2026-09-29T05:21:59.306316+00:00",
+  "source": "container PID 1 create_time, not independent provider billing start",
+  "bundle_sha256": "5e1bef386d14044ea89c7d14a5985191d5c3949d6d9dfa563daa02b642a6928e",
+  "code_commit": "992ac9ac6df34ea2364f3e58ecd6358a2f6f6052"
+}

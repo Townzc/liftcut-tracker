@@ -70,8 +70,15 @@ Its 48 train / 12 dev / 48 reserved test tasks are now frozen and CPU-reproduced
 The [corrected development experiment](research/2026-09-29-controlled-recovery-results.md)
 has now completed: U/C/R normal 0/12, 10/12, 11/12; controlled continuation 1/9, 8/9, 9/9.
 The paired recovery gain of one case in one error family misses its preregistered
-gate. Next is CPU preparation of [fixed-state diagnostics](research/2026-09-29-state-diagnostic-plan.md),
-not larger training. Reliable held-out and independent evaluation remain pending. See the
+gate. The subsequent [fixed-state diagnostics](research/2026-09-29-state-diagnostic-results.md)
+completed 38 continuations: C/R consent 5/10 and 6/10, memory 2/9 and 1/9.
+These first-decision development probes expose history and memory sensitivity.
+A retrospective training-coverage audit motivates a
+[2×2 state-coverage study](research/2026-09-29-state-coverage-next-plan.md);
+its CPU data, matching and budget gates are the next task, before another server window.
+The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
+actual outcomes and learning checkpoints. Reliable held-out and independent
+evaluation remain pending. See the
 [data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
 [GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
 [budget plan](research/2026-09-28-small-model-pilot-plan.md).

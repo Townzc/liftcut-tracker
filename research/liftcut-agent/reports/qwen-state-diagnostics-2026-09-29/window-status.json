@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "failures": [],
+  "booted_at_proxy": "2026-09-29T05:14:59.020000+00:00",
+  "inference_cutoff": "2026-09-29T05:49:59.020000+00:00",
+  "deadline": "2026-09-29T06:14:59.020000+00:00",
+  "hourly_cny_assumed": 2.18,
+  "code_commit": "992ac9ac6df34ea2364f3e58ecd6358a2f6f6052",
+  "training_steps": 0,
+  "test_episodes": 0,
+  "partial_rule": "Preserve partial raw calls/generations; never score an incomplete comparison"
+}

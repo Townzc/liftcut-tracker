@@ -107,6 +107,12 @@ jobs:
       - name: Reproduce fixed-state diagnostic prefixes, reference replay and handoff token limits
         run: python research/liftcut-agent/prepare_state_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-state-diagnostics
 
+      - name: Verify published fixed-state evidence and reproduce the descriptive review
+        run: python research/liftcut-agent/publish_state_diagnostics.py --run-dir research/liftcut-agent/reports/qwen-state-diagnostics-2026-09-29 --prepared-dir research/liftcut-agent/outputs/ci-state-diagnostics --check-publication
+
+      - name: Reproduce retrospective state-coverage analysis of the exact v2 training pools
+        run: python research/liftcut-agent/review_training_state_coverage.py --prepared-dir research/liftcut-agent/outputs/ci-controlled-prepared --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
