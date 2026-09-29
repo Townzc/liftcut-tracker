@@ -1,7 +1,16 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 completed and
-backed up; prepare fixed-state diagnostics on CPU before another GPU window**.
+Last updated: 2026-09-29 UTC. Active milestone: **19 fixed-state diagnostics
+implemented and independently CPU-reproduced; next is a short inference-only window
+using committed code and passing CI**. No new GPU/API calls in this increment.
+All 240 local CPU tests pass. The longest handoff is 2,295 tokens plus 512 output
+tokens within 4,096. Both actual adapter backups were rehashed. The next run is
+38 C/R first-decision probes, at most 114 requests, no training/test evaluation,
+60 minutes from boot with a 35-minute inference cutoff and ¥3 planning reserve.
+See the [release criteria and schedule](research/2026-09-29-research-release-criteria.md)
+for the remaining 3–5 week first-release estimate and evidence gates.
+
+P2 recovery-v2 remains completed and backed up.
 U/C/R normal success: 0/12, 10/12, 11/12; controlled continuation: 1/9, 8/9, 9/9.
 The recovery gain is one case in one error family, below the preregistered gate.
 All 63 episodes replay and 42 archive files, including both actual adapters, were
@@ -32,7 +41,16 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 215 local CPU tests pass, including saved real-episode
+- Current increment: all 240 CPU tests pass (25 new). Two independent fixed-state
+  preparations match all file, prefix and real-tokenizer hashes. The reference
+  contract passes 19/19 and replays; this is scripted verification, not model
+  performance. New tests exercise a synthetic 38-state native-response audit and
+  archive/restore/ack flow, plus unknown usage, denied writes, complete read-batch
+  execution, source-value attribution, tampering, missing cases and deadlines.
+  The one-hour controller dry run makes zero GPU calls. Both restored recovery-v2
+  adapter weights and configurations match their recorded SHA256. New GPU entry
+  points are implemented but have not yet executed on a server.
+- Previous increment: all 215 local CPU tests pass, including saved real-episode
   replay, restoration-index, clarification-order and tamper checks. The executed GPU source passed all 208
   server tests and all GitHub checks before launch.
   Two independent local preparations and server preparation matched all frozen
@@ -230,13 +248,14 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Implement and freeze the [fixed-state diagnosis](research/2026-09-29-state-diagnostic-plan.md)
-   on CPU: 10 consent states and 9 memory/clarification states, with exact prefix
-   and state-equivalence checks. These are design targets, not prepared artifacts.
-2. Reproduce prefixes twice, audit visible IDs and real tokenizer context limits,
-   implement bounded decision scoring and test complete backup/replay. Keep the
-   recovery-v2 data and results unchanged and leave its 48 reserved tests unopened.
-3. Only after committed CPU gates/CI pass, request a one-hour 4090 window for the
+1. Run the prepared [fixed-state diagnosis](research/2026-09-29-state-diagnostic-plan.md)
+   after branch CI/merge and the maintainer opens a server. Verify the new endpoint,
+   cloned disk, exact model/adapter hashes, environment and actual start time.
+2. Replay and restore all new diagnostic evidence before shutdown acknowledgment.
+   Keep the recovery-v2 data and results unchanged and its 48 reserved tests unopened.
+   Analyze consent histories and distinguishable memory values before choosing a
+   single intervention; use the [release criteria](research/2026-09-29-research-release-criteria.md).
+3. The one-hour 4090 window uses the
    two existing adapters: 38 diagnostic continuations, at most 114 model requests,
    no training or extra seed. At the prior CNY 2.18/hour quote, compute proxy 2.18,
    total planning reserve 3, no expansion. Do not lower recovery-v2's unmet gate
@@ -348,10 +367,24 @@ Implementation: [PR #15](https://github.com/Townzc/liftcut-tracker/pull/15).
   supplier power state, shutdown return code and billing were not directly seen.
 - [x] Added reproducible publication inventory/review checks to CI and a Chinese
   pipeline walkthrough. Public logs omit all weights; local full backups remain.
-- [ ] Implement the next 19-state CPU diagnostic design before requesting a server.
+- [x] The following increment implemented and froze the 19-state CPU diagnostic design.
 
 Evidence: [results and limits](research/2026-09-29-controlled-recovery-results.md).
 Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
+
+## Fixed-state diagnostic preparation increment
+
+- [x] Implemented 10 consent and 9 memory/clarification states, real tool/user
+  prefixes, first-decision scoring, complete read-batch handling and raw replay.
+- [x] Matched all files and real tokenizer hashes in two independent preparations;
+  19/19 scripted reference contracts pass. No new actual model outputs.
+- [x] Added pinned-adapter inference entry, durable per-call evidence, paired
+  38-state native audit, one-hour boot deadline and verified archive acknowledgment.
+- [x] Verified both local actual adapter weights/configurations; controller dry-run
+  starts no GPU process. All 240 local tests pass; tokenizer reproduction is in CI.
+- [x] Saved evidence-based first-release milestones and updated the private local
+  learning plan without publishing personal career details.
+- [ ] Execute the short GPU diagnostic window; analyze outcomes before further training.
 
 ## Decision log
 

@@ -1,7 +1,9 @@
 # 下一轮：固定状态的确认与记忆诊断
 
-状态：**设计已保存，CPU 场景与 runner 尚未实现；现在不需要重新开机。**
-先通过下列 CPU 验收并提交 Git，再安排短 GPU 窗口。计划复用已有 4090 环境、
+状态：**19 个状态、诊断 runner、评分回放、GPU 入口和归档恢复已实现；尚无本轮模型结果。**
+两次独立 CPU 准备完全一致，最长接手输入 2,295 tokens，加 512 输出预留为
+2,807/4,096，无截断。两份本地备份 adapter 的实际文件 SHA 已复核。
+合并通过 CI 的代码后安排短 GPU 窗口。计划复用已有 4090 环境、
 固定基模与 recovery-v2 的两份 final adapter。
 
 ## 为什么暂不继续训练
@@ -112,3 +114,28 @@ bodyweight、旧确认记忆为 barbell、当前有效确认记忆为 dumbbell�
   是否重训/重复 seed43、44。本轮 recovery-v2 未达门槛的结论保持不变。
 - 候选和开发标准固定后，才讨论打开原先保留的 48 个测试任务；DPO、RL、多模态
   和外部 benchmark 仍作为后续独立项目阶段。
+
+## 已实现的评分与证据边界
+
+- `state_diagnostics.py` 仅读取 recovery-v2 的 dev 文件；脚本前缀通过实际工具和
+  ScriptedUser 重建，冻结请求、状态、完整事件和参考决策。业务状态比较只排除
+  明确被干预的 steps/calls，其余字段必须完全一致。
+- 每条最多 3 个真实请求。`get_context/get_memories` 视为重读；其他工具都是首个
+  有任务含义的决定。一次合法只读 batch 的所有调用都会执行，再停止；评分只取
+  第一个任务决定，后续动作仍完整记录，不能把多个搜索解释成只有一次正确选择。
+- 确认组要求 `finish` 的 outcome 符合当前外部用户状态，approved 要求实际成功
+  apply 当前 proposal。记忆组接受有效器械搜索，或直接 validate/propose 一份
+  满足全部约束的计划。仅引用正确 memory ID 不足以通过。
+- `source_matches` 只表示选择的器械值与哪条公开记录相同，不能证明模型内部的
+  因果来源。四种不同值提高了诊断可区分性，仍需后续反事实实验。
+- 每个 arm 的真实调用总预留上限为 57；脚本使用独立的零 token 预算边界。
+  未知用量会停止后续实际请求，失败仍保留在完整分母。后续重读可能增大上下文，
+  native transport 继续执行 4,096 限制，首个输入通过审计不代表后续永不超限。
+- `audit_state_diagnostics.py` 回放 38 条状态续跑并核对原始生成和逐调用日志。
+  `restore_state_diagnostics.py` 在完整归档校验、完整比较重算通过之后才写关机
+  acknowledgment。部分运行只可显式确认文件完整性，不能宣称模型比较已完成。
+
+准备报告：[`state-diagnostic-preparation-v1.json`](../../research/liftcut-agent/reports/state-diagnostic-preparation-v1.json)。
+执行命令见 [研究 README](../../research/liftcut-agent/README.md) 与
+[AutoDL runbook](AUTODL_RUNBOOK.md)。这轮只做诊断；下一阶段的交付标准见
+[首版研究发布验收](2026-09-29-research-release-criteria.md)。

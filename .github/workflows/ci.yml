@@ -104,6 +104,9 @@ jobs:
       - name: Verify all controlled-recovery public artifacts and replay the review
         run: python research/liftcut-agent/publish_controlled.py --run-dir research/liftcut-agent/reports/qwen-controlled-recovery-2026-09-29 --prepared-dir research/liftcut-agent/outputs/ci-controlled-prepared --check-publication
 
+      - name: Reproduce fixed-state diagnostic prefixes, reference replay and handoff token limits
+        run: python research/liftcut-agent/prepare_state_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-state-diagnostics
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
