@@ -1,6 +1,7 @@
 """Reproduce descriptive coverage results without changing any frozen score or gate."""
 import argparse
 from collections import Counter
+import math
 from pathlib import Path
 
 from audit_state_coverage import audit
@@ -34,6 +35,8 @@ def training_statistics(log, report):
     # this timer BEFORE adapter saving/reload. Preserve the source field and label
     # this derived duration according to the code's actual timer boundary.
     seconds = report["training_seconds_including_checkpoints"]
+    if not math.isfinite(seconds) or seconds <= 0:
+        raise ValueError("optimization duration must be positive and finite")
     return {"optimizer_steps": len(log), "sample_uses": report["processed"]["decisions"],
         "supervised_tokens": previous, "input_tokens_including_targets": report["processed"]["input_tokens"],
         "optimization_loop_seconds": seconds,

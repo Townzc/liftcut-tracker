@@ -41,6 +41,12 @@ class CoverageReviewStatisticsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "denominator"):
             training_statistics(log, report)
 
+    def test_invalid_duration_cannot_produce_a_throughput_claim(self):
+        log, report = self.fixture()
+        for seconds in (0, -1, float("nan"), float("inf")):
+            with self.subTest(seconds=seconds), self.assertRaisesRegex(ValueError, "duration"):
+                training_statistics(log, {**report, "training_seconds_including_checkpoints": seconds})
+
 
 class CoveragePublicationReceiptTests(unittest.TestCase):
     def fixture(self, root, change=None):

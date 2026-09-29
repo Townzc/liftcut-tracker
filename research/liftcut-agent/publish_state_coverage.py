@@ -6,15 +6,16 @@ import shutil
 
 from audit_state_coverage import audit
 from gpu_state_diagnostics import read
+from liftcut_agent.benchmark import read_jsonl
 from restore_state_coverage import validate_index
 from review_state_coverage import review
 from server_workspace import dump_new, sha256
-from state_coverage import ARMS
+from state_coverage import ARMS, ROOT
 
 
 def public_paths():
     paths = ["window-status.json", "comparison.json", "backup-index.json", "off-instance-verification.json",
-        "operations.json", "preflight/doctor.json", "preflight/tests.log", "preflight/prepare.log",
+        "operations.json", "generation-token-audit.json", "preflight/doctor.json", "preflight/tests.log", "preflight/prepare.log",
         "preflight/diagnostic.log", "preflight/preflight-results.json", "preflight/boot-observation.json"]
     for arm in ARMS:
         paths += [f"training/{arm}/{n}" for n in ("manifest.json", "report.json", "memory-probe.json",
@@ -44,6 +45,22 @@ def verify_restore_scope(run):
     return receipt
 
 
+def verify_token_receipt(run, result):
+    receipt = read(run / "generation-token-audit.json")
+    if receipt["tokenizer_provenance"] != read(ROOT / "configs/qwen3-4b-tokenizer.json") or receipt["new_model_calls"] != 0:
+        raise ValueError("wrong coverage tokenizer receipt provenance")
+    for arm in ARMS:
+        for panel in ("normal", "diagnostic"):
+            row = receipt["panels"][arm][panel]
+            directory = run / "evaluation" / arm / panel
+            calls = read_jsonl(directory / "calls.jsonl")
+            if (row["requests"] != len(calls)
+                    or any(row[k] != result["arms"][arm][panel][k] for k in ("actual_model_generations", "local_context_guards"))
+                    or row["calls_sha256"] != sha256(directory / "calls.jsonl")
+                    or row["generations_sha256"] != sha256(directory / "generations.jsonl")):
+                raise ValueError("coverage tokenizer receipt refers to different generation evidence")
+
+
 def markdown(result):
     lines = ["# Four-arm state-coverage development experiment", "",
         "One seed (42), four newly trained adapters, unchanged 12 full development tasks and 19 fixed-state probes per arm.",
@@ -60,6 +77,7 @@ def markdown(result):
         "- `review.json`: reproducible descriptive counts, all paired gains/losses, interactions, first actions, value matches and cost proxies.",
         "- `training/*`: all 126 update records per arm, memory probes, provenance and adapter configurations; weights omitted.",
         "- `evaluation/*`: durable calls, original generated text and complete environment traces, including failures.",
+        "- `generation-token-audit.json`: CPU re-tokenization of every model request and decoding of saved output IDs; independently repeated by tokenizer CI.",
         "- `backup-index.json` and `off-instance-verification.json`: five-archive inventory and historical restore receipt.",
         "- `operations.json`: observed timing, assumed compute price, shutdown observations and billing uncertainty.",
         "- `publication-manifest.json`: exact public file inventory; CPU verification replays native responses and scores.", "",
@@ -77,6 +95,7 @@ def publish(run, prepared, diagnostic, output):
         raise ValueError("run artifacts must not be linked")
     result = audit(run, prepared, diagnostic)
     verify_restore_scope(run)
+    verify_token_receipt(run, result)
     if result != read(run / "comparison.json"):
         raise ValueError("server comparison differs from actual-weight replay")
     described = review(run, prepared, diagnostic, audited=result)
@@ -111,6 +130,7 @@ def verify_publication(run, prepared, diagnostic):
         raise ValueError("public coverage inventory mismatch")
     verify_restore_scope(run)
     result = audit(run, prepared, diagnostic, verify_weights=False)
+    verify_token_receipt(run, result)
     historical = read(run / "comparison.json")
     if historical["adapter_files_verified"] is not True or result != {**historical, "adapter_files_verified": False}:
         raise ValueError("public coverage comparison differs from replay")
