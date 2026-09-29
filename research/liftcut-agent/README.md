@@ -282,3 +282,26 @@ Reproduce all public artifact hashes, episode audits and the descriptive review:
 ```sh
 python research/liftcut-agent/publish_controlled.py --run-dir research/liftcut-agent/reports/qwen-controlled-recovery-2026-09-29 --prepared-dir NEW_V2_PREPARED_DIRECTORY --check-publication
 ```
+
+## Fixed-state diagnosis (development only)
+
+Nineteen frozen states isolate consent history and distinguishable memory sources.
+The scripted reference passes all contracts; no GPU diagnostic result is claimed.
+The pinned tokenizer's longest handoff is 2,295 input tokens, plus a 512-token
+output reservation within 4,096. Two independent CPU preparations match exactly.
+
+```sh
+python research/liftcut-agent/prepare_state_diagnostics.py --tokenizer-dir TOKENIZER_DIRECTORY --output-dir NEW_DIAGNOSTIC_PREPARED_DIRECTORY
+python research/liftcut-agent/run_state_diagnostic_window.py --model-dir MODEL_DIRECTORY --model-manifest MODEL_MANIFEST --prepared-dir NEW_DIAGNOSTIC_PREPARED_DIRECTORY --adapters-root V2_RUN_DIRECTORY/training --output-dir NEW_DIAGNOSTIC_RUN_DIRECTORY
+python research/liftcut-agent/audit_state_diagnostics.py --run-dir COMPLETE_DIAGNOSTIC_RUN_DIRECTORY --prepared-dir NEW_DIAGNOSTIC_PREPARED_DIRECTORY
+```
+
+The window command defaults to a CPU dry run. Actual AutoDL execution also needs
+`--execute --shutdown-when-done --booted-at AWARE_BOOT_TIMESTAMP`. It reuses the
+two exact v2 adapters, never trains or opens the reserved test set, and limits
+38 continuations to 114 requests. The first substantive decision is scored;
+accepted read batches are fully executed, and all failures stay in the denominator.
+The boot-relative inference cutoff is 35 minutes, shutdown deadline 60 minutes.
+Complete result claims require the raw generation audit and off-instance restore.
+See the [diagnostic specification](../../docs/research/2026-09-29-state-diagnostic-plan.md)
+and [release evidence criteria](../../docs/research/2026-09-29-research-release-criteria.md).

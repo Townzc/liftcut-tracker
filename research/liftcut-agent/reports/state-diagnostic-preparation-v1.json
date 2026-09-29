@@ -1,0 +1,210 @@
+{
+  "version": "state-diagnostic-preparation-v1",
+  "files": {
+    "cases.jsonl": "964857d576ae176f075821cf8983eab872d3d7de926e60d198fd1bbde4b87eb4",
+    "config.json": "5f982b9990e9c09f552538200a36e92a0e6410f109c8fcaeba4ca0e0f90896fe",
+    "manifest.json": "73832b961fad4d0db9217351dc75e5cfefce0567f0fd120d8f50c6e4326b7a02",
+    "reference-episodes.jsonl": "002ef4dac9560dc748468f553c6f7ac8f767627ae4dbf6ac51be52f4aabfd384",
+    "reference-report.json": "3b52e233565795500b772df58d023fd94f755443118decbf7b8b931cdf4aa7de",
+    "tokenizer-report.json": "af77ec8c574a40bc41f403ff1c0fd4a6e71f7a7c67da65f6ce560160285ca5ed"
+  },
+  "source_sha256": {
+    "state_diagnostics.py": "500b4afc73d6ef49c0a9e1b16c6a095a43f1e2cf2a956ef9bc8974c610345f31",
+    "prepare_state_diagnostics.py": "0d433dbfcc84ff18dfc00ac5eda5822d813b5ed4fc086554d6a20d25df3111e3"
+  },
+  "scope": "19 scripted development state contracts; reference success is not a model result",
+  "states": {
+    "consent": 10,
+    "memory": 9
+  },
+  "arms": [
+    "clean",
+    "mixed"
+  ],
+  "max_requests": 114,
+  "test_episodes": 0,
+  "training_steps": 0,
+  "tokenizer": {
+    "scope": "Real pinned tokenizer, CPU only; no weights or model inference",
+    "tokenizer": {
+      "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "file_sha256": {
+        "tokenizer_config.json": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "config.json": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+        "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      }
+    },
+    "max_context": 4096,
+    "max_output_tokens": 512,
+    "cases": 19,
+    "max_prompt_tokens": 2295,
+    "all_handoffs_fit": true,
+    "truncation": false,
+    "rows": [
+      {
+        "case_id": "sd1-consent-pending-plain",
+        "request_digest": "a3220d096a60e9348a114e366fcdf21d269a86bae7c94766e771b0984b70c680",
+        "input_ids_digest": "c3b13b3a9c10cdaa844ae8bd2142eba6b9bd3a0a4264df75765e81aec7d840cc",
+        "prompt_tokens": 2034,
+        "reserved_total_tokens": 2546
+      },
+      {
+        "case_id": "sd1-consent-pending-read",
+        "request_digest": "55e26efa672bced4812b1daf71235f69fde9f150018ecfb48e6b02fa31d18a92",
+        "input_ids_digest": "7dc785a42ede507313349255abd576a02cdaf74e7e507f8c66df0e3230352e0c",
+        "prompt_tokens": 2196,
+        "reserved_total_tokens": 2708
+      },
+      {
+        "case_id": "sd1-consent-pending-blocked",
+        "request_digest": "cc8ae8f5d393a0a85e619580c610d15ba89b45ad5c61d3ce139259269287ae5d",
+        "input_ids_digest": "d944513aa23b3d4057a01e68eed3035e3c2b27031bce2cc9ebeacbf5a6489588",
+        "prompt_tokens": 2162,
+        "reserved_total_tokens": 2674
+      },
+      {
+        "case_id": "sd1-consent-declined-plain",
+        "request_digest": "ec34b1bf361c811280f376d07c9d4418fa95570eebb6b0cbe708a020b899637e",
+        "input_ids_digest": "8700a3aea7c784c99f135a4a040285144b00a7894166c452cd9a57c7feb1c97f",
+        "prompt_tokens": 2089,
+        "reserved_total_tokens": 2601
+      },
+      {
+        "case_id": "sd1-consent-declined-read",
+        "request_digest": "18da777e180c54a7c476452a77bf652c613a881ed1adba9480014f20ba38131f",
+        "input_ids_digest": "5e6809262a8cc11f5f9f0b71ca62047c49cebe6a9055e28b9c6c6a7a12ec4cf8",
+        "prompt_tokens": 2251,
+        "reserved_total_tokens": 2763
+      },
+      {
+        "case_id": "sd1-consent-declined-blocked",
+        "request_digest": "53a68463055cc1e7ddc9f5f846b22277325189f3840491b9c0f835ef113aecdc",
+        "input_ids_digest": "8ddfaa5037a0462f8302dddb9d201b14ac0f796ffc76443ef8eed373723cd063",
+        "prompt_tokens": 2217,
+        "reserved_total_tokens": 2729
+      },
+      {
+        "case_id": "sd1-consent-revoked-plain",
+        "request_digest": "66e36737e40e3e3df001c34fdd3305ec4add37e673a3a70e0b29e235d9c9152b",
+        "input_ids_digest": "5b60c9f5ca40776f6ecd9862718d17ef3adc335907fab2b9ca270866a42cc14d",
+        "prompt_tokens": 2133,
+        "reserved_total_tokens": 2645
+      },
+      {
+        "case_id": "sd1-consent-revoked-read",
+        "request_digest": "a86d10d71a37f7c1c58a8f63472f4412c0360ee9c3086f78d4cde756808a552f",
+        "input_ids_digest": "a2d91aea88f1021ca2b17b3c80eda9c1d627cfd39d8a5b2dd5c2832b9d022266",
+        "prompt_tokens": 2295,
+        "reserved_total_tokens": 2807
+      },
+      {
+        "case_id": "sd1-consent-revoked-blocked",
+        "request_digest": "4ae09ad52b57ee963d065a2cdab7e272fe29d96a9a22cafc19be3250595df788",
+        "input_ids_digest": "6b8574ee64e173f74693d005f5bbf893c242accf69269234523f3c7670394815",
+        "prompt_tokens": 2261,
+        "reserved_total_tokens": 2773
+      },
+      {
+        "case_id": "sd1-consent-approved-plain",
+        "request_digest": "37d2df7f3867f49e3e6536a3dca18520d995203df3e1805d3bc7d3fb78ee8456",
+        "input_ids_digest": "824ba02dac89e1090ce1f46f3282b11ad071c1cb38076850d6ab52ca011c5dfe",
+        "prompt_tokens": 2088,
+        "reserved_total_tokens": 2600
+      },
+      {
+        "case_id": "sd1-memory-0-first-unconfirmed",
+        "request_digest": "5ba7696e69c9cfb022499f63a853fc4001aa34c3f9f38abaf13df797c4265938",
+        "input_ids_digest": "5a535ef5d033a2cf4ba9614f86ffb6c4f236b9d751d195842deaf908c35580bf",
+        "prompt_tokens": 1669,
+        "reserved_total_tokens": 2181
+      },
+      {
+        "case_id": "sd1-memory-0-first-expired",
+        "request_digest": "4f783d718e693f8ed474f338d3688f1d3803815c0e5882aafa5ae143b63a2664",
+        "input_ids_digest": "272e23ee330759c5f87a5f7be6ce160ddbc5ab4d75ad56ed0de15fcc0e57282d",
+        "prompt_tokens": 1678,
+        "reserved_total_tokens": 2190
+      },
+      {
+        "case_id": "sd1-memory-0-last-unconfirmed",
+        "request_digest": "5c4cf35970587b16b58ad0764de9591ff8c3f4e049d970a2b5a4e09d81c7a95e",
+        "input_ids_digest": "07153f7a56450c0783649a31a422f73a2c1ce934ee93cb00b5cb1453ee86502a",
+        "prompt_tokens": 1669,
+        "reserved_total_tokens": 2181
+      },
+      {
+        "case_id": "sd1-memory-0-last-expired",
+        "request_digest": "048b2188a58f75a18e6ed56ac660761b99449cb5240a2338023e0d45a6f55b19",
+        "input_ids_digest": "d0cfbeb236fc63219e9011d3bd80bd6966444b0ceb73af8d7f17a5994e25b169",
+        "prompt_tokens": 1678,
+        "reserved_total_tokens": 2190
+      },
+      {
+        "case_id": "sd1-memory-1-first-unconfirmed",
+        "request_digest": "200d3ac9e0413acca3b6567fd01ff21821f6f155d996a3f46b61343feaf3d370",
+        "input_ids_digest": "bc4c1366ab367ab2bee6bf2a2c4e6557cd1f5c9035076f2b03478e031578deb7",
+        "prompt_tokens": 2095,
+        "reserved_total_tokens": 2607
+      },
+      {
+        "case_id": "sd1-memory-1-first-expired",
+        "request_digest": "23397928363504ac4d0fcdb7261c5d930c702dfaeee137dac39e52365bacb3a3",
+        "input_ids_digest": "57cc87ff986c65a791f2ea8b4cd4500c92bf726c85528d5342a143fd3160818b",
+        "prompt_tokens": 2113,
+        "reserved_total_tokens": 2625
+      },
+      {
+        "case_id": "sd1-memory-1-last-unconfirmed",
+        "request_digest": "15c97975b41f4474814d5155633d25fabfc717c57634e1cd20406c4c6199eb22",
+        "input_ids_digest": "a779492a54fa37897213a12aa81b75ac4ee6aae558d9ede900687b5f441d01c6",
+        "prompt_tokens": 2095,
+        "reserved_total_tokens": 2607
+      },
+      {
+        "case_id": "sd1-memory-1-last-expired",
+        "request_digest": "75dd55847cc631c7ec80d603473183f7cfef13e30fc2947b09c6785e5c713934",
+        "input_ids_digest": "93a84532c0bc0ab5681e4bee20532edd6d2aed55ac7e15ad9a5be29e3d11ec71",
+        "prompt_tokens": 2113,
+        "reserved_total_tokens": 2625
+      },
+      {
+        "case_id": "sd1-memory-time-control",
+        "request_digest": "8c3f1863c98e80f46b0d2e2327c76271b2a9ea076ad51d8727007ebd4c702249",
+        "input_ids_digest": "dd24b26db58765bd9e1cd03ce2aa9dfb1efe1d81c5fa0b908622eee03f6caccb",
+        "prompt_tokens": 1867,
+        "reserved_total_tokens": 2379
+      }
+    ],
+    "later_requests": "Runtime context guard applies after rereads; no guarantee that all subsequent prompts fit"
+  },
+  "adapter_sha256": {
+    "clean": {
+      "adapter_bytes": 132187888,
+      "sha256": "518e8ea0c67df2410ee62f89995d47b1bb2cf6765a0d05d9feaf5a1cf8ef5583",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    "mixed": {
+      "adapter_bytes": 132187888,
+      "sha256": "80063f56303516c3282fc63d63ec4dbe7bcd7128e10d4b7b8cf7d0451e09bb1e",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    }
+  },
+  "budget": {
+    "hourly_cny_assumed": 2.18,
+    "max_minutes_from_boot": 60,
+    "inference_cutoff_minutes_from_boot": 35,
+    "compute_proxy_cny": 2.18,
+    "planning_reserve_cny": 3,
+    "storage": "Provider billed separately; no new disk purchase in this window"
+  }
+}

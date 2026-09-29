@@ -198,3 +198,50 @@ adapter 重放审计全部 63 个开发 episode。只有全部通过才创建本
 在新 commit 目录中从已有仓库 clone，fetch bundle，detach 到指定完整 SHA，再执行
 `server_workspace.py prepare` 进行来源和干净状态检查。保留旧 checkout、数据、环境、
 缓存和失败现场；服务端 Git push 仍禁用。不要把本机 GitHub 凭据复制到租赁实例。
+
+## Fixed-state diagnostics：复用 adapter 的一小时窗口
+
+这轮只运行 [19 个固定状态](2026-09-29-state-diagnostic-plan.md)，不训练、不调用付费
+API、不扩盘。先在本地完成两次 CPU 准备和 CI，再通知开机。开机后先记录实际启动
+时间或明确标注的容器启动代理、核对 ¥2.18/小时报价、数据盘、GPU、环境和已有权重。
+换机使用新 commit 的干净 checkout，保留旧源码和所有实验数据。
+
+```bash
+# 在已经核验的 checkout 和现有虚拟环境中执行；所有 NEW 路径必须不存在。
+python research/liftcut-agent/prepare_state_diagnostics.py \
+  --tokenizer-dir "$LIFTCUT_ROOT/data/qwen-tokenizer" \
+  --output-dir "$LIFTCUT_ROOT/data/state-diagnostic-v1-NEW"
+
+python research/liftcut-agent/run_state_diagnostic_window.py \
+  --model-dir "$HF_HOME/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554" \
+  --model-manifest "$LIFTCUT_ROOT/data/qwen-model-manifest.json" \
+  --prepared-dir "$LIFTCUT_ROOT/data/state-diagnostic-v1-NEW" \
+  --adapters-root "$LIFTCUT_ROOT/runs/recovery-v2/training" \
+  --output-dir "$LIFTCUT_ROOT/runs/state-diagnostic-v1-NEW"
+```
+
+上述控制器默认 dry-run。核对计划后使用同样参数追加
+`--execute --shutdown-when-done --booted-at ACTUAL_AWARE_BOOT_TIMESTAMP`，并通过已有
+tmux/nohup 方式独立于 SSH 运行。开机超过 10 分钟拒绝启动该窗口，不能偷偷延长
+预算；应保存准备状态并重新安排。控制器第 35 分钟停止推理阶段，单独守护进程
+在第 60 分钟请求关机。归档/核验提前结束则提前关机。实际平台关机与账单仍需
+查看控制台，不能根据 SSH 断开宣称供应商已停止计费。
+
+本轮归档为运行根目录中的 `evidence.tar.gz`，摘要在根目录 `backup-ready.json`。
+复制这两份文件到本机；完整运行在本机执行：
+
+```bash
+python research/liftcut-agent/restore_state_diagnostics.py \
+  --archive LOCAL_EVIDENCE.tar.gz --sha256 SHA256_FROM_BACKUP_READY \
+  --prepared-dir LOCAL_VERIFIED_DIAGNOSTIC_PREPARATION \
+  --output-dir NEW_LOCAL_RESTORE_DIRECTORY
+```
+
+逐文件哈希、原始生成、完整 38 状态回放和比较报告均通过才产生
+`NEW_LOCAL_RESTORE_DIRECTORY/off-instance-backup.json`。把该文件复制到服务端运行
+根目录触发提前关机。若本轮失败，`--allow-partial` 只确认完整备份了部分证据，
+回执明确 `complete_pair_replayed: false`，不能被完整实验状态接受。守护进程日志和
+关机回执属于归档之后继续变化的运维证据，能获取时另行复制并注明观察范围。
+
+两份 adapter 已有本地完整备份，本轮归档只包含诊断日志和元数据。执行前、后均
+不得覆盖 recovery-v2 的权重、数据或报告；新的实验结果须另建公开白名单包。

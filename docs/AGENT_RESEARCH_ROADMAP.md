@@ -2,6 +2,10 @@
 
 Updated: 2026-09-29 UTC. Status: approved direction; milestones below are targets.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).
+The remaining first-release schedule and evidence gates are maintained in
+[research release criteria](research/2026-09-29-research-release-criteria.md).
+The original milestone windows below remain the baseline plan; implementation
+is ahead of those dates, while independent evaluation remains unfinished.
 
 ## Research question
 
