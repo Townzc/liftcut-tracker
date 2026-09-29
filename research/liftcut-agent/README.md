@@ -15,6 +15,16 @@ research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
+The [follow-up design v2](../../docs/research/2026-09-29-followup-experiment-design-v2.md)
+separates seed replication, counterfactual diagnostics and conditional feedback-repair
+training. Only its retrospective CPU analysis is implemented in this increment;
+new GPU runners and reserved evaluations remain pending. With the original exact
+coverage preparation available, reproduce the analysis with:
+
+```sh
+python research/liftcut-agent/analyze_coverage_followup.py --prepared-dir research/liftcut-agent/outputs/state-coverage-v1 --check
+```
+
 ## Run from the repository root
 
 ```sh

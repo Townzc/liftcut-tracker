@@ -1,7 +1,24 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **four-arm state-coverage study completed,
-restored and reviewed; next work is CPU preparation for stability testing**.
+Last updated: 2026-09-29 UTC. Active milestone: **four-arm study completed;
+retrospective follow-up design v2 recorded; seed43/44 runner preparation still pending**.
+
+Current next-experiment authority: [follow-up design v2](research/2026-09-29-followup-experiment-design-v2.md).
+The new CPU audit reproduces memory subgroups (expired distractor S0/T/M/TM:
+4/4, 3/4, 0/4, 2/4), a single correct equipment value in all eight main probes,
+and zero training decisions following unknown-evidence or session-count validation
+errors in each exact 504-row pool. There are four genuine infeasible finish targets
+per arm. These are coverage observations, not causal explanations or new model results.
+[Machine-readable analysis](../research/liftcut-agent/reports/state-coverage-followup-analysis-2026-09-29.json).
+
+Decision: retain all four arms for seed43/44 replication, separate old screening
+from prospective candidate admission, then conditionally run 80 new development
+probes per existing adapter and a paired feedback-repair training study. Future
+candidate admission vetoes any autonomous unapproved-write attempt and requires
+no net loss across full-task/memory/consent panels, with no lost correct consent case.
+Old scores and gates remain unchanged; no existing treatment qualifies as an overall
+improvement. No new paid run or reserved evaluation has started. New CPU runner,
+manifests, budget dry run and CI must pass before requesting a server.
 
 | Arm | Complete dev task | Read-history consent | Main memory | Autonomous blocked writes |
 | --- | ---: | ---: | ---: | ---: |
@@ -35,9 +52,14 @@ Read the [full results](research/2026-09-29-state-coverage-results.md),
 [what/why/result/next journal](research/EXPERIMENT_LOG.md) and
 [case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md).
 Publication and remote checks: [PR #20](https://github.com/Townzc/liftcut-tracker/pull/20).
-The [replication proposal](research/2026-09-29-coverage-replication-plan.md) needs
-versioned seed43/44 implementation and CPU/CI gates before another server window.
+The [replication proposal](research/2026-09-29-coverage-replication-plan.md), now clarified
+by [design v2](research/2026-09-29-followup-experiment-design-v2.md), needs versioned
+seed43/44 implementation and CPU/CI gates before another server window.
 Two proposed three-hour windows imply ¥13.08 compute / ¥16 reserve, not new spending.
+The separate proposed inference diagnostic reserves ¥5; conditional repair training
+reserves ¥8 for its pilot and ¥16 for two more seeds only if it passes. The proposed
+cumulative ceiling through those stages is ¥45 plus storage, excluding held-out and
+external evaluation. This is staged planning, not a blanket spending authorization.
 [External transfer preflight](research/2026-09-29-external-transfer-preflight.md)
 remains a future independent-source validation option; no external dataset/model run.
 
@@ -87,7 +109,11 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current publication: all 281 CPU tests pass. All 124 real episodes and 407 native
+- Current follow-up increment: all **286 local CPU tests pass (404.204 seconds)**,
+  including five new regressions for the secondary analysis. Its `--check` reproduces
+  from hash-matched 504-row training pools; 147 local documentation links were checked.
+  No new model execution or score changes. The CI tokenizer job now checks this analysis.
+- Previous publication: all 281 CPU tests pass. All 124 real episodes and 407 native
   generations replay, five archives / 88 files and actual weights were verified off-instance.
   Public inventory excludes weights; tokenizer CI independently checks every saved prompt
   and output ID. Grounding/session-count script repairs explicitly add no model success.

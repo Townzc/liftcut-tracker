@@ -81,8 +81,13 @@ its four arms have now trained with 41,788 matched target tokens and 126 updates
 6/8, 4/8, 3/8, 5/8. Only S0→T passes T screening; M fails both pairs. TM adds
 three blocked unapproved-write attempts and is not a reliability promotion candidate.
 All 124 episodes and actual weights were restored; 407 generations pass token replay.
-Next: [CPU preparation for seed43/44 stability](research/2026-09-29-coverage-replication-plan.md),
-then frozen-candidate and independent validation. Original gates remain unchanged.
+Next: [follow-up design v2](research/2026-09-29-followup-experiment-design-v2.md) retains
+four-arm seed43/44 replication, separates screening from candidate admission, adds
+counterbalanced value/position/identity diagnostics, and conditionally tests one
+feedback-repair data factor. The [original replication proposal](research/2026-09-29-coverage-replication-plan.md)
+is preserved; new runners still need CPU/Git preparation. Original gates remain
+unchanged. Frozen-candidate and independent validation follow; no new training,
+reserved evaluation or paid API call is part of the design-only increment.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the

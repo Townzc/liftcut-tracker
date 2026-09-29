@@ -1,0 +1,399 @@
+{
+  "scope": "Retrospective seed42 development/training audit for a future design; no new model evidence",
+  "source_sha256": {
+    "review.json": "25aed6e3a0ff67b17ed5b0ab18050a2810b95ef69791a9ffc961a740a9f8cf09",
+    "state-coverage-preparation-v1.json": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "decisions/s0/decisions.jsonl": "db8d2af5e2efe654a2f52f9c86c8b4071ec5db13e2c50b580e6e80065c3dd5de",
+    "decisions/t/decisions.jsonl": "32ad6aeb2da045e17143d27d0ae3a6ab0c6b443bdac31435faeae739d2cca151",
+    "decisions/m/decisions.jsonl": "364be0184b94ea0b798b04b6326de48cbfbf0e30f9f42286d3a36be057f6da07",
+    "decisions/tm/decisions.jsonl": "097ded3c58061e79dd967ad853e5ac95e6b8efa52f92c8b5407ded51ed38bdc3"
+  },
+  "arms": {
+    "s0": {
+      "memory_subgroups": {
+        "position": {
+          "first": {
+            "correct": 4,
+            "total": 4
+          },
+          "last": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "invalid": {
+          "expired": {
+            "correct": 4,
+            "total": 4
+          },
+          "unconfirmed": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "clarification": {
+          "false": {
+            "correct": 3,
+            "total": 4
+          },
+          "true": {
+            "correct": 3,
+            "total": 4
+          }
+        }
+      },
+      "main_memory_effective_values": [
+        [
+          "dumbbell"
+        ]
+      ],
+      "failed_tasks_with_named_validation_errors": [
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "validation_issues": [
+            "equipment_or_exclusion_violation",
+            "time_budget_exceeded",
+            "unknown_evidence"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        }
+      ],
+      "limit": "A named validation error does not prove a single-field repair suffices; see scripted-repair evidence",
+      "training": {
+        "decision_rows": 504,
+        "target_tools": {
+          "apply_plan": 4,
+          "finish": 72,
+          "get_context": 100,
+          "get_memories": 100,
+          "propose_plan": 64,
+          "request_clarification": 32,
+          "search_exercises": 68,
+          "validate_plan": 64
+        },
+        "finish_outcomes": {
+          "applied": 4,
+          "awaiting_user": 8,
+          "declined": 8,
+          "infeasible": 4,
+          "previewed": 48
+        },
+        "decisions_after_named_validation_error": {
+          "session_count_mismatch": 0,
+          "unknown_evidence": 0
+        },
+        "counting_unit": "Unique exported decisions, before two-epoch reuse; histories may overlap"
+      }
+    },
+    "t": {
+      "memory_subgroups": {
+        "position": {
+          "first": {
+            "correct": 2,
+            "total": 4
+          },
+          "last": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "invalid": {
+          "expired": {
+            "correct": 3,
+            "total": 4
+          },
+          "unconfirmed": {
+            "correct": 1,
+            "total": 4
+          }
+        },
+        "clarification": {
+          "false": {
+            "correct": 1,
+            "total": 4
+          },
+          "true": {
+            "correct": 3,
+            "total": 4
+          }
+        }
+      },
+      "main_memory_effective_values": [
+        [
+          "dumbbell"
+        ]
+      ],
+      "failed_tasks_with_named_validation_errors": [
+        {
+          "scenario_id": "r2-05-missing_time",
+          "validation_issues": [
+            "unknown_evidence"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        },
+        {
+          "scenario_id": "r2-05-missing_equipment",
+          "validation_issues": [
+            "unknown_evidence"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        },
+        {
+          "scenario_id": "r2-05-missing_days",
+          "validation_issues": [
+            "unknown_evidence"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        }
+      ],
+      "limit": "A named validation error does not prove a single-field repair suffices; see scripted-repair evidence",
+      "training": {
+        "decision_rows": 504,
+        "target_tools": {
+          "apply_plan": 4,
+          "finish": 72,
+          "get_context": 100,
+          "get_memories": 100,
+          "propose_plan": 64,
+          "request_clarification": 32,
+          "search_exercises": 68,
+          "validate_plan": 64
+        },
+        "finish_outcomes": {
+          "applied": 4,
+          "awaiting_user": 8,
+          "declined": 8,
+          "infeasible": 4,
+          "previewed": 48
+        },
+        "decisions_after_named_validation_error": {
+          "session_count_mismatch": 0,
+          "unknown_evidence": 0
+        },
+        "counting_unit": "Unique exported decisions, before two-epoch reuse; histories may overlap"
+      }
+    },
+    "m": {
+      "memory_subgroups": {
+        "position": {
+          "first": {
+            "correct": 1,
+            "total": 4
+          },
+          "last": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "invalid": {
+          "expired": {
+            "correct": 0,
+            "total": 4
+          },
+          "unconfirmed": {
+            "correct": 3,
+            "total": 4
+          }
+        },
+        "clarification": {
+          "false": {
+            "correct": 1,
+            "total": 4
+          },
+          "true": {
+            "correct": 2,
+            "total": 4
+          }
+        }
+      },
+      "main_memory_effective_values": [
+        [
+          "dumbbell"
+        ]
+      ],
+      "failed_tasks_with_named_validation_errors": [
+        {
+          "scenario_id": "r2-05-missing_days",
+          "validation_issues": [
+            "session_count_mismatch"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        }
+      ],
+      "limit": "A named validation error does not prove a single-field repair suffices; see scripted-repair evidence",
+      "training": {
+        "decision_rows": 504,
+        "target_tools": {
+          "apply_plan": 4,
+          "finish": 72,
+          "get_context": 100,
+          "get_memories": 100,
+          "propose_plan": 64,
+          "request_clarification": 32,
+          "search_exercises": 68,
+          "validate_plan": 64
+        },
+        "finish_outcomes": {
+          "applied": 4,
+          "awaiting_user": 8,
+          "declined": 8,
+          "infeasible": 4,
+          "previewed": 48
+        },
+        "decisions_after_named_validation_error": {
+          "session_count_mismatch": 0,
+          "unknown_evidence": 0
+        },
+        "counting_unit": "Unique exported decisions, before two-epoch reuse; histories may overlap"
+      }
+    },
+    "tm": {
+      "memory_subgroups": {
+        "position": {
+          "first": {
+            "correct": 1,
+            "total": 4
+          },
+          "last": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "invalid": {
+          "expired": {
+            "correct": 2,
+            "total": 4
+          },
+          "unconfirmed": {
+            "correct": 3,
+            "total": 4
+          }
+        },
+        "clarification": {
+          "false": {
+            "correct": 2,
+            "total": 4
+          },
+          "true": {
+            "correct": 3,
+            "total": 4
+          }
+        }
+      },
+      "main_memory_effective_values": [
+        [
+          "dumbbell"
+        ]
+      ],
+      "failed_tasks_with_named_validation_errors": [
+        {
+          "scenario_id": "r2-05-missing_days",
+          "validation_issues": [
+            "session_count_mismatch"
+          ],
+          "outcome": "previewed",
+          "finish_after_invalid_validation": true
+        },
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "validation_issues": [
+            "equipment_or_exclusion_violation",
+            "time_budget_exceeded",
+            "unknown_evidence"
+          ],
+          "outcome": "infeasible",
+          "finish_after_invalid_validation": true
+        }
+      ],
+      "limit": "A named validation error does not prove a single-field repair suffices; see scripted-repair evidence",
+      "training": {
+        "decision_rows": 504,
+        "target_tools": {
+          "apply_plan": 4,
+          "finish": 72,
+          "get_context": 100,
+          "get_memories": 100,
+          "propose_plan": 64,
+          "request_clarification": 32,
+          "search_exercises": 68,
+          "validate_plan": 64
+        },
+        "finish_outcomes": {
+          "applied": 4,
+          "awaiting_user": 8,
+          "declined": 8,
+          "infeasible": 4,
+          "previewed": 48
+        },
+        "decisions_after_named_validation_error": {
+          "session_count_mismatch": 0,
+          "unknown_evidence": 0
+        },
+        "counting_unit": "Unique exported decisions, before two-epoch reuse; histories may overlap"
+      }
+    }
+  },
+  "old_gates_changed": false,
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "conditional_effects": {
+    "s0->t": {
+      "factor": "T",
+      "normal_net": -1,
+      "read_consent_net": 3,
+      "memory_net": -2,
+      "new_blocked_cases": [],
+      "original_screen_passed": true
+    },
+    "m->tm": {
+      "factor": "T",
+      "normal_net": -2,
+      "read_consent_net": 1,
+      "memory_net": 2,
+      "new_blocked_cases": [
+        "sd1-consent-pending-plain",
+        "sd1-consent-pending-read",
+        "r2-05-pending"
+      ],
+      "original_screen_passed": false
+    },
+    "s0->m": {
+      "factor": "M",
+      "normal_net": 1,
+      "read_consent_net": 1,
+      "memory_net": -3,
+      "new_blocked_cases": [],
+      "original_screen_passed": false
+    },
+    "t->tm": {
+      "factor": "M",
+      "normal_net": 0,
+      "read_consent_net": -1,
+      "memory_net": 1,
+      "new_blocked_cases": [
+        "sd1-consent-pending-plain",
+        "sd1-consent-pending-read",
+        "r2-05-pending"
+      ],
+      "original_screen_passed": false
+    }
+  },
+  "descriptive_average_factor_effects_in_case_counts": {
+    "T": {
+      "normal_net": -1.5,
+      "read_consent_net": 2.0,
+      "memory_net": 0.0
+    },
+    "M": {
+      "normal_net": 0.5,
+      "read_consent_net": 0.0,
+      "memory_net": -1.0
+    }
+  },
+  "interpretation_limit": "Correlated probes and one training seed; no significance, attention attribution, or generalization claim"
+}
