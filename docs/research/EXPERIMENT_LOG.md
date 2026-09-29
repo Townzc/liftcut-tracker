@@ -216,6 +216,8 @@ session_count_mismatch，随后以 infeasible 结束。现在不能说“排列�
 
 ## 2026-09-29：状态覆盖窗口完成与关机后复盘
 
+结果、复盘工具、学习材料和远端检查：[PR #20](https://github.com/Townzc/liftcut-tracker/pull/20)。
+
 ### 做了什么，为什么做
 
 按冻结的 `30fd396` 完成全部四组，没有根据中间分数改变训练、协议、checkpoint、

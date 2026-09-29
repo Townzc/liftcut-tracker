@@ -34,6 +34,7 @@ No server job or connection remains under management; do not reopen for CPU work
 Read the [full results](research/2026-09-29-state-coverage-results.md),
 [what/why/result/next journal](research/EXPERIMENT_LOG.md) and
 [case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md).
+Publication and remote checks: [PR #20](https://github.com/Townzc/liftcut-tracker/pull/20).
 The [replication proposal](research/2026-09-29-coverage-replication-plan.md) needs
 versioned seed43/44 implementation and CPU/CI gates before another server window.
 Two proposed three-hour windows imply ¥13.08 compute / ¥16 reserve, not new spending.

@@ -7,7 +7,8 @@
 
 [完整公开证据](../../research/liftcut-agent/reports/qwen-state-coverage-2026-09-29/README.md)
 包含成功和失败的原始轨迹、训练曲线、原生输出、token 审计及备份回执。权重保留在
-本机与云端持久数据目录，不进入 Git。GitHub 检查与合并状态见本次发布 PR。
+本机与云端持久数据目录，不进入 Git。GitHub 检查与合并状态见
+[发布 PR #20](https://github.com/Townzc/liftcut-tracker/pull/20)。
 
 ## 本轮回答什么
 
