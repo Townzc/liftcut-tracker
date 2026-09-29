@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
-from audit_recovery import audit_rollout
+from audit_recovery import audit_rollout, audit_training_log
 from liftcut_agent.benchmark import load_catalog, read_jsonl
 from liftcut_agent.environment import PlanEnvironment, ScriptedUser
 from liftcut_agent.workflow import FixedWorkflow
@@ -210,6 +210,46 @@ class RecoveryTests(unittest.TestCase):
             (target / "report.json").write_text(json.dumps(report), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "saved metrics"):
                 audit_rollout(target, scenarios, self.catalog)
+
+    def training_fixture(self, directory):
+        rows = [{"input_ids": [1, 2, 3], "target_tokens": 1} for _ in range(9)]
+        logs = [{"step": 1, "input_tokens": 24, "supervised_tokens": 8, "decisions": 8,
+                 "loss": .2, "gradient_norm_before_clip": .3},
+                {"step": 2, "input_tokens": 27, "supervised_tokens": 9, "decisions": 9,
+                 "loss": .1, "gradient_norm_before_clip": .2}]
+        totals = {"input_tokens": 27, "supervised_tokens": 9, "decisions": 9}
+        report = {"steps": 2, "processed": totals, "first_step_loss": .2, "last_step_loss": .1}
+        (directory / "report.json").write_text(json.dumps(report), encoding="utf-8")
+        write_rows(directory / "training.jsonl", logs)
+        return {"arms": {"clean": {"optimizer_steps": 2, **totals}}}, rows, logs, report
+
+    def test_training_audit_includes_final_partial_accumulation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)
+            plan, rows, _, _ = self.training_fixture(target)
+            actual = audit_training_log(target, plan, rows, "clean")
+            self.assertEqual(actual["decisions"], 9)
+            self.assertEqual(actual["supervised_tokens"], 9)
+
+    def test_training_audit_rejects_counter_or_gradient_changes(self):
+        for field, value in (("supervised_tokens", 10), ("gradient_norm_before_clip", float("inf"))):
+            with tempfile.TemporaryDirectory() as directory:
+                target = Path(directory)
+                plan, rows, logs, _ = self.training_fixture(target)
+                logs[-1][field] = value
+                # Use ordinary json to construct intentionally malformed evidence.
+                (target / "training.jsonl").write_text("".join(json.dumps(row) + "\n" for row in logs), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    audit_training_log(target, plan, rows, "clean")
+
+    def test_training_audit_rejects_rewritten_loss_summary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)
+            plan, rows, _, report = self.training_fixture(target)
+            report["last_step_loss"] = .001
+            (target / "report.json").write_text(json.dumps(report), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "loss summary"):
+                audit_training_log(target, plan, rows, "clean")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
 # Recovery-data pilot: review and execution plan
 
-Status: CPU preparation complete; new GPU training/evaluation has **not** run.
-The previous instance is stopped. Start a server only after this preparation is
-merged and the operator is ready to supervise the bounded window.
+Historical pre-execution plan. Execution and the subsequently discovered
+identifier-leakage defect are recorded in the
+[result review](2026-09-29-recovery-results.md). The original category-bearing
+IDs invalidate reliable held-out claims. Keep this plan and its frozen artifacts
+for reproduction; do not reuse its dataset as a clean evaluation.
 
 ## What the previous results establish
 

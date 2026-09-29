@@ -1,0 +1,1 @@
+{"status": "armed", "at_utc": "2026-09-28T23:42:59.328839+00:00", "deadline": "2026-09-29T01:39:52+00:00", "command": ["/bin/bash", "/usr/bin/shutdown"]}

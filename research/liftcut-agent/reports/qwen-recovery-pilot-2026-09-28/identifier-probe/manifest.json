@@ -1,0 +1,7 @@
+{
+  "scope": "Post-hoc opaque-ID diagnostic; original training unchanged",
+  "supervisor_commit": "592f357d9c3503656b814fbd213179d6dd7d69b1",
+  "original_rollout_script": "/root/autodl-tmp/liftcut/code/4b1d2419e73eb4c99ab1f5bb024221e2c97d57f2/research/liftcut-agent/gpu_rollout.py",
+  "deadline": "2026-09-29T01:39:52+00:00",
+  "reason": "Original record/memory IDs contain category hints; invalidate original held-out claims"
+}

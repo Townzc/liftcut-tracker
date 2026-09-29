@@ -1,2 +1,3 @@
 # Keep research input hashes stable across Windows and Linux checkouts.
 research/liftcut-agent/** text eol=lf
+research/liftcut-agent/**/*.png -text

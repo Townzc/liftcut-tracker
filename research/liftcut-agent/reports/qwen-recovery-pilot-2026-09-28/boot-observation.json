@@ -1,0 +1,7 @@
+{
+  "container_started_utc": "2026-09-28T23:39:52+00:00",
+  "source": "ps -p 1 -o lstart=; server timezone +0800",
+  "provider_billing_start_verified": false,
+  "hourly_cny_user_quote": 2.18,
+  "observed_at_utc": "2026-09-28T23:43:25.588560+00:00"
+}

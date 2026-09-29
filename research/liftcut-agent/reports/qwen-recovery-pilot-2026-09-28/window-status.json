@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "failures": [],
+  "booted_at": "2026-09-28T23:39:52+00:00",
+  "deadline": "2026-09-29T01:39:52+00:00",
+  "hourly_cny": 2.18,
+  "code_commit": "4b1d2419e73eb4c99ab1f5bb024221e2c97d57f2",
+  "result_rule": "Only complete, replay-audited arms are comparable; partial runs are not a result"
+}

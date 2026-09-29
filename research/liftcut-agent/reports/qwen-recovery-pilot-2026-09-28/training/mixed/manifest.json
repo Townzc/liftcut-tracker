@@ -1,0 +1,146 @@
+{
+  "arm": "mixed",
+  "plan": {
+    "version": "recovery-pilot-v1",
+    "status": "CPU-prepared; GPU results pending",
+    "scope": "Single seed, same-author synthetic bundle holdout, shared templates; no external generalization claim",
+    "files": {
+      "decisions/clean/config.json": "b4962ff7d56649624086d30d79117694fc56e5caf18613db4c628e0089c31231",
+      "decisions/clean/decisions.jsonl": "969f1c61e5cf41eee24c9ee4e8f291b774beec2853826fb22d5b28e52828027e",
+      "decisions/clean/episodes.jsonl": "732b7422f90c644c708b4f3712b2358d25d84fa01b9ae37e88f9940da0ceae29",
+      "decisions/clean/manifest.json": "4c42bfc34e2e0f39d882627b5c7d3e9fc961b3b0692427cdd86ac1dab20efeed",
+      "decisions/manifest.json": "a5e5c641543b76a4e9efa7e98a31954f5cbad18d9ca3296f6ebf80a07decf6d9",
+      "decisions/recovery/config.json": "b4962ff7d56649624086d30d79117694fc56e5caf18613db4c628e0089c31231",
+      "decisions/recovery/decisions.jsonl": "1c54b2b9d31b2bb55c1572c53c51204dd6bade8c836af670687f3d870dd5d1fa",
+      "decisions/recovery/episodes.jsonl": "74a28aed43720b08382d3985dbdf4d9e5b2bab6c70792d8d84668640c6f1b948",
+      "decisions/recovery/manifest.json": "615bd1d8751c0e34125607d9a1aedc35abaa44864cfd0f68aae1835c966e3a15",
+      "tokens/clean/report.json": "48cda61ff03fad4a4a90a41447bd5f6a09bdaf5821a83aafba9c9aaf974e780b",
+      "tokens/clean/tokens.jsonl": "c38ba2920d5936098db16e0cbb333211656b84d48bb5c66df19d4332bec8ac88",
+      "tokens/recovery/report.json": "81f0b0edc0a247a55a2f694849247150a706167f0b388f29f1f6998f22252cac",
+      "tokens/recovery/tokens.jsonl": "4b007628cadc2e15f5e1b6c7a10d8e00e43a218331572411f73f03b2e379d80e"
+    },
+    "frozen_manifest_sha256": "e6cd7597b9198d8eddab70c3c9299ec2a96ceacee0f9b9bca5104379b36d852e",
+    "source_sha256": {
+      "recovery_dataset.py": "04b2b90311b9ae8669eefba0b98426f98701babe144f8702b18e837da0343bba",
+      "tokenize_decisions.py": "493b01ac6af2c0de72f37d22abdfc3b6aa758f4b1b17a6b7055028488d428890",
+      "src/liftcut_agent/trajectories.py": "764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272"
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 2,
+      "gradient_accumulation": 8,
+      "micro_batch": 1,
+      "learning_rate": 0.0002,
+      "lora_rank": 16,
+      "lora_alpha": 32,
+      "dropout": 0.0,
+      "max_length": 4096,
+      "loss_reduction": "target-token mean per optimizer step"
+    },
+    "arms": {
+      "clean": {
+        "decisions": 300,
+        "optimizer_steps": 38,
+        "input_tokens": 520538,
+        "supervised_tokens": 12758,
+        "max_sequence_tokens": 2540,
+        "schedule_sha256": "db0b684d4cad7fbe4f7c0dd9e79943d4feaa069afdfa30bce0c3055a6e7b7974",
+        "recovery_context_decisions": 0,
+        "variants": {
+          "clean": 300
+        }
+      },
+      "mixed": {
+        "decisions": 300,
+        "optimizer_steps": 38,
+        "input_tokens": 526216,
+        "supervised_tokens": 12758,
+        "max_sequence_tokens": 2611,
+        "schedule_sha256": "999b5a6a1b167ced58c8b25ebe7d19924b14e98553771a9b6455321ec039f561",
+        "recovery_context_decisions": 75,
+        "variants": {
+          "clean": 150,
+          "recovery": 150
+        }
+      }
+    },
+    "paired_training_decisions": 150,
+    "evaluation": {
+      "arms": [
+        "unadapted",
+        "clean",
+        "mixed"
+      ],
+      "dev_cases": 8,
+      "test_cases": 16,
+      "total_episodes": 72,
+      "max_steps_per_episode": 24,
+      "max_output_tokens": 512,
+      "temperature": 0,
+      "test_used_for_selection": false
+    },
+    "budget": {
+      "hourly_cny": 2.18,
+      "max_hours_from_boot": 2,
+      "gpu_cap_cny_at_quote": 4.36,
+      "total_ceiling_cny": 10,
+      "disk_expansion": false,
+      "paid_api_calls": 0
+    }
+  },
+  "code_commit": "4b1d2419e73eb4c99ab1f5bb024221e2c97d57f2",
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "files": {
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "upstream_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 727,
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+        "upstream_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      },
+      "generation_config.json": {
+        "bytes": 238,
+        "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48",
+        "upstream_sha256": null
+      },
+      "model-00001-of-00003.safetensors": {
+        "bytes": 3957900840,
+        "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+        "upstream_sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+      },
+      "model-00002-of-00003.safetensors": {
+        "bytes": 3987450520,
+        "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+        "upstream_sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+      },
+      "model-00003-of-00003.safetensors": {
+        "bytes": 99630640,
+        "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+        "upstream_sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 32819,
+        "sha256": "d6c42883a895dfef5b0080ed2116a1bcd764f558406b98923d675978a1abf29c",
+        "upstream_sha256": null
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "upstream_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9377,
+        "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+        "upstream_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+      }
+    },
+    "weights_downloaded": true,
+    "scope": "Public pinned weights; LFS hashes checked; no training"
+  },
+  "started_at_utc": "2026-09-28T23:49:55.239512+00:00"
+}

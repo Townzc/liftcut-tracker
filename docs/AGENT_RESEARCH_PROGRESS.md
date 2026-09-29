@@ -1,8 +1,8 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-28. Active milestone: **P1 protocol revision implemented;
-P2 GPU compatibility pilot verified; grouped training/evaluation data and the hosted
-protocol comparison still pending**.
+Last updated: 2026-09-29 UTC. Active milestone: **P2 paired GPU pilot executed;
+identifier leakage discovered in recovery-v1; corrected data and reliable held-out
+evidence required before scaling training**. The hosted protocol matrix remains pending.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
@@ -25,6 +25,10 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
+- Latest increment: 191 local CPU tests pass; all 144 recovery/opaque-probe episodes
+  replay, and 87 full-backup files are hash-verified off-instance. See the
+  [result review](research/2026-09-29-recovery-results.md). The entries below retain
+  their historical verification scopes rather than replacing earlier results.
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
   155 tests passed locally and on AutoDL Python 3.12.3 before shutdown. Subsequent
   offline audit and shutdown-path regressions expand the local suite to 161;
@@ -114,9 +118,11 @@ No model/API or paid GPU training was used in the first two increments.
   alternate valid answers test the contract, but are not an independent research
   validation or an expert review of the scenario design.
 - All 30 proposal and 14 original interactive seeds remain public dev data.
-  Recovery-v1 now freezes 24 train / 8 dev / 16 test scenarios by constraint/persona
-  bundles, but shares author, behavior templates and catalog. It is not external
-  independent/OOD validation. The scripted user is intentionally simple.
+  Recovery-v1 freezes 24 train / 8 dev / 16 test scenarios by constraint/persona
+  bundles, but all 48 contain category hints in visible record/memory IDs. Its
+  original scores are contaminated diagnostics. The opaque-ID probe reuses tasks
+  and already-trained adapters; it is not corrected training or independent/OOD
+  validation. Shared authorship, behavior templates and catalog also limit claims.
 - Token usage and latency instrumentation is implemented; mock values are
   synthetic. Repeated live-model reliability remains unmeasured. Fixed-workflow
   controls are not model ablations.
@@ -207,18 +213,18 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. After the maintainer starts the server, prepare the full merged commit and
-   verify the retained model/environment and the reviewed recovery-v1 CPU artifacts.
-   Run the [prepared bounded recovery pilot](research/2026-09-28-recovery-experiment.md):
-   two adapters, then 72 fixed evaluation episodes across three arms. At the known
-   CNY 2.18/hour quote, max two hours from boot / compute CNY 4.36, total planning
-   ceiling CNY 10 including buffer. No new server or GPU job has been started.
-2. Verify backup, automatic shutdown and full artifact audit. Report success and
-   blocked writes separately; do not promote from terminal accuracy alone. If
-   partial, preserve the failed run instead of silently narrowing the comparison.
-3. Use the predeclared interpretation rules to choose more bundles/seeds, stronger
-   independent labels, or an external benchmark. The new pilot still cannot
-   establish broad generalization or replace the larger P2 data study.
+1. Prepare a corrected dataset on CPU before requesting another server window.
+   Audit model-visible identifiers and hidden-outcome invariance, strengthen
+   missing-information decisions, and create fresh evaluation bundles. Keep all
+   currently evaluated scenarios as development diagnostics.
+2. Regenerate/replay paired demonstrations and reproduce token budgets twice;
+   freeze the new data/config before training. Do not reuse old token counts after
+   identifier or task changes. See the [result review and next experiment](research/2026-09-29-recovery-results.md).
+3. Budget from the corrected input/generation estimates. Provisional 4090 limit:
+   two hours from boot at CNY 2.18/hour (compute CNY 4.36), CNY 10 total planning
+   ceiling, no expansion. Do not ask for a boot until CPU gates and migration
+   handoff are ready. Repeated seeds/external evaluation follow a useful signal;
+   do not move to DPO/RL on the strength of the contaminated original scores.
 4. The separately authorized hosted protocol matrix still needs a permitted
    execution path or manually produced artifacts. Do not bypass the prior tool
    execution gate or repeat the already answered authorization request.
@@ -229,8 +235,9 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
   Case012 fails before reaching its timeout: one missing field and one known field
   are requested together, causing 22 whole-request rejections.
 - [x] Committed 48 grouped scenarios in `491276b` before demonstration generation.
-  All labels are realizable by the scripted workflow; semantic/group leakage and
-  held-out target exports are rejected. Same-author/template limitations retained.
+  All labels are realizable by the scripted workflow; cross-split duplicate tasks,
+  group overlaps and held-out target exports are rejected. Those checks missed
+  category hints inside visible IDs, discovered during the subsequent GPU run.
 - [x] Generated and replayed 24 clean + 24 perturbed training episodes offline.
   Excluded 24 rejected decisions from targets while keeping them in later context.
   These are programmatic demonstrations, not new model-generated trajectories.
@@ -250,6 +257,34 @@ Implementation: [PR #13](https://github.com/Townzc/liftcut-tracker/pull/13).
 CPU CI verified 179 Python tests and reproduced the paired tokenizer/data report;
 the local upload archive also has all 13 prepared file hashes verified. No new
 GPU or paid API execution is included in this milestone.
+
+## Implemented in the eighth increment
+
+- [x] Ran two fresh QLoRA arms on the retained 4090: 38 steps, 300 decisions and
+  exactly 12,758 target tokens each. Both final adapters reload with zero probe
+  logit difference. Source `4b1d241`; no package install/weight redownload.
+- [x] Found the visible-ID category leakage missed by the previous preparation.
+  Preserved original 2/24, 21/24 and 20/24 scores as contaminated diagnostics;
+  withdrew reliable held-out claims instead of silently changing historical data.
+- [x] Froze opaque-ID fixtures/supervisor in `592f357` before its GPU run, retaining
+  the same models and rollout source. Complete probe: unadapted 1/24, ordinary SFT
+  20/24, mixed SFT 17/24. All original and probe episodes replay.
+- [x] Diagnosed three ordinary-only successes on pending approval, no mixed-only
+  success, four shared failures, and 33 mixed invalid-validation results versus
+  seven ordinary. Zero blocked writes in either suite does not establish broad safety.
+- [x] Verified the full 976,388,918-byte archive and all 87 inventory files on the
+  local machine, including eight saved adapters. Kept weights out of public Git.
+- [x] Sent verified-backup acknowledgment and resumed the controller for shutdown;
+  remote SSH closed and a fresh connection was refused. Estimated compute proxy
+  CNY 3.67; provider state/bill and final command return code remain unverified.
+  Documented the bounded backup-wait pause; the original two-hour hard cutoff stayed armed.
+- [x] Added stricter training/public-metadata audits, identifier invariance checks,
+  controller-resume regression tests, archive restoration checks and public CI replay.
+  Updated the next experiment to prioritize opaque IDs, recency/approval counterfactuals
+  and diverse clarification decisions. New data/CPU gates are not prepared yet.
+
+Analysis and evidence: [recovery result review](research/2026-09-29-recovery-results.md).
+Implementation: [PR #14](https://github.com/Townzc/liftcut-tracker/pull/14).
 
 ## Decision log
 
@@ -275,6 +310,9 @@ GPU or paid API execution is included in this milestone.
 | 2026-09-28 | Reuse the image's Torch in a separate Python 3.12 venv, then reverify CPU artifacts | Avoid global package changes; server token audit matched the original Python 3.11 result exactly |
 | 2026-09-28 | Prepare a paired recovery-context pilot before renting more compute | Existing 6/14 to 10/14 gain is entirely net training overlap; three blocked writes and 22 repeated clarification failures motivate the intervention |
 | 2026-09-28 | Match every assistant target and sampler position across SFT arms | Isolate error history while exactly matching supervised tokens and optimizer steps; disclose extra context compute and shared-template holdout limits |
+| 2026-09-29 | Invalidate reliable held-out claims for recovery-v1 and preserve original results | All 48 fixtures contain visible category hints; preparation tests missed this defect |
+| 2026-09-29 | Freeze a bounded post-hoc opaque-ID probe using unchanged trained models | Diagnose identifier sensitivity within the same boot deadline; do not silently retrain or relabel reused tasks as new tests |
+| 2026-09-29 | Prioritize data correction and clarification coverage before larger training | Both original SFT arms fail all three partial-clarification cases; mixed data does not improve original task success |
 
 ## Update protocol
 
