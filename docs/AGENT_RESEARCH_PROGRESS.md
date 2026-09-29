@@ -416,6 +416,7 @@ Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
   saved a four-arm design with CPU, evaluation and budget gates still pending.
 
 Evidence: [diagnostic results](research/2026-09-29-state-diagnostic-results.md).
+Publication and analysis: [PR #18](https://github.com/Townzc/liftcut-tracker/pull/18).
 
 ## Decision log
 

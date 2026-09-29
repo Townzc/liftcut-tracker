@@ -30,6 +30,7 @@
 4090 实例上恢复已有环境、模型缓存和两份 recovery-v2 final adapter。代码通过
 SHA 校验的 Git bundle 部署到新的 detached checkout，服务端 push 禁用；旧实验
 和权重保留。先复核环境、冻结数据与测试，再运行 19 状态 × 2 adapter。
+结果发布、复盘工具与学习记录：[PR #18](https://github.com/Townzc/liftcut-tracker/pull/18)。
 
 ### 为什么这样做
 
