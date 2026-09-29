@@ -1,0 +1,39 @@
+{
+  "scope": "Operator-observed backup/shutdown evidence; not provider billing or power-state verification",
+  "boot_observed_utc": "2026-09-28T23:39:52+00:00",
+  "backup": {
+    "archive": "recovery-v1.tar.gz",
+    "bytes": 976388918,
+    "sha256": "1e22064f18b1f5d9bd8e77f9210dca59bd441fea883cba078cea1d08f3e53436"
+  },
+  "verified_files": 87,
+  "all_inventory_files_verified": true,
+  "all_eight_saved_adapters_backed_up": true,
+  "backup_ack_sent_utc": "2026-09-29T01:20:21.443216+00:00",
+  "controller_resumed_for_shutdown": true,
+  "ssh_closed_by_remote_after_ack": true,
+  "fresh_ssh_probe": "Connection refused",
+  "probe_observed_by_utc": "2026-09-29T01:20:53+00:00",
+  "shutdown_returncode": null,
+  "shutdown_receipt_retrieved": false,
+  "controller_ack_consumption_verified": false,
+  "provider_power_state_verified": false,
+  "provider_bill_verified": false,
+  "hourly_cny_user_quote": 2.18,
+  "observed_window_hours_upper_proxy": 1.6836111111111112,
+  "estimated_compute_cny_upper_proxy": 3.670272,
+  "hard_deadline_utc": "2026-09-29T01:39:52+00:00",
+  "disk_expansion": false,
+  "paid_hosted_api_calls": 0,
+  "transfer_control": {
+    "at_utc": "2026-09-29T01:18:18.983087+00:00",
+    "reason": "Archive transfer below expected throughput; use remaining authorized window for backup",
+    "controller_paused": 1512,
+    "resume_watch_pid": 4344,
+    "latest_resume_at_utc": "2026-09-29T01:37:52+00:00",
+    "hard_shutdown_deadline_unchanged": "2026-09-29T01:39:52+00:00",
+    "original_five_minute_grace_extended": true,
+    "original_archive_unchanged": true
+  },
+  "transfer_note": "Controller briefly paused during fluctuating throughput; independent shutdown guards stayed armed. Transfer recovered and all files verified before resuming. Post-shutdown controller receipts were unavailable."
+}

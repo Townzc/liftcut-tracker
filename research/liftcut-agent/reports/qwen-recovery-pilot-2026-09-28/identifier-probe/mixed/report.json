@@ -1,0 +1,486 @@
+{
+  "scope": "Local GPU on frozen synthetic dev/test cases; shared templates; not external generalization evidence",
+  "mode": "live",
+  "model_manifest": {
+    "adapter_version": "model-policy-v0.2",
+    "config": {
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "token_limit_field": "max_completion_tokens",
+      "thinking_mode": null,
+      "temperature": 0,
+      "send_parallel_tool_calls": true,
+      "max_output_tokens": 512,
+      "max_requests": 576,
+      "max_reserved_output_tokens": 294912,
+      "max_request_bytes": 100000,
+      "max_response_bytes": 1000000,
+      "timeout_seconds": 60,
+      "input_usd_per_million": "0",
+      "output_usd_per_million": "0",
+      "max_reserved_usd": "0",
+      "pricing_note": "Local rented GPU; no API charge; GPU uptime accounted separately in CNY",
+      "tool_protocol": "read_batch",
+      "prompt_revision": "pending_approval_v1"
+    },
+    "prompt_sha256": "262a1fe12ba55574557a61e0b34e161a695089b37d762853d1fd7aefe78c0990",
+    "max_read_batch": 4,
+    "read_batch_tools": [
+      "get_context",
+      "get_memories",
+      "search_exercises",
+      "validate_plan"
+    ]
+  },
+  "scenario_digest": "e08b2c53b181ab890305950e14b29769e782bb7fa0e1d78ac27aef5eb0ccf894",
+  "catalog_digest": "7918794b3a604b4c2f63ae8353110a527da12fe7bfa2d8fd05ee4fe41d462a64",
+  "total": 24,
+  "passed": 17,
+  "clean_completions": 17,
+  "requests": 166,
+  "reserved_output_tokens": 84992,
+  "reserved_usd": "0",
+  "accounted_requests": 166,
+  "unknown_usage_requests": 0,
+  "usage_complete": true,
+  "observed_prompt_tokens": 298037,
+  "observed_completion_tokens": 8331,
+  "known_usage_cost_usd": "0",
+  "estimated_cost_usd": "0",
+  "estimated_cost_per_success_usd": "0",
+  "request_latency_p50_seconds": 2.4310870654881,
+  "request_latency_p95_seconds": 9.466321529820561,
+  "policy_failures": {
+    "expected_single_tool_call": 2
+  },
+  "tool_errors": {},
+  "blocked_write_attempts": 0,
+  "by_category": {
+    "approved": {
+      "total": 3,
+      "passed": 3
+    },
+    "declined": {
+      "total": 3,
+      "passed": 3
+    },
+    "infeasible": {
+      "total": 3,
+      "passed": 3
+    },
+    "memory_supersession": {
+      "total": 3,
+      "passed": 2
+    },
+    "partial_clarification": {
+      "total": 3,
+      "passed": 0
+    },
+    "pending": {
+      "total": 3,
+      "passed": 0
+    },
+    "preview": {
+      "total": 3,
+      "passed": 3
+    },
+    "revoked": {
+      "total": 3,
+      "passed": 3
+    }
+  },
+  "paired_with_fixed": {
+    "both_passed": 17,
+    "model_only": 0,
+    "fixed_only": 7,
+    "both_failed": 0
+  },
+  "results": [
+    {
+      "scenario_id": "r1-04-preview",
+      "category": "preview",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-approved",
+      "category": "approved",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-partial_clarification",
+      "category": "partial_clarification",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-memory_supersession",
+      "category": "memory_supersession",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "declined",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-revoked",
+      "category": "revoked",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-pending",
+      "category": "pending",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-declined",
+      "category": "declined",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-04-infeasible",
+      "category": "infeasible",
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-preview",
+      "category": "preview",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-approved",
+      "category": "approved",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-partial_clarification",
+      "category": "partial_clarification",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 17,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 18,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-memory_supersession",
+      "category": "memory_supersession",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-revoked",
+      "category": "revoked",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-pending",
+      "category": "pending",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-declined",
+      "category": "declined",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-05-infeasible",
+      "category": "infeasible",
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-preview",
+      "category": "preview",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-approved",
+      "category": "approved",
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 7,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-partial_clarification",
+      "category": "partial_clarification",
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch",
+        "unfinished_or_truncated"
+      ],
+      "outcome": null,
+      "steps": 17,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": "expected_single_tool_call",
+      "requests": 18,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-memory_supersession",
+      "category": "memory_supersession",
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-revoked",
+      "category": "revoked",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-pending",
+      "category": "pending",
+      "passed": false,
+      "issues": [
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-declined",
+      "category": "declined",
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 6,
+      "fixed_passed": true
+    },
+    {
+      "scenario_id": "r1-06-infeasible",
+      "category": "infeasible",
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true,
+      "policy_failure": null,
+      "requests": 5,
+      "fixed_passed": true
+    }
+  ],
+  "cost_note": "No API spend; rented GPU uptime billed separately in CNY",
+  "replay": {
+    "total": 24,
+    "replayed": 24,
+    "task_passed": 17
+  }
+}

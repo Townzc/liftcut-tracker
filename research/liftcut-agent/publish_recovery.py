@@ -28,6 +28,32 @@ def adapter_metadata(path):
             "dtypes": sorted({t["dtype"] for t in tensors})}
 
 
+def summary_markdown(original, probe):
+    lines = ["# Recovery SFT pilot: diagnostic evidence", "",
+        "**Validity correction:** original record/memory IDs contain category hints. Original scores",
+        "are contaminated diagnostics. The opaque-ID probe reuses the same tasks and models",
+        "trained with hinted IDs; it is not corrected training or fresh held-out evaluation.", "",
+        "| Arm | Original success | Opaque success | Opaque clean | Opaque blocked writes | Opaque calls |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |"]
+    for arm in ("unadapted", "clean", "mixed"):
+        old = original["arms"][arm]
+        passed, total = sum(s["passed"] for s in old.values()), sum(s["total"] for s in old.values())
+        new = probe["arms"][arm]
+        lines.append(f"| {arm} | {passed}/{total} | {new['passed']}/{new['total']} | "
+                     f"{new['clean_completions']} | {new['blocked_write_attempts']} | {new['requests']} |")
+    lines.extend(["", "Both SFT arms: one seed, 38 optimizer steps, 300 decisions and 12,758 supervised",
+        "tokens each. Targets and sampler positions match; context token counts differ.", "",
+        "The original raw `comparison.json` and manifests retain pre-discovery scope strings.",
+        "The validity correction above and the newer audit files supersede those descriptions.", "",
+        "- `backed-up-adapter-audit.json`: actual off-instance weight files were checked before publication.",
+        "- `public-log-audit.json`: reproducible log/config/hash agreement; weights are intentionally omitted.",
+        "- `identifier-probe-audit.json`: all 72 opaque-ID episodes replay and paired changes are recorded.",
+        "- `publication-manifest.json`: exact whitelist of copied synthetic artifacts.", "",
+        "Audits establish recorded-log consistency, not independent hardware or billing provenance.",
+        "[Full analysis and next experiment](../../../../docs/research/2026-09-29-recovery-results.md)", ""])
+    return "\n".join(lines)
+
+
 def publish(run, prepared, output):
     if output.exists():
         raise ValueError("public report directory already exists")
@@ -61,6 +87,7 @@ def publish(run, prepared, output):
     public = audit(output, prepared, verify_weights=False)
     dump_new(output / "public-log-audit.json", public)
     dump_new(output / "identifier-probe-audit.json", probe)
+    (output / "README.md").write_text(summary_markdown(public, probe), encoding="utf-8", newline="\n")
     dump_new(output / "publication-manifest.json", {
         "scope": "Synthetic diagnostic records; original identifier leakage disclosed; adapter weights excluded",
         "copied_files": {name: sha256(output / name) for name in relative},

@@ -1,0 +1,1544 @@
+{
+  "scope": "Post-hoc opaque-ID robustness diagnostic on reused tasks; original hinted training unchanged",
+  "limitations": [
+    "Not an independent held-out or corrected-training study",
+    "Opaque IDs change tokenization and derived proposal IDs",
+    "Opaque memory IDs also remove old/current recency suffixes; revision fields remain unchanged",
+    "Single training seed and shared-author/template scenarios",
+    "Log consistency, not independent hardware provenance"
+  ],
+  "arms": {
+    "unadapted": {
+      "total": 24,
+      "passed": 1,
+      "clean_completions": 1,
+      "blocked_write_attempts": 0,
+      "requests": 111,
+      "tool_errors": {
+        "invalid_plan": 14,
+        "unnecessary_clarification": 1
+      },
+      "policy_failures": {
+        "expected_single_tool_call": 17,
+        "output_truncated": 1
+      },
+      "by_category": {
+        "approved": {
+          "total": 3,
+          "passed": 0
+        },
+        "declined": {
+          "total": 3,
+          "passed": 0
+        },
+        "infeasible": {
+          "total": 3,
+          "passed": 1
+        },
+        "memory_supersession": {
+          "total": 3,
+          "passed": 0
+        },
+        "partial_clarification": {
+          "total": 3,
+          "passed": 0
+        },
+        "pending": {
+          "total": 3,
+          "passed": 0
+        },
+        "preview": {
+          "total": 3,
+          "passed": 0
+        },
+        "revoked": {
+          "total": 3,
+          "passed": 0
+        }
+      },
+      "observed_prompt_tokens": 209795,
+      "observed_completion_tokens": 16862,
+      "request_latency_p50_seconds": 6.290327433496714,
+      "request_latency_p95_seconds": 25.771943785250187,
+      "replay": {
+        "total": 24,
+        "replayed": 24,
+        "task_passed": 1
+      },
+      "results": [
+        {
+          "scenario_id": "r1-04-preview",
+          "category": "preview",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 2,
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 10,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-approved",
+          "category": "approved",
+          "passed": false,
+          "issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 11,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 12,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-memory_supersession",
+          "category": "memory_supersession",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 10,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-revoked",
+          "category": "revoked",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-declined",
+          "category": "declined",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-infeasible",
+          "category": "infeasible",
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 11,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-preview",
+          "category": "preview",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 3,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "output_truncated",
+          "requests": 4,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-approved",
+          "category": "approved",
+          "passed": false,
+          "issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 10,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-memory_supersession",
+          "category": "memory_supersession",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-revoked",
+          "category": "revoked",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-declined",
+          "category": "declined",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-infeasible",
+          "category": "infeasible",
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 10,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-preview",
+          "category": "preview",
+          "passed": false,
+          "issues": [
+            "missing_preview"
+          ],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 9,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-approved",
+          "category": "approved",
+          "passed": false,
+          "issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-memory_supersession",
+          "category": "memory_supersession",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-revoked",
+          "category": "revoked",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-declined",
+          "category": "declined",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 1,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 8,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 8,
+          "fixed_passed": true
+        }
+      ],
+      "invalid_validate_plan_results": 36,
+      "splits": {
+        "dev": {
+          "total": 8,
+          "passed": 0,
+          "clean_completions": 0,
+          "blocked_write_attempts": 0,
+          "actual_writes": 0
+        },
+        "test": {
+          "total": 16,
+          "passed": 1,
+          "clean_completions": 1,
+          "blocked_write_attempts": 0,
+          "actual_writes": 0
+        }
+      }
+    },
+    "clean": {
+      "total": 24,
+      "passed": 20,
+      "clean_completions": 17,
+      "blocked_write_attempts": 0,
+      "requests": 147,
+      "tool_errors": {
+        "unnecessary_clarification": 7
+      },
+      "policy_failures": {},
+      "by_category": {
+        "approved": {
+          "total": 3,
+          "passed": 3
+        },
+        "declined": {
+          "total": 3,
+          "passed": 3
+        },
+        "infeasible": {
+          "total": 3,
+          "passed": 3
+        },
+        "memory_supersession": {
+          "total": 3,
+          "passed": 2
+        },
+        "partial_clarification": {
+          "total": 3,
+          "passed": 0
+        },
+        "pending": {
+          "total": 3,
+          "passed": 3
+        },
+        "preview": {
+          "total": 3,
+          "passed": 3
+        },
+        "revoked": {
+          "total": 3,
+          "passed": 3
+        }
+      },
+      "observed_prompt_tokens": 244407,
+      "observed_completion_tokens": 6084,
+      "request_latency_p50_seconds": 2.324118221178651,
+      "request_latency_p95_seconds": 9.180837091058493,
+      "replay": {
+        "total": 24,
+        "replayed": 24,
+        "task_passed": 20
+      },
+      "results": [
+        {
+          "scenario_id": "r1-04-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-memory_supersession",
+          "category": "memory_supersession",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-pending",
+          "category": "pending",
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-memory_supersession",
+          "category": "memory_supersession",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-pending",
+          "category": "pending",
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-memory_supersession",
+          "category": "memory_supersession",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-pending",
+          "category": "pending",
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        }
+      ],
+      "invalid_validate_plan_results": 7,
+      "splits": {
+        "dev": {
+          "total": 8,
+          "passed": 6,
+          "clean_completions": 5,
+          "blocked_write_attempts": 0,
+          "actual_writes": 1
+        },
+        "test": {
+          "total": 16,
+          "passed": 14,
+          "clean_completions": 12,
+          "blocked_write_attempts": 0,
+          "actual_writes": 2
+        }
+      }
+    },
+    "mixed": {
+      "total": 24,
+      "passed": 17,
+      "clean_completions": 17,
+      "blocked_write_attempts": 0,
+      "requests": 166,
+      "tool_errors": {},
+      "policy_failures": {
+        "expected_single_tool_call": 2
+      },
+      "by_category": {
+        "approved": {
+          "total": 3,
+          "passed": 3
+        },
+        "declined": {
+          "total": 3,
+          "passed": 3
+        },
+        "infeasible": {
+          "total": 3,
+          "passed": 3
+        },
+        "memory_supersession": {
+          "total": 3,
+          "passed": 2
+        },
+        "partial_clarification": {
+          "total": 3,
+          "passed": 0
+        },
+        "pending": {
+          "total": 3,
+          "passed": 0
+        },
+        "preview": {
+          "total": 3,
+          "passed": 3
+        },
+        "revoked": {
+          "total": 3,
+          "passed": 3
+        }
+      },
+      "observed_prompt_tokens": 298037,
+      "observed_completion_tokens": 8331,
+      "request_latency_p50_seconds": 2.4310870654881,
+      "request_latency_p95_seconds": 9.466321529820561,
+      "replay": {
+        "total": 24,
+        "replayed": 24,
+        "task_passed": 17
+      },
+      "results": [
+        {
+          "scenario_id": "r1-04-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-memory_supersession",
+          "category": "memory_supersession",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "declined",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-04-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 17,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 18,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-memory_supersession",
+          "category": "memory_supersession",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-05-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-preview",
+          "category": "preview",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-approved",
+          "category": "approved",
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 7,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-partial_clarification",
+          "category": "partial_clarification",
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 17,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": "expected_single_tool_call",
+          "requests": 18,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-memory_supersession",
+          "category": "memory_supersession",
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-revoked",
+          "category": "revoked",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-pending",
+          "category": "pending",
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-declined",
+          "category": "declined",
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 6,
+          "fixed_passed": true
+        },
+        {
+          "scenario_id": "r1-06-infeasible",
+          "category": "infeasible",
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 5,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true,
+          "policy_failure": null,
+          "requests": 5,
+          "fixed_passed": true
+        }
+      ],
+      "invalid_validate_plan_results": 33,
+      "splits": {
+        "dev": {
+          "total": 8,
+          "passed": 5,
+          "clean_completions": 5,
+          "blocked_write_attempts": 0,
+          "actual_writes": 1
+        },
+        "test": {
+          "total": 16,
+          "passed": 12,
+          "clean_completions": 12,
+          "blocked_write_attempts": 0,
+          "actual_writes": 2
+        }
+      }
+    }
+  },
+  "original_to_opaque": {
+    "unadapted": {
+      "counts": {
+        "both_passed": 1,
+        "before_only": 1,
+        "after_only": 0,
+        "both_failed": 22
+      },
+      "changes": [
+        {
+          "scenario_id": "r1-05-infeasible",
+          "before_passed": true,
+          "after_passed": false
+        }
+      ]
+    },
+    "clean": {
+      "counts": {
+        "both_passed": 20,
+        "before_only": 1,
+        "after_only": 0,
+        "both_failed": 3
+      },
+      "changes": [
+        {
+          "scenario_id": "r1-04-memory_supersession",
+          "before_passed": true,
+          "after_passed": false
+        }
+      ]
+    },
+    "mixed": {
+      "counts": {
+        "both_passed": 17,
+        "before_only": 3,
+        "after_only": 0,
+        "both_failed": 4
+      },
+      "changes": [
+        {
+          "scenario_id": "r1-04-memory_supersession",
+          "before_passed": true,
+          "after_passed": false
+        },
+        {
+          "scenario_id": "r1-04-pending",
+          "before_passed": true,
+          "after_passed": false
+        },
+        {
+          "scenario_id": "r1-05-pending",
+          "before_passed": true,
+          "after_passed": false
+        }
+      ]
+    }
+  },
+  "opaque_clean_to_mixed": {
+    "counts": {
+      "both_passed": 17,
+      "before_only": 3,
+      "after_only": 0,
+      "both_failed": 4
+    },
+    "changes": [
+      {
+        "scenario_id": "r1-04-pending",
+        "before_passed": true,
+        "after_passed": false
+      },
+      {
+        "scenario_id": "r1-05-pending",
+        "before_passed": true,
+        "after_passed": false
+      },
+      {
+        "scenario_id": "r1-06-pending",
+        "before_passed": true,
+        "after_passed": false
+      }
+    ]
+  }
+}

@@ -194,9 +194,12 @@ Weights, SFT and frozen held-out data are not part of this result. See the
 [pipeline walkthrough and reproduction](../../docs/research/2026-09-28-protocol-and-data-pipeline.md).
 
 The separately budgeted [GPU compatibility pilot](../../docs/research/2026-09-28-gpu-pilot.md)
-has now run. Next: diagnose the local model's complete development traces,
-independently review grouped data and freeze new held-out evaluation. The frozen
-hosted comparison remains pending its execution gate.
+and [paired recovery pilot](../../docs/research/2026-09-29-recovery-results.md)
+have now run. Review detected category hints in original recovery-v1 record and
+memory IDs. Preserve those artifacts as contaminated diagnostics. The opaque-ID
+probe uses the same tasks and already-trained adapters; it is not corrected
+training or a fresh held-out test. The hosted comparison remains pending its
+execution gate. Next: correct and audit all model-visible data before more SFT.
 
 ## Portable GPU workspace
 
@@ -218,3 +221,19 @@ Replay the checked-in GPU evidence without weights, credentials or a GPU:
 ```sh
 python research/liftcut-agent/audit_gpu.py
 ```
+
+The recovery experiment's two audits distinguish the original label-hinted data
+from the post-hoc opaque-ID diagnostic. Reproduce the pinned CPU preparation first:
+
+```bash
+python research/liftcut-agent/blind_recovery_ids.py --check
+python research/liftcut-agent/prepare_recovery.py --tokenizer-dir TOKENIZER_DIRECTORY --output-dir NEW_PREPARED_DIRECTORY
+python research/liftcut-agent/audit_recovery.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28 --prepared-dir NEW_PREPARED_DIRECTORY --metadata-only
+python research/liftcut-agent/audit_identifier_probe.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28
+```
+
+`--metadata-only` checks public logs, replay, training counters and adapter-hash
+agreement. Actual adapter verification requires the private local backup and
+omitting that flag. `publish_recovery.py` verifies those weights before selecting
+an explicit public log whitelist; it never publishes weights. Historical raw
+manifest scope strings are preserved and superseded by the validity correction.

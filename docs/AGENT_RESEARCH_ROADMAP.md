@@ -1,6 +1,6 @@
 # LiftCut-AgentLab research roadmap
 
-Updated: 2026-09-28. Status: approved direction; milestones below are targets.
+Updated: 2026-09-29 UTC. Status: approved direction; milestones below are targets.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).
 
 ## Research question
@@ -56,7 +56,11 @@ pending-approval prompt factor. Four offline profiles are verified; the frozen
 paid comparison has not executed because of an execution-policy rejection.
 P2 preparation includes verified decision export, a real tokenizer/mask audit and
 an executed 20-step QLoRA compatibility pilot for pinned Qwen3-4B-Instruct-2507.
-The formal data study and held-out comparison are still pending. See the
+The paired recovery pilot has since executed, but review found category-bearing
+record/memory IDs in all 48 original scenarios. Its high scores do not establish
+reliable held-out performance. The next gate is corrected model-visible data and
+fresh evaluation before more training; see the [result review](research/2026-09-29-recovery-results.md).
+The formal data study and reliable held-out comparison remain pending. See the
 [data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
 [GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
 [budget plan](research/2026-09-28-small-model-pilot-plan.md).
@@ -69,6 +73,10 @@ The formal data study and held-out comparison are still pending. See the
   for the first model experiments, subject to audit quality and cost.
 - Assign user/template/task-family groups before generating completions or
   trajectories. Do not distribute paraphrases or variants across splits.
+- Audit all model-visible identifiers and text for hidden outcome hints. Paired
+  approval/decline counterfactuals must have equal observations before their user
+  event. Metadata and proposal identities must not reveal future labels. A split
+  hash or lack of duplicate tasks does not establish absence of label leakage.
 - Freeze test manifests and hashes. Tune on development data; if test errors inform
   changes, construct a new test version and disclose the reuse.
 - Score final task state using executable rules wherever possible. Separate raw

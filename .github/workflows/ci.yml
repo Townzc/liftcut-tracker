@@ -56,6 +56,11 @@ jobs:
       - name: Audit GPU pilot and local development traces without weights or GPU
         run: python research/liftcut-agent/audit_gpu.py
 
+      - name: Verify opaque identifiers and replay the diagnostic comparison
+        run: |
+          python research/liftcut-agent/blind_recovery_ids.py --check
+          python research/liftcut-agent/audit_identifier_probe.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28
+
       - name: Exercise the complete protocol matrix and decision export offline
         run: |
           python research/liftcut-agent/protocol_experiment.py mock --output-dir research/liftcut-agent/outputs/ci-protocol-matrix
@@ -89,6 +94,8 @@ jobs:
           PY
       - name: Reproduce paired recovery decisions and exact token budgets on CPU
         run: python research/liftcut-agent/prepare_recovery.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-recovery-prepared
+      - name: Replay the published recovery comparison without adapter weights
+        run: python research/liftcut-agent/audit_recovery.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28 --prepared-dir research/liftcut-agent/outputs/ci-recovery-prepared --metadata-only
 
   quality:
     runs-on: ubuntu-latest

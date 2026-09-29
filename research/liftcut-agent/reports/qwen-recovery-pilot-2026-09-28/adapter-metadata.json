@@ -1,0 +1,20 @@
+{
+  "clean": {
+    "adapter_bytes": 132187888,
+    "sha256": "7135164e8aa649640a4e4a718442f5b14940722aa6b155bdfe52e78e6220adb9",
+    "tensor_count": 504,
+    "parameter_count": 33030144,
+    "dtypes": [
+      "F32"
+    ]
+  },
+  "mixed": {
+    "adapter_bytes": 132187888,
+    "sha256": "97c1b275d612bbbb511c4297da2d3edac20fda8805f106ec3c0bf63804720f87",
+    "tensor_count": 504,
+    "parameter_count": 33030144,
+    "dtypes": [
+      "F32"
+    ]
+  }
+}

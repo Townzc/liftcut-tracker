@@ -156,5 +156,19 @@ SHA-256，记录备份位置；模型缓存可以按 revision 重新下载。完
 SSH 断开只能说明连接结束，不能证明计费结束。
 [官方关机说明](https://api.autodl.com/docs/save_money/)
 
+对于 `run_recovery_window.py` 生成的完整归档，先在本机核验服务端公布的归档 SHA，
+再恢复到全新目录并逐文件核验大小、哈希和清单覆盖范围：
+
+```bash
+python research/liftcut-agent/restore_recovery.py \
+  --archive LOCAL_RUN.tar.gz --output-dir NEW_RESTORE_DIRECTORY \
+  --sha256 SHA256_FROM_BACKUP_READY
+```
+
+脚本拒绝路径越界、链接、重复成员、清单遗漏和覆盖已有目录；只有全部文件核验
+成功才生成 `restore-receipt.json`。确认成功后再把同一归档 SHA 写入服务端的
+`off-instance-backup.json`，让控制器提前关机。部分权重备份不能代替完整归档的
+确认回执。公开日志通过白名单发布，adapter 和训练状态只保留在忽略目录及数据盘。
+
 换机后：更新本地连接配置 → 核实数据盘复制 → prepare 同一 commit → 重建/检查环境
 → verify 原 manifest → 再开始新实验。若校验失败，先恢复备份，不覆盖旧证据。

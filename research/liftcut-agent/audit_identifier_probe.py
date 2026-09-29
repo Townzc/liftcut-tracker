@@ -76,6 +76,7 @@ def audit_probe(run):
         raise ValueError("probe arms used different configurations")
     return {"scope": "Post-hoc opaque-ID robustness diagnostic on reused tasks; original hinted training unchanged",
         "limitations": ["Not an independent held-out or corrected-training study", "Opaque IDs change tokenization and derived proposal IDs",
+                        "Opaque memory IDs also remove old/current recency suffixes; revision fields remain unchanged",
                         "Single training seed and shared-author/template scenarios", "Log consistency, not independent hardware provenance"],
         "arms": arms, "original_to_opaque": original_to_opaque,
         "opaque_clean_to_mixed": paired(arms["clean"]["results"], arms["mixed"]["results"])}
