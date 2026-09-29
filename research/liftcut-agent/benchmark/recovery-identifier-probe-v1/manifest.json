@@ -1,0 +1,26 @@
+{
+  "version": "recovery-identifier-probe-v1",
+  "scope": "Post-hoc identifier robustness diagnostic; same tasks; not a new held-out test or corrected-training study",
+  "original_manifest_sha256": "e6cd7597b9198d8eddab70c3c9299ec2a96ceacee0f9b9bca5104379b36d852e",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478",
+  "files": {
+    "train.jsonl": "015e2f789ee7ef21c984d9e655e12568116bd06288a921e742c4532cd6180d29",
+    "dev.jsonl": "12f119e1949a9dc2a23f81b64d8bd17dc5dd33f5531d82504fe2814eb8e48e46",
+    "test.jsonl": "cc0a06bac88bce1eaaf9e88d212154ee46089a4ac04d30990ff5853aaa7d954f"
+  },
+  "counts": {
+    "train": 24,
+    "dev": 8,
+    "test": 16
+  },
+  "original_scenarios_with_identifier_hints": 48,
+  "opaque_scenarios_with_identifier_hints": 0,
+  "intervention": "Only record and memory IDs become opaque; all constraints, user behaviors and terminal labels stay fixed",
+  "limitations": [
+    "Existing adapters were trained on category-bearing IDs",
+    "Same evaluation tasks were already used",
+    "Opaque IDs alter tokenization and derived proposal IDs",
+    "No causal isolation of semantic hints alone"
+  ],
+  "train_file_use": "Reserved for future independently planned corrected training; not trained in this probe"
+}
