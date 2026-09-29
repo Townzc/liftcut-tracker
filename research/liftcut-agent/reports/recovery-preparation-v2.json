@@ -1,0 +1,106 @@
+{
+  "version": "recovery-pilot-v2",
+  "scope": "Corrected same-author synthetic development study; no test rollouts",
+  "files": {
+    "decisions/clean/config.json": "5f982b9990e9c09f552538200a36e92a0e6410f109c8fcaeba4ca0e0f90896fe",
+    "decisions/clean/decisions.jsonl": "fbd06367cfd58950ce57a413bbfbfa4e2bdb79860e6e959a884e2bc06e114360",
+    "decisions/clean/episodes.jsonl": "370f3cf151dddda310911e278c96e5a1fc2bdb2b7cd9d0cecc9c7f5fe1ff81d2",
+    "decisions/clean/manifest.json": "bc97dacd7ccfb1ee8bd380714829a510d7ef8b2668a72cd4c7c0ae90eb36e568",
+    "decisions/manifest.json": "4d9c0dd0e2d76b1a0b5a9e14d7878692264fcbe48413df1cee084e849c336b0b",
+    "decisions/prefixes.jsonl": "e860df84b3318fa7ac8c5dbfe160e69f621c31b0ed5148ea2550ecbac7724894",
+    "decisions/recovery/config.json": "5f982b9990e9c09f552538200a36e92a0e6410f109c8fcaeba4ca0e0f90896fe",
+    "decisions/recovery/decisions.jsonl": "0737b3bafd0572214d20060f9291203fd20146b7342a6ca2d1e0f741e52655b3",
+    "decisions/recovery/episodes.jsonl": "830eaf1fe94f300f1f2d8a3ce53e4bf8569bd0a19d7a6ec8a211733954a9514b",
+    "decisions/recovery/manifest.json": "f8856d8b4b59b4bd0707dcea7afc5b76f10001d24fe0962983584333117b5884",
+    "tokens/clean/report.json": "b59f4a8732cb344666472bfaa34e14ae836267841d7406608c9be31ab848f272",
+    "tokens/clean/tokens.jsonl": "69f9531f8c3eed0381a83baee156b96cdfac237768203ba9c8ef32a98b944700",
+    "tokens/recovery/report.json": "9ee066ffa3c757c88a404fb0f5da44360b1706578e2e0a0f12fcc29aec9ee9e5",
+    "tokens/recovery/tokens.jsonl": "a7edf7f509793c26583061bef10193220e7982202257684fa639016cb9ba9d7b"
+  },
+  "frozen_manifest_sha256": "024cf70424e67d58b3e3154de51471786c426ff287c62ba5c65bcdf10987c58c",
+  "source_sha256": {
+    "controlled_recovery.py": "8601a11b0dd9429d5a47198ce7df913c4a4f127a1eb1926aa593a115eb24823b",
+    "tokenize_decisions.py": "493b01ac6af2c0de72f37d22abdfc3b6aa758f4b1b17a6b7055028488d428890",
+    "src/liftcut_agent/trajectories.py": "764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272"
+  },
+  "training": {
+    "seed": 42,
+    "epochs": 2,
+    "gradient_accumulation": 8,
+    "micro_batch": 1,
+    "learning_rate": 0.0002,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "dropout": 0.0,
+    "max_length": 4096,
+    "loss_reduction": "target-token mean per optimizer step",
+    "checkpoints": "final_only_no_exact_resume"
+  },
+  "arms": {
+    "clean": {
+      "decisions": 648,
+      "optimizer_steps": 81,
+      "supervised_tokens": 26052,
+      "input_tokens": 1144882,
+      "max_sequence_tokens": 2671,
+      "schedule_sha256": "ade897cb1d3f59e1a830088ed3e63f793ef53da8cbed94626fbe1953ff351bff",
+      "recovery_context_decisions": 0
+    },
+    "mixed": {
+      "decisions": 648,
+      "optimizer_steps": 81,
+      "supervised_tokens": 26052,
+      "input_tokens": 1161328,
+      "max_sequence_tokens": 2762,
+      "schedule_sha256": "03f94f0c44b785abd6d5089bc8fa281c02bf3e9fbccacd09e3f146c88f3dd3e9",
+      "recovery_context_decisions": 192
+    }
+  },
+  "unique_decisions_by_action": {
+    "apply_plan": 4,
+    "finish": 48,
+    "get_context": 64,
+    "get_memories": 64,
+    "propose_plan": 40,
+    "request_clarification": 20,
+    "search_exercises": 44,
+    "validate_plan": 40
+  },
+  "unique_target_tokens_by_action": {
+    "apply_plan": 370,
+    "finish": 1020,
+    "get_context": 1088,
+    "get_memories": 1152,
+    "propose_plan": 3942,
+    "request_clarification": 496,
+    "search_exercises": 1056,
+    "validate_plan": 3902
+  },
+  "evaluation": {
+    "arms": [
+      "unadapted",
+      "clean",
+      "mixed"
+    ],
+    "normal_dev": 12,
+    "prefix_dev": 9,
+    "prefix_types": {
+      "known_field": 3,
+      "unapproved_write": 3,
+      "invalid_plan": 3
+    },
+    "total_episodes": 63,
+    "test_episodes": 0,
+    "max_steps": 24,
+    "max_output_tokens": 512,
+    "max_context": 4096
+  },
+  "budget": {
+    "hourly_cny": 2.18,
+    "max_hours_from_boot": 4,
+    "compute_proxy_cny": 8.72,
+    "total_planning_ceiling_cny": 10,
+    "backup_margin_minutes": 30,
+    "reason": "Maintainer requested completing the formal study on the already-started instance; preparation consumes this window too"
+  }
+}

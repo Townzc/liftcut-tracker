@@ -1,0 +1,30 @@
+{
+  "inventory_digest": "a26ae57ef28fce2e11d7818cd2b526fd1e65d8c9f67a6c928e690e6e6a236be5",
+  "archives": [
+    {
+      "archive": "clean.tar.gz",
+      "bytes": 122367284,
+      "sha256": "15a9173b8f9d398497f8a40f3dffcb30e6e7bd8c054c454ec9895c9f3282f8d3",
+      "verified_files": 7,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "mixed.tar.gz",
+      "bytes": 122350918,
+      "sha256": "f8031f23f79e1cd8a834c06c9a5960d1cd3aab3049d0bc45ccc5c72453a8505b",
+      "verified_files": 7,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "evidence.tar.gz",
+      "bytes": 252943,
+      "sha256": "b2e6058bddca14461484d8d4eab707c70aa376183b5ae0f20a2dd5606920e478",
+      "verified_files": 28,
+      "all_inventory_files_verified": true
+    }
+  ],
+  "episodes_replayed": 63,
+  "adapter_files_verified": true,
+  "all_archive_files_verified": true,
+  "test_episodes": 0
+}

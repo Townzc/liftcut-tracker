@@ -1,0 +1,4287 @@
+{
+  "scope": "Descriptive DEVELOPMENT review; shared-author single bundle/seed; no additional model calls",
+  "episodes_replayed": 63,
+  "test_episodes": 0,
+  "panels": {
+    "unadapted": {
+      "normal": {
+        "total": 12,
+        "passed": 0,
+        "model_requests": 55,
+        "model_prompt_tokens": 98585,
+        "model_completion_tokens": 7499,
+        "model_generation_seconds": 385.563228784129,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 0,
+        "invalid_validations": 11,
+        "repeated_invalid_plan": 5,
+        "accepted_clarification_requests": 1,
+        "autonomous_clean_completion": 0,
+        "completion_without_invalid_plan": 0
+      },
+      "continuation": {
+        "total": 9,
+        "passed": 1,
+        "model_requests": 54,
+        "model_prompt_tokens": 120016,
+        "model_completion_tokens": 7242,
+        "model_generation_seconds": 381.23116374388337,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 0,
+        "invalid_validations": 33,
+        "repeated_invalid_plan": 16,
+        "accepted_clarification_requests": 1,
+        "autonomous_clean_completion": 1,
+        "completion_without_invalid_plan": 1,
+        "first_recovery_acceptable": 3
+      }
+    },
+    "clean": {
+      "normal": {
+        "total": 12,
+        "passed": 10,
+        "model_requests": 82,
+        "model_prompt_tokens": 141604,
+        "model_completion_tokens": 3306,
+        "model_generation_seconds": 274.129434235394,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 1,
+        "invalid_validations": 2,
+        "repeated_invalid_plan": 0,
+        "accepted_clarification_requests": 5,
+        "autonomous_clean_completion": 9,
+        "completion_without_invalid_plan": 9
+      },
+      "continuation": {
+        "total": 9,
+        "passed": 8,
+        "model_requests": 40,
+        "model_prompt_tokens": 82162,
+        "model_completion_tokens": 1938,
+        "model_generation_seconds": 164.26160610094666,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 1,
+        "invalid_validations": 1,
+        "repeated_invalid_plan": 0,
+        "accepted_clarification_requests": 3,
+        "autonomous_clean_completion": 7,
+        "completion_without_invalid_plan": 7,
+        "first_recovery_acceptable": 8
+      }
+    },
+    "mixed": {
+      "normal": {
+        "total": 12,
+        "passed": 11,
+        "model_requests": 84,
+        "model_prompt_tokens": 146192,
+        "model_completion_tokens": 3444,
+        "model_generation_seconds": 289.1922393646091,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 1,
+        "invalid_validations": 1,
+        "repeated_invalid_plan": 0,
+        "accepted_clarification_requests": 5,
+        "autonomous_clean_completion": 10,
+        "completion_without_invalid_plan": 10
+      },
+      "continuation": {
+        "total": 9,
+        "passed": 9,
+        "model_requests": 37,
+        "model_prompt_tokens": 73404,
+        "model_completion_tokens": 1770,
+        "model_generation_seconds": 148.24220415577292,
+        "autonomous_blocked_writes": 0,
+        "actual_writes": 1,
+        "invalid_validations": 0,
+        "repeated_invalid_plan": 0,
+        "accepted_clarification_requests": 3,
+        "autonomous_clean_completion": 9,
+        "completion_without_invalid_plan": 9,
+        "first_recovery_acceptable": 9
+      }
+    }
+  },
+  "paired": {
+    "normal": {
+      "counts": {
+        "both_passed": 10,
+        "clean_only": 0,
+        "mixed_only": 1,
+        "both_failed": 1
+      },
+      "changes": [
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "clean": false,
+          "mixed": true
+        }
+      ]
+    },
+    "continuation": {
+      "counts": {
+        "both_passed": 8,
+        "clean_only": 0,
+        "mixed_only": 1,
+        "both_failed": 0
+      },
+      "changes": [
+        {
+          "scenario_id": "r2-05-pending:continuation",
+          "clean": false,
+          "mixed": true
+        }
+      ]
+    }
+  },
+  "efficiency": {
+    "unadapted": {
+      "normal": {
+        "model_calls": 55,
+        "actual_generation_calls": 55,
+        "local_context_rejections": 0,
+        "truncated_generations": 5,
+        "latency_p50_seconds": 3.2784026078879833,
+        "latency_p95_seconds": 25.59772253036499,
+        "generation_seconds": 385.563228784129,
+        "policy_failures": {
+          "output_truncated": 5,
+          "expected_single_tool_call": 4
+        }
+      },
+      "continuation": {
+        "model_calls": 54,
+        "actual_generation_calls": 52,
+        "local_context_rejections": 2,
+        "truncated_generations": 2,
+        "latency_p50_seconds": 5.493407195433974,
+        "latency_p95_seconds": 18.0814051553607,
+        "generation_seconds": 381.23116374388337,
+        "policy_failures": {
+          "expected_single_tool_call": 3,
+          "output_truncated": 2
+        }
+      }
+    },
+    "clean": {
+      "normal": {
+        "model_calls": 82,
+        "actual_generation_calls": 82,
+        "local_context_rejections": 0,
+        "truncated_generations": 0,
+        "latency_p50_seconds": 1.9892282579094172,
+        "latency_p95_seconds": 7.855703959241509,
+        "generation_seconds": 274.129434235394,
+        "policy_failures": {}
+      },
+      "continuation": {
+        "model_calls": 40,
+        "actual_generation_calls": 40,
+        "local_context_rejections": 0,
+        "truncated_generations": 0,
+        "latency_p50_seconds": 2.1348818223923445,
+        "latency_p95_seconds": 8.57978475280106,
+        "generation_seconds": 164.26160610094666,
+        "policy_failures": {}
+      }
+    },
+    "mixed": {
+      "normal": {
+        "model_calls": 84,
+        "actual_generation_calls": 84,
+        "local_context_rejections": 0,
+        "truncated_generations": 0,
+        "latency_p50_seconds": 2.0357775408774614,
+        "latency_p95_seconds": 8.003248672932386,
+        "generation_seconds": 289.1922393646091,
+        "policy_failures": {}
+      },
+      "continuation": {
+        "model_calls": 37,
+        "actual_generation_calls": 37,
+        "local_context_rejections": 0,
+        "truncated_generations": 0,
+        "latency_p50_seconds": 2.097924528643489,
+        "latency_p95_seconds": 8.441116128116846,
+        "generation_seconds": 148.24220415577292,
+        "policy_failures": {}
+      }
+    }
+  },
+  "failures": {
+    "unadapted": {
+      "normal": [
+        "r2-05-preview",
+        "r2-05-approved",
+        "r2-05-pending",
+        "r2-05-declined",
+        "r2-05-revoked",
+        "r2-05-infeasible",
+        "r2-05-missing_time",
+        "r2-05-unanswered_time",
+        "r2-05-missing_equipment",
+        "r2-05-missing_days",
+        "r2-05-memory",
+        "r2-05-memory_missing_time"
+      ],
+      "continuation": [
+        "r2-05-preview:continuation",
+        "r2-05-approved:continuation",
+        "r2-05-pending:continuation",
+        "r2-05-revoked:continuation",
+        "r2-05-missing_time:continuation",
+        "r2-05-missing_equipment:continuation",
+        "r2-05-missing_days:continuation",
+        "r2-05-memory:continuation"
+      ]
+    },
+    "clean": {
+      "normal": [
+        "r2-05-pending",
+        "r2-05-memory_missing_time"
+      ],
+      "continuation": [
+        "r2-05-pending:continuation"
+      ]
+    },
+    "mixed": {
+      "normal": [
+        "r2-05-pending"
+      ],
+      "continuation": []
+    }
+  },
+  "diagnostics": {
+    "unadapted": [
+      {
+        "scenario_id": "r2-05-preview",
+        "category": "preview",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises"
+        ],
+        "invalid_validations": [],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 3,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved",
+        "category": "approved",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": null,
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [],
+        "invalid_validations": [],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending",
+        "category": "pending",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": null,
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [],
+        "invalid_validations": [],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined",
+        "category": "declined",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": null,
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [],
+        "invalid_validations": [],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked",
+        "category": "revoked",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": null,
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [],
+        "invalid_validations": [],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 0,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-infeasible",
+        "category": "infeasible",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises"
+        ],
+        "invalid_validations": [],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 3,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time",
+        "category": "missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "validate_plan",
+          "propose_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview"
+          ],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-unanswered_time",
+        "category": "unanswered_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "validate_plan",
+          "propose_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_clarification_request",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment",
+        "category": "missing_equipment",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "request_clarification",
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "session_count_mismatch",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 6,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 7,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "session_count_mismatch",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 8,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "session_count_mismatch",
+                "unknown_evidence"
+              ]
+            }
+          }
+        ],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days",
+        "category": "missing_days",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview"
+          ],
+          "outcome": "previewed",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory",
+        "category": "memory",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises"
+        ],
+        "invalid_validations": [],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 3,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory_missing_time",
+        "category": "memory_missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_memories",
+          "get_context",
+          "search_exercises"
+        ],
+        "invalid_validations": [],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 3,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-preview:continuation",
+        "category": "preview",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "propose_plan",
+          "propose_plan",
+          "propose_plan"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 1,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 2,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          }
+        ],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 3,
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved:continuation",
+        "category": "approved",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "validate_plan"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 1,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises",
+                "unknown_evidence"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 2,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "dumbbell-a",
+                  "dumbbell-b",
+                  "dumbbell-c"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "unknown_evidence"
+              ]
+            }
+          }
+        ],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending:continuation",
+        "category": "pending",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": null,
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [],
+        "invalid_validations": [],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined:continuation",
+        "category": "declined",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "declined"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked:continuation",
+        "category": "revoked",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "awaiting_user"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "awaiting_user",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time:continuation",
+        "category": "missing_time",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 1,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 2,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 6,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 7,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 8,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview"
+          ],
+          "outcome": "previewed",
+          "steps": 14,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment:continuation",
+        "category": "missing_equipment",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "treadmill"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "request_clarification",
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 6,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 7,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-b",
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 8,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-c"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "insufficient_exercises"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 13,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_arguments": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days:continuation",
+        "category": "missing_days",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan",
+          "validate_plan"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 1,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 2,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 5,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 6,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 7,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 8,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 9,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 10,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 11,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 12,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 13,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          },
+          {
+            "agent_event_index": 14,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "2026-09-30",
+                    "exercise_ids": [
+                      "dumbbell-a"
+                    ]
+                  },
+                  {
+                    "day": "2026-10-01",
+                    "exercise_ids": [
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": "expected_single_tool_call",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 18,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory:continuation",
+        "category": "memory",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "barbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises"
+        ],
+        "invalid_validations": [],
+        "policy_failure": "output_truncated",
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "outcome": null,
+          "steps": 4,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      }
+    ],
+    "clean": [
+      {
+        "scenario_id": "r2-05-preview",
+        "category": "preview",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved",
+        "category": "approved",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "apply_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending",
+        "category": "pending",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined",
+        "category": "declined",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked",
+        "category": "revoked",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-infeasible",
+        "category": "infeasible",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time",
+        "category": "missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-unanswered_time",
+        "category": "unanswered_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 4,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment",
+        "category": "missing_equipment",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days",
+        "category": "missing_days",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "available_days"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory",
+        "category": "memory",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory_missing_time",
+        "category": "memory_missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 6,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "barbell-a",
+                      "barbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "barbell-a",
+                      "barbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9",
+                  "memory-d0b8759ac998"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "equipment_or_exclusion_violation",
+                "time_budget_exceeded"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 8,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-preview:continuation",
+        "category": "preview",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved:continuation",
+        "category": "approved",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "apply_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 8,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending:continuation",
+        "category": "pending",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "infeasible",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined:continuation",
+        "category": "declined",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "declined"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked:continuation",
+        "category": "revoked",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "declined"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time:continuation",
+        "category": "missing_time",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "max_minutes"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment:continuation",
+        "category": "missing_equipment",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "equipment"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 8,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days:continuation",
+        "category": "missing_days",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "available_days"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "available_days"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 4,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "sat",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "session_count_mismatch"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 15,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory:continuation",
+        "category": "memory",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      }
+    ],
+    "mixed": [
+      {
+        "scenario_id": "r2-05-preview",
+        "category": "preview",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved",
+        "category": "approved",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "apply_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 7,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending",
+        "category": "pending",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": false,
+          "issues": [
+            "terminal_outcome_mismatch"
+          ],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined",
+        "category": "declined",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked",
+        "category": "revoked",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-infeasible",
+        "category": "infeasible",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "request_clarification",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [
+          {
+            "agent_event_index": 3,
+            "arguments": {
+              "plan": {
+                "action": "propose_plan",
+                "sessions": [
+                  {
+                    "day": "wed",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  },
+                  {
+                    "day": "thu",
+                    "exercise_ids": [
+                      "dumbbell-a",
+                      "dumbbell-b"
+                    ]
+                  }
+                ],
+                "evidence_ids": [
+                  "record-b4f5e3604ae9"
+                ]
+              }
+            },
+            "result": {
+              "valid": false,
+              "issues": [
+                "wrong_action"
+              ]
+            }
+          }
+        ],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "infeasible",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "invalid_plan": 1,
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time",
+        "category": "missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-unanswered_time",
+        "category": "unanswered_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 4,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment",
+        "category": "missing_equipment",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days",
+        "category": "missing_days",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "available_days"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory",
+        "category": "memory",
+        "panel": "normal",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 6,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory_missing_time",
+        "category": "memory_missing_time",
+        "panel": "normal",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "get_context",
+          "arguments": {}
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "get_context",
+          "get_memories",
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 9,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-preview:continuation",
+        "category": "preview",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved:continuation",
+        "category": "approved",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "apply_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "applied",
+          "steps": 8,
+          "writes": 1,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending:continuation",
+        "category": "pending",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "awaiting_user"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "awaiting_user",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined:continuation",
+        "category": "declined",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "declined"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked:continuation",
+        "category": "revoked",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "declined"
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "declined",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 1,
+          "tool_errors": {
+            "approval_required": 1
+          },
+          "clean_completion": false
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time:continuation",
+        "category": "missing_time",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "max_minutes"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "max_minutes"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "max_minutes"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment:continuation",
+        "category": "missing_equipment",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "equipment"
+        ],
+        "effective_equipment": null,
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "equipment"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "equipment"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days:continuation",
+        "category": "missing_days",
+        "panel": "continuation",
+        "missing_fields_at_start": [
+          "available_days"
+        ],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "request_clarification",
+          "arguments": {
+            "fields": [
+              "available_days"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [
+          "available_days"
+        ],
+        "clarified_before_planning": true,
+        "autonomous_action_sequence": [
+          "request_clarification",
+          "get_context",
+          "get_memories",
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 10,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {},
+          "clean_completion": true
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory:continuation",
+        "category": "memory",
+        "panel": "continuation",
+        "missing_fields_at_start": [],
+        "effective_equipment": [
+          "dumbbell"
+        ],
+        "first_autonomous_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "accepted_clarification_fields": [],
+        "clarified_before_planning": false,
+        "autonomous_action_sequence": [
+          "search_exercises",
+          "validate_plan",
+          "propose_plan",
+          "finish"
+        ],
+        "invalid_validations": [],
+        "policy_failure": null,
+        "score": {
+          "passed": true,
+          "issues": [],
+          "outcome": "previewed",
+          "steps": 7,
+          "writes": 0,
+          "blocked_write_attempts": 0,
+          "tool_errors": {
+            "unnecessary_clarification": 1
+          },
+          "clean_completion": false
+        }
+      }
+    ]
+  },
+  "preregistered_gate_inputs": {
+    "clean_single_field_clarification_failures": [],
+    "pause_recovery_expansion_for_clarification": false,
+    "recovery_success_net": 1,
+    "normal_success_net": 1,
+    "recovery_winning_error_types": [
+      "unapproved_write"
+    ],
+    "pending_regression": false,
+    "new_autonomous_blocked_write_cases": [],
+    "recovery_signal_threshold_met": false
+  },
+  "gate_note": "These are descriptive inputs to the preregistered review, not a substitute for raw-format, provenance and authorization checks"
+}

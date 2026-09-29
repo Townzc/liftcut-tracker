@@ -1,0 +1,11 @@
+{
+  "changed_at_utc": "2026-09-29T02:45:46.387743+00:00",
+  "reason": "Maintainer explicitly requested completing the formal experiment before shutdown, superseding the migration-only early stop",
+  "cancelled_migration_guard_pid": 2282,
+  "experiment_guard_pid": 2478,
+  "hard_deadline_utc": "2026-09-29T05:58:34.800642+00:00",
+  "hourly_cny_assumed_from_prior_quote": 2.18,
+  "four_hour_compute_proxy_cny": 8.72,
+  "planning_ceiling_cny": 10,
+  "early_shutdown_after_completed_experiment_and_verified_backup": true
+}

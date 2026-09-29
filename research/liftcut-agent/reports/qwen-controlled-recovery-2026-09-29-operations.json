@@ -1,0 +1,21 @@
+{
+  "scope": "Operator observations, not supplier power-state or billing receipt",
+  "backup_files_verified": 42,
+  "episodes_replayed": 63,
+  "adapter_files_verified": true,
+  "backup_ack_upload_complete": true,
+  "ssh_and_sftp_closed_by_remote_after_ack": true,
+  "reconnect_observed_at_utc": "2026-09-29T04:21:07+00:00",
+  "reconnect_result": "banner exchange: Connection refused",
+  "shutdown_command_returncode_observed": false,
+  "backup_ack_consumption_receipt_observed": false,
+  "provider_power_state_verified": false,
+  "supplier_billing_verified": false,
+  "container_start_proxy_utc": "2026-09-29T01:58:34.800642+00:00",
+  "hourly_cny_assumed": 2.18,
+  "compute_proxy_until_refusal_observation_cny": 5.1788,
+  "storage_cost_known": false,
+  "hosted_api_calls": 0,
+  "new_model_downloads": 0,
+  "disk_expanded": false
+}

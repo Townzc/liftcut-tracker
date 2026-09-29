@@ -1,0 +1,10 @@
+{
+  "observed_at_utc": "2026-09-29T02:39:27.800642+00:00",
+  "pid1_elapsed_seconds": 2453,
+  "container_start_proxy_utc": "2026-09-29T01:58:34.800642+00:00",
+  "two_hour_cutoff_utc": "2026-09-29T03:58:34.800642+00:00",
+  "migration_cutoff_utc": "2026-09-29T02:59:27.800642+00:00",
+  "source": "ps etimes; container uptime proxy, not supplier billing start",
+  "purpose": "migration verification only; new experiment CPU gates not ready",
+  "guard_pid": 2282
+}

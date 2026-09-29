@@ -172,3 +172,29 @@ python research/liftcut-agent/restore_recovery.py \
 
 换机后：更新本地连接配置 → 核实数据盘复制 → prepare 同一 commit → 重建/检查环境
 → verify 原 manifest → 再开始新实验。若校验失败，先恢复备份，不覆盖旧证据。
+
+## Recovery-v2 的分批备份
+
+`run_controlled_window.py` 使用[本轮执行方案](2026-09-29-controlled-recovery-experiment.md)
+登记的预算，先完成一组训练就生成 `training/clean.tar.gz` 或
+`training/mixed.tar.gz`，可与后续 GPU 阶段重叠传输。评测及审计完成后再生成
+`evidence.tar.gz`。旧版单归档的确认格式不适用于这个控制器。
+
+下载三份归档及根目录 `backup-ready.json` 到同一本地目录，运行：
+
+```bash
+python research/liftcut-agent/restore_controlled.py \
+  --archive-dir LOCAL_ARCHIVE_DIRECTORY --prepared-dir VERIFIED_PREPARED_DIRECTORY \
+  --output-dir NEW_RESTORED_DIRECTORY
+```
+
+该命令检查联合清单、每份归档大小/SHA、全部恢复文件，并组装运行目录，用真实
+adapter 重放审计全部 63 个开发 episode。只有全部通过才创建本地
+`NEW_RESTORED_DIRECTORY/off-instance-backup.json`。把这个文件复制到服务端运行根目录，
+控制器验证相同 `inventory_digest` 后请求关机。禁止提前手写成功回执；脚本失败时
+保留诊断及数据，不把部分结果称为完整实验。独立硬截止仍用于控制租赁支出。
+
+服务端访问 GitHub 失败时可通过经过 SHA 核验的 Git bundle 同步已提交版本。
+在新 commit 目录中从已有仓库 clone，fetch bundle，detach 到指定完整 SHA，再执行
+`server_workspace.py prepare` 进行来源和干净状态检查。保留旧 checkout、数据、环境、
+缓存和失败现场；服务端 Git push 仍禁用。不要把本机 GitHub 凭据复制到租赁实例。
