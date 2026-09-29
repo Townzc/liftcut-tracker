@@ -16,6 +16,13 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - At the end of meaningful work, update progress with what actually ran, evidence,
   limitations, next steps, and any plan change with its reason. Planned metrics
   and historical reports must never be presented as newly verified results.
+- Maintain `docs/research/EXPERIMENT_LOG.md` as the human-readable research journal.
+  Each substantive increment must record what changed, why that choice was made,
+  what actually ran and what its results mean, and the next step with its trigger.
+  Link code/configs and raw evidence; separate observations, interpretations,
+  limitations and pending work. Include a short learning checkpoint so the
+  maintainer can explain the experiment independently. Never backfill predictions
+  as if they were written before observing a result.
 - Start substantial changes on a focused branch based on current `main`. Verify
   and commit there before merging into `main` and syncing GitHub, as authorized
   by the maintainer. Preserve unrelated branch work; do not force-push.

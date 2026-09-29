@@ -1,0 +1,173 @@
+{
+  "scope": "Retrospective v2 coverage analysis motivated by new development failures; no new training/model calls",
+  "source_sha256": {
+    "decisions/clean/decisions.jsonl": "fbd06367cfd58950ce57a413bbfbfa4e2bdb79860e6e959a884e2bc06e114360",
+    "decisions/recovery/decisions.jsonl": "0737b3bafd0572214d20060f9291203fd20146b7342a6ca2d1e0f741e52655b3"
+  },
+  "train_fixture_sha256": "970b0f7fcd1af79c38576b61516eafe560f4e8f0d6e3aec2192ccaef8fee44a5",
+  "decision_pools": {
+    "clean": {
+      "unique_decisions": 324,
+      "last_tool_to_target": {
+        "apply_plan": {
+          "finish": 4
+        },
+        "get_context": {
+          "get_memories": 64
+        },
+        "get_memories": {
+          "search_exercises": 44,
+          "request_clarification": 20
+        },
+        "initial": {
+          "get_context": 48
+        },
+        "propose_plan": {
+          "finish": 36,
+          "apply_plan": 4
+        },
+        "request_clarification": {
+          "get_context": 16,
+          "finish": 4
+        },
+        "search_exercises": {
+          "validate_plan": 40,
+          "finish": 4
+        },
+        "validate_plan": {
+          "propose_plan": 40
+        }
+      },
+      "finish_target_previous_tool": {
+        "apply_plan": 4,
+        "propose_plan": 36,
+        "request_clarification": 4,
+        "search_exercises": 4
+      },
+      "finish_after_context_or_memory_read": 0
+    },
+    "recovery": {
+      "unique_decisions": 324,
+      "last_tool_to_target": {
+        "apply_plan": {
+          "finish": 16
+        },
+        "get_context": {
+          "get_memories": 64
+        },
+        "get_memories": {
+          "search_exercises": 28
+        },
+        "initial": {
+          "get_context": 48
+        },
+        "propose_plan": {
+          "finish": 24,
+          "apply_plan": 4
+        },
+        "request_clarification": {
+          "search_exercises": 16,
+          "get_context": 16,
+          "finish": 4
+        },
+        "search_exercises": {
+          "validate_plan": 40,
+          "finish": 4
+        },
+        "validate_plan": {
+          "propose_plan": 40,
+          "request_clarification": 20
+        }
+      },
+      "finish_target_previous_tool": {
+        "apply_plan": 16,
+        "propose_plan": 24,
+        "request_clarification": 4,
+        "search_exercises": 4
+      },
+      "finish_after_context_or_memory_read": 0
+    }
+  },
+  "memory_fixtures": [
+    {
+      "scenario_id": "r2-01-memory",
+      "family_id": "r2-bundle-01",
+      "category": "memory",
+      "valid_position": "first",
+      "high_invalid_kind": "unconfirmed",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-01-memory_missing_time",
+      "family_id": "r2-bundle-01",
+      "category": "memory_missing_time",
+      "valid_position": "first",
+      "high_invalid_kind": "unconfirmed",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-02-memory",
+      "family_id": "r2-bundle-02",
+      "category": "memory",
+      "valid_position": "last",
+      "high_invalid_kind": "expired",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-02-memory_missing_time",
+      "family_id": "r2-bundle-02",
+      "category": "memory_missing_time",
+      "valid_position": "last",
+      "high_invalid_kind": "expired",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-03-memory",
+      "family_id": "r2-bundle-03",
+      "category": "memory",
+      "valid_position": "first",
+      "high_invalid_kind": "unconfirmed",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-03-memory_missing_time",
+      "family_id": "r2-bundle-03",
+      "category": "memory_missing_time",
+      "valid_position": "first",
+      "high_invalid_kind": "unconfirmed",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-04-memory",
+      "family_id": "r2-bundle-04",
+      "category": "memory",
+      "valid_position": "last",
+      "high_invalid_kind": "expired",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    },
+    {
+      "scenario_id": "r2-04-memory_missing_time",
+      "family_id": "r2-bundle-04",
+      "category": "memory_missing_time",
+      "valid_position": "last",
+      "high_invalid_kind": "expired",
+      "raw_old_invalid_same_value": true,
+      "distinct_equipment_values": 2
+    }
+  ],
+  "memory_position_invalid_cross": {
+    "first/unconfirmed": 4,
+    "first/expired": 0,
+    "last/unconfirmed": 0,
+    "last/expired": 4
+  },
+  "weighting_limit": "Pool counts are unique exported decisions, not the sampled 648-decision optimizer schedule",
+  "causal_limit": "Missing combinations and deterministic transition coverage are plausible explanations, not isolated causal effects"
+}

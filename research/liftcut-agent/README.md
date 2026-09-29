@@ -8,8 +8,9 @@ installation or web app needed.
 
 **Also implemented:** a native function-calling model adapter, strict parsing,
 shared run budgets, usage/latency records and model-response replay. Its mock
-transport needs no credentials. Trajectory training, product integration and
-held-out model evaluation remain pending. The offline confirmation state is a
+transport needs no credentials. Small-model trajectory SFT and development
+diagnostics have executed; product integration and independent model evaluation
+remain pending. The offline confirmation state is a
 research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
@@ -286,7 +287,12 @@ python research/liftcut-agent/publish_controlled.py --run-dir research/liftcut-a
 ## Fixed-state diagnosis (development only)
 
 Nineteen frozen states isolate consent history and distinguishable memory sources.
-The scripted reference passes all contracts; no GPU diagnostic result is claimed.
+The scripted reference passes all contracts. The completed GPU diagnostic run
+used the two saved recovery-v2 adapters: C/R consent decisions 5/10 vs 6/10 and
+memory decisions 2/9 vs 1/9, through 44 actual generations. All 38 continuations
+replay. These scores measure the first substantive decision, not full tasks or
+independent generalization. The main eight memory probes score 1/8 vs 0/8;
+the ninth is a successful no-memory clarification control for both adapters.
 The pinned tokenizer's longest handoff is 2,295 input tokens, plus a 512-token
 output reservation within 4,096. Two independent CPU preparations match exactly.
 
@@ -305,3 +311,20 @@ The boot-relative inference cutoff is 35 minutes, shutdown deadline 60 minutes.
 Complete result claims require the raw generation audit and off-instance restore.
 See the [diagnostic specification](../../docs/research/2026-09-29-state-diagnostic-plan.md)
 and [release evidence criteria](../../docs/research/2026-09-29-research-release-criteria.md).
+
+Verify the published evidence and reproduce the retrospective training-coverage
+analysis from the previously prepared v2 decisions (no model calls):
+
+```sh
+python research/liftcut-agent/publish_state_diagnostics.py --run-dir research/liftcut-agent/reports/qwen-state-diagnostics-2026-09-29 --prepared-dir NEW_DIAGNOSTIC_PREPARED_DIRECTORY --check-publication
+python research/liftcut-agent/review_training_state_coverage.py --prepared-dir NEW_V2_PREPARED_DIRECTORY --check
+```
+
+The [result review](../../docs/research/2026-09-29-state-diagnostic-results.md)
+separates observed actions from explanations. The
+[research journal](../../docs/research/EXPERIMENT_LOG.md) records each increment's
+purpose, evidence and next step; the
+[case walkthrough](../../docs/research/RECOVERY_STUDY_WALKTHROUGH.md) connects three
+failures to raw traces. A proposed
+[2×2 training-coverage study](../../docs/research/2026-09-29-state-coverage-next-plan.md)
+still needs CPU implementation and budget verification before another GPU window.

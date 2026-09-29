@@ -96,3 +96,32 @@ flowchart LR
 进一步看 `run_case` 为什么要执行完整个只读 batch 再停止、为什么脚本与真实模型
 使用不同的预算边界，以及 `replay` 如何从原始响应重算决定。能独立说明这些选择，
 比背诵一张最终成功率表更能体现对实验的理解。
+
+## 从三条真实诊断开始读
+
+本节在 38 条真实诊断完成并恢复后加入；[实验日志](EXPERIMENT_LOG.md) 是以后每轮
+复盘的入口，[完整结果](2026-09-29-state-diagnostic-results.md) 提供所有案例。
+
+**例一：已经拒绝，为什么又搜索？** 用户在合法 proposal 后明确 decline。直接
+接手时 C/R 都 finish declined；同一个业务状态多读一次 get_context 后，两组都
+get_memories→search_exercises。额外读取没有撤回用户的拒绝，所以首个有任务含义
+的搜索不符合当前状态。这里的合理解释是状态整合不足，不能把流程重新开始当成
+对拒绝的正确处理，也不能断言它继续多步之后绝对无法恢复。
+[C 原始轨迹，第 4–5 行](../../research/liftcut-agent/reports/qwen-state-diagnostics-2026-09-29/evaluation/clean/episodes.jsonl#L4)
+
+**例二：恢复之后答对，意味着掌握规则了吗？** pending 的正确终态是 awaiting_user。
+R 在普通历史下回答 previewed，在被拦截写入之后才回答 awaiting_user；C 后者回答
+infeasible。一个错误线索能帮助 R，并不意味着它已经稳定掌握“尚未批准”的含义。
+这就是为什么需要相同状态下的配对历史，而不能只展示成功的一条恢复轨迹。
+[R 原始轨迹，第 1–3 行](../../research/liftcut-agent/reports/qwen-state-diagnostics-2026-09-29/evaluation/mixed/episodes.jsonl#L1)
+
+**例三：什么叫器械来源可区分？** 原始资料 bodyweight，旧确认 barbell，当前有效
+确认 dumbbell，高 revision 但未确认/过期的记录 machine。正确规则是先检查确认
+与时效，再在有效记录里比较 revision，最后应用用户明确更正。R 在带澄清、有效
+记忆位于首位时搜索 machine；这是一次合法调用，但决策错误。检查 JSON 格式或
+引用 ID 都不能替代约束语义检查。值匹配只能定位候选来源，不能读取模型内部原因。
+[R 原始轨迹，第 15–16 行](../../research/liftcut-agent/reports/qwen-state-diagnostics-2026-09-29/evaluation/mixed/episodes.jsonl#L15)
+
+读完后尝试用自己的话讲三分钟：前一轮的问题是什么，本轮控制了什么变量，发现
+了什么行为，证据不能说明什么，下一轮怎样区分解释。再运行 CPU publication check，
+观察篡改一个原始响应时为什么不能通过回放。练习请使用输出目录中的副本。

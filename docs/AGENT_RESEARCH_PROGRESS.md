@@ -1,12 +1,18 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **19 fixed-state diagnostics
-implemented and independently CPU-reproduced; next is a short inference-only window
-using committed code and passing CI**. No new GPU/API calls in this increment.
-All 240 local CPU tests pass. The longest handoff is 2,295 tokens plus 512 output
-tokens within 4,096. Both actual adapter backups were rehashed. The next run is
-38 C/R first-decision probes, at most 114 requests, no training/test evaluation,
-60 minutes from boot with a 35-minute inference cutoff and ¥3 planning reserve.
+Last updated: 2026-09-29 UTC. Active milestone: **fixed-state diagnostics completed,
+restored and reviewed; next is CPU preparation of a 2×2 state-coverage study**.
+C/R consent decisions: 5/10 and 6/10; memory decisions: 2/9 and 1/9. These are
+first-decision development diagnostics, not complete-task or held-out scores.
+All 38 continuations replay; 44 actual model generations, no new training/API calls.
+The 21-file archive was verified locally before acknowledgment; actual v2 adapter
+backups were rehashed. SSH/SFTP then closed; provider power/billing remains
+unverified. Boot-to-connection-check compute proxy ≈¥0.42 at ¥2.18/hour.
+All 248 local CPU tests pass; the executed frozen server code passed 240 tests.
+Read the [research journal](research/EXPERIMENT_LOG.md),
+[results](research/2026-09-29-state-diagnostic-results.md) and
+[next design](research/2026-09-29-state-coverage-next-plan.md).
+The next design is not implemented or CPU-ready; no server is needed yet.
 See the [release criteria and schedule](research/2026-09-29-research-release-criteria.md)
 for the remaining 3–5 week first-release estimate and evidence gates.
 
@@ -41,7 +47,15 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 240 CPU tests pass (25 new). Two independent fixed-state
+- Current increment: all 248 CPU tests pass (8 new). Published synthetic evidence
+  has an exact hash inventory, complete native/environment replay and a reproducible
+  descriptive review. Tests reject changed evidence and forged review summaries.
+  The server executed frozen commit `992ac9a`, passed 240 tests and reproduced the
+  diagnostic preparation. All 38 continuations and 21 backup files were verified
+  off-instance before acknowledgment. Both actual v2 adapter backups were rehashed.
+  A retrospective audit of SHA-matched training pools reproduces missing read-to-finish
+  transitions and correlated memory coverage; these are hypotheses, not causal proof.
+- Previous increment: all 240 CPU tests pass (25 new). Two independent fixed-state
   preparations match all file, prefix and real-tokenizer hashes. The reference
   contract passes 19/19 and replays; this is scripted verification, not model
   performance. New tests exercise a synthetic 38-state native-response audit and
@@ -248,18 +262,18 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Run the prepared [fixed-state diagnosis](research/2026-09-29-state-diagnostic-plan.md)
-   after branch CI/merge and the maintainer opens a server. Verify the new endpoint,
-   cloned disk, exact model/adapter hashes, environment and actual start time.
-2. Replay and restore all new diagnostic evidence before shutdown acknowledgment.
-   Keep the recovery-v2 data and results unchanged and its 48 reserved tests unopened.
-   Analyze consent histories and distinguishable memory values before choosing a
-   single intervention; use the [release criteria](research/2026-09-29-research-release-criteria.md).
-3. The one-hour 4090 window uses the
-   two existing adapters: 38 diagnostic continuations, at most 114 model requests,
-   no training or extra seed. At the prior CNY 2.18/hour quote, compute proxy 2.18,
-   total planning reserve 3, no expansion. Do not lower recovery-v2's unmet gate
-   after observing its scores; DPO/RL and independent evaluation remain later work.
+1. Implement the [2×2 state-coverage study](research/2026-09-29-state-coverage-next-plan.md)
+   on CPU: matched baseline, post-preview read histories, decoupled memory placement,
+   and their combination. Keep all four correct-target schedules matched; disclose
+   the common source-value redesign and different input-token costs separately.
+2. Verify real state equivalence, order-independent public identities, no future-label
+   leakage, loss masks, target-token matching and two independent preparations.
+   Freeze the development gates and recompute runtime/budget before requesting a server.
+   The provisional two-hour/¥6 reserve is a design estimate, not an executed budget.
+3. Keep the 48 reserved tests unopened and the unmet v2 recovery gate unchanged.
+   Use the [case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md) and maintain the
+   [what/why/result/next journal](research/EXPERIMENT_LOG.md) for each increment.
+   Additional seeds, independent evaluation and DPO/RL remain conditional later work.
 4. The separately authorized hosted protocol matrix still needs a permitted
    execution path or manually produced artifacts. Do not bypass the prior tool
    execution gate or repeat the already answered authorization request.
@@ -384,7 +398,24 @@ Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
   starts no GPU process. All 240 local tests pass; tokenizer reproduction is in CI.
 - [x] Saved evidence-based first-release milestones and updated the private local
   learning plan without publishing personal career details.
-- [ ] Execute the short GPU diagnostic window; analyze outcomes before further training.
+- [x] Executed the short GPU diagnostic window in the following increment (below).
+
+## Fixed-state results and training-coverage review
+
+- [x] Ran 19 states per existing adapter, 44 actual generations, no training or test
+  evaluation; C/R consent 5/10 vs 6/10, memory 2/9 vs 1/9. No autonomous blocked
+  writes, parsing failures, truncation or context guards occurred.
+- [x] Restored and verified the complete 21-file archive and replayed all 38 states
+  before acknowledgment. Connection closure observed; provider power/bill unverified.
+- [x] Published exact-inventory synthetic evidence, action-level comparisons and
+  CI replay. Added a reproducible retrospective audit of the original training pools.
+- [x] Both pools have 64 get_context→get_memories targets and no read→finish
+  targets; eight memory fixtures confound valid position with invalidity type.
+  Observed failures motivate coverage interventions but do not isolate causality.
+- [x] Added the persistent research journal and three concrete trace walkthroughs;
+  saved a four-arm design with CPU, evaluation and budget gates still pending.
+
+Evidence: [diagnostic results](research/2026-09-29-state-diagnostic-results.md).
 
 ## Decision log
 
@@ -419,6 +450,8 @@ Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
 | 2026-09-29 | Prepare recovery-v2 and transfer final adapters during evaluation | 48 train / 12 dev / 48 reserved test, two CPU reproductions, 26,052 matched target tokens per arm; three error types, nine exact prefixes; early per-arm archives reduce late transfer risk |
 | 2026-09-29 | Preserve limited positive results without lowering the recovery gate | R gains one normal and one continuation case, but recovery gain is only one case/one family; C already has 8/9 and normal pending still fails both |
 | 2026-09-29 | Diagnose fixed consent and memory states before more training | Compare equal previews under changed histories; separate raw context, stale memory and invalid high revision values; 38 planned inference-only continuations after CPU gates |
+| 2026-09-29 | Prepare a matched 2×2 coverage intervention after diagnostic failure | Both adapters restart planning after reads; distinct memory values expose wrong-source choices. Exact training pools lack corresponding terminal histories and independent position/invalidity coverage; causality remains untested |
+| 2026-09-29 | Maintain a what/why/result/next journal and concrete learning cases | Maintainer requested continuous records to independently understand and explain the project; observations, interpretations and pending experiments stay separate |
 
 ## Update protocol
 
