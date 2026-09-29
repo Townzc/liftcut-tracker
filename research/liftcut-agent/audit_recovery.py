@@ -6,6 +6,7 @@ from decimal import Decimal
 import json
 import math
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parent
@@ -23,6 +24,13 @@ from server_workspace import dump_new, sha256
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def invalid_validations(episodes):
+    return sum(event["actor"] == "agent" and event["action"].get("tool") == "validate_plan"
+               and event["observation"].get("ok") is True
+               and event["observation"].get("result", {}).get("valid") is False
+               for episode in episodes for event in episode["trace"]["events"])
 
 
 def audit_rollout(directory, scenarios, catalog):
@@ -70,12 +78,33 @@ def audit_rollout(directory, scenarios, catalog):
     return episodes, report, config
 
 
-def audit(root, prepared):
+def audit_training_log(training, plan, rows, arm):
+    """Check every cumulative counter against the frozen per-decision schedule."""
+    trained = read(training / "report.json")
+    logs = read_jsonl(training / "training.jsonl")
+    if len(logs) != plan["arms"][arm]["optimizer_steps"] or trained["steps"] != len(logs):
+        raise ValueError("training step count mismatch")
+    totals = {"input_tokens": 0, "supervised_tokens": 0, "decisions": 0}
+    for step, log in enumerate(logs, 1):
+        for row in rows[(step - 1) * 8:step * 8]:
+            totals["input_tokens"] += len(row["input_ids"])
+            totals["supervised_tokens"] += row["target_tokens"]
+            totals["decisions"] += 1
+        if (log["step"] != step or any(log[k] != v for k, v in totals.items())
+                or not math.isfinite(log["loss"]) or not math.isfinite(log["gradient_norm_before_clip"])):
+            raise ValueError("training sampler or finite-gradient audit failed")
+    if (trained["processed"] != totals or any(totals[k] != plan["arms"][arm][k] for k in totals)
+            or trained["first_step_loss"] != logs[0]["loss"] or trained["last_step_loss"] != logs[-1]["loss"]):
+        raise ValueError("training totals/loss summary mismatch")
+    return totals
+
+
+def audit(root, prepared, *, verify_weights=True):
     plan = verify_prepared(prepared)
     schedule, tokens, _ = schedules(prepared)
     scenarios = [s for s in load_frozen() if s["split"] == "dev"] + [s for s in load_frozen() if s["split"] == "test"]
     catalog = load_catalog(ROOT / "benchmark/catalog.json")
-    manifests, configs, results = {}, {}, {}
+    manifests, configs, results, efficiency, adapter_configs = {}, {}, {}, {}, {}
     for arm in ("unadapted", "clean", "mixed"):
         directory = root / "evaluation" / arm
         manifest = read(directory / "manifest.json")
@@ -96,34 +125,42 @@ def audit(root, prepared):
                     or trained_manifest["model"] != manifest["model"]
                     or not trained["reload_close"] or trained["changed_adapter_tensors"] <= 0):
                 raise ValueError("training/evaluation provenance mismatch")
-            actual_hashes = {name: sha256(training / "final" / name) for name in ("adapter_config.json", "adapter_model.safetensors")}
+            names = ("adapter_config.json", "adapter_model.safetensors")
+            if (set(trained["adapter_sha256"]) != set(names)
+                    or any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+                           for value in trained["adapter_sha256"].values())):
+                raise ValueError("invalid adapter hash inventory")
+            actual_hashes = {"adapter_config.json": sha256(training / "final/adapter_config.json"),
+                "adapter_model.safetensors": sha256(training / "final/adapter_model.safetensors")
+                if verify_weights else trained["adapter_sha256"]["adapter_model.safetensors"]}
             if trained["adapter_sha256"] != actual_hashes or manifest["adapter_sha256"] != actual_hashes:
                 raise ValueError("evaluation adapter differs from saved training artifact")
-            logs = read_jsonl(training / "training.jsonl")
+            adapter_config = read(training / "final/adapter_config.json")
+            # PEFT serializes a set of target modules in process-dependent order.
+            adapter_configs[arm] = {key: sorted(value) if isinstance(value, list) else value
+                                    for key, value in adapter_config.items()}
+            if any(adapter_config[key] != value for key, value in
+                   {"r": 16, "lora_alpha": 32, "lora_dropout": 0.0, "bias": "none", "task_type": "CAUSAL_LM"}.items()):
+                raise ValueError("adapter configuration differs from pre-registration")
             rows = [tokens[r["variant"]][r["index"]] for r in schedule[arm]]
-            if len(logs) != plan["arms"][arm]["optimizer_steps"] or trained["steps"] != len(logs):
-                raise ValueError("training step count mismatch")
-            totals = {"input_tokens": 0, "supervised_tokens": 0, "decisions": 0}
-            for step, log in enumerate(logs, 1):
-                for row in rows[(step - 1) * 8:step * 8]:
-                    totals["input_tokens"] += len(row["input_ids"])
-                    totals["supervised_tokens"] += row["target_tokens"]
-                    totals["decisions"] += 1
-                if (log["step"] != step or any(log[k] != v for k, v in totals.items())
-                        or not math.isfinite(log["loss"]) or not math.isfinite(log["gradient_norm_before_clip"])):
-                    raise ValueError("training sampler or finite-gradient audit failed")
-            if trained["processed"] != totals:
-                raise ValueError("training totals mismatch")
+            audit_training_log(training, plan, rows, arm)
         manifests[arm], configs[arm] = manifest, config
+        efficiency[arm] = {key: report[key] for key in ("requests", "observed_prompt_tokens", "observed_completion_tokens",
+            "request_latency_p50_seconds", "request_latency_p95_seconds", "policy_failures", "usage_complete")}
+        efficiency[arm]["recorded_generation_seconds"] = sum(c["response"]["elapsed_seconds"] for e in episodes for c in e["calls"])
+        efficiency[arm]["invalid_validate_plan_results"] = invalid_validations(episodes)
         results[arm] = {}
         for split in ("dev", "test"):
             selected = [r for r, s in zip(report["results"], scenarios) if s["split"] == split]
             results[arm][split] = {"total": len(selected), "passed": sum(r["passed"] for r in selected),
                 "clean_completions": sum(r["passed"] and r["clean_completion"] for r in selected),
                 "blocked_write_attempts": sum(r["blocked_write_attempts"] for r in selected),
+                "actual_writes": sum(r["writes"] for r in selected),
                 "tool_errors": dict(sum((Counter(r["tool_errors"]) for r in selected), Counter())),
                 "results": selected}
     pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
+    if adapter_configs["clean"] != adapter_configs["mixed"]:
+        raise ValueError("SFT arms used different adapter configurations")
     for arm in manifests:
         if configs[arm] != configs["unadapted"]:
             raise ValueError("unmatched evaluation protocol")
@@ -144,8 +181,11 @@ def audit(root, prepared):
             if a["passed"] != b["passed"]:
                 changes.append({"scenario_id": a["scenario_id"], "clean_passed": a["passed"], "mixed_passed": b["passed"]})
         paired[split] = {"counts": dict(pairs), "changes": changes}
-    return {"scope": "Single-seed descriptive pilot; two test bundles; no significance or external transfer claim",
-            "reviewed_plan_sha256": sha256(REVIEWED), "arms": results, "paired_clean_mixed": paired}
+    return {"scope": "Contaminated diagnostic: category-bearing IDs; not reliable held-out/generalization evidence",
+            "validity_warning": "All 48 original cases contain agent-visible identifier hints; preserve scores as historical diagnostics only",
+            "evidence_scope": "Recorded-log consistency; not independent hardware/provider provenance",
+            "adapter_files_verified": verify_weights, "reviewed_plan_sha256": sha256(REVIEWED),
+            "arms": results, "efficiency": efficiency, "paired_clean_mixed": paired}
 
 
 if __name__ == "__main__":
@@ -153,8 +193,10 @@ if __name__ == "__main__":
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--prepared-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--metadata-only", action="store_true",
+                        help="Audit public logs/hash agreement; does not verify omitted adapter files")
     args = parser.parse_args()
-    result = audit(args.run_dir, args.prepared_dir)
+    result = audit(args.run_dir, args.prepared_dir, verify_weights=not args.metadata_only)
     if args.output:
         dump_new(args.output, result)
     print(json.dumps({"scope": result["scope"], "paired": result["paired_clean_mixed"]}, indent=2))

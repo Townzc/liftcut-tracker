@@ -43,12 +43,12 @@ def main():
     cmdline = Path(f"/proc/{args.controller_pid}/cmdline").read_bytes().replace(b"\0", b" ").decode()
     if "run_recovery_window.py" not in cmdline or str(args.run_dir) not in cmdline or process_state(args.controller_pid) != "T":
         raise ValueError("expected the intentionally paused original controller")
-    deadline = datetime.fromisoformat(args.deadline)
-    if deadline.tzinfo is None or (deadline - datetime.now(timezone.utc)).total_seconds() > 7200:
-        raise ValueError("invalid fixed deadline")
     output = args.run_dir / "identifier-probe"
     status, error = "failed", None
     try:
+        deadline = datetime.fromisoformat(args.deadline)
+        if deadline.tzinfo is None or (deadline - datetime.now(timezone.utc)).total_seconds() > 7200:
+            raise ValueError("invalid fixed deadline")
         output.mkdir(exist_ok=False)
         load_frozen(PROBE)
         shutil.copytree(PROBE, output / "cases")
