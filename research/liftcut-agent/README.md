@@ -237,3 +237,16 @@ agreement. Actual adapter verification requires the private local backup and
 omitting that flag. `publish_recovery.py` verifies those weights before selecting
 an explicit public log whitelist; it never publishes weights. Historical raw
 manifest scope strings are preserved and superseded by the validity correction.
+
+The [deeper review and next experiment](../../docs/research/2026-09-29-recovery-review-and-next-plan.md)
+adds a reproducible coverage and failure analysis: only two injected training
+error types, clarification coupled to memory updates, and equipment errors masked
+by an earlier missing-information validation failure. The counterfactual checks
+grade recorded plans only; they neither rerun a model nor change historical scores.
+
+```sh
+python research/liftcut-agent/review_recovery.py --prepared-dir NEW_PREPARED_DIRECTORY --check
+```
+
+Next: prepare corrected data and a controlled continuation runner on CPU. The
+planned first window evaluates development tasks only; new GPU work is not ready.

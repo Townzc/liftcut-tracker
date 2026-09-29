@@ -96,6 +96,8 @@ jobs:
         run: python research/liftcut-agent/prepare_recovery.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-recovery-prepared
       - name: Replay the published recovery comparison without adapter weights
         run: python research/liftcut-agent/audit_recovery.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28 --prepared-dir research/liftcut-agent/outputs/ci-recovery-prepared --metadata-only
+      - name: Reproduce coverage and masked-failure forensic review
+        run: python research/liftcut-agent/review_recovery.py --prepared-dir research/liftcut-agent/outputs/ci-recovery-prepared --check
 
   quality:
     runs-on: ubuntu-latest

@@ -1,0 +1,829 @@
+{
+  "scope": "Offline forensic review of existing contaminated/reused-task diagnostics; no new model calls",
+  "verification": {
+    "episodes_replayed": 144,
+    "actual_adapter_weights_verified_in_this_review": false
+  },
+  "sources_sha256": {
+    "reports/recovery-preparation-v1.json": "2b6db98b282e9e6ad2d192d28c694b83777935a3fda0740614048f9a415eaf7e",
+    "benchmark/recovery-v1/manifest.json": "e6cd7597b9198d8eddab70c3c9299ec2a96ceacee0f9b9bca5104379b36d852e",
+    "benchmark/recovery-identifier-probe-v1/manifest.json": "093ca9a9a5f6c2fe5e897fffe5a4f8cb4e234eb7bd9c9ea94c1027bf83343637",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/unadapted/episodes.jsonl": "cb70d2bfd012133cfd38cefc0456da8127215313195601110026574306e78154",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/unadapted/generations.jsonl": "d05ceab655da7fc264f80f2ed117ebb354a875f492fcb885a93b7875ee796e58",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/clean/episodes.jsonl": "f79fb61911d16e067be080143671aa8a0248f8fc955bb85b61eef8c934b6aacb",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/clean/generations.jsonl": "513c18d170b0cc0d61419b7d77b4db830123a0d0349093427515d7c67c25579a",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/mixed/episodes.jsonl": "9112aa8c8a26139dccabbdf033637be8a07033a1fe930905a0f1a9317f8698a1",
+    "reports/qwen-recovery-pilot-2026-09-28/evaluation/mixed/generations.jsonl": "e2199efa2197f16fa229af0acac70f2290e13033c020a1af5f8cfda7c1a1d0a5",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/unadapted/episodes.jsonl": "a35aca101d3ef016cbbaf306fa64c3edd4beb92ea9ebba3537c88b8269f29f62",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/unadapted/generations.jsonl": "bef82e8a85698f4a42117cb9369708970244ceb26525eb8f7b986bd1a0d8cee1",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/clean/episodes.jsonl": "5a3ec110574512e05131a2ae552299ff8762b98a3dfd4516ad21bbe29f09dc17",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/clean/generations.jsonl": "7e373f9ee751cfddbb6d750411ae851a3250e124018712daae653f7a3682268a",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/mixed/episodes.jsonl": "70e447a5267eaf58c183dd58469130d118dd79b8d154ffe7a287ee72fb57c072",
+    "reports/qwen-recovery-pilot-2026-09-28/identifier-probe/mixed/generations.jsonl": "09bb77918324375873082c0408cd437ee453b1cae851e203ab310fe8b5e4cd92"
+  },
+  "fixture_coverage": {
+    "train_cases": 24,
+    "missing_constraint_cases": 3,
+    "missing_cases_with_memory_update": 3,
+    "missing_cases_without_answer": 0,
+    "memory_cases": 6,
+    "memory_cases_with_highest_revision_last": 6,
+    "unconfirmed_memory_records": 0,
+    "expired_memory_records": 0,
+    "after_preview_update_cases": 0,
+    "fixture_faults_by_split": {
+      "train": 0,
+      "dev": 0,
+      "test": 0
+    }
+  },
+  "training_coverage": {
+    "unique_decisions": 150,
+    "unique_target_tokens": 6379,
+    "decisions_by_action": {
+      "apply_plan": 3,
+      "finish": 24,
+      "get_context": 27,
+      "get_memories": 27,
+      "propose_plan": 21,
+      "request_clarification": 3,
+      "search_exercises": 24,
+      "validate_plan": 21
+    },
+    "target_tokens_by_action": {
+      "apply_plan": 284,
+      "finish": 510,
+      "get_context": 459,
+      "get_memories": 486,
+      "propose_plan": 2001,
+      "request_clarification": 75,
+      "search_exercises": 584,
+      "validate_plan": 1980
+    },
+    "clarification_fields": {
+      "max_minutes": 3
+    },
+    "scripted_rejected_actions": {
+      "unnecessary_clarification": 15,
+      "approval_required": 9
+    },
+    "scripted_invalid_validations": 0,
+    "mixed_scheduled_decisions": 300,
+    "mixed_changed_histories": 75,
+    "mixed_immediate_post_error_decisions": 24,
+    "changed_histories_by_category_action": {
+      "approved/apply_plan": 3,
+      "approved/finish": 3,
+      "approved/propose_plan": 3,
+      "approved/search_exercises": 3,
+      "approved/validate_plan": 3,
+      "declined/finish": 3,
+      "infeasible/finish": 3,
+      "infeasible/search_exercises": 3,
+      "memory_supersession/finish": 3,
+      "memory_supersession/propose_plan": 3,
+      "memory_supersession/search_exercises": 3,
+      "memory_supersession/validate_plan": 3,
+      "partial_clarification/finish": 3,
+      "partial_clarification/get_context": 3,
+      "partial_clarification/get_memories": 3,
+      "partial_clarification/propose_plan": 3,
+      "partial_clarification/request_clarification": 3,
+      "partial_clarification/search_exercises": 3,
+      "partial_clarification/validate_plan": 3,
+      "pending/finish": 3,
+      "preview/finish": 3,
+      "preview/propose_plan": 3,
+      "preview/search_exercises": 3,
+      "preview/validate_plan": 3,
+      "revoked/finish": 3
+    },
+    "immediate_post_error_by_category_action": {
+      "approved/search_exercises": 3,
+      "declined/finish": 3,
+      "infeasible/search_exercises": 3,
+      "memory_supersession/search_exercises": 3,
+      "partial_clarification/request_clarification": 3,
+      "pending/finish": 3,
+      "preview/search_exercises": 3,
+      "revoked/finish": 3
+    }
+  },
+  "evaluation": {
+    "evaluation": {
+      "unadapted": {
+        "recorded_generation_seconds": 857.5669540464878,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 2,
+            "requests": 13,
+            "invalid_validations": 1,
+            "repeated_identical_invalid_plan": 0
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 27,
+            "clarification_requests": 3,
+            "accepted_clarification_requests": 0,
+            "invalid_validations": 7,
+            "repeated_identical_invalid_plan": 2
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 22,
+            "invalid_validations": 6,
+            "repeated_identical_invalid_plan": 1
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 18,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "insufficient_exercises"
+            ]
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "session_count_mismatch"
+            ]
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "insufficient_exercises",
+              "missing_evidence"
+            ]
+          }
+        ]
+      },
+      "clean": {
+        "recorded_generation_seconds": 607.7196745835245,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 21
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0,
+            "clarification_requests": 3,
+            "accepted_clarification_requests": 0
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 18,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0,
+            "clarification_requests": 3,
+            "accepted_clarification_requests": 0
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "machine"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "dumbbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "bodyweight"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          }
+        ]
+      },
+      "mixed": {
+        "recorded_generation_seconds": 582.6171930544078,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 21
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 15,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 15,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 2,
+            "requests": 18
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "machine"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "dumbbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "bodyweight"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          }
+        ]
+      }
+    },
+    "identifier-probe": {
+      "unadapted": {
+        "recorded_generation_seconds": 1044.7904204465449,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 1,
+            "requests": 29,
+            "invalid_validations": 14,
+            "repeated_identical_invalid_plan": 7
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 20,
+            "invalid_validations": 8,
+            "repeated_identical_invalid_plan": 2
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 27,
+            "invalid_validations": 9,
+            "repeated_identical_invalid_plan": 3
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 23,
+            "invalid_validations": 5,
+            "repeated_identical_invalid_plan": 1,
+            "clarification_requests": 1,
+            "accepted_clarification_requests": 0
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 3
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "missing_evidence"
+            ]
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "invalid_or_duplicate_exercise_ids",
+              "missing_evidence"
+            ]
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation",
+              "insufficient_exercises",
+              "missing_evidence"
+            ]
+          }
+        ]
+      },
+      "clean": {
+        "recorded_generation_seconds": 602.7877223845571,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 21
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0,
+            "clarification_requests": 3,
+            "accepted_clarification_requests": 0
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 2,
+            "requests": 18,
+            "invalid_validations": 1,
+            "repeated_identical_invalid_plan": 0,
+            "clarification_requests": 1,
+            "accepted_clarification_requests": 0
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 18,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0,
+            "clarification_requests": 3,
+            "accepted_clarification_requests": 0
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation"
+            ]
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "barbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation"
+            ]
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "bodyweight"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          }
+        ]
+      },
+      "mixed": {
+        "recorded_generation_seconds": 826.6390497181565,
+        "by_category": {
+          "approved": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 21
+          },
+          "declined": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "infeasible": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 15,
+            "invalid_validations": 3,
+            "repeated_identical_invalid_plan": 0
+          },
+          "memory_supersession": {
+            "cases": 3,
+            "passed": 2,
+            "requests": 17,
+            "invalid_validations": 1,
+            "repeated_identical_invalid_plan": 0
+          },
+          "partial_clarification": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 41,
+            "invalid_validations": 29,
+            "repeated_identical_invalid_plan": 26
+          },
+          "pending": {
+            "cases": 3,
+            "passed": 0,
+            "requests": 18
+          },
+          "preview": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          },
+          "revoked": {
+            "cases": 3,
+            "passed": 3,
+            "requests": 18
+          }
+        },
+        "partial_clarification_diagnostics": [
+          {
+            "scenario_id": "r1-04-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "machine"
+            ],
+            "searched_equipment": [
+              [
+                "barbell",
+                "machine"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": [
+              "equipment_or_exclusion_violation"
+            ]
+          },
+          {
+            "scenario_id": "r1-05-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "dumbbell"
+            ],
+            "searched_equipment": [
+              [
+                "barbell",
+                "dumbbell"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          },
+          {
+            "scenario_id": "r1-06-partial_clarification",
+            "first_validation": 3,
+            "effective_equipment": [
+              "bodyweight"
+            ],
+            "searched_equipment": [
+              [
+                "barbell",
+                "bodyweight"
+              ]
+            ],
+            "missing_fields_at_first_validation": [
+              "max_minutes"
+            ],
+            "original_issues": [
+              "wrong_action"
+            ],
+            "same_plan_issues_if_fixture_answer_supplied_to_grader_only": []
+          }
+        ]
+      }
+    }
+  },
+  "contract_probes": {
+    "selected_memory_evidence_omitted_but_plan_valid": true,
+    "hidden_approval_change_preserves_initial_and_reads": true,
+    "hidden_approval_change_alters_scenario_derived_proposal_id": true,
+    "scope": "Harness-only counterexamples. Hash dependence is not proof a model decodes hidden outcomes."
+  },
+  "counterfactual_scope": "Grade the recorded first plan after supplying the fixture's missing answer. Never change the actual episode score; never infer an unobserved model response."
+}

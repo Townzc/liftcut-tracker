@@ -193,6 +193,12 @@ audits the complete published experiment without GPU access or credentials.
 
 ## Next experiment: corrected data before larger training
 
+**Planning update:** the provisional scope below is retained as history and is
+superseded by the [deeper review and staged next design](2026-09-29-recovery-review-and-next-plan.md).
+The new plan separates normal starts from fixed-error continuations, decouples
+clarification and memory coverage, and uses development gates before test evaluation.
+The new data and runner remain unprepared; this is not an instruction to start a GPU.
+
 The next CPU preparation should target four training bundles (40 scenarios:
 eight existing behavior types plus two additional clarification contexts per bundle),
 one development bundle (8) and three freshly authored evaluation bundles (24).

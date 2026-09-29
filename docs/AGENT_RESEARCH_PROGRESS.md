@@ -1,8 +1,9 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **P2 paired GPU pilot executed;
-identifier leakage discovered in recovery-v1; corrected data and reliable held-out
-evidence required before scaling training**. The hosted protocol matrix remains pending.
+Last updated: 2026-09-29 UTC. Active milestone: **P2 forensic review completed;
+prepare corrected data and fixed-error continuation evaluation on CPU before
+the next development-only GPU window**. New data and runner are not ready.
+The hosted protocol matrix remains pending.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
 P1 offline delivery and remote check status: [PR #8](https://github.com/Townzc/liftcut-tracker/pull/8).
@@ -25,9 +26,11 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Latest increment: 191 local CPU tests pass; all 144 recovery/opaque-probe episodes
-  replay, and 87 full-backup files are hash-verified off-instance. See the
-  [result review](research/2026-09-29-recovery-results.md). The entries below retain
+- Latest increment: 197 local CPU tests pass; the new forensic report reproduces
+  from both previously prepared directories and replays all 144 recovery/probe
+  episodes. No new GPU/API execution or adapter-file verification. The previous
+  increment verified 87 full-backup files off-instance. See the
+  [deeper review and next plan](research/2026-09-29-recovery-review-and-next-plan.md). The entries below retain
   their historical verification scopes rather than replacing earlier results.
 - Python 3.11.5: `python -m unittest discover -s research/liftcut-agent/tests -v`:
   155 tests passed locally and on AutoDL Python 3.12.3 before shutdown. Subsequent
@@ -286,6 +289,32 @@ GPU or paid API execution is included in this milestone.
 Analysis and evidence: [recovery result review](research/2026-09-29-recovery-results.md).
 Implementation: [PR #14](https://github.com/Townzc/liftcut-tracker/pull/14).
 
+## Implemented in the ninth increment
+
+- [x] Recomputed decision-level training coverage: 3/150 clarification targets,
+  all for max_minutes and all coupled to memory updates; 75/300 mixed histories
+  change, but only 24 are immediately after an error. Injected examples cover
+  15 unnecessary clarifications and 9 unapproved writes, zero invalid validations.
+- [x] Replayed both suites and distinguished requested from accepted clarification.
+  All three ordinary-SFT clarification calls on opaque partial cases are rejected.
+  Mixed SFT repeats the identical invalid plan 26 times across the probe.
+- [x] Diagnosed masked memory mistakes by grading unchanged recorded plans with
+  only the missing fixture answer supplied to the grader. Two ordinary and one
+  mixed first plans still violate equipment constraints on the opaque partial
+  cases. These are offline counterfactuals, not new model responses or revised scores.
+- [x] Added executable limitations for evidence-ID grading and hidden-state-derived
+  proposal IDs, and tests protecting counterfactual scope and input immutability.
+- [x] Saved a staged next design: 48 train / 12 dev / 48 reserved test targets,
+  corrected IDs and separated clarification/memory factors; 36 normal development
+  episodes plus 27 controlled continuations, three model arms, explicit go/no-go
+  rules, two-hour provisional budget and a 30-minute backup/shutdown margin.
+- [x] Added full JSON reproduction to tokenizer CI and corrected stale roadmap
+  wording that still described the executed recovery pilot as pending.
+- [ ] Build/freeze the new data, continuation runner, paired masks and measured
+  runtime budget. No server-start notice until these gates pass.
+
+Evidence and design: [forensic review](research/2026-09-29-recovery-review-and-next-plan.md).
+
 ## Decision log
 
 | Date | Decision | Reason / evidence |
@@ -313,6 +342,8 @@ Implementation: [PR #14](https://github.com/Townzc/liftcut-tracker/pull/14).
 | 2026-09-29 | Invalidate reliable held-out claims for recovery-v1 and preserve original results | All 48 fixtures contain visible category hints; preparation tests missed this defect |
 | 2026-09-29 | Freeze a bounded post-hoc opaque-ID probe using unchanged trained models | Diagnose identifier sensitivity within the same boot deadline; do not silently retrain or relabel reused tasks as new tests |
 | 2026-09-29 | Prioritize data correction and clarification coverage before larger training | Both original SFT arms fail all three partial-clarification cases; mixed data does not improve original task success |
+| 2026-09-29 | Add identical post-error starts and gate test evaluation on development evidence | Reset-only evaluation does not isolate recovery; injected training errors omit invalid validation, and missing information is confounded with memory updates |
+| 2026-09-29 | Preserve narrow score definitions and report masked failures separately | wrong_action masks equipment errors; tool exception count misses valid:false; evidence IDs do not enforce citation of selected memory |
 
 ## Update protocol
 
