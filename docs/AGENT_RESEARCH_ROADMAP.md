@@ -58,15 +58,16 @@ P2 preparation includes verified decision export, a real tokenizer/mask audit an
 an executed 20-step QLoRA compatibility pilot for pinned Qwen3-4B-Instruct-2507.
 The paired recovery pilot has since executed, but review found category-bearing
 record/memory IDs in all 48 original scenarios. Its high scores do not establish
-reliable held-out performance. The next gate is corrected model-visible data and
+reliable held-out performance. This motivated corrected model-visible data and
 fresh evaluation before more training; see the [result review](research/2026-09-29-recovery-results.md).
 The [deeper review and next design](research/2026-09-29-recovery-review-and-next-plan.md)
 now separates clean-start task performance from controlled error-prefix recovery.
 Its 48 train / 12 dev / 48 reserved test tasks are now frozen and CPU-reproduced.
-The next GPU window is development-only. The [execution specification](research/2026-09-29-controlled-recovery-experiment.md)
-now records the implemented CPU data/prefix pipeline and exact matched token budget;
-server verification and live model results remain pending.
-The formal data study and reliable held-out comparison remain pending. See the
+The [corrected development experiment](research/2026-09-29-controlled-recovery-results.md)
+has now completed: U/C/R normal 0/12, 10/12, 11/12; controlled continuation 1/9, 8/9, 9/9.
+The paired recovery gain of one case in one error family misses its preregistered
+gate. Next is CPU preparation of [fixed-state diagnostics](research/2026-09-29-state-diagnostic-plan.md),
+not larger training. Reliable held-out and independent evaluation remain pending. See the
 [data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
 [GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
 [budget plan](research/2026-09-28-small-model-pilot-plan.md).
@@ -161,16 +162,15 @@ and health outcomes are not automatic ground truth.
   with identical 12,758 supervised tokens per adapter. Visible category hints
   invalidate reliable held-out claims; the later opaque-ID probe remains a
   reused-task diagnostic. Both adapters and all 144 traces were backed up.
-- The [next design](research/2026-09-29-recovery-review-and-next-plan.md) first
-  corrects IDs, separates missing-information and memory-update factors, and adds
-  controlled post-error continuations. Plan 36 normal development episodes and
-  27 continuations across an unadapted reference and two fresh SFT arms. Reserve
-  test evaluation until a useful development signal and a fixed candidate exist.
-  Data and controlled continuation runner are now implemented; each arm uses
-  26,052 target tokens, 648 decisions and 81 updates. The maintainer requested
-  retaining the already-started replacement instance through the experiment.
-  The revised boot-relative limit is four hours (CNY8.72 compute at the prior quote,
-  CNY10 total planning reserve), including setup and a final 30-minute backup margin.
+- The corrected recovery-v2 executed 36 normal development episodes and 27
+  continuations with 26,052 target tokens, 648 decisions and 81 updates per SFT arm.
+  All 63 episodes and both adapters were backed up and re-audited before the
+  shutdown acknowledgment. Compute proxy through the connection-refusal observation
+  is CNY 5.18, within the four-hour CNY 8.72 compute window; supplier billing is unknown.
+- Next, prepare 19 fixed diagnostic states on CPU, then compare the existing C/R
+  adapters in 38 bounded continuations. Proposed one-hour 4090 window: CNY 2.18
+  compute proxy, CNY 3 planning reserve. No new training/seed/test evaluation until
+  these diagnostics and a more discriminating development design justify it.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.

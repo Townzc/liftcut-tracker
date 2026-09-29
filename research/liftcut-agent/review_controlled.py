@@ -57,7 +57,12 @@ def review(root, prepared):
             calls = [c for e in selected for c in e["calls"][len(prefixes[e["scenario_id"]]["calls"])
                      if e["scenario_id"] in prefixes else 0:]]
             latency = [c["response"]["elapsed_seconds"] for c in calls]
+            bodies = [json.loads(c["response"]["body"]) for c in calls]
+            local_rejections = sum(b.get("local_guard") == "context_limit" for b in bodies)
             efficiency[arm][panel] = {"model_calls": len(calls),
+                "actual_generation_calls": len(calls) - local_rejections,
+                "local_context_rejections": local_rejections,
+                "truncated_generations": sum(b["choices"][0]["finish_reason"] == "length" for b in bodies),
                 "latency_p50_seconds": percentile(latency, .5), "latency_p95_seconds": percentile(latency, .95),
                 "generation_seconds": sum(latency),
                 "policy_failures": dict(Counter(e["policy_failure"] for e in selected if e["policy_failure"]))}

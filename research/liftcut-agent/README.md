@@ -268,3 +268,17 @@ panels separate. `restore_controlled.py` verifies all three archives and actual
 adapters before producing a shutdown acknowledgment. `publish_controlled.py`
 verifies restored weights before selecting public synthetic logs; weights remain
 in the ignored local backup. See the server runbook for the complete sequence.
+
+The [Chinese pipeline walkthrough](../../docs/research/RECOVERY_STUDY_WALKTHROUGH.md)
+maps each stage to its code and explains supervision masks, paired comparisons,
+scripted-prefix accounting and the limits of development-only results.
+
+Recovery-v2 has completed: U/C/R score 0/12, 10/12, 11/12 on normal tasks and
+1/9, 8/9, 9/9 on fixed-error continuations. The one-case/one-family recovery gain
+does not meet its preregistered gate. See the [result review](../../docs/research/2026-09-29-controlled-recovery-results.md)
+and [next diagnostic design](../../docs/research/2026-09-29-state-diagnostic-plan.md).
+Reproduce all public artifact hashes, episode audits and the descriptive review:
+
+```sh
+python research/liftcut-agent/publish_controlled.py --run-dir research/liftcut-agent/reports/qwen-controlled-recovery-2026-09-29 --prepared-dir NEW_V2_PREPARED_DIRECTORY --check-publication
+```

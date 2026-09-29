@@ -1,10 +1,14 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 formal development
-window running on committed source `036dccab31225796c95ea93286c849784f082b5b`**.
-Server CPU reproduction and all 208 server tests passed before launch; GPU results
-remain pending. The accompanying CPU restoration/review tools do not change this
-frozen training or evaluation source.
+Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 completed and
+backed up; prepare fixed-state diagnostics on CPU before another GPU window**.
+U/C/R normal success: 0/12, 10/12, 11/12; controlled continuation: 1/9, 8/9, 9/9.
+The recovery gain is one case in one error family, below the preregistered gate.
+All 63 episodes replay and 42 archive files, including both actual adapters, were
+verified off-instance before the shutdown acknowledgment. Connections closed;
+provider power/billing was not independently observed. See the
+[results](research/2026-09-29-controlled-recovery-results.md) and
+[next diagnostic design](research/2026-09-29-state-diagnostic-plan.md).
 The hosted protocol matrix remains pending.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
@@ -28,11 +32,13 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 212 local CPU tests pass, including four new restoration
-  index and clarification-order checks. The executed GPU source passed all 208
+- Current increment: all 215 local CPU tests pass, including saved real-episode
+  replay, restoration-index, clarification-order and tamper checks. The executed GPU source passed all 208
   server tests and all GitHub checks before launch.
-  Two independent CPU preparations match all frozen data and token hashes;
-  63 live development episodes remain pending. See the
+  Two independent local preparations and server preparation matched all frozen
+  data/token hashes. All 63 real episodes and raw generations now replay; actual
+  adapter hashes and 42 restored files were verified. Publication inventory and
+  the complete descriptive review reproduce locally. See the
   [execution specification](research/2026-09-29-controlled-recovery-experiment.md).
 - Previous increment: 197 local CPU tests pass; the new forensic report reproduces
   from both previously prepared directories and replays all 144 recovery/probe
@@ -224,18 +230,17 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Prepare a corrected dataset on CPU before requesting another server window.
-   Audit model-visible identifiers and hidden-outcome invariance, strengthen
-   missing-information decisions, and create fresh evaluation bundles. Keep all
-   currently evaluated scenarios as development diagnostics.
-2. Regenerate/replay paired demonstrations and reproduce token budgets twice;
-   freeze the new data/config before training. Do not reuse old token counts after
-   identifier or task changes. See the [result review and next experiment](research/2026-09-29-recovery-results.md).
-3. Budget from the corrected input/generation estimates. Provisional 4090 limit:
-   two hours from boot at CNY 2.18/hour (compute CNY 4.36), CNY 10 total planning
-   ceiling, no expansion. Do not ask for a boot until CPU gates and migration
-   handoff are ready. Repeated seeds/external evaluation follow a useful signal;
-   do not move to DPO/RL on the strength of the contaminated original scores.
+1. Implement and freeze the [fixed-state diagnosis](research/2026-09-29-state-diagnostic-plan.md)
+   on CPU: 10 consent states and 9 memory/clarification states, with exact prefix
+   and state-equivalence checks. These are design targets, not prepared artifacts.
+2. Reproduce prefixes twice, audit visible IDs and real tokenizer context limits,
+   implement bounded decision scoring and test complete backup/replay. Keep the
+   recovery-v2 data and results unchanged and leave its 48 reserved tests unopened.
+3. Only after committed CPU gates/CI pass, request a one-hour 4090 window for the
+   two existing adapters: 38 diagnostic continuations, at most 114 model requests,
+   no training or extra seed. At the prior CNY 2.18/hour quote, compute proxy 2.18,
+   total planning reserve 3, no expansion. Do not lower recovery-v2's unmet gate
+   after observing its scores; DPO/RL and independent evaluation remain later work.
 4. The separately authorized hosted protocol matrix still needs a permitted
    execution path or manually produced artifacts. Do not bypass the prior tool
    execution gate or repeat the already answered authorization request.
@@ -318,11 +323,35 @@ Implementation: [PR #14](https://github.com/Townzc/liftcut-tracker/pull/14).
   rules, two-hour provisional budget and a 30-minute backup/shutdown margin.
 - [x] Added full JSON reproduction to tokenizer CI and corrected stale roadmap
   wording that still described the executed recovery pilot as pending.
-- [ ] Build/freeze the new data, continuation runner, paired masks and measured
-  runtime budget. No server-start notice until these gates pass.
+- [x] Subsequently completed new data, continuation runner, paired masks and
+  measured runtime in the tenth increment below; preserve this design as history.
 
 Evidence and design: [forensic review](research/2026-09-29-recovery-review-and-next-plan.md).
 Implementation: [PR #15](https://github.com/Townzc/liftcut-tracker/pull/15).
+
+## Implemented in the tenth increment
+
+- [x] Froze 48 train/12 dev/48 reserved test scenarios with opaque public IDs,
+  approval counterfactual invariance and separated missing-field/memory coverage.
+- [x] Reproduced 324 paired targets and nine exact error prefixes twice locally
+  and once on the server. Both SFT arms consumed 648 decisions, 81 updates and
+  26,052 supervised tokens; input context and elapsed compute differ.
+- [x] Executed committed source `036dcca` on the retained 4090. Both final adapters
+  reload with zero maximum logit difference. All 63 development episodes completed;
+  normal and controlled panels remain separate and reserved test usage is zero.
+- [x] Recorded C/R paired improvements on memory+clarification and pending recovery.
+  Normal pending still fails both. Net recovery +1 in one family misses the
+  preregistered +2/two-family gate; no larger training or seed expansion is launched.
+- [x] Restored all 42 files from three archives and re-audited actual adapters and
+  raw generations before uploading the shutdown ack. SSH/SFTP then closed and a
+  reconnect was refused. Compute proxy through that observation is CNY 5.1788;
+  supplier power state, shutdown return code and billing were not directly seen.
+- [x] Added reproducible publication inventory/review checks to CI and a Chinese
+  pipeline walkthrough. Public logs omit all weights; local full backups remain.
+- [ ] Implement the next 19-state CPU diagnostic design before requesting a server.
+
+Evidence: [results and limits](research/2026-09-29-controlled-recovery-results.md).
+Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
 
 ## Decision log
 
@@ -355,6 +384,8 @@ Implementation: [PR #15](https://github.com/Townzc/liftcut-tracker/pull/15).
 | 2026-09-29 | Preserve narrow score definitions and report masked failures separately | wrong_action masks equipment errors; tool exception count misses valid:false; evidence IDs do not enforce citation of selected memory |
 | 2026-09-29 | Keep the replacement instance for the full controlled development experiment | Maintainer explicitly superseded migration-only early shutdown; use a boot-relative four-hour CNY8.72 compute proxy within the CNY10 planning reserve, including preparation |
 | 2026-09-29 | Prepare recovery-v2 and transfer final adapters during evaluation | 48 train / 12 dev / 48 reserved test, two CPU reproductions, 26,052 matched target tokens per arm; three error types, nine exact prefixes; early per-arm archives reduce late transfer risk |
+| 2026-09-29 | Preserve limited positive results without lowering the recovery gate | R gains one normal and one continuation case, but recovery gain is only one case/one family; C already has 8/9 and normal pending still fails both |
+| 2026-09-29 | Diagnose fixed consent and memory states before more training | Compare equal previews under changed histories; separate raw context, stale memory and invalid high revision values; 38 planned inference-only continuations after CPU gates |
 
 ## Update protocol
 

@@ -1,6 +1,8 @@
 # Recovery-v2: corrected data and controlled continuation experiment
 
-Pre-execution specification. GPU results are pending at this commit. This realizes
+Pre-execution specification, preserved after execution. Results were pending when
+this specification was frozen; see the [completed results](2026-09-29-controlled-recovery-results.md).
+This realizes
 the [reviewed next design](2026-09-29-recovery-review-and-next-plan.md), with the
 maintainer's subsequent instruction to keep the already-started replacement
 instance running until the experiment and verified backup finish.

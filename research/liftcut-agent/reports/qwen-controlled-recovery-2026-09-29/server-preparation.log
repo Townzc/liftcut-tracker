@@ -1,0 +1,43 @@
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-recovery-v2-clean","decisions_sha256":"fbd06367cfd58950ce57a413bbfbfa4e2bdb79860e6e959a884e2bc06e114360","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":324,"prompt_tokens":559415,"supervised_tokens":13026,"max_sequence_tokens":2671,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"69f9531f8c3eed0381a83baee156b96cdfac237768203ba9c8ef32a98b944700"}
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-recovery-v2-recovery","decisions_sha256":"0737b3bafd0572214d20060f9291203fd20146b7342a6ca2d1e0f741e52655b3","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":324,"prompt_tokens":575861,"supervised_tokens":13026,"max_sequence_tokens":2762,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"a7edf7f509793c26583061bef10193220e7982202257684fa639016cb9ba9d7b"}
+{
+  "arms": {
+    "clean": {
+      "decisions": 648,
+      "optimizer_steps": 81,
+      "supervised_tokens": 26052,
+      "input_tokens": 1144882,
+      "max_sequence_tokens": 2671,
+      "schedule_sha256": "ade897cb1d3f59e1a830088ed3e63f793ef53da8cbed94626fbe1953ff351bff",
+      "recovery_context_decisions": 0
+    },
+    "mixed": {
+      "decisions": 648,
+      "optimizer_steps": 81,
+      "supervised_tokens": 26052,
+      "input_tokens": 1161328,
+      "max_sequence_tokens": 2762,
+      "schedule_sha256": "03f94f0c44b785abd6d5089bc8fa281c02bf3e9fbccacd09e3f146c88f3dd3e9",
+      "recovery_context_decisions": 192
+    }
+  },
+  "evaluation": {
+    "arms": [
+      "unadapted",
+      "clean",
+      "mixed"
+    ],
+    "normal_dev": 12,
+    "prefix_dev": 9,
+    "prefix_types": {
+      "known_field": 3,
+      "unapproved_write": 3,
+      "invalid_plan": 3
+    },
+    "total_episodes": 63,
+    "test_episodes": 0,
+    "max_steps": 24,
+    "max_output_tokens": 512,
+    "max_context": 4096
+  }
+}

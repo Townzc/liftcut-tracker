@@ -79,11 +79,41 @@ def publish(root, prepared, output):
     return public
 
 
+def verify_publication(root, prepared):
+    manifest = json.loads((root / "publication-manifest.json").read_text(encoding="utf-8"))
+    paths = [p for p in root.rglob("*") if p.is_file() and p.name != "publication-manifest.json"]
+    if any(p.is_symlink() for p in root.rglob("*")):
+        raise ValueError("public artifacts must not contain links")
+    if ({p.relative_to(root).as_posix(): sha256(p) for p in paths} != manifest["files"]
+            or manifest["copied_files"] != public_paths()):
+        raise ValueError("public file inventory mismatch")
+    result = audit(root, prepared, verify_weights=False)
+    for name in ("public-log-audit.json", "backed-up-adapter-audit.json", "comparison.json"):
+        saved = json.loads((root / name).read_text(encoding="utf-8"))
+        expected_flag = name != "public-log-audit.json"
+        if saved["adapter_files_verified"] is not expected_flag:
+            raise ValueError("incorrect adapter verification scope")
+        saved["adapter_files_verified"] = False
+        if saved != result:
+            raise ValueError("published audit differs from replay")
+    if review(root, prepared) != json.loads((root / "review.json").read_text(encoding="utf-8")):
+        raise ValueError("published review differs from replay")
+    return result
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--run-dir", type=Path, required=True)
     p.add_argument("--prepared-dir", type=Path, required=True)
-    p.add_argument("--output-dir", type=Path, required=True)
+    p.add_argument("--output-dir", type=Path)
+    p.add_argument("--check-publication", action="store_true")
     args = p.parse_args()
-    result = publish(args.run_dir, args.prepared_dir, args.output_dir)
-    print(json.dumps({"published": True, "episodes_replayed": result["episodes_replayed"]}))
+    if args.check_publication:
+        if args.output_dir:
+            p.error("publication check does not write an output directory")
+        result = verify_publication(args.run_dir, args.prepared_dir)
+    else:
+        if not args.output_dir:
+            p.error("publication requires a new output directory")
+        result = publish(args.run_dir, args.prepared_dir, args.output_dir)
+    print(json.dumps({"publication_verified": True, "episodes_replayed": result["episodes_replayed"]}))
