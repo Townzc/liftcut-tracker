@@ -1,6 +1,9 @@
 """Plot verified development evidence; matplotlib is an optional analysis dependency."""
 import argparse
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
 from liftcut_agent.benchmark import read_jsonl
 from publish_state_coverage import verify_publication

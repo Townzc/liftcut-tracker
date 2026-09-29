@@ -9,8 +9,13 @@ All 264 frozen-source server tests passed in 106.980 seconds. Server preparation
 matches the CPU-frozen hashes; pinned CUDA/BF16 environment is verified. Immutable
 execution source is merged `30fd396`; the controller guard armed at 06:28:45 UTC.
 Container boot proxy is 06:21:39.310 UTC, work cutoff 08:51:39.310, hard shutdown
-09:21:39.310. S0 training started; no complete model scores are available yet.
-Next: complete four arms, restore all adapters and 124 traces, verify, then acknowledge
+09:21:39.310. At 08:10 UTC, S0/T/M are trained, backed up and independently replayed;
+TM training is active. Their normal results are 10/12, 9/12 and 11/12; read-history
+consent 0/3, 3/3 and 1/3; main memory 6/8, 4/8 and 3/8. These are partial-study
+observations, not a complete four-arm result. All three saved adapters pass actual
+file/counter checks; their 93 episodes and 305 native generations also pass CPU
+environment and pinned-tokenizer replay. No full-study backup acknowledgment yet.
+Next: finish TM, restore all adapters and 124 traces, verify, then acknowledge
 shutdown. At ¥2.18/hour:
 ¥6.54 compute proxy / ¥8 planning reserve, storage billed separately.
 See the [execution specification](research/2026-09-29-state-coverage-experiment.md)
@@ -18,6 +23,9 @@ and [research journal](research/EXPERIMENT_LOG.md).
 The [external transfer preflight](research/2026-09-29-external-transfer-preflight.md)
 records a future independent-source validation option; no external dataset/model run
 is part of this active GPU window.
+The [results draft](research/2026-09-29-state-coverage-results.md) preserves regressions
+as well as gains; [replication planning](research/2026-09-29-coverage-replication-plan.md)
+is a future CPU/Git preparation task, not an additional authorized GPU job here.
 
 Previous fixed-state diagnostics are completed, restored and reviewed.
 C/R consent decisions: 5/10 and 6/10; memory decisions: 2/9 and 1/9. These are

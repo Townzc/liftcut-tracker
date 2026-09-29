@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 
 from audit_state_coverage import audit
+from check_coverage_repairs import review_repairs
 from gpu_state_diagnostics import read
 from liftcut_agent.benchmark import read_jsonl
 from publish_recovery import adapter_metadata
@@ -79,6 +80,7 @@ def markdown(result):
         "- `training/*`: all 126 update records per arm, memory probes, provenance and adapter configurations; weights omitted.",
         "- `evaluation/*`: durable calls, original generated text and complete environment traces, including failures.",
         "- `generation-token-audit.json`: CPU re-tokenization of every model request and decoding of saved output IDs; independently repeated by tokenizer CI.",
+        "- `scripted-repair-checks.json`: four post-hoc proposal validations using already observed facts; zero added model successes.",
         "- `backup-index.json` and `off-instance-verification.json`: five-archive inventory and historical restore receipt.",
         "- `operations.json`: observed timing, assumed compute price, shutdown observations and billing uncertainty.",
         "- `publication-manifest.json`: exact public file inventory; CPU verification replays native responses and scores.", "",
@@ -115,6 +117,7 @@ def publish(run, prepared, diagnostic, output):
         "saved_tensor_metadata": {a: adapter_metadata(run / "training" / a / "final/adapter_model.safetensors")
                                   for a in ARMS}})
     dump_new(output / "review.json", described)
+    dump_new(output / "scripted-repair-checks.json", review_repairs(run))
     (output / "README.md").write_text(markdown(described), encoding="utf-8", newline="\n")
     dump_new(output / "publication-manifest.json", {"scope": "Synthetic reused-development evidence, no weights or credentials",
         "copied_files": public_paths(), "files": {p.relative_to(output).as_posix(): sha256(p)
@@ -128,7 +131,7 @@ def verify_publication(run, prepared, diagnostic):
         raise ValueError("public artifacts must not be linked")
     files = {p.relative_to(run).as_posix(): sha256(p) for p in run.rglob("*")
              if p.is_file() and p.relative_to(run).as_posix() != "publication-manifest.json"}
-    expected = set(public_paths()) | {"adapter-verification.json", "review.json", "README.md"}
+    expected = set(public_paths()) | {"adapter-verification.json", "review.json", "scripted-repair-checks.json", "README.md"}
     if files != manifest["files"] or set(files) != expected or manifest["copied_files"] != public_paths():
         raise ValueError("public coverage inventory mismatch")
     verify_restore_scope(run)
@@ -149,6 +152,8 @@ def verify_publication(run, prepared, diagnostic):
     described = review(run, prepared, diagnostic, audited=result)
     if described != read(run / "review.json") or (run / "README.md").read_text(encoding="utf-8") != markdown(described):
         raise ValueError("public coverage review differs from replay")
+    if review_repairs(run) != read(run / "scripted-repair-checks.json"):
+        raise ValueError("scripted proposal diagnostics differ from replay")
     return described
 
 
