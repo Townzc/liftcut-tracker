@@ -327,4 +327,26 @@ purpose, evidence and next step; the
 [case walkthrough](../../docs/research/RECOVERY_STUDY_WALKTHROUGH.md) connects three
 failures to raw traces. A proposed
 [2×2 training-coverage study](../../docs/research/2026-09-29-state-coverage-next-plan.md)
-still needs CPU implementation and budget verification before another GPU window.
+now has reproduced CPU preparation, with GPU execution still pending.
+
+## Four-arm state-coverage study (CPU prepared; no new model results)
+
+S0/T/M/TM separately vary state-preserving post-preview reads and memory placement
+coverage. Every arm has 72 train-only scenarios from the same four bundles and 504
+paired correct decisions. Two epochs use exactly 41,788 target tokens, 1,008 samples
+and 126 updates. Target token sequences and sample order match across all arms;
+input tokens and compute differ. Longest sequence: 2,995/4,096, no truncation.
+
+```sh
+python research/liftcut-agent/state_coverage.py check
+python research/liftcut-agent/prepare_state_coverage.py --tokenizer-dir TOKENIZER_DIRECTORY --output-dir NEW_COVERAGE_DIRECTORY
+python research/liftcut-agent/run_state_coverage_window.py --model-dir MODEL_DIRECTORY --model-manifest MODEL_MANIFEST --prepared-dir NEW_COVERAGE_DIRECTORY --diagnostic-dir VERIFIED_DIAGNOSTIC_DIRECTORY --output-dir NEW_RUN_DIRECTORY
+```
+
+The window defaults to a zero-GPU dry run. Each trained arm will have twelve normal
+development episodes and nineteen unchanged first-decision diagnostics; all 124
+must replay before a complete comparison. No reserved test evaluation. The
+[execution specification](../../docs/research/2026-09-29-state-coverage-experiment.md)
+freezes four paired comparisons and a three-hour boot deadline, with early adapter
+archives and an off-instance restore gate. Runtime/budget is an estimate; no new
+training or model performance is claimed by scripted tests.

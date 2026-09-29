@@ -125,3 +125,25 @@ infeasible。一个错误线索能帮助 R，并不意味着它已经稳定掌�
 读完后尝试用自己的话讲三分钟：前一轮的问题是什么，本轮控制了什么变量，发现
 了什么行为，证据不能说明什么，下一轮怎样区分解释。再运行 CPU publication check，
 观察篡改一个原始响应时为什么不能通过回放。练习请使用输出目录中的副本。
+
+## 四组状态覆盖实验：读懂一个配对目标
+
+新研究的训练输入见 `state_coverage.py`，采样与 token 配对见
+`prepare_state_coverage.py`；[执行规格](2026-09-29-state-coverage-experiment.md)
+列出了准确参数。这一增量只有 CPU 验证，模型训练结果尚未产生。
+
+以 pending 为例，S0 的最后历史是有效预览，目标是 finish awaiting_user。T 在同一
+用户状态下真实读取 context 或 memories，再监督完全相同的 finish awaiting_user。
+被插入的读取不另导出成正目标，因此 T 没有多一次训练决策。输入更长，但最终
+assistant 的 target token 完全相同；每次优化更新按相同监督 token 数归一化。
+
+M 的关键是相同记录换顺序后，正确器械、证据 ID 和 proposal ID 都必须一致。
+如果只改排列，却因为 episode identity 的计算顺序改变了 apply 参数，那就同时
+改了训练目标。新研究排序公开事实生成 identity，测试会改变未来批准或澄清答案，
+验证这些隐藏变量不会改变身份。
+
+可以先手工挑 `sc1-01-pending`，比较四组 decisions 中最后的 assistant，再比较
+其前面的工具返回。随后找同一个 memory 场景，对照 S0/M 的记录顺序与目标。
+思考：为什么 72 个场景仍只来自四个 bundle，为什么 504 条导出决策在两轮训练
+中变成 1,008 次使用，为什么按累积8得到126次更新？能解释这些数，才能说明
+控制了什么，而不仅是背诵 LoRA 参数。
