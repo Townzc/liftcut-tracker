@@ -1,17 +1,23 @@
 # Agent research progress and handoff
 
 Last updated: 2026-09-29 UTC. Active milestone: **four-arm state-coverage study
-implemented and independently CPU-reproduced; GPU execution pending**.
+running on the maintainer-started AutoDL instance; complete results pending**.
 S0/T/M/TM each have 72 training scenarios, 504 paired exported decisions, 41,788
 supervised tokens, 1,008 sampled decisions and 126 updates. Actual target-token
 sequences and sampler indices match; longest sequence 2,995/4,096, no truncation.
-All 264 local tests pass. Two preparations match all hashes; a controller dry run
-makes zero GPU calls. No new server connection, training or paid API execution.
-Next: run the committed, CI-passing code after maintainer startup, within three hours
-from boot (150-minute work cutoff, 30-minute backup margin). At ¥2.18/hour:
+All 264 frozen-source server tests passed in 106.980 seconds. Server preparation
+matches the CPU-frozen hashes; pinned CUDA/BF16 environment is verified. Immutable
+execution source is merged `30fd396`; the controller guard armed at 06:28:45 UTC.
+Container boot proxy is 06:21:39.310 UTC, work cutoff 08:51:39.310, hard shutdown
+09:21:39.310. S0 training started; no complete model scores are available yet.
+Next: complete four arms, restore all adapters and 124 traces, verify, then acknowledge
+shutdown. At ¥2.18/hour:
 ¥6.54 compute proxy / ¥8 planning reserve, storage billed separately.
 See the [execution specification](research/2026-09-29-state-coverage-experiment.md)
 and [research journal](research/EXPERIMENT_LOG.md).
+The [external transfer preflight](research/2026-09-29-external-transfer-preflight.md)
+records a future independent-source validation option; no external dataset/model run
+is part of this active GPU window.
 
 Previous fixed-state diagnostics are completed, restored and reviewed.
 C/R consent decisions: 5/10 and 6/10; memory decisions: 2/9 and 1/9. These are
