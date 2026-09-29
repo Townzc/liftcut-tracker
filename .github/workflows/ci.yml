@@ -27,6 +27,7 @@ jobs:
           python research/liftcut-agent/benchmark/build_interactive_seeds.py --check
           python research/liftcut-agent/recovery_dataset.py check
           python research/liftcut-agent/controlled_recovery.py check
+          python research/liftcut-agent/state_coverage.py check
 
       - name: Validate development scenarios
         run: |
@@ -112,6 +113,12 @@ jobs:
 
       - name: Reproduce retrospective state-coverage analysis of the exact v2 training pools
         run: python research/liftcut-agent/review_training_state_coverage.py --prepared-dir research/liftcut-agent/outputs/ci-controlled-prepared --check
+
+      - name: Reproduce four paired state-coverage arms and exact supervised-token schedules
+        run: python research/liftcut-agent/prepare_state_coverage.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-state-coverage
+
+      - name: Verify the bounded coverage window without GPU execution
+        run: python research/liftcut-agent/run_state_coverage_window.py --model-dir model --model-manifest manifest --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --output-dir research/liftcut-agent/outputs/ci-window-dry-run
 
   quality:
     runs-on: ubuntu-latest

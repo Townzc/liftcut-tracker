@@ -75,7 +75,10 @@ completed 38 continuations: C/R consent 5/10 and 6/10, memory 2/9 and 1/9.
 These first-decision development probes expose history and memory sensitivity.
 A retrospective training-coverage audit motivates a
 [2×2 state-coverage study](research/2026-09-29-state-coverage-next-plan.md);
-its CPU data, matching and budget gates are the next task, before another server window.
+its four-arm CPU preparation now reproduces exactly. Each arm uses 41,788 matched
+target tokens and 126 updates. The next server window is bounded to three hours
+(CNY 6.54 compute proxy / CNY 8 reserve), after CI and maintainer startup; no new
+GPU result is claimed. See the [execution specification](research/2026-09-29-state-coverage-experiment.md).
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the
@@ -178,10 +181,12 @@ and health outcomes are not automatic ground truth.
   All 63 episodes and both adapters were backed up and re-audited before the
   shutdown acknowledgment. Compute proxy through the connection-refusal observation
   is CNY 5.18, within the four-hour CNY 8.72 compute window; supplier billing is unknown.
-- Next, prepare 19 fixed diagnostic states on CPU, then compare the existing C/R
-  adapters in 38 bounded continuations. Proposed one-hour 4090 window: CNY 2.18
-  compute proxy, CNY 3 planning reserve. No new training/seed/test evaluation until
-  these diagnostics and a more discriminating development design justify it.
+- The 38 fixed-state diagnostics completed and were backed up before acknowledgment;
+  compute proxy CNY 0.42. Findings and the exact old training pools motivated the
+  four-arm coverage study. Its two CPU preparations agree, with 1,008 sampled
+  decisions, 41,788 supervised tokens and 126 updates per arm, seed42 only.
+  Proposed next 4090 window: three hours from boot, CNY 6.54 compute proxy / CNY 8
+  reserve, including 30 minutes for backup. No reserved test or additional seed.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.

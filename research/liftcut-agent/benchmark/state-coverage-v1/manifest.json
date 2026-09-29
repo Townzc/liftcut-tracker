@@ -1,0 +1,24 @@
+{
+  "version": "state-coverage-v1",
+  "arms": [
+    "s0",
+    "t",
+    "m",
+    "tm"
+  ],
+  "files": {
+    "m/factors.jsonl": "2b1c56105c53b3158526baca043e78fd147430d27cf91d0c809664007d00e96b",
+    "m/train.jsonl": "66bd689e51341f8417c1336a04675afafc620c1eaabb4746b54e4fa11bb2d03e",
+    "s0/factors.jsonl": "b09708c095d9740acf40ac30f53c59413d284e8c614df89c69d3979a8217f79e",
+    "s0/train.jsonl": "27fd17228115aa768bd13e98a2394193ffdcdec5d0070040665c4b688d34d306",
+    "t/factors.jsonl": "375c1d4f4ad2848d7fbf66da56ed839de42792ef488d8fa3bf26fea48cd64a7c",
+    "t/train.jsonl": "27fd17228115aa768bd13e98a2394193ffdcdec5d0070040665c4b688d34d306",
+    "tm/factors.jsonl": "a0362cd2df8bb9d90d7014191e3a65c1a782de5b778e9e5c1a883d22dc4705f6",
+    "tm/train.jsonl": "66bd689e51341f8417c1336a04675afafc620c1eaabb4746b54e4fa11bb2d03e"
+  },
+  "source_train_sha256": "970b0f7fcd1af79c38576b61516eafe560f4e8f0d6e3aec2192ccaef8fee44a5",
+  "source_dev_sha256": "009e2093b1a06876f83e5b5a64c3bafd2cf1aff6a77b24f0ed558e9c4b3e94bf",
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478",
+  "scope": "Same four training bundles, shared authored templates; not independent data",
+  "reserved_test_read": false
+}

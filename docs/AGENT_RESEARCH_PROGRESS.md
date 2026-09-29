@@ -1,18 +1,30 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **fixed-state diagnostics completed,
-restored and reviewed; next is CPU preparation of a 2×2 state-coverage study**.
+Last updated: 2026-09-29 UTC. Active milestone: **four-arm state-coverage study
+implemented and independently CPU-reproduced; GPU execution pending**.
+S0/T/M/TM each have 72 training scenarios, 504 paired exported decisions, 41,788
+supervised tokens, 1,008 sampled decisions and 126 updates. Actual target-token
+sequences and sampler indices match; longest sequence 2,995/4,096, no truncation.
+All 264 local tests pass. Two preparations match all hashes; a controller dry run
+makes zero GPU calls. No new server connection, training or paid API execution.
+Next: run the committed, CI-passing code after maintainer startup, within three hours
+from boot (150-minute work cutoff, 30-minute backup margin). At ¥2.18/hour:
+¥6.54 compute proxy / ¥8 planning reserve, storage billed separately.
+See the [execution specification](research/2026-09-29-state-coverage-experiment.md)
+and [research journal](research/EXPERIMENT_LOG.md).
+
+Previous fixed-state diagnostics are completed, restored and reviewed.
 C/R consent decisions: 5/10 and 6/10; memory decisions: 2/9 and 1/9. These are
 first-decision development diagnostics, not complete-task or held-out scores.
-All 38 continuations replay; 44 actual model generations, no new training/API calls.
+All 38 continuations replay; 44 actual model generations in that earlier increment.
 The 21-file archive was verified locally before acknowledgment; actual v2 adapter
 backups were rehashed. SSH/SFTP then closed; provider power/billing remains
 unverified. Boot-to-connection-check compute proxy ≈¥0.42 at ¥2.18/hour.
-All 248 local CPU tests pass; the executed frozen server code passed 240 tests.
+That increment passed 248 local CPU tests; the executed frozen server code passed 240.
 Read the [research journal](research/EXPERIMENT_LOG.md),
 [results](research/2026-09-29-state-diagnostic-results.md) and
 [next design](research/2026-09-29-state-coverage-next-plan.md).
-The next design is not implemented or CPU-ready; no server is needed yet.
+The design is now implemented as the four-arm preparation above; model results remain pending.
 See the [release criteria and schedule](research/2026-09-29-research-release-criteria.md)
 for the remaining 3–5 week first-release estimate and evidence gates.
 
@@ -47,7 +59,17 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 248 CPU tests pass (8 new). Published synthetic evidence
+- Current increment: all 264 CPU tests pass (16 new). Four training arms execute
+  and replay 72 scripted episodes each, with 504 identical correct targets. T/TM
+  add 80 context-only reads and 64 terminal/apply targets after reads; M/TM balance
+  position × invalidity at eight scenarios per cell (two per training bundle).
+  Two independent real-tokenizer preparations match exactly, with target masking,
+  sample order and per-update target budgets verified. A synthetic native-response
+  fixture audits all 124 planned evaluations and five-archive restore/ack; this is
+  CPU contract evidence, not GPU execution. Tests reject altered native text, weights,
+  training counters, missing archives, forged comparisons and added blocked-write
+  cases hidden by aggregate counts. The bounded controller dry run makes no GPU call.
+- Previous increment: all 248 CPU tests pass (8 new). Published synthetic evidence
   has an exact hash inventory, complete native/environment replay and a reproducible
   descriptive review. Tests reject changed evidence and forged review summaries.
   The server executed frozen commit `992ac9a`, passed 240 tests and reproduced the
@@ -262,14 +284,15 @@ Details, source commits and follow-up design: [GPU pilot](research/2026-09-28-gp
 
 ## Next concrete work
 
-1. Implement the [2×2 state-coverage study](research/2026-09-29-state-coverage-next-plan.md)
-   on CPU: matched baseline, post-preview read histories, decoupled memory placement,
-   and their combination. Keep all four correct-target schedules matched; disclose
-   the common source-value redesign and different input-token costs separately.
-2. Verify real state equivalence, order-independent public identities, no future-label
-   leakage, loss masks, target-token matching and two independent preparations.
-   Freeze the development gates and recompute runtime/budget before requesting a server.
-   The provisional two-hour/¥6 reserve is a design estimate, not an executed budget.
+1. Execute the [frozen four-arm study](research/2026-09-29-state-coverage-experiment.md)
+   after branch CI/merge and maintainer startup. Check endpoint, retained disk/model,
+   actual boot proxy and hourly quote; deploy to a fresh immutable push-disabled checkout.
+   Preserve all prior data/adapters. Reproduce CPU preparation before any GPU phase.
+2. Use the three-hour-from-boot / ¥8 planning window (¥6.54 compute proxy), replacing
+   the preliminary two-hour/¥6 design estimate after measuring actual token volume.
+   Refuse launch after minute ten, stop experiment phases at minute 150, transfer four
+   adapter archives plus evidence, then verify all 124 replays and actual weights before
+   acknowledgment and early shutdown. Partial/failed backups must stay explicitly partial.
 3. Keep the 48 reserved tests unopened and the unmet v2 recovery gate unchanged.
    Use the [case walkthrough](research/RECOVERY_STUDY_WALKTHROUGH.md) and maintain the
    [what/why/result/next journal](research/EXPERIMENT_LOG.md) for each increment.
@@ -418,6 +441,23 @@ Implementation: [PR #16](https://github.com/Townzc/liftcut-tracker/pull/16).
 Evidence: [diagnostic results](research/2026-09-29-state-diagnostic-results.md).
 Publication and analysis: [PR #18](https://github.com/Townzc/liftcut-tracker/pull/18).
 
+## Four-arm state-coverage preparation
+
+- [x] Expanded only the original training bundles; frozen 72 scenarios per arm.
+- [x] Executed and replayed all scripted trajectories; injected reads remain context,
+  business states agree, and every correct target is paired across S0/T/M/TM.
+- [x] Added a permutation-invariant public identity for the new training study;
+  future user decisions do not enter it. Historical data, runners and identities unchanged.
+- [x] Independently reproduced actual tokenizer masks and exact four-arm schedules.
+  Each arm uses 41,788 target tokens and 126 updates; input compute is disclosed separately.
+- [x] Added versioned GPU training/evaluation, paired gates, raw-response audit,
+  three-hour controller and five-archive actual-weight restore before acknowledgment.
+- [x] All 264 local tests pass; synthetic operational tests are not model evidence.
+- [ ] Execute the first four-arm GPU development window after CI and maintainer startup.
+
+Specification: [execution and budget](research/2026-09-29-state-coverage-experiment.md).
+Implementation and remote verification: [PR #19](https://github.com/Townzc/liftcut-tracker/pull/19).
+
 ## Decision log
 
 | Date | Decision | Reason / evidence |
@@ -453,6 +493,8 @@ Publication and analysis: [PR #18](https://github.com/Townzc/liftcut-tracker/pul
 | 2026-09-29 | Diagnose fixed consent and memory states before more training | Compare equal previews under changed histories; separate raw context, stale memory and invalid high revision values; 38 planned inference-only continuations after CPU gates |
 | 2026-09-29 | Prepare a matched 2×2 coverage intervention after diagnostic failure | Both adapters restart planning after reads; distinct memory values expose wrong-source choices. Exact training pools lack corresponding terminal histories and independent position/invalidity coverage; causality remains untested |
 | 2026-09-29 | Maintain a what/why/result/next journal and concrete learning cases | Maintainer requested continuous records to independently understand and explain the project; observations, interpretations and pending experiments stay separate |
+| 2026-09-29 | Freeze four matched state-coverage arms before GPU execution | 72 train scenarios/504 paired decisions per arm; actual target sequences identical; context-only reads and memory permutations isolated within the new common data |
+| 2026-09-29 | Revise the proposed window from two hours/¥6 to three hours/¥8 | Actual inputs imply about 93 training minutes, 112 with 20% margin; evaluation/setup/backup bring the estimate to about 177 minutes; hard deadline remains boot-relative |
 
 ## Update protocol
 
