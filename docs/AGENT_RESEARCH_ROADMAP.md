@@ -60,6 +60,10 @@ The paired recovery pilot has since executed, but review found category-bearing
 record/memory IDs in all 48 original scenarios. Its high scores do not establish
 reliable held-out performance. The next gate is corrected model-visible data and
 fresh evaluation before more training; see the [result review](research/2026-09-29-recovery-results.md).
+The [deeper review and next design](research/2026-09-29-recovery-review-and-next-plan.md)
+now separates clean-start task performance from controlled error-prefix recovery.
+Its 48 train / 12 dev / 48 reserved test tasks are design targets, not prepared data.
+The next GPU window is development-only and remains gated on CPU preparation.
 The formal data study and reliable held-out comparison remain pending. See the
 [data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
 [GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
@@ -101,7 +105,9 @@ The formal data study and reliable held-out comparison remain pending. See the
 5. A strong hosted model as a capability reference, not a causal LoRA comparison.
 
 Primary ablation: successful-only vs successful-plus-recovery trajectories at
-matched training-token budgets. Additional ablations: structured temporal memory
+matched supervised-token budgets; extra input tokens and compute are reported separately.
+Evaluate both normal task starts and the same fixed error history across arms;
+separate harness-injected errors from the model's subsequent decisions. Additional ablations: structured temporal memory
 vs summary/history under matched context budgets; raw vs repaired outputs; data
 sampling strategies only when failure analysis motivates them.
 
@@ -149,13 +155,18 @@ and health outcomes are not automatic ground truth.
   final-assistant-only labels and identical logits after adapter reload. This is
   pipeline evidence on 59 public development decisions, not a completed P2 data
   study or a held-out improvement. See the [GPU pilot](research/2026-09-28-gpu-pilot.md).
-- The [next recovery-context pilot](research/2026-09-28-recovery-experiment.md) is
-  prepared offline: 24 train / 8 dev / 16 test cases grouped by constraint/persona
-  bundle, paired scripted demonstrations, identical 12,758 supervised tokens per
-  adapter, then a fixed three-arm comparison. Shared templates, single seed and
-  two test bundles limit its interpretation; independent labels and external
-  validation remain later gates. GPU execution is pending a maintainer-started
-  two-hour window, with compute CNY 4.36 at the current quote and CNY 10 total buffer.
+- The [recovery-context pilot](research/2026-09-29-recovery-results.md) executed
+  with identical 12,758 supervised tokens per adapter. Visible category hints
+  invalidate reliable held-out claims; the later opaque-ID probe remains a
+  reused-task diagnostic. Both adapters and all 144 traces were backed up.
+- The [next design](research/2026-09-29-recovery-review-and-next-plan.md) first
+  corrects IDs, separates missing-information and memory-update factors, and adds
+  controlled post-error continuations. Plan 36 normal development episodes and
+  27 continuations across an unadapted reference and two fresh SFT arms. Reserve
+  test evaluation until a useful development signal and a fixed candidate exist.
+  Data, continuation runner and exact CPU token budget are not prepared yet.
+  Provisionally retain a two-hour boot-relative window at CNY 4.36 compute and
+  CNY 10 total planning reserve; stop computation at minute 90 for backup/shutdown.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.
