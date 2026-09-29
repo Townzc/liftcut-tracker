@@ -1,0 +1,7 @@
+{
+  "sequence_tokens": 2995,
+  "forward_backward_passed": true,
+  "optimizer_steps": 0,
+  "peak_allocated_bytes": 12005549056,
+  "peak_reserved_bytes": 15495856128
+}

@@ -1,0 +1,62 @@
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-state-coverage-v1-s0","decisions_sha256":"db8d2af5e2efe654a2f52f9c86c8b4071ec5db13e2c50b580e6e80065c3dd5de","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":504,"prompt_tokens":893050,"supervised_tokens":20894,"max_sequence_tokens":2658,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"2e99d31f519b5aab4edcc1da777128a8a4ea8c05f7b543d26a41f23e58336b20"}
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-state-coverage-v1-t","decisions_sha256":"32ad6aeb2da045e17143d27d0ae3a6ab0c6b443bdac31435faeae739d2cca151","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":504,"prompt_tokens":904938,"supervised_tokens":20894,"max_sequence_tokens":2995,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"cb738437a1aaed8ffaa6ec10ab329b539a7f432703f0709e6fc6db1a7ddec9fd"}
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-state-coverage-v1-m","decisions_sha256":"364be0184b94ea0b798b04b6326de48cbfbf0e30f9f42286d3a36be057f6da07","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":504,"prompt_tokens":893050,"supervised_tokens":20894,"max_sequence_tokens":2658,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"e5e86dea0da3e0f4bbf585133f1e5eeb77390efd9cd18a433a0f702953556102"}
+{"scope":"CPU tokenizer and final-assistant mask audit; no weights, training or model evaluation","mask_version":"final-assistant-prefix-v0.1","implementation_sha256":"764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272","source_run_id":"scripted-state-coverage-v1-tm","decisions_sha256":"097ded3c58061e79dd967ad853e5ac95e6b8efa52f92c8b5407ded51ed38bdc3","chat_template_sha256":"64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326","libraries":{"transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6"},"decisions":504,"prompt_tokens":904938,"supervised_tokens":20894,"max_sequence_tokens":2995,"max_length":4096,"truncated_decisions":0,"all_prefix_tokens_masked":true,"tokens_sha256":"d91e4689489c820a0f5895a0178182e267b447d1ca96a17e15422ced2bb9815a"}
+{
+  "arms": {
+    "s0": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1827888,
+      "max_sequence_tokens": 2658,
+      "sample_order_sha256": "820dd32b0ce55b90762d2d529b964620e700ace8f51ddf5832e1ec18a4036ed3",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996"
+    },
+    "t": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1851664,
+      "max_sequence_tokens": 2995,
+      "sample_order_sha256": "820dd32b0ce55b90762d2d529b964620e700ace8f51ddf5832e1ec18a4036ed3",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996"
+    },
+    "m": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1827888,
+      "max_sequence_tokens": 2658,
+      "sample_order_sha256": "820dd32b0ce55b90762d2d529b964620e700ace8f51ddf5832e1ec18a4036ed3",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996"
+    },
+    "tm": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1851664,
+      "max_sequence_tokens": 2995,
+      "sample_order_sha256": "820dd32b0ce55b90762d2d529b964620e700ace8f51ddf5832e1ec18a4036ed3",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996"
+    }
+  },
+  "runtime_estimate": {
+    "source": "Slower observed v2 input-token throughput; linear proxy, not a guarantee",
+    "input_tokens_per_second": 1316.0359021203003,
+    "training_seconds_proxy": 5591.871762877861,
+    "training_minutes_with_20pct_margin": 112,
+    "evaluation_minutes_reserved": 20,
+    "load_probe_setup_minutes_reserved": 15,
+    "backup_minutes_reserved": 30
+  },
+  "budget": {
+    "hourly_cny_assumed": 2.18,
+    "max_minutes_from_boot": 180,
+    "work_cutoff_minutes_from_boot": 150,
+    "compute_proxy_cny": 6.54,
+    "planning_reserve_cny": 8,
+    "storage": "Existing disk, no expansion; provider charges separately",
+    "authorization": "Execution requires a maintainer-opened instance and agreed window; CPU preparation spends no GPU/API budget"
+  }
+}

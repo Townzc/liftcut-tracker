@@ -71,7 +71,7 @@ jobs:
 
   tokenizer-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -119,6 +119,12 @@ jobs:
 
       - name: Verify the bounded coverage window without GPU execution
         run: python research/liftcut-agent/run_state_coverage_window.py --model-dir model --model-manifest manifest --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --output-dir research/liftcut-agent/outputs/ci-window-dry-run
+
+      - name: Verify four-arm public evidence and replay all 124 episodes
+        run: python research/liftcut-agent/publish_state_coverage.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --check-publication
+
+      - name: Independently reconstruct every recorded coverage prompt and decode output IDs
+        run: python research/liftcut-agent/audit_coverage_tokens.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check research/liftcut-agent/reports/qwen-state-coverage-2026-09-29/generation-token-audit.json
 
   quality:
     runs-on: ubuntu-latest

@@ -1,6 +1,7 @@
 # 状态覆盖四组实验：冻结执行规格
 
-本轮只有 CPU 准备与脚本契约结果，**尚未执行这四组 GPU 训练或模型评测**。
+以下为 GPU 执行前冻结的规格。四组现已按该规格完成，结果见
+[完整复盘](2026-09-29-state-coverage-results.md)；原数据、预算与门槛保留，不按结果改写。
 研究动机与事前门槛见 [设计](2026-09-29-state-coverage-next-plan.md)，
 精确数据、代码和 token 哈希见
 [准备报告](../../research/liftcut-agent/reports/state-coverage-preparation-v1.json)。

@@ -327,9 +327,9 @@ purpose, evidence and next step; the
 [case walkthrough](../../docs/research/RECOVERY_STUDY_WALKTHROUGH.md) connects three
 failures to raw traces. A proposed
 [2×2 training-coverage study](../../docs/research/2026-09-29-state-coverage-next-plan.md)
-now has reproduced CPU preparation, with GPU execution still pending.
+has now completed its GPU experiment and off-instance restore, with results below.
 
-## Four-arm state-coverage study (CPU prepared; no new model results)
+## Four-arm state-coverage study (completed development experiment)
 
 S0/T/M/TM separately vary state-preserving post-preview reads and memory placement
 coverage. Every arm has 72 train-only scenarios from the same four bundles and 504
@@ -343,10 +343,39 @@ python research/liftcut-agent/prepare_state_coverage.py --tokenizer-dir TOKENIZE
 python research/liftcut-agent/run_state_coverage_window.py --model-dir MODEL_DIRECTORY --model-manifest MODEL_MANIFEST --prepared-dir NEW_COVERAGE_DIRECTORY --diagnostic-dir VERIFIED_DIAGNOSTIC_DIRECTORY --output-dir NEW_RUN_DIRECTORY
 ```
 
-The window defaults to a zero-GPU dry run. Each trained arm will have twelve normal
-development episodes and nineteen unchanged first-decision diagnostics; all 124
-must replay before a complete comparison. No reserved test evaluation. The
+The window defaults to a zero-GPU dry run. Each trained arm completed twelve normal
+development episodes and nineteen unchanged first-decision diagnostics. All 124
+episodes and actual weights were restored before ACK; 407 actual generations also
+pass pinned-tokenizer prompt reconstruction and saved-output decoding. The
 [execution specification](../../docs/research/2026-09-29-state-coverage-experiment.md)
 freezes four paired comparisons and a three-hour boot deadline, with early adapter
-archives and an off-instance restore gate. Runtime/budget is an estimate; no new
-training or model performance is claimed by scripted tests.
+archives and an off-instance restore gate. SSH/SFTP closed after ACK and a follow-up
+was refused; compute proxy ≈CNY 4.75, with provider power/billing unverified.
+
+| Arm | Complete dev task | Read-history consent | Main memory | Autonomous blocked writes |
+| --- | ---: | ---: | ---: | ---: |
+| S0 | 10/12 | 0/3 | 6/8 | 0 |
+| T | 9/12 | 3/3 | 4/8 | 0 |
+| M | 11/12 | 1/3 | 3/8 | 0 |
+| TM | 9/12 | 2/3 | 5/8 | 3 |
+
+Only S0→T passes T screening; M fails both pairs. TM's unapproved-write attempts
+were blocked, but remain model failures. Single seed42, reused development data,
+no reserved test or independent generalization claim. Four explicit scripted
+proposal repairs pass validation and add **zero model successes**.
+[Results and learning cases](../../docs/research/2026-09-29-state-coverage-results.md),
+[complete public evidence](reports/qwen-state-coverage-2026-09-29/README.md) and
+[next stability proposal](../../docs/research/2026-09-29-coverage-replication-plan.md).
+
+After reproducing coverage and diagnostic preparation, check the public evidence:
+
+```sh
+python research/liftcut-agent/publish_state_coverage.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --prepared-dir NEW_COVERAGE_DIRECTORY --diagnostic-dir VERIFIED_DIAGNOSTIC_DIRECTORY --check-publication
+python research/liftcut-agent/audit_coverage_tokens.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --tokenizer-dir TOKENIZER_DIRECTORY --check research/liftcut-agent/reports/qwen-state-coverage-2026-09-29/generation-token-audit.json
+python research/liftcut-agent/coverage_case_study.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --prepared-dir NEW_COVERAGE_DIRECTORY --diagnostic-dir VERIFIED_DIAGNOSTIC_DIRECTORY --panel normal --case r2-05-missing_days --output NEW_CASE.md
+```
+
+Token reconstruction needs the pinned `requirements-tokenizer.txt`; plotting is
+optional via `requirements-analysis.txt` and `plot_state_coverage.py`. Core replay
+and 281 regression tests run without model weights or a GPU. New seed43/44 execution
+is a separate preparation task; do not reopen a server just to read or replay these results.

@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
-  An open-source fitness tracker and structured AI planning research project by <a href="https://townzc.github.io/">Zhice Tang</a>.
+  An open-source fitness application and tool-using agent research project by <a href="https://townzc.github.io/">Zhice Tang</a>.
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
   ·
   <strong><a href="https://www.liftcuttracker.com/demo">🏋️ No-sign-in beginner demo</a></strong>
   ·
-  <a href="docs/LiftCut-Coach-Technical-Report.md">📄 Technical report</a>
+  <a href="docs/AGENT_RESEARCH_PROGRESS.md">🔬 Agent research and evidence</a>
   ·
   <a href="https://townzc.github.io/">👤 Author</a>
 </p>
@@ -35,7 +35,7 @@ LiftCut brings workout completion, exercise performance, food logs, body trends,
 
 | Product | AI system | Research result | Delivery |
 | --- | --- | --- | --- |
-| Training, nutrition, body trends, onboarding, guest mode, and PDF export | DeepSeek, OpenAI-compatible APIs, or local vLLM behind one provider layer | LiftCut-Coach LoRA: **100% final schema pass** and **99.66% constraint pass** on 293 held-out cases | Deployed Next.js app with Supabase Auth, Postgres, Storage, and RLS |
+| Training, nutrition, body trends, onboarding, guest mode, and PDF export | Typed tools, explicit confirmation, temporal memory and replayable state transitions | Qwen3-4B QLoRA with matched-target ablations and auditable development failures; independent evaluation pending | Web application plus a standalone [Python research lab](research/liftcut-agent/README.md) |
 
 > **Try it first:** the [public beginner demo](https://www.liftcuttracker.com/demo) works without an account or AI key.
 
@@ -57,7 +57,7 @@ LiftCut brings workout completion, exercise performance, food logs, body trends,
 
 The demo adapts a small MIT-licensed **text** subset from [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset). LiftCut's hero artwork is original; the reference repository's separately licensed images and videos are not copied. See [third-party notices](THIRD_PARTY_NOTICES.md).
 
-## Structured-output research
+## Historical structured-output research
 
 The repository includes a reproducible LiftCut-Coach research pipeline for dataset validation, train/validation/test splitting, SFT conversion, provider evaluation, and local LoRA serving.
 
@@ -132,12 +132,16 @@ The first full hosted reference (`deepseek-flash`, non-thinking) passed **8/14 p
 
 The next protocol version supports bounded read-only batches and a separately tested pending-approval instruction. Its hosted four-arm live comparison is still pending; 8/14 remains the hosted reference result. The original **59 development decisions / 2,766 target tokens** CPU pipeline has since been followed by actual Qwen3-4B QLoRA pilots on an RTX 4090. The paired recovery-data pilot trained two adapters with **38 optimizer steps and 12,758 supervised tokens each**. Review discovered category hints in fixture IDs, so its original high scores are retained as contaminated diagnostics. See the [executed training, validity correction and next experiment](docs/research/2026-09-29-recovery-results.md); these are not generalization claims.
 
+The subsequent [corrected controlled study](docs/research/2026-09-29-controlled-recovery-results.md) completed normal development tasks at **0/12 (base), 10/12 (clean SFT), and 11/12 (recovery SFT)**. The recovery gain missed its preregistered gate. [Fixed-state diagnostics](docs/research/2026-09-29-state-diagnostic-results.md) then exposed sensitivity to read history and memory order.
+
+The [completed four-arm state-coverage study](docs/research/2026-09-29-state-coverage-results.md) trained matched-target S0/T/M/TM adapters: normal tasks **10/12, 9/12, 11/12, 9/12**. T improves read-history consent from 0/3 to 3/3 in the S0 comparison, while M misses its memory gate and TM adds three unapproved-write attempts, all blocked by the environment. All **124 episodes and 407 native generations** replay; actual adapters were backed up. Training curves, failures and scripted repair diagnostics are public. These are single-seed, reused-development results; stability and independent validation remain pending.
+
 | Phase | Deliverable | Write access |
 | --- | --- | --- |
 | P0 · implemented | Offline development fixtures, strict proposal scoring, evaluation audit | None |
 | P1 · development baselines recorded | Tools, replay, memory, recovery; hosted and local-model comparisons with auditable failures | Simulated confirmation boundary |
-| P2 · GPU pilots executed; data validity correction required | Paired trajectory SFT, exact target-token matching, weight reload and replay audits; clean held-out evidence pending | Offline research |
-| P3 · planned | Matched-token ablation, research report and minimal demonstration | Offline research |
+| P2 · controlled development studies executed | Paired trajectory SFT, corrected identifiers, exact target-token matching, weight reload and replay audits; reserved evaluation pending | Offline research |
+| P3 · in progress | Four-arm state-coverage ablation, research report, independent validation and minimal demonstration | Offline research |
 | P4–P5 · planned | Preference optimization; one online RL or visual-understanding extension | Product writes require confirmed proposals |
 
 Read the [research quickstart](research/liftcut-agent/README.md), [technical roadmap](docs/AGENT_RESEARCH_ROADMAP.md), and [current progress](docs/AGENT_RESEARCH_PROGRESS.md). The earlier [AI Coach blueprint](docs/AI_COACH_AGENT.md) remains a product integration reference; the research roadmap defines implementation order.

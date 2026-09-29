@@ -1,0 +1,15 @@
+{
+  "states": {
+    "consent": 10,
+    "memory": 9
+  },
+  "max_prompt_tokens": 2295,
+  "budget": {
+    "hourly_cny_assumed": 2.18,
+    "max_minutes_from_boot": 60,
+    "inference_cutoff_minutes_from_boot": 35,
+    "compute_proxy_cny": 2.18,
+    "planning_reserve_cny": 3,
+    "storage": "Provider billed separately; no new disk purchase in this window"
+  }
+}

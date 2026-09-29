@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "failures": [],
+  "booted_at_proxy": "2026-09-29T06:21:39.310000+00:00",
+  "deadline": "2026-09-29T09:21:39.310000+00:00",
+  "hourly_cny_assumed": 2.18,
+  "code_commit": "30fd396976a8ab821da0895ca625a677cea89999",
+  "test_episodes": 0,
+  "backup_rule": "Four complete final-adapter training archives plus complete rollout/evidence archive"
+}
