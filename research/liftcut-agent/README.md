@@ -199,7 +199,8 @@ have now run. Review detected category hints in original recovery-v1 record and
 memory IDs. Preserve those artifacts as contaminated diagnostics. The opaque-ID
 probe uses the same tasks and already-trained adapters; it is not corrected
 training or a fresh held-out test. The hosted comparison remains pending its
-execution gate. Next: correct and audit all model-visible data before more SFT.
+execution gate. Recovery-v2 implements corrected model-visible identifiers and
+broader missing-information/error coverage before new SFT.
 
 ## Portable GPU workspace
 
@@ -248,5 +249,22 @@ grade recorded plans only; they neither rerun a model nor change historical scor
 python research/liftcut-agent/review_recovery.py --prepared-dir NEW_PREPARED_DIRECTORY --check
 ```
 
-Next: prepare corrected data and a controlled continuation runner on CPU. The
-planned first window evaluates development tasks only; new GPU work is not ready.
+The [recovery-v2 execution specification](../../docs/research/2026-09-29-controlled-recovery-experiment.md)
+freezes 48 train / 12 development / 48 reserved test cases. Two independent local
+preparations and a server preparation reproduce all paired target tokens and
+controlled prefixes. Its 63-episode first GPU window is development-only; consult
+the [progress log](../../docs/AGENT_RESEARCH_PROGRESS.md) for execution status.
+
+```sh
+python research/liftcut-agent/controlled_recovery.py check
+python research/liftcut-agent/prepare_controlled.py --tokenizer-dir TOKENIZER_DIRECTORY --output-dir NEW_V2_PREPARED_DIRECTORY
+python research/liftcut-agent/audit_controlled.py --run-dir V2_RUN_DIRECTORY --prepared-dir NEW_V2_PREPARED_DIRECTORY
+python research/liftcut-agent/review_controlled.py --run-dir V2_RUN_DIRECTORY --prepared-dir NEW_V2_PREPARED_DIRECTORY
+```
+
+The audit checks actual adapter files by default; `--metadata-only` audits a public
+log bundle. The descriptive review is CPU-only and keeps normal and continuation
+panels separate. `restore_controlled.py` verifies all three archives and actual
+adapters before producing a shutdown acknowledgment. `publish_controlled.py`
+verifies restored weights before selecting public synthetic logs; weights remain
+in the ignored local backup. See the server runbook for the complete sequence.

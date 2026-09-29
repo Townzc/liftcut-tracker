@@ -1,8 +1,10 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 CPU data and
-controlled continuation runner implemented; verify the committed source and
-server reproduction before the 63-episode development window**. GPU results pending.
+Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 formal development
+window running on committed source `036dccab31225796c95ea93286c849784f082b5b`**.
+Server CPU reproduction and all 208 server tests passed before launch; GPU results
+remain pending. The accompanying CPU restoration/review tools do not change this
+frozen training or evaluation source.
 The hosted protocol matrix remains pending.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
@@ -26,8 +28,9 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Current increment: all 208 local CPU tests pass (207-test full suite plus the
-  complete 11-test controlled-recovery module after adding its final regression).
+- Current increment: all 212 local CPU tests pass, including four new restoration
+  index and clarification-order checks. The executed GPU source passed all 208
+  server tests and all GitHub checks before launch.
   Two independent CPU preparations match all frozen data and token hashes;
   63 live development episodes remain pending. See the
   [execution specification](research/2026-09-29-controlled-recovery-experiment.md).
