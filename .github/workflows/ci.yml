@@ -126,6 +126,9 @@ jobs:
       - name: Independently reconstruct every recorded coverage prompt and decode output IDs
         run: python research/liftcut-agent/audit_coverage_tokens.py --run-dir research/liftcut-agent/reports/qwen-state-coverage-2026-09-29 --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check research/liftcut-agent/reports/qwen-state-coverage-2026-09-29/generation-token-audit.json
 
+      - name: Reproduce the retrospective follow-up design analysis from exact training decisions
+        run: python research/liftcut-agent/analyze_coverage_followup.py --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
