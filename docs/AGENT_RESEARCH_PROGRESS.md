@@ -314,6 +314,7 @@ Implementation: [PR #14](https://github.com/Townzc/liftcut-tracker/pull/14).
   runtime budget. No server-start notice until these gates pass.
 
 Evidence and design: [forensic review](research/2026-09-29-recovery-review-and-next-plan.md).
+Implementation: [PR #15](https://github.com/Townzc/liftcut-tracker/pull/15).
 
 ## Decision log
 
