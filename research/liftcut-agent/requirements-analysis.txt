@@ -1,0 +1,2 @@
+# Optional only for plot_state_coverage.py; CPU audit and tests use stdlib/tokenizer dependencies.
+matplotlib==3.10.9

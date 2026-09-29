@@ -7,6 +7,7 @@ import shutil
 from audit_state_coverage import audit
 from gpu_state_diagnostics import read
 from liftcut_agent.benchmark import read_jsonl
+from publish_recovery import adapter_metadata
 from restore_state_coverage import validate_index
 from review_state_coverage import review
 from server_workspace import dump_new, sha256
@@ -110,7 +111,9 @@ def publish(run, prepared, diagnostic, output):
         shutil.copyfile(run / name, target)
     dump_new(output / "adapter-verification.json", {"weights_published": False,
         "scope": "Actual off-instance adapter files rehashed before publication; public replay verifies metadata only",
-        "files_verified": {a: read(run / "training" / a / "report.json")["adapter_sha256"] for a in ARMS}})
+        "files_verified": {a: read(run / "training" / a / "report.json")["adapter_sha256"] for a in ARMS},
+        "saved_tensor_metadata": {a: adapter_metadata(run / "training" / a / "final/adapter_model.safetensors")
+                                  for a in ARMS}})
     dump_new(output / "review.json", described)
     (output / "README.md").write_text(markdown(described), encoding="utf-8", newline="\n")
     dump_new(output / "publication-manifest.json", {"scope": "Synthetic reused-development evidence, no weights or credentials",
@@ -138,6 +141,11 @@ def verify_publication(run, prepared, diagnostic):
     if (metadata["weights_published"] is not False or metadata["files_verified"] !=
             {a: read(run / "training" / a / "report.json")["adapter_sha256"] for a in ARMS}):
         raise ValueError("public adapter metadata mismatch")
+    tensors = metadata["saved_tensor_metadata"]
+    if set(tensors) != set(ARMS) or any(tensors[a]["sha256"] != metadata["files_verified"][a]["adapter_model.safetensors"]
+            or any(tensors[a][k] != tensors["s0"][k] for k in ("tensor_count", "parameter_count", "dtypes"))
+            for a in ARMS):
+        raise ValueError("saved tensor metadata differs across matched adapters or weight hashes")
     described = review(run, prepared, diagnostic, audited=result)
     if described != read(run / "review.json") or (run / "README.md").read_text(encoding="utf-8") != markdown(described):
         raise ValueError("public coverage review differs from replay")

@@ -58,6 +58,28 @@ def efficiency(episodes, *, diagnostic):
         "latency_p95_seconds": percentile(latency, .95)}
 
 
+def describe_normal(episode):
+    """Report observed validation feedback without inventing an internal model cause."""
+    events = [e for e in episode["trace"]["events"] if e["actor"] == "agent"]
+    validations = []
+    for event in events:
+        if event["action"]["tool"] != "validate_plan":
+            continue
+        observed = event["observation"]
+        if observed["ok"] and observed["result"]["valid"] is False:
+            validations.append({"event_index": event["index"], "issues": observed["result"]["issues"],
+                "submitted_evidence_ids": event["action"]["arguments"]["plan"].get("evidence_ids", [])})
+    return {"scenario_id": episode["scenario_id"],
+        "passed": episode["trace"]["score"]["passed"] and episode["policy_failure"] is None,
+        "outcome": episode["trace"]["score"]["outcome"], "policy_failure": episode["policy_failure"],
+        "action_sequence": [e["action"]["tool"] for e in events],
+        "search_equipment": [e["action"]["arguments"].get("equipment") for e in events if e["action"]["tool"] == "search_exercises"],
+        "invalid_validations": validations,
+        "finish_after_invalid_validation": bool(validations and events[-1]["action"]["tool"] == "finish"
+            and events[-1]["index"] > validations[-1]["event_index"]),
+        "interpretation": "Validation feedback and subsequent actions are observations, not proof of an internal reasoning mechanism"}
+
+
 def review(run, prepared, diagnostic, *, audited=None):
     audited = audit(run, prepared, diagnostic, verify_weights=False) if audited is None else audited
     cases, arms = load_prepared(diagnostic), {}
@@ -87,6 +109,7 @@ def review(run, prepared, diagnostic, *, audited=None):
             "consent_history_contrasts": contrasts,
             "main_memory_value_match_roles": dict(Counter(m["role"] for r in memory for m in r["observed_value_matches"])),
             "normal_failures": [r for r in audited["arms"][arm]["normal"]["results"] if not r["passed"]],
+            "normal_cases": [describe_normal(e) for e in normal],
             "efficiency": {"normal": efficiency(normal, diagnostic=False), "diagnostic": efficiency(probes, diagnostic=True)},
             "actual_model_generations": sum(p["actual_model_generations"] for p in audited["arms"][arm].values()),
             "local_context_guards": sum(p["local_context_guards"] for p in audited["arms"][arm].values()),

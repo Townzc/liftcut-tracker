@@ -1,11 +1,11 @@
-"""Render one verified four-arm diagnostic case for human inspection, without model calls."""
+"""Render one verified four-arm task or diagnostic for inspection, without model calls."""
 import argparse
 import json
 from pathlib import Path
 
 from liftcut_agent.benchmark import read_jsonl
 from publish_state_coverage import verify_publication
-from state_coverage import ARMS
+from state_coverage import ARMS, original
 from state_diagnostics import load_prepared
 
 
@@ -66,16 +66,49 @@ def render(run, diagnostic, reviewed, identity):
     return "\n".join(lines)
 
 
+def render_normal(run, identity):
+    scenarios = original("dev")
+    try:
+        scenario = next(s for s in scenarios if s["id"] == identity)
+    except StopIteration as exc:
+        raise ValueError("unknown normal development task") from exc
+    lines = [f"# 四组完整任务：{identity}", "",
+        "来自已通过清单和回放审计的公开证据；没有新增模型调用。",
+        "本页从初始状态开始展示完整任务，固定状态首个决定的分数不能替代这里的最终得分。", "",
+        "## 相同的初始请求", "", block(scenario["input"]), ""]
+    for arm in ARMS:
+        episodes = read_jsonl(run / "evaluation" / arm / "normal/episodes.jsonl")
+        index = next(i for i, e in enumerate(episodes) if e["scenario_id"] == identity)
+        episode = episodes[index]
+        lines += [f"## {arm.upper()}", "",
+            f"原始证据：`evaluation/{arm}/normal/episodes.jsonl` 第 {index + 1} 行。", "",
+            "最终评分（这是研究者侧评分，不是模型输入）：", "",
+            block({"policy_failure": episode["policy_failure"], **episode["trace"]["score"]}), "",
+            "按发生顺序检查动作与返回。user 事件来自模拟用户，不能归因于模型自行完成。", ""]
+        for event in episode["trace"]["events"]:
+            lines += [f"### 事件 {event['index']} · {event['actor']}", "",
+                      block({k: event[k] for k in ("action", "observation") if k in event}), ""]
+    lines += ["## 自己复盘", "",
+        "1. 找到四组第一次产生不同行为的位置，当时哪些信息已经通过工具或用户事件出现？",
+        "2. 记忆是否确认、是否过期、revision 多大，与实际搜索或计划的参数是否一致？",
+        "3. validate_plan 的反馈到底说明不可行，还是当前提案参数错误？",
+        "4. 最后的 finish 标签和实际授权/写入状态是否相符？",
+        "5. 固定状态测试与此任务在哪些上下文上不同，为什么不能互相替代？", ""]
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("run-dir", "prepared-dir", "diagnostic-dir", "output"):
         p.add_argument("--" + name, type=Path, required=True)
     p.add_argument("--case", required=True)
+    p.add_argument("--panel", choices=("diagnostic", "normal"), default="diagnostic")
     args = p.parse_args()
     if args.output.exists():
         p.error("new output file required")
     reviewed = verify_publication(args.run_dir, args.prepared_dir, args.diagnostic_dir)
-    content = render(args.run_dir, args.diagnostic_dir, reviewed, args.case)
+    content = (render(args.run_dir, args.diagnostic_dir, reviewed, args.case) if args.panel == "diagnostic"
+               else render_normal(args.run_dir, args.case))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(content, encoding="utf-8", newline="\n")
-    print(json.dumps({"case": args.case, "verified_source": True, "model_calls": 0, "output": str(args.output)}))
+    print(json.dumps({"case": args.case, "panel": args.panel, "verified_source": True, "model_calls": 0, "output": str(args.output)}))
