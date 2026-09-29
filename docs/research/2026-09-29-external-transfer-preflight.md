@@ -17,8 +17,19 @@
 [官方类别](https://github.com/ShishirPatil/gorilla/blob/main/berkeley-function-call-leaderboard/TEST_CATEGORIES.md)
 
 官方榜单当前页面注明用于复现的短 commit `f7cf735` 与包版本 `bfcl-eval==2025.12.17`。
-正式准备时须解析完整 commit，并固定代码、数据、评分器和 handler 哈希；不能一边
+已通过官方 GitHub commit API 解析为
+`f7cf7359b7ac615a0b294831c5ba2bc95ee4a000`（2025-12-17T03:55:00Z）；
+该固定提交的 README 也确认支持 run-ids 与 partial-eval。
+正式准备时须固定该提交的代码、数据、评分器和 handler 哈希；不能一边
 使用最新版数据，一边声称复现旧榜单。[官方版本说明](https://gorilla.cs.berkeley.edu/leaderboard.html)
+[完整提交](https://github.com/ShishirPatil/gorilla/commit/f7cf7359b7ac615a0b294831c5ba2bc95ee4a000)、
+[固定版本 README](https://github.com/ShishirPatil/gorilla/blob/f7cf7359b7ac615a0b294831c5ba2bc95ee4a000/berkeley-function-call-leaderboard/README.md)
+
+固定版本的可选 vLLM 依赖为 0.8.5，并有独立的数值/解析依赖。不要直接装进当前
+torch 2.8.0 训练环境：未来将评分环境隔离，优先保留现有已验证推理路径，再实现
+明确的协议适配。如果采用另一个推理后端，先做数值和协议对照，单独标记配置差异。
+本次只读取版本元数据和文档，没有安装依赖。
+[固定版本依赖声明](https://github.com/ShishirPatil/gorilla/blob/f7cf7359b7ac615a0b294831c5ba2bc95ee4a000/berkeley-function-call-leaderboard/pyproject.toml)
 
 官方仓库许可证和数据卡均标注 Apache-2.0。实际分发选定文件前仍保留该版本的
 LICENSE、现有归属信息及修改说明。本轮只读取文档，不复制 benchmark 题目。
