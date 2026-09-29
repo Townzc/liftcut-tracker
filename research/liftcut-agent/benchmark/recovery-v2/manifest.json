@@ -1,0 +1,17 @@
+{
+  "version": "recovery-v2",
+  "scope": "Same-author synthetic bundle holdout; shared templates",
+  "files": {
+    "train.jsonl": "970b0f7fcd1af79c38576b61516eafe560f4e8f0d6e3aec2192ccaef8fee44a5",
+    "dev.jsonl": "009e2093b1a06876f83e5b5a64c3bafd2cf1aff6a77b24f0ed558e9c4b3e94bf",
+    "test.jsonl": "7485de3ec860262bb96d127cb42fafa15895aeaa47070c532cce1411becd9119"
+  },
+  "catalog_sha256": "bf415c27340d3687062d1740b5fcbc1563db5e0837715c5cf5fcc9d95c3d0478",
+  "counts": {
+    "train": 48,
+    "dev": 12,
+    "test": 48
+  },
+  "test_rule": "Contract validation only until candidate frozen after development; no test rollout in first window",
+  "external_validation": false
+}

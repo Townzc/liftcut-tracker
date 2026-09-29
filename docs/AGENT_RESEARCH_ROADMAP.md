@@ -62,8 +62,10 @@ reliable held-out performance. The next gate is corrected model-visible data and
 fresh evaluation before more training; see the [result review](research/2026-09-29-recovery-results.md).
 The [deeper review and next design](research/2026-09-29-recovery-review-and-next-plan.md)
 now separates clean-start task performance from controlled error-prefix recovery.
-Its 48 train / 12 dev / 48 reserved test tasks are design targets, not prepared data.
-The next GPU window is development-only and remains gated on CPU preparation.
+Its 48 train / 12 dev / 48 reserved test tasks are now frozen and CPU-reproduced.
+The next GPU window is development-only. The [execution specification](research/2026-09-29-controlled-recovery-experiment.md)
+now records the implemented CPU data/prefix pipeline and exact matched token budget;
+server verification and live model results remain pending.
 The formal data study and reliable held-out comparison remain pending. See the
 [data pipeline](research/2026-09-28-protocol-and-data-pipeline.md),
 [GPU pilot evidence](research/2026-09-28-gpu-pilot.md) and
@@ -164,9 +166,11 @@ and health outcomes are not automatic ground truth.
   controlled post-error continuations. Plan 36 normal development episodes and
   27 continuations across an unadapted reference and two fresh SFT arms. Reserve
   test evaluation until a useful development signal and a fixed candidate exist.
-  Data, continuation runner and exact CPU token budget are not prepared yet.
-  Provisionally retain a two-hour boot-relative window at CNY 4.36 compute and
-  CNY 10 total planning reserve; stop computation at minute 90 for backup/shutdown.
+  Data and controlled continuation runner are now implemented; each arm uses
+  26,052 target tokens, 648 decisions and 81 updates. The maintainer requested
+  retaining the already-started replacement instance through the experiment.
+  The revised boot-relative limit is four hours (CNY8.72 compute at the prior quote,
+  CNY10 total planning reserve), including setup and a final 30-minute backup margin.
 - Use [immutable server checkouts and artifact manifests](research/AUTODL_RUNBOOK.md)
   when AutoDL instances change; keep model caches separate and copy critical
   checkpoints off-instance before shutdown/release.

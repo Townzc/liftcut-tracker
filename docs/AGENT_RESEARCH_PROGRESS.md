@@ -1,8 +1,8 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **P2 forensic review completed;
-prepare corrected data and fixed-error continuation evaluation on CPU before
-the next development-only GPU window**. New data and runner are not ready.
+Last updated: 2026-09-29 UTC. Active milestone: **P2 recovery-v2 CPU data and
+controlled continuation runner implemented; verify the committed source and
+server reproduction before the 63-episode development window**. GPU results pending.
 The hosted protocol matrix remains pending.
 Canonical plan: [research roadmap](AGENT_RESEARCH_ROADMAP.md).
 P0 delivery: [PR #7](https://github.com/Townzc/liftcut-tracker/pull/7).
@@ -26,7 +26,12 @@ Portable AutoDL workspace, GPU pilot and diagnostic evidence: [PR #12](https://g
 
 ## Verification evidence
 
-- Latest increment: 197 local CPU tests pass; the new forensic report reproduces
+- Current increment: all 208 local CPU tests pass (207-test full suite plus the
+  complete 11-test controlled-recovery module after adding its final regression).
+  Two independent CPU preparations match all frozen data and token hashes;
+  63 live development episodes remain pending. See the
+  [execution specification](research/2026-09-29-controlled-recovery-experiment.md).
+- Previous increment: 197 local CPU tests pass; the new forensic report reproduces
   from both previously prepared directories and replays all 144 recovery/probe
   episodes. No new GPU/API execution or adapter-file verification. The previous
   increment verified 87 full-backup files off-instance. See the
@@ -345,6 +350,8 @@ Implementation: [PR #15](https://github.com/Townzc/liftcut-tracker/pull/15).
 | 2026-09-29 | Prioritize data correction and clarification coverage before larger training | Both original SFT arms fail all three partial-clarification cases; mixed data does not improve original task success |
 | 2026-09-29 | Add identical post-error starts and gate test evaluation on development evidence | Reset-only evaluation does not isolate recovery; injected training errors omit invalid validation, and missing information is confounded with memory updates |
 | 2026-09-29 | Preserve narrow score definitions and report masked failures separately | wrong_action masks equipment errors; tool exception count misses valid:false; evidence IDs do not enforce citation of selected memory |
+| 2026-09-29 | Keep the replacement instance for the full controlled development experiment | Maintainer explicitly superseded migration-only early shutdown; use a boot-relative four-hour CNY8.72 compute proxy within the CNY10 planning reserve, including preparation |
+| 2026-09-29 | Prepare recovery-v2 and transfer final adapters during evaluation | 48 train / 12 dev / 48 reserved test, two CPU reproductions, 26,052 matched target tokens per arm; three error types, nine exact prefixes; early per-arm archives reduce late transfer risk |
 
 ## Update protocol
 

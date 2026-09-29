@@ -26,6 +26,7 @@ jobs:
           python research/liftcut-agent/benchmark/build_dev_seeds.py --check
           python research/liftcut-agent/benchmark/build_interactive_seeds.py --check
           python research/liftcut-agent/recovery_dataset.py check
+          python research/liftcut-agent/controlled_recovery.py check
 
       - name: Validate development scenarios
         run: |
@@ -98,6 +99,8 @@ jobs:
         run: python research/liftcut-agent/audit_recovery.py --run-dir research/liftcut-agent/reports/qwen-recovery-pilot-2026-09-28 --prepared-dir research/liftcut-agent/outputs/ci-recovery-prepared --metadata-only
       - name: Reproduce coverage and masked-failure forensic review
         run: python research/liftcut-agent/review_recovery.py --prepared-dir research/liftcut-agent/outputs/ci-recovery-prepared --check
+      - name: Reproduce corrected data, error prefixes and paired recovery-v2 tokens
+        run: python research/liftcut-agent/prepare_controlled.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-controlled-prepared
 
   quality:
     runs-on: ubuntu-latest

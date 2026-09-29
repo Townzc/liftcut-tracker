@@ -22,14 +22,20 @@ def main():
     parser.add_argument("--prepared-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--arm", choices=("clean", "mixed"), required=True)
+    parser.add_argument("--study", choices=("v1", "v2"), default="v1")
     parser.add_argument("--allow-gpu", action="store_true")
     args = parser.parse_args()
     if not args.allow_gpu:
         parser.error("--allow-gpu required")
     if args.output_dir.exists() or command(["git", "status", "--porcelain"], ROOT):
         raise ValueError("new output and clean committed source required")
-    plan = verify_prepared(args.prepared_dir)
-    schedule, tokens, _ = schedules(args.prepared_dir)
+    if args.study == "v2":
+        from prepare_controlled import verify_prepared as verify_v2, schedules as schedules_v2
+        plan = verify_v2(args.prepared_dir)
+        schedule, tokens, _ = schedules_v2(args.prepared_dir)
+    else:
+        plan = verify_prepared(args.prepared_dir)
+        schedule, tokens, _ = schedules(args.prepared_dir)
     rows = [tokens[item["variant"]][item["index"]] for item in schedule[args.arm]]
     pinned = json.loads((ROOT / "configs/qwen3-4b-tokenizer.json").read_text(encoding="utf-8"))
     manifest = json.loads(args.model_manifest.read_text(encoding="utf-8"))
@@ -118,7 +124,9 @@ def main():
             log.write(encode(record) + "\n")
             log.flush()
             print(encode(record), flush=True)
-            if len(losses) % 10 == 0:
+            # The short v2 window exports final adapters early for off-instance
+            # transfer. No exact-resume claim; v1 checkpoint behavior is retained.
+            if args.study == "v1" and len(losses) % 10 == 0:
                 model.save_pretrained(args.output_dir / f"checkpoint-{len(losses)}", safe_serialization=True)
     elapsed = time.monotonic() - started
     changed = sum(not torch.equal(initial[name], p.detach().cpu()) for name, p in model.named_parameters() if p.requires_grad)
