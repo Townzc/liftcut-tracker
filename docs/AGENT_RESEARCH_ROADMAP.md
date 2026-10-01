@@ -1,6 +1,6 @@
 # LiftCut-AgentLab research roadmap
 
-Updated: 2026-09-29 UTC. Status: approved direction; milestones below are targets.
+Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).
 The remaining first-release schedule and evidence gates are maintained in
 [research release criteria](research/2026-09-29-research-release-criteria.md).
@@ -85,9 +85,11 @@ Next: [follow-up design v2](research/2026-09-29-followup-experiment-design-v2.md
 four-arm seed43/44 replication, separates screening from candidate admission, adds
 counterbalanced value/position/identity diagnostics, and conditionally tests one
 feedback-repair data factor. The [original replication proposal](research/2026-09-29-coverage-replication-plan.md)
-is preserved; new runners still need CPU/Git preparation. Original gates remain
-unchanged. Frozen-candidate and independent validation follow; no new training,
-reserved evaluation or paid API call is part of the design-only increment.
+is preserved. [Versioned R1 execution and handoff](research/2026-10-01-coverage-replication-execution.md)
+now implement seed pairing, exact provenance, bounded windows and independently
+verified backup ACKs. CPU/CI evidence precedes the next seed43 window; no new GPU
+experiment has run in this increment. Original gates remain unchanged.
+Frozen-candidate and independent validation follow.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the

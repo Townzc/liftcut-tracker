@@ -129,6 +129,21 @@ jobs:
       - name: Reproduce the retrospective follow-up design analysis from exact training decisions
         run: python research/liftcut-agent/analyze_coverage_followup.py --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --check
 
+      - name: Reproduce seed42 equivalence and seed43/44 preparation twice without GPU
+        run: |
+          for COPY in a b; do
+            python research/liftcut-agent/prepare_coverage_replication.py --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --output-dir research/liftcut-agent/outputs/ci-replication-$COPY
+          done
+          diff -r research/liftcut-agent/outputs/ci-replication-a research/liftcut-agent/outputs/ci-replication-b
+          python research/liftcut-agent/prepare_coverage_replication.py --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --output-dir research/liftcut-agent/outputs/ci-replication-a --verify-only
+
+      - name: Verify both bounded replication plans without process launch or GPU
+        run: |
+          for SEED in 43 44; do
+            python research/liftcut-agent/run_coverage_replication_window.py --model-dir model --model-manifest manifest --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --replication-dir research/liftcut-agent/outputs/ci-replication-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-replication-dry-$SEED --seed "$SEED" --expected-code-commit "$(git rev-parse HEAD)" --hourly-cny 2.18
+            test ! -e research/liftcut-agent/outputs/ci-replication-dry-$SEED
+          done
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
