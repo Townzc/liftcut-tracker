@@ -144,6 +144,64 @@ jobs:
             test ! -e research/liftcut-agent/outputs/ci-replication-dry-$SEED
           done
 
+      - name: Verify seed43 public evidence and reproduce its descriptive review
+        run: |
+          python research/liftcut-agent/publish_coverage_replication.py \
+            --run-dir research/liftcut-agent/reports/qwen-coverage-replication-seed43-2026-10-01 \
+            --prepared-dir research/liftcut-agent/outputs/ci-state-coverage \
+            --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics \
+            --replication-dir research/liftcut-agent/outputs/ci-replication-a \
+            --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer \
+            --seed 43 --check-publication --allow-missing-weights
+
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+
+          root = Path("research/liftcut-agent")
+          sys.path[:0] = [str(root), str(root / "src")]
+          from prepare_coverage_replication import ARMS, read
+          from review_coverage_replication_seed import summarize, training_observation
+          from server_workspace import sha256
+
+          run = root / "reports/qwen-coverage-replication-seed43-2026-10-01"
+          historical = root / "reports/qwen-state-coverage-2026-09-29"
+          review_path = root / "reports/coverage-replication-seed43-review-2026-10-01.json"
+          assert sum(p.is_file() for p in run.rglob("*")) == 81
+
+          # Earlier CI steps verified both public evidence bundles. These are
+          # unchanged historical audit records, not new weight verification.
+          derived = summarize(
+              43, read(run / "comparison.json"),
+              read(historical / "comparison.json"),
+          )
+          derived["training"] = {
+              arm: training_observation(run / "training" / arm)
+              for arm in ARMS
+          }
+          derived["source_sha256"] = {
+              "seed42_comparison": sha256(historical / "comparison.json"),
+              "current_comparison": sha256(run / "comparison.json"),
+          }
+
+          saved = read(review_path)
+          recorded_verification = saved.pop("verification")
+          assert recorded_verification == {
+              "current_actual_weights": True,
+              "current_native_and_environment_replay": True,
+              "current_token_ids": True,
+              "seed42_metadata_replay": True,
+              "seed42_actual_weights_rechecked": False,
+          }, "Historical local verification attestation changed"
+          assert derived == saved, "Published single-seed review differs from evidence"
+          print({
+              "derived_review_reproduced": True,
+              "actual_weights_verified_in_this_ci_run": False,
+              "historical_weight_attestation_preserved": True,
+              "new_model_calls": 0,
+          })
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -1,0 +1,80 @@
+{
+  "scope": "Operator observations, separate from model results and the genuine local restore receipt",
+  "run_binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 43,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "b7259da39fb62cc8741e44905d26da6002ef2a50456ee28fb5a74ec31b3a2115",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+  },
+  "research_phases_status": "complete",
+  "local_complete_restore": {
+    "verified_event_at_utc": "2026-10-01T20:59:18.302040+00:00",
+    "archives": 5,
+    "archive_inventory_entries": 100,
+    "episodes_replayed": 124,
+    "actual_weights_verified": true,
+    "token_ids_verified": true,
+    "test_episodes": 0,
+    "receipt_sha256": "1fbae3ce07791f2f32152ff2d663191d7728e5e96b651216ac8621094b2ad692"
+  },
+  "receipt_transfer": {
+    "attempted": true,
+    "client_confirmed_upload": false,
+    "server_acceptance": "unknown",
+    "connection_loss_at_utc": "2026-10-01T20:59:18.701492+00:00",
+    "error": "SSHException",
+    "message": "Server connection dropped: ",
+    "limit": "SFTP disconnected during put; a complete remote receipt may have been accepted before confirmation, but no server acceptance receipt was captured"
+  },
+  "shutdown_observations": {
+    "ssh_observer": "Remote host closed the existing SSH connection; no backup-copy-status or shutdown-request JSON captured",
+    "rpc_observer": "Existing SSH session not active",
+    "subsequent_tcp_check": {
+      "tcp_test_succeeded": false,
+      "observed_between_utc": [
+        "2026-10-01T21:03:21+00:00",
+        "2026-10-01T21:05:10+00:00"
+      ],
+      "source": "One read-only Test-NetConnection check of the current experiment SSH endpoint; endpoint omitted"
+    },
+    "shutdown_command_return_observed": false,
+    "provider_power_state_verified": false,
+    "provider_billing_stop_verified": false,
+    "platform_confirmation": "Requested from the user; pending",
+    "limit": "Connection loss and an unreachable SSH port do not prove provider power or billing stop"
+  },
+  "budget": {
+    "booted_at_proxy": "2026-10-01T18:47:08.490000+00:00",
+    "work_cutoff": "2026-10-01T21:17:08.490000+00:00",
+    "hard_deadline": "2026-10-01T21:47:08.490000+00:00",
+    "hourly_cny_assumed": 2.18,
+    "planned_compute_proxy_cap_cny": 6.54,
+    "reserve_cny": 8,
+    "boot_to_connection_loss_seconds": 7930.211492,
+    "compute_proxy_to_connection_loss_cny": 4.802183625711112,
+    "compute_proxy_to_failed_port_check_upper_observation_cny": 5.014914388888889,
+    "actual_provider_bill_cny": null,
+    "storage_cost_cny": null,
+    "limit": "Elapsed-time proxies at the user-supplied rate, not an invoice, actual power-off time, or verified final spending cap"
+  },
+  "unchanged_boundaries": {
+    "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed44_executed": false,
+    "reserved_test_episodes": 0,
+    "reserved_task_count": 48,
+    "extra_paid_api_calls": 0,
+    "server_restarted_for_logs": false
+  },
+  "evidence_sha256": {
+    "events.jsonl": "a096e9ee10b393583a924b77633f1fac6d272808f614d394c4887443644ffa8d",
+    "../qwen-coverage-replication-seed43-2026-10-01/window-status.json": "34855a7a6bde5915b4c259780972328d10bdbcd95c3e14a20b5121833c5ece28"
+  },
+  "event_publication": {
+    "normalization": "CRLF to LF only, matching repository attributes; parsed records unchanged",
+    "local_original_sha256": "3698577ae760f7eb588bdd904fec286722bb4c1bd2e71ddcb712941ec09c45af",
+    "published_sha256": "a096e9ee10b393583a924b77633f1fac6d272808f614d394c4887443644ffa8d"
+  }
+}

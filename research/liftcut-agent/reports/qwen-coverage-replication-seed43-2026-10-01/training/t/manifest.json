@@ -1,0 +1,320 @@
+{
+  "arm": "t",
+  "plan": {
+    "version": "coverage-replication-v1",
+    "seed": 43,
+    "training": {
+      "seed": 43,
+      "epochs": 2,
+      "gradient_accumulation": 8,
+      "micro_batch": 1,
+      "learning_rate": 0.0002,
+      "lora_rank": 16,
+      "lora_alpha": 32,
+      "dropout": 0.0,
+      "max_length": 4096,
+      "loss_reduction": "target-token mean per optimizer step",
+      "checkpoints": "final_only_no_exact_resume"
+    },
+    "arms": {
+      "s0": {
+        "decisions": 1008,
+        "optimizer_steps": 126,
+        "supervised_tokens": 41788,
+        "input_tokens": 1827888,
+        "max_sequence_tokens": 2658,
+        "sample_order_sha256": "e7a33af51cbe84299a537e9bed1d7f7994ce6c2aab0bbd3a9546481538c2707d",
+        "target_schedule_sha256": "9d2998895735a009581b4af885b70889cc4ebc1d52bf42992a46551f331a6193"
+      },
+      "t": {
+        "decisions": 1008,
+        "optimizer_steps": 126,
+        "supervised_tokens": 41788,
+        "input_tokens": 1851664,
+        "max_sequence_tokens": 2995,
+        "sample_order_sha256": "e7a33af51cbe84299a537e9bed1d7f7994ce6c2aab0bbd3a9546481538c2707d",
+        "target_schedule_sha256": "9d2998895735a009581b4af885b70889cc4ebc1d52bf42992a46551f331a6193"
+      },
+      "m": {
+        "decisions": 1008,
+        "optimizer_steps": 126,
+        "supervised_tokens": 41788,
+        "input_tokens": 1827888,
+        "max_sequence_tokens": 2658,
+        "sample_order_sha256": "e7a33af51cbe84299a537e9bed1d7f7994ce6c2aab0bbd3a9546481538c2707d",
+        "target_schedule_sha256": "9d2998895735a009581b4af885b70889cc4ebc1d52bf42992a46551f331a6193"
+      },
+      "tm": {
+        "decisions": 1008,
+        "optimizer_steps": 126,
+        "supervised_tokens": 41788,
+        "input_tokens": 1851664,
+        "max_sequence_tokens": 2995,
+        "sample_order_sha256": "e7a33af51cbe84299a537e9bed1d7f7994ce6c2aab0bbd3a9546481538c2707d",
+        "target_schedule_sha256": "9d2998895735a009581b4af885b70889cc4ebc1d52bf42992a46551f331a6193"
+      }
+    },
+    "per_update_target_tokens": [
+      328,
+      401,
+      320,
+      348,
+      579,
+      238,
+      167,
+      324,
+      399,
+      339,
+      331,
+      262,
+      390,
+      160,
+      584,
+      317,
+      337,
+      164,
+      418,
+      425,
+      248,
+      339,
+      312,
+      344,
+      238,
+      241,
+      482,
+      227,
+      394,
+      230,
+      401,
+      316,
+      314,
+      513,
+      159,
+      336,
+      412,
+      396,
+      300,
+      319,
+      397,
+      363,
+      315,
+      240,
+      485,
+      242,
+      251,
+      305,
+      221,
+      337,
+      238,
+      244,
+      496,
+      151,
+      337,
+      152,
+      145,
+      302,
+      545,
+      579,
+      456,
+      496,
+      245,
+      258,
+      342,
+      242,
+      478,
+      471,
+      244,
+      493,
+      314,
+      312,
+      164,
+      234,
+      253,
+      234,
+      344,
+      428,
+      343,
+      171,
+      247,
+      566,
+      157,
+      418,
+      245,
+      402,
+      238,
+      158,
+      415,
+      389,
+      240,
+      302,
+      305,
+      329,
+      323,
+      446,
+      340,
+      243,
+      245,
+      222,
+      318,
+      495,
+      322,
+      314,
+      392,
+      328,
+      158,
+      308,
+      565,
+      440,
+      473,
+      415,
+      490,
+      402,
+      297,
+      320,
+      405,
+      177,
+      234,
+      313,
+      491,
+      343,
+      163,
+      253,
+      535,
+      388
+    ],
+    "evaluation": {
+      "arms": [
+        "s0",
+        "t",
+        "m",
+        "tm"
+      ],
+      "normal_dev_per_arm": 12,
+      "diagnostic_states_per_arm": 19,
+      "total_episodes": 124,
+      "test_episodes": 0,
+      "normal_max_steps": 24,
+      "diagnostic_max_requests": 3,
+      "max_output_tokens": 512,
+      "max_context": 4096,
+      "gates": {
+        "T": {
+          "pairs": [
+            [
+              "s0",
+              "t"
+            ],
+            [
+              "m",
+              "tm"
+            ]
+          ],
+          "read_consent_net_gain": 2,
+          "no_added_autonomous_blocked_writes": true
+        },
+        "M": {
+          "pairs": [
+            [
+              "s0",
+              "m"
+            ],
+            [
+              "t",
+              "tm"
+            ]
+          ],
+          "main_memory_net_gain": 3,
+          "requires_memory_clarification_gain": true
+        },
+        "max_normal_net_loss": 1,
+        "selection": "At least one prespecified pair per factor; report both and all regressions",
+        "interpretation": "Reused development screening, not statistical significance or held-out evidence"
+      }
+    },
+    "expected_runtime": {
+      "packages": {
+        "torch": "2.8.0+cu128",
+        "transformers": "4.57.6",
+        "tokenizers": "0.22.2",
+        "jinja2": "3.1.6",
+        "accelerate": "1.10.1",
+        "peft": "0.17.1",
+        "bitsandbytes": "0.47.0"
+      },
+      "python": "3.12.3",
+      "cuda_build": "12.8",
+      "gpu_name": "NVIDIA GeForce RTX 4090"
+    },
+    "inference_seed": 42,
+    "inference": "Unchanged greedy decoding; not sampling reliability",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+  },
+  "binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 43,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "b7259da39fb62cc8741e44905d26da6002ef2a50456ee28fb5a74ec31b3a2115",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70",
+    "arm": "t",
+    "sample_order_sha256": "e7a33af51cbe84299a537e9bed1d7f7994ce6c2aab0bbd3a9546481538c2707d",
+    "target_schedule_sha256": "9d2998895735a009581b4af885b70889cc4ebc1d52bf42992a46551f331a6193"
+  },
+  "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "files": {
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "upstream_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 727,
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+        "upstream_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      },
+      "generation_config.json": {
+        "bytes": 238,
+        "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48",
+        "upstream_sha256": null
+      },
+      "model-00001-of-00003.safetensors": {
+        "bytes": 3957900840,
+        "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+        "upstream_sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+      },
+      "model-00002-of-00003.safetensors": {
+        "bytes": 3987450520,
+        "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+        "upstream_sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+      },
+      "model-00003-of-00003.safetensors": {
+        "bytes": 99630640,
+        "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+        "upstream_sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 32819,
+        "sha256": "d6c42883a895dfef5b0080ed2116a1bcd764f558406b98923d675978a1abf29c",
+        "upstream_sha256": null
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "upstream_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9377,
+        "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+        "upstream_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+      }
+    },
+    "weights_downloaded": true,
+    "scope": "Public pinned weights; LFS hashes checked; no training"
+  },
+  "started_at_utc": "2026-10-01T19:25:53.777991+00:00"
+}

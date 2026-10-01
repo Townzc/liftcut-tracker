@@ -1,0 +1,9 @@
+{
+  "study_version": "coverage-replication-v1",
+  "seed": 43,
+  "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+  "seed_plan_sha256": "b7259da39fb62cc8741e44905d26da6002ef2a50456ee28fb5a74ec31b3a2115",
+  "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+  "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+  "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+}

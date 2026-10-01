@@ -1,26 +1,60 @@
 # Agent research progress and handoff
 
-## Active execution: R1 seed43, 2026-10-01 UTC
+## Current: seed43 completed and restored; seed44 pending
 
-The user opened the retained RTX4090 instance. The fixed `f18cb5820881a048b19b6007fc4ca231dfd64de9`
-checkout passed its runtime/input checks and started the four-arm controller at
-18:55:11.721 UTC, 483.229 seconds after the recorded PID1 boot proxy. Work cutoff:
-21:17:08.490 UTC; independent hard shutdown: 21:47:08.490 UTC. Price assumption remains
-the user's CNY2.18/hour, CNY6.54 compute proxy/CNY8 reserve, storage separate.
+Updated 2026-10-01 UTC. The frozen `f18cb5820881a048b19b6007fc4ca231dfd64de9`
+four-arm experiment completed. Five archives, actual weights, all124 native/environment
+replays and409 recorded generations passed local recovery/token verification. The
+[results and next steps](research/2026-10-01-coverage-replication-seed43-results.md),
+[81-file public evidence](../research/liftcut-agent/reports/qwen-coverage-replication-seed43-2026-10-01/README.md)
+and [single-seed review](../research/liftcut-agent/reports/coverage-replication-seed43-review-2026-10-01.json)
+retain every gain and regression. This is the second completed training seed, not
+three-seed replication or an independent-task evaluation.
 
-S0 optimization is in progress. No complete new arm or model score is claimed yet.
-The local operator downloads completed arm archives early and issues a shutdown ACK
-only after actual weights, 124 native/environment replays and token reconstruction
-pass the frozen restore entrypoint. Local operational state is in ignored
-`outputs/autodl/HANDOFF.md`; no credentials or endpoint are published.
+| seed43 arm | Full task | Read-history consent | Main memory | All consent | Blocked writes |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| S0 | 11/12 | 0/3 | 4/8 | 7/10 | 0 |
+| T | 11/12 | 3/3 | 6/8 | 10/10 | 0 |
+| M | 12/12 | 1/3 | 2/8 | 8/10 | 0 |
+| TM | 11/12 | 3/3 | 2/8 | 10/10 | 0 |
 
-Separate CPU publication and per-seed review tools are being prepared locally; they
-are not deployed to the running experiment. All 322 local tests pass (149.556s).
-This run does not include seed44, D2, G1, paid API calls or reserved evaluation.
-The ready-state record below is retained as the pre-launch handoff.
+Both original T pairs pass in seed43; neither M pair does. S0→T main-memory effect
+changes from−2 in seed42 to+2 in seed43. M→TM has net-zero memory with two gains and
+two losses; T→TM loses four memory cases. T meets the necessary candidate protections
+in seed43 only; seed42 regressions remain. Do not promote a version or replace the
+fixed seed42 representative checkpoint with the more favorable seed43.
 
-Last updated: 2026-10-01 (project work date). Active milestone: **R1 versioned
-seed43/44 execution implemented; CPU/Git verification before the next GPU window**.
+Local restoration completed20:59:18 UTC. The connection dropped during genuine
+receipt upload; client confirmation, remote ACK consumption and shutdown return
+were not captured. A subsequent SSH-port check failed. **Provider power/billing
+stop remains unverified**, and user platform confirmation is pending. No reboot for
+logs. Boot-to-disconnection compute proxy≈CNY4.80 at CNY2.18/hour, or≈CNY5.01 through
+the later failed-port-check observation bound; neither is an invoice or final cost.
+Storage is unknown/separate. Original150/180-minute deadlines were not extended.
+[Operation observations](../research/liftcut-agent/reports/coverage-replication-seed43-operations-2026-10-01/observations.json).
+
+Publication/review code passed322 local tests; real public replay independently
+passes124 episodes and token reconstruction while explicitly omitting private
+weights. CI now checks the new evidence and exactly reproduces the derived review.
+Final exact-head CI and merge status are recorded by [PR #23](https://github.com/Townzc/liftcut-tracker/pull/23).
+The GPU never ran the later CPU analysis changes.
+
+Next: confirm platform closure, finish Git delivery, then prepare the separate
+seed44 window with the same four arms and original CNY8 reserve. First verify a
+real-receipt atomic upload/observation procedure offline; no current server launch.
+Do not cancel44 because43 looks better or worse. After44, run the required three-seed
+review; D2/G1 remain conditional and48 reserved tasks remain unused. Keep the common
+feasible time budget explicit before D2 value-cycle preparation. No extra paid API
+call, disk expansion or new model download occurred in this window.
+
+## Pre-launch R1 handoff (historical record)
+
+The following readiness and earlier study entries are retained as historical
+context. Their “next” and “not yet run” statements describe those earlier stages;
+the section above is the current handoff.
+
+Recorded 2026-10-01 before launch. Milestone then: **R1 versioned seed43/44
+execution implemented; CPU/Git verification before the next GPU window**.
 
 The [R1 execution handoff](research/2026-10-01-coverage-replication-execution.md)
 records commands, runtime pins, seed/arm/source bindings, automatic budget cutoff,
