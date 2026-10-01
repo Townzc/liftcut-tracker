@@ -87,9 +87,16 @@ counterbalanced value/position/identity diagnostics, and conditionally tests one
 feedback-repair data factor. The [original replication proposal](research/2026-09-29-coverage-replication-plan.md)
 is preserved. [Versioned R1 execution and handoff](research/2026-10-01-coverage-replication-execution.md)
 now implement seed pairing, exact provenance, bounded windows and independently
-verified backup ACKs. CPU/CI evidence precedes the next seed43 window; no new GPU
-experiment has run in this increment. Original gates remain unchanged.
-Frozen-candidate and independent validation follow.
+verified local backup receipts. [Seed43 results](research/2026-10-01-coverage-replication-seed43-results.md)
+are now complete: normal11/12,11/12,12/12,11/12; read-history consent0/3,3/3,1/3,3/3;
+main memory4/8,6/8,2/8,2/8. Both T pairs pass the unchanged original screen, neither
+M pair does; T's memory effect changes sign across completed seeds. The124 episodes,
+actual weights and409 generations passed local replay. Remote receipt acceptance
+and provider shutdown/billing remain unconfirmed after connection loss.
+Seed44 remains the next separate window after closure and readiness checks; no
+three-seed or generalization claim. Then perform the fixed three-seed review before
+conditional D2/G1, frozen-candidate and independent validation. The48 reserved tasks
+remain unused; seed42 stays the predetermined representative checkpoint.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the

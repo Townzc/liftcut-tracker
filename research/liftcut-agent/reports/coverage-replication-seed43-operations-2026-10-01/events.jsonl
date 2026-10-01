@@ -1,0 +1,75 @@
+{"at_utc": "2026-10-01T18:59:56.858565+00:00", "event": "monitor_ready", "deadline": "2026-10-01T21:47:08.490000+00:00", "work_cutoff": "2026-10-01T21:17:08.490000+00:00", "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9"}
+{"at_utc": "2026-10-01T18:59:57.825810+00:00", "event": "phase", "record": {"phase": "train-s0", "status": "started"}}
+{"at_utc": "2026-10-01T18:59:58.613382+00:00", "event": "training_progress", "arm": "s0", "step": 21, "loss": 0.03631073963885184, "elapsed_seconds": 239.35891630873084}
+{"at_utc": "2026-10-01T19:02:08.352583+00:00", "event": "training_progress", "arm": "s0", "step": 33, "loss": 0.00013579325797277277, "elapsed_seconds": 375.2247484270483}
+{"at_utc": "2026-10-01T19:04:42.054654+00:00", "event": "monitor_ready", "deadline": "2026-10-01T21:47:08.490000+00:00", "work_cutoff": "2026-10-01T21:17:08.490000+00:00", "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9"}
+{"at_utc": "2026-10-01T19:04:42.937017+00:00", "event": "phase", "record": {"phase": "train-s0", "status": "started"}}
+{"at_utc": "2026-10-01T19:04:43.733093+00:00", "event": "training_progress", "arm": "s0", "step": 46, "loss": 0.002171669641585659, "elapsed_seconds": 522.4469137117267}
+{"at_utc": "2026-10-01T19:05:48.597786+00:00", "event": "training_progress", "arm": "s0", "step": 52, "loss": 0.018073958248858046, "elapsed_seconds": 586.2180320881307}
+{"at_utc": "2026-10-01T19:07:25.884902+00:00", "event": "training_progress", "arm": "s0", "step": 61, "loss": 0.00149523230836342, "elapsed_seconds": 683.725480068475}
+{"at_utc": "2026-10-01T19:09:03.109923+00:00", "event": "training_progress", "arm": "s0", "step": 70, "loss": 0.0007858245122908305, "elapsed_seconds": 782.3500601593405}
+{"at_utc": "2026-10-01T19:11:12.622574+00:00", "event": "training_progress", "arm": "s0", "step": 82, "loss": 0.0031005074654756933, "elapsed_seconds": 917.3313252553344}
+{"at_utc": "2026-10-01T19:12:50.124926+00:00", "event": "training_progress", "arm": "s0", "step": 91, "loss": 0.0005287765962445215, "elapsed_seconds": 1016.040753537789}
+{"at_utc": "2026-10-01T19:14:59.558658+00:00", "event": "training_progress", "arm": "s0", "step": 102, "loss": 0.0002600792036074298, "elapsed_seconds": 1144.2231864761561}
+{"at_utc": "2026-10-01T19:16:37.100952+00:00", "event": "training_progress", "arm": "s0", "step": 111, "loss": 0.00015852697222449533, "elapsed_seconds": 1244.8447481952608}
+{"at_utc": "2026-10-01T19:18:46.507675+00:00", "event": "training_progress", "arm": "s0", "step": 122, "loss": 0.00014467755066666687, "elapsed_seconds": 1365.5413976367563}
+{"at_utc": "2026-10-01T19:19:50.709601+00:00", "event": "phase", "record": {"phase": "evaluate-s0", "status": "started"}}
+{"at_utc": "2026-10-01T19:19:52.070328+00:00", "event": "download_started", "part": "s0", "bytes": 122397791}
+{"at_utc": "2026-10-01T19:20:12.109731+00:00", "event": "archive_bytes_verified", "part": "s0", "bytes": 122397791, "sha256": "a4018aed5f8e31ca4f126a1518145b0a4ecc121c64b90b7f6bfe6e2aa797cfc1"}
+{"at_utc": "2026-10-01T19:26:06.959451+00:00", "event": "phase", "record": {"phase": "train-t", "status": "started"}}
+{"at_utc": "2026-10-01T19:26:40.897077+00:00", "event": "training_progress", "arm": "t", "step": 2, "loss": 0.10551043405554136, "elapsed_seconds": 22.09031660296023}
+{"at_utc": "2026-10-01T19:28:19.964560+00:00", "event": "training_progress", "arm": "t", "step": 10, "loss": 0.019516972192674033, "elapsed_seconds": 120.23295965604484}
+{"at_utc": "2026-10-01T19:30:32.129572+00:00", "event": "training_progress", "arm": "t", "step": 22, "loss": 0.021253723123266736, "elapsed_seconds": 258.383066451177}
+{"at_utc": "2026-10-01T19:32:11.044598+00:00", "event": "training_progress", "arm": "t", "step": 30, "loss": 0.004739683990160499, "elapsed_seconds": 352.2082431167364}
+{"at_utc": "2026-10-01T19:34:23.203963+00:00", "event": "training_progress", "arm": "t", "step": 42, "loss": 0.011973879641386489, "elapsed_seconds": 485.60524486377835}
+{"at_utc": "2026-10-01T19:36:02.169699+00:00", "event": "training_progress", "arm": "t", "step": 51, "loss": 0.0006323516906430835, "elapsed_seconds": 588.7020461838692}
+{"at_utc": "2026-10-01T19:37:40.929802+00:00", "event": "training_progress", "arm": "t", "step": 60, "loss": 0.0012379049306710465, "elapsed_seconds": 686.3813153710216}
+{"at_utc": "2026-10-01T19:39:52.772039+00:00", "event": "training_progress", "arm": "t", "step": 71, "loss": 0.000200744054799178, "elapsed_seconds": 810.093437852338}
+{"at_utc": "2026-10-01T19:41:31.796794+00:00", "event": "training_progress", "arm": "t", "step": 80, "loss": 0.006985783748716226, "elapsed_seconds": 913.5372249539942}
+{"at_utc": "2026-10-01T19:43:43.579824+00:00", "event": "training_progress", "arm": "t", "step": 91, "loss": 0.0020869786925231896, "elapsed_seconds": 1039.0349949002266}
+{"at_utc": "2026-10-01T19:45:22.908930+00:00", "event": "training_progress", "arm": "t", "step": 100, "loss": 3.4824872813801076e-05, "elapsed_seconds": 1147.114013440907}
+{"at_utc": "2026-10-01T19:47:35.559630+00:00", "event": "training_progress", "arm": "t", "step": 112, "loss": 6.426258903475062e-05, "elapsed_seconds": 1283.5628702118993}
+{"at_utc": "2026-10-01T19:49:14.222146+00:00", "event": "training_progress", "arm": "t", "step": 120, "loss": 5.8766557995345994e-05, "elapsed_seconds": 1372.4014081694186}
+{"at_utc": "2026-10-01T19:50:51.488356+00:00", "event": "phase", "record": {"phase": "evaluate-t", "status": "started"}}
+{"at_utc": "2026-10-01T19:50:53.274593+00:00", "event": "download_started", "part": "t", "bytes": 122383763}
+{"at_utc": "2026-10-01T19:51:12.993820+00:00", "event": "archive_bytes_verified", "part": "t", "bytes": 122383763, "sha256": "dfdcdc085eeff499814a618642f69c0679e8b97f2f07fa8162fb707c885ff69e"}
+{"at_utc": "2026-10-01T19:56:41.684211+00:00", "event": "phase", "record": {"phase": "train-m", "status": "started"}}
+{"at_utc": "2026-10-01T19:57:17.432175+00:00", "event": "training_progress", "arm": "m", "step": 2, "loss": 0.13814964016948938, "elapsed_seconds": 21.88751758635044}
+{"at_utc": "2026-10-01T19:58:58.534636+00:00", "event": "training_progress", "arm": "m", "step": 10, "loss": 0.010966007344481042, "elapsed_seconds": 116.43919334933162}
+{"at_utc": "2026-10-01T20:01:13.571516+00:00", "event": "training_progress", "arm": "m", "step": 22, "loss": 0.027940060494402025, "elapsed_seconds": 252.12246769294143}
+{"at_utc": "2026-10-01T20:02:54.600078+00:00", "event": "training_progress", "arm": "m", "step": 31, "loss": 0.0007595929483452839, "elapsed_seconds": 355.43147016875446}
+{"at_utc": "2026-10-01T20:04:34.816222+00:00", "event": "training_progress", "arm": "m", "step": 40, "loss": 0.01296603506507438, "elapsed_seconds": 452.05851858109236}
+{"at_utc": "2026-10-01T20:06:48.885458+00:00", "event": "training_progress", "arm": "m", "step": 52, "loss": 0.021308033372615234, "elapsed_seconds": 586.4622835367918}
+{"at_utc": "2026-10-01T20:08:30.529115+00:00", "event": "training_progress", "arm": "m", "step": 62, "loss": 0.0011463743118724776, "elapsed_seconds": 695.247710859403}
+{"at_utc": "2026-10-01T20:10:11.538401+00:00", "event": "training_progress", "arm": "m", "step": 71, "loss": 0.0002870619531572947, "elapsed_seconds": 793.2223327644169}
+{"at_utc": "2026-10-01T20:11:51.719045+00:00", "event": "training_progress", "arm": "m", "step": 80, "loss": 0.011779340618365405, "elapsed_seconds": 894.1722787283361}
+{"at_utc": "2026-10-01T20:14:05.764994+00:00", "event": "training_progress", "arm": "m", "step": 92, "loss": 0.00015104804481701564, "elapsed_seconds": 1028.9464092329144}
+{"at_utc": "2026-10-01T20:15:45.981372+00:00", "event": "training_progress", "arm": "m", "step": 101, "loss": 0.00029606006955873454, "elapsed_seconds": 1131.6407547388226}
+{"at_utc": "2026-10-01T20:17:59.705676+00:00", "event": "training_progress", "arm": "m", "step": 112, "loss": 0.0001415547696611962, "elapsed_seconds": 1255.6291491091251}
+{"at_utc": "2026-10-01T20:19:39.999520+00:00", "event": "training_progress", "arm": "m", "step": 122, "loss": 6.12281951693541e-05, "elapsed_seconds": 1365.4683070108294}
+{"at_utc": "2026-10-01T20:21:18.575714+00:00", "event": "phase", "record": {"phase": "evaluate-m", "status": "started"}}
+{"at_utc": "2026-10-01T20:21:20.886111+00:00", "event": "download_started", "part": "m", "bytes": 122429991}
+{"at_utc": "2026-10-01T20:21:35.809083+00:00", "event": "archive_bytes_verified", "part": "m", "bytes": 122429991, "sha256": "42fd3216471d06e39144c5b878278f854681ed120d0844be8ee9ec5b28fc8b18"}
+{"at_utc": "2026-10-01T20:27:41.983739+00:00", "event": "phase", "record": {"phase": "train-tm", "status": "started"}}
+{"at_utc": "2026-10-01T20:28:19.436118+00:00", "event": "training_progress", "arm": "tm", "step": 3, "loss": 0.17703336597877523, "elapsed_seconds": 35.00789222680032}
+{"at_utc": "2026-10-01T20:30:02.214656+00:00", "event": "training_progress", "arm": "tm", "step": 11, "loss": 0.010826418012221627, "elapsed_seconds": 133.67013503424823}
+{"at_utc": "2026-10-01T20:31:44.631990+00:00", "event": "training_progress", "arm": "tm", "step": 20, "loss": 0.0037690094409866585, "elapsed_seconds": 234.65743755921721}
+{"at_utc": "2026-10-01T20:34:01.352760+00:00", "event": "training_progress", "arm": "tm", "step": 32, "loss": 0.0026013369301202873, "elapsed_seconds": 372.99426169134676}
+{"at_utc": "2026-10-01T20:35:43.483957+00:00", "event": "training_progress", "arm": "tm", "step": 41, "loss": 0.003886626221313829, "elapsed_seconds": 474.49649229086936}
+{"at_utc": "2026-10-01T20:37:25.461537+00:00", "event": "training_progress", "arm": "tm", "step": 50, "loss": 0.010610713405501137, "elapsed_seconds": 579.2424073237926}
+{"at_utc": "2026-10-01T20:39:41.391258+00:00", "event": "training_progress", "arm": "tm", "step": 62, "loss": 0.01649225672187435, "elapsed_seconds": 711.4690032787621}
+{"at_utc": "2026-10-01T20:41:23.560471+00:00", "event": "training_progress", "arm": "tm", "step": 71, "loss": 0.003714149055922694, "elapsed_seconds": 811.2820325735956}
+{"at_utc": "2026-10-01T20:43:05.377337+00:00", "event": "training_progress", "arm": "tm", "step": 80, "loss": 0.00870869984846543, "elapsed_seconds": 914.8690004982054}
+{"at_utc": "2026-10-01T20:45:22.530231+00:00", "event": "training_progress", "arm": "tm", "step": 92, "loss": 8.851696731762063e-05, "elapsed_seconds": 1053.5778237264603}
+{"at_utc": "2026-10-01T20:47:05.408512+00:00", "event": "training_progress", "arm": "tm", "step": 101, "loss": 6.695699022322583e-05, "elapsed_seconds": 1159.08150193654}
+{"at_utc": "2026-10-01T20:48:47.619702+00:00", "event": "training_progress", "arm": "tm", "step": 110, "loss": 0.0003484947256786407, "elapsed_seconds": 1262.6823360957205}
+{"at_utc": "2026-10-01T20:51:03.547466+00:00", "event": "training_progress", "arm": "tm", "step": 122, "loss": 0.006315980153551803, "elapsed_seconds": 1396.5189445354044}
+{"at_utc": "2026-10-01T20:52:09.014236+00:00", "event": "phase", "record": {"phase": "evaluate-tm", "status": "started"}}
+{"at_utc": "2026-10-01T20:52:11.869621+00:00", "event": "download_started", "part": "tm", "bytes": 122435386}
+{"at_utc": "2026-10-01T20:52:26.412525+00:00", "event": "archive_bytes_verified", "part": "tm", "bytes": 122435386, "sha256": "9a32b301bbd8fd38895a791e917b296824341edea520e4f788a3bb78851233c1"}
+{"at_utc": "2026-10-01T20:58:37.119708+00:00", "event": "phase", "record": {"phase": "audit", "status": "started"}}
+{"at_utc": "2026-10-01T20:58:41.014170+00:00", "event": "download_started", "part": "evidence", "bytes": 458821}
+{"at_utc": "2026-10-01T20:58:43.054513+00:00", "event": "archive_bytes_verified", "part": "evidence", "bytes": 458821, "sha256": "e5ec3b73420f154c459c3825d83ccf6c7483a103c37b0daa5d6c06f20a4a24fa"}
+{"at_utc": "2026-10-01T20:58:43.055518+00:00", "event": "all_archives_downloaded", "run_status": "complete", "archive_count": 5}
+{"at_utc": "2026-10-01T20:59:18.302040+00:00", "event": "off_instance_verified", "receipt": {"inventory_digest": "35cc7ff124815eb731a3739023043518fcbb01f78ac31a71f621fbd4a11f1e59", "run_status": "complete", "run_binding": {"study_version": "coverage-replication-v1", "seed": 43, "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9", "seed_plan_sha256": "b7259da39fb62cc8741e44905d26da6002ef2a50456ee28fb5a74ec31b3a2115", "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52", "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b", "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"}, "archives": [{"archive": "s0.tar.gz", "bytes": 122397791, "sha256": "a4018aed5f8e31ca4f126a1518145b0a4ecc121c64b90b7f6bfe6e2aa797cfc1", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "t.tar.gz", "bytes": 122383763, "sha256": "dfdcdc085eeff499814a618642f69c0679e8b97f2f07fa8162fb707c885ff69e", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "m.tar.gz", "bytes": 122429991, "sha256": "42fd3216471d06e39144c5b878278f854681ed120d0844be8ee9ec5b28fc8b18", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "tm.tar.gz", "bytes": 122435386, "sha256": "9a32b301bbd8fd38895a791e917b296824341edea520e4f788a3bb78851233c1", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "evidence.tar.gz", "bytes": 458821, "sha256": "e5ec3b73420f154c459c3825d83ccf6c7483a103c37b0daa5d6c06f20a4a24fa", "verified_files": 64, "all_inventory_files_verified": true}], "all_archive_files_verified": true, "complete_study_replayed": true, "episodes_replayed": 124, "adapter_files_verified": true, "token_ids_verified": true, "test_episodes": 0}}
+{"at_utc": "2026-10-01T20:59:18.701492+00:00", "event": "monitor_stopped", "error": "SSHException", "message": "Server connection dropped: ", "provider_power_state_verified": false}
