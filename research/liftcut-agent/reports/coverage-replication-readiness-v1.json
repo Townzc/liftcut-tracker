@@ -1,0 +1,69 @@
+{
+  "scope": "Local CPU-only readiness; no training, model inference or paid calls",
+  "preparation_report_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+  "two_preparations_identical": true,
+  "input_preparations": "Two existing independently tokenized coverage/diagnostic preparations reverified; not newly tokenized in this check",
+  "file_sha256": {
+    "manifest.json": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "seed-42/plan.json": "1fbacc96509fe4c6f42fa4470d2cb9ef74714d0b8b0652aebbce14713d60b2f4",
+    "seed-42/schedule.json": "ab6a8ab097a47a49fe641f34496b1bbbba1e20d6dceec1b30966c92f131c7087",
+    "seed-43/plan.json": "10e0db9213f96026af58e2965abcf8a3e90fe9f2c3446f03d342450f9d21c252",
+    "seed-43/schedule.json": "f4528e9e1f468b792c244a52ed36910bf437cca43e8cbb3ea8a3bfa1c97d6d5e",
+    "seed-44/plan.json": "3dbc6924e2c06445a4c04a6fb249285534e660c26c7789913dfff626fe8a9866",
+    "seed-44/schedule.json": "c227f55518b84b4f75bf0ba81cc73a79b01304859a9187ddb0c6b9912695a836"
+  },
+  "inventory_digest": "a9c4f4a29060335e459df04a0bfa2b32022b8d76bc4a69eeea7f5ac9616b69ca",
+  "seed42_matches_original": true,
+  "verified_seed_schedules": [
+    42,
+    43,
+    44
+  ],
+  "bounded_dry_runs": {
+    "43": {
+      "phases": [
+        "train-s0",
+        "evaluate-s0",
+        "train-t",
+        "evaluate-t",
+        "train-m",
+        "evaluate-m",
+        "train-tm",
+        "evaluate-tm",
+        "audit-tokens",
+        "audit"
+      ],
+      "gpu_calls": 0,
+      "output_directory_created": false
+    },
+    "44": {
+      "phases": [
+        "train-s0",
+        "evaluate-s0",
+        "train-t",
+        "evaluate-t",
+        "train-m",
+        "evaluate-m",
+        "train-tm",
+        "evaluate-tm",
+        "audit-tokens",
+        "audit"
+      ],
+      "gpu_calls": 0,
+      "output_directory_created": false
+    }
+  },
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "limits": [
+    "Dry-run commit is syntax-validated only; execution enforces clean exact committed checkout.",
+    "CUDA initialization fingerprints, runtime compatibility and real adapter reload remain unexecuted until a new GPU window."
+  ],
+  "local_regression": {
+    "tests_passed": 302,
+    "seconds": 448.131,
+    "new_replication_tests": 16,
+    "synthetic_operations_fixtures": true,
+    "gpu_executed": false
+  }
+}

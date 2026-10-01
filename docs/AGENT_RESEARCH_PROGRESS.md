@@ -1,7 +1,25 @@
 # Agent research progress and handoff
 
-Last updated: 2026-09-29 UTC. Active milestone: **four-arm study completed;
-retrospective follow-up design v2 recorded; seed43/44 runner preparation still pending**.
+Last updated: 2026-10-01 (project work date). Active milestone: **R1 versioned
+seed43/44 execution implemented; CPU/Git verification before the next GPU window**.
+
+The [R1 execution handoff](research/2026-10-01-coverage-replication-execution.md)
+records commands, runtime pins, seed/arm/source bindings, automatic budget cutoff,
+actual-weight restoration and learning checkpoints. The new paths preserve all
+historical runners and reports. Seed42 is an equivalence check only; GPU launch
+accepts 43/44. See the [CPU readiness evidence](../research/liftcut-agent/reports/coverage-replication-readiness-v1.json)
+and the dated journal for verification results; CPU tests do not prove new model
+performance. No new server connection, training, inference or paid API call occurred.
+
+Local validation: **302 tests passed (448.131s)**; two independent preparation
+outputs match across all seven files; both ten-phase dry-runs create no execution
+directory; 244 documentation links pass. GitHub CI/merge evidence is the increment's PR.
+
+Next window: seed43 × S0/T/M/TM on an RTX 4090 with the original runtime, then a
+separate seed44 window. Each requires a newly confirmed endpoint and opening time,
+at most three hours from boot / CNY6.54 compute proxy / CNY8 reserve at CNY2.18/hour.
+Storage is separate. Work stops at minute150; backup and automatic shutdown follow.
+Do not reopen the old server to finish local publication or change historical logs.
 
 Current next-experiment authority: [follow-up design v2](research/2026-09-29-followup-experiment-design-v2.md).
 The new CPU audit reproduces memory subgroups (expired distractor S0/T/M/TM:
@@ -18,7 +36,8 @@ candidate admission vetoes any autonomous unapproved-write attempt and requires
 no net loss across full-task/memory/consent panels, with no lost correct consent case.
 Old scores and gates remain unchanged; no existing treatment qualifies as an overall
 improvement. No new paid run or reserved evaluation has started. New CPU runner,
-manifests, budget dry run and CI must pass before requesting a server.
+manifests and budget dry runs are implemented; use only a final CI-passed commit
+when opening a new window. D2/G1 remain later conditional stages.
 
 | Arm | Complete dev task | Read-history consent | Main memory | Autonomous blocked writes |
 | --- | ---: | ---: | ---: | ---: |

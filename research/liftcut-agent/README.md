@@ -17,13 +17,26 @@ See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 
 The [follow-up design v2](../../docs/research/2026-09-29-followup-experiment-design-v2.md)
 separates seed replication, counterfactual diagnostics and conditional feedback-repair
-training. Only its retrospective CPU analysis is implemented in this increment;
-new GPU runners and reserved evaluations remain pending. With the original exact
-coverage preparation available, reproduce the analysis with:
+training. The [versioned R1 runner and handoff](../../docs/research/2026-10-01-coverage-replication-execution.md)
+now implement CPU seed42 equivalence, seed43/44 training and evaluation, bounded
+windows, seed-bound actual-weight restoration and three-seed descriptive review.
+They have not produced new GPU results; reserved evaluations remain pending.
+With the original exact coverage preparation available, reproduce the analysis with:
 
 ```sh
 python research/liftcut-agent/analyze_coverage_followup.py --prepared-dir research/liftcut-agent/outputs/state-coverage-v1 --check
 ```
+
+Prepare R1 on CPU (fresh output required; no weights or model calls):
+
+```sh
+python research/liftcut-agent/prepare_coverage_replication.py --prepared-dir research/liftcut-agent/outputs/state-coverage-v1 --diagnostic-dir research/liftcut-agent/outputs/state-diagnostic-v1 --output-dir research/liftcut-agent/outputs/replication-new
+```
+
+Use the execution handoff for default dry-runs and explicit GPU launch. Each seed
+uses four arms and a separate three-hour window measured from boot. Complete ACKs
+require all five archives, actual adapters, 124 replayed episodes and token-ID audit;
+partial backup receipts never represent a completed experiment.
 
 ## Run from the repository root
 
