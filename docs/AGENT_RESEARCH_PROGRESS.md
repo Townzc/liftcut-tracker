@@ -39,13 +39,32 @@ weights. CI now checks the new evidence and exactly reproduces the derived revie
 Final exact-head CI and merge status are recorded by [PR #23](https://github.com/Townzc/liftcut-tracker/pull/23).
 The GPU never ran the later CPU analysis changes.
 
-Next: confirm platform closure, finish Git delivery, then prepare the separate
-seed44 window with the same four arms and original CNY8 reserve. First verify a
-real-receipt atomic upload/observation procedure offline; no current server launch.
-Do not cancel44 because43 looks better or worse. After44, run the required three-seed
-review; D2/G1 remain conditional and48 reserved tasks remain unused. Keep the common
-feasible time budget explicit before D2 value-cycle preparation. No extra paid API
-call, disk expansion or new model download occurred in this window.
+PR23 merged at21:21:42 UTC after all five checks passed exact head4deaf997; main
+feff1b1 has the same checked tree. The old heartbeat is paused; no live monitoring
+or server transport remains. Platform confirmation is still pending, not inferred
+from connection loss.
+
+The [post-seed43 review and next plan](research/2026-10-01-post-seed43-review-and-next-plan.md)
+now details the execution order: local atomic receipt/seed44 monitor preparation →
+original seed44 four-arm window → D2 on the fixed seed42 adapters → conditional G1 →
+frozen validation and release. Only S0→T can still reach the original3/3 pair screen;
+all current treatments already fail the across-seed necessary candidate guards
+because of seed42. Do not cancel44, replace the representative seed, or erase a
+regression based on44's result.
+
+D2's60 memory/ID cases will share30minutes, including any clarification answer,
+to avoid confounding equipment-value changes with infeasible tasks. Old23-minute
+cases remain unchanged. Formal80-case construction, token/state audit and the new
+receipt-transfer CPU checks are not implemented in this planning increment; do not
+request a GPU opening yet. The original two G1 error types have not both repeated
+across observed normal-task seeds, so G1 remains conditional on D2 and paired data.
+The plan adds an explicit pre-D2 budget trigger: both fixed variants in at least
+one intended error family must show valid failure-to-repair behavior in old T,
+with executable references and paired-data audits. This is a new planning rule,
+not a retroactive claim about v2 or evidence of cross-seed stability.
+Remaining R1+D2 reserve is CNY13; with all conditional G1 windows it is CNY37, not
+blanket spending authorization, and excludes H1/storage. Seed44 alone remains CNY8.
+No new model call or reserved-task read occurred during this review.
 
 ## Pre-launch R1 handoff (historical record)
 

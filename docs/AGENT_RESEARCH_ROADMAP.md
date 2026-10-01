@@ -97,6 +97,10 @@ Seed44 remains the next separate window after closure and readiness checks; no
 three-seed or generalization claim. Then perform the fixed three-seed review before
 conditional D2/G1, frozen-candidate and independent validation. The48 reserved tasks
 remain unused; seed42 stays the predetermined representative checkpoint.
+The [post-seed43 plan](research/2026-10-01-post-seed43-review-and-next-plan.md)
+details what44 can still establish, local receipt-transfer readiness, a common
+30-minute budget for new D2 memory/ID cases, conditional G1 and explicit stopping
+rules. This is a planning increment, not a new trained model or ready D2 runner.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the
