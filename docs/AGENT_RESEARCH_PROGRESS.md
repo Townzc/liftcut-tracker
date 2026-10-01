@@ -1,5 +1,24 @@
 # Agent research progress and handoff
 
+## Active execution: R1 seed43, 2026-10-01 UTC
+
+The user opened the retained RTX4090 instance. The fixed `f18cb5820881a048b19b6007fc4ca231dfd64de9`
+checkout passed its runtime/input checks and started the four-arm controller at
+18:55:11.721 UTC, 483.229 seconds after the recorded PID1 boot proxy. Work cutoff:
+21:17:08.490 UTC; independent hard shutdown: 21:47:08.490 UTC. Price assumption remains
+the user's CNY2.18/hour, CNY6.54 compute proxy/CNY8 reserve, storage separate.
+
+S0 optimization is in progress. No complete new arm or model score is claimed yet.
+The local operator downloads completed arm archives early and issues a shutdown ACK
+only after actual weights, 124 native/environment replays and token reconstruction
+pass the frozen restore entrypoint. Local operational state is in ignored
+`outputs/autodl/HANDOFF.md`; no credentials or endpoint are published.
+
+Separate CPU publication and per-seed review tools are being prepared locally; they
+are not deployed to the running experiment. All 322 local tests pass (149.556s).
+This run does not include seed44, D2, G1, paid API calls or reserved evaluation.
+The ready-state record below is retained as the pre-launch handoff.
+
 Last updated: 2026-10-01 (project work date). Active milestone: **R1 versioned
 seed43/44 execution implemented; CPU/Git verification before the next GPU window**.
 
