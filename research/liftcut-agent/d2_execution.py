@@ -20,7 +20,7 @@ from server_workspace import dump_new, sha256
 
 VERSION = "d2-execution-v1"
 ARMS = ("s0", "t", "m", "tm")
-REVIEWED = ROOT / "reports/d2-execution-readiness-v1.json"
+REVIEWED = ROOT / "reports/d2-execution-readiness-v2.json"
 # Ten first-response cases and two full continuations, all inside the 80 cases.
 CALIBRATION_INDICES = (0, 1, 6, 12, 24, 36, 48, 59, 60, 68, 72, 76)
 BUDGET = {"hourly_cny": 2.18, "reserve_cny": 5, "compute_proxy_limit_cny": 4.36,
@@ -35,7 +35,7 @@ SOURCE_FILES = (
     "d2_execution.py", "gpu_counterfactual_diagnostics.py", "audit_counterfactual_diagnostics.py",
     "run_counterfactual_window.py", "restore_counterfactual_diagnostics.py", "d2_receipt_transfer.py",
     "monitor_counterfactual_diagnostics.py", "prepare_d2_execution.py", "d2_setup.py",
-    "stage_d2_execution.py", "drill_d2_execution.py",
+    "stage_d2_execution.py", "drill_d2_execution.py", "d2_bundle.py",
     "shutdown_guard.py", "run_recovery_window.py", "restore_recovery.py", "run_controlled_window.py",
     "replication_receipt_transfer.py", "monitor_coverage_replication.py", "server_workspace.py",
     "src/liftcut_agent/qwen_transport.py", "audit_controlled.py", "audit_coverage_tokens.py",
@@ -261,7 +261,8 @@ def append_json(stream, row):
     os.fsync(stream.fileno())
 
 
-def event_file(path, event, **fields):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8", newline="\n") as stream:
+def event_file(destination, event, **fields):
+    # `path` is a legitimate event payload field (the per-arm archive path).
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with destination.open("a", encoding="utf-8", newline="\n") as stream:
         append_json(stream, {"event": event, "at_utc": utcnow().isoformat(), **fields})

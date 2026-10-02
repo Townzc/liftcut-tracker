@@ -2,6 +2,16 @@
 
 Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
 Latest evidence update: 2026-10-02 UTC. The original42/43/44 four-arm study is
+complete. A subsequent [D2 partial window](research/2026-10-02-d2-partial-results-and-repair.md)
+completed S0 only (80 cases/84 generations) before an archive-registration bug.
+The data is restored and independently replayed; T/M/TM remain unrun and G1 cannot
+be evaluated. Latest-valid-memory position scores16/16,2/16,8/16 expose an S0
+development shortfall. Controller/incremental-deployment repairs and a production-path
+CPU drill now precede a new complete D2 window; scientific conditions stay fixed,
+and prior costs/partial results stay visible. The older readiness statements below
+are historical; current details are in progress and the linked review.
+
+The original42/43/44 four-arm study is
 complete; [three-seed results](research/2026-10-02-r1-three-seed-results.md) retain
 all gains and regressions. S0→T reproduces its local screen3/3, but no treatment
 passes all-seed candidate guards. [Next work](research/2026-10-02-post-r1-next-plan.md)
@@ -16,9 +26,10 @@ merge and staging, the first CNY5 D2 window was opened but
 interpreter mismatch and slow/repeated upload exhausted the setup allowance.
 Shutdown was requested; compute proxy CNY0.6463, platform billing unconfirmed.
 A maintained launcher, verified prefix resume and an additional ten-minute
-prelaunch shutdown guard are CPU-checked. Deliver final checked fixes before
-requesting a new CNY5 window; the failure cost stays separate. The GPU execution
-commit and90/120-minute limits remain fixed. There are still no D2 model results.
+prelaunch shutdown guard then enabled the partial S0 window described above.
+The controller bug is repaired in v2; the scientific conditions and90/120-minute
+limits remain fixed. Both failed-window costs stay separate from the next CNY5
+reserve; historical06654db is the incremental deployment base, not the next target.
 No extra training seed or reserved evaluation. Seed44 is
 user-confirmed off, with a reported CNY4.60 run cost.
 Earlier stage-specific “next” statements below are historical context.

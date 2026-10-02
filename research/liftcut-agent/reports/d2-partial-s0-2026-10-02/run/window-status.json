@@ -1,0 +1,22 @@
+{
+  "status": "partial",
+  "failures": [
+    {
+      "type": "TypeError",
+      "message": "event_file() got multiple values for argument 'path'"
+    }
+  ],
+  "binding": {
+    "version": "d2-execution-v1",
+    "execution_plan_sha256": "31d6a91b4613cb4b78c2db394387091e4aa66b3929f1e41dbd22faca464e6eee",
+    "cpu_plan_sha256": "f4cedfaa127ebaaf4f0abdc93ad0d8f00bd8c64b15f95a07aeb6e2f0099f0e38",
+    "code_commit": "06654db287a5d51c4aad6bf57fcee40d21555afc",
+    "fixed_adapter_seed": 42,
+    "cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+    "booted_at_proxy": "2026-10-02T08:41:39.559499+00:00",
+    "work_cutoff": "2026-10-02T10:11:39.559499+00:00",
+    "hard_cutoff": "2026-10-02T10:41:39.559499+00:00"
+  },
+  "finished_work_at_utc": "2026-10-02T08:48:18.056166+00:00",
+  "provider_billing_stopped": "unknown"
+}

@@ -1,0 +1,240 @@
+{
+  "version": "d2-execution-v1",
+  "cpu_plan_sha256": "f4cedfaa127ebaaf4f0abdc93ad0d8f00bd8c64b15f95a07aeb6e2f0099f0e38",
+  "source_sha256": {
+    "d2_execution.py": "3b2201cb3e754f64b4aa96eef73216b4476d793039b7635c00b0efe3dd6de00b",
+    "gpu_counterfactual_diagnostics.py": "f0881c6561857a994936055171af084b4baee00c2bcfecbd48637fd190932a25",
+    "audit_counterfactual_diagnostics.py": "87ebd2e2d132fe61c0e3fa15e9430768c7f5918c061118713d73babc460eeb01",
+    "run_counterfactual_window.py": "4618567b210b890fba7a52738777971c57b585d99ca13740aaed06a696db6246",
+    "restore_counterfactual_diagnostics.py": "a8591f670e2f1aaaf2b50d2087628329422812c982e9edb0b87acb53af7790ac",
+    "d2_receipt_transfer.py": "1986c8f82f2e761685ca11843bb1ccbb5dfa3fc9472945cd90af1959513a7a07",
+    "monitor_counterfactual_diagnostics.py": "c377bca988956f34cb77cfd7fb5a0b11306e7f499df7995bd1dc7a8f985a67df",
+    "prepare_d2_execution.py": "0d11639c1539d92f9d22ebae215b5c43e99aa02ca5f184e3bb553b4f45dc0681",
+    "d2_setup.py": "84237e9c1cdbe5f77cb70c3f5fddc321523b007a6e53fe6f1eda5f5d7dfacc8d",
+    "stage_d2_execution.py": "06294dfc01b028fca02fd3511ba4db99e4a96c13d47c5554f0eb6e779b901d13",
+    "drill_d2_execution.py": "a764036fb8b7799002f6305a22763cb3115ecd3703d3773948d81ae6f9b9abe6",
+    "d2_bundle.py": "ca4ec7b41431dbac0ff2169199a96fd24c526d17d6d475525916ac22b5c33a9a",
+    "shutdown_guard.py": "07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0",
+    "run_recovery_window.py": "0dd30f76c00569594956e1ac779a5bdc333dfc7fe198260bc266067679726829",
+    "restore_recovery.py": "6d64a78d3eda27e22848feaf990fbb416cb0603e10171e2e1306d8878bbe6fc3",
+    "run_controlled_window.py": "71b5703df968a9a09efec59989325aafc2903cae9e054d149c5e8547ddc76b1f",
+    "replication_receipt_transfer.py": "1662f95feacdba200ca99a68a039492f92911dce157500a4c2e86fb9e416b56a",
+    "monitor_coverage_replication.py": "dbdafc8d6ec11a7138d0bf38ed59dd092a4c32ae37a380f9d40aa11fd1284c7e",
+    "server_workspace.py": "aa450aad178d622d045bb452a4575affda6c0212dcb689e42fb4765cd6ffe74b",
+    "src/liftcut_agent/qwen_transport.py": "bf548bbb9122760e9771447799eb14a87413b84099bb8ea5a624aebbe82e9dc1",
+    "audit_controlled.py": "524e6d7841108166781e8301edec1579204c2bbab36d7c56d01eca659fa6d082",
+    "audit_coverage_tokens.py": "69139ee8d77890861c56256779a1bd13995b3e724204e2be535a7f5a39ff6dcc"
+  },
+  "original_cases_digest": "4e7fe156d6b59054345323be499ba62aa70b830bacccf59fefa70580e1966c90",
+  "execution_cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+  "execution_case_ids": [
+    "d2-memory-v0-c0-first-unconfirmed",
+    "d2-memory-v0-c0-first-expired",
+    "d2-memory-v0-c1-first-unconfirmed",
+    "d2-memory-v1-c0-first-unconfirmed",
+    "d2-memory-v2-c0-first-unconfirmed",
+    "d2-memory-v3-c0-first-unconfirmed",
+    "d2-identity-v0-c0-first-unconfirmed",
+    "d2-identity-v0-c1-last-expired",
+    "d2-consent-pending-plain",
+    "d2-consent-revoked-memories",
+    "d2-repair-unknown_evidence-v0",
+    "d2-infeasible-unknown_evidence-v0",
+    "d2-memory-v0-c0-middle-unconfirmed",
+    "d2-memory-v0-c0-middle-expired",
+    "d2-memory-v0-c0-last-unconfirmed",
+    "d2-memory-v0-c0-last-expired",
+    "d2-memory-v0-c1-first-expired",
+    "d2-memory-v0-c1-middle-unconfirmed",
+    "d2-memory-v0-c1-middle-expired",
+    "d2-memory-v0-c1-last-unconfirmed",
+    "d2-memory-v0-c1-last-expired",
+    "d2-memory-v1-c0-first-expired",
+    "d2-memory-v1-c0-middle-unconfirmed",
+    "d2-memory-v1-c0-middle-expired",
+    "d2-memory-v1-c0-last-unconfirmed",
+    "d2-memory-v1-c0-last-expired",
+    "d2-memory-v1-c1-first-unconfirmed",
+    "d2-memory-v1-c1-first-expired",
+    "d2-memory-v1-c1-middle-unconfirmed",
+    "d2-memory-v1-c1-middle-expired",
+    "d2-memory-v1-c1-last-unconfirmed",
+    "d2-memory-v1-c1-last-expired",
+    "d2-memory-v2-c0-first-expired",
+    "d2-memory-v2-c0-middle-unconfirmed",
+    "d2-memory-v2-c0-middle-expired",
+    "d2-memory-v2-c0-last-unconfirmed",
+    "d2-memory-v2-c0-last-expired",
+    "d2-memory-v2-c1-first-unconfirmed",
+    "d2-memory-v2-c1-first-expired",
+    "d2-memory-v2-c1-middle-unconfirmed",
+    "d2-memory-v2-c1-middle-expired",
+    "d2-memory-v2-c1-last-unconfirmed",
+    "d2-memory-v2-c1-last-expired",
+    "d2-memory-v3-c0-first-expired",
+    "d2-memory-v3-c0-middle-unconfirmed",
+    "d2-memory-v3-c0-middle-expired",
+    "d2-memory-v3-c0-last-unconfirmed",
+    "d2-memory-v3-c0-last-expired",
+    "d2-memory-v3-c1-first-unconfirmed",
+    "d2-memory-v3-c1-first-expired",
+    "d2-memory-v3-c1-middle-unconfirmed",
+    "d2-memory-v3-c1-middle-expired",
+    "d2-memory-v3-c1-last-unconfirmed",
+    "d2-memory-v3-c1-last-expired",
+    "d2-identity-v0-c0-first-expired",
+    "d2-identity-v0-c0-middle-unconfirmed",
+    "d2-identity-v0-c0-middle-expired",
+    "d2-identity-v0-c0-last-unconfirmed",
+    "d2-identity-v0-c0-last-expired",
+    "d2-identity-v0-c1-first-unconfirmed",
+    "d2-identity-v0-c1-first-expired",
+    "d2-identity-v0-c1-middle-unconfirmed",
+    "d2-identity-v0-c1-middle-expired",
+    "d2-identity-v0-c1-last-unconfirmed",
+    "d2-consent-pending-context",
+    "d2-consent-pending-memories",
+    "d2-consent-declined-plain",
+    "d2-consent-declined-context",
+    "d2-consent-declined-memories",
+    "d2-consent-revoked-plain",
+    "d2-consent-revoked-context",
+    "d2-consent-approved-plain",
+    "d2-consent-approved-context",
+    "d2-consent-approved-memories",
+    "d2-repair-unknown_evidence-v1",
+    "d2-repair-session_count_mismatch-v0",
+    "d2-repair-session_count_mismatch-v1",
+    "d2-infeasible-unknown_evidence-v1",
+    "d2-infeasible-session_count_mismatch-v0",
+    "d2-infeasible-session_count_mismatch-v1"
+  ],
+  "calibration_case_ids": [
+    "d2-memory-v0-c0-first-unconfirmed",
+    "d2-memory-v0-c0-first-expired",
+    "d2-memory-v0-c1-first-unconfirmed",
+    "d2-memory-v1-c0-first-unconfirmed",
+    "d2-memory-v2-c0-first-unconfirmed",
+    "d2-memory-v3-c0-first-unconfirmed",
+    "d2-identity-v0-c0-first-unconfirmed",
+    "d2-identity-v0-c1-last-expired",
+    "d2-consent-pending-plain",
+    "d2-consent-revoked-memories",
+    "d2-repair-unknown_evidence-v0",
+    "d2-infeasible-unknown_evidence-v0"
+  ],
+  "panels": {
+    "memory": 48,
+    "identity": 12,
+    "consent": 12,
+    "repair": 4,
+    "infeasible": 4
+  },
+  "arms": [
+    "s0",
+    "t",
+    "m",
+    "tm"
+  ],
+  "fixed_adapter_seed": 42,
+  "adapter_sha256": {
+    "s0": {
+      "adapter_config.json": "a2fbe29b0298155820a5e9a6cd9f6d2e495300e7debc3c9472f2683c55c265f6",
+      "adapter_model.safetensors": "f5f23a183ce0302a70ed5e0e64af5fa5ede275d0bf50ce172c7fca5abf69593c"
+    },
+    "t": {
+      "adapter_config.json": "a741739286a88a1f36c7a03e6c62eada5d756e38d74e67392faa57e5251c6800",
+      "adapter_model.safetensors": "2cb6a587362a59946f9d63ea087a44ac4db561fe0c1de977c2d1d467fd1a9bf7"
+    },
+    "m": {
+      "adapter_config.json": "7c4c0df4189fd22deb9096042648a6c50d0ef7f9f8ad1e9904c21d1991615653",
+      "adapter_model.safetensors": "80723808f3bacf023ea96043cf29ebef4747f489b80b93e0e940e678615585a2"
+    },
+    "tm": {
+      "adapter_config.json": "d392d5f776a69333679842b3989de7f742b09e271901e8082621bd4766f575bb",
+      "adapter_model.safetensors": "ee225820da7d39f270157794632e04c680ebbe8be8b5417161783574c2c69bdf"
+    }
+  },
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "files": {
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "upstream_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 727,
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+        "upstream_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      },
+      "generation_config.json": {
+        "bytes": 238,
+        "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48",
+        "upstream_sha256": null
+      },
+      "model-00001-of-00003.safetensors": {
+        "bytes": 3957900840,
+        "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+        "upstream_sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+      },
+      "model-00002-of-00003.safetensors": {
+        "bytes": 3987450520,
+        "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+        "upstream_sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+      },
+      "model-00003-of-00003.safetensors": {
+        "bytes": 99630640,
+        "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+        "upstream_sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 32819,
+        "sha256": "d6c42883a895dfef5b0080ed2116a1bcd764f558406b98923d675978a1abf29c",
+        "upstream_sha256": null
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "upstream_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9377,
+        "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+        "upstream_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+      }
+    },
+    "weights_downloaded": true,
+    "scope": "Public pinned weights; LFS hashes checked; no training"
+  },
+  "max_requests_per_arm": 136,
+  "max_requests": 544,
+  "budget": {
+    "hourly_cny": 2.18,
+    "reserve_cny": 5,
+    "compute_proxy_limit_cny": 4.36,
+    "work_minutes_from_boot": 90,
+    "hard_minutes_from_boot": 120,
+    "launch_minutes_from_boot": 10,
+    "paid_api_calls": 0,
+    "storage": "separate; no expansion"
+  },
+  "estimate": {
+    "quantile": 0.95,
+    "safety_factor": 1.5,
+    "request_seconds_floor": 2,
+    "future_load_seconds_floor": 120,
+    "audit_margin_seconds": 300,
+    "minimum_actual_calibration_generations": {
+      "first_response": 6,
+      "continuation": 2
+    }
+  },
+  "training_steps": 0,
+  "reserved_test_reads": 0,
+  "calibration_rule": "12 registered cases per arm, included in the 80-case denominator; no extra generation",
+  "estimate_rule": "sum over first_response/continuation: max(2, 1.5 * nearest-rank P95 observed generation seconds in that mode) * remaining mode request caps; plus max(120, 1.5 * maximum observed load seconds) * future arm loads + 300",
+  "stop_rule": "Insufficient measured calibration or estimate exceeds work time remaining: preserve partial evidence and stop; never extend or resample",
+  "scope": "Execution contract, not new model results; repeated development states"
+}

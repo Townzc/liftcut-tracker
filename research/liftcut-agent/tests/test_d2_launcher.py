@@ -19,6 +19,8 @@ from d2_prelaunch_guard import opening_matches, watch
 from monitor_coverage_replication import TimeBudget
 from server_workspace import dump_new
 
+EXECUTION = "0" * 40  # Explicit synthetic execution ref, not a GPU run.
+
 
 class Clock:
     def __init__(self):
@@ -84,15 +86,16 @@ class TransferTests(unittest.TestCase):
             root, boot = Path(tmp), datetime.now(timezone.utc).isoformat()
             stage = root / "stage"
             stage.mkdir()
-            for name in ("d2_setup.py", "shutdown_guard.py"):
+            for name in ("d2_setup.py", "shutdown_guard.py", "d2_bundle.py"):
                 shutil.copyfile(ROOT/name, stage/name)
             for name in ("code.bundle", "assets.tar.gz", "asset-index.json"):
                 (stage/name).write_bytes(b"SYNTHETIC-INTEGRATION-ONLY")
             files = {p.name:{"bytes":p.stat().st_size,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in stage.iterdir()}
             remote_stage = launch.PERSIST + "/staging/d2-integration-only"
-            dump_new(stage/"stage.json", {"execution_commit":launch.EXECUTION,"remote_stage":remote_stage,"files":files})
+            dump_new(stage/"stage.json", {"execution_commit":EXECUTION,"remote_stage":remote_stage,"files":files,
+                "execution_plan_sha256":launch.sha256(launch.REVIEWED)})
             raw = json.loads(cfg_source.read_text())
-            raw["execution_commit"] = launch.EXECUTION
+            raw["execution_commit"] = EXECUTION
             config = root/"input.json"
             dump_new(config, raw)
             original_configure = launch.configure
@@ -245,7 +248,7 @@ class TransferTests(unittest.TestCase):
         cfg = ROOT / "configs/d2-monitor.template.json"
         with tempfile.TemporaryDirectory() as tmp:
             raw = json.loads(cfg.read_text())
-            raw["execution_commit"] = launch.EXECUTION
+            raw["execution_commit"] = EXECUTION
             path = Path(tmp) / "config.json"
             dump_new(path, raw)
             run = Mock(return_value=SimpleNamespace(stdout=json.dumps({"offline_only":True,"actual_seed42_adapter_bytes_verified":True,"gpu_calls":0})))
@@ -268,7 +271,7 @@ class TransferTests(unittest.TestCase):
 class PrelaunchGuardTests(unittest.TestCase):
     def opening(self, path, boot, **overrides):
         value = {"evidence_kind":"model","started_at_utc":(boot+timedelta(minutes=1)).isoformat(),
-            "binding":{"code_commit":launch.EXECUTION,"booted_at_proxy":boot.isoformat(),
+            "binding":{"code_commit":EXECUTION,"booted_at_proxy":boot.isoformat(),
                        "work_cutoff":(boot+timedelta(minutes=90)).isoformat(),
                        "hard_cutoff":(boot+timedelta(minutes=120)).isoformat()}}
         value.update(overrides)
@@ -279,7 +282,7 @@ class PrelaunchGuardTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)/"opening.json"
             self.opening(path,clock.now())
-            result = watch(path,clock.now(),launch.EXECUTION,lambda event,**_:logs.append(event),shutdown,
+            result = watch(path,clock.now(),EXECUTION,lambda event,**_:logs.append(event),shutdown,
                            now=clock.now,tick=lambda:clock.tick,sleep=clock.sleep)
         self.assertEqual(result,"opened")
         shutdown.assert_not_called()
@@ -287,7 +290,7 @@ class PrelaunchGuardTests(unittest.TestCase):
     def test_no_opening_triggers_setup_shutdown_at_ten_minutes(self):
         clock, shutdown = Clock(), Mock(return_value=0)
         with tempfile.TemporaryDirectory() as tmp:
-            result = watch(Path(tmp)/"missing",clock.now(),launch.EXECUTION,lambda *_a,**_k:None,shutdown,
+            result = watch(Path(tmp)/"missing",clock.now(),EXECUTION,lambda *_a,**_k:None,shutdown,
                            now=clock.now,tick=lambda:clock.tick,sleep=clock.sleep)
         self.assertEqual(result,"shutdown_requested")
         self.assertEqual(clock.tick,600)
@@ -296,7 +299,7 @@ class PrelaunchGuardTests(unittest.TestCase):
     def test_late_watchdog_start_requests_shutdown_without_new_allowance(self):
         clock, shutdown = Clock(), Mock(return_value=0)
         with tempfile.TemporaryDirectory() as tmp:
-            result=watch(Path(tmp)/"missing",clock.now()-timedelta(seconds=601),launch.EXECUTION,
+            result=watch(Path(tmp)/"missing",clock.now()-timedelta(seconds=601),EXECUTION,
                          lambda *_a,**_k:None,shutdown,now=clock.now,tick=lambda:clock.tick,sleep=clock.sleep)
         self.assertEqual(result,"shutdown_requested")
         self.assertEqual(clock.tick,0.)
@@ -308,7 +311,7 @@ class PrelaunchGuardTests(unittest.TestCase):
             clock.tick += seconds
             clock.value -= timedelta(seconds=seconds)
         with tempfile.TemporaryDirectory() as tmp:
-            watch(Path(tmp)/"missing",clock.now(),launch.EXECUTION,lambda *_a,**_k:None,shutdown,
+            watch(Path(tmp)/"missing",clock.now(),EXECUTION,lambda *_a,**_k:None,shutdown,
                   now=clock.now,tick=lambda:clock.tick,sleep=backwards)
         self.assertEqual(clock.tick,600)
         shutdown.assert_called_once()
@@ -320,7 +323,7 @@ class PrelaunchGuardTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 path=Path(tmp)/"opening.json"
                 self.opening(path,boot,**change)
-                self.assertFalse(opening_matches(path,boot,launch.EXECUTION))
+                self.assertFalse(opening_matches(path,boot,EXECUTION))
 
     def test_invalid_json_shape_does_not_kill_shutdown_watchdog(self):
         for value in ([], None, {"binding":[]}, {"binding":None}):
@@ -328,7 +331,7 @@ class PrelaunchGuardTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 path=Path(tmp)/"opening.json"
                 path.write_text(json.dumps(value),encoding="utf-8")
-                result=watch(path,clock.now(),launch.EXECUTION,lambda *_a,**_k:None,shutdown,
+                result=watch(path,clock.now(),EXECUTION,lambda *_a,**_k:None,shutdown,
                              now=clock.now,tick=lambda:clock.tick,sleep=clock.sleep)
             self.assertEqual(result,"shutdown_requested")
             shutdown.assert_called_once()

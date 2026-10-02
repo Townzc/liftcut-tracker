@@ -17,20 +17,17 @@ import subprocess
 import threading
 import time
 
-from d2_execution import ROOT, aware, deadlines, event_file, expected_runtime, read, utcnow, verify_plan
+from d2_execution import ROOT, REVIEWED, aware, deadlines, event_file, expected_runtime, read, utcnow, verify_plan
 from monitor_counterfactual_diagnostics import collect, parse_config
 from monitor_coverage_replication import TimeBudget, io_budget, remote_bytes, json_lines
 from server_workspace import dump_new, sha256
 
-EXECUTION = "06654db287a5d51c4aad6bf57fcee40d21555afc"
 PERSIST = "/root/autodl-tmp/liftcut"
 
 
 def local_preflight(config_file, *, runner=subprocess.run):
     """Never import Transformers/SciPy in the transport Python process."""
     cfg = parse_config(read(config_file))
-    if cfg["execution_commit"] != EXECUTION:
-        raise ValueError("this launcher is for the reviewed D2 GPU commit only")
     result = runner([str(cfg["restore_python"]), str(ROOT / "monitor_counterfactual_diagnostics.py"),
                      "--config", str(config_file)], check=True, capture_output=True, text=True,
                     encoding="utf-8", timeout=90)
@@ -126,16 +123,22 @@ class Remote:
 
 def execute(config_file, stage, opening_id, supplied_boot):
     cfg, preflight = local_preflight(config_file)
+    execution = cfg["execution_commit"]
     deadlines(supplied_boot, utcnow())  # No network after an already-stale opening.
     plan, spec = verify_plan(cfg["prepared"]), read(stage / "stage.json")
+    if spec.get("execution_plan_sha256") != sha256(REVIEWED):
+        raise ValueError("stage is not bound to the currently reviewed execution plan")
+    base_commit = spec.get("bundle_base_commit")
+    if base_commit is not None and (not re.fullmatch(r"[0-9a-f]{40}", base_commit) or base_commit == execution):
+        raise ValueError("exact separate bundle base commit required")
     remote_stage = PurePosixPath(spec["remote_stage"])
-    if (spec["execution_commit"] != EXECUTION or remote_stage.parent != PurePosixPath(PERSIST + "/staging")
+    if (spec["execution_commit"] != execution or remote_stage.parent != PurePosixPath(PERSIST + "/staging")
             or not re.fullmatch(r"d2-[A-Za-z0-9_-]+", remote_stage.name)):
         raise ValueError("reviewed immutable staging directory required")
     for name, item in spec["files"].items():
         if Path(name).name != name or sha256(stage/name) != item["sha256"] or (stage/name).stat().st_size != item["bytes"]:
             raise ValueError("staged local payload changed")
-    for name in ("d2_setup.py", "shutdown_guard.py"):
+    for name in ("d2_setup.py", "shutdown_guard.py", "d2_bundle.py"):
         if sha256(stage/name) != sha256(ROOT/name):
             raise ValueError("bootstrap differs from locally verified frozen sources")
     raw = configure(read(config_file), opening_id, supplied_boot)
@@ -145,7 +148,7 @@ def execute(config_file, stage, opening_id, supplied_boot):
     operations = cfg["operations"]
     (operations / "monitor.lock").write_text("exclusive-launch-and-collector\n", encoding="utf-8")
     dump_new(operations / "offline-preflight.json", preflight)
-    dump_new(operations / "local-source.json", {"cloud_commit": EXECUTION,
+    dump_new(operations / "local-source.json", {"cloud_commit": execution,
         "local_source_sha256": {n: sha256(ROOT/n) for n in ("launch_d2_remote.py", "d2_prelaunch_guard.py")}})
     def emit(event, **fields):
         event_file(operations / "events.jsonl", event, **fields)
@@ -190,7 +193,7 @@ def execute(config_file, stage, opening_id, supplied_boot):
             emit("original_guard_armed", **opened)
             upload(ROOT/"d2_prelaunch_guard.py")
             guard_argv = [python, str(remote_stage/"d2_prelaunch_guard.py"), "--arm", "--booted-at", boot.isoformat(),
-                "--commit", EXECUTION, "--opening", cfg["remote_run"] + "/opening.json",
+                "--commit", execution, "--opening", cfg["remote_run"] + "/opening.json",
                 "--receipt", cfg["remote_ops"] + "/prelaunch-guard.jsonl"]
             code = "import subprocess,json; from pathlib import Path; argv=" + repr(guard_argv) + "; log=Path(" + repr(cfg["remote_ops"] + "/prelaunch-guard.log") + ").open('x'); p=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True); print(json.dumps({'pid':p.pid,'argv':argv}))"
             guard = json.loads(remote.run([python, "-c", code], "prelaunch-guard"))
@@ -225,17 +228,15 @@ print(json.dumps({'disk_free_bytes':shutil.disk_usage(p).free,'gpu':gpu,'python'
             for name in spec["files"]:
                 if name not in ("d2_setup.py", "shutdown_guard.py", "launch.sh"):
                     upload(stage/name)
-            checkout, data = PERSIST + "/code/" + EXECUTION, PERSIST + "/data/" + remote_stage.name
+            checkout, data = PERSIST + "/code/" + execution, PERSIST + "/data/" + remote_stage.name
             # Installation is idempotent only for exact verified existing bytes.
-            code = """import hashlib,json,subprocess,tarfile,shutil
+            code = """import hashlib,json,subprocess,tarfile,shutil,sys
 from pathlib import Path
 stage=Path(STAGE); checkout=Path(CHECKOUT); data=Path(DATA)
 assert shutil.disk_usage(stage).free >= 3000000000
-if not checkout.exists():
-    subprocess.run(['git','clone','--no-checkout',str(stage/'code.bundle'),str(checkout)],check=True)
-    subprocess.run(['git','-C',str(checkout),'checkout','--detach',COMMIT],check=True)
-assert subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()==COMMIT
-assert not subprocess.check_output(['git','-C',str(checkout),'status','--porcelain'],text=True).strip()
+sys.path.insert(0,str(stage))
+from d2_bundle import install_bundle
+install_bundle(stage/'code.bundle',checkout,COMMIT,BASE_CHECKOUT,BASE_COMMIT)
 inventory=json.loads((stage/'asset-index.json').read_text())
 assert len(inventory) <= 32 and sum(x['bytes'] for x in inventory.values()) <= 64000000
 assert not data.is_symlink()
@@ -253,11 +254,13 @@ for name,item in inventory.items():
     assert hashlib.file_digest(p.open('rb'),'sha256').hexdigest()==item['sha256']
 print(json.dumps({'checkout_verified':True,'assets_verified':len(inventory),'disk_free_bytes':shutil.disk_usage(stage).free}))
 """
-            code = "STAGE=" + repr(str(remote_stage)) + ";CHECKOUT=" + repr(checkout) + ";DATA=" + repr(data) + ";COMMIT=" + repr(EXECUTION) + "\n" + code
+            code = ("STAGE=" + repr(str(remote_stage)) + ";CHECKOUT=" + repr(checkout) + ";DATA=" + repr(data)
+                + ";COMMIT=" + repr(execution) + ";BASE_COMMIT=" + repr(base_commit)
+                + ";BASE_CHECKOUT=" + repr(PERSIST + "/code/" + base_commit if base_commit else None) + "\n" + code)
             emit("remote_assets_verified", **json.loads(remote.run([python, "-c", code], "install", timeout=90)))
             model = PERSIST + "/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554"
             argv = [python, checkout + "/research/liftcut-agent/d2_setup.py", "--ops-dir", cfg["remote_ops"],
-                "--expected-code-commit", EXECUTION, "--model-dir", model, "--model-manifest", PERSIST + "/data/qwen-model-manifest.json",
+                "--expected-code-commit", execution, "--model-dir", model, "--model-manifest", PERSIST + "/data/qwen-model-manifest.json",
                 "--prepared-dir", data + "/prepared", "--tokenizer-dir", data + "/tokenizer",
                 "--adapters-root", PERSIST + "/runs/state-coverage-v1-20260929/training", "--output-dir", cfg["remote_run"]]
             # Intent is recorded before dispatch. Never repeat after ambiguity.

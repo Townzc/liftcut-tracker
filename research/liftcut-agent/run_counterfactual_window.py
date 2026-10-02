@@ -40,6 +40,19 @@ def run_phase(name, argv, output, work, clock, *, runner=subprocess.run):
     event_file(output / "events.jsonl", "phase_completed", phase=name)
 
 
+def execute_phases(commands, output, bind, work, clock, *, phase_runner=run_phase):
+    """One production/drill path for phase ordering and durable early archives."""
+    for name, argv in commands:
+        phase_runner(name, argv, output, work, clock)
+        if name.startswith("evaluate-"):
+            arm = name.removeprefix("evaluate-")
+            if arm not in ARMS:
+                raise ValueError("unknown D2 evaluation arm")
+            backup = archive_run(output / "evaluation" / arm)
+            event_file(output / "early-index.jsonl", "arm_archive", arm=arm, binding=bind,
+                       path="evaluation/" + backup["archive"], **backup)
+
+
 def budget_from_setup(path, booted_at):
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
     _, hard = deadlines(booted_at, aware(booted_at))
@@ -157,13 +170,7 @@ def main():
             raise ValueError("less than 3GB experiment disk free; do not expand disk automatically")
         verify_model(args.model_dir, args.model_manifest)
         verify_adapters(args.adapters_root)
-        for name, argv in commands:
-            run_phase(name, argv, output, work, clock)
-            if name.startswith("evaluate-"):
-                arm = name.removeprefix("evaluate-")
-                backup = archive_run(output / "evaluation" / arm)
-                event_file(output / "early-index.jsonl", "arm_archive", arm=arm, binding=bind,
-                           path="evaluation/" + backup["archive"], **backup)
+        execute_phases(commands, output, bind, work, clock)
         status = "complete"
     except Exception as error:
         failures.append({"type": type(error).__name__, "message": str(error)})
