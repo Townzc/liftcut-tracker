@@ -1,0 +1,68 @@
+{
+  "version": "g1-pair-feasibility-v1",
+  "d2_gate_report_sha256": "21f753fbcebef1c632e429f216333c8faae624719be90536602f67d0cbb2d845",
+  "source_training_manifest_sha256": "643c6d48190ce5a9d710f7116e1662d3399911cc8b40b2c8ec0715ed70785313",
+  "source_sha256": {
+    "g1_pair_feasibility.py": "a0637ad5d6a2e5f7a9de2258c0454bb4f69235a2aa21efc895dc1a9e97bb70c9",
+    "state_coverage.py": "86ca8390a6be9814cda8145dc62fd730c90e5f0d16af47bd3b976a8256e36b1c"
+  },
+  "tokenizer": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "file_sha256": {
+      "tokenizer_config.json": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "config.json": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+    },
+    "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+    "weights_downloaded": false
+  },
+  "arms": {
+    "control": {
+      "replay": {
+        "total": 72,
+        "replayed": 72,
+        "task_passed": 72
+      },
+      "scenarios": 72,
+      "decisions": 504,
+      "target_tokens_one_pass": 20894,
+      "input_tokens_one_pass": 925832,
+      "max_sequence_tokens": 2995
+    },
+    "repair": {
+      "replay": {
+        "total": 72,
+        "replayed": 72,
+        "task_passed": 72
+      },
+      "scenarios": 72,
+      "decisions": 504,
+      "target_tokens_one_pass": 20894,
+      "input_tokens_one_pass": 952728,
+      "max_sequence_tokens": 3126
+    }
+  },
+  "injected_errors": {
+    "session_count_mismatch": 32,
+    "unknown_evidence": 32
+  },
+  "all_correct_actions_and_target_tokens_identical": true,
+  "target_tokens_sha256": "ef8a8caa0bab68992167ceb304c4533c0c4b7831d78ba24d1a9593beb4a687ae",
+  "files": {
+    "control/context-audit.jsonl": "fd1ed96266bc65c97b9be94eac254485be91aad4f2fa68481b8f374c0ae70e85",
+    "control/decisions.jsonl": "22e66d960f29da7e32fc28bcb6edcb7521545c45d08bb3f0c72ca1bc6f963479",
+    "control/episodes.jsonl": "faff585fa77ac61e8b670476f35f83ca2dbfa831ca673cc73b5c088802cf049e",
+    "control/tokens.jsonl": "c38c4285d5df64024c5fa5613ef2dca4080c155be4abc3c537b2f61496a517a3",
+    "repair/context-audit.jsonl": "5a55b109c9e804b30949eb24c5dc57a1196a330ab954127ffd2fc2559430053e",
+    "repair/decisions.jsonl": "79fac8ffc462e1dd0c99ca7c9c482db4fa46b175053456019f58da5240e5d466",
+    "repair/episodes.jsonl": "bba23a7a44cb68c97ba326052466b22c7d6854a390aff7b799b49d07d5e65dbb",
+    "repair/tokens.jsonl": "31906fd41c64edd80d7bb579af5fd43ecb60d4630a7a0002d73734f1d052d53c"
+  },
+  "gpu_ready": false,
+  "training_authorized": false,
+  "new_model_calls": 0,
+  "test_episodes": 0,
+  "scope": "CPU paired-data feasibility using existing T train-only fixtures. Needs frozen schedule, training/evaluation controller, recovery drill and budget before GPU."
+}

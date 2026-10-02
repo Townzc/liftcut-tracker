@@ -1,6 +1,31 @@
 # Agent research progress and handoff
 
-## Current: complete D2 audited; G1 paired-training readiness next
+## Current: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
+
+Updated 2026-10-02 UTC. D2 [PR31](https://github.com/Townzc/liftcut-tracker/pull/31)
+merged after all five checks passed exact33ebe5806401418ff09c5937b2d44c8c1a1b0639;
+main23aa8a6 has the same tree. [G1 preparation and operating plan](research/2026-10-02-g1-pilot-readiness.md)
+now implements the original triggered T-control/T-repair pilot, both fresh seed42
+from the pinned base, both error families retained, T on/M off. Two independent
+preparations match all9 files. Each arm has504 correct decisions,41,788 supervised
+tokens across two epochs,126 updates; input tokens differ by2.9% and are reported.
+
+The shared production/drill path passed222 environment episodes and376 scripted
+native/token records. A complete recovery drill used unchanged historical T bytes
+only as container artifacts, synthetic training/probe counters and stub shutdown;
+these are not G1 weights, GPU memory measurements or performance.18 focused checks
+passed;488 full local regressions passed in170.088s. Offline launcher preflight and
+the five-phase no-output dry-run passed. Final exact-head CI belongs to the delivery PR.
+
+Next: final checked bundle installation and a NEW user-opened4090 window. Reserve
+CNY8 at2.18/hour; expected about two hours, work150/hard180 minutes from the earlier
+user/container boot proxy, ten-minute setup allowance; no storage expansion/API.
+Use [G1 runbook](research/G1_RUNBOOK.md), a new run/ops ID, genuine actual-weight/
+222-case/token restoration, then automatic shutdown and analysis. Original pilot
+gates, fixed representative42 and48 untouched reserved tasks remain; no G1 result,
+seed43/44 training authority or independent generalization claim yet.
+
+## Historical: complete D2 audited; G1 paired-training readiness next
 
 Updated 2026-10-02 UTC. Frozen3e4d8e2 completed all four original seed42 arms.
 The real restorer verified51 inventory files, original adapter bytes,320 native/
