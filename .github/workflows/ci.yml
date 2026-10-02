@@ -343,6 +343,17 @@ jobs:
                  "new_model_calls": 0, "test_episodes": 0})
           PY
 
+      - name: Reproduce R1 shortfall audit and CPU clarification interventions
+        run: python research/liftcut-agent/analyze_agent_shortfalls.py --prepared-dir research/liftcut-agent/outputs/ci-state-coverage --check
+
+      - name: Reproduce eighty D2 contracts and real handoff tokens twice without inference
+        run: |
+          for COPY in a b; do
+            python research/liftcut-agent/prepare_counterfactual_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-d2-$COPY
+          done
+          diff -r research/liftcut-agent/outputs/ci-d2-a research/liftcut-agent/outputs/ci-d2-b
+          python research/liftcut-agent/prepare_counterfactual_diagnostics.py --output-dir research/liftcut-agent/outputs/ci-d2-a --verify-only
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

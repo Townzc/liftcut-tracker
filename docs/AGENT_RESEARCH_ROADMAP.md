@@ -5,8 +5,12 @@ Latest evidence update: 2026-10-02 UTC. The original42/43/44 four-arm study is
 complete; [three-seed results](research/2026-10-02-r1-three-seed-results.md) retain
 all gains and regressions. S0→T reproduces its local screen3/3, but no treatment
 passes all-seed candidate guards. [Next work](research/2026-10-02-post-r1-next-plan.md)
-is CPU D2 preparation on fixed seed42 weights; no extra training seed or reserved
-evaluation. Seed44 is user-confirmed off, with a reported CNY4.60 run cost.
+has completed the [CPU shortfall audit and80 D2 contracts](research/2026-10-02-shortfall-audit-and-d2-contracts.md).
+Sixteen environment-only clarification interventions separate missing information,
+day re-planning and waiting for user input; they are not new model successes.
+Next finish bounded GPU orchestration/recovery readiness on fixed seed42 weights;
+do not open a server yet. No extra training seed or reserved evaluation. Seed44 is
+user-confirmed off, with a reported CNY4.60 run cost.
 Earlier stage-specific “next” statements below are historical context.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).
 The remaining first-release schedule and evidence gates are maintained in
