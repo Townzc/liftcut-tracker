@@ -1,6 +1,27 @@
 # Agent research progress and handoff
 
-## Current: seed44 local collector verified; platform confirmation and opening pending
+## Current: seed44 running; complete evidence and three-seed review pending
+
+Updated2026-10-02 01:16 UTC (project date2026-10-01 America/Los_Angeles).
+The user explicitly opened the instance for the prepared seed44 window. Frozen
+f18 controller started01:04:03 UTC,279.291392s after the container-start proxy;
+S0 is training. Work cutoff03:29:23.910 UTC, hard shutdown03:59:23.910 UTC;
+CNY8 reserve and prior CNY2.18/hour assumption, storage separate. The local PR25
+collector and seed44 heartbeat are active. No completed seed44 score is available.
+[Execution record and evidence](research/2026-10-01-seed44-execution.md).
+
+Read-only acquisition on this newly user-opened instance also found the old
+seed43 server ACK=true and shutdown-command returncode0 at20:59:18.321598 UTC.
+[Late evidence](../research/liftcut-agent/reports/coverage-replication-seed43-late-closure-2026-10-02/acquisition.json)
+supplements, rather than rewrites, the original observations. Platform power/billing
+stop and actual invoice remain unverified; the new opening does not prove them.
+
+Next: authentic actual-weight/124-episode/token restore, genuine receipt, shutdown
+observations, seed44 publication and the original42/43/44 descriptive review.
+Do not change frozen conditions, extend the window, add a seed or run D2/G1 yet.
+Representative seed42 stays fixed and48 reserved tasks remain unused.
+
+## Historical: seed44 local collector verified before the user opened the instance
 
 Updated2026-10-01 America/Los_Angeles (CPU logs2026-10-02 UTC). The
 [seed44 local monitor and handoff](research/2026-10-01-seed44-monitor-readiness.md)

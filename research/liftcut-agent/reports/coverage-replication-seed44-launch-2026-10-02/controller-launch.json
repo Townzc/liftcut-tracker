@@ -1,0 +1,33 @@
+{
+  "pid": 1467,
+  "argv": [
+    "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+    "/root/autodl-tmp/liftcut/code/f18cb5820881a048b19b6007fc4ca231dfd64de9/research/liftcut-agent/run_coverage_replication_window.py",
+    "--model-dir",
+    "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+    "--model-manifest",
+    "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json",
+    "--prepared-dir",
+    "/root/autodl-tmp/liftcut/data/state-coverage-v1-20260929",
+    "--diagnostic-dir",
+    "/root/autodl-tmp/liftcut/data/state-diagnostic-v1-20260929",
+    "--replication-dir",
+    "/root/autodl-tmp/liftcut/data/coverage-replication-v1-f18cb58",
+    "--tokenizer-dir",
+    "/root/autodl-tmp/liftcut/data/qwen-tokenizer",
+    "--output-dir",
+    "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-20261002",
+    "--seed",
+    "44",
+    "--expected-code-commit",
+    "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "--hourly-cny",
+    "2.18",
+    "--execute",
+    "--shutdown-when-done",
+    "--booted-at",
+    "2026-10-02T00:59:23.910000+00:00"
+  ],
+  "boot_age_seconds_at_spawn": 279.291392,
+  "at_utc": "2026-10-02T01:04:03.201392+00:00"
+}
