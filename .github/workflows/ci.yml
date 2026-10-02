@@ -380,6 +380,14 @@ jobs:
           --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
           --metadata-only --check
 
+      - name: Reconstruct the complete fixed-seed D2 result and paired review
+        run: >-
+          python research/liftcut-agent/analyze_d2_results.py
+          --public-dir research/liftcut-agent/reports/d2-fixed-seed42-2026-10-02
+          --prepared-dir research/liftcut-agent/outputs/ci-d2-a
+          --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          --metadata-only --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

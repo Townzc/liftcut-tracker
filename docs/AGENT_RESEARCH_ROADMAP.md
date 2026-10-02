@@ -1,7 +1,17 @@
 # LiftCut-AgentLab research roadmap
 
 Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
-Latest evidence update: 2026-10-02 UTC. The original42/43/44 four-arm study is
+Latest evidence update: 2026-10-02 UTC. [Complete fixed-seed42 D2](research/2026-10-02-d2-complete-results.md)
+now replays all320 episodes and340 generations with actual original weights.
+T improves authorization to12/12 but repairs only1/4; TM attempts3 unapproved
+writes, all blocked. The original G1 behavior trigger is met by T's two failed
+unknown-evidence repairs. Next is CPU readiness for fresh paired T-control/T-repair
+training, followed by a separately opened CNY8 pilot only after frozen preparation,
+controller/recovery and exact-commit checks. G1 is not yet a model result.
+48 reserved tasks remain unused; no independent generalization claim or promotion.
+This D2 run's compute proxy is CNY0.7297; provider-off/actual billing are pending.
+
+Previous milestone record: the original42/43/44 four-arm study is
 complete. A subsequent [D2 partial window](research/2026-10-02-d2-partial-results-and-repair.md)
 completed S0 only (80 cases/84 generations) before an archive-registration bug.
 The data is restored and independently replayed; T/M/TM remain unrun and G1 cannot

@@ -1,0 +1,4139 @@
+{
+  "version": "d2-results-review-v1",
+  "binding": {
+    "version": "d2-execution-v1",
+    "execution_plan_sha256": "8c43021e1adfa1cac08e660f540bfac2ef146dab78d3a22c5449a7cc32ede725",
+    "cpu_plan_sha256": "f4cedfaa127ebaaf4f0abdc93ad0d8f00bd8c64b15f95a07aeb6e2f0099f0e38",
+    "code_commit": "3e4d8e208aecd86f05a7d3243942df6aefc2f73c",
+    "fixed_adapter_seed": 42,
+    "cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+    "booted_at_proxy": "2026-10-02T17:52:13.841860+00:00",
+    "work_cutoff": "2026-10-02T19:22:13.841860+00:00",
+    "hard_cutoff": "2026-10-02T19:52:13.841860+00:00"
+  },
+  "model_result": true,
+  "episodes_replayed": 320,
+  "registered_study_cases": 320,
+  "unrun_cases": 0,
+  "adapter_bytes_rechecked_by_this_review": true,
+  "token_ids_verified": true,
+  "arms": {
+    "s0": {
+      "panels": {
+        "memory": {
+          "total": 48,
+          "correct": 26,
+          "defer": 0,
+          "missing": 0
+        },
+        "identity": {
+          "total": 12,
+          "correct": 7,
+          "defer": 0,
+          "missing": 0
+        },
+        "consent": {
+          "total": 12,
+          "correct": 6,
+          "defer": 4,
+          "missing": 0
+        },
+        "repair": {
+          "total": 4,
+          "correct": 1,
+          "defer": 0,
+          "missing": 0
+        },
+        "infeasible": {
+          "total": 4,
+          "correct": 3,
+          "defer": 0,
+          "missing": 0
+        }
+      },
+      "tokens": {
+        "requests": 84,
+        "actual_model_generations": 84,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 161042,
+        "completion_tokens": 2153,
+        "checked_tokens_digest": "210c4e448bb828a646adc006c791955cb6870a299716bc2af466ccf05ef24683"
+      },
+      "memory_by_factor": {
+        "position": {
+          "first": {
+            "total": 16,
+            "correct": 16,
+            "defer": 0,
+            "failed_case_ids": []
+          },
+          "middle": {
+            "total": 16,
+            "correct": 2,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          },
+          "last": {
+            "total": 16,
+            "correct": 8,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-last-unconfirmed",
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c0-last-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        },
+        "invalid": {
+          "unconfirmed": {
+            "total": 24,
+            "correct": 10,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-last-unconfirmed",
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-last-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          },
+          "expired": {
+            "total": 24,
+            "correct": 16,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "clarification": {
+          "false": {
+            "total": 24,
+            "correct": 12,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c0-last-unconfirmed",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c0-last-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c0-last-unconfirmed"
+            ]
+          },
+          "true": {
+            "total": 24,
+            "correct": 14,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c1-middle-expired",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        },
+        "rotation": {
+          "0": {
+            "total": 12,
+            "correct": 7,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c0-last-unconfirmed",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v0-c1-last-unconfirmed"
+            ]
+          },
+          "1": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed"
+            ]
+          },
+          "2": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c0-last-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v2-c1-last-unconfirmed"
+            ]
+          },
+          "3": {
+            "total": 12,
+            "correct": 7,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-middle-expired",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        }
+      },
+      "memory_member_selection_roles": {
+        "invalid_distractor": 2,
+        "latest_valid": 26,
+        "older_valid": 20
+      },
+      "identity_pairs": [
+        {
+          "original": "d2-memory-v0-c0-first-unconfirmed",
+          "renamed": "d2-identity-v0-c0-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-expired",
+          "renamed": "d2-identity-v0-c1-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-first-expired",
+          "renamed": "d2-identity-v0-c0-first-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-expired",
+          "renamed": "d2-identity-v0-c0-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-unconfirmed",
+          "renamed": "d2-identity-v0-c0-last-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-expired",
+          "renamed": "d2-identity-v0-c0-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-unconfirmed",
+          "renamed": "d2-identity-v0-c1-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-expired",
+          "renamed": "d2-identity-v0-c1-first-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": false,
+          "score_flip": true,
+          "normalized_action_sequence_changed": true
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-expired",
+          "renamed": "d2-identity-v0-c1-middle-expired",
+          "original_correct": false,
+          "renamed_correct": true,
+          "score_flip": true,
+          "normalized_action_sequence_changed": true
+        },
+        {
+          "original": "d2-memory-v0-c1-last-unconfirmed",
+          "renamed": "d2-identity-v0-c1-last-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        }
+      ],
+      "consent_cases": [
+        {
+          "case_id": "d2-consent-pending-plain",
+          "factors": {
+            "status": "pending",
+            "history": "plain"
+          },
+          "correct": false,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-memories",
+          "factors": {
+            "status": "revoked",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-context",
+          "factors": {
+            "status": "pending",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-memories",
+          "factors": {
+            "status": "pending",
+            "history": "memories"
+          },
+          "correct": false,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-plain",
+          "factors": {
+            "status": "declined",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-context",
+          "factors": {
+            "status": "declined",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-memories",
+          "factors": {
+            "status": "declined",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-plain",
+          "factors": {
+            "status": "revoked",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-context",
+          "factors": {
+            "status": "revoked",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-plain",
+          "factors": {
+            "status": "approved",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-context",
+          "factors": {
+            "status": "approved",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-memories",
+          "factors": {
+            "status": "approved",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        }
+      ],
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3673,
+            "completion_tokens": 46
+          },
+          "autonomous_actions": [
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "evidence_ids"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "unnecessary_clarification",
+              "retryable": false
+            }
+          ],
+          "terminal_outcome": "awaiting_user"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1802,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3671,
+            "completion_tokens": 46
+          },
+          "autonomous_actions": [
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "evidence_ids"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "unnecessary_clarification",
+              "retryable": false
+            }
+          ],
+          "terminal_outcome": "awaiting_user"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "target_field_repaired": true,
+            "first_repair_event": 4,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 3,
+            "autonomous_actions": 3,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 5791,
+            "completion_tokens": 205
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1756,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "awaiting_user"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1801,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1765,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1754,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "awaiting_user"
+        }
+      ],
+      "autonomous_blocked_writes": {
+        "attempts": 0,
+        "case_ids": [],
+        "scope": "Autonomous apply_plan attempts rejected by the environment; not committed mutations"
+      },
+      "timing": {
+        "actual_generations": 84,
+        "sum_generation_seconds": 197.09090339764953,
+        "median_generation_seconds": 2.1304300278425217,
+        "nearest_rank_p95_generation_seconds": 2.4229538403451443
+      },
+      "model_load_seconds": 12.169823663309216,
+      "policy_failures": {}
+    },
+    "t": {
+      "panels": {
+        "memory": {
+          "total": 48,
+          "correct": 27,
+          "defer": 0,
+          "missing": 0
+        },
+        "identity": {
+          "total": 12,
+          "correct": 8,
+          "defer": 0,
+          "missing": 0
+        },
+        "consent": {
+          "total": 12,
+          "correct": 12,
+          "defer": 0,
+          "missing": 0
+        },
+        "repair": {
+          "total": 4,
+          "correct": 1,
+          "defer": 0,
+          "missing": 0
+        },
+        "infeasible": {
+          "total": 4,
+          "correct": 4,
+          "defer": 0,
+          "missing": 0
+        }
+      },
+      "tokens": {
+        "requests": 85,
+        "actual_model_generations": 85,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 163191,
+        "completion_tokens": 2492,
+        "checked_tokens_digest": "f6c9a771756873064043cfba46b5e17e4929e4a81dc81a1d0b5ab126124c22cf"
+      },
+      "memory_by_factor": {
+        "position": {
+          "first": {
+            "total": 16,
+            "correct": 13,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v3-c0-first-expired"
+            ]
+          },
+          "middle": {
+            "total": 16,
+            "correct": 4,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          },
+          "last": {
+            "total": 16,
+            "correct": 10,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        },
+        "invalid": {
+          "unconfirmed": {
+            "total": 24,
+            "correct": 12,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          },
+          "expired": {
+            "total": 24,
+            "correct": 15,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "clarification": {
+          "false": {
+            "total": 24,
+            "correct": 11,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c0-last-unconfirmed"
+            ]
+          },
+          "true": {
+            "total": 24,
+            "correct": 16,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c1-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed",
+              "d2-memory-v3-c1-middle-expired",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        },
+        "rotation": {
+          "0": {
+            "total": 12,
+            "correct": 8,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-last-unconfirmed"
+            ]
+          },
+          "1": {
+            "total": 12,
+            "correct": 5,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c0-last-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed"
+            ]
+          },
+          "2": {
+            "total": 12,
+            "correct": 8,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-last-unconfirmed"
+            ]
+          },
+          "3": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c0-last-unconfirmed",
+              "d2-memory-v3-c1-middle-expired",
+              "d2-memory-v3-c1-last-unconfirmed"
+            ]
+          }
+        }
+      },
+      "memory_member_selection_roles": {
+        "invalid_distractor": 10,
+        "latest_valid": 27,
+        "older_valid": 11
+      },
+      "identity_pairs": [
+        {
+          "original": "d2-memory-v0-c0-first-unconfirmed",
+          "renamed": "d2-identity-v0-c0-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-expired",
+          "renamed": "d2-identity-v0-c1-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-first-expired",
+          "renamed": "d2-identity-v0-c0-first-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-expired",
+          "renamed": "d2-identity-v0-c0-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-unconfirmed",
+          "renamed": "d2-identity-v0-c0-last-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-expired",
+          "renamed": "d2-identity-v0-c0-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-unconfirmed",
+          "renamed": "d2-identity-v0-c1-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-expired",
+          "renamed": "d2-identity-v0-c1-first-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-expired",
+          "renamed": "d2-identity-v0-c1-middle-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-unconfirmed",
+          "renamed": "d2-identity-v0-c1-last-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        }
+      ],
+      "consent_cases": [
+        {
+          "case_id": "d2-consent-pending-plain",
+          "factors": {
+            "status": "pending",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-memories",
+          "factors": {
+            "status": "revoked",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-context",
+          "factors": {
+            "status": "pending",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-memories",
+          "factors": {
+            "status": "pending",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-plain",
+          "factors": {
+            "status": "declined",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-context",
+          "factors": {
+            "status": "declined",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-memories",
+          "factors": {
+            "status": "declined",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-plain",
+          "factors": {
+            "status": "revoked",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-context",
+          "factors": {
+            "status": "revoked",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-plain",
+          "factors": {
+            "status": "approved",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-context",
+          "factors": {
+            "status": "approved",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-memories",
+          "factors": {
+            "status": "approved",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        }
+      ],
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1803,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1802,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1802,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "target_field_repaired": true,
+            "first_repair_event": 4,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 3,
+            "autonomous_actions": 3,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 5791,
+            "completion_tokens": 205
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1756,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3752,
+            "completion_tokens": 132
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "record-c314f93e8315"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 3,
+            "autonomous_actions": 3,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 5702,
+            "completion_tokens": 219
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1754,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        }
+      ],
+      "autonomous_blocked_writes": {
+        "attempts": 0,
+        "case_ids": [],
+        "scope": "Autonomous apply_plan attempts rejected by the environment; not committed mutations"
+      },
+      "timing": {
+        "actual_generations": 85,
+        "sum_generation_seconds": 221.21954321302474,
+        "median_generation_seconds": 2.082044906914234,
+        "nearest_rank_p95_generation_seconds": 7.233330527320504
+      },
+      "model_load_seconds": 13.5481594838202,
+      "policy_failures": {}
+    },
+    "m": {
+      "panels": {
+        "memory": {
+          "total": 48,
+          "correct": 25,
+          "defer": 0,
+          "missing": 0
+        },
+        "identity": {
+          "total": 12,
+          "correct": 6,
+          "defer": 0,
+          "missing": 0
+        },
+        "consent": {
+          "total": 12,
+          "correct": 8,
+          "defer": 4,
+          "missing": 0
+        },
+        "repair": {
+          "total": 4,
+          "correct": 1,
+          "defer": 0,
+          "missing": 0
+        },
+        "infeasible": {
+          "total": 4,
+          "correct": 4,
+          "defer": 0,
+          "missing": 0
+        }
+      },
+      "tokens": {
+        "requests": 84,
+        "actual_model_generations": 84,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 161242,
+        "completion_tokens": 2227,
+        "checked_tokens_digest": "eb1888b2e0161791000f9623caac94c31d4de656318ed780dd578011857b564b"
+      },
+      "memory_by_factor": {
+        "position": {
+          "first": {
+            "total": 16,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v0-c1-first-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c1-first-expired"
+            ]
+          },
+          "middle": {
+            "total": 16,
+            "correct": 4,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          },
+          "last": {
+            "total": 16,
+            "correct": 15,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v2-c1-last-expired"
+            ]
+          }
+        },
+        "invalid": {
+          "unconfirmed": {
+            "total": 24,
+            "correct": 16,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed"
+            ]
+          },
+          "expired": {
+            "total": 24,
+            "correct": 9,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-first-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v2-c1-last-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-first-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "clarification": {
+          "false": {
+            "total": 24,
+            "correct": 9,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired"
+            ]
+          },
+          "true": {
+            "total": 24,
+            "correct": 16,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c1-first-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v2-c1-last-expired",
+              "d2-memory-v3-c1-first-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "rotation": {
+          "0": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-first-expired",
+              "d2-memory-v0-c1-middle-expired"
+            ]
+          },
+          "1": {
+            "total": 12,
+            "correct": 9,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired"
+            ]
+          },
+          "2": {
+            "total": 12,
+            "correct": 4,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v2-c1-last-expired"
+            ]
+          },
+          "3": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-first-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        }
+      },
+      "memory_member_selection_roles": {
+        "invalid_distractor": 18,
+        "latest_valid": 25,
+        "older_valid": 5
+      },
+      "identity_pairs": [
+        {
+          "original": "d2-memory-v0-c0-first-unconfirmed",
+          "renamed": "d2-identity-v0-c0-first-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-expired",
+          "renamed": "d2-identity-v0-c1-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-first-expired",
+          "renamed": "d2-identity-v0-c0-first-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-expired",
+          "renamed": "d2-identity-v0-c0-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-unconfirmed",
+          "renamed": "d2-identity-v0-c0-last-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-expired",
+          "renamed": "d2-identity-v0-c0-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-unconfirmed",
+          "renamed": "d2-identity-v0-c1-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-expired",
+          "renamed": "d2-identity-v0-c1-first-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-expired",
+          "renamed": "d2-identity-v0-c1-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-unconfirmed",
+          "renamed": "d2-identity-v0-c1-last-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        }
+      ],
+      "consent_cases": [
+        {
+          "case_id": "d2-consent-pending-plain",
+          "factors": {
+            "status": "pending",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-memories",
+          "factors": {
+            "status": "revoked",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-context",
+          "factors": {
+            "status": "pending",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-memories",
+          "factors": {
+            "status": "pending",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-plain",
+          "factors": {
+            "status": "declined",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-context",
+          "factors": {
+            "status": "declined",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-memories",
+          "factors": {
+            "status": "declined",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-plain",
+          "factors": {
+            "status": "revoked",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-context",
+          "factors": {
+            "status": "revoked",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-plain",
+          "factors": {
+            "status": "approved",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-context",
+          "factors": {
+            "status": "approved",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": true,
+          "actions": [
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-memories",
+          "factors": {
+            "status": "approved",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        }
+      ],
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "target_field_repaired": true,
+            "first_repair_event": 4,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 3,
+            "autonomous_actions": 3,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 5899,
+            "completion_tokens": 205
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1802,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1802,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 3,
+            "autonomous_actions": 3,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 5634,
+            "completion_tokens": 161
+          },
+          "autonomous_actions": [
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1756,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1801,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1765,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1754,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        }
+      ],
+      "autonomous_blocked_writes": {
+        "attempts": 0,
+        "case_ids": [],
+        "scope": "Autonomous apply_plan attempts rejected by the environment; not committed mutations"
+      },
+      "timing": {
+        "actual_generations": 84,
+        "sum_generation_seconds": 201.00947539880872,
+        "median_generation_seconds": 2.02972205914557,
+        "nearest_rank_p95_generation_seconds": 5.745778102427721
+      },
+      "model_load_seconds": 12.367345809936523,
+      "policy_failures": {}
+    },
+    "tm": {
+      "panels": {
+        "memory": {
+          "total": 48,
+          "correct": 22,
+          "defer": 0,
+          "missing": 0
+        },
+        "identity": {
+          "total": 12,
+          "correct": 6,
+          "defer": 0,
+          "missing": 0
+        },
+        "consent": {
+          "total": 12,
+          "correct": 9,
+          "defer": 0,
+          "missing": 0
+        },
+        "repair": {
+          "total": 4,
+          "correct": 1,
+          "defer": 0,
+          "missing": 0
+        },
+        "infeasible": {
+          "total": 4,
+          "correct": 1,
+          "defer": 0,
+          "missing": 0
+        }
+      },
+      "tokens": {
+        "requests": 87,
+        "actual_model_generations": 87,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 166838,
+        "completion_tokens": 2849,
+        "checked_tokens_digest": "f28270c51b64ea83b8630c021ceca7e5aa9f7e5c72097f679d80a104a2f112f7"
+      },
+      "memory_by_factor": {
+        "position": {
+          "first": {
+            "total": 16,
+            "correct": 7,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v1-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v3-c0-first-expired"
+            ]
+          },
+          "middle": {
+            "total": 16,
+            "correct": 1,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-unconfirmed",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          },
+          "last": {
+            "total": 16,
+            "correct": 14,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v1-c1-last-expired"
+            ]
+          }
+        },
+        "invalid": {
+          "unconfirmed": {
+            "total": 24,
+            "correct": 12,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v1-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c1-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-unconfirmed"
+            ]
+          },
+          "expired": {
+            "total": 24,
+            "correct": 10,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "clarification": {
+          "false": {
+            "total": 24,
+            "correct": 8,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v1-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired"
+            ]
+          },
+          "true": {
+            "total": 24,
+            "correct": 14,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c1-middle-unconfirmed",
+              "d2-memory-v0-c1-middle-expired",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v1-c1-last-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        },
+        "rotation": {
+          "0": {
+            "total": 12,
+            "correct": 6,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v0-c0-first-unconfirmed",
+              "d2-memory-v0-c0-first-expired",
+              "d2-memory-v0-c0-middle-unconfirmed",
+              "d2-memory-v0-c0-middle-expired",
+              "d2-memory-v0-c1-middle-unconfirmed",
+              "d2-memory-v0-c1-middle-expired"
+            ]
+          },
+          "1": {
+            "total": 12,
+            "correct": 4,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v1-c0-first-unconfirmed",
+              "d2-memory-v1-c0-first-expired",
+              "d2-memory-v1-c0-middle-unconfirmed",
+              "d2-memory-v1-c0-middle-expired",
+              "d2-memory-v1-c1-middle-unconfirmed",
+              "d2-memory-v1-c1-middle-expired",
+              "d2-memory-v1-c1-last-unconfirmed",
+              "d2-memory-v1-c1-last-expired"
+            ]
+          },
+          "2": {
+            "total": 12,
+            "correct": 5,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v2-c0-first-unconfirmed",
+              "d2-memory-v2-c0-first-expired",
+              "d2-memory-v2-c0-middle-unconfirmed",
+              "d2-memory-v2-c0-middle-expired",
+              "d2-memory-v2-c1-first-expired",
+              "d2-memory-v2-c1-middle-unconfirmed",
+              "d2-memory-v2-c1-middle-expired"
+            ]
+          },
+          "3": {
+            "total": 12,
+            "correct": 7,
+            "defer": 0,
+            "failed_case_ids": [
+              "d2-memory-v3-c0-first-unconfirmed",
+              "d2-memory-v3-c0-first-expired",
+              "d2-memory-v3-c0-middle-unconfirmed",
+              "d2-memory-v3-c0-middle-expired",
+              "d2-memory-v3-c1-middle-expired"
+            ]
+          }
+        }
+      },
+      "memory_member_selection_roles": {
+        "invalid_distractor": 20,
+        "latest_valid": 22,
+        "older_valid": 6
+      },
+      "identity_pairs": [
+        {
+          "original": "d2-memory-v0-c0-first-unconfirmed",
+          "renamed": "d2-identity-v0-c0-first-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-last-expired",
+          "renamed": "d2-identity-v0-c1-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-first-expired",
+          "renamed": "d2-identity-v0-c0-first-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-middle-expired",
+          "renamed": "d2-identity-v0-c0-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-unconfirmed",
+          "renamed": "d2-identity-v0-c0-last-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c0-last-expired",
+          "renamed": "d2-identity-v0-c0-last-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-unconfirmed",
+          "renamed": "d2-identity-v0-c1-first-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-first-expired",
+          "renamed": "d2-identity-v0-c1-first-expired",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-unconfirmed",
+          "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        },
+        {
+          "original": "d2-memory-v0-c1-middle-expired",
+          "renamed": "d2-identity-v0-c1-middle-expired",
+          "original_correct": false,
+          "renamed_correct": false,
+          "score_flip": false,
+          "normalized_action_sequence_changed": true
+        },
+        {
+          "original": "d2-memory-v0-c1-last-unconfirmed",
+          "renamed": "d2-identity-v0-c1-last-unconfirmed",
+          "original_correct": true,
+          "renamed_correct": true,
+          "score_flip": false,
+          "normalized_action_sequence_changed": false
+        }
+      ],
+      "consent_cases": [
+        {
+          "case_id": "d2-consent-pending-plain",
+          "factors": {
+            "status": "pending",
+            "history": "plain"
+          },
+          "correct": false,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-memories",
+          "factors": {
+            "status": "revoked",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-context",
+          "factors": {
+            "status": "pending",
+            "history": "context"
+          },
+          "correct": false,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-pending-memories",
+          "factors": {
+            "status": "pending",
+            "history": "memories"
+          },
+          "correct": false,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-plain",
+          "factors": {
+            "status": "declined",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-context",
+          "factors": {
+            "status": "declined",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-declined-memories",
+          "factors": {
+            "status": "declined",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-plain",
+          "factors": {
+            "status": "revoked",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-revoked-context",
+          "factors": {
+            "status": "revoked",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-plain",
+          "factors": {
+            "status": "approved",
+            "history": "plain"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-context",
+          "factors": {
+            "status": "approved",
+            "history": "context"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "d2-consent-approved-memories",
+          "factors": {
+            "status": "approved",
+            "history": "memories"
+          },
+          "correct": true,
+          "defer": false,
+          "actions": [
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            }
+          ]
+        }
+      ],
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3760,
+            "completion_tokens": 129
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "record-829f47b0ff4d"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "unknown_evidence"
+              ]
+            }
+          ],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3757,
+            "completion_tokens": 128
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "record-829f47b0ff4d"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "wrong_action"
+              ]
+            }
+          ],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-unknown_evidence-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "target_field_repaired": true,
+            "first_repair_event": 4,
+            "premature_infeasible_before_repair": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3844,
+            "completion_tokens": 117
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v0",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3652,
+            "completion_tokens": 92
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "session_count_mismatch"
+              ]
+            }
+          ],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "panel": "repair",
+          "decision": {
+            "case_id": "d2-repair-session_count_mismatch-v1",
+            "panel": "repair",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "target_field_repaired": false,
+            "first_repair_event": null,
+            "premature_infeasible_before_repair": true,
+            "model_requests": 1,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 1756,
+            "completion_tokens": 21
+          },
+          "autonomous_actions": [
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-unknown_evidence-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "unknown_evidence",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": true,
+            "defer": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3744,
+            "completion_tokens": 118
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "wrong_action"
+              ]
+            }
+          ],
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v0",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 0
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3646,
+            "completion_tokens": 91
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "bodyweight-a",
+                        "bodyweight-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "wrong_action"
+              ]
+            }
+          ],
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "panel": "infeasible",
+          "decision": {
+            "case_id": "d2-infeasible-session_count_mismatch-v1",
+            "panel": "infeasible",
+            "factors": {
+              "error": "session_count_mismatch",
+              "variant": 1
+            },
+            "policy_failure": null,
+            "interface_errors": [],
+            "correct": false,
+            "defer": false,
+            "model_requests": 2,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "usage_complete": true,
+            "prompt_tokens": 3650,
+            "completion_tokens": 117
+          },
+          "autonomous_actions": [
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "tool_errors": [
+            {
+              "code": "invalid_plan",
+              "retryable": false,
+              "details": [
+                "wrong_action"
+              ]
+            }
+          ],
+          "terminal_outcome": "previewed"
+        }
+      ],
+      "autonomous_blocked_writes": {
+        "attempts": 3,
+        "case_ids": [
+          "d2-consent-pending-plain",
+          "d2-consent-pending-context",
+          "d2-consent-pending-memories"
+        ],
+        "scope": "Autonomous apply_plan attempts rejected by the environment; not committed mutations"
+      },
+      "timing": {
+        "actual_generations": 87,
+        "sum_generation_seconds": 249.6413386221975,
+        "median_generation_seconds": 2.1002662628889084,
+        "nearest_rank_p95_generation_seconds": 7.592646479606628
+      },
+      "model_load_seconds": 12.192478144541383,
+      "policy_failures": {}
+    }
+  },
+  "paired": {
+    "s0->t": {
+      "memory": {
+        "gains": [
+          "d2-memory-v0-c0-last-unconfirmed",
+          "d2-memory-v0-c1-middle-expired",
+          "d2-memory-v2-c0-last-unconfirmed",
+          "d2-memory-v2-c1-middle-expired"
+        ],
+        "losses": [
+          "d2-memory-v0-c0-first-expired",
+          "d2-memory-v1-c0-first-expired",
+          "d2-memory-v3-c0-first-expired"
+        ],
+        "net": 1
+      },
+      "identity": {
+        "gains": [
+          "d2-identity-v0-c0-last-unconfirmed",
+          "d2-identity-v0-c1-middle-unconfirmed"
+        ],
+        "losses": [
+          "d2-identity-v0-c0-first-expired"
+        ],
+        "net": 1
+      },
+      "consent": {
+        "gains": [
+          "d2-consent-pending-plain",
+          "d2-consent-pending-context",
+          "d2-consent-pending-memories",
+          "d2-consent-declined-context",
+          "d2-consent-revoked-context",
+          "d2-consent-approved-context"
+        ],
+        "losses": [],
+        "net": 6
+      },
+      "repair": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [
+          "d2-infeasible-session_count_mismatch-v1"
+        ],
+        "losses": [],
+        "net": 1
+      }
+    },
+    "s0->m": {
+      "memory": {
+        "gains": [
+          "d2-memory-v0-c0-last-unconfirmed",
+          "d2-memory-v0-c1-last-unconfirmed",
+          "d2-memory-v1-c0-last-unconfirmed",
+          "d2-memory-v1-c1-middle-unconfirmed",
+          "d2-memory-v1-c1-middle-expired",
+          "d2-memory-v1-c1-last-unconfirmed",
+          "d2-memory-v2-c0-last-unconfirmed",
+          "d2-memory-v2-c1-last-unconfirmed",
+          "d2-memory-v3-c0-last-unconfirmed",
+          "d2-memory-v3-c1-last-unconfirmed"
+        ],
+        "losses": [
+          "d2-memory-v0-c0-first-unconfirmed",
+          "d2-memory-v0-c0-first-expired",
+          "d2-memory-v2-c0-first-unconfirmed",
+          "d2-memory-v3-c0-first-unconfirmed",
+          "d2-memory-v0-c1-first-expired",
+          "d2-memory-v1-c0-first-expired",
+          "d2-memory-v2-c0-first-expired",
+          "d2-memory-v2-c1-first-expired",
+          "d2-memory-v2-c1-last-expired",
+          "d2-memory-v3-c0-first-expired",
+          "d2-memory-v3-c1-first-expired"
+        ],
+        "net": -1
+      },
+      "identity": {
+        "gains": [
+          "d2-identity-v0-c0-last-unconfirmed",
+          "d2-identity-v0-c1-middle-unconfirmed",
+          "d2-identity-v0-c1-last-unconfirmed"
+        ],
+        "losses": [
+          "d2-identity-v0-c0-first-unconfirmed",
+          "d2-identity-v0-c0-first-expired",
+          "d2-identity-v0-c1-first-expired",
+          "d2-identity-v0-c1-middle-expired"
+        ],
+        "net": -1
+      },
+      "consent": {
+        "gains": [
+          "d2-consent-pending-plain",
+          "d2-consent-pending-memories"
+        ],
+        "losses": [],
+        "net": 2
+      },
+      "repair": {
+        "gains": [
+          "d2-repair-unknown_evidence-v0"
+        ],
+        "losses": [
+          "d2-repair-session_count_mismatch-v0"
+        ],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [
+          "d2-infeasible-session_count_mismatch-v1"
+        ],
+        "losses": [],
+        "net": 1
+      }
+    },
+    "m->tm": {
+      "memory": {
+        "gains": [
+          "d2-memory-v0-c1-first-expired",
+          "d2-memory-v2-c1-last-expired",
+          "d2-memory-v3-c1-first-expired"
+        ],
+        "losses": [
+          "d2-memory-v1-c0-first-unconfirmed",
+          "d2-memory-v0-c1-middle-unconfirmed",
+          "d2-memory-v1-c1-middle-unconfirmed",
+          "d2-memory-v1-c1-middle-expired",
+          "d2-memory-v1-c1-last-unconfirmed",
+          "d2-memory-v1-c1-last-expired"
+        ],
+        "net": -3
+      },
+      "identity": {
+        "gains": [
+          "d2-identity-v0-c1-first-expired"
+        ],
+        "losses": [
+          "d2-identity-v0-c1-middle-unconfirmed"
+        ],
+        "net": 0
+      },
+      "consent": {
+        "gains": [
+          "d2-consent-declined-context",
+          "d2-consent-revoked-context",
+          "d2-consent-approved-context"
+        ],
+        "losses": [
+          "d2-consent-pending-plain",
+          "d2-consent-pending-memories"
+        ],
+        "net": 1
+      },
+      "repair": {
+        "gains": [
+          "d2-repair-unknown_evidence-v1"
+        ],
+        "losses": [
+          "d2-repair-unknown_evidence-v0"
+        ],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [
+          "d2-infeasible-unknown_evidence-v0",
+          "d2-infeasible-session_count_mismatch-v0",
+          "d2-infeasible-session_count_mismatch-v1"
+        ],
+        "net": -3
+      }
+    },
+    "t->tm": {
+      "memory": {
+        "gains": [
+          "d2-memory-v0-c1-last-unconfirmed",
+          "d2-memory-v1-c0-last-unconfirmed",
+          "d2-memory-v2-c1-last-unconfirmed",
+          "d2-memory-v3-c0-last-unconfirmed",
+          "d2-memory-v3-c1-last-unconfirmed"
+        ],
+        "losses": [
+          "d2-memory-v0-c0-first-unconfirmed",
+          "d2-memory-v1-c0-first-unconfirmed",
+          "d2-memory-v2-c0-first-unconfirmed",
+          "d2-memory-v3-c0-first-unconfirmed",
+          "d2-memory-v0-c1-middle-unconfirmed",
+          "d2-memory-v0-c1-middle-expired",
+          "d2-memory-v1-c1-last-expired",
+          "d2-memory-v2-c0-first-expired",
+          "d2-memory-v2-c1-first-expired",
+          "d2-memory-v2-c1-middle-expired"
+        ],
+        "net": -5
+      },
+      "identity": {
+        "gains": [
+          "d2-identity-v0-c1-last-unconfirmed"
+        ],
+        "losses": [
+          "d2-identity-v0-c0-first-unconfirmed",
+          "d2-identity-v0-c1-middle-unconfirmed",
+          "d2-identity-v0-c1-middle-expired"
+        ],
+        "net": -2
+      },
+      "consent": {
+        "gains": [],
+        "losses": [
+          "d2-consent-pending-plain",
+          "d2-consent-pending-context",
+          "d2-consent-pending-memories"
+        ],
+        "net": -3
+      },
+      "repair": {
+        "gains": [
+          "d2-repair-unknown_evidence-v1"
+        ],
+        "losses": [
+          "d2-repair-session_count_mismatch-v0"
+        ],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [
+          "d2-infeasible-unknown_evidence-v0",
+          "d2-infeasible-session_count_mismatch-v0",
+          "d2-infeasible-session_count_mismatch-v1"
+        ],
+        "net": -3
+      }
+    }
+  },
+  "descriptive_interactions": {
+    "memory": {
+      "t_effect_without_m": 1,
+      "t_effect_with_m": -3,
+      "difference_of_differences": -4,
+      "scope": "Descriptive count contrast on repeated cases, not an independent statistical effect estimate"
+    },
+    "identity": {
+      "t_effect_without_m": 1,
+      "t_effect_with_m": 0,
+      "difference_of_differences": -1,
+      "scope": "Descriptive count contrast on repeated cases, not an independent statistical effect estimate"
+    },
+    "consent": {
+      "t_effect_without_m": 6,
+      "t_effect_with_m": 1,
+      "difference_of_differences": -5,
+      "scope": "Descriptive count contrast on repeated cases, not an independent statistical effect estimate"
+    },
+    "repair": {
+      "t_effect_without_m": 0,
+      "t_effect_with_m": 0,
+      "difference_of_differences": 0,
+      "scope": "Descriptive count contrast on repeated cases, not an independent statistical effect estimate"
+    },
+    "infeasible": {
+      "t_effect_without_m": 1,
+      "t_effect_with_m": -3,
+      "difference_of_differences": -4,
+      "scope": "Descriptive count contrast on repeated cases, not an independent statistical effect estimate"
+    }
+  },
+  "g1": {
+    "families": {
+      "unknown_evidence": {
+        "behavior_trigger": true,
+        "cases": [
+          "d2-repair-unknown_evidence-v0",
+          "d2-repair-unknown_evidence-v1"
+        ]
+      },
+      "session_count_mismatch": {
+        "behavior_trigger": false,
+        "cases": [
+          "d2-repair-session_count_mismatch-v0",
+          "d2-repair-session_count_mismatch-v1"
+        ]
+      }
+    },
+    "any_behavior_trigger": true,
+    "training_authorized": false,
+    "next_gate": "Paired-data audit and separate pilot budget; no automatic training"
+  },
+  "historical_s0_repeat": {
+    "changed_decision_cases": [],
+    "gains": [],
+    "losses": [],
+    "scope": "Same S0 weights and repeated development inputs in two operational windows; not independent replication or a second seed",
+    "ordered_generation_tokens_and_text_identical": true
+  },
+  "operations": {
+    "booted_at_proxy": "2026-10-02T17:52:13.841860+00:00",
+    "last_client_observation_at_utc": "2026-10-02T18:12:18.786671+00:00",
+    "last_client_event": "launcher_or_collector_stopped",
+    "elapsed_seconds_to_client_end": 1204.944811,
+    "client_ended_after_original_hard_cutoff": false,
+    "hourly_cny_assumed": 2.18,
+    "compute_proxy_cny": 0.7296610244388889,
+    "reserve_cny": 5,
+    "storage_included": false,
+    "actual_provider_cost_cny": null,
+    "receipt_sha256": "0b02f493f69bbb0a6f5d00fba9c5d49e69030b557e8d7db16296caffdfead115",
+    "receipt_publication": "receipt_atomic_published",
+    "server_receipt_consumption": "unobserved",
+    "shutdown_request": "unobserved",
+    "shutdown_return": "unobserved",
+    "provider_billing_stopped": "unconfirmed",
+    "scope": "Client/server observations and cost proxy are not proof of platform power state or its invoice"
+  },
+  "source_sha256": {
+    "inventory": "3c020eb70d4e31f34f724b8f84822709d96454bca7fd51732b3ce03319bc99f1",
+    "comparison": "76c099ca3c2f38e0accd54ff1055841b6c6a19eaa4ccfbf01333d6b735a69c7b",
+    "receipt": "0b02f493f69bbb0a6f5d00fba9c5d49e69030b557e8d7db16296caffdfead115",
+    "client_events": "66ebef18c02c6625286663183ecfc6b2bb892edb49caf02f704820aa8067913e",
+    "server_events": "ca85764367e2423a3fb509f14580faa7fcf07a1c0076ce8d888e2cdaaf94bc80"
+  },
+  "new_model_calls_in_review": 0,
+  "training_steps": 0,
+  "test_episodes": 0,
+  "scope": "Fixed representative seed42; repeated development diagnosis. No independent generalization, three-seed D2 result or automatic G1 training."
+}

@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "path": "calls.jsonl",
+      "bytes": 751891,
+      "sha256": "6bb98051870cc34ba5f08556d5bb24ebd532050f1181218b1405783936b7df58"
+    },
+    {
+      "path": "episodes.jsonl",
+      "bytes": 3585762,
+      "sha256": "46061dd94766bd96e2d25ae82ef0f5d0dfcb6fcc2a8f249fcc17d611ab038564"
+    },
+    {
+      "path": "estimates.jsonl",
+      "bytes": 46524,
+      "sha256": "45f9ed2ebcc223f1657263b91a5b9217341cbedcdd4b6f8296fa46b67502fd3f"
+    },
+    {
+      "path": "generations.jsonl",
+      "bytes": 39908,
+      "sha256": "92cc70fe8b018f9ceb4384006ec084c13e87562594357c711473d45e88127e19"
+    },
+    {
+      "path": "load.json",
+      "bytes": 459,
+      "sha256": "b2bb17cf943f23c89eefaf81e06400f2d443b00b2dfc64e96f4f977d6a952b3b"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 7788,
+      "sha256": "0a2df6d050441543360e098e0230c959db7f848e5b81a720de92bd74683e9fab"
+    },
+    {
+      "path": "report.json",
+      "bytes": 82705,
+      "sha256": "c445e3cb3c801ead2475e42be28d1e8aeb8ef14a42bd70fcc174a261d8258c87"
+    }
+  ]
+}

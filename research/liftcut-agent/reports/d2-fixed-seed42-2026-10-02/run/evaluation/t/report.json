@@ -1,0 +1,2520 @@
+{
+  "total": 80,
+  "completed_attempts": 80,
+  "missing": 0,
+  "results": [
+    {
+      "case_id": "d2-memory-v0-c0-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c0-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-last-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-pending-plain",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-revoked-memories",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-repair-unknown_evidence-v0",
+      "panel": "repair",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-infeasible-unknown_evidence-v0",
+      "panel": "infeasible",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c0-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c0-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v0-c1-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v1-c1-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c0-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v2-c1-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c0-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-first-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-middle-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-memory-v3-c1-last-expired",
+      "panel": "memory",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-first-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-middle-expired",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "panel": "identity",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-pending-context",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-pending-memories",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-declined-plain",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-declined-context",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-declined-memories",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-revoked-plain",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-revoked-context",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-approved-plain",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-approved-context",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-consent-approved-memories",
+      "panel": "consent",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-repair-unknown_evidence-v1",
+      "panel": "repair",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-repair-session_count_mismatch-v0",
+      "panel": "repair",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-repair-session_count_mismatch-v1",
+      "panel": "repair",
+      "attempt_complete": true,
+      "correct": false,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-infeasible-unknown_evidence-v1",
+      "panel": "infeasible",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-infeasible-session_count_mismatch-v0",
+      "panel": "infeasible",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    },
+    {
+      "case_id": "d2-infeasible-session_count_mismatch-v1",
+      "panel": "infeasible",
+      "attempt_complete": true,
+      "correct": true,
+      "defer": false,
+      "missing_reason": null,
+      "policy_failure": null
+    }
+  ],
+  "panels": {
+    "memory": {
+      "total": 48,
+      "correct": 27,
+      "defer": 0,
+      "missing": 0
+    },
+    "identity": {
+      "total": 12,
+      "correct": 8,
+      "defer": 0,
+      "missing": 0
+    },
+    "consent": {
+      "total": 12,
+      "correct": 12,
+      "defer": 0,
+      "missing": 0
+    },
+    "repair": {
+      "total": 4,
+      "correct": 1,
+      "defer": 0,
+      "missing": 0
+    },
+    "infeasible": {
+      "total": 4,
+      "correct": 4,
+      "defer": 0,
+      "missing": 0
+    }
+  },
+  "scope": "Partial execution denominator; missing is not an observed model answer",
+  "stop_reason": null,
+  "estimates": [
+    {
+      "observations": 96,
+      "by_mode": {
+        "first_response": {
+          "observations": 82,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 206
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 382,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3233.4968596994877,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "work_seconds_remaining": 4980.440212,
+      "at_utc": "2026-10-02T17:59:13.401648+00:00",
+      "stop": false
+    },
+    {
+      "observations": 97,
+      "by_mode": {
+        "first_response": {
+          "observations": 83,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 205
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 381,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3229.984002381563,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c0-middle-expired",
+      "work_seconds_remaining": 4978.298715,
+      "at_utc": "2026-10-02T17:59:15.543145+00:00",
+      "stop": false
+    },
+    {
+      "observations": 98,
+      "by_mode": {
+        "first_response": {
+          "observations": 84,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 204
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 380,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3226.4711450636387,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "work_seconds_remaining": 4976.302048,
+      "at_utc": "2026-10-02T17:59:17.539812+00:00",
+      "stop": false
+    },
+    {
+      "observations": 99,
+      "by_mode": {
+        "first_response": {
+          "observations": 85,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 203
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 379,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3222.958287745714,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c0-last-expired",
+      "work_seconds_remaining": 4974.243579,
+      "at_utc": "2026-10-02T17:59:19.598281+00:00",
+      "stop": false
+    },
+    {
+      "observations": 100,
+      "by_mode": {
+        "first_response": {
+          "observations": 86,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 202
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 378,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3219.4454304277897,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c1-first-expired",
+      "work_seconds_remaining": 4972.168104,
+      "at_utc": "2026-10-02T17:59:21.673756+00:00",
+      "stop": false
+    },
+    {
+      "observations": 101,
+      "by_mode": {
+        "first_response": {
+          "observations": 87,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 201
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 377,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3215.932573109865,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "work_seconds_remaining": 4969.9533,
+      "at_utc": "2026-10-02T17:59:23.888560+00:00",
+      "stop": false
+    },
+    {
+      "observations": 102,
+      "by_mode": {
+        "first_response": {
+          "observations": 88,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 200
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 376,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3212.4197157919407,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c1-middle-expired",
+      "work_seconds_remaining": 4967.693047,
+      "at_utc": "2026-10-02T17:59:26.148813+00:00",
+      "stop": false
+    },
+    {
+      "observations": 103,
+      "by_mode": {
+        "first_response": {
+          "observations": 89,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 199
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 375,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3208.906858474016,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "work_seconds_remaining": 4965.406031,
+      "at_utc": "2026-10-02T17:59:28.435829+00:00",
+      "stop": false
+    },
+    {
+      "observations": 104,
+      "by_mode": {
+        "first_response": {
+          "observations": 90,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 198
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 374,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3205.3940011560917,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v0-c1-last-expired",
+      "work_seconds_remaining": 4963.095269,
+      "at_utc": "2026-10-02T17:59:30.746591+00:00",
+      "stop": false
+    },
+    {
+      "observations": 105,
+      "by_mode": {
+        "first_response": {
+          "observations": 91,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 197
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 373,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3201.881143838167,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c0-first-expired",
+      "work_seconds_remaining": 4960.878306,
+      "at_utc": "2026-10-02T17:59:32.963554+00:00",
+      "stop": false
+    },
+    {
+      "observations": 106,
+      "by_mode": {
+        "first_response": {
+          "observations": 92,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 196
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 372,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3198.3682865202427,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "work_seconds_remaining": 4958.797245,
+      "at_utc": "2026-10-02T17:59:35.044615+00:00",
+      "stop": false
+    },
+    {
+      "observations": 107,
+      "by_mode": {
+        "first_response": {
+          "observations": 93,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 195
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 371,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3194.855429202318,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c0-middle-expired",
+      "work_seconds_remaining": 4956.707165,
+      "at_utc": "2026-10-02T17:59:37.134695+00:00",
+      "stop": false
+    },
+    {
+      "observations": 108,
+      "by_mode": {
+        "first_response": {
+          "observations": 94,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 194
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 370,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3191.3425718843937,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "work_seconds_remaining": 4954.653812,
+      "at_utc": "2026-10-02T17:59:39.188048+00:00",
+      "stop": false
+    },
+    {
+      "observations": 109,
+      "by_mode": {
+        "first_response": {
+          "observations": 95,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 193
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 369,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3187.829714566469,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c0-last-expired",
+      "work_seconds_remaining": 4952.564621,
+      "at_utc": "2026-10-02T17:59:41.277239+00:00",
+      "stop": false
+    },
+    {
+      "observations": 110,
+      "by_mode": {
+        "first_response": {
+          "observations": 96,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 192
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 368,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3184.3168572485447,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "work_seconds_remaining": 4950.571899,
+      "at_utc": "2026-10-02T17:59:43.269961+00:00",
+      "stop": false
+    },
+    {
+      "observations": 111,
+      "by_mode": {
+        "first_response": {
+          "observations": 97,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 191
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 367,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3180.80399993062,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-first-expired",
+      "work_seconds_remaining": 4948.404299,
+      "at_utc": "2026-10-02T17:59:45.437561+00:00",
+      "stop": false
+    },
+    {
+      "observations": 112,
+      "by_mode": {
+        "first_response": {
+          "observations": 98,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 190
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 366,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3177.2911426126957,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "work_seconds_remaining": 4946.2657,
+      "at_utc": "2026-10-02T17:59:47.576160+00:00",
+      "stop": false
+    },
+    {
+      "observations": 113,
+      "by_mode": {
+        "first_response": {
+          "observations": 99,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 189
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 365,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3173.778285294771,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-middle-expired",
+      "work_seconds_remaining": 4944.083475,
+      "at_utc": "2026-10-02T17:59:49.758385+00:00",
+      "stop": false
+    },
+    {
+      "observations": 114,
+      "by_mode": {
+        "first_response": {
+          "observations": 100,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 188
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 364,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3166.9084465764463,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "work_seconds_remaining": 4941.877356,
+      "at_utc": "2026-10-02T17:59:51.964504+00:00",
+      "stop": false
+    },
+    {
+      "observations": 115,
+      "by_mode": {
+        "first_response": {
+          "observations": 101,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 187
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 363,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3163.4134455425665,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v1-c1-last-expired",
+      "work_seconds_remaining": 4939.679444,
+      "at_utc": "2026-10-02T17:59:54.162416+00:00",
+      "stop": false
+    },
+    {
+      "observations": 116,
+      "by_mode": {
+        "first_response": {
+          "observations": 102,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 186
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 362,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3159.9184445086867,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c0-first-expired",
+      "work_seconds_remaining": 4937.626386,
+      "at_utc": "2026-10-02T17:59:56.215474+00:00",
+      "stop": false
+    },
+    {
+      "observations": 117,
+      "by_mode": {
+        "first_response": {
+          "observations": 103,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 185
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 361,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3156.423443474807,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "work_seconds_remaining": 4935.644323,
+      "at_utc": "2026-10-02T17:59:58.197537+00:00",
+      "stop": false
+    },
+    {
+      "observations": 118,
+      "by_mode": {
+        "first_response": {
+          "observations": 104,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 184
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 360,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3152.928442440927,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c0-middle-expired",
+      "work_seconds_remaining": 4933.583617,
+      "at_utc": "2026-10-02T18:00:00.258243+00:00",
+      "stop": false
+    },
+    {
+      "observations": 119,
+      "by_mode": {
+        "first_response": {
+          "observations": 105,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 183
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 359,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3149.433441407047,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "work_seconds_remaining": 4931.478507,
+      "at_utc": "2026-10-02T18:00:02.363353+00:00",
+      "stop": false
+    },
+    {
+      "observations": 120,
+      "by_mode": {
+        "first_response": {
+          "observations": 106,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 182
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 358,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3145.9384403731674,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c0-last-expired",
+      "work_seconds_remaining": 4929.491536,
+      "at_utc": "2026-10-02T18:00:04.350324+00:00",
+      "stop": false
+    },
+    {
+      "observations": 121,
+      "by_mode": {
+        "first_response": {
+          "observations": 107,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 181
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 357,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3142.4434393392876,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "work_seconds_remaining": 4927.522185,
+      "at_utc": "2026-10-02T18:00:06.319675+00:00",
+      "stop": false
+    },
+    {
+      "observations": 122,
+      "by_mode": {
+        "first_response": {
+          "observations": 108,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 180
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 356,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3138.9484383054078,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-first-expired",
+      "work_seconds_remaining": 4925.403112,
+      "at_utc": "2026-10-02T18:00:08.438748+00:00",
+      "stop": false
+    },
+    {
+      "observations": 123,
+      "by_mode": {
+        "first_response": {
+          "observations": 109,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 179
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 355,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3135.453437271528,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "work_seconds_remaining": 4923.202744,
+      "at_utc": "2026-10-02T18:00:10.639116+00:00",
+      "stop": false
+    },
+    {
+      "observations": 124,
+      "by_mode": {
+        "first_response": {
+          "observations": 110,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 178
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 354,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3131.958436237648,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-middle-expired",
+      "work_seconds_remaining": 4921.106291,
+      "at_utc": "2026-10-02T18:00:12.735569+00:00",
+      "stop": false
+    },
+    {
+      "observations": 125,
+      "by_mode": {
+        "first_response": {
+          "observations": 111,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 177
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 353,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3128.4634352037683,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "work_seconds_remaining": 4918.923668,
+      "at_utc": "2026-10-02T18:00:14.918192+00:00",
+      "stop": false
+    },
+    {
+      "observations": 126,
+      "by_mode": {
+        "first_response": {
+          "observations": 112,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 176
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 352,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3124.9684341698885,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v2-c1-last-expired",
+      "work_seconds_remaining": 4916.803991,
+      "at_utc": "2026-10-02T18:00:17.037869+00:00",
+      "stop": false
+    },
+    {
+      "observations": 127,
+      "by_mode": {
+        "first_response": {
+          "observations": 113,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 175
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 351,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3121.4734331360087,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c0-first-expired",
+      "work_seconds_remaining": 4914.666038,
+      "at_utc": "2026-10-02T18:00:19.175822+00:00",
+      "stop": false
+    },
+    {
+      "observations": 128,
+      "by_mode": {
+        "first_response": {
+          "observations": 114,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 174
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 350,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3117.978432102129,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "work_seconds_remaining": 4912.638349,
+      "at_utc": "2026-10-02T18:00:21.203511+00:00",
+      "stop": false
+    },
+    {
+      "observations": 129,
+      "by_mode": {
+        "first_response": {
+          "observations": 115,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 173
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 349,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3114.483431068249,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c0-middle-expired",
+      "work_seconds_remaining": 4910.56628,
+      "at_utc": "2026-10-02T18:00:23.275580+00:00",
+      "stop": false
+    },
+    {
+      "observations": 130,
+      "by_mode": {
+        "first_response": {
+          "observations": 116,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 172
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 348,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3110.9884300343692,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "work_seconds_remaining": 4908.526472,
+      "at_utc": "2026-10-02T18:00:25.315388+00:00",
+      "stop": false
+    },
+    {
+      "observations": 131,
+      "by_mode": {
+        "first_response": {
+          "observations": 117,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 171
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 347,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3107.4934290004894,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c0-last-expired",
+      "work_seconds_remaining": 4906.481023,
+      "at_utc": "2026-10-02T18:00:27.360837+00:00",
+      "stop": false
+    },
+    {
+      "observations": 132,
+      "by_mode": {
+        "first_response": {
+          "observations": 118,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 170
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 346,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3103.9984279666096,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "work_seconds_remaining": 4904.390543,
+      "at_utc": "2026-10-02T18:00:29.451317+00:00",
+      "stop": false
+    },
+    {
+      "observations": 133,
+      "by_mode": {
+        "first_response": {
+          "observations": 119,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 169
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 345,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3100.50342693273,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-first-expired",
+      "work_seconds_remaining": 4902.152788,
+      "at_utc": "2026-10-02T18:00:31.689072+00:00",
+      "stop": false
+    },
+    {
+      "observations": 134,
+      "by_mode": {
+        "first_response": {
+          "observations": 120,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 168
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 344,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3088.884879603982,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "work_seconds_remaining": 4899.924047,
+      "at_utc": "2026-10-02T18:00:33.917813+00:00",
+      "stop": false
+    },
+    {
+      "observations": 135,
+      "by_mode": {
+        "first_response": {
+          "observations": 121,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 167
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 343,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3085.4382330123335,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-middle-expired",
+      "work_seconds_remaining": 4897.620477,
+      "at_utc": "2026-10-02T18:00:36.221383+00:00",
+      "stop": false
+    },
+    {
+      "observations": 136,
+      "by_mode": {
+        "first_response": {
+          "observations": 122,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 166
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 342,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3081.991586420685,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "work_seconds_remaining": 4895.421253,
+      "at_utc": "2026-10-02T18:00:38.420607+00:00",
+      "stop": false
+    },
+    {
+      "observations": 137,
+      "by_mode": {
+        "first_response": {
+          "observations": 123,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 165
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 341,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3078.5449398290366,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-memory-v3-c1-last-expired",
+      "work_seconds_remaining": 4893.251298,
+      "at_utc": "2026-10-02T18:00:40.590562+00:00",
+      "stop": false
+    },
+    {
+      "observations": 138,
+      "by_mode": {
+        "first_response": {
+          "observations": 124,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 164
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 340,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3075.098293237388,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c0-first-expired",
+      "work_seconds_remaining": 4890.950667,
+      "at_utc": "2026-10-02T18:00:42.891193+00:00",
+      "stop": false
+    },
+    {
+      "observations": 139,
+      "by_mode": {
+        "first_response": {
+          "observations": 125,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 163
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 339,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3071.6516466457397,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "work_seconds_remaining": 4888.943374,
+      "at_utc": "2026-10-02T18:00:44.898486+00:00",
+      "stop": false
+    },
+    {
+      "observations": 140,
+      "by_mode": {
+        "first_response": {
+          "observations": 126,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 162
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 338,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3068.205000054091,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c0-middle-expired",
+      "work_seconds_remaining": 4886.792613,
+      "at_utc": "2026-10-02T18:00:47.049247+00:00",
+      "stop": false
+    },
+    {
+      "observations": 141,
+      "by_mode": {
+        "first_response": {
+          "observations": 127,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 161
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 337,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3064.7583534624428,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "work_seconds_remaining": 4884.845726,
+      "at_utc": "2026-10-02T18:00:48.996134+00:00",
+      "stop": false
+    },
+    {
+      "observations": 142,
+      "by_mode": {
+        "first_response": {
+          "observations": 128,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 160
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 336,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3061.3117068707943,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c0-last-expired",
+      "work_seconds_remaining": 4882.832592,
+      "at_utc": "2026-10-02T18:00:51.009268+00:00",
+      "stop": false
+    },
+    {
+      "observations": 143,
+      "by_mode": {
+        "first_response": {
+          "observations": 129,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 159
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 335,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3057.865060279146,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "work_seconds_remaining": 4880.825631,
+      "at_utc": "2026-10-02T18:00:53.016229+00:00",
+      "stop": false
+    },
+    {
+      "observations": 144,
+      "by_mode": {
+        "first_response": {
+          "observations": 130,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 158
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 334,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3054.4184136874974,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c1-first-expired",
+      "work_seconds_remaining": 4878.652797,
+      "at_utc": "2026-10-02T18:00:55.189063+00:00",
+      "stop": false
+    },
+    {
+      "observations": 145,
+      "by_mode": {
+        "first_response": {
+          "observations": 131,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 157
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 333,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3050.971767095849,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "work_seconds_remaining": 4876.416432,
+      "at_utc": "2026-10-02T18:00:57.425428+00:00",
+      "stop": false
+    },
+    {
+      "observations": 146,
+      "by_mode": {
+        "first_response": {
+          "observations": 132,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 156
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 332,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3047.5251205042005,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c1-middle-expired",
+      "work_seconds_remaining": 4874.232044,
+      "at_utc": "2026-10-02T18:00:59.609816+00:00",
+      "stop": false
+    },
+    {
+      "observations": 147,
+      "by_mode": {
+        "first_response": {
+          "observations": 133,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 155
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 331,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3044.078473912552,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "work_seconds_remaining": 4872.032298,
+      "at_utc": "2026-10-02T18:01:01.809562+00:00",
+      "stop": false
+    },
+    {
+      "observations": 148,
+      "by_mode": {
+        "first_response": {
+          "observations": 134,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 154
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 330,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3040.6318273209035,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-pending-context",
+      "work_seconds_remaining": 4869.772773,
+      "at_utc": "2026-10-02T18:01:04.069087+00:00",
+      "stop": false
+    },
+    {
+      "observations": 149,
+      "by_mode": {
+        "first_response": {
+          "observations": 135,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 153
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 329,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3037.185180729255,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-pending-memories",
+      "work_seconds_remaining": 4867.670024,
+      "at_utc": "2026-10-02T18:01:06.171836+00:00",
+      "stop": false
+    },
+    {
+      "observations": 150,
+      "by_mode": {
+        "first_response": {
+          "observations": 136,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 152
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 328,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3033.7385341376066,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-declined-plain",
+      "work_seconds_remaining": 4865.627243,
+      "at_utc": "2026-10-02T18:01:08.214617+00:00",
+      "stop": false
+    },
+    {
+      "observations": 151,
+      "by_mode": {
+        "first_response": {
+          "observations": 137,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 151
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 327,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3030.291887545958,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-declined-context",
+      "work_seconds_remaining": 4863.67964,
+      "at_utc": "2026-10-02T18:01:10.162220+00:00",
+      "stop": false
+    },
+    {
+      "observations": 152,
+      "by_mode": {
+        "first_response": {
+          "observations": 138,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 150
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 326,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3026.8452409543097,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-declined-memories",
+      "work_seconds_remaining": 4861.628594,
+      "at_utc": "2026-10-02T18:01:12.213266+00:00",
+      "stop": false
+    },
+    {
+      "observations": 153,
+      "by_mode": {
+        "first_response": {
+          "observations": 139,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 149
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 325,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3023.3985943626612,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-revoked-plain",
+      "work_seconds_remaining": 4859.683268,
+      "at_utc": "2026-10-02T18:01:14.158592+00:00",
+      "stop": false
+    },
+    {
+      "observations": 154,
+      "by_mode": {
+        "first_response": {
+          "observations": 140,
+          "p95_generation_seconds": 2.297504100948572,
+          "request_seconds_with_margin": 3.4462561514228582,
+          "remaining_request_caps": 148
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 324,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3019.894162617624,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-revoked-context",
+      "work_seconds_remaining": 4857.739132,
+      "at_utc": "2026-10-02T18:01:16.102728+00:00",
+      "stop": false
+    },
+    {
+      "observations": 155,
+      "by_mode": {
+        "first_response": {
+          "observations": 141,
+          "p95_generation_seconds": 2.297504100948572,
+          "request_seconds_with_margin": 3.4462561514228582,
+          "remaining_request_caps": 147
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 323,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3016.447906466201,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-approved-plain",
+      "work_seconds_remaining": 4855.761413,
+      "at_utc": "2026-10-02T18:01:18.080447+00:00",
+      "stop": false
+    },
+    {
+      "observations": 156,
+      "by_mode": {
+        "first_response": {
+          "observations": 142,
+          "p95_generation_seconds": 2.2977643944323063,
+          "request_seconds_with_margin": 3.4466465916484594,
+          "remaining_request_caps": 146
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 322,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3013.058654587716,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-approved-context",
+      "work_seconds_remaining": 4848.842691,
+      "at_utc": "2026-10-02T18:01:24.999169+00:00",
+      "stop": false
+    },
+    {
+      "observations": 157,
+      "by_mode": {
+        "first_response": {
+          "observations": 143,
+          "p95_generation_seconds": 2.330000689253211,
+          "request_seconds_with_margin": 3.4950010338798165,
+          "remaining_request_caps": 145
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 321,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3016.623402119614,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-consent-approved-memories",
+      "work_seconds_remaining": 4841.796384,
+      "at_utc": "2026-10-02T18:01:32.045476+00:00",
+      "stop": false
+    },
+    {
+      "observations": 158,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 14,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 176
+        }
+      },
+      "remaining_request_caps": 320,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 3015.6997059881687,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-repair-unknown_evidence-v1",
+      "work_seconds_remaining": 4834.62196,
+      "at_utc": "2026-10-02T18:01:39.219900+00:00",
+      "stop": false
+    },
+    {
+      "observations": 159,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 15,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 168
+        }
+      },
+      "remaining_request_caps": 312,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 2926.161149069667,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-repair-session_count_mismatch-v0",
+      "work_seconds_remaining": 4832.688158,
+      "at_utc": "2026-10-02T18:01:41.153702+00:00",
+      "stop": false
+    },
+    {
+      "observations": 162,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 18,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 160
+        }
+      },
+      "remaining_request_caps": 304,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 2836.622592151165,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-repair-session_count_mismatch-v1",
+      "work_seconds_remaining": 4816.067752,
+      "at_utc": "2026-10-02T18:01:57.774108+00:00",
+      "stop": false
+    },
+    {
+      "observations": 163,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 19,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 152
+        }
+      },
+      "remaining_request_caps": 296,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 2747.084035232663,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-infeasible-unknown_evidence-v1",
+      "work_seconds_remaining": 4814.172329,
+      "at_utc": "2026-10-02T18:01:59.669531+00:00",
+      "stop": false
+    },
+    {
+      "observations": 165,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 21,
+          "p95_generation_seconds": 7.4615464098751545,
+          "request_seconds_with_margin": 11.192319614812732,
+          "remaining_request_caps": 144
+        }
+      },
+      "remaining_request_caps": 288,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 2657.5454783141613,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-infeasible-session_count_mismatch-v0",
+      "work_seconds_remaining": 4803.096894,
+      "at_utc": "2026-10-02T18:02:10.744966+00:00",
+      "stop": false
+    },
+    {
+      "observations": 168,
+      "by_mode": {
+        "first_response": {
+          "observations": 144,
+          "p95_generation_seconds": 2.341904878616333,
+          "request_seconds_with_margin": 3.5128573179244995,
+          "remaining_request_caps": 144
+        },
+        "continuation": {
+          "observations": 24,
+          "p95_generation_seconds": 8.76790152490139,
+          "request_seconds_with_margin": 13.151852287352085,
+          "remaining_request_caps": 136
+        }
+      },
+      "remaining_request_caps": 280,
+      "future_loads": 2,
+      "estimated_remaining_seconds": 2834.5033648610115,
+      "warning": "Empirical estimate, not a latency guarantee; process and shutdown deadlines enforce cost",
+      "before_case_id": "d2-infeasible-session_count_mismatch-v1",
+      "work_seconds_remaining": 4784.856923,
+      "at_utc": "2026-10-02T18:02:28.984937+00:00",
+      "stop": false
+    }
+  ],
+  "full_summary": {
+    "version": "counterfactual-diagnostics-v2",
+    "cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+    "panels": {
+      "memory": {
+        "total": 48,
+        "correct": 27,
+        "defer": 0,
+        "model_requests": 48,
+        "autonomous_blocked_writes": 0,
+        "prompt_tokens": 90588,
+        "completion_tokens": 1105,
+        "policy_failures": {}
+      },
+      "identity": {
+        "total": 12,
+        "correct": 8,
+        "defer": 0,
+        "model_requests": 12,
+        "autonomous_blocked_writes": 0,
+        "prompt_tokens": 22557,
+        "completion_tokens": 276,
+        "policy_failures": {}
+      },
+      "consent": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "model_requests": 12,
+        "autonomous_blocked_writes": 0,
+        "prompt_tokens": 25884,
+        "completion_tokens": 450,
+        "policy_failures": {}
+      },
+      "repair": {
+        "total": 4,
+        "correct": 1,
+        "defer": 0,
+        "model_requests": 6,
+        "autonomous_blocked_writes": 0,
+        "prompt_tokens": 11152,
+        "completion_tokens": 268,
+        "policy_failures": {}
+      },
+      "infeasible": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "model_requests": 7,
+        "autonomous_blocked_writes": 0,
+        "prompt_tokens": 13010,
+        "completion_tokens": 393,
+        "policy_failures": {}
+      }
+    },
+    "scope": "Reused-development diagnosis; panels have different units and must not be pooled as task accuracy"
+  }
+}
