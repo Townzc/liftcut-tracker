@@ -1,0 +1,89 @@
+{
+  "scope": "Operator observations separate from native research evidence and authentic restore receipt",
+  "run_binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 44,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+  },
+  "research_phases_status": "complete",
+  "local_complete_restore": {
+    "verified_event_at_utc": "2026-10-02T03:06:31.062432+00:00",
+    "archives": 5,
+    "archive_bytes": 490048967,
+    "archive_inventory_entries": 100,
+    "episodes_replayed": 124,
+    "recorded_generations_reconstructed": 358,
+    "actual_weights_verified": true,
+    "token_ids_verified": true,
+    "test_episodes": 0,
+    "receipt_sha256": "7d5bc8a12faaed1d13674dd7378a379bb36c28191b77ec63d88f9e89a77075e4"
+  },
+  "receipt_transfer": {
+    "temporary_upload_readback_hash_verified": true,
+    "temporary_verified_at_utc": "2026-10-02T03:06:32.965283+00:00",
+    "atomic_publication_confirmed": true,
+    "atomic_published_at_utc": "2026-10-02T03:06:33.334673+00:00",
+    "reason": "standard rename confirmation received",
+    "server_acceptance": "unknown",
+    "connection_loss_at_utc": "2026-10-02T03:06:33.428261+00:00",
+    "error": "SSHException"
+  },
+  "shutdown_observations": {
+    "readonly_observer_rpc_result": {
+      "exit": -1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "server_ack_record_captured": false,
+    "shutdown_command_return_observed": false,
+    "subsequent_tcp_check": {
+      "tcp_connected": false,
+      "socket_error": 10061,
+      "started_at_utc": "2026-10-02T03:10:49.2601776Z",
+      "ended_at_utc": "2026-10-02T03:10:52.5770141Z",
+      "source": "One read-only network-permitted TCP check; endpoint omitted"
+    },
+    "platform_power_state": "off",
+    "platform_state_evidence": "user confirmation",
+    "provider_api_power_or_billing_independently_verified": false,
+    "exact_poweroff_or_billing_stop_timestamp": null,
+    "limit": "Atomic publication and connection loss do not establish server ACK consumption; user platform confirmation is separate evidence"
+  },
+  "budget": {
+    "booted_at_proxy": "2026-10-02T00:59:23.910000+00:00",
+    "work_cutoff": "2026-10-02T03:29:23.910000+00:00",
+    "hard_deadline": "2026-10-02T03:59:23.910000+00:00",
+    "hourly_cny_assumed": 2.18,
+    "reserve_cny": 8,
+    "planned_three_hour_compute_proxy_cny": 6.54,
+    "boot_to_connection_loss_seconds": 7629.518261,
+    "compute_proxy_to_connection_loss_cny": 4.620097169161111,
+    "user_reported_actual_run_cost_cny": 4.6,
+    "provider_invoice_independently_verified": false,
+    "storage_cost_cny": null,
+    "limit": "Reported actual run cost and elapsed compute proxy differ in provenance; storage breakdown and exact billing timestamp were not supplied"
+  },
+  "unchanged_boundaries": {
+    "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "representative_seed": 42,
+    "reserved_task_count": 48,
+    "reserved_test_episodes": 0,
+    "extra_paid_api_calls": 0,
+    "seed45_or_D2_or_G1_executed": false,
+    "server_restarted_for_logs": false
+  },
+  "evidence_sha256": {
+    "events.jsonl": "1bd1a707559075991653dfb1c79e439b83b0a2925793d88d4dc16b9a04ece824",
+    "user-platform-confirmation.json": "ad60680f979b5511ea828320963f641aed8a83d2b762f87b611e85b93e4786c1",
+    "../qwen-coverage-replication-seed44-2026-10-02/window-status.json": "12aef896b8bfd99fa764f1ad06b04dc47eb47d6e80abb5516e2aa35f022284f0"
+  },
+  "event_publication": {
+    "normalization": "CRLF to LF only; parsed records unchanged",
+    "local_original_sha256": "1bd1a707559075991653dfb1c79e439b83b0a2925793d88d4dc16b9a04ece824",
+    "published_sha256": "1bd1a707559075991653dfb1c79e439b83b0a2925793d88d4dc16b9a04ece824"
+  }
+}

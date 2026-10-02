@@ -233,6 +233,116 @@ jobs:
           })
           PY
 
+      - name: Verify seed44 public evidence and reproduce the original three-seed review
+        run: |
+          python research/liftcut-agent/publish_coverage_replication.py \
+            --run-dir research/liftcut-agent/reports/qwen-coverage-replication-seed44-2026-10-02 \
+            --prepared-dir research/liftcut-agent/outputs/ci-state-coverage \
+            --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics \
+            --replication-dir research/liftcut-agent/outputs/ci-replication-a \
+            --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer \
+            --seed 44 --check-publication --allow-missing-weights
+
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+
+          root = Path("research/liftcut-agent")
+          sys.path[:0] = [str(root), str(root / "src")]
+          from prepare_coverage_replication import ARMS, read
+          from review_coverage_replication_seed import summarize, training_observation
+          from review_coverage_replication import summarize as summarize_three
+          from plot_coverage_replication_review import validate_review
+          from server_workspace import sha256
+
+          runs = {
+              42: root / "reports/qwen-state-coverage-2026-09-29",
+              43: root / "reports/qwen-coverage-replication-seed43-2026-10-01",
+              44: root / "reports/qwen-coverage-replication-seed44-2026-10-02",
+          }
+          assert sum(p.is_file() for p in runs[44].rglob("*")) == 81
+          comparisons = {seed: read(run / "comparison.json") for seed, run in runs.items()}
+          # All three public bundles were replayed earlier in this job. Their
+          # saved local weight attestations are not new CI weight verification.
+          derived = summarize(44, comparisons[44], comparisons[42])
+          derived["training"] = {
+              arm: training_observation(runs[44] / "training" / arm) for arm in ARMS
+          }
+          derived["source_sha256"] = {
+              "seed42_comparison": sha256(runs[42] / "comparison.json"),
+              "current_comparison": sha256(runs[44] / "comparison.json"),
+          }
+          saved = read(root / "reports/coverage-replication-seed44-review-2026-10-02.json")
+          assert saved.pop("verification") == {
+              "current_actual_weights": True,
+              "current_native_and_environment_replay": True,
+              "current_token_ids": True,
+              "seed42_metadata_replay": True,
+              "seed42_actual_weights_rechecked": False,
+          }
+          assert derived == saved, "Seed44 descriptive review differs from evidence"
+
+          three = summarize_three(comparisons)
+          three["source_sha256"] = {
+              f"seed{seed}_comparison": sha256(run / "comparison.json")
+              for seed, run in runs.items()
+          }
+          assert comparisons[43]["initial_adapter_sha256"] != comparisons[44]["initial_adapter_sha256"]
+          three["initialization"] = {
+              "seed42": "not recorded by the historical runner",
+              "seed43": comparisons[43]["initial_adapter_sha256"],
+              "seed44": comparisons[44]["initial_adapter_sha256"],
+              "new_seeds_differ": True,
+          }
+          assert three == read(root / "reports/coverage-replication-three-seed-review-2026-10-02.json")
+          validate_review(three)
+          for name in ("coverage-replication-seed44-launch-2026-10-02",
+                       "coverage-replication-seed43-late-closure-2026-10-02"):
+              directory = root / "reports" / name
+              acquisition = read(directory / "acquisition.json")
+              assert {p.name for p in directory.iterdir()} == {
+                  "acquisition.json", *(item["name"] for item in acquisition["files"])
+              }
+              for item in acquisition["files"]:
+                  path = directory / item["name"]
+                  assert path.stat().st_size == item["bytes"] and sha256(path) == item["sha256"]
+          import json
+          import datetime as dt
+          ops = root / "reports/coverage-replication-seed44-operations-2026-10-02"
+          observed = read(ops / "observations.json")
+          for name, expected in observed["evidence_sha256"].items():
+              assert sha256(ops / name) == expected
+          events = [json.loads(line) for line in (ops / "events.jsonl").read_text().splitlines()]
+          event = lambda key: next(e for e in events if e["event"] == key)
+          receipt = event("off_instance_verified")["receipt"]
+          assert receipt["run_binding"] == comparisons[44]["run_binding"] == observed["run_binding"]
+          assert receipt["complete_study_replayed"] and receipt["adapter_files_verified"] and receipt["token_ids_verified"]
+          assert receipt["episodes_replayed"] == 124 and receipt["test_episodes"] == 0
+          assert len(receipt["archives"]) == 5 and sum(a["verified_files"] for a in receipt["archives"]) == 100
+          restored = observed["local_complete_restore"]
+          assert restored["verified_event_at_utc"] == event("off_instance_verified")["at_utc"]
+          assert restored["receipt_sha256"] == event("receipt_temporary_verified")["receipt_sha256"] == event("receipt_atomic_published")["receipt_sha256"]
+          tokens = read(runs[44] / "generation-token-audit.json")
+          assert restored["recorded_generations_reconstructed"] == sum(
+              panel["actual_model_generations"] for arm in tokens["panels"].values() for panel in arm.values()
+          ) == 358
+          assert observed["receipt_transfer"]["server_acceptance"] == "unknown"
+          assert observed["shutdown_observations"]["server_ack_record_captured"] is False
+          assert observed["shutdown_observations"]["shutdown_command_return_observed"] is False
+          user = read(ops / "user-platform-confirmation.json")
+          assert user["power_state_user_confirmed"] == "off"
+          assert user["reported_run_cost_cny"] == observed["budget"]["user_reported_actual_run_cost_cny"] == 4.6
+          assert not user["provider_api_or_invoice_independently_inspected"]
+          budget = observed["budget"]
+          seconds = (dt.datetime.fromisoformat(event("monitor_stopped")["at_utc"]) - dt.datetime.fromisoformat(budget["booted_at_proxy"])).total_seconds()
+          assert seconds == budget["boot_to_connection_loss_seconds"]
+          assert seconds / 3600 * budget["hourly_cny_assumed"] == budget["compute_proxy_to_connection_loss_cny"]
+          print({"seed44_review_reproduced": True, "original_three_seed_review_reproduced": True,
+                 "actual_weights_verified_in_this_ci_run": False,
+                 "historical_weight_attestation_preserved": True,
+                 "new_model_calls": 0, "test_episodes": 0})
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -1,0 +1,189 @@
+{
+  "scope": "Reused recovery-v2 normal DEVELOPMENT tasks; full episodes, not independent test",
+  "total": 12,
+  "passed": 7,
+  "results": [
+    {
+      "scenario_id": "r2-05-preview",
+      "category": "preview",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-approved",
+      "category": "approved",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "applied",
+      "steps": 7,
+      "writes": 1,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-pending",
+      "category": "pending",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "awaiting_user",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-declined",
+      "category": "declined",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-revoked",
+      "category": "revoked",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "declined",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-infeasible",
+      "category": "infeasible",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-missing_time",
+      "category": "missing_time",
+      "policy_failure": null,
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "r2-05-unanswered_time",
+      "category": "unanswered_time",
+      "policy_failure": null,
+      "passed": false,
+      "issues": [
+        "missing_clarification_request",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "r2-05-missing_equipment",
+      "category": "missing_equipment",
+      "policy_failure": null,
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "r2-05-missing_days",
+      "category": "missing_days",
+      "policy_failure": null,
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false
+    },
+    {
+      "scenario_id": "r2-05-memory",
+      "category": "memory",
+      "policy_failure": null,
+      "passed": true,
+      "issues": [],
+      "outcome": "previewed",
+      "steps": 6,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": true
+    },
+    {
+      "scenario_id": "r2-05-memory_missing_time",
+      "category": "memory_missing_time",
+      "policy_failure": null,
+      "passed": false,
+      "issues": [
+        "missing_preview",
+        "terminal_outcome_mismatch"
+      ],
+      "outcome": "infeasible",
+      "steps": 5,
+      "writes": 0,
+      "blocked_write_attempts": 0,
+      "tool_errors": {},
+      "clean_completion": false
+    }
+  ],
+  "replay": {
+    "total": 12,
+    "replayed": 12,
+    "task_passed": 7
+  },
+  "blocked_write_attempts": 0,
+  "policy_failures": {},
+  "requests": 67,
+  "usage_complete": true,
+  "prompt_tokens": 109959,
+  "completion_tokens": 2813
+}

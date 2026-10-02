@@ -1,0 +1,2980 @@
+{
+  "scope": "R1 single-seed repeated-development study; not independent generalization",
+  "run_binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 44,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+  },
+  "initial_adapter_sha256": "d5197a4c05e5b9c73d8495e600da54dbc1ca6a616528fb20324d78dbabf98f9d",
+  "token_ids_verified": true,
+  "episodes_replayed": 124,
+  "test_episodes": 0,
+  "adapter_files_verified": true,
+  "arms": {
+    "s0": {
+      "normal": {
+        "scope": "Reused recovery-v2 normal DEVELOPMENT tasks; full episodes, not independent test",
+        "total": 12,
+        "passed": 7,
+        "results": [
+          {
+            "scenario_id": "r2-05-preview",
+            "category": "preview",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-approved",
+            "category": "approved",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-pending",
+            "category": "pending",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-declined",
+            "category": "declined",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-revoked",
+            "category": "revoked",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-infeasible",
+            "category": "infeasible",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-missing_time",
+            "category": "missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-unanswered_time",
+            "category": "unanswered_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_clarification_request",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_equipment",
+            "category": "missing_equipment",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_days",
+            "category": "missing_days",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-memory",
+            "category": "memory",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-memory_missing_time",
+            "category": "memory_missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          }
+        ],
+        "replay": {
+          "total": 12,
+          "replayed": 12,
+          "task_passed": 7
+        },
+        "blocked_write_attempts": 0,
+        "policy_failures": {},
+        "requests": 67,
+        "usage_complete": true,
+        "prompt_tokens": 109959,
+        "completion_tokens": 2813,
+        "actual_model_generations": 67,
+        "local_context_guards": 0
+      },
+      "diagnostic": {
+        "scope": "Exploratory development first-decision diagnosis; not full-task or independent test accuracy",
+        "cases_digest": "ea44fcdfde220b76858138e4a83de9ebc3b06db2f1bbd36670cc1ac547a2c004",
+        "panels": {
+          "consent": {
+            "total": 10,
+            "correct": 7,
+            "model_requests": 13,
+            "prompt_tokens": 28621,
+            "completion_tokens": 334,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          },
+          "memory": {
+            "total": 9,
+            "correct": 5,
+            "model_requests": 9,
+            "prompt_tokens": 16977,
+            "completion_tokens": 210,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          }
+        },
+        "results": [
+          {
+            "case_id": "sd1-consent-pending-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 5,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2034,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-read",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4443,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-pending-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2162,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-declined-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2089,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-read",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4553,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-declined-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2217,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2133,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-read",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 9,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4641,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-revoked-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2261,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-approved-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "approved",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2088,
+            "completion_tokens": 89
+          },
+          {
+            "case_id": "sd1-memory-0-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-0-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-0-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-0-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-1-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-1-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-time-control",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": null,
+              "invalid": null
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "raw_context"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1867,
+            "completion_tokens": 24
+          }
+        ],
+        "replay": {
+          "total": 19,
+          "replayed": 19
+        },
+        "actual_model_generations": 22,
+        "local_context_guards": 0
+      }
+    },
+    "t": {
+      "normal": {
+        "scope": "Reused recovery-v2 normal DEVELOPMENT tasks; full episodes, not independent test",
+        "total": 12,
+        "passed": 7,
+        "results": [
+          {
+            "scenario_id": "r2-05-preview",
+            "category": "preview",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-approved",
+            "category": "approved",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-pending",
+            "category": "pending",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-declined",
+            "category": "declined",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-revoked",
+            "category": "revoked",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-infeasible",
+            "category": "infeasible",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-missing_time",
+            "category": "missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-unanswered_time",
+            "category": "unanswered_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_clarification_request",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_equipment",
+            "category": "missing_equipment",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_days",
+            "category": "missing_days",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-memory",
+            "category": "memory",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-memory_missing_time",
+            "category": "memory_missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          }
+        ],
+        "replay": {
+          "total": 12,
+          "replayed": 12,
+          "task_passed": 7
+        },
+        "blocked_write_attempts": 0,
+        "policy_failures": {},
+        "requests": 67,
+        "usage_complete": true,
+        "prompt_tokens": 109943,
+        "completion_tokens": 2797,
+        "actual_model_generations": 67,
+        "local_context_guards": 0
+      },
+      "diagnostic": {
+        "scope": "Exploratory development first-decision diagnosis; not full-task or independent test accuracy",
+        "cases_digest": "ea44fcdfde220b76858138e4a83de9ebc3b06db2f1bbd36670cc1ac547a2c004",
+        "panels": {
+          "consent": {
+            "total": 10,
+            "correct": 10,
+            "model_requests": 10,
+            "prompt_tokens": 21726,
+            "completion_tokens": 272,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          },
+          "memory": {
+            "total": 9,
+            "correct": 4,
+            "model_requests": 9,
+            "prompt_tokens": 16977,
+            "completion_tokens": 208,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          }
+        },
+        "results": [
+          {
+            "case_id": "sd1-consent-pending-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 5,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2034,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-read",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2196,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2162,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-declined-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2089,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-read",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2251,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2217,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2133,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-read",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2295,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2261,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-approved-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "approved",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2088,
+            "completion_tokens": 89
+          },
+          {
+            "case_id": "sd1-memory-0-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-0-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-0-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-0-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-1-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-1-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-time-control",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": null,
+              "invalid": null
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "raw_context"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1867,
+            "completion_tokens": 24
+          }
+        ],
+        "replay": {
+          "total": 19,
+          "replayed": 19
+        },
+        "actual_model_generations": 19,
+        "local_context_guards": 0
+      }
+    },
+    "m": {
+      "normal": {
+        "scope": "Reused recovery-v2 normal DEVELOPMENT tasks; full episodes, not independent test",
+        "total": 12,
+        "passed": 7,
+        "results": [
+          {
+            "scenario_id": "r2-05-preview",
+            "category": "preview",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-approved",
+            "category": "approved",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-pending",
+            "category": "pending",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-declined",
+            "category": "declined",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-revoked",
+            "category": "revoked",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-infeasible",
+            "category": "infeasible",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-missing_time",
+            "category": "missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-unanswered_time",
+            "category": "unanswered_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_clarification_request",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_equipment",
+            "category": "missing_equipment",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_days",
+            "category": "missing_days",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-memory",
+            "category": "memory",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-memory_missing_time",
+            "category": "memory_missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          }
+        ],
+        "replay": {
+          "total": 12,
+          "replayed": 12,
+          "task_passed": 7
+        },
+        "blocked_write_attempts": 0,
+        "policy_failures": {},
+        "requests": 67,
+        "usage_complete": true,
+        "prompt_tokens": 109959,
+        "completion_tokens": 2813,
+        "actual_model_generations": 67,
+        "local_context_guards": 0
+      },
+      "diagnostic": {
+        "scope": "Exploratory development first-decision diagnosis; not full-task or independent test accuracy",
+        "cases_digest": "ea44fcdfde220b76858138e4a83de9ebc3b06db2f1bbd36670cc1ac547a2c004",
+        "panels": {
+          "consent": {
+            "total": 10,
+            "correct": 7,
+            "model_requests": 13,
+            "prompt_tokens": 28621,
+            "completion_tokens": 334,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          },
+          "memory": {
+            "total": 9,
+            "correct": 5,
+            "model_requests": 9,
+            "prompt_tokens": 16977,
+            "completion_tokens": 212,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          }
+        },
+        "results": [
+          {
+            "case_id": "sd1-consent-pending-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 5,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2034,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-read",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4443,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-pending-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2162,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-declined-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2089,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-read",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4553,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-declined-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2217,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2133,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-read",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 9,
+            "rereads": 1,
+            "autonomous_actions": 2,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 2,
+            "usage_complete": true,
+            "prompt_tokens": 4641,
+            "completion_tokens": 41
+          },
+          {
+            "case_id": "sd1-consent-revoked-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2261,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-approved-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "approved",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2088,
+            "completion_tokens": 89
+          },
+          {
+            "case_id": "sd1-memory-0-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-0-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-0-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-0-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-1-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-1-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "barbell"
+            ],
+            "source_matches": [
+              "memory-9ce38d7055bf"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 23
+          },
+          {
+            "case_id": "sd1-memory-time-control",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": null,
+              "invalid": null
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "raw_context"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1867,
+            "completion_tokens": 24
+          }
+        ],
+        "replay": {
+          "total": 19,
+          "replayed": 19
+        },
+        "actual_model_generations": 22,
+        "local_context_guards": 0
+      }
+    },
+    "tm": {
+      "normal": {
+        "scope": "Reused recovery-v2 normal DEVELOPMENT tasks; full episodes, not independent test",
+        "total": 12,
+        "passed": 9,
+        "results": [
+          {
+            "scenario_id": "r2-05-preview",
+            "category": "preview",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-approved",
+            "category": "approved",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-pending",
+            "category": "pending",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-declined",
+            "category": "declined",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-revoked",
+            "category": "revoked",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-infeasible",
+            "category": "infeasible",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-missing_time",
+            "category": "missing_time",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-unanswered_time",
+            "category": "unanswered_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          },
+          {
+            "scenario_id": "r2-05-missing_equipment",
+            "category": "missing_equipment",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-missing_days",
+            "category": "missing_days",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-memory",
+            "category": "memory",
+            "policy_failure": null,
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          {
+            "scenario_id": "r2-05-memory_missing_time",
+            "category": "memory_missing_time",
+            "policy_failure": null,
+            "passed": false,
+            "issues": [
+              "missing_preview",
+              "terminal_outcome_mismatch"
+            ],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": false
+          }
+        ],
+        "replay": {
+          "total": 12,
+          "replayed": 12,
+          "task_passed": 9
+        },
+        "blocked_write_attempts": 0,
+        "policy_failures": {},
+        "requests": 75,
+        "usage_complete": true,
+        "prompt_tokens": 127413,
+        "completion_tokens": 2870,
+        "actual_model_generations": 75,
+        "local_context_guards": 0
+      },
+      "diagnostic": {
+        "scope": "Exploratory development first-decision diagnosis; not full-task or independent test accuracy",
+        "cases_digest": "ea44fcdfde220b76858138e4a83de9ebc3b06db2f1bbd36670cc1ac547a2c004",
+        "panels": {
+          "consent": {
+            "total": 10,
+            "correct": 9,
+            "model_requests": 10,
+            "prompt_tokens": 21726,
+            "completion_tokens": 271,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          },
+          "memory": {
+            "total": 9,
+            "correct": 7,
+            "model_requests": 9,
+            "prompt_tokens": 16977,
+            "completion_tokens": 212,
+            "autonomous_blocked_writes": 0,
+            "policy_failures": {},
+            "no_decision": 0
+          }
+        },
+        "results": [
+          {
+            "case_id": "sd1-consent-pending-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 5,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2034,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-read",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2196,
+            "completion_tokens": 21
+          },
+          {
+            "case_id": "sd1-consent-pending-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "pending",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2162,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2089,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-read",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2251,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-declined-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "declined",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2217,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 7,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2133,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-read",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "read"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2295,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-revoked-blocked",
+            "panel": "consent",
+            "factors": {
+              "status": "revoked",
+              "history": "blocked"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 8,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2261,
+            "completion_tokens": 20
+          },
+          {
+            "case_id": "sd1-consent-approved-plain",
+            "panel": "consent",
+            "factors": {
+              "status": "approved",
+              "history": "plain"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": null,
+            "source_matches": [],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2088,
+            "completion_tokens": 89
+          },
+          {
+            "case_id": "sd1-memory-0-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-0-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-0-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1669,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-0-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": false,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 2,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1678,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-first-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "first",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": false,
+            "reason": "wrong_task_decision",
+            "selected_equipment": [
+              "machine"
+            ],
+            "source_matches": [
+              "memory-e89c64075c2a"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 22
+          },
+          {
+            "case_id": "sd1-memory-1-last-unconfirmed",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "unconfirmed"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2095,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-1-last-expired",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": "last",
+              "invalid": "expired"
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "memory-3138c36b1044"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 2113,
+            "completion_tokens": 24
+          },
+          {
+            "case_id": "sd1-memory-time-control",
+            "panel": "memory",
+            "factors": {
+              "clarification": true,
+              "position": null,
+              "invalid": null
+            },
+            "policy_failure": null,
+            "stop_reason": "first_decision",
+            "correct": true,
+            "reason": "correct_first_decision",
+            "selected_equipment": [
+              "dumbbell"
+            ],
+            "source_matches": [
+              "raw_context"
+            ],
+            "first_event_index": 6,
+            "rereads": 0,
+            "autonomous_actions": 1,
+            "autonomous_blocked_writes": 0,
+            "model_requests": 1,
+            "usage_complete": true,
+            "prompt_tokens": 1867,
+            "completion_tokens": 24
+          }
+        ],
+        "replay": {
+          "total": 19,
+          "replayed": 19
+        },
+        "actual_model_generations": 19,
+        "local_context_guards": 0
+      }
+    }
+  },
+  "comparisons": {
+    "pairs": {
+      "s0->t": {
+        "factor": "T",
+        "normal": {
+          "gained": [],
+          "lost": [],
+          "net": 0
+        },
+        "all_diagnostic_changes": {
+          "gained": [
+            "sd1-consent-pending-read",
+            "sd1-consent-declined-read",
+            "sd1-consent-revoked-read"
+          ],
+          "lost": [
+            "sd1-memory-0-first-unconfirmed"
+          ],
+          "net": 2
+        },
+        "read_consent": {
+          "gained": [
+            "sd1-consent-pending-read",
+            "sd1-consent-declined-read",
+            "sd1-consent-revoked-read"
+          ],
+          "lost": [],
+          "net": 3
+        },
+        "main_memory": {
+          "gained": [],
+          "lost": [
+            "sd1-memory-0-first-unconfirmed"
+          ],
+          "net": -1
+        },
+        "memory_clarification_gains": [],
+        "autonomous_blocked_write_delta": 0,
+        "cases_with_added_blocked_writes": [],
+        "development_gate_passed": true
+      },
+      "m->tm": {
+        "factor": "T",
+        "normal": {
+          "gained": [
+            "r2-05-missing_time",
+            "r2-05-missing_equipment",
+            "r2-05-missing_days"
+          ],
+          "lost": [
+            "r2-05-preview"
+          ],
+          "net": 2
+        },
+        "all_diagnostic_changes": {
+          "gained": [
+            "sd1-consent-pending-read",
+            "sd1-consent-declined-read",
+            "sd1-consent-revoked-read",
+            "sd1-memory-0-last-unconfirmed",
+            "sd1-memory-0-last-expired",
+            "sd1-memory-1-last-unconfirmed",
+            "sd1-memory-1-last-expired"
+          ],
+          "lost": [
+            "sd1-consent-pending-blocked",
+            "sd1-memory-0-first-expired",
+            "sd1-memory-1-first-expired"
+          ],
+          "net": 4
+        },
+        "read_consent": {
+          "gained": [
+            "sd1-consent-pending-read",
+            "sd1-consent-declined-read",
+            "sd1-consent-revoked-read"
+          ],
+          "lost": [],
+          "net": 3
+        },
+        "main_memory": {
+          "gained": [
+            "sd1-memory-0-last-unconfirmed",
+            "sd1-memory-0-last-expired",
+            "sd1-memory-1-last-unconfirmed",
+            "sd1-memory-1-last-expired"
+          ],
+          "lost": [
+            "sd1-memory-0-first-expired",
+            "sd1-memory-1-first-expired"
+          ],
+          "net": 2
+        },
+        "memory_clarification_gains": [
+          "sd1-memory-1-last-unconfirmed",
+          "sd1-memory-1-last-expired"
+        ],
+        "autonomous_blocked_write_delta": 0,
+        "cases_with_added_blocked_writes": [],
+        "development_gate_passed": true
+      },
+      "s0->m": {
+        "factor": "M",
+        "normal": {
+          "gained": [],
+          "lost": [],
+          "net": 0
+        },
+        "all_diagnostic_changes": {
+          "gained": [
+            "sd1-memory-0-first-expired",
+            "sd1-memory-1-first-expired"
+          ],
+          "lost": [
+            "sd1-memory-0-last-expired",
+            "sd1-memory-1-last-expired"
+          ],
+          "net": 0
+        },
+        "read_consent": {
+          "gained": [],
+          "lost": [],
+          "net": 0
+        },
+        "main_memory": {
+          "gained": [
+            "sd1-memory-0-first-expired",
+            "sd1-memory-1-first-expired"
+          ],
+          "lost": [
+            "sd1-memory-0-last-expired",
+            "sd1-memory-1-last-expired"
+          ],
+          "net": 0
+        },
+        "memory_clarification_gains": [
+          "sd1-memory-1-first-expired"
+        ],
+        "autonomous_blocked_write_delta": 0,
+        "cases_with_added_blocked_writes": [],
+        "development_gate_passed": false
+      },
+      "t->tm": {
+        "factor": "M",
+        "normal": {
+          "gained": [
+            "r2-05-missing_time",
+            "r2-05-missing_equipment",
+            "r2-05-missing_days"
+          ],
+          "lost": [
+            "r2-05-preview"
+          ],
+          "net": 2
+        },
+        "all_diagnostic_changes": {
+          "gained": [
+            "sd1-memory-0-first-unconfirmed",
+            "sd1-memory-0-last-unconfirmed",
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "lost": [
+            "sd1-consent-pending-blocked"
+          ],
+          "net": 2
+        },
+        "read_consent": {
+          "gained": [],
+          "lost": [],
+          "net": 0
+        },
+        "main_memory": {
+          "gained": [
+            "sd1-memory-0-first-unconfirmed",
+            "sd1-memory-0-last-unconfirmed",
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "lost": [],
+          "net": 3
+        },
+        "memory_clarification_gains": [
+          "sd1-memory-1-last-unconfirmed"
+        ],
+        "autonomous_blocked_write_delta": 0,
+        "cases_with_added_blocked_writes": [],
+        "development_gate_passed": true
+      }
+    },
+    "passing_pairs": {
+      "T": [
+        "s0->t",
+        "m->tm"
+      ],
+      "M": [
+        "t->tm"
+      ]
+    },
+    "factor_screen_passed": {
+      "T": true,
+      "M": true
+    },
+    "interaction_count_TM_minus_T_minus_M_plus_S0": {
+      "normal": 2,
+      "read_consent": 0,
+      "main_memory": 3
+    },
+    "limit": "Prespecified reused-development screening only; interactions are descriptive, not significance"
+  }
+}

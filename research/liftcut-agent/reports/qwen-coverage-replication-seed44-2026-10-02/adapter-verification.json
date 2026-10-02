@@ -1,0 +1,60 @@
+{
+  "weights_published": false,
+  "scope": "Actual off-instance weights rehashed before publication; public replay cannot rehash omitted bytes",
+  "files_verified": {
+    "s0": {
+      "adapter_config.json": "188a4fe644de9b53411074a39f768a1549f80519da3b5e0020fab469661009da",
+      "adapter_model.safetensors": "70b2a11702802490a9f0ba5a39d2b85230dda47f0d4f02713caed330db7b853b"
+    },
+    "t": {
+      "adapter_config.json": "6b4b0cbee08dceaf37904cf3ba5935f9b2667cafab1aecdeea888f7030f8d600",
+      "adapter_model.safetensors": "573861ffd4163a024be58c061f907169860e87de76ae73d7ceea0b6c7abbf141"
+    },
+    "m": {
+      "adapter_config.json": "2763f821d7d542f9dbd1b63bf83f568510bba6bbae30ec5039d62f5302b04986",
+      "adapter_model.safetensors": "3c0b9eebddeda2cbed5092a88ef0f628b82d91ad5eb76f431ee42fa7dbb2512e"
+    },
+    "tm": {
+      "adapter_config.json": "0fa0544ff41bbb5d37ce656892e95494256b1634f38ca7e50a7cab8f9fc6d555",
+      "adapter_model.safetensors": "82be46ee40ec4f8aa5e9230c0418b521b1c818ea1c3829658833e84d3dc58300"
+    }
+  },
+  "saved_tensor_metadata": {
+    "s0": {
+      "adapter_bytes": 132187888,
+      "sha256": "70b2a11702802490a9f0ba5a39d2b85230dda47f0d4f02713caed330db7b853b",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    "t": {
+      "adapter_bytes": 132187888,
+      "sha256": "573861ffd4163a024be58c061f907169860e87de76ae73d7ceea0b6c7abbf141",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    "m": {
+      "adapter_bytes": 132187888,
+      "sha256": "3c0b9eebddeda2cbed5092a88ef0f628b82d91ad5eb76f431ee42fa7dbb2512e",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    "tm": {
+      "adapter_bytes": 132187888,
+      "sha256": "82be46ee40ec4f8aa5e9230c0418b521b1c818ea1c3829658833e84d3dc58300",
+      "tensor_count": 504,
+      "parameter_count": 33030144,
+      "dtypes": [
+        "F32"
+      ]
+    }
+  }
+}

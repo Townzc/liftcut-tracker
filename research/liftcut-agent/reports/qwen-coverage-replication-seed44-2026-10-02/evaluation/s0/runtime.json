@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 44,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70",
+    "arm": "s0",
+    "sample_order_sha256": "f707448bf1cddf7a7eb8d5bed9e83ee870e5e32380f57574494ddc95390d4671",
+    "target_schedule_sha256": "c8fefa9bcd9ca06c6be891da8aa8fb40c72922b9bccf73eff4d1d67046cbdf51"
+  },
+  "runtime": {
+    "packages": {
+      "torch": "2.8.0+cu128",
+      "transformers": "4.57.6",
+      "tokenizers": "0.22.2",
+      "jinja2": "3.1.6",
+      "accelerate": "1.10.1",
+      "peft": "0.17.1",
+      "bitsandbytes": "0.47.0"
+    },
+    "python": "3.12.3",
+    "cuda_build": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 4090"
+  }
+}

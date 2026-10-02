@@ -1,0 +1,35 @@
+{
+  "arm": "s0",
+  "binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 44,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70",
+    "arm": "s0",
+    "sample_order_sha256": "f707448bf1cddf7a7eb8d5bed9e83ee870e5e32380f57574494ddc95390d4671",
+    "target_schedule_sha256": "c8fefa9bcd9ca06c6be891da8aa8fb40c72922b9bccf73eff4d1d67046cbdf51"
+  },
+  "initial_adapter_sha256": "d5197a4c05e5b9c73d8495e600da54dbc1ca6a616528fb20324d78dbabf98f9d",
+  "steps": 126,
+  "processed": {
+    "input_tokens": 1827888,
+    "supervised_tokens": 41788,
+    "decisions": 1008
+  },
+  "optimization_seconds": 1414.2505737375468,
+  "first_step_loss": 0.43040038354482263,
+  "last_step_loss": 0.00073638034137475,
+  "changed_adapter_tensors": 504,
+  "peak_allocated_bytes": 11462622208,
+  "peak_reserved_bytes": 14589886464,
+  "reload_close": true,
+  "reload_max_logit_difference": 0.0,
+  "adapter_sha256": {
+    "adapter_config.json": "188a4fe644de9b53411074a39f768a1549f80519da3b5e0020fab469661009da",
+    "adapter_model.safetensors": "70b2a11702802490a9f0ba5a39d2b85230dda47f0d4f02713caed330db7b853b"
+  },
+  "finished_at_utc": "2026-10-02T01:28:23.079711+00:00"
+}

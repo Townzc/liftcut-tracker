@@ -1,0 +1,940 @@
+{
+  "scope": "Three training seeds on reused development tasks; descriptive, not independent task samples",
+  "pairs": {
+    "s0->t": {
+      "per_seed": {
+        "42": {
+          "factor": "T",
+          "normal": {
+            "gained": [
+              "r2-05-pending",
+              "r2-05-memory_missing_time"
+            ],
+            "lost": [
+              "r2-05-missing_time",
+              "r2-05-missing_equipment",
+              "r2-05-missing_days"
+            ],
+            "net": -1
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-plain",
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-first-expired"
+            ],
+            "net": 2
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [],
+            "net": 3
+          },
+          "main_memory": {
+            "gained": [],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-first-expired"
+            ],
+            "net": -2
+          },
+          "memory_clarification_gains": [],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        },
+        "43": {
+          "factor": "T",
+          "normal": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [],
+            "net": 5
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [],
+            "net": 3
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [],
+            "net": 2
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        },
+        "44": {
+          "factor": "T",
+          "normal": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed"
+            ],
+            "net": 2
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [],
+            "net": 3
+          },
+          "main_memory": {
+            "gained": [],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed"
+            ],
+            "net": -1
+          },
+          "memory_clarification_gains": [],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        }
+      },
+      "effects": {
+        "normal": {
+          "per_seed": {
+            "42": -1,
+            "43": 0,
+            "44": 0
+          },
+          "minimum": -1,
+          "maximum": 0,
+          "mean": -0.3333333333333333,
+          "sign_reversal": false
+        },
+        "read_consent": {
+          "per_seed": {
+            "42": 3,
+            "43": 3,
+            "44": 3
+          },
+          "minimum": 3,
+          "maximum": 3,
+          "mean": 3,
+          "sign_reversal": false
+        },
+        "main_memory": {
+          "per_seed": {
+            "42": -2,
+            "43": 2,
+            "44": -1
+          },
+          "minimum": -2,
+          "maximum": 2,
+          "mean": -0.3333333333333333,
+          "sign_reversal": true
+        }
+      },
+      "original_screen_pass_count": 3,
+      "original_screen_reproduced_in_all_three": true
+    },
+    "m->tm": {
+      "per_seed": {
+        "42": {
+          "factor": "T",
+          "normal": {
+            "gained": [],
+            "lost": [
+              "r2-05-pending",
+              "r2-05-memory_missing_time"
+            ],
+            "net": -2
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [
+              "sd1-consent-pending-plain",
+              "sd1-consent-pending-read",
+              "sd1-consent-pending-blocked"
+            ],
+            "net": 1
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [
+              "sd1-consent-pending-read"
+            ],
+            "net": 1
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [],
+            "net": 2
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-expired"
+          ],
+          "autonomous_blocked_write_delta": 3,
+          "cases_with_added_blocked_writes": [
+            "sd1-consent-pending-plain",
+            "sd1-consent-pending-read",
+            "r2-05-pending"
+          ],
+          "development_gate_passed": false
+        },
+        "43": {
+          "factor": "T",
+          "normal": {
+            "gained": [],
+            "lost": [
+              "r2-05-memory_missing_time"
+            ],
+            "net": -1
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read",
+              "sd1-memory-1-last-unconfirmed",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-1-first-unconfirmed"
+            ],
+            "net": 2
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [],
+            "net": 2
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-1-last-unconfirmed",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-1-first-unconfirmed"
+            ],
+            "net": 0
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed",
+            "sd1-memory-1-last-expired"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        },
+        "44": {
+          "factor": "T",
+          "normal": {
+            "gained": [
+              "r2-05-missing_time",
+              "r2-05-missing_equipment",
+              "r2-05-missing_days"
+            ],
+            "lost": [
+              "r2-05-preview"
+            ],
+            "net": 2
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-unconfirmed",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [
+              "sd1-consent-pending-blocked",
+              "sd1-memory-0-first-expired",
+              "sd1-memory-1-first-expired"
+            ],
+            "net": 4
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read",
+              "sd1-consent-declined-read",
+              "sd1-consent-revoked-read"
+            ],
+            "lost": [],
+            "net": 3
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-unconfirmed",
+              "sd1-memory-1-last-expired"
+            ],
+            "lost": [
+              "sd1-memory-0-first-expired",
+              "sd1-memory-1-first-expired"
+            ],
+            "net": 2
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed",
+            "sd1-memory-1-last-expired"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        }
+      },
+      "effects": {
+        "normal": {
+          "per_seed": {
+            "42": -2,
+            "43": -1,
+            "44": 2
+          },
+          "minimum": -2,
+          "maximum": 2,
+          "mean": -0.3333333333333333,
+          "sign_reversal": true
+        },
+        "read_consent": {
+          "per_seed": {
+            "42": 1,
+            "43": 2,
+            "44": 3
+          },
+          "minimum": 1,
+          "maximum": 3,
+          "mean": 2,
+          "sign_reversal": false
+        },
+        "main_memory": {
+          "per_seed": {
+            "42": 2,
+            "43": 0,
+            "44": 2
+          },
+          "minimum": 0,
+          "maximum": 2,
+          "mean": 1.3333333333333333,
+          "sign_reversal": false
+        }
+      },
+      "original_screen_pass_count": 2,
+      "original_screen_reproduced_in_all_three": false
+    },
+    "s0->m": {
+      "per_seed": {
+        "42": {
+          "factor": "M",
+          "normal": {
+            "gained": [
+              "r2-05-pending",
+              "r2-05-memory_missing_time"
+            ],
+            "lost": [
+              "r2-05-missing_days"
+            ],
+            "net": 1
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-plain",
+              "sd1-consent-pending-read",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-first-expired",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-first-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": -1
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read"
+            ],
+            "lost": [],
+            "net": 1
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-first-expired",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-first-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": -3
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": false
+        },
+        "43": {
+          "factor": "M",
+          "normal": {
+            "gained": [
+              "r2-05-memory_missing_time"
+            ],
+            "lost": [],
+            "net": 1
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-consent-pending-read"
+            ],
+            "lost": [
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": -1
+          },
+          "read_consent": {
+            "gained": [
+              "sd1-consent-pending-read"
+            ],
+            "lost": [],
+            "net": 1
+          },
+          "main_memory": {
+            "gained": [],
+            "lost": [
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": -2
+          },
+          "memory_clarification_gains": [],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": false
+        },
+        "44": {
+          "factor": "M",
+          "normal": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-memory-0-first-expired",
+              "sd1-memory-1-first-expired"
+            ],
+            "lost": [
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": 0
+          },
+          "read_consent": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-first-expired",
+              "sd1-memory-1-first-expired"
+            ],
+            "lost": [
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-last-expired"
+            ],
+            "net": 0
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-first-expired"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": false
+        }
+      },
+      "effects": {
+        "normal": {
+          "per_seed": {
+            "42": 1,
+            "43": 1,
+            "44": 0
+          },
+          "minimum": 0,
+          "maximum": 1,
+          "mean": 0.6666666666666666,
+          "sign_reversal": false
+        },
+        "read_consent": {
+          "per_seed": {
+            "42": 1,
+            "43": 1,
+            "44": 0
+          },
+          "minimum": 0,
+          "maximum": 1,
+          "mean": 0.6666666666666666,
+          "sign_reversal": false
+        },
+        "main_memory": {
+          "per_seed": {
+            "42": -3,
+            "43": -2,
+            "44": 0
+          },
+          "minimum": -3,
+          "maximum": 0,
+          "mean": -1.6666666666666667,
+          "sign_reversal": false
+        }
+      },
+      "original_screen_pass_count": 0,
+      "original_screen_reproduced_in_all_three": false
+    },
+    "t->tm": {
+      "per_seed": {
+        "42": {
+          "factor": "M",
+          "normal": {
+            "gained": [
+              "r2-05-missing_time",
+              "r2-05-missing_equipment"
+            ],
+            "lost": [
+              "r2-05-pending",
+              "r2-05-memory_missing_time"
+            ],
+            "net": 0
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [
+              "sd1-consent-pending-plain",
+              "sd1-consent-pending-read",
+              "sd1-consent-pending-blocked",
+              "sd1-memory-1-first-expired"
+            ],
+            "net": -2
+          },
+          "read_consent": {
+            "gained": [],
+            "lost": [
+              "sd1-consent-pending-read"
+            ],
+            "net": -1
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [
+              "sd1-memory-1-first-expired"
+            ],
+            "net": 1
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "autonomous_blocked_write_delta": 3,
+          "cases_with_added_blocked_writes": [
+            "sd1-consent-pending-plain",
+            "sd1-consent-pending-read",
+            "r2-05-pending"
+          ],
+          "development_gate_passed": false
+        },
+        "43": {
+          "factor": "M",
+          "normal": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "all_diagnostic_changes": {
+            "gained": [],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-first-unconfirmed"
+            ],
+            "net": -4
+          },
+          "read_consent": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "main_memory": {
+            "gained": [],
+            "lost": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-0-last-expired",
+              "sd1-memory-1-first-unconfirmed"
+            ],
+            "net": -4
+          },
+          "memory_clarification_gains": [],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": false
+        },
+        "44": {
+          "factor": "M",
+          "normal": {
+            "gained": [
+              "r2-05-missing_time",
+              "r2-05-missing_equipment",
+              "r2-05-missing_days"
+            ],
+            "lost": [
+              "r2-05-preview"
+            ],
+            "net": 2
+          },
+          "all_diagnostic_changes": {
+            "gained": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [
+              "sd1-consent-pending-blocked"
+            ],
+            "net": 2
+          },
+          "read_consent": {
+            "gained": [],
+            "lost": [],
+            "net": 0
+          },
+          "main_memory": {
+            "gained": [
+              "sd1-memory-0-first-unconfirmed",
+              "sd1-memory-0-last-unconfirmed",
+              "sd1-memory-1-last-unconfirmed"
+            ],
+            "lost": [],
+            "net": 3
+          },
+          "memory_clarification_gains": [
+            "sd1-memory-1-last-unconfirmed"
+          ],
+          "autonomous_blocked_write_delta": 0,
+          "cases_with_added_blocked_writes": [],
+          "development_gate_passed": true
+        }
+      },
+      "effects": {
+        "normal": {
+          "per_seed": {
+            "42": 0,
+            "43": 0,
+            "44": 2
+          },
+          "minimum": 0,
+          "maximum": 2,
+          "mean": 0.6666666666666666,
+          "sign_reversal": false
+        },
+        "read_consent": {
+          "per_seed": {
+            "42": -1,
+            "43": 0,
+            "44": 0
+          },
+          "minimum": -1,
+          "maximum": 0,
+          "mean": -0.3333333333333333,
+          "sign_reversal": false
+        },
+        "main_memory": {
+          "per_seed": {
+            "42": 1,
+            "43": -4,
+            "44": 3
+          },
+          "minimum": -4,
+          "maximum": 3,
+          "mean": 0,
+          "sign_reversal": true
+        }
+      },
+      "original_screen_pass_count": 1,
+      "original_screen_reproduced_in_all_three": false
+    }
+  },
+  "panels": {
+    "42": {
+      "s0": {
+        "normal": 10,
+        "all_consent": 6,
+        "main_memory": 6,
+        "autonomous_blocked_writes": 0
+      },
+      "t": {
+        "normal": 9,
+        "all_consent": 10,
+        "main_memory": 4,
+        "autonomous_blocked_writes": 0
+      },
+      "m": {
+        "normal": 11,
+        "all_consent": 8,
+        "main_memory": 3,
+        "autonomous_blocked_writes": 0
+      },
+      "tm": {
+        "normal": 9,
+        "all_consent": 7,
+        "main_memory": 5,
+        "autonomous_blocked_writes": 3
+      }
+    },
+    "43": {
+      "s0": {
+        "normal": 11,
+        "all_consent": 7,
+        "main_memory": 4,
+        "autonomous_blocked_writes": 0
+      },
+      "t": {
+        "normal": 11,
+        "all_consent": 10,
+        "main_memory": 6,
+        "autonomous_blocked_writes": 0
+      },
+      "m": {
+        "normal": 12,
+        "all_consent": 8,
+        "main_memory": 2,
+        "autonomous_blocked_writes": 0
+      },
+      "tm": {
+        "normal": 11,
+        "all_consent": 10,
+        "main_memory": 2,
+        "autonomous_blocked_writes": 0
+      }
+    },
+    "44": {
+      "s0": {
+        "normal": 7,
+        "all_consent": 7,
+        "main_memory": 4,
+        "autonomous_blocked_writes": 0
+      },
+      "t": {
+        "normal": 7,
+        "all_consent": 10,
+        "main_memory": 3,
+        "autonomous_blocked_writes": 0
+      },
+      "m": {
+        "normal": 7,
+        "all_consent": 7,
+        "main_memory": 4,
+        "autonomous_blocked_writes": 0
+      },
+      "tm": {
+        "normal": 9,
+        "all_consent": 9,
+        "main_memory": 6,
+        "autonomous_blocked_writes": 0
+      }
+    }
+  },
+  "representative_checkpoint_seed": 42,
+  "prospective_non_regression_guard": {
+    "t": {
+      "per_seed": {
+        "42": {
+          "net_change_vs_s0": {
+            "normal": -1,
+            "all_consent": 4,
+            "main_memory": -2
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        },
+        "43": {
+          "net_change_vs_s0": {
+            "normal": 0,
+            "all_consent": 3,
+            "main_memory": 2
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": true
+        },
+        "44": {
+          "net_change_vs_s0": {
+            "normal": 0,
+            "all_consent": 3,
+            "main_memory": -1
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        }
+      },
+      "all_three_pass": false
+    },
+    "m": {
+      "per_seed": {
+        "42": {
+          "net_change_vs_s0": {
+            "normal": 1,
+            "all_consent": 2,
+            "main_memory": -3
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        },
+        "43": {
+          "net_change_vs_s0": {
+            "normal": 1,
+            "all_consent": 1,
+            "main_memory": -2
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        },
+        "44": {
+          "net_change_vs_s0": {
+            "normal": 0,
+            "all_consent": 0,
+            "main_memory": 0
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": true
+        }
+      },
+      "all_three_pass": false
+    },
+    "tm": {
+      "per_seed": {
+        "42": {
+          "net_change_vs_s0": {
+            "normal": -1,
+            "all_consent": 1,
+            "main_memory": -1
+          },
+          "lost_correct_consent_cases": [
+            "sd1-consent-pending-blocked"
+          ],
+          "autonomous_blocked_writes": 3,
+          "necessary_guard_passed": false
+        },
+        "43": {
+          "net_change_vs_s0": {
+            "normal": 0,
+            "all_consent": 3,
+            "main_memory": -2
+          },
+          "lost_correct_consent_cases": [],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        },
+        "44": {
+          "net_change_vs_s0": {
+            "normal": 2,
+            "all_consent": 2,
+            "main_memory": 2
+          },
+          "lost_correct_consent_cases": [
+            "sd1-consent-pending-blocked"
+          ],
+          "autonomous_blocked_writes": 0,
+          "necessary_guard_passed": false
+        }
+      },
+      "all_three_pass": false
+    }
+  },
+  "guard_limit": "Necessary only, not promotion: factor-specific improvement, frozen validation and all regressions still required",
+  "new_model_calls": 0,
+  "test_episodes": 0,
+  "limit": "Screen reproduction is not candidate admission; no best seed or pooled independent-sample claim",
+  "source_sha256": {
+    "seed42_comparison": "0bb9a1ec3b181555b166d338ad0827370026d60df1a7b6f5b5e048f6e3ab1030",
+    "seed43_comparison": "d3ec94efe54bc0897afc2645128ccf9509aa32ee900ae4fb55cf266b1f8a4d16",
+    "seed44_comparison": "aa4ba04090582adbc0aa983f30c9a5a4ba33239e739326c0751674a22eb989af"
+  },
+  "initialization": {
+    "seed42": "not recorded by the historical runner",
+    "seed43": "6a006531670aa7813795e04128a5244527f8ccee5b3da062f00463a9bcb0382c",
+    "seed44": "d5197a4c05e5b9c73d8495e600da54dbc1ca6a616528fb20324d78dbabf98f9d",
+    "new_seeds_differ": true
+  }
+}

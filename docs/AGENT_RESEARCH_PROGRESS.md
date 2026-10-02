@@ -1,6 +1,42 @@
 # Agent research progress and handoff
 
-## Current: seed44 running; complete evidence and three-seed review pending
+## Current: original three-seed study complete; CPU D2 preparation is next
+
+Updated 2026-10-02 UTC. The frozen f18 seed44 four-arm window completed; five
+archives, actual weights, 124 native/environment episodes and 358 generations
+passed local restoration and token reconstruction. Public evidence and the
+original42/43/44 review are available in the [complete R1 results](research/2026-10-02-r1-three-seed-results.md).
+
+| seed44 arm | Full task | Read-history consent | Main memory | All consent | Blocked writes |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| S0 | 7/12 | 0/3 | 4/8 | 7/10 | 0 |
+| T | 7/12 | 3/3 | 3/8 | 10/10 | 0 |
+| M | 7/12 | 0/3 | 4/8 | 7/10 | 0 |
+| TM | 9/12 | 3/3 | 6/8 | 9/10 | 0 |
+
+Original screens S0→T/M→TM/S0→M/T→TM pass3/3,2/3,0/3,1/3. No treatment passes
+the necessary candidate guard across all three seeds. T's memory effect is−2/+2/−1;
+T→TM is+1/−4/+3. Seed44 TM gains net task/memory counts but loses the previously
+correct pending-blocked consent case. Preserve every failure, the fixed seed42
+representative, and48 unused reserved tasks. These are repeated development states,
+not independent-task generalization or a promoted model.
+
+The genuine receipt passed temporary-upload/readback/hash checks and atomic rename
+at03:06:33 UTC; SSH then disconnected. Server ACK consumption and shutdown return
+were not captured. The user subsequently confirmed AutoDL was off and this run
+cost CNY4.60 (reserve8), separately recorded as user evidence, not an inspected
+invoice. The boot-to-disconnection compute proxy is CNY4.6201; exact shutdown time
+and storage breakdown remain unknown. No reboot or deadline extension occurred.
+[Closure evidence](../research/liftcut-agent/reports/coverage-replication-seed44-operations-2026-10-02/README.md).
+
+Next: [CPU clarification audit and D2 construction/readiness](research/2026-10-02-post-r1-next-plan.md),
+then a separately bounded fixed-seed42 inference window. D2/G1 remain unimplemented
+and unexecuted; do not request opening yet. No seed45, paid model API or held-out
+evaluation was added. Local regression passed384 tests in154.069s; the real public
+replay and three-seed derivation passed. Final exact-head CI/merge are tracked by
+[PR26](https://github.com/Townzc/liftcut-tracker/pull/26).
+
+## Historical: seed44 launch and late seed43 closure evidence
 
 Updated2026-10-02 01:16 UTC (project date2026-10-01 America/Los_Angeles).
 The user explicitly opened the instance for the prepared seed44 window. Frozen
