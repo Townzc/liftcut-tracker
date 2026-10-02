@@ -1,6 +1,29 @@
 # Agent research progress and handoff
 
-## Current: D2 partial S0 audited; controller/CPU integration repaired
+## Current: complete D2 audited; G1 paired-training readiness next
+
+Updated 2026-10-02 UTC. Frozen3e4d8e2 completed all four original seed42 arms.
+The real restorer verified51 inventory files, original adapter bytes,320 native/
+environment episodes and340 generations/tokens. [Complete review and next plan](research/2026-10-02-d2-complete-results.md)
+retain every paired gain and regression. Memory S0/T/M/TM=26/27/25/22 out of48;
+consent=6/12/8/9 out of12; repair=1/1/1/1 out of4; infeasible=3/4/4/1 out of4.
+TM made3 unapproved apply attempts, all blocked with writes0. No treatment is promoted.
+
+Fixed T prematurely declares both unknown-evidence repair variants infeasible;
+the original G1 behavior trigger is met for that family only. Next prepare two
+fresh T-control/T-repair training runs from the pinned base, with identical correct
+target tokens and both original error families. Freeze schedule,111 evaluations
+per arm, recovery/controller/launch checks and CNY8 reserve before a new opening.
+Original pilot gates and48 untouched reserved tasks remain. No G1 model result yet.
+
+Real receipt was atomically published18:12:18 UTC and SSH then disconnected.
+Server ACK consumption/shutdown and provider billing remain unobserved/unconfirmed;
+user confirmation is pending. This opening's compute proxy is CNY0.7297, separate
+from prior failures, not an invoice. No active cloud window or deadline extension.
+Local publication audit rechecks actual weights;470 regression tests passed before
+the final descriptive additions. Final precise-commit checks are in the delivery PR.
+
+## Historical: D2 partial S0 audited; controller/CPU integration repaired
 
 Updated 2026-10-02 UTC. The new opening successfully deployed06654db and completed
 S0: memory26/48, identity7/12, consent6/12 (defer4), repair1/4, infeasible3/4.

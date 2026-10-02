@@ -1,0 +1,1927 @@
+{
+  "total": 320,
+  "durable_episodes": 320,
+  "rows": [
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-pending-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-revoked-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-repair-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-infeasible-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v1-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v2-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-memory-v3-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-pending-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-pending-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-declined-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-declined-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-declined-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-revoked-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-revoked-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-approved-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-approved-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-consent-approved-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-repair-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-repair-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-repair-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-infeasible-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-infeasible-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "s0",
+      "case_id": "d2-infeasible-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-pending-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-revoked-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-repair-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-infeasible-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v1-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v2-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-memory-v3-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-pending-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-pending-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-declined-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-declined-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-declined-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-revoked-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-revoked-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-approved-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-approved-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-consent-approved-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-repair-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-repair-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-repair-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-infeasible-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-infeasible-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "t",
+      "case_id": "d2-infeasible-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-pending-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-revoked-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-repair-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-infeasible-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v1-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v2-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-memory-v3-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-pending-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-pending-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-declined-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-declined-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-declined-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-revoked-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-revoked-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-approved-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-approved-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-consent-approved-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-repair-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-repair-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-repair-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-infeasible-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-infeasible-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "m",
+      "case_id": "d2-infeasible-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-pending-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-revoked-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-repair-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-infeasible-unknown_evidence-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v0-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v1-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v2-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-memory-v3-c1-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-first-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-first-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-middle-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-middle-expired",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-identity-v0-c1-last-unconfirmed",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-pending-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-pending-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-declined-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-declined-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-declined-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-revoked-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-revoked-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-approved-plain",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-approved-context",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-consent-approved-memories",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-repair-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-repair-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-repair-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-infeasible-unknown_evidence-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-infeasible-session_count_mismatch-v0",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    },
+    {
+      "arm": "tm",
+      "case_id": "d2-infeasible-session_count_mismatch-v1",
+      "durable_episode_present": true,
+      "missing_is_not_an_observed_model_failure": false
+    }
+  ],
+  "scope": "Presence inventory only, not a replay-verified score; every registered case retained"
+}

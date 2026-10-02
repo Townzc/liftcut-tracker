@@ -1,0 +1,28 @@
+{
+  "version": "d2-backup-receipt-v1",
+  "binding": {
+    "version": "d2-execution-v1",
+    "execution_plan_sha256": "8c43021e1adfa1cac08e660f540bfac2ef146dab78d3a22c5449a7cc32ede725",
+    "cpu_plan_sha256": "f4cedfaa127ebaaf4f0abdc93ad0d8f00bd8c64b15f95a07aeb6e2f0099f0e38",
+    "code_commit": "3e4d8e208aecd86f05a7d3243942df6aefc2f73c",
+    "fixed_adapter_seed": 42,
+    "cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+    "booted_at_proxy": "2026-10-02T17:52:13.841860+00:00",
+    "work_cutoff": "2026-10-02T19:22:13.841860+00:00",
+    "hard_cutoff": "2026-10-02T19:52:13.841860+00:00"
+  },
+  "index_digest": "f89e8ce77f5a71bdb7c2e25dffb65e226dbf96ff52f32ce20582218a3a8e13cc",
+  "evidence_kind": "model",
+  "run_status": "complete",
+  "archive": "evidence.tar.gz",
+  "bytes": 1275033,
+  "sha256": "f97d45e6dfaa22f52c1df65c14a30f960d69ef1bc413134e191f68dcfbf881e8",
+  "verified_files": 51,
+  "all_inventory_files_verified": true,
+  "complete_study_replayed": true,
+  "episodes_replayed": 320,
+  "adapter_files_verified": true,
+  "token_ids_verified": true,
+  "model_result": true,
+  "test_episodes": 0
+}
