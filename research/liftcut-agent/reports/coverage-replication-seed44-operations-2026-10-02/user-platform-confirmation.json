@@ -1,0 +1,10 @@
+{
+  "source": "Direct user reply in this experiment conversation after the operator requested an AutoDL platform check",
+  "user_text": "已关机，费用4.6元",
+  "recorded_at_utc": "2026-10-02T03:14:08.172556+00:00",
+  "power_state_user_confirmed": "off",
+  "reported_run_cost_cny": 4.6,
+  "provider_api_or_invoice_independently_inspected": false,
+  "exact_poweroff_or_billing_stop_timestamp": null,
+  "storage_component_specified": false
+}

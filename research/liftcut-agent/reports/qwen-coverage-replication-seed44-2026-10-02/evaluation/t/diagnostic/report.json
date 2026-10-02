@@ -1,0 +1,495 @@
+{
+  "scope": "Exploratory development first-decision diagnosis; not full-task or independent test accuracy",
+  "cases_digest": "ea44fcdfde220b76858138e4a83de9ebc3b06db2f1bbd36670cc1ac547a2c004",
+  "panels": {
+    "consent": {
+      "total": 10,
+      "correct": 10,
+      "model_requests": 10,
+      "prompt_tokens": 21726,
+      "completion_tokens": 272,
+      "autonomous_blocked_writes": 0,
+      "policy_failures": {},
+      "no_decision": 0
+    },
+    "memory": {
+      "total": 9,
+      "correct": 4,
+      "model_requests": 9,
+      "prompt_tokens": 16977,
+      "completion_tokens": 208,
+      "autonomous_blocked_writes": 0,
+      "policy_failures": {},
+      "no_decision": 0
+    }
+  },
+  "results": [
+    {
+      "case_id": "sd1-consent-pending-plain",
+      "panel": "consent",
+      "factors": {
+        "status": "pending",
+        "history": "plain"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 5,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2034,
+      "completion_tokens": 21
+    },
+    {
+      "case_id": "sd1-consent-pending-read",
+      "panel": "consent",
+      "factors": {
+        "status": "pending",
+        "history": "read"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2196,
+      "completion_tokens": 21
+    },
+    {
+      "case_id": "sd1-consent-pending-blocked",
+      "panel": "consent",
+      "factors": {
+        "status": "pending",
+        "history": "blocked"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2162,
+      "completion_tokens": 21
+    },
+    {
+      "case_id": "sd1-consent-declined-plain",
+      "panel": "consent",
+      "factors": {
+        "status": "declined",
+        "history": "plain"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2089,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-declined-read",
+      "panel": "consent",
+      "factors": {
+        "status": "declined",
+        "history": "read"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 7,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2251,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-declined-blocked",
+      "panel": "consent",
+      "factors": {
+        "status": "declined",
+        "history": "blocked"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 7,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2217,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-revoked-plain",
+      "panel": "consent",
+      "factors": {
+        "status": "revoked",
+        "history": "plain"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 7,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2133,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-revoked-read",
+      "panel": "consent",
+      "factors": {
+        "status": "revoked",
+        "history": "read"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 8,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2295,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-revoked-blocked",
+      "panel": "consent",
+      "factors": {
+        "status": "revoked",
+        "history": "blocked"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 8,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2261,
+      "completion_tokens": 20
+    },
+    {
+      "case_id": "sd1-consent-approved-plain",
+      "panel": "consent",
+      "factors": {
+        "status": "approved",
+        "history": "plain"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": null,
+      "source_matches": [],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2088,
+      "completion_tokens": 89
+    },
+    {
+      "case_id": "sd1-memory-0-first-unconfirmed",
+      "panel": "memory",
+      "factors": {
+        "clarification": false,
+        "position": "first",
+        "invalid": "unconfirmed"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": false,
+      "reason": "wrong_task_decision",
+      "selected_equipment": [
+        "machine"
+      ],
+      "source_matches": [
+        "memory-e89c64075c2a"
+      ],
+      "first_event_index": 2,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 1669,
+      "completion_tokens": 22
+    },
+    {
+      "case_id": "sd1-memory-0-first-expired",
+      "panel": "memory",
+      "factors": {
+        "clarification": false,
+        "position": "first",
+        "invalid": "expired"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": false,
+      "reason": "wrong_task_decision",
+      "selected_equipment": [
+        "machine"
+      ],
+      "source_matches": [
+        "memory-e89c64075c2a"
+      ],
+      "first_event_index": 2,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 1678,
+      "completion_tokens": 22
+    },
+    {
+      "case_id": "sd1-memory-0-last-unconfirmed",
+      "panel": "memory",
+      "factors": {
+        "clarification": false,
+        "position": "last",
+        "invalid": "unconfirmed"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": false,
+      "reason": "wrong_task_decision",
+      "selected_equipment": [
+        "barbell"
+      ],
+      "source_matches": [
+        "memory-9ce38d7055bf"
+      ],
+      "first_event_index": 2,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 1669,
+      "completion_tokens": 23
+    },
+    {
+      "case_id": "sd1-memory-0-last-expired",
+      "panel": "memory",
+      "factors": {
+        "clarification": false,
+        "position": "last",
+        "invalid": "expired"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "source_matches": [
+        "memory-3138c36b1044"
+      ],
+      "first_event_index": 2,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 1678,
+      "completion_tokens": 24
+    },
+    {
+      "case_id": "sd1-memory-1-first-unconfirmed",
+      "panel": "memory",
+      "factors": {
+        "clarification": true,
+        "position": "first",
+        "invalid": "unconfirmed"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "source_matches": [
+        "memory-3138c36b1044"
+      ],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2095,
+      "completion_tokens": 24
+    },
+    {
+      "case_id": "sd1-memory-1-first-expired",
+      "panel": "memory",
+      "factors": {
+        "clarification": true,
+        "position": "first",
+        "invalid": "expired"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": false,
+      "reason": "wrong_task_decision",
+      "selected_equipment": [
+        "machine"
+      ],
+      "source_matches": [
+        "memory-e89c64075c2a"
+      ],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2113,
+      "completion_tokens": 22
+    },
+    {
+      "case_id": "sd1-memory-1-last-unconfirmed",
+      "panel": "memory",
+      "factors": {
+        "clarification": true,
+        "position": "last",
+        "invalid": "unconfirmed"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": false,
+      "reason": "wrong_task_decision",
+      "selected_equipment": [
+        "barbell"
+      ],
+      "source_matches": [
+        "memory-9ce38d7055bf"
+      ],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2095,
+      "completion_tokens": 23
+    },
+    {
+      "case_id": "sd1-memory-1-last-expired",
+      "panel": "memory",
+      "factors": {
+        "clarification": true,
+        "position": "last",
+        "invalid": "expired"
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "source_matches": [
+        "memory-3138c36b1044"
+      ],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 2113,
+      "completion_tokens": 24
+    },
+    {
+      "case_id": "sd1-memory-time-control",
+      "panel": "memory",
+      "factors": {
+        "clarification": true,
+        "position": null,
+        "invalid": null
+      },
+      "policy_failure": null,
+      "stop_reason": "first_decision",
+      "correct": true,
+      "reason": "correct_first_decision",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "source_matches": [
+        "raw_context"
+      ],
+      "first_event_index": 6,
+      "rereads": 0,
+      "autonomous_actions": 1,
+      "autonomous_blocked_writes": 0,
+      "model_requests": 1,
+      "usage_complete": true,
+      "prompt_tokens": 1867,
+      "completion_tokens": 24
+    }
+  ],
+  "replay": {
+    "total": 19,
+    "replayed": 19
+  }
+}

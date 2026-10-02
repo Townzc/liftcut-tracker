@@ -20,7 +20,12 @@ separates seed replication, counterfactual diagnostics and conditional feedback-
 training. The [versioned R1 runner and handoff](../../docs/research/2026-10-01-coverage-replication-execution.md)
 now implement CPU seed42 equivalence, seed43/44 training and evaluation, bounded
 windows, seed-bound actual-weight restoration and three-seed descriptive review.
-They have not produced new GPU results; reserved evaluations remain pending.
+The original42/43/44 study is now complete: [results and case-level review](../../docs/research/2026-10-02-r1-three-seed-results.md).
+S0→T passes the original local screen3/3; no treatment passes all-seed candidate
+guards. All48 reserved tasks remain unused; no independent-generalization claim.
+Seed44's124 episodes and358 generations passed actual-weight/native/token recovery.
+The [next plan](../../docs/research/2026-10-02-post-r1-next-plan.md) prepares D2 on
+fixed seed42 weights before any new GPU window.
 With the original exact coverage preparation available, reproduce the analysis with:
 
 ```sh

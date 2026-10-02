@@ -1,0 +1,27 @@
+{
+  "recorded_at_utc": "2026-10-02T01:16:13.580836+00:00",
+  "source": "Existing authenticated SSH/SFTP session; read-only acquisition during newly user-opened seed44 window",
+  "files": [
+    {
+      "name": "backup-copy-status.json",
+      "bytes": 40,
+      "sha256": "3dafa426bd81c2ab60ac7a13f1f25ca059ed2f5a7354cc13c2578d614ba0b517",
+      "local_acquired_at_utc": "2026-10-02T01:12:37.004548+00:00"
+    },
+    {
+      "name": "shutdown-request.json",
+      "bytes": 112,
+      "sha256": "8556f75eb82b79d97540554a367f4f290a65b72b7009fada42b4c6c54cf5e2f9",
+      "local_acquired_at_utc": "2026-10-02T01:12:40.491318+00:00"
+    }
+  ],
+  "new_model_calls_in_acquisition": 0,
+  "provider_power_state_verified": false,
+  "provider_billing_verified": false,
+  "remote_digest_observed_at_utc": "2026-10-02T01:13:31.088550+00:00",
+  "remote_sha256": {
+    "backup-copy-status.json": "3dafa426bd81c2ab60ac7a13f1f25ca059ed2f5a7354cc13c2578d614ba0b517",
+    "shutdown-request.json": "8556f75eb82b79d97540554a367f4f290a65b72b7009fada42b4c6c54cf5e2f9"
+  },
+  "interpretation": "The retained server records establish ACK consumption and shutdown-command returncode0 in seed43. They do not establish the platform billing stop or exact power-off time. Historical observations remain preserved."
+}

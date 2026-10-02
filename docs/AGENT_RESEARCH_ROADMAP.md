@@ -1,6 +1,13 @@
 # LiftCut-AgentLab research roadmap
 
 Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
+Latest evidence update: 2026-10-02 UTC. The original42/43/44 four-arm study is
+complete; [three-seed results](research/2026-10-02-r1-three-seed-results.md) retain
+all gains and regressions. S0→T reproduces its local screen3/3, but no treatment
+passes all-seed candidate guards. [Next work](research/2026-10-02-post-r1-next-plan.md)
+is CPU D2 preparation on fixed seed42 weights; no extra training seed or reserved
+evaluation. Seed44 is user-confirmed off, with a reported CNY4.60 run cost.
+Earlier stage-specific “next” statements below are historical context.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).
 The remaining first-release schedule and evidence gates are maintained in
 [research release criteria](research/2026-09-29-research-release-criteria.md).

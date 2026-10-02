@@ -1,0 +1,78 @@
+{"at_utc": "2026-10-02T01:05:14.810657+00:00", "event": "monitor_ready", "seed": 44, "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9", "deadline": "2026-10-02T03:59:23.910000+00:00", "guard_records_observed": true, "guard_process_liveness_verified": false, "provider_power_state_verified": false}
+{"at_utc": "2026-10-02T01:05:15.716217+00:00", "event": "phase", "record": {"phase": "train-s0", "status": "started"}}
+{"at_utc": "2026-10-02T01:05:16.630581+00:00", "event": "training_progress", "arm": "s0", "step": 3, "loss": 0.12700887432728206, "elapsed_seconds": 31.37261737138033}
+{"at_utc": "2026-10-02T01:06:54.376374+00:00", "event": "training_progress", "arm": "s0", "step": 12, "loss": 0.022198457285227208, "elapsed_seconds": 133.00774328038096}
+{"at_utc": "2026-10-02T01:08:31.675509+00:00", "event": "training_progress", "arm": "s0", "step": 20, "loss": 0.04863823946288903, "elapsed_seconds": 220.02567776851356}
+{"at_utc": "2026-10-02T01:10:41.137176+00:00", "event": "training_progress", "arm": "s0", "step": 32, "loss": 0.00961146739541816, "elapsed_seconds": 356.99750778637826}
+{"at_utc": "2026-10-02T01:12:18.289034+00:00", "event": "training_progress", "arm": "s0", "step": 40, "loss": 0.006200132289954324, "elapsed_seconds": 446.26328165642917}
+{"at_utc": "2026-10-02T01:14:28.167829+00:00", "event": "training_progress", "arm": "s0", "step": 52, "loss": 0.00020926679396356232, "elapsed_seconds": 582.4034816604108}
+{"at_utc": "2026-10-02T01:16:05.299987+00:00", "event": "training_progress", "arm": "s0", "step": 60, "loss": 0.006617899577679766, "elapsed_seconds": 673.8032927289605}
+{"at_utc": "2026-10-02T01:18:14.789829+00:00", "event": "training_progress", "arm": "s0", "step": 72, "loss": 0.00048213414639125584, "elapsed_seconds": 807.8450504206121}
+{"at_utc": "2026-10-02T01:19:51.903628+00:00", "event": "training_progress", "arm": "s0", "step": 80, "loss": 0.010560936934663914, "elapsed_seconds": 899.5177596062422}
+{"at_utc": "2026-10-02T01:21:29.010077+00:00", "event": "training_progress", "arm": "s0", "step": 90, "loss": 0.00019877001032335705, "elapsed_seconds": 1005.3571170009673}
+{"at_utc": "2026-10-02T01:23:38.580632+00:00", "event": "training_progress", "arm": "s0", "step": 101, "loss": 0.005851862646425917, "elapsed_seconds": 1128.9711534436792}
+{"at_utc": "2026-10-02T01:25:15.721945+00:00", "event": "training_progress", "arm": "s0", "step": 110, "loss": 0.00016510133853675708, "elapsed_seconds": 1231.5180420801044}
+{"at_utc": "2026-10-02T01:27:25.205403+00:00", "event": "training_progress", "arm": "s0", "step": 121, "loss": 5.67436611509904e-05, "elapsed_seconds": 1357.3237586747855}
+{"at_utc": "2026-10-02T01:29:01.616984+00:00", "event": "phase", "record": {"phase": "evaluate-s0", "status": "started"}}
+{"at_utc": "2026-10-02T01:29:02.884960+00:00", "event": "download_started", "part": "s0", "bytes": 122391864}
+{"at_utc": "2026-10-02T01:29:19.332056+00:00", "event": "archive_bytes_verified", "part": "s0", "bytes": 122391864, "sha256": "976379f54a896e1112bc57ce81fbe3db03bda85ce7bab158bf409df0bb718be2"}
+{"at_utc": "2026-10-02T01:34:10.598076+00:00", "event": "phase", "record": {"phase": "train-t", "status": "started"}}
+{"at_utc": "2026-10-02T01:34:45.612167+00:00", "event": "training_progress", "arm": "t", "step": 3, "loss": 0.10357791569382128, "elapsed_seconds": 32.04129265062511}
+{"at_utc": "2026-10-02T01:36:25.422694+00:00", "event": "training_progress", "arm": "t", "step": 11, "loss": 0.10961184807716919, "elapsed_seconds": 125.52294214256108}
+{"at_utc": "2026-10-02T01:38:04.665701+00:00", "event": "training_progress", "arm": "t", "step": 20, "loss": 0.048294531117223455, "elapsed_seconds": 224.6271229442209}
+{"at_utc": "2026-10-02T01:40:16.901225+00:00", "event": "training_progress", "arm": "t", "step": 32, "loss": 0.011372506892771724, "elapsed_seconds": 364.1142513938248}
+{"at_utc": "2026-10-02T01:41:56.022956+00:00", "event": "training_progress", "arm": "t", "step": 40, "loss": 0.008651225453492322, "elapsed_seconds": 454.6938744597137}
+{"at_utc": "2026-10-02T01:44:09.111852+00:00", "event": "training_progress", "arm": "t", "step": 52, "loss": 0.00035607359396943656, "elapsed_seconds": 594.888216342777}
+{"at_utc": "2026-10-02T01:45:48.182320+00:00", "event": "training_progress", "arm": "t", "step": 60, "loss": 0.00354897646041748, "elapsed_seconds": 688.3643319588155}
+{"at_utc": "2026-10-02T01:48:00.474311+00:00", "event": "training_progress", "arm": "t", "step": 72, "loss": 0.0002529849118119051, "elapsed_seconds": 826.4017626140267}
+{"at_utc": "2026-10-02T01:49:39.667603+00:00", "event": "training_progress", "arm": "t", "step": 80, "loss": 0.010169967843045014, "elapsed_seconds": 919.8816597629339}
+{"at_utc": "2026-10-02T01:51:18.807825+00:00", "event": "training_progress", "arm": "t", "step": 90, "loss": 0.051033294258487925, "elapsed_seconds": 1027.3244500625879}
+{"at_utc": "2026-10-02T01:53:30.986203+00:00", "event": "training_progress", "arm": "t", "step": 101, "loss": 0.008152318118793321, "elapsed_seconds": 1154.3951726201922}
+{"at_utc": "2026-10-02T01:55:10.068157+00:00", "event": "training_progress", "arm": "t", "step": 110, "loss": 0.0013234463160479509, "elapsed_seconds": 1258.9300943613052}
+{"at_utc": "2026-10-02T01:57:22.619626+00:00", "event": "training_progress", "arm": "t", "step": 121, "loss": 8.811136880077747e-05, "elapsed_seconds": 1387.6845784932375}
+{"at_utc": "2026-10-02T01:59:00.391457+00:00", "event": "phase", "record": {"phase": "evaluate-t", "status": "started"}}
+{"at_utc": "2026-10-02T01:59:02.344238+00:00", "event": "download_started", "part": "t", "bytes": 122431156}
+{"at_utc": "2026-10-02T01:59:17.259370+00:00", "event": "archive_bytes_verified", "part": "t", "bytes": 122431156, "sha256": "66bd06834b065d19116f1c438a483426850f70864cadd3e1f0a8a5bf808e2cd2"}
+{"at_utc": "2026-10-02T02:04:14.119971+00:00", "event": "phase", "record": {"phase": "train-m", "status": "started"}}
+{"at_utc": "2026-10-02T02:04:49.618789+00:00", "event": "training_progress", "arm": "m", "step": 3, "loss": 0.1283541286161164, "elapsed_seconds": 31.547182518988848}
+{"at_utc": "2026-10-02T02:06:31.236310+00:00", "event": "training_progress", "arm": "m", "step": 12, "loss": 0.012891703334493878, "elapsed_seconds": 133.3076741490513}
+{"at_utc": "2026-10-02T02:08:13.109369+00:00", "event": "training_progress", "arm": "m", "step": 21, "loss": 0.005334448147054486, "elapsed_seconds": 233.4540193695575}
+{"at_utc": "2026-10-02T02:10:28.599483+00:00", "event": "training_progress", "arm": "m", "step": 33, "loss": 0.007839096059051, "elapsed_seconds": 369.32490161433816}
+{"at_utc": "2026-10-02T02:12:10.994918+00:00", "event": "training_progress", "arm": "m", "step": 42, "loss": 0.0038918806384847203, "elapsed_seconds": 472.5447913631797}
+{"at_utc": "2026-10-02T02:13:53.735600+00:00", "event": "training_progress", "arm": "m", "step": 51, "loss": 0.0001129914765086774, "elapsed_seconds": 571.6010414883494}
+{"at_utc": "2026-10-02T02:15:36.776980+00:00", "event": "training_progress", "arm": "m", "step": 60, "loss": 0.004389360021254707, "elapsed_seconds": 675.5037324223667}
+{"at_utc": "2026-10-02T02:17:54.617704+00:00", "event": "training_progress", "arm": "m", "step": 72, "loss": 9.085412124622655e-05, "elapsed_seconds": 809.5859443750232}
+{"at_utc": "2026-10-02T02:19:38.956755+00:00", "event": "training_progress", "arm": "m", "step": 81, "loss": 0.027432395008121172, "elapsed_seconds": 913.4277121461928}
+{"at_utc": "2026-10-02T02:21:23.161475+00:00", "event": "training_progress", "arm": "m", "step": 91, "loss": 0.00014715516754854415, "elapsed_seconds": 1020.16070131585}
+{"at_utc": "2026-10-02T02:23:07.438363+00:00", "event": "training_progress", "arm": "m", "step": 100, "loss": 0.003875301088384517, "elapsed_seconds": 1121.7603638675064}
+{"at_utc": "2026-10-02T02:25:25.075003+00:00", "event": "training_progress", "arm": "m", "step": 112, "loss": 0.0025804596945890987, "elapsed_seconds": 1256.679783321917}
+{"at_utc": "2026-10-02T02:27:07.891125+00:00", "event": "training_progress", "arm": "m", "step": 121, "loss": 0.00013446834487597568, "elapsed_seconds": 1360.2802156787366}
+{"at_utc": "2026-10-02T02:28:14.461226+00:00", "event": "phase", "record": {"phase": "evaluate-m", "status": "started"}}
+{"at_utc": "2026-10-02T02:28:17.561685+00:00", "event": "download_started", "part": "m", "bytes": 122364599}
+{"at_utc": "2026-10-02T02:29:45.760260+00:00", "event": "archive_bytes_verified", "part": "m", "bytes": 122364599, "sha256": "d81e057da6f5b620852f1f62e41b3f2dd7ff34d9ec6d629acc7d7a7d6b3de193"}
+{"at_utc": "2026-10-02T02:33:42.688224+00:00", "event": "phase", "record": {"phase": "train-tm", "status": "started"}}
+{"at_utc": "2026-10-02T02:34:19.722783+00:00", "event": "training_progress", "arm": "tm", "step": 1, "loss": 0.37804896657345005, "elapsed_seconds": 10.24945879727602}
+{"at_utc": "2026-10-02T02:36:04.124421+00:00", "event": "training_progress", "arm": "tm", "step": 10, "loss": 0.022140440334808012, "elapsed_seconds": 114.00691770389676}
+{"at_utc": "2026-10-02T02:37:49.259022+00:00", "event": "training_progress", "arm": "tm", "step": 20, "loss": 0.030096745085578077, "elapsed_seconds": 224.7764000184834}
+{"at_utc": "2026-10-02T02:40:10.138457+00:00", "event": "training_progress", "arm": "tm", "step": 32, "loss": 0.010624257847650923, "elapsed_seconds": 364.9057611711323}
+{"at_utc": "2026-10-02T02:41:55.128102+00:00", "event": "training_progress", "arm": "tm", "step": 41, "loss": 0.009012895976491386, "elapsed_seconds": 469.06452812068164}
+{"at_utc": "2026-10-02T02:43:40.123189+00:00", "event": "training_progress", "arm": "tm", "step": 50, "loss": 0.007712763153002256, "elapsed_seconds": 574.3137215990573}
+{"at_utc": "2026-10-02T02:46:01.037376+00:00", "event": "training_progress", "arm": "tm", "step": 62, "loss": 7.430402562433702e-05, "elapsed_seconds": 711.6618458591402}
+{"at_utc": "2026-10-02T02:47:46.324662+00:00", "event": "training_progress", "arm": "tm", "step": 71, "loss": 0.007767357132436275, "elapsed_seconds": 815.0707808025181}
+{"at_utc": "2026-10-02T02:49:31.987074+00:00", "event": "training_progress", "arm": "tm", "step": 80, "loss": 0.010126802939652409, "elapsed_seconds": 920.9700405597687}
+{"at_utc": "2026-10-02T02:51:17.413646+00:00", "event": "training_progress", "arm": "tm", "step": 90, "loss": 0.0012054888616463014, "elapsed_seconds": 1028.2426344770938}
+{"at_utc": "2026-10-02T02:53:38.275478+00:00", "event": "training_progress", "arm": "tm", "step": 102, "loss": 0.020020702085694956, "elapsed_seconds": 1166.3226954173297}
+{"at_utc": "2026-10-02T02:55:23.698451+00:00", "event": "training_progress", "arm": "tm", "step": 111, "loss": 0.03490165586322104, "elapsed_seconds": 1271.172312580049}
+{"at_utc": "2026-10-02T02:57:08.865372+00:00", "event": "training_progress", "arm": "tm", "step": 120, "loss": 0.0002588931744207466, "elapsed_seconds": 1374.8150673676282}
+{"at_utc": "2026-10-02T02:58:51.352505+00:00", "event": "phase", "record": {"phase": "evaluate-tm", "status": "started"}}
+{"at_utc": "2026-10-02T02:58:55.811992+00:00", "event": "download_started", "part": "tm", "bytes": 122426476}
+{"at_utc": "2026-10-02T02:59:15.343585+00:00", "event": "archive_bytes_verified", "part": "tm", "bytes": 122426476, "sha256": "2f5a48180baabe6c10e9fc24e728a39978340fb1543c36aa2b478abe557f9030"}
+{"at_utc": "2026-10-02T03:03:55.186287+00:00", "event": "phase", "record": {"phase": "audit", "status": "started"}}
+{"at_utc": "2026-10-02T03:04:36.861409+00:00", "event": "download_started", "part": "evidence", "bytes": 434872}
+{"at_utc": "2026-10-02T03:04:38.960474+00:00", "event": "archive_bytes_verified", "part": "evidence", "bytes": 434872, "sha256": "79b55310ccb5fe6d194914a99ee76c3048c82289331e65b37ee510f621abec55"}
+{"at_utc": "2026-10-02T03:04:38.963140+00:00", "event": "all_archives_downloaded", "run_status": "complete", "archive_count": 5}
+{"at_utc": "2026-10-02T03:04:38.984183+00:00", "event": "restore_started", "attempt": "474d080c7e61462cbfb9e1a506190f82", "run_status": "complete"}
+{"at_utc": "2026-10-02T03:06:31.062432+00:00", "event": "off_instance_verified", "attempt": "474d080c7e61462cbfb9e1a506190f82", "receipt": {"inventory_digest": "7d29b087b5e18640f0238d9ccceea6ab61a3519a7203c95e876c4b33b08412fa", "run_status": "complete", "run_binding": {"study_version": "coverage-replication-v1", "seed": 44, "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9", "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24", "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52", "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b", "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"}, "archives": [{"archive": "s0.tar.gz", "bytes": 122391864, "sha256": "976379f54a896e1112bc57ce81fbe3db03bda85ce7bab158bf409df0bb718be2", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "t.tar.gz", "bytes": 122431156, "sha256": "66bd06834b065d19116f1c438a483426850f70864cadd3e1f0a8a5bf808e2cd2", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "m.tar.gz", "bytes": 122364599, "sha256": "d81e057da6f5b620852f1f62e41b3f2dd7ff34d9ec6d629acc7d7a7d6b3de193", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "tm.tar.gz", "bytes": 122426476, "sha256": "2f5a48180baabe6c10e9fc24e728a39978340fb1543c36aa2b478abe557f9030", "verified_files": 9, "all_inventory_files_verified": true}, {"archive": "evidence.tar.gz", "bytes": 434872, "sha256": "79b55310ccb5fe6d194914a99ee76c3048c82289331e65b37ee510f621abec55", "verified_files": 64, "all_inventory_files_verified": true}], "all_archive_files_verified": true, "complete_study_replayed": true, "episodes_replayed": 124, "adapter_files_verified": true, "token_ids_verified": true, "test_episodes": 0}}
+{"at_utc": "2026-10-02T03:06:32.965283+00:00", "event": "receipt_temporary_verified", "receipt_sha256": "7d5bc8a12faaed1d13674dd7378a379bb36c28191b77ec63d88f9e89a77075e4", "receipt_bytes": 1985, "run_status": "complete", "complete_study_receipt": true, "remote_final": "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-20261002/off-instance-backup.json", "temp_path": "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-20261002/.off-instance-backup.json.93c155b10312449fbc3ca604c70120ac.tmp", "server_acceptance": "unknown"}
+{"at_utc": "2026-10-02T03:06:33.334673+00:00", "event": "receipt_atomic_published", "receipt_sha256": "7d5bc8a12faaed1d13674dd7378a379bb36c28191b77ec63d88f9e89a77075e4", "receipt_bytes": 1985, "run_status": "complete", "complete_study_receipt": true, "remote_final": "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-20261002/off-instance-backup.json", "temp_path": "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-20261002/.off-instance-backup.json.93c155b10312449fbc3ca604c70120ac.tmp", "server_acceptance": "unknown", "status": "published", "reason": "standard rename confirmation received"}
+{"at_utc": "2026-10-02T03:06:33.428261+00:00", "event": "monitor_stopped", "error": "SSHException", "provider_power_state_verified": false}

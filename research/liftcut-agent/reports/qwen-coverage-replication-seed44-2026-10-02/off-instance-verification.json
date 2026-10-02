@@ -1,0 +1,56 @@
+{
+  "inventory_digest": "7d29b087b5e18640f0238d9ccceea6ab61a3519a7203c95e876c4b33b08412fa",
+  "run_status": "complete",
+  "run_binding": {
+    "study_version": "coverage-replication-v1",
+    "seed": 44,
+    "code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+    "seed_plan_sha256": "3246f58b658a303c02c4f8a1d56b5453c40304ce38650a86c74b930dbe7f2f24",
+    "replication_plan_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+    "legacy_preparation_sha256": "a7169e5137c583c20e05e41069edcd63e46b6e2570f754818885f491ef509c3b",
+    "diagnostic_plan_sha256": "10c81fea3868a9bb0dddc2d03134e43a8c09f85c9091a59ede5dbd9e78cb2a70"
+  },
+  "archives": [
+    {
+      "archive": "s0.tar.gz",
+      "bytes": 122391864,
+      "sha256": "976379f54a896e1112bc57ce81fbe3db03bda85ce7bab158bf409df0bb718be2",
+      "verified_files": 9,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "t.tar.gz",
+      "bytes": 122431156,
+      "sha256": "66bd06834b065d19116f1c438a483426850f70864cadd3e1f0a8a5bf808e2cd2",
+      "verified_files": 9,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "m.tar.gz",
+      "bytes": 122364599,
+      "sha256": "d81e057da6f5b620852f1f62e41b3f2dd7ff34d9ec6d629acc7d7a7d6b3de193",
+      "verified_files": 9,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "tm.tar.gz",
+      "bytes": 122426476,
+      "sha256": "2f5a48180baabe6c10e9fc24e728a39978340fb1543c36aa2b478abe557f9030",
+      "verified_files": 9,
+      "all_inventory_files_verified": true
+    },
+    {
+      "archive": "evidence.tar.gz",
+      "bytes": 434872,
+      "sha256": "79b55310ccb5fe6d194914a99ee76c3048c82289331e65b37ee510f621abec55",
+      "verified_files": 64,
+      "all_inventory_files_verified": true
+    }
+  ],
+  "all_archive_files_verified": true,
+  "complete_study_replayed": true,
+  "episodes_replayed": 124,
+  "adapter_files_verified": true,
+  "token_ids_verified": true,
+  "test_episodes": 0
+}

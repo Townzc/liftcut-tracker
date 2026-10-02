@@ -1,0 +1,10 @@
+{
+  "booted_at_proxy": "2026-10-02T00:59:23.910000+00:00",
+  "boot_time_source": "container PID1 start ticks plus host btime; platform billing start not independently observed",
+  "observed_at_utc": "2026-10-02T01:02:48.522231+00:00",
+  "boot_age_seconds": 204.612231,
+  "deadline": "2026-10-02T03:59:23.910000+00:00",
+  "work_cutoff": "2026-10-02T03:29:23.910000+00:00",
+  "hourly_cny_assumed": 2.18,
+  "expected_code_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9"
+}

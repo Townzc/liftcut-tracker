@@ -1,0 +1,72 @@
+{
+  "recorded_at_utc": "2026-10-02T01:16:13.580836+00:00",
+  "source": "Existing authenticated SSH/SFTP session; read-only acquisition during newly user-opened seed44 window",
+  "files": [
+    {
+      "name": "opening.json",
+      "bytes": 473,
+      "sha256": "ca6ef6867fe45ff1b2162621e8494ad3d5405fb14f764c4e3f95cba55ef56abf",
+      "local_acquired_at_utc": "2026-10-02T01:15:15.497304+00:00"
+    },
+    {
+      "name": "doctor.json",
+      "bytes": 862,
+      "sha256": "41a282e46b3501b9c7f1e3a32700c9a9750f2c6c73265b73ed7823f0f64f37d6",
+      "local_acquired_at_utc": "2026-10-02T01:15:19.740062+00:00"
+    },
+    {
+      "name": "runtime-preflight.json",
+      "bytes": 299,
+      "sha256": "b6807d683608e2638a476c86166f4b7f9688d33edb0b973a2aaf43110f8cba45",
+      "local_acquired_at_utc": "2026-10-02T01:15:23.109534+00:00"
+    },
+    {
+      "name": "dry-run.json",
+      "bytes": 11642,
+      "sha256": "a31a0673b3a184fc80749d76c1033aad715a50aa110df71e636cf502556ee7b3",
+      "local_acquired_at_utc": "2026-10-02T01:15:26.738060+00:00"
+    },
+    {
+      "name": "controller-launch.json",
+      "bytes": 1253,
+      "sha256": "4f60e5a6e11548f0b583546919b1d7ebdeb9c6e442e20d8e82abfbec4677bba5",
+      "local_acquired_at_utc": "2026-10-02T01:15:30.947042+00:00"
+    },
+    {
+      "name": "setup-guard-process.json",
+      "bytes": 84,
+      "sha256": "bd2030a108c399c29c899ae30718cd834c3292be77ba0454c7dafa44d02c8cd9",
+      "local_acquired_at_utc": "2026-10-02T01:15:34.361068+00:00"
+    },
+    {
+      "name": "s0-initialization.json",
+      "bytes": 899,
+      "sha256": "64ad3583f3685495577810a61c108ed1f546342ab42f2549d9bec1002e80bbb8",
+      "local_acquired_at_utc": "2026-10-02T01:18:44.609752+00:00"
+    },
+    {
+      "name": "s0-memory-probe.json",
+      "bytes": 952,
+      "sha256": "104d30e6358f030a9af648c7e7567c60a216fe977644a20fb7c125b7e6e4c95a",
+      "local_acquired_at_utc": "2026-10-02T01:18:48.147144+00:00"
+    }
+  ],
+  "new_model_calls_in_acquisition": 0,
+  "provider_power_state_verified": false,
+  "provider_billing_verified": false,
+  "status_at_acquisition": "S0 training in progress; final model scores, restore and shutdown pending",
+  "local_collector_base_commit": "68702ac089c1c9e9fd4dc9d8c54a36a7d5fea0be",
+  "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+  "process_liveness_observed_at_utc": "2026-10-02T01:13:31.088550+00:00",
+  "observed_process_states": {
+    "setup_guard_1280": "S",
+    "controller_1467": "S",
+    "controller_guard_1472": "S",
+    "s0_trainer_1473": "R"
+  },
+  "reserve_cny": 8,
+  "hourly_rate_basis": "Previous user-provided CNY2.18/hour assumed unchanged; not a new provider-price verification",
+  "full_window_compute_proxy_cny": 6.54,
+  "storage_cost": "unknown/separate",
+  "supplemented_at_utc": "2026-10-02T01:18:50.027898+00:00"
+}

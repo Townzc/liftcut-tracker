@@ -1,0 +1,111 @@
+{
+  "scope": "CPU reconstruction of recorded prompts and output decoding; no new model call or provider provenance proof",
+  "tokenizer_provenance": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "file_sha256": {
+      "tokenizer_config.json": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "config.json": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+    },
+    "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+    "weights_downloaded": false
+  },
+  "libraries": {
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "panels": {
+    "s0": {
+      "normal": {
+        "requests": 67,
+        "actual_model_generations": 67,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 109959,
+        "completion_tokens": 2813,
+        "checked_tokens_digest": "9d1a6b9e7bc2fe9d939cd1b342ecd4106194bb6eb663e9c9f161ef157d3d64a0",
+        "calls_sha256": "b2adb173e30b217163903879a372b35da2e8f906d5d779d2485f7b5c45309f6b",
+        "generations_sha256": "5f8e1cbc1fbd60c320562603ec57b14394f8cc14725a270563c32b74ab4135d5"
+      },
+      "diagnostic": {
+        "requests": 22,
+        "actual_model_generations": 22,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 45598,
+        "completion_tokens": 544,
+        "checked_tokens_digest": "ceaff153ca1e7f39ee1ea335a78383511bc4fe734ba91e9b00d489b1b37befd6",
+        "calls_sha256": "e47c3e35c612abd8f1afc2454fac81d602d0aca9f6535a0cda57d4726eca6b5b",
+        "generations_sha256": "2759c12b556a9c94f9235bbad6f5f16def2179e5452869cf9add61f186eac292"
+      }
+    },
+    "t": {
+      "normal": {
+        "requests": 67,
+        "actual_model_generations": 67,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 109943,
+        "completion_tokens": 2797,
+        "checked_tokens_digest": "ce45d0ff7e92952becde44ef01b47396e19c01fdff0992a54905b02e0245b313",
+        "calls_sha256": "4b407779fb07711216890f33438d985fb8ba8b7630ab0f03719bdbd016c71362",
+        "generations_sha256": "faea25692c89d0616b82d3d9692b99ec1c2141ed76ca849dc6ed0a1a40e0e877"
+      },
+      "diagnostic": {
+        "requests": 19,
+        "actual_model_generations": 19,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 38703,
+        "completion_tokens": 480,
+        "checked_tokens_digest": "84ec2c7c3f4cdfd8a188cf618c7525fd7d9dc451570a00b94ef3796f65efcd61",
+        "calls_sha256": "c1e1a254fd5f57ac5356ea44224b42bc30539369a6ee4661dcdfa4562bcc692a",
+        "generations_sha256": "0cd2e35c53df1d803283f724004ccb303156918a0dd2dd30d87ac4721b36bf5c"
+      }
+    },
+    "m": {
+      "normal": {
+        "requests": 67,
+        "actual_model_generations": 67,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 109959,
+        "completion_tokens": 2813,
+        "checked_tokens_digest": "e40d7b8760398bc2706a9e6ddf3442ce034701f8ccad03baaf7b537592f7291a",
+        "calls_sha256": "6e8cfa0c9e690008de61be6054c79d7e8250a5ea87b5c5951d53e25f8a00f435",
+        "generations_sha256": "bc426caad2af8d3ff286d0f39167850073df838ac8761d8d9dbe102dfc6af5bb"
+      },
+      "diagnostic": {
+        "requests": 22,
+        "actual_model_generations": 22,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 45598,
+        "completion_tokens": 546,
+        "checked_tokens_digest": "4e0c241ed9aad193675129b0042fdac9bcb882ce0df1d09003309d87fdff5868",
+        "calls_sha256": "cf23512bc955de67e7197cc83f83d97b231512da56ddb2d9927ae3611ddb84e2",
+        "generations_sha256": "74aff3b129d57a82933f794654ff17711523e0248dce5c8c6f13475a3cf75f03"
+      }
+    },
+    "tm": {
+      "normal": {
+        "requests": 75,
+        "actual_model_generations": 75,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 127413,
+        "completion_tokens": 2870,
+        "checked_tokens_digest": "ff3238c87ef5302227480fa2a4a9cfc2b8c2f5a5570a5c85af1756f96ef8a929",
+        "calls_sha256": "0a21a1031409a173aa19ff294d34593dcd67ae57884c8ad0fe87b0c5737f124c",
+        "generations_sha256": "a8f96b6ca0513d5dba336647db85f1108723dc5fa2b10ea5b483dffe117a0b94"
+      },
+      "diagnostic": {
+        "requests": 19,
+        "actual_model_generations": 19,
+        "local_context_guards": 0,
+        "generated_prompt_tokens": 38703,
+        "completion_tokens": 483,
+        "checked_tokens_digest": "a53b45df6a7974e71e38179822f565dde66aa6b7410436e8d765f774e71bbc29",
+        "calls_sha256": "08fd462c9ed68a729f94ec63d0216eed028b63d030c17660c561f93fffeb707f",
+        "generations_sha256": "2f803c0cd4d80694e7e3c919bd3a5faf6339cfc3de594a4f4d03a8d377b5bafc"
+      }
+    }
+  },
+  "new_model_calls": 0
+}
