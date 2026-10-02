@@ -1,0 +1,10 @@
+{"event":"ssh_connected","at_utc":"2026-10-02T07:32:23.441347+00:00"}
+{"event":"file_uploaded","at_utc":"2026-10-02T07:32:26.043129+00:00","file":"d2_setup.py","bytes":6936}
+{"event":"file_uploaded","at_utc":"2026-10-02T07:32:26.642453+00:00","file":"shutdown_guard.py","bytes":2462}
+{"event":"remote_command","at_utc":"2026-10-02T07:32:27.099553+00:00","name":"bootstrap-hashes","returncode":0}
+{"event":"remote_command","at_utc":"2026-10-02T07:32:27.895434+00:00","name":"arm-guard","returncode":0}
+{"event":"setup_guard_armed","at_utc":"2026-10-02T07:32:27.902453+00:00","guard_armed":true,"booted_at_proxy":"2026-10-02T07:26:28.614980+00:00","hard_cutoff":"2026-10-02T09:26:28.614980+00:00"}
+{"event":"remote_command","at_utc":"2026-10-02T07:32:28.844742+00:00","name":"live-preflight","returncode":0}
+{"event":"live_preflight_passed","at_utc":"2026-10-02T07:32:28.848433+00:00","disk_free_bytes":36242472960,"gpu":"NVIDIA GeForce RTX 4090, 24564 MiB","python":"3.12.3","packages":{"torch":"2.8.0+cu128","transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6","accelerate":"1.10.1","peft":"0.17.1","bitsandbytes":"0.47.0"},"hourly_cny_assumed":2.18,"provider_price_independently_verified":false}
+{"event":"file_uploaded","at_utc":"2026-10-02T07:32:29.916115+00:00","file":"asset-index.json","bytes":1405}
+{"event":"file_uploaded","at_utc":"2026-10-02T07:33:39.245027+00:00","file":"assets.tar.gz","bytes":2333788}

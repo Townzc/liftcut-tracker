@@ -11,8 +11,15 @@ day re-planning and waiting for user input; they are not new model successes.
 The [bounded execution/recovery readiness](research/2026-10-02-d2-execution-readiness.md)
 is now implemented and exercised with320 CPU oracle episodes, native/token replay,
 actual local seed42 weights and simulated shutdown. After final exact-commit CI,
-merge and staging, notify the user to open the CNY5 D2 window (90-minute work,
-120-minute hard stop). There are still no D2 model results. No extra training seed or reserved evaluation. Seed44 is
+merge and staging, the first CNY5 D2 window was opened but
+[failed before model launch](research/2026-10-02-d2-startup-review.md): local
+interpreter mismatch and slow/repeated upload exhausted the setup allowance.
+Shutdown was requested; compute proxy CNY0.6463, platform billing unconfirmed.
+A maintained launcher, verified prefix resume and an additional ten-minute
+prelaunch shutdown guard are CPU-checked. Deliver final checked fixes before
+requesting a new CNY5 window; the failure cost stays separate. The GPU execution
+commit and90/120-minute limits remain fixed. There are still no D2 model results.
+No extra training seed or reserved evaluation. Seed44 is
 user-confirmed off, with a reported CNY4.60 run cost.
 Earlier stage-specific “next” statements below are historical context.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).

@@ -1,0 +1,6 @@
+{"event":"ssh_connected","at_utc":"2026-10-02T07:35:35.373187+00:00"}
+{"event":"remote_command","at_utc":"2026-10-02T07:35:36.805496+00:00","name":"bootstrap-hashes","returncode":0}
+{"event":"setup_guard_armed","at_utc":"2026-10-02T07:35:39.134139+00:00","guard_armed":true,"booted_at_proxy":"2026-10-02T07:26:28.614980+00:00","hard_cutoff":"2026-10-02T09:26:28.614980+00:00"}
+{"event":"remote_command","at_utc":"2026-10-02T07:35:39.876498+00:00","name":"live-preflight","returncode":0}
+{"event":"live_preflight_passed","at_utc":"2026-10-02T07:35:39.880560+00:00","disk_free_bytes":36237053952,"gpu":"NVIDIA GeForce RTX 4090, 24564 MiB","python":"3.12.3","packages":{"torch":"2.8.0+cu128","transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6","accelerate":"1.10.1","peft":"0.17.1","bitsandbytes":"0.47.0"},"hourly_cny_assumed":2.18,"provider_price_independently_verified":false}
+{"event":"startup_or_collector_stopped","at_utc":"2026-10-02T07:44:15.864638+00:00","error_type":"EOFError","error":"","launch_issued":false,"setup_guard_armed":true,"provider_billing_stopped":"unknown"}

@@ -1,0 +1,44 @@
+{
+  "kind": "prelaunch_operational_failure",
+  "intended_cloud_commit": "06654db287a5d51c4aad6bf57fcee40d21555afc",
+  "booted_at_proxy": "2026-10-02T07:26:28.614980+00:00",
+  "setup_guard_armed": true,
+  "hard_cutoff": "2026-10-02T09:26:28.614980+00:00",
+  "controller_launched": false,
+  "new_model_calls": 0,
+  "training_steps": 0,
+  "reserved_test_reads": 0,
+  "failure": "Local transport interpreter imported incompatible SciPy/NumPy during tokenizer preflight; corrected to pinned interpreter. Slow bulk upload then missed the original 10-minute launch allowance. No late launch or deadline extension.",
+  "local_import_error_evidence": "Operator-observed process output (session31342), not an archived raw traceback.",
+  "before_shutdown": {
+    "files": {
+      "d2_setup.py": 6936,
+      "shutdown_guard.py": 2462,
+      "asset-index.json": 1405,
+      "assets.tar.gz": 2333788,
+      "code.bundle.interrupted-before-launch": 3080192,
+      "code.bundle": 27852800
+    },
+    "controller_launch_exists": false,
+    "run_exists": false,
+    "gpu": "0 %, 0 MiB"
+  },
+  "shutdown_request_issued_at_utc": "2026-10-02T07:44:15.243434+00:00",
+  "shutdown_helper_stdout": "0\n",
+  "shutdown_ssh_channel_exit_status": -1,
+  "provider_billing_stopped": "unconfirmed",
+  "actual_cost_cny": null,
+  "hourly_cny_assumed": 2.18,
+  "proxy_to_shutdown_rpc_seconds": 1067.247658,
+  "compute_proxy_cny": 0.6462777484555556,
+  "budget_reserve_cny": 5,
+  "storage_included_in_proxy": false,
+  "evidence_sha256": {
+    "startup-b.jsonl": "1d815bb8a1b7ca2c845f7ec4fdc63176d070e3bb83bf7a96a18499f7d4bdbbb3",
+    "startup-c.jsonl": "581bb8fbda4af6f39a5b0bb03bc933b85c52687351b12c641088ca7535b26bff",
+    "closure.jsonl": "bea120bdce09c72e54aaa67145b83ba77738d42461a83d1d73e893618f35104b",
+    "arm-guard.json": "ee0af62e7e7b2868ee5866810db54e20286c6efddc3db8c7aa532cdbc64d6e48",
+    "live-preflight.json": "a928d4237abf170da28860a88328cd2c9fbf15d7e880f5c581ad5310b2dc4838"
+  },
+  "scope": "Operational failure, not a failed agent case or a D2 model result. Platform off/actual billing await user confirmation."
+}
