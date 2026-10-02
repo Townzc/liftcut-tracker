@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "seed": 44,
+  "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+  "remote_run": "/root/autodl-tmp/liftcut/runs/coverage-replication-v1-seed44-REPLACE_WINDOW",
+  "remote_ops": "/root/autodl-tmp/liftcut/runs/coverage-replication-seed44-ops-REPLACE_WINDOW",
+  "booted_at": null,
+  "hourly_cny": 2.18,
+  "ssh_host": "replace-endpoint.invalid",
+  "ssh_port": 22,
+  "ssh_user": "root",
+  "known_hosts": "~/.ssh/known_hosts",
+  "downloads": "research/liftcut-agent/outputs/autodl/coverage-replication-seed44-downloads",
+  "restored": "research/liftcut-agent/outputs/autodl/coverage-replication-seed44-restored",
+  "operations": "research/liftcut-agent/outputs/autodl/coverage-replication-seed44-operations",
+  "prepared": "research/liftcut-agent/outputs/state-coverage-v1",
+  "diagnostic": "research/liftcut-agent/outputs/state-diagnostic-v1",
+  "replication": "research/liftcut-agent/outputs/coverage-replication-r1-prepared-a",
+  "tokenizer": "research/liftcut-agent/outputs/tokenizers/cdbee75f17c01a7cc42f958dc650907174af0554",
+  "restore_python": "research/liftcut-agent/.venv/Scripts/python.exe"
+}

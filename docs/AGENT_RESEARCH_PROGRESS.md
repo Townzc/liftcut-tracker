@@ -1,6 +1,33 @@
 # Agent research progress and handoff
 
-## Current: seed43 completed and restored; seed44 pending
+## Current: seed44 local collector verified; platform confirmation and opening pending
+
+Updated2026-10-01 America/Los_Angeles (CPU logs2026-10-02 UTC). The
+[seed44 local monitor and handoff](research/2026-10-01-seed44-monitor-readiness.md)
+implements explicit seed/window bindings, early verified downloads, fresh actual
+restoration on every attempt, and genuine receipt temporary upload/readback/hash/
+atomic publication without overwriting a final receipt. Ambiguous publication,
+server acceptance, shutdown request and provider state remain separate facts.
+The cloud continues to use frozenf18; only the local collector is new.
+
+Two freshly generated replication preparations match all seven historical files;
+the eight frozen sources matchf18; two seed44 ten-phase dry-runs create no output.
+Local full regression passed359 tests before the final review fixes; all32 final
+monitor and15 receipt tests then passed. A real historical seed43 restore through
+the new orchestration verifies actual weights,124 replays and409 token records,
+followed only by simulated in-memory SFTP publication. No real SSH/GPU/model call
+or reserved-task read occurred. [Readiness evidence](../research/liftcut-agent/reports/seed44-monitor-readiness-2026-10-01.json).
+Final exact-head CI and merge must pass before launch; use the associated PR record.
+
+The next GPU work is original seed44 four-arm replication: RTX409024GB, current
+price confirmation, CNY8 reserve,150-minute work/180-minute hard deadline from
+the newly authorized opening. First obtain the already-requested previous
+AutoDL power/billing confirmation and the user's new endpoint/opening time.
+No automatic reboot/reconnect, disk expansion or change of experimental conditions.
+Old r1-seed43 heartbeat stays paused. D2/G1 remain unimplemented;48 reserved tasks
+unused; representative seed42 fixed. D2/G1 follow the plan after the R1 review.
+
+## Completed seed43 and subsequent planning (historical record)
 
 Updated 2026-10-01 UTC. The frozen `f18cb5820881a048b19b6007fc4ca231dfd64de9`
 four-arm experiment completed. Five archives, actual weights, all124 native/environment

@@ -1,0 +1,114 @@
+{
+  "version": "seed44-local-monitor-readiness-v1",
+  "project_date": "2026-10-01 America/Los_Angeles",
+  "scope": "Local CPU readiness; no SSH/GPU/model call or reserved-task read. Not a server launch authorization.",
+  "execution_commit": "f18cb5820881a048b19b6007fc4ca231dfd64de9",
+  "frozen_source_sha256": {
+    "prepare_coverage_replication.py": "7369896255a7c8a88f739c36893e59daff5426725bb10ca46eb6ea0b0848ab02",
+    "gpu_train_coverage_replication.py": "1c2d8b077d06ffcbd3cccb1cb1d62c70b3dfda6fa1a903643e0e5fb3944b146c",
+    "gpu_coverage_replication.py": "b0067346722f625031d52d5d1b3977cd0b38d3b627c62cda525b3eea2e124f21",
+    "audit_coverage_replication.py": "5cc7cf8c4d95ed524f548e47247e609ad5fc839e0ebeb9f35496e03cd5cfe31e",
+    "run_coverage_replication_window.py": "d664b70e8e8c9cbd7234da8afa88c1e8ad94198a42ac18e5b0e13c56e2373955",
+    "restore_coverage_replication.py": "4cdba2eb4be94e7ce901c241089fa3be28a530393fc694715acaac02a7508114",
+    "review_coverage_replication.py": "a74c4b414a9b614a7f2aac9985e8a67a5d0eb23772ae1cbc8eeea4bb73c419df",
+    "audit_coverage_tokens.py": "69139ee8d77890861c56256779a1bd13995b3e724204e2be535a7f5a39ff6dcc"
+  },
+  "preparation_report_sha256": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+  "preparation": {
+    "two_new_replication_preparations_identical": true,
+    "previously_tokenized_inputs_reused": true,
+    "new_tokenization_performed": false,
+    "matches_historical_inventory": true,
+    "file_sha256": {
+      "manifest.json": "76bd66338dfc64ef9f1884a68c4aca83324557b7ce1d4342fc0657417c9f0b52",
+      "seed-42/plan.json": "1fbacc96509fe4c6f42fa4470d2cb9ef74714d0b8b0652aebbce14713d60b2f4",
+      "seed-42/schedule.json": "ab6a8ab097a47a49fe641f34496b1bbbba1e20d6dceec1b30966c92f131c7087",
+      "seed-43/plan.json": "10e0db9213f96026af58e2965abcf8a3e90fe9f2c3446f03d342450f9d21c252",
+      "seed-43/schedule.json": "f4528e9e1f468b792c244a52ed36910bf437cca43e8cbb3ea8a3bfa1c97d6d5e",
+      "seed-44/plan.json": "3dbc6924e2c06445a4c04a6fb249285534e660c26c7789913dfff626fe8a9866",
+      "seed-44/schedule.json": "c227f55518b84b4f75bf0ba81cc73a79b01304859a9187ddb0c6b9912695a836"
+    },
+    "seed44_dry_runs": 2,
+    "phases": [
+      "train-s0",
+      "evaluate-s0",
+      "train-t",
+      "evaluate-t",
+      "train-m",
+      "evaluate-m",
+      "train-tm",
+      "evaluate-tm",
+      "audit-tokens",
+      "audit"
+    ],
+    "execution_output_directories_created": false,
+    "tokenizer_provenance_verified": true,
+    "elapsed_seconds": 71.775
+  },
+  "local_storage_observation": {
+    "free_bytes_before": 80147726336,
+    "free_bytes_after": 80145907712,
+    "required_bytes": 3000000000,
+    "sufficient": true
+  },
+  "regression": {
+    "full_suite_before_last_review_fixes": {
+      "passed": 359,
+      "seconds": 151.368
+    },
+    "targeted_final_monitor_tests": {
+      "passed": 32,
+      "seconds": 0.642
+    },
+    "targeted_final_receipt_tests": {
+      "passed": 15,
+      "seconds": 0.299
+    },
+    "synthetic_fault_tests_are_not_model_or_real_ssh_evidence": true,
+    "final_exact_commit_full_ci": "Required before merge; use the associated PR check records"
+  },
+  "historical_seed43_integration": {
+    "scope": "Real CPU restore of historical seed43 bytes, followed by IN-MEMORY SFTP only",
+    "seed44_executed": false,
+    "new_model_calls": 0,
+    "gpu_calls": 0,
+    "network_connections": 0,
+    "real_remote_files_written": 0,
+    "old_server_budget_extended": false,
+    "clock_scope": "Fresh five-minute local CPU test clock",
+    "archive_count": 5,
+    "archive_inventory_entries": 100,
+    "episodes_replayed": 124,
+    "historical_generations_token_verified": 409,
+    "actual_weight_files_verified": true,
+    "token_ids_verified": true,
+    "receipt_sha256": "1fbae3ce07791f2f32152ff2d663191d7728e5e96b651216ac8621094b2ad692",
+    "simulated_final_equals_actual_receipt_bytes": true,
+    "server_acceptance": "unknown",
+    "frozen_execution_sources_unchanged": true,
+    "elapsed_seconds": 40.204
+  },
+  "budget": {
+    "hourly_cny_assumed": 2.18,
+    "work_cutoff_minutes_from_boot": 150,
+    "hard_cutoff_minutes_from_boot": 180,
+    "compute_proxy_cny": 6.54,
+    "reserve_cny": 8,
+    "storage": "Separate; no automatic expansion"
+  },
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "server_connections": 0,
+  "pending_before_launch": [
+    "Final exact-commit CI and merge",
+    "User confirmation of prior platform shutdown/billing state",
+    "User opening plus current endpoint and original opening time",
+    "Live runtime/price/model/input and >=2GB result-space checks; guard liveness; <=10-minute controller start"
+  ],
+  "not_claimed": [
+    "Seed44 model results or initialization validation",
+    "D2/G1 implementation or execution",
+    "Actual remote SFTP transfer/ACK consumption/shutdown/provider billing confirmation",
+    "Three-seed replication or generalization"
+  ]
+}
