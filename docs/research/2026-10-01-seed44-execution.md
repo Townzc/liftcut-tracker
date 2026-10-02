@@ -63,5 +63,16 @@ seed43遗留的[服务端状态与关机请求](../../research/liftcut-agent/rep
 实验计划，再通过独立分支和最终精确提交的全部CI合并main。完整结果前不宣称
 三seed实验完成、候选晋升或泛化改善。
 
+## 等待GPU期间的本地分析准备
+
+新增[三seed图表工具](../../research/liftcut-agent/plot_coverage_replication_review.py)，
+读取冻结reviewer产生的JSON，分别展示每个seed的逐例收益、退步、净变化及符号
+反转，并分开原筛选门槛和必要候选保护条件。检查只涉及输入形状和算术一致性，
+明确`source_audit_performed_now=false`，不能代替真实权重和轨迹核验。
+
+15项CPU测试通过（0.100秒）；合成布局图已视觉检查，显著标明不是seed44结果，
+仅保存在ignored outputs。独立审查发现并修复了新增写入案例与总数矛盾、授权与
+记忆案例重叠两项漏洞。实际seed44图表和三seed汇总仍待完整证据，不发布合成图。
+
 学习检查：解释“同一seed四组初始权重相同、不同seed初始权重不同”各控制了什么；
 逐项说出真实恢复、服务端备份确认和平台停机分别需要什么证据。
