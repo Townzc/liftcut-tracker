@@ -3,12 +3,13 @@ import argparse
 from collections import Counter, defaultdict
 import json
 from pathlib import Path
+import sys
 
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / 'src'))
 from liftcut_agent.benchmark import read_jsonl
 from analyze_g1_results import publication_integrity
 from server_workspace import dump_new, sha256
-
-ROOT = Path(__file__).resolve().parent
 
 
 def canonical(value):

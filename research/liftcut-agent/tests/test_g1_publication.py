@@ -1,7 +1,9 @@
 """Publication must retain raw evidence and never upgrade a script or partial run."""
 from copy import deepcopy
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -36,6 +38,13 @@ def fixture(root):
 
 
 class G1PublicationTests(unittest.TestCase):
+    def test_context_cli_bootstraps_src_without_pythonpath(self):
+        env = dict(os.environ)
+        env.pop('PYTHONPATH', None)
+        result = subprocess.run([sys.executable, str(ROOT / 'analyze_g1_contexts.py'), '--help'],
+                                env=env, capture_output=True, text=True, check=True)
+        self.assertIn('--public-dir', result.stdout)
+
     def test_conditioning_state_is_separate_from_matched_target(self):
         # Same correct target; one row learns the clean decision and the other
         # learns a continuation after an invalid response. The call IDs differ.

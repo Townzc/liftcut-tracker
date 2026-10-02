@@ -133,6 +133,9 @@ tensors的新权重、同初始化、222条native/environment回放和384条真�
 重建，与已保存review一致；本地真实权重核验是独立的已完成步骤。36个冻结执行
 文件SHA保持不变。两张图已生成并检查布局，新增文档引用可解析，最终精确提交
 的远端检查和合并记录见[PR33](https://github.com/Townzc/liftcut-tracker/pull/33)。
+首轮CI成功重建真实结果，随后发现新上下文分析CLI依赖本机的PYTHONPATH设置；
+已在CLI显式加载src路径并加入清空PYTHONPATH的子进程检查。修复后10项定向检查
+及无PYTHONPATH的真实上下文重建通过，不改变数据或结论；最终全量CI另行通过才合并。
 
 ## 接下来做什么
 
