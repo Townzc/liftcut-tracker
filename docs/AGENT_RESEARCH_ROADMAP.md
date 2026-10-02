@@ -101,6 +101,10 @@ The [post-seed43 plan](research/2026-10-01-post-seed43-review-and-next-plan.md)
 details what44 can still establish, local receipt-transfer readiness, a common
 30-minute budget for new D2 memory/ID cases, conditional G1 and explicit stopping
 rules. This is a planning increment, not a new trained model or ready D2 runner.
+The subsequent [seed44 local collector increment](research/2026-10-01-seed44-monitor-readiness.md)
+now implements and fault-tests receipt publication and fresh restoration. CPU
+preparation is verified; previous platform confirmation, final CI and a new
+user-opened window remain prerequisites. No seed44 model result exists yet.
 The [research journal](research/EXPERIMENT_LOG.md) records what changed, why,
 actual outcomes and learning checkpoints. Reliable held-out and independent
 evaluation remain pending. See the

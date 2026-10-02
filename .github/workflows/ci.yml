@@ -144,6 +144,37 @@ jobs:
             test ! -e research/liftcut-agent/outputs/ci-replication-dry-$SEED
           done
 
+      - name: Check the seed44 local collector offline without creating a run or connecting
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import sys
+          root = Path("research/liftcut-agent")
+          sys.path[:0] = [str(root), str(root / "src")]
+          from monitor_coverage_replication import parse_config, offline_preflight
+          from server_workspace import sha256
+          cfg = json.loads((root / "configs/coverage-replication-monitor-seed44.example.json").read_text())
+          for key, directory in {
+              "prepared": "ci-state-coverage", "diagnostic": "ci-state-diagnostics",
+              "replication": "ci-replication-a", "tokenizer": "ci-tokenizer",
+              "downloads": "ci-monitor-downloads", "restored": "ci-monitor-restored",
+              "operations": "ci-monitor-operations",
+          }.items():
+              cfg[key] = str(root / "outputs" / directory)
+          cfg["restore_python"] = sys.executable
+          parsed = parse_config(cfg)
+          plan, report = offline_preflight(parsed)
+          assert plan["seed"] == 44 and report["gpu_calls"] == 0
+          assert not report["server_state_verified"] and not report["boot_time_configured"]
+          assert all(not parsed[k].exists() for k in ("downloads", "restored", "operations"))
+          saved = json.loads((root / "reports/seed44-monitor-readiness-2026-10-01.json").read_text())
+          assert report["execution_commit"] == saved["execution_commit"]
+          assert {name: sha256(root / name) for name in report["frozen_sources_verified"]} == saved["frozen_source_sha256"]
+          assert {name: sha256(parsed["replication"] / name) for name in saved["preparation"]["file_sha256"]} == saved["preparation"]["file_sha256"]
+          print(json.dumps(report, indent=2))
+          PY
+
       - name: Verify seed43 public evidence and reproduce its descriptive review
         run: |
           python research/liftcut-agent/publish_coverage_replication.py \
