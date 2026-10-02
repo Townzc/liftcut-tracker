@@ -1,6 +1,32 @@
 # Agent research progress and handoff
 
-## Current: original three-seed study complete; CPU D2 preparation is next
+## Current: R1 shortfalls audited; D2 CPU contracts verified
+
+Updated 2026-10-02 UTC. The [shortfall audit and D2 contracts](research/2026-10-02-shortfall-audit-and-d2-contracts.md)
+replay all144 normal traces and bind each training arm's504 decision/token pairs.
+Planning with unresolved fields occurs0/0/16 times across seeds42/43/44. Sixteen new
+CPU interventions preserve each emitted plan and request only fixture-permitted
+clarification:10 plans become valid,3 require day re-planning,3 still lack a user
+answer. These are environment interventions, not autonomous model recovery.
+
+Each arm has32 clarification targets (time/equipment/days24/4/4),1,592/41,788
+two-epoch supervised tokens, and zero decisions after any of the three audited
+validation-error families. Exposure gaps are hypotheses, not proven causal effects.
+
+D2 now has80 deterministic states with actual prefixes, ID bijections, feasibility
+proofs, reference execution/replay and first-response/continuation scoring. Two
+independent preparations match byte-for-byte; the pinned tokenizer's longest
+handoff/reference request is2,295 tokens (2,807 including output reserve). This
+is CPU contract evidence only. Fixedseed42/320 planned episodes/544 maximum calls
+and48 untouched reserved tasks remain unchanged. No new model calls or rental.
+
+Next complete the bounded GPU controller, fixed calibration, partial-result
+collection, recovery receipts and shutdown drills; **do not open a server yet**.
+The existing staged D2 reserve remainsCNY5,90-minute work/120-minute hard limit;
+G1 still requires the original D2 behavior trigger. No training intervention was
+silently substituted for G1.
+
+## Historical: original three-seed study complete; CPU D2 preparation queued
 
 Updated 2026-10-02 UTC. The frozen f18 seed44 four-arm window completed; five
 archives, actual weights, 124 native/environment episodes and 358 generations
