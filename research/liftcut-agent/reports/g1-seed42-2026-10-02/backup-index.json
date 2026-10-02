@@ -1,0 +1,38 @@
+{
+  "version": "g1-backup-v1",
+  "binding": {
+    "version": "g1-window-binding-v1",
+    "execution_plan_sha256": "53d859e6b7dd106fd36f5daf8004bb3462233ec9b5618744fb7ca57591e8d215",
+    "code_commit": "29d8d7fc6d1e749a85d93979da3b589d063f5c0d",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-02T21:12:28.452751+00:00",
+    "work_cutoff": "2026-10-02T23:42:28.452751+00:00",
+    "hard_cutoff": "2026-10-03T00:12:28.452751+00:00",
+    "test_episodes": 0
+  },
+  "evidence_kind": "model",
+  "status": "complete",
+  "archives": [
+    {
+      "part": "control",
+      "path": "training/control.tar.gz",
+      "archive": "control.tar.gz",
+      "bytes": 122408854,
+      "sha256": "249a6a3076fc747ba058d8e232b52b430e79a2d656eb31bfdbaf839487773e76"
+    },
+    {
+      "part": "repair",
+      "path": "training/repair.tar.gz",
+      "archive": "repair.tar.gz",
+      "bytes": 122434364,
+      "sha256": "3e8d9c2ad356e9eade567374612e0c3d67c16f9a617cbfcc77d9cefd1964d54d"
+    },
+    {
+      "part": "evidence",
+      "path": "evidence.tar.gz",
+      "archive": "evidence.tar.gz",
+      "bytes": 543948,
+      "sha256": "2365f87c7ca6cc6b1209ebf9b60c8675c96d693c75e36ed3a393ed9076860176"
+    }
+  ]
+}

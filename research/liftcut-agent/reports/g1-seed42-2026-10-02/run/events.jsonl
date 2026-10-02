@@ -1,0 +1,10 @@
+{"event":"phase_started","at_utc":"2026-10-02T21:18:39.219526+00:00","phase":"train-control"}
+{"event":"phase_completed","at_utc":"2026-10-02T21:43:29.205951+00:00","phase":"train-control"}
+{"event":"phase_started","at_utc":"2026-10-02T21:43:38.032463+00:00","phase":"evaluate-control"}
+{"event":"phase_completed","at_utc":"2026-10-02T21:52:50.145614+00:00","phase":"evaluate-control"}
+{"event":"phase_started","at_utc":"2026-10-02T21:52:50.146742+00:00","phase":"train-repair"}
+{"event":"phase_completed","at_utc":"2026-10-02T22:18:54.384142+00:00","phase":"train-repair"}
+{"event":"phase_started","at_utc":"2026-10-02T22:19:03.531701+00:00","phase":"evaluate-repair"}
+{"event":"phase_completed","at_utc":"2026-10-02T22:30:40.780627+00:00","phase":"evaluate-repair"}
+{"event":"phase_started","at_utc":"2026-10-02T22:30:40.781373+00:00","phase":"audit"}
+{"event":"phase_completed","at_utc":"2026-10-02T22:31:07.990712+00:00","phase":"audit"}

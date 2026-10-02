@@ -1,11 +1,21 @@
 # LiftCut-AgentLab research roadmap
 
-Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
-Current execution update: [G1 seed42 window](research/2026-10-02-g1-seed42-window.md)
-started on2026-10-02 after the new user opening and checked PR32 deployment.
-Control training is in progress under the original150/180-minute limits and CNY8
-reserve. Full paired results, recovery and gate decision are pending; no independent
-test use, additional training seed or condition change is authorized by this run.
+Updated: 2026-10-02 (project work date). Status: approved direction; milestones below are targets.
+Current result: [G1 paired pilot](research/2026-10-02-g1-complete-results.md) is complete
+and fails its original gate. Repair1/4→3/4 is outweighed by full-task9/12→2/12 and
+infeasible4/4→2/4 regressions. Both actual weights and222 native/token evaluations
+are restored; platform OFF is user-confirmed, compute estimate CNY3.00. G1 seed43/44
+and G2 stop here. No qualified adapter is promoted; reserved48 remain unused.
+
+The [next local phase](research/2026-10-02-post-g1-release-plan.md) completes the
+research evidence index, saved-trajectory demo, state-coverage audit and learning
+report. All64 clean first-validation targets moved to after-error contexts in G1;
+this post-hoc finding is a mechanism hypothesis, not a proven causal intervention.
+Publish S0 baseline and negative findings with development-only limits; independent
+evaluation is still unfinished. No server opening is needed for this local phase.
+
+The preparation/execution updates below are historical; current status is above
+and in [progress](AGENT_RESEARCH_PROGRESS.md).
 
 Latest preparation update: [G1 seed42 paired-pilot readiness](research/2026-10-02-g1-pilot-readiness.md)
 now has two identical CPU preparations, matched41,788 target tokens/126 updates per

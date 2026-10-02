@@ -52,7 +52,7 @@ def plot(source, output):
     axes[1].legend(frameon=False, ncol=2, loc='lower center', bbox_to_anchor=(.5, -.2))
     verdict = 'PASS' if report['gates']['pilot_passed'] else 'FAIL'
     fig.suptitle('G1 seed42 paired pilot | original gate: ' + verdict, x=.06, ha='left', fontsize=16)
-    fig.text(.06, .03, '222 reused development cases; one training seed. No pooled accuracy or independent generalization claim.', fontsize=9, color='#4B5563')
+    fig.text(.06, .03, '222 evaluations on 111 reused development cases; one training seed. No independent generalization claim.', fontsize=9, color='#4B5563')
     fig.subplots_adjust(left=.08, right=.98, top=.84, bottom=.27, wspace=.44)
     save(fig, output, 'g1-panels-and-paired-changes')
     plt.close(fig)
@@ -80,7 +80,7 @@ def plot(source, output):
     axes[1].set_title('Memory sensitivity after repair training', fontsize=11, loc='left')
     axes[1].legend(frameon=False)
     fig.suptitle('Training behavior and memory regression check', x=.07, ha='left', fontsize=16)
-    fig.text(.07, .035, 'Both arms: 126 steps and41,788 target tokens. Repair input tokens are about2.9% higher; loss is not repair success.', fontsize=9, color='#4B5563')
+    fig.text(.07, .035, 'Both arms: 126 steps and 41,788 target tokens. Repair input tokens are about 2.9% higher; loss is not repair success.', fontsize=9, color='#4B5563')
     fig.subplots_adjust(left=.08, right=.97, top=.8, bottom=.19, wspace=.3)
     save(fig, output, 'g1-training-and-memory')
     plt.close(fig)

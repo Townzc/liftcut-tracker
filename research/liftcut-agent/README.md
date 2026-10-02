@@ -15,6 +15,15 @@ research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
+Latest (2026-10-02): [G1 paired pilot and failure analysis](../../docs/research/2026-10-02-g1-complete-results.md)
+is complete. Repair improves1/4→3/4, but full tasks regress9/12→2/12 and true
+infeasible4/4→2/4. Original gate FAIL; no adapter promotion or further G1 seeds.
+[Public evidence and CPU reproduction](reports/g1-seed42-2026-10-02/README.md)
+include actual-restoration provenance, 222 evaluations, paired changes and the
+post-hoc conditioning-coverage audit. [Next local work](../../docs/research/2026-10-02-post-g1-release-plan.md)
+is the research index, saved-trajectory demonstration and learning report.
+Independent validation remains unfinished; the48 reserved tasks remain unused.
+
 The [follow-up design v2](../../docs/research/2026-09-29-followup-experiment-design-v2.md)
 separates seed replication, counterfactual diagnostics and conditional feedback-repair
 training. The [versioned R1 runner and handoff](../../docs/research/2026-10-01-coverage-replication-execution.md)

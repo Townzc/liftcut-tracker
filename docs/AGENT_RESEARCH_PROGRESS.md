@@ -1,21 +1,33 @@
 # Agent research progress and handoff
 
-## Current: G1 seed42 pilot running in its original bounded window
+## Current: G1 pilot complete; original gate failed, stop expanding training
 
-The user opened the server for the ready PR32 pilot. Checked cloud execution is
-`29d8d7fc6d1e749a85d93979da3b589d063f5c0d`; the earlier container boot proxy is
-2026-10-02T21:12:28.452751UTC. Work cutoff23:42:28.452751UTC and hard cutoff
-2026-10-03T00:12:28.452751UTC stay fixed, with CNY8 reserve at2.18/hour.
-Deployment and25 assets passed; control training started21:18:39UTC. A real
-21:30:48 snapshot observed61/126 steps, GPU100%, the longest-row backward probe
-passed and both hard-deadline guard processes present. No completed G1 score yet.
+Updated 2026-10-02 UTC. [G1 complete results](research/2026-10-02-g1-complete-results.md)
+publish both fresh seed42 adapters' actual restoration, 222 native/environment
+evaluations on 111 reused development cases, and 384 true generation token audits
+plus one local context refusal. Frozen execution29d8d7f and all36 source files are
+unchanged. Repair improves1/4→3/4, but full tasks9/12→2/12 and true infeasible4/4→2/4;
+D2 memory27/48→19/48. No unapproved write attempts, yet no candidate passes protections.
+G1 fails its original pilot gate. No G1 seeds43/44, G2, seed45 or held-out48 run.
 
-[Execution and delivery notes](research/2026-10-02-g1-seed42-window.md) distinguish
-actual runtime evidence from pending results. Sole collector and quiet follow-up
-continue; no second launch or condition change. Publication, paired analysis and
-plotting are being prepared outside the frozen source list. Next: actual new
-weights/222-case/token restoration, genuine receipt, automatic shutdown, then
-all gains/regressions and original gate assessment. No extra seed/API/held-out use.
+Post-hoc CPU audit found all64 clean first-validation targets moved behind error
+feedback; clean-search supervision retains only4 infeasible targets. Eight full
+tasks falsely terminate infeasible before validation. This supports a conditioning
+coverage hypothesis, not proven causality or an explanation of every memory error.
+One repeated-invalid-plan trajectory ends in a local context refusal, not OOM.
+
+Genuine recovery receipt atomically published22:34:50UTC, connection ended22:34:56.
+User subsequently confirms platform OFF; server ACK consumption/shutdown return
+remain unobserved. CNY2.9962 compute estimate uses boot-to-disconnect4947.849707s
+at2.18/hour, excludes storage, not an invoice. Per user preference, estimate from
+recorded duration rather than repeatedly requesting actual fees. No active cloud run.
+
+[Next CPU work](research/2026-10-02-post-g1-release-plan.md): research evidence index,
+saved-trajectory demonstration, data/state coverage checklist and learning report.
+S0 stays the fixed comparison baseline; publish negative findings with limits.
+Independent evaluation remains unfinished; 48 reserved tasks stay untouched.
+Current result delivery is [PR33](https://github.com/Townzc/liftcut-tracker/pull/33);
+merge only after all checks pass on the final exact head, then close the G1 heartbeat.
 
 ## Historical: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
 

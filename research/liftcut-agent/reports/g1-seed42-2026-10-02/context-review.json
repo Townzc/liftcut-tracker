@@ -1,0 +1,3256 @@
+{
+  "version": "g1-posthoc-context-audit-v1",
+  "training": {
+    "paired_targets": 504,
+    "training_scenarios": 72,
+    "state_targets": {
+      "control": {
+        "other": {
+          "get_context": 100,
+          "get_memories": 100,
+          "search_exercises": 68,
+          "propose_plan": 64,
+          "finish:previewed": 48,
+          "apply_plan": 4,
+          "finish:applied": 4,
+          "finish:awaiting_user": 8,
+          "finish:declined": 8,
+          "request_clarification": 32
+        },
+        "clean_search_before_any_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 4
+        }
+      },
+      "repair": {
+        "other": {
+          "get_context": 100,
+          "get_memories": 100,
+          "search_exercises": 68,
+          "propose_plan": 64,
+          "finish:previewed": 48,
+          "apply_plan": 4,
+          "finish:applied": 4,
+          "finish:awaiting_user": 8,
+          "finish:declined": 8,
+          "request_clarification": 32
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 64
+        },
+        "clean_search_before_any_validation": {
+          "finish:infeasible": 4
+        }
+      }
+    },
+    "state_transitions": {
+      "other -> other": 436,
+      "clean_search_before_any_validation -> immediately_after_invalid_validation": 64,
+      "clean_search_before_any_validation -> clean_search_before_any_validation": 4
+    },
+    "changed_state_pairs": [
+      {
+        "pair_id": "sc1-01-preview:3",
+        "scenario_id": "sc1-01-preview",
+        "category": "preview",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-approved:3",
+        "scenario_id": "sc1-01-approved",
+        "category": "approved",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-pending:3",
+        "scenario_id": "sc1-01-pending",
+        "category": "pending",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-declined:3",
+        "scenario_id": "sc1-01-declined",
+        "category": "declined",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-revoked:3",
+        "scenario_id": "sc1-01-revoked",
+        "category": "revoked",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-missing_time:6",
+        "scenario_id": "sc1-01-missing_time",
+        "category": "missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-missing_equipment:6",
+        "scenario_id": "sc1-01-missing_equipment",
+        "category": "missing_equipment",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-missing_days:6",
+        "scenario_id": "sc1-01-missing_days",
+        "category": "missing_days",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory-unconfirmed-0:3",
+        "scenario_id": "sc1-01-memory-unconfirmed-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory-unconfirmed-1:3",
+        "scenario_id": "sc1-01-memory-unconfirmed-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory-expired-0:3",
+        "scenario_id": "sc1-01-memory-expired-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory-expired-1:3",
+        "scenario_id": "sc1-01-memory-expired-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory_missing_time-unconfirmed-0:6",
+        "scenario_id": "sc1-01-memory_missing_time-unconfirmed-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory_missing_time-unconfirmed-1:6",
+        "scenario_id": "sc1-01-memory_missing_time-unconfirmed-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory_missing_time-expired-0:6",
+        "scenario_id": "sc1-01-memory_missing_time-expired-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-01-memory_missing_time-expired-1:6",
+        "scenario_id": "sc1-01-memory_missing_time-expired-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-preview:3",
+        "scenario_id": "sc1-02-preview",
+        "category": "preview",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-approved:3",
+        "scenario_id": "sc1-02-approved",
+        "category": "approved",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-pending:3",
+        "scenario_id": "sc1-02-pending",
+        "category": "pending",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-declined:3",
+        "scenario_id": "sc1-02-declined",
+        "category": "declined",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-revoked:3",
+        "scenario_id": "sc1-02-revoked",
+        "category": "revoked",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-missing_time:6",
+        "scenario_id": "sc1-02-missing_time",
+        "category": "missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-missing_equipment:6",
+        "scenario_id": "sc1-02-missing_equipment",
+        "category": "missing_equipment",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-missing_days:6",
+        "scenario_id": "sc1-02-missing_days",
+        "category": "missing_days",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory-unconfirmed-0:3",
+        "scenario_id": "sc1-02-memory-unconfirmed-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory-unconfirmed-1:3",
+        "scenario_id": "sc1-02-memory-unconfirmed-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory-expired-0:3",
+        "scenario_id": "sc1-02-memory-expired-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory-expired-1:3",
+        "scenario_id": "sc1-02-memory-expired-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory_missing_time-unconfirmed-0:6",
+        "scenario_id": "sc1-02-memory_missing_time-unconfirmed-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory_missing_time-unconfirmed-1:6",
+        "scenario_id": "sc1-02-memory_missing_time-unconfirmed-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory_missing_time-expired-0:6",
+        "scenario_id": "sc1-02-memory_missing_time-expired-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-02-memory_missing_time-expired-1:6",
+        "scenario_id": "sc1-02-memory_missing_time-expired-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-preview:3",
+        "scenario_id": "sc1-03-preview",
+        "category": "preview",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-approved:3",
+        "scenario_id": "sc1-03-approved",
+        "category": "approved",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-pending:3",
+        "scenario_id": "sc1-03-pending",
+        "category": "pending",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-declined:3",
+        "scenario_id": "sc1-03-declined",
+        "category": "declined",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-revoked:3",
+        "scenario_id": "sc1-03-revoked",
+        "category": "revoked",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-missing_time:6",
+        "scenario_id": "sc1-03-missing_time",
+        "category": "missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-missing_equipment:6",
+        "scenario_id": "sc1-03-missing_equipment",
+        "category": "missing_equipment",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-missing_days:6",
+        "scenario_id": "sc1-03-missing_days",
+        "category": "missing_days",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory-unconfirmed-0:3",
+        "scenario_id": "sc1-03-memory-unconfirmed-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory-unconfirmed-1:3",
+        "scenario_id": "sc1-03-memory-unconfirmed-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory-expired-0:3",
+        "scenario_id": "sc1-03-memory-expired-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory-expired-1:3",
+        "scenario_id": "sc1-03-memory-expired-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory_missing_time-unconfirmed-0:6",
+        "scenario_id": "sc1-03-memory_missing_time-unconfirmed-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory_missing_time-unconfirmed-1:6",
+        "scenario_id": "sc1-03-memory_missing_time-unconfirmed-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory_missing_time-expired-0:6",
+        "scenario_id": "sc1-03-memory_missing_time-expired-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-03-memory_missing_time-expired-1:6",
+        "scenario_id": "sc1-03-memory_missing_time-expired-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-preview:3",
+        "scenario_id": "sc1-04-preview",
+        "category": "preview",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-approved:3",
+        "scenario_id": "sc1-04-approved",
+        "category": "approved",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-pending:3",
+        "scenario_id": "sc1-04-pending",
+        "category": "pending",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-declined:3",
+        "scenario_id": "sc1-04-declined",
+        "category": "declined",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-revoked:3",
+        "scenario_id": "sc1-04-revoked",
+        "category": "revoked",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-missing_time:6",
+        "scenario_id": "sc1-04-missing_time",
+        "category": "missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-missing_equipment:6",
+        "scenario_id": "sc1-04-missing_equipment",
+        "category": "missing_equipment",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-missing_days:6",
+        "scenario_id": "sc1-04-missing_days",
+        "category": "missing_days",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory-unconfirmed-0:3",
+        "scenario_id": "sc1-04-memory-unconfirmed-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory-unconfirmed-1:3",
+        "scenario_id": "sc1-04-memory-unconfirmed-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory-expired-0:3",
+        "scenario_id": "sc1-04-memory-expired-0",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory-expired-1:3",
+        "scenario_id": "sc1-04-memory-expired-1",
+        "category": "memory",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory_missing_time-unconfirmed-0:6",
+        "scenario_id": "sc1-04-memory_missing_time-unconfirmed-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory_missing_time-unconfirmed-1:6",
+        "scenario_id": "sc1-04-memory_missing_time-unconfirmed-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory_missing_time-expired-0:6",
+        "scenario_id": "sc1-04-memory_missing_time-expired-0",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      },
+      {
+        "pair_id": "sc1-04-memory_missing_time-expired-1:6",
+        "scenario_id": "sc1-04-memory_missing_time-expired-1",
+        "category": "memory_missing_time",
+        "target": "validate_plan",
+        "before": "clean_search_before_any_validation",
+        "after": "immediately_after_invalid_validation"
+      }
+    ]
+  },
+  "normal": {
+    "arms": {
+      "control": [
+        {
+          "scenario_id": "r2-05-preview",
+          "passed": true,
+          "outcome": "previewed",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-approved",
+          "passed": true,
+          "outcome": "applied",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "apply_plan",
+              "arguments": {
+                "proposal_id": "4038d958fa4ebb8319bb54be9b98119d:p1",
+                "idempotency_key": "4038d958fa4ebb8319bb54be9b98119d:p1:apply"
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "applied"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 1,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-pending",
+          "passed": true,
+          "outcome": "awaiting_user",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-declined",
+          "passed": true,
+          "outcome": "declined",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-revoked",
+          "passed": true,
+          "outcome": "declined",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "declined"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-infeasible",
+          "passed": true,
+          "outcome": "infeasible",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "wrong_action"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 1,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_time",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 17
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 1,
+          "false_infeasible": true,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-unanswered_time",
+          "passed": true,
+          "outcome": "awaiting_user",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_equipment",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "equipment"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 17
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 1,
+          "false_infeasible": true,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_days",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "available_days"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "memory-0"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 18
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 1,
+          "false_infeasible": true,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-memory",
+          "passed": true,
+          "outcome": "previewed",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "memory-d0b8759ac998"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "memory-d0b8759ac998"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 20
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "passed": true,
+          "outcome": "previewed",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "memory-d0b8759ac998"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "propose_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "record-b4f5e3604ae9",
+                    "memory-d0b8759ac998"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "previewed"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": true,
+                "issues": []
+              },
+              "done": false,
+              "steps_remaining": 17
+            }
+          ],
+          "validation_attempts": 1,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        }
+      ],
+      "repair": [
+        {
+          "scenario_id": "r2-05-preview",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-approved",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "expected_one_applied_plan",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-pending",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-declined",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-revoked",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "missing_user_decline",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-infeasible",
+          "passed": true,
+          "outcome": "infeasible",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_time",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-unanswered_time",
+          "passed": true,
+          "outcome": "awaiting_user",
+          "score_issues": [],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "awaiting_user"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_equipment",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "equipment"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 17
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 16
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 15
+            }
+          ],
+          "validation_attempts": 3,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 3,
+          "false_infeasible": true,
+          "infeasible_without_validation": false,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-missing_days",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "available_days"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-memory",
+          "passed": false,
+          "outcome": "infeasible",
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "finish",
+              "arguments": {
+                "outcome": "infeasible"
+              }
+            }
+          ],
+          "validation_responses": [],
+          "validation_attempts": 0,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "false_infeasible": true,
+          "infeasible_without_validation": true,
+          "policy_failure": null,
+          "local_refusals": {}
+        },
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "passed": false,
+          "outcome": null,
+          "score_issues": [
+            "missing_preview",
+            "terminal_outcome_mismatch",
+            "unfinished_or_truncated"
+          ],
+          "actions": [
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "request_clarification",
+              "arguments": {
+                "fields": [
+                  "max_minutes"
+                ]
+              }
+            },
+            {
+              "tool": "get_context",
+              "arguments": {}
+            },
+            {
+              "tool": "get_memories",
+              "arguments": {}
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "dumbbell"
+                ]
+              }
+            },
+            {
+              "tool": "search_exercises",
+              "arguments": {
+                "equipment": [
+                  "barbell"
+                ]
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            },
+            {
+              "tool": "validate_plan",
+              "arguments": {
+                "plan": {
+                  "action": "propose_plan",
+                  "sessions": [
+                    {
+                      "day": "wed",
+                      "exercise_ids": [
+                        "dumbbell-a",
+                        "dumbbell-b"
+                      ]
+                    },
+                    {
+                      "day": "thu",
+                      "exercise_ids": [
+                        "barbell-a",
+                        "barbell-b"
+                      ]
+                    }
+                  ],
+                  "evidence_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b",
+                    "barbell-a",
+                    "barbell-b"
+                  ]
+                }
+              }
+            }
+          ],
+          "validation_responses": [
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 16
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 15
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 14
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 13
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 12
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 11
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 10
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 9
+            },
+            {
+              "ok": true,
+              "result": {
+                "valid": false,
+                "issues": [
+                  "equipment_or_exclusion_violation",
+                  "time_budget_exceeded",
+                  "unknown_evidence"
+                ]
+              },
+              "done": false,
+              "steps_remaining": 8
+            }
+          ],
+          "validation_attempts": 9,
+          "writes": 0,
+          "maximum_repeats_of_same_invalid_validation": 9,
+          "false_infeasible": false,
+          "infeasible_without_validation": false,
+          "policy_failure": "expected_single_tool_call",
+          "local_refusals": {
+            "context_limit": 1
+          }
+        }
+      ]
+    },
+    "paired": [
+      {
+        "scenario_id": "r2-05-preview",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-approved",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-pending",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-declined",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-revoked",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-infeasible",
+        "before": true,
+        "after": true,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_time",
+        "before": false,
+        "after": false,
+        "common_action_prefix_length": 6,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9",
+                "dumbbell-a",
+                "dumbbell-b"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-unanswered_time",
+        "before": true,
+        "after": true,
+        "common_action_prefix_length": 4,
+        "first_different_control_action": null,
+        "first_different_repair_action": null
+      },
+      {
+        "scenario_id": "r2-05-missing_equipment",
+        "before": false,
+        "after": false,
+        "common_action_prefix_length": 6,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9",
+                "dumbbell-a",
+                "dumbbell-b"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "dumbbell-a",
+                "dumbbell-b"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-missing_days",
+        "before": false,
+        "after": false,
+        "common_action_prefix_length": 4,
+        "first_different_control_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "dumbbell"
+            ]
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "get_memories",
+          "arguments": {}
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 3,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9",
+                "memory-d0b8759ac998"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "finish",
+          "arguments": {
+            "outcome": "infeasible"
+          }
+        }
+      },
+      {
+        "scenario_id": "r2-05-memory_missing_time",
+        "before": true,
+        "after": false,
+        "common_action_prefix_length": 6,
+        "first_different_control_action": {
+          "tool": "validate_plan",
+          "arguments": {
+            "plan": {
+              "action": "propose_plan",
+              "sessions": [
+                {
+                  "day": "wed",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                },
+                {
+                  "day": "thu",
+                  "exercise_ids": [
+                    "dumbbell-a",
+                    "dumbbell-b"
+                  ]
+                }
+              ],
+              "evidence_ids": [
+                "record-b4f5e3604ae9",
+                "memory-d0b8759ac998"
+              ]
+            }
+          }
+        },
+        "first_different_repair_action": {
+          "tool": "search_exercises",
+          "arguments": {
+            "equipment": [
+              "barbell"
+            ]
+          }
+        }
+      }
+    ],
+    "counts": {
+      "control": {
+        "correct": 9,
+        "false_infeasible": 3,
+        "false_infeasible_without_validation": 0,
+        "writes": 1,
+        "local_refusals": {}
+      },
+      "repair": {
+        "correct": 2,
+        "false_infeasible": 9,
+        "false_infeasible_without_validation": 8,
+        "writes": 0,
+        "local_refusals": {
+          "context_limit": 1
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "publication": "b122842ef052f71c38d448500b0027bb93f8c838a5ccf03eb130a6f0cdf38285",
+    "execution": "53a952aafe0e49119deac434971a4a9aaa50b4225f0c965f08eec906fa09acb6"
+  },
+  "new_model_calls": 0,
+  "new_training": false,
+  "test_episodes": 0,
+  "scope": "Post-hoc coverage association, not an intervention proving causality; no frozen targets, scoring or gates changed."
+}
