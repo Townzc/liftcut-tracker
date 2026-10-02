@@ -115,7 +115,7 @@ def analyze(prepared):
     dev = {r["id"]: r for r in original("dev")}
     preparation = ROOT / "reports/state-coverage-preparation-v1.json"
     inventory = read(preparation)["files"]
-    sources = {str(preparation.relative_to(ROOT)): sha(preparation),
+    sources = {preparation.relative_to(ROOT).as_posix(): sha(preparation),
                **{name: sha(ROOT / name) for name in ("benchmark/catalog.json", "benchmark/recovery-v2/dev.jsonl")}}
     training = {}
     for arm in ARMS:
@@ -128,19 +128,19 @@ def analyze(prepared):
         published = ROOT / "reports" / folder
         manifest = published / "publication-manifest.json"
         inv = read(manifest)["files"]
-        sources[str(manifest.relative_to(ROOT))] = sha(manifest)
+        sources[manifest.relative_to(ROOT).as_posix()] = sha(manifest)
         arms = {}
         for arm in ARMS:
             training_name = f"training/{arm}/report.json"
             training_path = checked(published / training_name, inv[training_name])
-            sources[str(training_path.relative_to(ROOT))] = sha(training_path)
+            sources[training_path.relative_to(ROOT).as_posix()] = sha(training_path)
             processed = read(training_path)["processed"]
             if (processed["decisions"] != training[arm]["two_epoch_uses"] or
                     processed["supervised_tokens"] != training[arm]["two_epoch_target_tokens"]):
                 raise ValueError("recorded training exposure differs from the two-epoch pool audit")
             name = f"evaluation/{arm}/normal/episodes.jsonl"
             path = checked(published / name, inv[name])
-            sources[str(path.relative_to(ROOT))] = sha(path)
+            sources[path.relative_to(ROOT).as_posix()] = sha(path)
             episodes = read_jsonl(path)
             if len(episodes) != 12 or {e["scenario_id"] for e in episodes} != set(dev):
                 raise ValueError("normal development denominator mismatch")

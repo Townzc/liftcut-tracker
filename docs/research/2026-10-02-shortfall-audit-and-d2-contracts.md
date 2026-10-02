@@ -133,6 +133,11 @@ python -m unittest discover -s research/liftcut-agent/tests -p test_agent_shortf
 输出目录必须全新；用`--verify-only --output-dir ...`验证已有准备产物。CI使用固定
 tokenizer依赖重建两份准备目录并比较，CPU测试不需要torch/GPU。
 
+本地全量401项回归通过，随后新增的评分边界另行通过专项验证。首次Linux CI已
+通过403项回归，但发现来源清单在Windows使用反斜杠、Linux使用斜杠，导致审计
+报告比较失败；已统一为仓库相对POSIX路径并增加可移植性回归，不改变实验数字。
+以[PR27](https://github.com/Townzc/liftcut-tracker/pull/27)最终精确提交的全部检查作为合并依据。
+
 学习时手工跟两条：
 
 - seed44 S0 memory_missing_time：找到正确dumbbell检索、max_minutes仍空、wrong_action；

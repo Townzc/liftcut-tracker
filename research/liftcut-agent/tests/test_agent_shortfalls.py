@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -11,6 +12,14 @@ from state_coverage import original
 
 
 class ShortfallAuditTests(unittest.TestCase):
+    def test_public_source_inventory_is_relative_and_platform_independent(self):
+        report = json.loads((ROOT / "reports/agent-shortfalls-2026-10-02.json").read_text(encoding="utf-8"))
+        for name in report["source_sha256"]:
+            self.assertNotIn("\\", name)
+            self.assertNotIn(":", name)
+            self.assertFalse(name.startswith("/"))
+            self.assertNotIn("..", name.split("/"))
+
     def test_training_rows_require_train_and_exact_token_pair(self):
         row = {"split": "train", "source_episode_id": "a", "source_call_index": 2, "category": "missing_time",
             "assistant_target_index": 1, "messages": [{"role": "tool", "content": '{"result":{"issues":["wrong_action"]}}'},
