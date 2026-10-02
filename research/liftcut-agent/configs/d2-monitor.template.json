@@ -1,0 +1,19 @@
+{
+  "version": "d2-monitor-v1",
+  "execution_commit": "0000000000000000000000000000000000000000",
+  "remote_run": "/root/autodl-tmp/liftcut/runs/d2-run-OPENING_ID",
+  "remote_ops": "/root/autodl-tmp/liftcut/runs/d2-ops-OPENING_ID",
+  "booted_at": null,
+  "hourly_cny": 2.18,
+  "ssh_host": "not-configured.invalid",
+  "ssh_port": 22,
+  "ssh_user": "root",
+  "prepared": "research/liftcut-agent/outputs/d2-prepared-a",
+  "tokenizer": "research/liftcut-agent/outputs/tokenizers/cdbee75f17c01a7cc42f958dc650907174af0554",
+  "adapters": "research/liftcut-agent/outputs/autodl/state-coverage-v1-restored/run/training",
+  "restore_python": "research/liftcut-agent/.venv/Scripts/python.exe",
+  "known_hosts": "~/.ssh/known_hosts",
+  "downloads": "research/liftcut-agent/outputs/autodl/d2-OPENING_ID-downloads",
+  "restored": "research/liftcut-agent/outputs/autodl/d2-OPENING_ID-restored",
+  "operations": "research/liftcut-agent/outputs/autodl/d2-OPENING_ID-operations"
+}

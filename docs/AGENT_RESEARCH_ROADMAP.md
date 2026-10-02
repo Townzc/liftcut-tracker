@@ -8,8 +8,11 @@ passes all-seed candidate guards. [Next work](research/2026-10-02-post-r1-next-p
 has completed the [CPU shortfall audit and80 D2 contracts](research/2026-10-02-shortfall-audit-and-d2-contracts.md).
 Sixteen environment-only clarification interventions separate missing information,
 day re-planning and waiting for user input; they are not new model successes.
-Next finish bounded GPU orchestration/recovery readiness on fixed seed42 weights;
-do not open a server yet. No extra training seed or reserved evaluation. Seed44 is
+The [bounded execution/recovery readiness](research/2026-10-02-d2-execution-readiness.md)
+is now implemented and exercised with320 CPU oracle episodes, native/token replay,
+actual local seed42 weights and simulated shutdown. After final exact-commit CI,
+merge and staging, notify the user to open the CNY5 D2 window (90-minute work,
+120-minute hard stop). There are still no D2 model results. No extra training seed or reserved evaluation. Seed44 is
 user-confirmed off, with a reported CNY4.60 run cost.
 Earlier stage-specific “next” statements below are historical context.
 Current results and the next task live in [research progress](AGENT_RESEARCH_PROGRESS.md).

@@ -1,0 +1,279 @@
+{
+  "version": "d2-operating-drill-v1",
+  "execution_contract_digest": "31d6a91b4613cb4b78c2db394387091e4aa66b3929f1e41dbd22faca464e6eee",
+  "evidence_kind": "scripted_contract",
+  "model_result": false,
+  "new_model_calls": 0,
+  "gpu_calls": 0,
+  "real_shutdown_calls": 0,
+  "test_episodes": 0,
+  "episodes_replayed": 320,
+  "scripted_native_responses": 352,
+  "real_token_ids_reconstructed": true,
+  "budget_forecasts_recomputed": 272,
+  "actual_seed42_adapter_bytes_verified": true,
+  "full_restore_and_local_receipt_consumption": true,
+  "reference_panel_counts": {
+    "s0": {
+      "memory": {
+        "total": 48,
+        "correct": 48,
+        "defer": 0,
+        "missing": 0
+      },
+      "identity": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "consent": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "repair": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      },
+      "infeasible": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      }
+    },
+    "t": {
+      "memory": {
+        "total": 48,
+        "correct": 48,
+        "defer": 0,
+        "missing": 0
+      },
+      "identity": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "consent": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "repair": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      },
+      "infeasible": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      }
+    },
+    "m": {
+      "memory": {
+        "total": 48,
+        "correct": 48,
+        "defer": 0,
+        "missing": 0
+      },
+      "identity": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "consent": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "repair": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      },
+      "infeasible": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      }
+    },
+    "tm": {
+      "memory": {
+        "total": 48,
+        "correct": 48,
+        "defer": 0,
+        "missing": 0
+      },
+      "identity": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "consent": {
+        "total": 12,
+        "correct": 12,
+        "defer": 0,
+        "missing": 0
+      },
+      "repair": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      },
+      "infeasible": {
+        "total": 4,
+        "correct": 4,
+        "defer": 0,
+        "missing": 0
+      }
+    }
+  },
+  "sftp_tested_by_this_drill": false,
+  "paired": {
+    "s0->t": {
+      "memory": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "identity": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "consent": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "repair": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      }
+    },
+    "s0->m": {
+      "memory": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "identity": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "consent": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "repair": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      }
+    },
+    "m->tm": {
+      "memory": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "identity": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "consent": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "repair": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      }
+    },
+    "t->tm": {
+      "memory": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "identity": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "consent": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "repair": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      },
+      "infeasible": {
+        "gains": [],
+        "losses": [],
+        "net": 0
+      }
+    }
+  },
+  "g1": {
+    "families": {
+      "unknown_evidence": {
+        "behavior_trigger": false,
+        "cases": [
+          "d2-repair-unknown_evidence-v0",
+          "d2-repair-unknown_evidence-v1"
+        ]
+      },
+      "session_count_mismatch": {
+        "behavior_trigger": false,
+        "cases": [
+          "d2-repair-session_count_mismatch-v0",
+          "d2-repair-session_count_mismatch-v1"
+        ]
+      }
+    },
+    "any_behavior_trigger": false,
+    "training_authorized": false,
+    "next_gate": "Paired-data audit and separate pilot budget; no automatic training"
+  },
+  "scope": "CPU oracle text and synthetic timings, not model latency/accuracy. SFTP faults are separate unit tests; live startup remains conditional."
+}

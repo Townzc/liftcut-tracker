@@ -354,6 +354,24 @@ jobs:
           diff -r research/liftcut-agent/outputs/ci-d2-a research/liftcut-agent/outputs/ci-d2-b
           python research/liftcut-agent/prepare_counterfactual_diagnostics.py --output-dir research/liftcut-agent/outputs/ci-d2-a --verify-only
 
+      - name: Verify D2 operating contract and native CPU drill without weights or inference
+        run: |
+          python research/liftcut-agent/prepare_d2_execution.py --prepared-dir research/liftcut-agent/outputs/ci-d2-a
+          python research/liftcut-agent/drill_d2_execution.py --prepared-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-d2-drill
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('research/liftcut-agent')
+          observed = json.loads((p / 'outputs/ci-d2-drill/drill-report.json').read_text())
+          expected = json.loads((p / 'reports/d2-operating-drill-2026-10-02.json').read_text())
+          # CI reconstructs actual tokenizer/environment, but has no private
+          # adapter files and must never claim a complete restoration receipt.
+          expected['actual_seed42_adapter_bytes_verified'] = False
+          expected['full_restore_and_local_receipt_consumption'] = False
+          assert observed == expected
+          assert not list((p / 'outputs/ci-d2-drill').rglob('off-instance-backup.json'))
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

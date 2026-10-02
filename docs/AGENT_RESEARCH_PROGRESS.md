@@ -1,6 +1,31 @@
 # Agent research progress and handoff
 
-## Current: R1 shortfalls audited; D2 CPU contracts verified
+## Current: D2 execution and recovery ready for the bounded server window
+
+Updated 2026-10-02 UTC. The [D2 operating readiness record](research/2026-10-02-d2-execution-readiness.md)
+and [operator runbook](research/D2_RUNBOOK.md) now cover fixed calibration, actual
+adapter/runtime binding, boot-relative deadlines, partial denominators, staged Git
+deployment, per-arm collection, independent restore and real receipt publication.
+The final checked PR commit is the cloud execution input; merge only after every
+check passes. Historical f18 R1 code and evidence remain unchanged.
+
+The CPU operating drill replays320 episodes and352 scripted native responses with
+the real pinned tokenizer; it independently recomputes272 forecasts and rechecks
+the original eight adapter files (528,755,732 bytes). Complete archive restoration
+and local receipt consumption use the actual restorer, with a stub shutdown.
+These are oracle contract checks, **zero new model calls**, not improved agent
+scores. CI metadata mode has no weights and cannot emit a complete restore ACK.
+
+Next: notify the user to open the same4090 for the fixedseed42 four-arm D2 window,
+after final GitHub checks/merge and local staging. Reserve CNY5 at2.18/hour,
+90-minute work/120-minute hard cutoff from original opening; no expansion,
+downloads, new training, paid API, seed45 or reserved-task evaluation. Remote disk,
+assets and runtime are still conditional live checks because the server is off.
+After launch, collect complete/partial evidence, shut down, review paired gains and
+regressions and only then assess the unchanged G1 gate. Platform billing remains
+distinct from an SSH disconnect or successful shutdown request.
+
+## Historical: R1 shortfalls audited; D2 CPU contracts verified
 
 Updated 2026-10-02 UTC. The [shortfall audit and D2 contracts](research/2026-10-02-shortfall-audit-and-d2-contracts.md)
 replay all144 normal traces and bind each training arm's504 decision/token pairs.
