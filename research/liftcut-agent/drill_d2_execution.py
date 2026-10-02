@@ -17,8 +17,7 @@ from gpu_counterfactual_diagnostics import manifest_for
 from audit_counterfactual_diagnostics import audit
 from restore_counterfactual_diagnostics import restore_d2
 from d2_receipt_transfer import validate_index, validate_receipt
-from run_counterfactual_window import finalize, observed_progress
-from run_recovery_window import archive_run
+from run_counterfactual_window import execute_phases, finalize, observed_progress
 from prepare_counterfactual_diagnostics import load_tokenizer
 from liftcut_agent.benchmark import load_catalog
 from liftcut_agent.model_policy import Reply, encode
@@ -78,7 +77,14 @@ def drill(output, prepared, tokenizer_dir, adapters=None):
     dump_new(run / "opening.json", {"binding": bind, "booted_at_proxy": boot, "budget": BUDGET,
                                     "evidence_kind": "scripted_contract", "started_at_utc": clock.now().isoformat()})
     all_timings, loads = [], []
-    for arm in ARMS:
+    result = None
+    def oracle_phase(name, argv, _output, _work, _clock):
+        nonlocal result
+        if name == "audit":
+            result = audit(run, prepared, tokenizer_dir, adapters, metadata_only=adapters is None, allow_scripted=True)
+            dump_new(run / "comparison.json", result)
+            return
+        arm = name.removeprefix("evaluate-")
         directory = run / "evaluation" / arm
         dump_new(directory / "manifest.json", manifest_for(plan, bind, arm, "scripted_contract"))
         dump_new(directory / "load.json", {"seconds": 0., "runtime": {"scripted_contract": True},
@@ -100,16 +106,12 @@ def drill(output, prepared, tokenizer_dir, adapters=None):
                 on_estimate=lambda row: append_json(streams["estimates"], row))
         assert report["completed_attempts"] == 80 and report["stop_reason"] is None
         dump_new(directory / "report.json", report)
-        backup = archive_run(directory)
-        with (run / "early-index.jsonl").open("a", encoding="utf-8", newline="\n") as stream:
-            append_json(stream, {"event": "arm_archive", "arm": arm, "binding": bind,
-                "path": "evaluation/" + backup["archive"], **backup, "at_utc": clock.now().isoformat()})
         all_timings.extend(tag_timings(cases, episodes, timings))
         loads.append(0.)
-    result = audit(run, prepared, tokenizer_dir, adapters, metadata_only=adapters is None, allow_scripted=True)
+    execute_phases([*(('evaluate-' + arm, []) for arm in ARMS), ('audit', [])], run, bind,
+                   aware(bind['work_cutoff']), clock, phase_runner=oracle_phase)
     if any(p["correct"] != p["total"] for arm in result["arms"].values() for p in arm["panels"].values()):
         raise AssertionError("native oracle contract is not correct for every registered case")
-    dump_new(run / "comparison.json", result)
     dump_new(run / "presence.json", observed_progress(run, cases))
     receipt, shutdowns = None, []
     if adapters is not None:
@@ -142,6 +144,7 @@ def drill(output, prepared, tokenizer_dir, adapters=None):
         "episodes_replayed": 320, "scripted_native_responses": len(all_timings), "real_token_ids_reconstructed": True,
         "budget_forecasts_recomputed": 272, "actual_seed42_adapter_bytes_verified": adapters is not None,
         "full_restore_and_local_receipt_consumption": receipt is not None,
+        "production_phase_and_early_archive_path_exercised": True,
         "reference_panel_counts": {a: result["arms"][a]["panels"] for a in ARMS},
         "sftp_tested_by_this_drill": False, "paired": result["paired"], "g1": result["g1"],
         "scope": "CPU oracle text and synthetic timings, not model latency/accuracy. SFTP faults are separate unit tests; live startup remains conditional."}

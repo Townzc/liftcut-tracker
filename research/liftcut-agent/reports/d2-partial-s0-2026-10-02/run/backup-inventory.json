@@ -1,0 +1,79 @@
+{
+  "files": [
+    {
+      "path": "evaluate-s0.log",
+      "bytes": 617,
+      "sha256": "e3e5e46b91b1265341f61bb8dd5b605466b2a2f2099aa60b8cf5be8a1b31f4a7"
+    },
+    {
+      "path": "evaluation/s0/backup-inventory.json",
+      "bytes": 1062,
+      "sha256": "7bf78a5245b45708c9eff65d3bcb8d6383a36669c0b23d157357b9ecd80336b2"
+    },
+    {
+      "path": "evaluation/s0/backup-ready.json",
+      "bytes": 128,
+      "sha256": "51c3b62bb5c81d249e8b867e1120b3a29562235b66b4aad776ad69d46e8932c3"
+    },
+    {
+      "path": "evaluation/s0/calls.jsonl",
+      "bytes": 721933,
+      "sha256": "48c4433e93fb43922f09b8258a7370d1588e195c4be1180ce0c0bdc25d635fb7"
+    },
+    {
+      "path": "evaluation/s0/episodes.jsonl",
+      "bytes": 3553124,
+      "sha256": "b21c1b5d89d794d20893e140786c00774e6dfe27536a2b8398c50f7d3ed7c64f"
+    },
+    {
+      "path": "evaluation/s0/estimates.jsonl",
+      "bytes": 46612,
+      "sha256": "d3b3c6b69bf4d6f2aa9bef3ed51883489524a97cc9996214e96bf4145ae98b5f"
+    },
+    {
+      "path": "evaluation/s0/generations.jsonl",
+      "bytes": 34767,
+      "sha256": "797df30480ac606811d5a4a28221948bc9fdbb360a07df66fece462b9430f762"
+    },
+    {
+      "path": "evaluation/s0/load.json",
+      "bytes": 459,
+      "sha256": "844d8e30d8ff6e3bc5d6d0a5a4f701b923e5814e88833a299d04a1ac6ddf292d"
+    },
+    {
+      "path": "evaluation/s0/manifest.json",
+      "bytes": 7788,
+      "sha256": "df40ac54534fb6cc099ee1a67887e5a594b2430e07ef4b291bf22a5b7d0b75a2"
+    },
+    {
+      "path": "evaluation/s0/report.json",
+      "bytes": 82783,
+      "sha256": "bc5a3c353096ced504e02c765ed30584ecb2d0cafb728351c6c30400c9ebd14f"
+    },
+    {
+      "path": "evaluation/s0.tar.gz",
+      "bytes": 168065,
+      "sha256": "9d2f3cea79b98991d0fa3a27eb41f28357074dd668cba822f8eaf3295f96d720"
+    },
+    {
+      "path": "events.jsonl",
+      "bytes": 186,
+      "sha256": "9b2146d07574bc8f6a9bd756f0b4eb9c7d3327c68a4981d98c140a86c8482ff6"
+    },
+    {
+      "path": "opening.json",
+      "bytes": 1007,
+      "sha256": "c91c33ed4fa4b0e0b2af425c91777f91e22f4f548a668a654b0d3d6664670b60"
+    },
+    {
+      "path": "presence.json",
+      "bytes": 57240,
+      "sha256": "dd42c8d1739edf1f7786b727162e103cd50078f129b391172bda6eca0dcdf15e"
+    },
+    {
+      "path": "window-status.json",
+      "bytes": 852,
+      "sha256": "2ece2f94c9807d142a7f02005db70aafa333c36bb6aa511932fed2a9d945a832"
+    }
+  ]
+}

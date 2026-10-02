@@ -3,3 +3,4 @@ research/liftcut-agent/** text eol=lf
 research/liftcut-agent/**/*.png -text
 # Preserve captured event bytes, including the Windows shutdown observer's CRLF.
 research/liftcut-agent/reports/d2-startup-failure-2026-10-02/*.jsonl -text whitespace=cr-at-eol
+research/liftcut-agent/reports/d2-partial-s0-2026-10-02/**/*.tar.gz -text

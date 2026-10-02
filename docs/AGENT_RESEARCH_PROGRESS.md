@@ -1,6 +1,33 @@
 # Agent research progress and handoff
 
-## Current: D2 startup failed before inference; local startup fixes prepared
+## Current: D2 partial S0 audited; controller/CPU integration repaired
+
+Updated 2026-10-02 UTC. The new opening successfully deployed06654db and completed
+S0: memory26/48, identity7/12, consent6/12 (defer4), repair1/4, infeasible3/4.
+Archive registration then failed due to a duplicated `path` argument; T/M/TM
+never ran. The real partial archive and integrity-only receipt were recovered
+and published before connection loss. Platform shutdown/billing remain unconfirmed;
+this window's compute proxy is CNY0.2620, separate from the earlier CNY0.6463.
+See the [full analysis and repair](research/2026-10-02-d2-partial-results-and-repair.md).
+
+Subsequent local audit verified80 native/environment episodes,84 generations and
+original weights; it did not upgrade the partial receipt. Latest valid memory in
+first/middle/last positions scores16/16,2/16,8/16. Twenty of22 memory errors choose
+an older valid value. ID renaming produces two opposing case flips despite equal
+totals. These are fixed-seed S0 development observations, not treatment effects.
+
+The v2 repair shares the production phase/archive loop with the CPU drill and
+supports offline incremental Git installation from the existing clean06654db base.
+All scientific conditions remain identical to v1; only reviewed control/deployment
+sources change. The320-case CPU drill passes real archive registration, native/token
+replay and full scripted recovery. All465 local tests passed in157.652 seconds;
+the exact CI metadata-only path also reproduced all80 S0 cases and84 generations.
+Final exact-head CI and an actual final bundle
+roundtrip must pass before another opening. Next: a new complete four-arm D2 window
+with CNY5 reserve and unchanged90/120-minute limits, preserving this partial run;
+no result selection, G1, extra training/API or reserved48-task use.
+
+## Historical: D2 startup failed before inference; local startup fixes prepared
 
 Updated 2026-10-02 UTC. The first D2 opening ended before any controller/model
 launch. A wrong local tokenizer interpreter and slow/repeated bundle upload

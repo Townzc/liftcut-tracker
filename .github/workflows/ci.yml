@@ -363,7 +363,7 @@ jobs:
           from pathlib import Path
           p = Path('research/liftcut-agent')
           observed = json.loads((p / 'outputs/ci-d2-drill/drill-report.json').read_text())
-          expected = json.loads((p / 'reports/d2-operating-drill-2026-10-02.json').read_text())
+          expected = json.loads((p / 'reports/d2-operating-drill-v2-2026-10-02.json').read_text())
           # CI reconstructs actual tokenizer/environment, but has no private
           # adapter files and must never claim a complete restoration receipt.
           expected['actual_seed42_adapter_bytes_verified'] = False
@@ -371,6 +371,14 @@ jobs:
           assert observed == expected
           assert not list((p / 'outputs/ci-d2-drill').rglob('off-instance-backup.json'))
           PY
+
+      - name: Replay the historical partial D2 S0 arm without upgrading its receipt
+        run: >-
+          python research/liftcut-agent/analyze_d2_partial.py
+          --public-dir research/liftcut-agent/reports/d2-partial-s0-2026-10-02
+          --prepared-dir research/liftcut-agent/outputs/ci-d2-a
+          --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          --metadata-only --check
 
   quality:
     runs-on: ubuntu-latest

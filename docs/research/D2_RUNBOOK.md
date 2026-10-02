@@ -4,11 +4,14 @@ Read [scope, calibration and limits](2026-10-02-d2-execution-readiness.md) first
 No live server is needed to build or test these assets. Do not reuse R1 deadlines,
 restart old monitors, install packages, launch training or access reserved tasks.
 
-After the [first startup failure](2026-10-02-d2-startup-review.md), use the maintained
-local `launch_d2_remote.py` below. Do not repeat the ad hoc uploader or dispatch
-the old generated `launch.sh`. Cloud inference stays at checked commit
-`06654db287a5d51c4aad6bf57fcee40d21555afc`; the separately checked local launcher
-and extra prelaunch guard record their own hashes. No new model result exists.
+After the [partial S0 window](2026-10-02-d2-partial-results-and-repair.md), use the
+v2 controller and maintained `launch_d2_remote.py` below. That window completed
+80 cases, then failed in archive registration; T/M/TM never ran. Preserve its
+original code/receipt and repeat all four arms in a new window. The new exact
+checked commit replaces the controller/deployment sources only; scientific
+conditions must match historical v1. The existing clean cloud checkout
+`06654db287a5d51c4aad6bf57fcee40d21555afc` is an offline bundle base, not the next
+execution target. Do not dispatch an old generated `launch.sh`.
 
 ## Offline release gate
 
@@ -17,24 +20,34 @@ and extra prelaunch guard record their own hashes. No new model result exists.
 3. Run `drill_d2_execution.py --prepared-dir … --tokenizer-dir … --adapters-root …
    --output-dir NEW_LOCAL_DIRECTORY`. It must report320 native/environment episodes,
    352 scripted responses,272 recomputed forecasts, actual original adapter bytes
-   verified, and full recovery. There are no real model or shutdown calls.
-4. Commit local startup fixes on a branch. Its final exact PR head must pass every
+   verified, full recovery, and `production_phase_and_early_archive_path_exercised`.
+   It must use the same `execute_phases` function as production, including all four
+   archive/index transitions. There are no real model or shutdown calls.
+4. Commit the controller/deployment amendment on a branch. Its final exact PR head must pass every
    GitHub check before merging; verify the merge tree equals the checked tree.
-   Preserve the old checked PR28 ref for the GPU bundle; do not substitute the new
-   local-launcher commit for the frozen GPU execution commit.
-5. Reuse the already verified06654db stage. Only if preparing it on a new local
-   machine, stage that same frozen commit with the real pinned tokenizer:
+   Preserve the old PR28 ref and v1 plan for the partial-window audit. Verify that
+   `analyze_d2_partial.py --metadata-only --check` reproduces all public S0 results
+   and accepts only the enumerated v2 source amendment.
+5. Create a new incremental stage for that final checked commit and the real pinned
+   tokenizer. The old clean base must remain available on the same instance:
 
 ```text
 python research/liftcut-agent/stage_d2_execution.py
   --execution-commit CHECKED_40_HEX_SHA --source-ref CHECKED_BRANCH_REF
+  --base-commit 06654db287a5d51c4aad6bf57fcee40d21555afc
   --opening-id UNIQUE_ID --prepared-dir LOCAL_D2_PREPARED
   --tokenizer-dir LOCAL_PINNED_TOKENIZER --output-dir NEW_LOCAL_STAGE
 ```
 
 The invocation is one command; line breaks above are for readability. Bundle only
 that explicit ref. `stage.json` describes paths, checksum inventory, first-upload
-files and arm command. The new launcher uses that inventory, but creates fresh
+files, `bundle_base_commit`, v2 execution-plan SHA and arm command. Before asking
+for another opening, apply this **actual final bundle** locally with
+`d2_bundle.install_bundle` into a fresh checkout from the clean06654db base.
+Verify exact HEAD, clean tree, v2 source hashes, unchanged base and total payload
+bytes. A temporary toy-Git test alone is insufficient. Do not send a full-history
+bundle again. A missing/dirty remote base ends setup rather than causing downloads
+or an extended budget. The launcher uses that inventory, but creates fresh
 ops/run paths and verifies any existing immutable checkout/data. It does not use
 the stage's historical ops/run names or its legacy `launch.sh`. Copy the
 template `configs/d2-monitor.template.json` into ignored local outputs, fill its
@@ -68,7 +81,7 @@ never write the password into Git, command text, JSON or the public runbook.
 
 ```text
 TRANSPORT_PYTHON research/liftcut-agent/launch_d2_remote.py
-  --config LOCAL_CONFIG --stage-dir EXISTING_06654DB_STAGE
+  --config LOCAL_CONFIG --stage-dir CHECKED_V2_INCREMENTAL_STAGE
   --opening-id NEW_UNIQUE_ID --booted-at ACTUAL_EARLIEST_UTC --execute
 ```
 
@@ -86,7 +99,10 @@ TRANSPORT_PYTHON research/liftcut-agent/launch_d2_remote.py
    files are skipped. Mismatches/symlinks/oversize targets are preserved and rejected.
    Progress counts queued bytes; only close plus full size/hash verification means
    transfer completed. Every operation uses the original ten-minute setup budget.
-5. The launcher checks/clones the immutable06654db checkout, checks/extracts the
+5. The launcher verifies the immutable06654db base, copies it locally into a new
+   commit-addressed checkout without hardlinks, and applies the verified incremental
+   bundle without network access. It verifies exact new HEAD/clean tree, leaving
+   the base unchanged, then checks/extracts the
    bounded public asset inventory, and records exclusive dispatch intent before
    invoking frozen `d2_setup.py`. The controller must open within the original
    allowance. The same connection then runs the existing collector, with restoration
