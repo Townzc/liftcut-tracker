@@ -1,6 +1,12 @@
 # LiftCut-AgentLab research roadmap
 
 Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
+Current execution update: [G1 seed42 window](research/2026-10-02-g1-seed42-window.md)
+started on2026-10-02 after the new user opening and checked PR32 deployment.
+Control training is in progress under the original150/180-minute limits and CNY8
+reserve. Full paired results, recovery and gate decision are pending; no independent
+test use, additional training seed or condition change is authorized by this run.
+
 Latest preparation update: [G1 seed42 paired-pilot readiness](research/2026-10-02-g1-pilot-readiness.md)
 now has two identical CPU preparations, matched41,788 target tokens/126 updates per
 arm,222-case evaluation and real archive/receipt contract drills. These are CPU

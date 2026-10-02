@@ -1,6 +1,23 @@
 # Agent research progress and handoff
 
-## Current: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
+## Current: G1 seed42 pilot running in its original bounded window
+
+The user opened the server for the ready PR32 pilot. Checked cloud execution is
+`29d8d7fc6d1e749a85d93979da3b589d063f5c0d`; the earlier container boot proxy is
+2026-10-02T21:12:28.452751UTC. Work cutoff23:42:28.452751UTC and hard cutoff
+2026-10-03T00:12:28.452751UTC stay fixed, with CNY8 reserve at2.18/hour.
+Deployment and25 assets passed; control training started21:18:39UTC. A real
+21:30:48 snapshot observed61/126 steps, GPU100%, the longest-row backward probe
+passed and both hard-deadline guard processes present. No completed G1 score yet.
+
+[Execution and delivery notes](research/2026-10-02-g1-seed42-window.md) distinguish
+actual runtime evidence from pending results. Sole collector and quiet follow-up
+continue; no second launch or condition change. Publication, paired analysis and
+plotting are being prepared outside the frozen source list. Next: actual new
+weights/222-case/token restoration, genuine receipt, automatic shutdown, then
+all gains/regressions and original gate assessment. No extra seed/API/held-out use.
+
+## Historical: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
 
 Updated 2026-10-02 UTC. D2 [PR31](https://github.com/Townzc/liftcut-tracker/pull/31)
 merged after all five checks passed exact33ebe5806401418ff09c5937b2d44c8c1a1b0639;
