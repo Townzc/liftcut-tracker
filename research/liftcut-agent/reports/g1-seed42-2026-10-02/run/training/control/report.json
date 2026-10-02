@@ -1,0 +1,31 @@
+{
+  "arm": "control",
+  "binding": {
+    "version": "g1-arm-binding-v1",
+    "plan_digest": "91d0897ec657fffb873b9a3fa7f0c8a5e0c2f4945309ee092713fffc9f9726d7",
+    "code_commit": "29d8d7fc6d1e749a85d93979da3b589d063f5c0d",
+    "arm": "control",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "initial_adapter_sha256": "f403d9a13af8b10692e99c94c32fdccf193f1b23bcf373ab1812e17d2042ad04",
+  "steps": 126,
+  "processed": {
+    "input_tokens": 1851664,
+    "supervised_tokens": 41788,
+    "decisions": 1008
+  },
+  "optimization_seconds": 1454.0221783760935,
+  "first_step_loss": 0.32113059294510465,
+  "last_step_loss": 0.012230150423341397,
+  "changed_adapter_tensors": 504,
+  "peak_allocated_bytes": 12410431488,
+  "peak_reserved_bytes": 15890120704,
+  "reload_close": true,
+  "reload_max_logit_difference": 0.0,
+  "adapter_sha256": {
+    "adapter_config.json": "f2aa7e30b3de7dc62667ed01be242fbb0472979e94f3bcc80767c2b73994b1d4",
+    "adapter_model.safetensors": "2cb6a587362a59946f9d63ea087a44ac4db561fe0c1de977c2d1d467fd1a9bf7"
+  },
+  "finished_at_utc": "2026-10-02T21:43:27.891563+00:00"
+}

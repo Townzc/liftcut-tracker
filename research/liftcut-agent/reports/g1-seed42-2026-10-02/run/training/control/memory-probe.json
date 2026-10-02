@@ -1,0 +1,16 @@
+{
+  "sequence_tokens": 2995,
+  "forward_backward_passed": true,
+  "optimizer_steps": 0,
+  "binding": {
+    "version": "g1-arm-binding-v1",
+    "plan_digest": "91d0897ec657fffb873b9a3fa7f0c8a5e0c2f4945309ee092713fffc9f9726d7",
+    "code_commit": "29d8d7fc6d1e749a85d93979da3b589d063f5c0d",
+    "arm": "control",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "initial_parameters_unchanged": true,
+  "peak_allocated_bytes": 12005549056,
+  "peak_reserved_bytes": 15495856128
+}

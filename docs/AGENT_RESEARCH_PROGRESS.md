@@ -1,6 +1,35 @@
 # Agent research progress and handoff
 
-## Current: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
+## Current: G1 pilot complete; original gate failed, stop expanding training
+
+Updated 2026-10-02 UTC. [G1 complete results](research/2026-10-02-g1-complete-results.md)
+publish both fresh seed42 adapters' actual restoration, 222 native/environment
+evaluations on 111 reused development cases, and 384 true generation token audits
+plus one local context refusal. Frozen execution29d8d7f and all36 source files are
+unchanged. Repair improves1/4→3/4, but full tasks9/12→2/12 and true infeasible4/4→2/4;
+D2 memory27/48→19/48. No unapproved write attempts, yet no candidate passes protections.
+G1 fails its original pilot gate. No G1 seeds43/44, G2, seed45 or held-out48 run.
+
+Post-hoc CPU audit found all64 clean first-validation targets moved behind error
+feedback; clean-search supervision retains only4 infeasible targets. Eight full
+tasks falsely terminate infeasible before validation. This supports a conditioning
+coverage hypothesis, not proven causality or an explanation of every memory error.
+One repeated-invalid-plan trajectory ends in a local context refusal, not OOM.
+
+Genuine recovery receipt atomically published22:34:50UTC, connection ended22:34:56.
+User subsequently confirms platform OFF; server ACK consumption/shutdown return
+remain unobserved. CNY2.9962 compute estimate uses boot-to-disconnect4947.849707s
+at2.18/hour, excludes storage, not an invoice. Per user preference, estimate from
+recorded duration rather than repeatedly requesting actual fees. No active cloud run.
+
+[Next CPU work](research/2026-10-02-post-g1-release-plan.md): research evidence index,
+saved-trajectory demonstration, data/state coverage checklist and learning report.
+S0 stays the fixed comparison baseline; publish negative findings with limits.
+Independent evaluation remains unfinished; 48 reserved tasks stay untouched.
+Current result delivery is [PR33](https://github.com/Townzc/liftcut-tracker/pull/33);
+merge only after all checks pass on the final exact head, then close the G1 heartbeat.
+
+## Historical: G1 seed42 paired pilot prepared; final Git/launch staging before new opening
 
 Updated 2026-10-02 UTC. D2 [PR31](https://github.com/Townzc/liftcut-tracker/pull/31)
 merged after all five checks passed exact33ebe5806401418ff09c5937b2d44c8c1a1b0639;

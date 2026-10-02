@@ -1,0 +1,14 @@
+{
+  "version": "g1-operator-status-v1",
+  "opening_id": "20261002-211657",
+  "recorded_at_utc": "2026-10-02T22:49:48+00:00",
+  "source": "user reply in this conversation after the G1 completion question",
+  "platform_power_state": "off_user_confirmed",
+  "exact_shutdown_timestamp": null,
+  "provider_invoice_cny": null,
+  "hourly_cny_user_supplied": 2.18,
+  "compute_proxy_cny": 2.996197878127778,
+  "compute_proxy_interval": "original boot proxy to collector connection loss, 4947.849707 seconds",
+  "billing_preference": "Use recorded duration times CNY2.18/hour for estimates; do not repeatedly request an invoice.",
+  "scope": "Later human confirmation of platform off; does not change raw receipt, server-ACK or shutdown-command observations. Estimate is not an invoice and excludes storage."
+}

@@ -408,6 +408,20 @@ jobs:
           assert not (r / 'outputs/ci-g1-drill/SYNTHETIC-CONTRACT-ONLY/off-instance-backup.json').exists()
           PY
 
+      - name: Reconstruct complete G1 public results and post-hoc conditioning audit
+        run: |
+          # Public CI has no private weights. The genuine local restoration
+          # attestation remains separate from this metadata/native/token replay.
+          python research/liftcut-agent/analyze_g1_results.py \
+            --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 \
+            --prepared-dir research/liftcut-agent/outputs/ci-g1-a \
+            --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics \
+            --d2-dir research/liftcut-agent/outputs/ci-d2-a \
+            --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
+          python research/liftcut-agent/analyze_g1_contexts.py \
+            --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 \
+            --prepared-dir research/liftcut-agent/outputs/ci-g1-a --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

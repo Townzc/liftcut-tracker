@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "final/README.md",
+      "bytes": 5422,
+      "sha256": "a9cbaef9e2c447892e70a165f5000f253e00ba2951b8676844a5830ebef44785"
+    },
+    {
+      "path": "final/adapter_config.json",
+      "bytes": 1045,
+      "sha256": "f8d16bff9ed8db1fb13ad583f1144ae9bcaeec85259a77a99a0b2304d5e27c47"
+    },
+    {
+      "path": "final/adapter_model.safetensors",
+      "bytes": 132187888,
+      "sha256": "062dc258e1534d21f7213983d5b2434fac9ee3ce9801b93f39ef0f76ed38013a"
+    },
+    {
+      "path": "initialization.json",
+      "bytes": 419,
+      "sha256": "83b5a3cba1eaa73fedfae6ca5d5448f87146d8da33d2f710a236dc87e0a18800"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 9999,
+      "sha256": "65c478df084db1109b6eb3c09b755e61f2de8c1956f576a453529027642946c0"
+    },
+    {
+      "path": "memory-probe.json",
+      "bytes": 472,
+      "sha256": "62b317d7578503bc498565e48d5cd542d3487a149abad811b0739515d867e01e"
+    },
+    {
+      "path": "report.json",
+      "bytes": 1087,
+      "sha256": "c64d4cb7634315b944ea5dfbfc2c284b20126457cb7529435577349a55ec6328"
+    },
+    {
+      "path": "runtime.json",
+      "bytes": 608,
+      "sha256": "846a7d651364f2c4d29fbddefcb78061a5336f4d182736bba758cc6e4ba36381"
+    },
+    {
+      "path": "training.jsonl",
+      "bytes": 34448,
+      "sha256": "d0a169319bd7c5f88f7efa5bc3ce254d93d39dd224981be6b5642afedf80d201"
+    }
+  ]
+}
