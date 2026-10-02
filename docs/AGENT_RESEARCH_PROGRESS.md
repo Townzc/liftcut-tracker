@@ -1,6 +1,33 @@
 # Agent research progress and handoff
 
-## Current: D2 execution and recovery ready for the bounded server window
+## Current: D2 startup failed before inference; local startup fixes prepared
+
+Updated 2026-10-02 UTC. The first D2 opening ended before any controller/model
+launch. A wrong local tokenizer interpreter and slow/repeated bundle upload
+exhausted the original ten-minute launch allowance. The operator requested
+shutdown at07:44:15 UTC after observing no launch/run and GPU0%/0MiB. Shutdown
+helper stdout0 and SSH disconnect are recorded; platform-off/actual billing remain
+unconfirmed. Compute proxy to the RPC return is CNY0.6463, excluding storage.
+See the [failure review and evidence](research/2026-10-02-d2-startup-review.md).
+
+A maintained local launcher now separates pinned tokenizer Python from transport,
+verifies/resumes matching remote prefixes, shares one connection with collection,
+and arms an additional boot+10-minute prelaunch shutdown guard before bulk upload.
+Eighteen new CPU regression checks passed; real local preflight reverified the
+eight original adapter files. All456 local tests passed in160.914 seconds, and the
+frozen execution plan passed source/actual-weight verification. Exact-head CI
+evidence belongs to the delivery PR. Mock transport tests are not live-server
+integration evidence.
+
+The checked cloud execution remains06654db287a5d51c4aad6bf57fcee40d21555afc;
+local startup changes do not refreeze inference conditions. No D2 results,
+new training, API calls or reserved-task reads occurred. After final checks and
+Git delivery, request a new user-opened window using the updated
+[runbook](research/D2_RUNBOOK.md), fresh ops/run paths and verified old staging
+bytes. The new CNY5 reserve is additional to this failed opening's actual or proxy
+cost; original90/120-minute limits remain. Analyze actual D2 evidence before any G1.
+
+## Historical: D2 execution and recovery ready for the bounded server window
 
 Updated 2026-10-02 UTC. The [D2 operating readiness record](research/2026-10-02-d2-execution-readiness.md)
 and [operator runbook](research/D2_RUNBOOK.md) now cover fixed calibration, actual

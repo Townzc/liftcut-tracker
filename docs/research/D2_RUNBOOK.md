@@ -4,6 +4,12 @@ Read [scope, calibration and limits](2026-10-02-d2-execution-readiness.md) first
 No live server is needed to build or test these assets. Do not reuse R1 deadlines,
 restart old monitors, install packages, launch training or access reserved tasks.
 
+After the [first startup failure](2026-10-02-d2-startup-review.md), use the maintained
+local `launch_d2_remote.py` below. Do not repeat the ad hoc uploader or dispatch
+the old generated `launch.sh`. Cloud inference stays at checked commit
+`06654db287a5d51c4aad6bf57fcee40d21555afc`; the separately checked local launcher
+and extra prelaunch guard record their own hashes. No new model result exists.
+
 ## Offline release gate
 
 1. Reproduce the CPU D2 preparation and `prepare_d2_execution.py --prepared-dir …`.
@@ -12,10 +18,12 @@ restart old monitors, install packages, launch training or access reserved tasks
    --output-dir NEW_LOCAL_DIRECTORY`. It must report320 native/environment episodes,
    352 scripted responses,272 recomputed forecasts, actual original adapter bytes
    verified, and full recovery. There are no real model or shutdown calls.
-4. Commit on a branch. Final exact PR head must pass every GitHub check before merging.
-   Preserve the checked branch ref for the offline bundle; use its exact40-hex SHA
-   as execution commit. The merge tree must equal the checked head tree.
-5. Stage with the real pinned tokenizer and prepared directory:
+4. Commit local startup fixes on a branch. Its final exact PR head must pass every
+   GitHub check before merging; verify the merge tree equals the checked tree.
+   Preserve the old checked PR28 ref for the GPU bundle; do not substitute the new
+   local-launcher commit for the frozen GPU execution commit.
+5. Reuse the already verified06654db stage. Only if preparing it on a new local
+   machine, stage that same frozen commit with the real pinned tokenizer:
 
 ```text
 python research/liftcut-agent/stage_d2_execution.py
@@ -26,12 +34,23 @@ python research/liftcut-agent/stage_d2_execution.py
 
 The invocation is one command; line breaks above are for readability. Bundle only
 that explicit ref. `stage.json` describes paths, checksum inventory, first-upload
-files and arm command. `launch.sh` is generated with shell quoting; it makes a
-fresh checkout and extracts only the staged, hash-checked public assets. Copy the
+files and arm command. The new launcher uses that inventory, but creates fresh
+ops/run paths and verifies any existing immutable checkout/data. It does not use
+the stage's historical ops/run names or its legacy `launch.sh`. Copy the
 template `configs/d2-monitor.template.json` into ignored local outputs, fill its
 checked commit and endpoint, and keep `booted_at:null` until an actual opening.
 Do not put credentials in config or scripts. Offline monitor preflight verifies
-local actual weights, pinned tokenizer and free disk.
+local actual weights, pinned tokenizer and free disk. Set `restore_python` to the
+pinned tokenizer virtual environment, not to the Paramiko transport interpreter.
+Run the new entry point's default offline mode from the repository root:
+
+```text
+TRANSPORT_PYTHON research/liftcut-agent/launch_d2_remote.py --config LOCAL_CONFIG
+```
+
+On the current Windows machine the transport interpreter is `E:/anaconda/python.exe`
+and restoration uses `research/liftcut-agent/.venv/Scripts/python.exe`. The
+transport environment must not import Transformers. No package install is needed.
 
 ## Once the user opens the same 4090 instance
 
@@ -40,27 +59,40 @@ changed connection information. Capture the earliest observed opening timestamp.
 Use existing known_hosts verification and an in-memory password or authorized key;
 never write the password into Git, command text, JSON or the public runbook.
 
-1. Connect once for setup; inspect container/GPU identity and current price. Never
-   turn a rental on automatically. Upload only `d2_setup.py` and `shutdown_guard.py`
-   into `stage.json`'s new `remote_stage`; verify their local/remote SHA256.
-2. Invoke the exact `arm_argv_replace_boot_with_actual_observation` from `stage.json`,
-   replacing the time placeholder with the actual aware UTC observation. Capture
-   returned `booted_at_proxy`, setup opening, guard PID and armed record. The earlier
-   container start proxy may shorten the window; never replace it with a later time.
-3. Before bulk upload, verify ≥3GB free on `/root/autodl-tmp`, the historical model,
-   original seed42 four adapter directories, existing Python environment and price.
-   If missing/mismatched or the ten-minute launch allowance is exhausted, preserve
-   evidence and request immediate shutdown using the existing AutoDL shutdown
-   command; do not install, expand, reboot or extend.
-4. Upload remaining staged files with their hashes and run `bash launch.sh` from
-   the staging directory. The script checks hashes and has an immediate shutdown
-   trap on setup error. It launches the controller detached; it does not wait for
-   inference to finish. Observe `controller-launch.json`, PID, opening, both guards
-   and actual live process/argv. If ambiguous, inspect; never blindly run again.
-5. Put the **returned original proxy** into local monitor config. Confirm its
-   remote_run/remote_ops match this stage and all local output directories are new.
-   Start one `monitor_counterfactual_diagnostics.py --config LOCAL_CONFIG --connect`
-   with the pinned local restoration Python. Password is prompted, not serialized.
+1. Confirm the previous rental is off and record its actual bill if available.
+   Reserve CNY5 for this separate attempt at the previously supplied2.18/hour;
+   failed-opening cost remains separate. A changed instance/price requires rechecking
+   the quote. Never turn on a rental automatically or expand storage.
+2. Run the following **once**, using the actual earliest aware UTC opening proxy
+   and a fresh simple ID. Keep the terminal session for the entire collector:
+
+```text
+TRANSPORT_PYTHON research/liftcut-agent/launch_d2_remote.py
+  --config LOCAL_CONFIG --stage-dir EXISTING_06654DB_STAGE
+  --opening-id NEW_UNIQUE_ID --booted-at ACTUAL_EARLIEST_UTC --execute
+```
+
+   Line breaks above are for readability. Password is entered only through the
+   interactive prompt. The launcher first invokes the pinned local preflight,
+   uses verified known_hosts, and opens one SSH connection. It never retries an
+   ambiguous launch automatically.
+3. The launcher verifies the two small frozen bootstrap files and arms the original
+   120-minute setup guard using fresh ops paths. It adopts the earlier of supplied
+   time and container start, then arms the additional ten-minute prelaunch guard.
+   Observe both armed records before bulk upload. It checks existing4090, package
+   versions, model/adapter presence and ≥3GB free, without installing anything.
+4. The existing stage is reusable only after remote full/prefix SHA256 verification.
+   Matching partial files receive just their missing suffix; complete matching
+   files are skipped. Mismatches/symlinks/oversize targets are preserved and rejected.
+   Progress counts queued bytes; only close plus full size/hash verification means
+   transfer completed. Every operation uses the original ten-minute setup budget.
+5. The launcher checks/clones the immutable06654db checkout, checks/extracts the
+   bounded public asset inventory, and records exclusive dispatch intent before
+   invoking frozen `d2_setup.py`. The controller must open within the original
+   allowance. The same connection then runs the existing collector, with restoration
+   in the pinned local interpreter. Do **not** start a second monitor. Inspect the
+   saved original boot/config, controller intent/PID/opening/guards and real process
+   if a launch outcome is ambiguous. Opening itself is not proof of model execution.
 6. Save local process/session ID and absolute work/hard deadlines in ignored
    `outputs/autodl/HANDOFF.md`. If using the existing heartbeat mechanism, monitor
    this specific run quietly unless a stage ends, fails or needs human action.
@@ -68,9 +100,14 @@ never write the password into Git, command text, JSON or the public runbook.
 
 ## Failure or lost connection
 
-- Setup/controller guard preserves the original hard deadline independently of SSH.
-  If setup fails and the trap cannot run, use the already authorized shutdown action
-  or ask the user to turn the instance off; retain the armed guard as backstop.
+- The extra setup guard requests shutdown at boot+10 minutes unless a valid
+  controller opening was observed. The original setup/controller guards preserve
+  the hard deadline independently of SSH. The local launcher also requests immediate
+  shutdown on setup failure before dispatch. A lost shutdown return is unknown;
+  ask for platform status instead of repeatedly opening new sessions.
+- Do not restart this launcher on the same opening. Inspect existing receipts and
+  processes first. After an explicitly authorized later opening, use a new ID and
+  actual new boot; never reuse old ops/run directories or reset a live deadline.
 - Inspect local files, events and actual process before recovery. A recovery monitor
   uses entirely new local downloads/restored/operations directories, the **same**
   boot proxy and remote run. It never changes running inference conditions.

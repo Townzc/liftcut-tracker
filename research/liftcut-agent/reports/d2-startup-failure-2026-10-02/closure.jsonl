@@ -1,0 +1,3 @@
+{"event": "before_shutdown", "at_utc": "2026-10-02T07:44:15.241433+00:00", "observation": {"files": {"d2_setup.py": 6936, "shutdown_guard.py": 2462, "asset-index.json": 1405, "assets.tar.gz": 2333788, "code.bundle.interrupted-before-launch": 3080192, "code.bundle": 27852800}, "controller_launch_exists": false, "run_exists": false, "gpu": "0 %, 0 MiB"}}
+{"event": "shutdown_request_issued", "at_utc": "2026-10-02T07:44:15.243434+00:00", "reason": "late prelaunch transfer; no deadline extension", "provider_billing_stopped": "unknown"}
+{"event": "shutdown_rpc_return", "at_utc": "2026-10-02T07:44:15.862638+00:00", "stdout": "0\n", "exit_status": -1, "provider_billing_stopped": "unknown"}
