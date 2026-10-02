@@ -84,8 +84,8 @@ TM 的三个真不可行错误还包括提出无效方案后错误地 finish(pre
 
 ## 下一步：G1 单 seed 成对修复训练
 
-沿用[原设计](2026-09-29-followup-experiment-design-v2.md#G1有条件启动的校验反馈纠错训练)
-及[事前触发与预算](2026-10-01-post-seed43-review-and-next-plan.md#g1维持条件触发限制扩训次数)。
+沿用[原设计](2026-09-29-followup-experiment-design-v2.md)
+及[事前触发与预算](2026-10-01-post-seed43-review-and-next-plan.md)。
 两组都从同一个固定基座重新训练，T 开、M 关；旧 T 只负责触发，不替代新 T-control。
 T-repair 输入含真实错误校验和工具反馈，随后正确动作与 control 逐 token 配对；
 错误动作、工具反馈和额外读取不计监督目标。两个错误族都保留，只使用原训练 fixtures。

@@ -1,7 +1,14 @@
 # LiftCut-AgentLab research roadmap
 
 Updated: 2026-10-01 (project work date). Status: approved direction; milestones below are targets.
-Latest evidence update: 2026-10-02 UTC. [Complete fixed-seed42 D2](research/2026-10-02-d2-complete-results.md)
+Latest preparation update: [G1 seed42 paired-pilot readiness](research/2026-10-02-g1-pilot-readiness.md)
+now has two identical CPU preparations, matched41,788 target tokens/126 updates per
+arm,222-case evaluation and real archive/receipt contract drills. These are CPU
+checks, not new training or performance. Final exact-commit checks and local staged
+Git installation precede a new CNY8/150-minute work/180-minute hard window. The
+original pilot protection thresholds and48 untouched reserved tasks remain fixed.
+
+Latest model evidence: 2026-10-02 UTC. [Complete fixed-seed42 D2](research/2026-10-02-d2-complete-results.md)
 now replays all320 episodes and340 generations with actual original weights.
 T improves authorization to12/12 but repairs only1/4; TM attempts3 unapproved
 writes, all blocked. The original G1 behavior trigger is met by T's two failed
