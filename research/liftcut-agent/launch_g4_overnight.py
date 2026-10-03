@@ -9,7 +9,7 @@ from datetime import timedelta
 import getpass
 import json
 import os
-from pathlib import Path
+from pathlib import Path,PurePosixPath
 import re
 import shutil
 import stat
@@ -27,10 +27,10 @@ from launch_g3_remote import Remote,upload_verified
 from monitor_coverage_replication import TimeBudget,io_budget,remote_bytes,json_lines,persist_json
 from server_workspace import command,dump_new,sha256
 
-PERSIST=Path('/root/autodl-tmp/liftcut')
+PERSIST=PurePosixPath('/root/autodl-tmp/liftcut')
 BASE='eaa132538fefdf28973d808dd56a159e19b86d67'
 PYTHON=str(PERSIST/'envs/qwen-pilot-py312/bin/python')
-SHARED=PERSIST/'data/g3-eaa1325'
+SHARED=Path(PERSIST/'data/g3-eaa1325')  # Used only inside the Linux dispatch function.
 
 
 def stage(output,prepared,commit,ref):
@@ -106,12 +106,12 @@ def dispatch(prepared,commit,run_id):
     from gpu_counterfactual_diagnostics import verify_model
     from prepare_state_diagnostics import verify_prepared as diagnostic
     from prepare_counterfactual_diagnostics import verify_prepared as d2,load_tokenizer
-    historical=read(PERSIST/'runs/g3-ops-20261003-053547/controller-launch.json')['argv']
+    historical=read(Path(PERSIST/'runs/g3-ops-20261003-053547/controller-launch.json'))['argv']
     get=lambda flag:Path(historical[historical.index(flag)+1])
     model,manifest=get('--model-dir'),get('--model-manifest')
     verify_model(model,manifest);diagnostic(SHARED/'diagnostic');d2(SHARED/'d2');load_tokenizer(SHARED/'tokenizer')
     now=utcnow();deadlines(now.isoformat(),now)
-    run=PERSIST/'runs'/('g4-run-'+run_id);ops=PERSIST/'runs'/('g4-ops-'+run_id)
+    run=Path(PERSIST/'runs'/('g4-run-'+run_id));ops=Path(PERSIST/'runs'/('g4-ops-'+run_id))
     if run.exists() or ops.exists():raise ValueError('run already exists; inspect, never relaunch')
     # One durable dispatch reservation for this entire lease, including unknown outcome.
     dump_new(LEASE_DIR/'g4-dispatch-reservation.json',{'commit':commit,'run':str(run),'at_utc':now.isoformat()})

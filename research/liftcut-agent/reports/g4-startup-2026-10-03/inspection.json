@@ -1,0 +1,26 @@
+{
+  "at_utc": "2026-10-03T08:12:26.476111+00:00",
+  "guard_alive": true,
+  "guard": {
+    "deadline": "2026-10-03T14:00:00+00:00",
+    "identity": {
+      "pid": 3560,
+      "argv": [
+        "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+        "/root/autodl-tmp/liftcut/ops/overnight-20261003/overnight_lease.py",
+        "--lease",
+        "/root/autodl-tmp/liftcut/ops/overnight-20261003/lease.json",
+        "--mode",
+        "guard"
+      ],
+      "state": "R",
+      "ppid": 3559,
+      "start_ticks": "1398346997"
+    },
+    "maximum_compute_proxy_cny": 18.711090618622226
+  },
+  "g4_reservation_exists": false,
+  "g4_runs": [],
+  "active_workers": [],
+  "gpu_processes": ""
+}

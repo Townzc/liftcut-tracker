@@ -1,5 +1,22 @@
 # Agent research progress and handoff
 
+## Current: inspected G4 pre-dispatch path failure; portable fix awaiting final checks
+
+G4 PR39 passed all5 checks at389527f and mergedbe528c3. Attempt080715 ended before
+training at08:08:12: Windows serialized a remote path with backslashes, so the first
+remote hash command returned127. [Original evidence](../research/liftcut-agent/reports/g4-startup-2026-10-03/README.md)
+includes08:12:26 read-only inspection: no reservation, no G4 run, no workers or GPU
+compute processes; guard3560 still alive to14:00. No unknown training outcome.
+
+Fix branch separates explicit POSIX remote paths from host paths.8 focused tests
+pass, including Windows/Linux path assertions and compiled bootstrap commands.
+A new execution-source hash is frozen; training data/order/gates are unchanged.
+Final-source full CPU restoration passed; next is exact-head CI then one new
+staging/operations directory, not automatic relaunch. Originalboot/CNY20/hard14:00
+remain. Morning report draft is prepared; G4 outcomes are still pending.
+
+
+
 ## Current preparation: G4 fresh paired memory-order coverage under the continuous lease
 
 G3 PR38 passed all five checks at8db43ba and merged02069c4; merge tree verified equal.
