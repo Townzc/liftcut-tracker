@@ -1,0 +1,11 @@
+{
+  "started_at_utc": "2026-10-03T14:00:47.805838+00:00",
+  "scope": "one TCP reachability probe after observer ended; no SSH authentication or command",
+  "provider_power_verified": false,
+  "provider_billing_verified": false,
+  "tcp_reachable": false,
+  "error_type": "TimeoutError",
+  "error_code": null,
+  "finished_at_utc": "2026-10-03T14:00:55.996644+00:00",
+  "elapsed_seconds": 8.187999999965541
+}

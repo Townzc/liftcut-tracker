@@ -12,3 +12,5 @@ research/liftcut-agent/reports/g3-startup-failure-2026-10-03/opening-authorizati
 research/liftcut-agent/reports/g3-seed42-2026-10-03/inspected-handoff-repair.json -text whitespace=cr-at-eol
 research/liftcut-agent/reports/g3-seed42-2026-10-03/collector-history/manifest.json -text whitespace=cr-at-eol
 research/liftcut-agent/reports/g4-startup-2026-10-03/inspection.json -text whitespace=cr-at-eol
+# Preserve the original Windows TCP observation bytes in the closing evidence.
+research/liftcut-agent/reports/overnight-close-2026-10-03/connectivity-observation.json -text whitespace=cr-at-eol
