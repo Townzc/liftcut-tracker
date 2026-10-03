@@ -1,5 +1,15 @@
 # Agent research progress and handoff
 
+## 2026-10-03 10:22 UTC：G4已合main；I1真实参考已冻结，等待最终检查
+
+PR41最终bae5723五项SUCCESS，合并7b810a8且树一致。I1独立分支合入main，保留双方
+全部CI与日志；98源再次核验与原CPU演练一致。实际G4完整恢复重新审计通过后生成
+reference，固定预注册新control权重adb76deb…；原机制/候选失败为真实触发。
+raw/view各111新推理，40/48记忆、净增12、ID10/12及S0保护不变；系统干预不冒称
+新训练。完整CPU合同595测试与222脚本回放的边界保留，最终精确Git检查待过。
+尚未派发I1；路径配置已准备，不含密码，后续唯一派发仍检查原guard/无worker/实际
+G4服务器ACK和时间。原14:00UTC/累计¥20、48保留任务未用；无第三轮实验。
+
 ## 2026-10-03 10:05 UTC：G4真实结果已恢复，整体候选失败
 
 [G4完整复盘](research/2026-10-03-g4-complete-results.md)：新control/permuted记忆11/48→20/48，
@@ -1249,3 +1259,28 @@ commands/results, current limitations and the next task. Change the roadmap when
 evidence or constraints justify it and add a dated reason here. Link each completed
 increment to its final GitHub change; do not mark an experiment complete from a
 configuration file or intended result alone.
+
+## Conditional I1 preparation in an isolated worktree, 2026-10-03 09:25 UTC
+
+Branch feat/i1-memory-view starts from main678e3dc while the primary G4 results
+branch continues collecting the only active cloud run. Native projection helpers
+from PR41 are reused unchanged. Fixed-reference, original-lease, system-gate,
+fresh raw/view GPU entrypoint and dual-audit code are prepared;6 focused tests and
+CLI compilation pass. This is incomplete preparation: real G4 failure/restoration,
+reference/source freeze, controller/collector/restorer, full CPU recovery and exact
+Git checks remain required. No I1 model call or complete readiness claim. See
+[preparation status](research/2026-10-03-i1-preparation-status.md).
+
+## I1 operating contract prepared, 2026-10-03 09:46 UTC
+
+Controller, single-dispatch collector, receipt transfer and restorer are implemented
+in this isolated branch.10 focused I1 checks and595 full offline tests pass174.510s.
+A full CPU drill with actual unchanged historical T bytes restores222 scripted
+native/environment episodes and376 generation records, then creates a SCRIPTED
+complete receipt; consumption is simulated locally.111 scripted reference episodes
+are separate. This is neither actual G4 trigger nor I1 model/remote evidence.
+Metadata-only partial recovery is being checked separately. Actual G4 restoration,
+failure decision, fixed reference/source freeze, exact-head Git checks and original
+time fit still gate all I1 dispatch. Root G4 collector remains the only cloud run.
+
+09:48 UTC: metadata-only CPU recovery passed; receipt remains partial with0 complete episodes. Full-drill source digest is unchanged. No real I1 trigger/freeze or GPU dispatch.
