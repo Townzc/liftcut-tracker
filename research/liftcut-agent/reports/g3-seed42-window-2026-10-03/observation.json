@@ -1,0 +1,95 @@
+{
+  "observed_at_utc": "2026-10-03T05:49:49.224196+00:00",
+  "read_only": true,
+  "gpu": "NVIDIA GeForce RTX 4090, 100 %, 16141 MiB, 24564 MiB",
+  "processes": [
+    {
+      "pid": 1229,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/staging/g3-eaa1325/shutdown_guard.py --arm --deadline 2026-10-03T08:35:00.409447+00:00 --receipt /root/autodl-tmp/liftcut/runs/g3-ops-20261003-053547/setup-guard.jsonl "
+    },
+    {
+      "pid": 1325,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent/run_g3_window.py --model-dir /root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554 --model-manifest /root/autodl-tmp/liftcut/data/qwen-model-manifest.json --prepared-dir /root/autodl-tmp/liftcut/data/g3-eaa1325/prepared --diagnostic-dir /root/autodl-tmp/liftcut/data/g3-eaa1325/diagnostic --d2-dir /root/autodl-tmp/liftcut/data/g3-eaa1325/d2 --tokenizer-dir /root/autodl-tmp/liftcut/data/g3-eaa1325/tokenizer --output-dir /root/autodl-tmp/liftcut/runs/g3-run-20261003-053547 --expected-code-commit eaa132538fefdf28973d808dd56a159e19b86d67 --hourly-cny 2.18 --booted-at 2026-10-03T05:35:00.409447+00:00 --setup-guard /root/autodl-tmp/liftcut/runs/g3-ops-20261003-053547/setup-guard.jsonl --execute --shutdown-when-done "
+    },
+    {
+      "pid": 1334,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent/shutdown_guard.py --arm --deadline 2026-10-03T08:35:00.409447+00:00 --receipt /root/autodl-tmp/liftcut/runs/g3-run-20261003-053547/deadline-guard.jsonl "
+    },
+    {
+      "pid": 1337,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent/gpu_train_g3.py --model-dir /root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554 --model-manifest /root/autodl-tmp/liftcut/data/qwen-model-manifest.json --prepared-dir /root/autodl-tmp/liftcut/data/g3-eaa1325/prepared --run-dir /root/autodl-tmp/liftcut/runs/g3-run-20261003-053547 --expected-code-commit eaa132538fefdf28973d808dd56a159e19b86d67 --arm stop_half --output-dir /root/autodl-tmp/liftcut/runs/g3-run-20261003-053547/training/stop_half --allow-gpu "
+    },
+    {
+      "pid": 1756,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python -c \nimport json, subprocess\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nrun = Path('/root/autodl-tmp/liftcut/runs/g3-run-20261003-053547')\nops = Path('/root/autodl-tmp/liftcut/runs/g3-ops-20261003-053547')\ndef read(p):\n    return json.loads(p.read_text()) if p.is_file() else None\ndef tail(p, n=1):\n    return p.read_text().splitlines()[-n:] if p.is_file() else []\nprocesses = []\nfor p in Path('/proc').iterdir():\n    if not p.name.isdigit():\n        continue\n    try:\n        argv = (p / 'cmdline').read_bytes().replace(b'\\x00', b' ').decode()\n        if len(argv) < 6000 and ('g3-run-20261003-053547' in argv or 'g3-ops-20261003-053547' in argv):\n            processes.append({'pid': int(p.name), 'argv': argv})\n    except (OSError, UnicodeError):\n        pass\nresult = {'observed_at_utc': datetime.now(timezone.utc).isoformat(), 'read_only': True,\n 'gpu': subprocess.check_output(['nvidia-smi','--query-gpu=name,utilization.gpu,memory.used,memory.total','--format=csv,noheader'], text=True, timeout=10).strip(),\n 'processes': processes, 'server_events_tail': tail(run / 'events.jsonl', 8),\n 'setup_guard': tail(ops / 'setup-guard.jsonl', 2),\n 'prelaunch_guard': tail(ops / 'prelaunch-guard.jsonl', 2),\n 'deadline_guard': tail(run / 'deadline-guard.jsonl', 2), 'arms': {}}\nfor arm in ('stop_half', 'stop_all'):\n    training = run / 'training' / arm\n    result['arms'][arm] = {'last_training_step': tail(training / 'training.jsonl'),\n      'control_reproduction': read(training / 'control-reproduction.json'),\n      'probe': read(training / 'memory-probe.json'), 'report': read(training / 'report.json'),\n      'episodes': {panel: sum(1 for _ in (run / 'evaluation' / arm / panel / 'episodes.jsonl').open())\n        if (run / 'evaluation' / arm / panel / 'episodes.jsonl').is_file() else 0\n        for panel in ('normal','diagnostic','d2')}}\nprint(json.dumps(result))\n "
+    }
+  ],
+  "server_events_tail": [
+    "{\"event\":\"phase_started\",\"at_utc\":\"2026-10-03T05:38:28.880735+00:00\",\"phase\":\"train-stop_half\"}"
+  ],
+  "setup_guard": [
+    "{\"status\": \"armed\", \"at_utc\": \"2026-10-03T05:36:57.551241+00:00\", \"deadline\": \"2026-10-03T08:35:00.409447+00:00\", \"command\": [\"/bin/bash\", \"/usr/bin/shutdown\"]}"
+  ],
+  "prelaunch_guard": [
+    "{\"event\": \"armed\", \"at_utc\": \"2026-10-03T05:36:59.578416+00:00\", \"deadline\": \"2026-10-03T05:45:00.409447+00:00\"}",
+    "{\"event\": \"controller_opening_observed\", \"at_utc\": \"2026-10-03T05:38:21.597488+00:00\"}"
+  ],
+  "deadline_guard": [
+    "{\"status\": \"armed\", \"at_utc\": \"2026-10-03T05:38:20.801329+00:00\", \"deadline\": \"2026-10-03T08:35:00.409447+00:00\", \"command\": [\"/bin/bash\", \"/usr/bin/shutdown\"]}"
+  ],
+  "arms": {
+    "stop_half": {
+      "last_training_step": [
+        "{\"binding_digest\":\"f28afa71d9a87671e57c4661c844c76d1ed8eae861868f9ef85317ba0e51599c\",\"step\":55,\"loss\":0.001044586501796847,\"gradient_norm_before_clip\":0.04473739489912987,\"elapsed_seconds\":642.3532229755074,\"input_tokens\":821674,\"supervised_tokens\":18403,\"decisions\":440}"
+      ],
+      "control_reproduction": {
+        "binding": {
+          "version": "g3-arm-binding-v1",
+          "plan_digest": "31584aeec679a6da9f4f32a6dcfa3367dac71bfffc9b9f38895848926b6f214a",
+          "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+          "arm": "stop_half",
+          "seed": 42,
+          "test_episodes": 0
+        },
+        "shared_steps": 12,
+        "reproduced": true,
+        "initial_adapter_matches_g2": true,
+        "comparison": "step, loss, gradient_norm_before_clip and cumulative counters; exact equality",
+        "policy": "continue either way; mismatch limits the result to a historical comparison"
+      },
+      "probe": {
+        "sequence_tokens": 3126,
+        "forward_backward_passed": true,
+        "optimizer_steps": 0,
+        "binding": {
+          "version": "g3-arm-binding-v1",
+          "plan_digest": "31584aeec679a6da9f4f32a6dcfa3367dac71bfffc9b9f38895848926b6f214a",
+          "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+          "arm": "stop_half",
+          "seed": 42,
+          "test_episodes": 0
+        },
+        "initial_parameters_unchanged": true,
+        "peak_allocated_bytes": 12374085120,
+        "peak_reserved_bytes": 16024338432
+      },
+      "report": null,
+      "episodes": {
+        "normal": 0,
+        "diagnostic": 0,
+        "d2": 0
+      }
+    },
+    "stop_all": {
+      "last_training_step": [],
+      "control_reproduction": null,
+      "probe": null,
+      "report": null,
+      "episodes": {
+        "normal": 0,
+        "diagnostic": 0,
+        "d2": 0
+      }
+    }
+  }
+}

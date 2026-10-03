@@ -1,0 +1,18 @@
+{
+  "version": "g3-window-snapshot-v1",
+  "captured_at_utc": "2026-10-03T05:51:16.591998+00:00",
+  "opening_id": "20261003-053547",
+  "execution_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+  "launch_issued": true,
+  "complete_study": false,
+  "complete_receipt_created": false,
+  "training_conditions_changed": false,
+  "original_files_sha256": {
+    "events-at-observation.jsonl": "38bbfd7599361df7c785e7b87cabf5e5873b714015da927c3a36091a6252be8b",
+    "opening.json": "ff1aeb7a7cb9e3a7f0e8486a3576714a6a69c264641a62ea213f0a7d52658023",
+    "launch.json": "cdb52056d66b5ce37e4737492411674632b8e3754e74566daeb69fd09f5a4cab",
+    "offline-preflight.json": "ed66585a9da4207949e5ece79dfdede497338603f135643900cfb12e7f0092d4",
+    "observation.json": "8422f2216312240ced623c894814a967d282918b0840bfd1b9a6272bb94ea9f2"
+  },
+  "scope": "Startup/one read-only training snapshot only. Not a model efficacy result, completed backup or shutdown observation."
+}

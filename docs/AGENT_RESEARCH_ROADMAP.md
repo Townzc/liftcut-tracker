@@ -13,8 +13,11 @@ with a shared-prefix reproduction check planned during training). The [memory au
 shows training covers only 4 of the record orders D2 uses; all coverage_mix memory
 errors fall in unseen orders. G3 exact-head CI and final local installation now pass.
 The [first setup window](research/2026-10-03-g3-startup-failure.md) ended during upload
-before training; platform OFF is user-confirmed, compute proxy CNY0.36. Next is a new
-opening using the retained verified bundle, with no repeat local rehearsal while billed.
+before training; its platform OFF is user-confirmed, compute proxy CNY0.36 retained.
+The user then opened a new window20261003-053547: checked installation/launch succeeded
+and stop_half is training. Original work08:05:00.409447/hard08:35:00.409447 UTC and
+CNY8 reserve remain fixed. Next is complete restoration, per-arm gates and full
+case-by-case review; no G3 efficacy claim yet. See [progress](AGENT_RESEARCH_PROGRESS.md).
 
 [Next local work](research/2026-10-03-post-g2-next-plan.md) isolates the stopping
 boundary: keep normal/repair coverage and move exposures of existing train-only

@@ -1,6 +1,29 @@
 # Agent research progress and handoff
 
-## Current: G3 ready for a new opening; first setup window failed before training
+## Current: G3 second opening is training; result publication tools prepared
+
+2026-10-03 UTC. After the first opening was closed, the user explicitly reopened.
+New opening20261003-053547 uses checked eaa1325 unchanged. Assets resumed only after
+matching the remote prefix, installation verifies30 assets, launch returned0 at
+05:38:12, train-stop_half started05:38:28. Actual boot05:35:00.409447 fixes
+work08:05:00.409447/hard08:35:00.409447 UTC; CNY8 reserve and2.18/hour unchanged.
+Sole launcher/collector8131, quiet g3-seed42 heartbeat active. Never launch twice.
+
+[Original startup snapshot](../research/liftcut-agent/reports/g3-seed42-window-2026-10-03/README.md)
+at05:49:49 shows55/126 updates, GPU100%,16141MiB, both hard guards alive. stop_half
+shared12-step reproduction and initialization match G2; this is prefix evidence,
+not a freshly retrained complete historical control or a model-quality result.
+
+New publication/analysis/plot tools preserve raw evidence, omit only model weights,
+require the genuine complete restore receipt and replay, and retain all111 per-arm
+case comparisons (including the one diagnostic control omitted from110 gate-panel
+cases). Original mechanism/candidate gates remain unchanged. Eight focused tests
+pass; full suite565 tests pass in348.347s. Final exact-head CI and complete model
+evidence remain pending for this new result branch.
+Both real complete results remain pending;48 reserved tasks unused. First startup
+failure/estimateCNY0.36 stays in history; PR37 passed all5 checks and merged27541b6.
+
+## Historical: G3 ready for a new opening; first setup window failed before training
 
 Updated2026-10-03 UTC. PR36 merged; all five checks passed exact execution commit
 eaa132538fefdf28973d808dd56a159e19b86d67, including real-tokenizer reconstruction.
