@@ -1193,3 +1193,14 @@ commands/results, current limitations and the next task. Change the roadmap when
 evidence or constraints justify it and add a dated reason here. Link each completed
 increment to its final GitHub change; do not mark an experiment complete from a
 configuration file or intended result alone.
+
+## Conditional I1 preparation in an isolated worktree, 2026-10-03 09:25 UTC
+
+Branch feat/i1-memory-view starts from main678e3dc while the primary G4 results
+branch continues collecting the only active cloud run. Native projection helpers
+from PR41 are reused unchanged. Fixed-reference, original-lease, system-gate,
+fresh raw/view GPU entrypoint and dual-audit code are prepared;6 focused tests and
+CLI compilation pass. This is incomplete preparation: real G4 failure/restoration,
+reference/source freeze, controller/collector/restorer, full CPU recovery and exact
+Git checks remain required. No I1 model call or complete readiness claim. See
+[preparation status](research/2026-10-03-i1-preparation-status.md).
