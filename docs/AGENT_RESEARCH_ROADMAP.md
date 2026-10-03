@@ -7,7 +7,9 @@ fall15→0 but28 older-valid choices remain. ID renaming flips no scores in eith
 low subset accuracy is not evidence of an ID shortcut here. Preserve fixedS0 and48unused.
 Next conditional I1 uses the preselected new CONTROL weight, fresh raw/view inference,
 public latest-valid projection and separate input/native audits. No further blind SFT
-or seeds tonight. Complete G4 PR then actual reference/freeze/checks/time-fit before I1.
+or seeds tonight. G4 is delivered; I1 passed all final checks and started once at
+10:41:37 UTC with frozen execution2bf816a. Actual work11:31:37 and collection12:01:37
+deadlines are fixed; I1 results are pending.
 The original CNY20/14:00UTC lease remains; morning report has G4 evidence, final close pending.
 
 Next isolated experiment: [G4 memory-order coverage](research/2026-10-03-g4-memory-order-design.md).
