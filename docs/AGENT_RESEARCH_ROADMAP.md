@@ -1,5 +1,15 @@
 # LiftCut-AgentLab research roadmap
 
+Next isolated experiment: [G4 memory-order coverage](research/2026-10-03-g4-memory-order-design.md).
+G3 is fully delivered in mergedPR38. Fresh control versus permuted memory records
+will test the position-coverage hypothesis while preserving stopping and consent;
+equal1008 exposures/126 updates/41,788 targets per arm,222 reused development episodes.
+Two CPU preparations and scripted recovery pass; no G4 model result yet. Runtime
+uses the existing authorized14:00UTC/CNY20 lease, not a new opening or budget reset.
+The morning capability/shortfall/ETA assessment is a separate required deliverable.
+If G4 fails protection gates, do not add seeds to rescue it; inspect paired failures
+and prepare a separate deterministic memory-view system comparison.
+
 Latest result: [G3 complete](research/2026-10-03-g3-complete-results.md), both real
 weights/222 native episodes/376 generations restored. stop_half passes stopping
 mechanism, stop_all fails; both overall candidates fail. Normal12/12 and infeasible4/4

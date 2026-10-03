@@ -1,5 +1,29 @@
 # Agent research progress and handoff
 
+## Current preparation: G4 fresh paired memory-order coverage under the continuous lease
+
+G3 PR38 passed all five checks at8db43ba and merged02069c4; merge tree verified equal.
+The separate `feat/g4-memory-order` branch freezes the
+[G4 design](research/2026-10-03-g4-memory-order-design.md) and
+[operating procedure](research/G4_RUNBOOK.md). Both new seed42 arms retain the G3
+stop_half recipe; only memory list order changes. Historical G3 never replaces the
+new complete control. Two full preparations match26 files;248/1008 exposure contexts
+change while target/order,126 updates,41,788 supervised and1,879,075 input tokens match.
+The paired primary gate and every stopping/consent/fixedS0 protection are pre-registered.
+
+CPU production phases replay222 scripted native episodes/376 generation records;
+local restoration uses unchanged historical T weights as a container, not G4 training.
+580 offline tests pass175.137s, with7 final focused operating tests passing after the
+launcher review. Real G4 weights/performance, cloud transport and final exact-head CI
+remain pending. Frozen execution covers87 sources; completed G3 sources stay unchanged.
+
+The continuous lease retains the real05:35 boot and separate trial timestamp. One
+durable dispatch reservation prevents automatic duplicate launch; existing14:00
+guard identity must be alive. Work<=11:45 and collection<=12:30, original cumulative
+CNY20 unchanged. New bounded archive reads are unit-tested, not yet a measured network
+speed improvement.48 reserved tasks remain unused. Next: exact-commit checks, isolated
+dispatch, actual restoration and paired case analysis; morning report by14:00 UTC.
+
 ## Current: G3 complete and restored; overnight lease continues for the next isolated pilot
 
 2026-10-03 UTC. [Complete G3 review](research/2026-10-03-g3-complete-results.md):
