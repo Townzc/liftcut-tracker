@@ -20,8 +20,13 @@ At06:49:10 the replacement14:00 guard3560 and completion watcher3561 were actual
 armed outside the frozen checkout. The monitor validated the original binding,
 verified the retained archive prefix against the cloud, and resumed a copy. It reports
 evaluate-stop_all started06:39:27. Actual final restoration/receipt and controller
-handoff are still pending. Frozen74 source files are unchanged;7 focused power/recovery
-tests pass. Full-suite/CI results on this new commit are pending. DraftPR38 remains open.
+handoff were initially pending. Watcher3561 then failed because it misclassified the
+old power guard child as a training worker. An inspected correction exempts only that
+exact saved guard identity; real workers/PID reuse remain blocked. One foreground
+repair completed the actual handoff06:58:51; guard3560 remains, no collector/training
+restart. Original failure evidence is retained. Full573 tests pass170.865s;9 publication
+tests cover the additional separate-consumer evidence. Final exact-head CI and complete
+local model restoration are pending. Frozen74 source files are unchanged; draftPR38 remains open.
 
 ## Historical: G3 second opening is training; result publication tools prepared
 

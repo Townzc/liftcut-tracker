@@ -10,7 +10,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'src')]
-from analyze_g3_results import case_comparison, normal_comparison, control_scope
+from analyze_g3_results import case_comparison, normal_comparison, control_scope, overnight_observations
 from liftcut_agent.benchmark import read_jsonl
 from plot_g3_results import plot
 from publish_g3_results import ARMS, EXECUTION, WEIGHTS, verify_complete, verify_inventory
@@ -133,6 +133,35 @@ class G3PublicationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'historical control'):
                 plot(p/'review.json',p/'figures')
             self.assertFalse((p/'figures').exists())
+
+    def test_overnight_consumer_is_not_old_controller_ack_or_shutdown(self):
+        with tempfile.TemporaryDirectory() as temp:
+            p=Path(temp)
+            save(p/'restore-receipt.json', {'synthetic': 'not model evidence'})
+            receipt=json.loads((p/'restore-receipt.json').read_text())
+            guard={'maximum_compute_proxy_cny':18.72,'identity':{'pid':123}}
+            install={'guard':guard,'lease':{'authorization':'unit-authorized',
+                     'deadline':'2026-10-03T14:00:00+00:00','reserve_cny':20}}
+            index={'synthetic':'index'}
+            handoff={'index':index,'replacement_guard':guard,'training_conditions_changed':False,
+                     'at_utc':'2026-10-03T07:00:00+00:00'}
+            consumed={'receipt_sha256':sha256(p/'restore-receipt.json'),'receipt':receipt,
+                      'original_controller_consumption':'unobserved','new_receipts_created':0}
+            for name,obj in [('overnight-lease-install',install),('backup-index',index),
+                             ('overnight-handoff',handoff),('inspected-handoff-repair',{'result':handoff}),
+                             ('overnight-receipt-consumption',consumed)]:
+                save(p/(name+'.json'),obj)
+            events=[{'event':'new_user_overnight_lease_armed'},
+                    {'event':'real_receipt_consumed_by_overnight_handoff',**consumed}]
+            (p/'operations.jsonl').write_text('\n'.join(json.dumps(r) for r in events))
+            actual=overnight_observations(p)
+            self.assertEqual(actual['old_controller_receipt_consumption'],'unobserved')
+            self.assertFalse(actual['provider_billing_stopped'])
+            self.assertTrue(actual['shutdown_deferred_by_new_user_authorization'])
+            consumed['receipt_sha256']='0'*64
+            save(p/'overnight-receipt-consumption.json',consumed)
+            with self.assertRaisesRegex(ValueError,'genuine receipt consumption'):
+                overnight_observations(p)
 
 
 if __name__ == '__main__':

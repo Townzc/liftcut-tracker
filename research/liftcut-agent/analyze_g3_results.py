@@ -70,6 +70,39 @@ def control_scope(control):
             'independent_generalization': False}
 
 
+def overnight_observations(public):
+    """Keep the old controller's unobserved ACK distinct from the new consumer."""
+    rows = read_jsonl(public / 'operations.jsonl')
+    armed = [r for r in rows if r['event'] == 'new_user_overnight_lease_armed']
+    if not armed:
+        return None
+    install = read(public / 'overnight-lease-install.json')
+    handoff = read(public / 'overnight-handoff.json')
+    repair = read(public / 'inspected-handoff-repair.json')
+    consumed = read(public / 'overnight-receipt-consumption.json')
+    observed = [r for r in rows if r['event'] == 'real_receipt_consumed_by_overnight_handoff']
+    if (len(armed) != 1 or len(observed) != 1 or repair['result'] != handoff
+            or handoff['index'] != read(public / 'backup-index.json')
+            or handoff['replacement_guard'] != install['guard']
+            or consumed['receipt_sha256'] != sha256(public / 'restore-receipt.json')
+            or consumed['receipt'] != read(public / 'restore-receipt.json')
+            or any(observed[0].get(k) != v for k, v in consumed.items())
+            or consumed['original_controller_consumption'] != 'unobserved'
+            or consumed['new_receipts_created'] != 0 or handoff['training_conditions_changed']):
+        raise ValueError('overnight handoff or genuine receipt consumption differs')
+    return {'authorization': install['lease']['authorization'],
+            'deadline_utc': install['lease']['deadline'],
+            'cumulative_reserve_cny': install['lease']['reserve_cny'],
+            'maximum_compute_proxy_cny_including_prior_failure': install['guard']['maximum_compute_proxy_cny'],
+            'old_controller_receipt_consumption': 'unobserved',
+            'independent_consumer': consumed,
+            'handoff_completed_at_utc': handoff['at_utc'],
+            'old_watcher_failure': 'original power guard incorrectly treated as a training worker; inspected repair',
+            'g3_conditions_changed': False, 'shutdown_deferred_by_new_user_authorization': True,
+            'provider_billing_stopped': False,
+            'cost_scope': 'G3 client-end cost is cumulative elapsed compute to collection, not final overnight cost.'}
+
+
 def review(public, prepared, diagnostic, d2, tokenizer, *, restored_run=None):
     publication_integrity(public)
     result = verify_complete(public / 'run', public / 'backup-index.json', public / 'restore-receipt.json',
@@ -110,6 +143,7 @@ def review(public, prepared, diagnostic, d2, tokenizer, *, restored_run=None):
                      'gate_panel_cases': sum(len(m) for m in maps.values())}
     operations = operational_evidence(public, result['binding'])
     operations['reserve_cny'] = BUDGET['reserve_cny']
+    operations['overnight_power_lease'] = overnight_observations(public)
     observed = [r for r in read_jsonl(public / 'operations.jsonl') if r['event'] == 'receipt_final_observed']
     for row in observed:
         if row['receipt_sha256'] != sha256(public / 'restore-receipt.json'):

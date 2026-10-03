@@ -17,6 +17,8 @@ from server_workspace import dump_new, sha256
 
 EXECUTION = 'eaa132538fefdf28973d808dd56a159e19b86d67'
 WEIGHTS = {f'training/{a}/final/adapter_model.safetensors' for a in ARMS}
+POWER_FILES = ('overnight-lease-install.json', 'inspected-handoff-repair.json',
+               'overnight-handoff.json', 'overnight-receipt-consumption.json')
 
 
 def inventory(run):
@@ -115,6 +117,9 @@ def publish(restored, index, operations, output, prepared, diagnostic, d2, token
                          (operations / 'events.jsonl', 'operations.jsonl'),
                          (operations / 'server-events-latest.jsonl', 'server-events.jsonl')):
         shutil.copyfile(source, output / name)
+    if any(r['event'] == 'new_user_overnight_lease_armed' for r in events):
+        for name in POWER_FILES:
+            shutil.copyfile(operations / name, output / name)
     verify_inventory(output / 'run', metadata_only=True)
     record = {'version': 'g3-publication-v1', 'binding': result['binding'],
               'original_receipt_sha256': sha256(receipt),
@@ -140,6 +145,8 @@ def publication_integrity(public):
     files, inventories = inventory(public / 'run')
     required = {'run/' + n for n in (set(files) - WEIGHTS) | inventories}
     required |= {'backup-index.json', 'restore-receipt.json', 'operations.jsonl', 'server-events.jsonl'}
+    if any(r['event'] == 'new_user_overnight_lease_armed' for r in read_jsonl(public / 'operations.jsonl')):
+        required |= set(POWER_FILES)
     if set(record['public_files_sha256']) != required:
         raise ValueError('publication provenance must cover all original public files')
     if (record['omitted_weight_files'] != {n: files[n] for n in sorted(WEIGHTS)}
