@@ -1,5 +1,16 @@
 # LiftCut-AgentLab research roadmap
 
+Latest result: [G3 complete](research/2026-10-03-g3-complete-results.md), both real
+weights/222 native episodes/376 generations restored. stop_half passes stopping
+mechanism, stop_all fails; both overall candidates fail. Normal12/12 and infeasible4/4
+are restored, while memory11/48 or15/48 and ID2/12 regress. Carry forward only the half
+stopping recipe to a separately prepared memory-order intervention with a new complete
+control. Preserve all losses and fixedS0 protections. No adapter promotion or independent
+generalization claim. The overnight server remains on under the confirmed14:00UTC and
+CNY20 lease, with a real separate receipt consumer; old controller ACK is unobserved.
+Prepare next isolated trial and the morning feature/shortfall/future/ETA report; see
+[progress](AGENT_RESEARCH_PROGRESS.md). Earlier running-status paragraphs below are history.
+
 Current authorization update: the maintainer confirmed an overnight continuous lease
 through2026-10-03 07:00 Los Angeles /14:00 UTC, cumulative CNY20. The
 [overnight plan](research/2026-10-03-overnight-plan.md) allows evidence-driven follow-up

@@ -27,7 +27,18 @@ Rebuild to a new output with:
 python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/outputs/g1-demo.html
 ```
 
-Latest result (2026-10-03 UTC): [G2 complete analysis](../../docs/research/2026-10-03-g2-complete-results.md)
+Latest result (2026-10-03 UTC): [G3 complete analysis](../../docs/research/2026-10-03-g3-complete-results.md)
+verifies two real adapters,222 native/environment episodes and376 generations.
+Normal12/12 and infeasible4/4 in both arms; stop_half preserves repair4/4 and passes
+the stopping mechanism gate. stop_all falsely stops one repair task. Memory11/48
+and15/48, ID2/12 in both: both overall candidate gates FAIL. No promotion or
+independent-generalization claim; historical G2 was not fully retrained. The
+[public package](reports/g3-seed42-2026-10-03/README.md) keeps all gains/regressions
+and separates genuine overnight receipt consumption from the old controller ACK.
+The server remains on under a newly confirmed14:00UTC/CNY20 lease for an isolated
+memory-order follow-up;48 reserved tasks remain unused.
+
+Historical result: [G2 complete analysis](../../docs/research/2026-10-03-g2-complete-results.md)
 reports full tasks2/12→10/12, repair3/4→4/4, true infeasible2/4→0/4. Both original
 mechanism and candidate gates FAIL. Both new weights,222 native/environment
 episodes and439 actual generations are restored/audited; three local context guards

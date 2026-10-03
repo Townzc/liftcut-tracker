@@ -1,0 +1,102 @@
+{
+  "script_sha256": "6c4ccba42c3724fadc2cd235d0df91f1ee73f8c9558b74639a31d139b17db05e",
+  "lease": {
+    "version": "liftcut-overnight-lease-v1",
+    "deadline": "2026-10-03T14:00:00+00:00",
+    "reserve_cny": 20,
+    "hourly_cny": 2.18,
+    "execution_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+    "g3_run": "/root/autodl-tmp/liftcut/runs/g3-run-20261003-053547",
+    "original_hard_cutoff": "2026-10-03T08:35:00.409447+00:00",
+    "authorization": "explicit_user_20261003_overnight_0700_Los_Angeles_CNY20",
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "earlier_failed_opening_cny": 0.3630052281944445,
+    "code_root": "/root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent",
+    "controller_identity": {
+      "pid": 1325,
+      "argv": [
+        "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+        "/root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent/run_g3_window.py",
+        "--model-dir",
+        "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+        "--model-manifest",
+        "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json",
+        "--prepared-dir",
+        "/root/autodl-tmp/liftcut/data/g3-eaa1325/prepared",
+        "--diagnostic-dir",
+        "/root/autodl-tmp/liftcut/data/g3-eaa1325/diagnostic",
+        "--d2-dir",
+        "/root/autodl-tmp/liftcut/data/g3-eaa1325/d2",
+        "--tokenizer-dir",
+        "/root/autodl-tmp/liftcut/data/g3-eaa1325/tokenizer",
+        "--output-dir",
+        "/root/autodl-tmp/liftcut/runs/g3-run-20261003-053547",
+        "--expected-code-commit",
+        "eaa132538fefdf28973d808dd56a159e19b86d67",
+        "--hourly-cny",
+        "2.18",
+        "--booted-at",
+        "2026-10-03T05:35:00.409447+00:00",
+        "--setup-guard",
+        "/root/autodl-tmp/liftcut/runs/g3-ops-20261003-053547/setup-guard.jsonl",
+        "--execute",
+        "--shutdown-when-done"
+      ],
+      "state": "S",
+      "ppid": 1,
+      "start_ticks": "1397921247"
+    },
+    "original_guard_identities": [
+      {
+        "pid": 1229,
+        "argv": [
+          "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+          "/root/autodl-tmp/liftcut/staging/g3-eaa1325/shutdown_guard.py",
+          "--arm",
+          "--deadline",
+          "2026-10-03T08:35:00.409447+00:00",
+          "--receipt",
+          "/root/autodl-tmp/liftcut/runs/g3-ops-20261003-053547/setup-guard.jsonl"
+        ],
+        "state": "S",
+        "ppid": 1,
+        "start_ticks": "1397913690"
+      },
+      {
+        "pid": 1334,
+        "argv": [
+          "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+          "/root/autodl-tmp/liftcut/code/eaa132538fefdf28973d808dd56a159e19b86d67/research/liftcut-agent/shutdown_guard.py",
+          "--arm",
+          "--deadline",
+          "2026-10-03T08:35:00.409447+00:00",
+          "--receipt",
+          "/root/autodl-tmp/liftcut/runs/g3-run-20261003-053547/deadline-guard.jsonl"
+        ],
+        "state": "S",
+        "ppid": 1325,
+        "start_ticks": "1397922016"
+      }
+    ]
+  },
+  "guard_pid": 3560,
+  "watcher_pid": 3561,
+  "guard": {
+    "deadline": "2026-10-03T14:00:00+00:00",
+    "identity": {
+      "pid": 3560,
+      "argv": [
+        "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+        "/root/autodl-tmp/liftcut/ops/overnight-20261003/overnight_lease.py",
+        "--lease",
+        "/root/autodl-tmp/liftcut/ops/overnight-20261003/lease.json",
+        "--mode",
+        "guard"
+      ],
+      "state": "R",
+      "ppid": 3559,
+      "start_ticks": "1398346997"
+    },
+    "maximum_compute_proxy_cny": 18.711090618622226
+  }
+}

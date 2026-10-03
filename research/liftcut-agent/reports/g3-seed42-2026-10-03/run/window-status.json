@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "failures": [],
+  "binding": {
+    "version": "g3-window-binding-v1",
+    "execution_plan_sha256": "1b0896a8b9a2dbd98bab7b955439db8d165a9db275361c3e323d9e56aedc4360",
+    "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "work_cutoff": "2026-10-03T08:05:00.409447+00:00",
+    "hard_cutoff": "2026-10-03T08:35:00.409447+00:00",
+    "test_episodes": 0
+  },
+  "finished_work_at_utc": "2026-10-03T06:50:07.194051+00:00",
+  "provider_billing_stopped": "unknown"
+}

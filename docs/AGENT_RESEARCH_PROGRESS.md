@@ -1,6 +1,31 @@
 # Agent research progress and handoff
 
-## Current: authorized overnight window; G3 recovery collector and new power guard active
+## Current: G3 complete and restored; overnight lease continues for the next isolated pilot
+
+2026-10-03 UTC. [Complete G3 review](research/2026-10-03-g3-complete-results.md):
+stop_half passes the original stopping mechanism gate, stop_all fails with one false
+stop; BOTH fail overall candidate guards. Normal12/12 each, true infeasible4/4 each,
+repair4/4 vs3/4, D2 memory11/48 vs15/48, ID2/12 each. Historical G2 is not a fresh
+complete control; identical initialization/shared12 steps remain prefix evidence only.
+All111 comparisons preserve half8 gains/19 losses and all9 gains/17 losses. No promotion.
+
+Frozen restoration verified two actual132,187,888-byte/504-tensor weights,222 native
+episodes and376 generations/tokens. Recovery49175 ENDED0; genuine receipt atomically
+published07:13:23 and consumed by the separate overnight handoff07:13:24. Old controller
+consumption remains unobserved. [Public evidence](../research/liftcut-agent/reports/g3-seed42-2026-10-03/README.md)
+preserves copied bytes, original collector history and inspected handoff failure/repair.
+Figures rendered and visually checked. Cumulative boot-to-collection proxyCNY3.575,
+prior failed openingCNY0.363 separate; server deliberately stays ON under the authorized
+14:00UTC/07:00Los_Angeles guard and cumulativeCNY20 lease. No shutdown/billing-stop claim.
+
+Next: keep the stop_half recipe, prepare a fresh complete control plus a train-only
+memory permutation intervention. Preliminary CPU rebuilds are identical for32 memory
+scenarios/12 orders and unchanged targets; this is not new model evidence. Freeze the
+new design/continuous-lease controller before launching.48 reserved tasks stay unused,
+no paid API/expansion/reboot. Finish exact-head PR38 checks/Git delivery, then the new
+focused branch; deliver the requested capability/shortfall/development/ETA report by14:00.
+
+## Historical: authorized overnight window; G3 recovery collector and new power guard active
 
 The maintainer explicitly confirmed Los Angeles 2026-10-03 07:00 / UTC14:00 and a
 cumulative CNY20 reserve at2.18/hour. [Overnight plan](research/2026-10-03-overnight-plan.md)
