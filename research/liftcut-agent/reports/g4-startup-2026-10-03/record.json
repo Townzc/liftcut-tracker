@@ -1,0 +1,18 @@
+{
+  "version": "g4-pre-dispatch-failure-v1",
+  "failed_attempt": "20261003-080715",
+  "execution_commit": "389527f23b28b49c601f0361c4b9499f7fb937a6",
+  "training_started": false,
+  "gpu_calls": 0,
+  "reservation_exists_at_inspection": false,
+  "remote_archive_cleanup_performed": false,
+  "original_boot_preserved": true,
+  "new_boot_or_budget": false,
+  "reason": "Windows Path serialized remote paths with backslashes; first remote hash command returned127 before dispatch.",
+  "readonly_inspection_first_attempt": "An ephemeral inspection helper contained one embedded null byte; SSH rejected the command. Corrected raw string inspection then succeeded; no training action was issued.",
+  "files": {
+    "events.jsonl": "e0af2f6add4cbb127e23a7fee008ef7745bbd7136cb2a8cfc3c6ffd8e02ecf7a",
+    "inspection.json": "c18688e85ceebe98d6221dcde38ed1d22b40dfb7752fd040230701c2311a0b83",
+    "remote-hash.stderr": "91daa95b18c93918e306161ce2029d4e580aeb1c5762b3d57c47e875393b8f57"
+  }
+}

@@ -38,6 +38,12 @@ class SFTP:
 
 
 class G4Tests(unittest.TestCase):
+    def test_remote_paths_are_posix_on_windows_and_linux(self):
+        from pathlib import PurePosixPath
+        self.assertIsInstance(launcher.PERSIST,PurePosixPath)
+        self.assertEqual(launcher.PYTHON,'/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python')
+        self.assertEqual(str(launcher.PERSIST/'staging/g4-example'),'/root/autodl-tmp/liftcut/staging/g4-example')
+
     def test_deadlines_keep_boot_and_hard_boundary(self):
         start='2026-10-03T08:10:00+00:00'
         work,collect=deadlines(start,aware(start))
@@ -122,6 +128,9 @@ class G4Tests(unittest.TestCase):
                 def __init__(self,*_):pass
                 def run(self,argv,label,**_):
                     labels.append(label)
+                    self_outer.assertEqual(argv[0],'/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python')
+                    if label=='dispatch':
+                        self_outer.assertEqual(argv[1],'/root/autodl-tmp/liftcut/code/'+commit+'/research/liftcut-agent/launch_g4_overnight.py')
                     if '-c' in argv:compiled.append(compile(argv[argv.index('-c')+1],'<remote>','exec'))
                     if label=='dispatch':return json.dumps({'pid':123,'trial_started_at_utc':start})
                     return 'verified'
@@ -129,6 +138,7 @@ class G4Tests(unittest.TestCase):
                 def __init__(self,end):self.deadline=end
                 def check(self):pass
                 def remaining(self):return 600
+            self_outer=self
             with patch.object(launcher,'ROOT',root),patch.object(launcher,'verify_plan',return_value=plan),\
                  patch.object(launcher.subprocess,'run'),patch.object(launcher,'utcnow',return_value=aware(start)),\
                  patch.object(launcher,'TimeBudget',Budget),patch.object(launcher,'Remote',Remote),\
