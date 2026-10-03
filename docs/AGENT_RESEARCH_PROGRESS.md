@@ -1204,3 +1204,17 @@ CLI compilation pass. This is incomplete preparation: real G4 failure/restoratio
 reference/source freeze, controller/collector/restorer, full CPU recovery and exact
 Git checks remain required. No I1 model call or complete readiness claim. See
 [preparation status](research/2026-10-03-i1-preparation-status.md).
+
+## I1 operating contract prepared, 2026-10-03 09:46 UTC
+
+Controller, single-dispatch collector, receipt transfer and restorer are implemented
+in this isolated branch.10 focused I1 checks and595 full offline tests pass174.510s.
+A full CPU drill with actual unchanged historical T bytes restores222 scripted
+native/environment episodes and376 generation records, then creates a SCRIPTED
+complete receipt; consumption is simulated locally.111 scripted reference episodes
+are separate. This is neither actual G4 trigger nor I1 model/remote evidence.
+Metadata-only partial recovery is being checked separately. Actual G4 restoration,
+failure decision, fixed reference/source freeze, exact-head Git checks and original
+time fit still gate all I1 dispatch. Root G4 collector remains the only cloud run.
+
+09:48 UTC: metadata-only CPU recovery passed; receipt remains partial with0 complete episodes. Full-drill source digest is unchanged. No real I1 trigger/freeze or GPU dispatch.

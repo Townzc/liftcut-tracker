@@ -167,3 +167,33 @@ def verify_worker(run, commit):
     verify_live_lease(plan)
     verify_adapter(run / 'reference/final', plan['reference'])
     return plan, bind
+
+
+if __name__ == '__main__':
+    import argparse
+    from server_workspace import dump_new
+    p = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    for name in ('create-reference', 'freeze', 'verify'):
+        p.add_argument('--' + name, action='store_true')
+    for name in ('g4-restored', 'g4-index', 'g4-prepared', 'diagnostic-dir', 'd2-dir', 'tokenizer-dir'):
+        p.add_argument('--' + name, type=Path)
+    args = p.parse_args()
+    if sum((args.create_reference, args.freeze, args.verify)) != 1:
+        p.error('select exactly one reference/freeze/verification action')
+    if args.create_reference:
+        reference = reference_from_restored(args.g4_restored, args.g4_index, args.g4_prepared,
+                                           args.diagnostic_dir, args.d2_dir, args.tokenizer_dir)
+        dump_new(REFERENCE, reference)
+        print({'real_G4_failure_verified': True, 'checkpoint_selection': reference['selection'], 'gpu_calls': 0})
+    elif args.freeze:
+        plan = execution_plan(read(REFERENCE))
+        dump_new(EXECUTION, plan)
+        print({'frozen_sources': len(plan['source_sha256']), 'gpu_calls': 0})
+    else:
+        from prepare_state_diagnostics import verify_prepared as verify_diagnostic
+        from prepare_counterfactual_diagnostics import verify_prepared as verify_d2, load_tokenizer
+        plan = verify_plan()
+        verify_diagnostic(args.diagnostic_dir)
+        verify_d2(args.d2_dir)
+        load_tokenizer(args.tokenizer_dir)
+        print({'frozen_sources': len(plan['source_sha256']), 'gpu_calls': 0})
