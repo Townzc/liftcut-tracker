@@ -252,10 +252,13 @@ class TransferTests(unittest.TestCase):
             path = Path(tmp) / "config.json"
             dump_new(path, raw)
             run = Mock(return_value=SimpleNamespace(stdout=json.dumps({"offline_only":True,"actual_seed42_adapter_bytes_verified":True,"gpu_calls":0})))
-            resolved, _ = launch.local_preflight(path, runner=run)
-            argv = run.call_args.args[0]
-            self.assertEqual(argv[0], str(resolved["restore_python"]))
-            self.assertNotEqual(argv[0], sys.executable)
+            # The test may itself be run by restore_python. Simulate a different
+            # transport interpreter explicitly instead of assuming the host one.
+            with patch.object(sys, 'executable', 'transport-only-python'):
+                resolved, _ = launch.local_preflight(path, runner=run)
+                argv = run.call_args.args[0]
+                self.assertEqual(argv[0], str(resolved["restore_python"]))
+                self.assertNotEqual(argv[0], sys.executable)
             self.assertNotIn("--connect", argv)
 
     def test_new_opening_never_reuses_previous_run_or_output_paths(self):

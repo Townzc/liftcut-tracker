@@ -1,0 +1,15 @@
+{
+  "binding": {
+    "version": "g3-arm-binding-v1",
+    "plan_digest": "31584aeec679a6da9f4f32a6dcfa3367dac71bfffc9b9f38895848926b6f214a",
+    "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+    "arm": "stop_all",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "shared_steps": 12,
+  "reproduced": true,
+  "initial_adapter_matches_g2": true,
+  "comparison": "step, loss, gradient_norm_before_clip and cumulative counters; exact equality",
+  "policy": "continue either way; mismatch limits the result to a historical comparison"
+}

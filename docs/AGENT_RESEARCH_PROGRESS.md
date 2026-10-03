@@ -1,6 +1,82 @@
 # Agent research progress and handoff
 
-## Current: G3 ready for a new opening; first setup window failed before training
+## Current: G3 complete and restored; overnight lease continues for the next isolated pilot
+
+2026-10-03 UTC. [Complete G3 review](research/2026-10-03-g3-complete-results.md):
+stop_half passes the original stopping mechanism gate, stop_all fails with one false
+stop; BOTH fail overall candidate guards. Normal12/12 each, true infeasible4/4 each,
+repair4/4 vs3/4, D2 memory11/48 vs15/48, ID2/12 each. Historical G2 is not a fresh
+complete control; identical initialization/shared12 steps remain prefix evidence only.
+All111 comparisons preserve half8 gains/19 losses and all9 gains/17 losses. No promotion.
+
+Frozen restoration verified two actual132,187,888-byte/504-tensor weights,222 native
+episodes and376 generations/tokens. Recovery49175 ENDED0; genuine receipt atomically
+published07:13:23 and consumed by the separate overnight handoff07:13:24. Old controller
+consumption remains unobserved. [Public evidence](../research/liftcut-agent/reports/g3-seed42-2026-10-03/README.md)
+preserves copied bytes, original collector history and inspected handoff failure/repair.
+Figures rendered and visually checked. Cumulative boot-to-collection proxyCNY3.575,
+prior failed openingCNY0.363 separate; server deliberately stays ON under the authorized
+14:00UTC/07:00Los_Angeles guard and cumulativeCNY20 lease. No shutdown/billing-stop claim.
+
+Next: keep the stop_half recipe, prepare a fresh complete control plus a train-only
+memory permutation intervention. Preliminary CPU rebuilds are identical for32 memory
+scenarios/12 orders and unchanged targets; this is not new model evidence. Freeze the
+new design/continuous-lease controller before launching.48 reserved tasks stay unused,
+no paid API/expansion/reboot. Finish exact-head PR38 checks/Git delivery, then the new
+focused branch; deliver the requested capability/shortfall/development/ETA report by14:00.
+
+## Historical: authorized overnight window; G3 recovery collector and new power guard active
+
+The maintainer explicitly confirmed Los Angeles 2026-10-03 07:00 / UTC14:00 and a
+cumulative CNY20 reserve at2.18/hour. [Overnight plan](research/2026-10-03-overnight-plan.md)
+supersedes the old end-of-G3 shutdown policy, not the frozen G3 scientific conditions
+or its08:05 compute cutoff. Subsequent evidence-driven pilots are authorized inside
+this continuous lease, after preparation and a new Git freeze. No expansion, paid
+API, reboot or reserved48; leave the last45 minutes for backup and the morning report.
+
+At06:28 the tool no longer recognized8131; a06:30 process inspection found no old
+Python collector. Its exact loss time/cause is unknown. The06:31 cloud observation
+confirmed training continued: stop_half126 updates/111 evaluation episodes written,
+stop_all85 updates. Both shared12-step records match; complete local replay is pending.
+The101,777,408-byte old partial and original events are retained untouched.
+
+Inspected recovery49175 started in a NEW064210 directory, without launching training.
+At06:49:10 the replacement14:00 guard3560 and completion watcher3561 were actually
+armed outside the frozen checkout. The monitor validated the original binding,
+verified the retained archive prefix against the cloud, and resumed a copy. It reports
+evaluate-stop_all started06:39:27. Actual final restoration/receipt and controller
+handoff were initially pending. Watcher3561 then failed because it misclassified the
+old power guard child as a training worker. An inspected correction exempts only that
+exact saved guard identity; real workers/PID reuse remain blocked. One foreground
+repair completed the actual handoff06:58:51; guard3560 remains, no collector/training
+restart. Original failure evidence is retained. Full573 tests pass170.865s;9 publication
+tests cover the additional separate-consumer evidence. Final exact-head CI and complete
+local model restoration are pending. Frozen74 source files are unchanged; draftPR38 remains open.
+
+## Historical: G3 second opening is training; result publication tools prepared
+
+2026-10-03 UTC. After the first opening was closed, the user explicitly reopened.
+New opening20261003-053547 uses checked eaa1325 unchanged. Assets resumed only after
+matching the remote prefix, installation verifies30 assets, launch returned0 at
+05:38:12, train-stop_half started05:38:28. Actual boot05:35:00.409447 fixes
+work08:05:00.409447/hard08:35:00.409447 UTC; CNY8 reserve and2.18/hour unchanged.
+Sole launcher/collector8131, quiet g3-seed42 heartbeat active. Never launch twice.
+
+[Original startup snapshot](../research/liftcut-agent/reports/g3-seed42-window-2026-10-03/README.md)
+at05:49:49 shows55/126 updates, GPU100%,16141MiB, both hard guards alive. stop_half
+shared12-step reproduction and initialization match G2; this is prefix evidence,
+not a freshly retrained complete historical control or a model-quality result.
+
+New publication/analysis/plot tools preserve raw evidence, omit only model weights,
+require the genuine complete restore receipt and replay, and retain all111 per-arm
+case comparisons (including the one diagnostic control omitted from110 gate-panel
+cases). Original mechanism/candidate gates remain unchanged. Eight focused tests
+pass; full suite565 tests pass in348.347s. Final exact-head CI and complete model
+evidence remain pending for this new result branch.
+Both real complete results remain pending;48 reserved tasks unused. First startup
+failure/estimateCNY0.36 stays in history; PR37 passed all5 checks and merged27541b6.
+
+## Historical: G3 ready for a new opening; first setup window failed before training
 
 Updated2026-10-03 UTC. PR36 merged; all five checks passed exact execution commit
 eaa132538fefdf28973d808dd56a159e19b86d67, including real-tokenizer reconstruction.

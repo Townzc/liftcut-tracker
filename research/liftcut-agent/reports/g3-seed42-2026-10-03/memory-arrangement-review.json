@@ -1,0 +1,222 @@
+{
+  "version": "g3-memory-arrangement-review-v1",
+  "choices": {
+    "g2_historical": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      }
+    },
+    "stop_half": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 5,
+        "chose:U": 3,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 3,
+        "chose:U": 5,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 5,
+        "chose:V": 1,
+        "chose:X": 1,
+        "chose:raw/other": 1,
+        "correct": 1,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:O": 6,
+        "chose:V": 1,
+        "chose:X": 1,
+        "correct": 1,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:O": 1,
+        "chose:U": 3,
+        "chose:V": 4,
+        "correct": 4,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:O": 1,
+        "chose:V": 5,
+        "chose:X": 2,
+        "correct": 5,
+        "total": 8
+      }
+    },
+    "stop_all": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:U": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 1,
+        "chose:X": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 5,
+        "chose:U": 1,
+        "chose:V": 2,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 5,
+        "chose:U": 3,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 5,
+        "chose:X": 3,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:O": 4,
+        "chose:V": 3,
+        "chose:X": 1,
+        "correct": 3,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:U": 3,
+        "chose:V": 5,
+        "correct": 5,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 5,
+        "chose:X": 3,
+        "correct": 5,
+        "total": 8
+      }
+    }
+  },
+  "episodes_sha256": {
+    "g2_historical": "0c990fc69ca71fdfdcae7a55af8df44b5ec5dfc5a30767f5bd568664955209a9",
+    "stop_half": "be57440674264253e659dc494b0ab40c0cd88fc90ff2b0920431bce5075f23dd",
+    "stop_all": "623580c5a8c370ecbffcf4cdd825ef140fd97e6906a47f2655022b9052303f31"
+  },
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "scope": "Post-hoc description of reused dev states; not proof of a unique causal mechanism."
+}

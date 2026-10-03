@@ -1,0 +1,24 @@
+{
+  "binding": {
+    "version": "g3-arm-binding-v1",
+    "plan_digest": "31584aeec679a6da9f4f32a6dcfa3367dac71bfffc9b9f38895848926b6f214a",
+    "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+    "arm": "stop_all",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "runtime": {
+    "packages": {
+      "torch": "2.8.0+cu128",
+      "transformers": "4.57.6",
+      "tokenizers": "0.22.2",
+      "jinja2": "3.1.6",
+      "accelerate": "1.10.1",
+      "peft": "0.17.1",
+      "bitsandbytes": "0.47.0"
+    },
+    "python": "3.12.3",
+    "cuda_build": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 4090"
+  }
+}

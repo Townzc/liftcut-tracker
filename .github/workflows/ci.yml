@@ -490,6 +490,25 @@ jobs:
       - name: Reproduce the memory arrangement audit from the exact G2 training pools
         run: python research/liftcut-agent/analyze_memory_coverage.py --prepared-dir research/liftcut-agent/outputs/ci-g2-a --check
 
+      - name: Reconstruct complete G3 evidence and the separate overnight receipt
+        run: |
+          python research/liftcut-agent/analyze_g3_results.py \
+            --public-dir research/liftcut-agent/reports/g3-seed42-2026-10-03 \
+            --prepared-dir research/liftcut-agent/outputs/ci-g3-a \
+            --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics \
+            --d2-dir research/liftcut-agent/outputs/ci-d2-a \
+            --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
+          python research/liftcut-agent/analyze_g3_memory.py --public-dir research/liftcut-agent/reports/g3-seed42-2026-10-03 --check
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path('research/liftcut-agent/reports/g3-seed42-2026-10-03/collector-history')
+          record=json.loads((p/'manifest.json').read_text())
+          for name,checksum in record['files'].items():
+              assert hashlib.sha256((p/name).read_bytes()).hexdigest()==checksum
+          assert record['new_receipts_created']==0 and record['exact_old_collector_loss_cause']=='unknown'
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -1,5 +1,26 @@
 # LiftCut-AgentLab research roadmap
 
+Latest result: [G3 complete](research/2026-10-03-g3-complete-results.md), both real
+weights/222 native episodes/376 generations restored. stop_half passes stopping
+mechanism, stop_all fails; both overall candidates fail. Normal12/12 and infeasible4/4
+are restored, while memory11/48 or15/48 and ID2/12 regress. Carry forward only the half
+stopping recipe to a separately prepared memory-order intervention with a new complete
+control. Preserve all losses and fixedS0 protections. No adapter promotion or independent
+generalization claim. The overnight server remains on under the confirmed14:00UTC and
+CNY20 lease, with a real separate receipt consumer; old controller ACK is unobserved.
+Prepare next isolated trial and the morning feature/shortfall/future/ETA report; see
+[progress](AGENT_RESEARCH_PROGRESS.md). Earlier running-status paragraphs below are history.
+
+Current authorization update: the maintainer confirmed an overnight continuous lease
+through2026-10-03 07:00 Los Angeles /14:00 UTC, cumulative CNY20. The
+[overnight plan](research/2026-10-03-overnight-plan.md) allows evidence-driven follow-up
+pilots after G3 analysis and a separately checked freeze. G3 itself keeps its original
+training/score conditions and08:05 compute cutoff. Recovery49175 and the new14:00
+guard are active; full local G3 results remain pending. Complete the morning capability,
+shortfall, next-step and remaining-time report within this window. Older per-window
+shutdown/budget statements below describe history and are superseded only where the
+new explicit authorization says so. No reserved48, paid API, expansion or reboot.
+
 Updated: 2026-10-03 UTC. [G2 complete results](research/2026-10-03-g2-complete-results.md)
 restore full tasks2/12→10/12 and repair3/4→4/4, but true infeasible2/4→0/4.
 Both original mechanism and candidate gates FAIL; memory24/48 and ID6/12 also
@@ -13,8 +34,11 @@ with a shared-prefix reproduction check planned during training). The [memory au
 shows training covers only 4 of the record orders D2 uses; all coverage_mix memory
 errors fall in unseen orders. G3 exact-head CI and final local installation now pass.
 The [first setup window](research/2026-10-03-g3-startup-failure.md) ended during upload
-before training; platform OFF is user-confirmed, compute proxy CNY0.36. Next is a new
-opening using the retained verified bundle, with no repeat local rehearsal while billed.
+before training; its platform OFF is user-confirmed, compute proxy CNY0.36 retained.
+The user then opened a new window20261003-053547: checked installation/launch succeeded
+and stop_half is training. Original work08:05:00.409447/hard08:35:00.409447 UTC and
+CNY8 reserve remain fixed. Next is complete restoration, per-arm gates and full
+case-by-case review; no G3 efficacy claim yet. See [progress](AGENT_RESEARCH_PROGRESS.md).
 
 [Next local work](research/2026-10-03-post-g2-next-plan.md) isolates the stopping
 boundary: keep normal/repair coverage and move exposures of existing train-only

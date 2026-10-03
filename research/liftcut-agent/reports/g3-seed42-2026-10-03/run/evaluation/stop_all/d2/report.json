@@ -1,0 +1,60 @@
+{
+  "version": "counterfactual-diagnostics-v2",
+  "cases_digest": "831aafa072d70c774e027e095e149163d5c1cac18999ca9da408f112e1c5afd5",
+  "panels": {
+    "memory": {
+      "total": 48,
+      "correct": 15,
+      "defer": 0,
+      "model_requests": 48,
+      "autonomous_blocked_writes": 0,
+      "prompt_tokens": 90588,
+      "completion_tokens": 1111,
+      "policy_failures": {}
+    },
+    "identity": {
+      "total": 12,
+      "correct": 2,
+      "defer": 0,
+      "model_requests": 12,
+      "autonomous_blocked_writes": 0,
+      "prompt_tokens": 22557,
+      "completion_tokens": 282,
+      "policy_failures": {}
+    },
+    "consent": {
+      "total": 12,
+      "correct": 12,
+      "defer": 0,
+      "model_requests": 12,
+      "autonomous_blocked_writes": 0,
+      "prompt_tokens": 25884,
+      "completion_tokens": 450,
+      "policy_failures": {}
+    },
+    "repair": {
+      "total": 4,
+      "correct": 3,
+      "defer": 0,
+      "model_requests": 10,
+      "autonomous_blocked_writes": 0,
+      "prompt_tokens": 19358,
+      "completion_tokens": 644,
+      "policy_failures": {}
+    },
+    "infeasible": {
+      "total": 4,
+      "correct": 4,
+      "defer": 0,
+      "model_requests": 4,
+      "autonomous_blocked_writes": 0,
+      "prompt_tokens": 7122,
+      "completion_tokens": 84,
+      "policy_failures": {}
+    }
+  },
+  "scope": "Reused-development diagnosis; panels have different units and must not be pooled as task accuracy",
+  "replay": {
+    "replayed": 80
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "files": {
+    "events.jsonl": "55537dc01924c3edbc55258f5aebb1fb03a9512e2d15b36a6891d97a165f3569",
+    "observation-20261003-063111.json": "e6c02e237e61a3402c2e60cf7e372b26346bbc20ca6aa3d98ac098c581243923",
+    "observation-20261003-065554.json": "3805e28d0b76a70808b56537783e2225e2f64e5927d742614655fe5d451ebd94"
+  },
+  "exact_old_collector_loss_cause": "unknown",
+  "new_receipts_created": 0,
+  "partial_weight_bytes_committed": false,
+  "note": "Original collector events and read-only observations copied unchanged; no old final event is fabricated."
+}

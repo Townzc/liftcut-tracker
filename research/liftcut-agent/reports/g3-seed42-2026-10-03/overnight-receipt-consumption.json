@@ -1,0 +1,31 @@
+{
+  "consumer": "explicit_overnight_handoff",
+  "receipt_sha256": "fbe7967a413decf905372cd74fc745f24488abbb03cb23a532510de18479886b",
+  "receipt": {
+    "version": "g3-backup-receipt-v1",
+    "binding": {
+      "version": "g3-window-binding-v1",
+      "execution_plan_sha256": "1b0896a8b9a2dbd98bab7b955439db8d165a9db275361c3e323d9e56aedc4360",
+      "code_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+      "seed": 42,
+      "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+      "work_cutoff": "2026-10-03T08:05:00.409447+00:00",
+      "hard_cutoff": "2026-10-03T08:35:00.409447+00:00",
+      "test_episodes": 0
+    },
+    "index_digest": "ca5c737e810f1193c09d6a0782eeeac1c86f07dd6df56af005feeaf87cfc08a0",
+    "evidence_kind": "model",
+    "run_status": "complete",
+    "all_inventory_files_verified": true,
+    "complete_study_replayed": true,
+    "episodes_replayed": 222,
+    "adapter_files_verified": true,
+    "token_ids_verified": true,
+    "model_result": true,
+    "test_episodes": 0,
+    "verified_files": 58
+  },
+  "original_controller_consumption": "unobserved",
+  "shutdown_deferred_until": "2026-10-03T14:00:00+00:00",
+  "new_receipts_created": 0
+}

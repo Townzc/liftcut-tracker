@@ -64,3 +64,15 @@ G2的`f403d9a1…`。观察者看到不一致时不要中止或重开，记录�
 `audit_g3.py`输出每组的`mechanism_passed`、`candidate_passed`、相对G2对照的逐例得失、
 误停案例和`carried_forward`。两组分别报告，不合并。按设计文档第5节的规则决定下一步；
 通过也不自动加seed，失败不扩训，48个保留任务保持未使用。
+
+完整恢复且唯一收集器退出后，使用新增的发布/复盘工具（tokenizer仍用本机固定`.venv`）：
+
+```sh
+python research/liftcut-agent/publish_g3_results.py --restored-dir RESTORED_UUID --index DOWNLOADS/backup-index.json --operations ORIGINAL_OPERATIONS --output-dir NEW_PUBLIC_DIR --prepared-dir research/liftcut-agent/outputs/g3-prepared-a --diagnostic-dir research/liftcut-agent/outputs/state-diagnostic-v1 --d2-dir research/liftcut-agent/outputs/d2-prepared-a --tokenizer-dir PINNED_TOKENIZER
+python research/liftcut-agent/analyze_g3_results.py --public-dir NEW_PUBLIC_DIR --restored-run RESTORED_UUID/run --prepared-dir research/liftcut-agent/outputs/g3-prepared-a --diagnostic-dir research/liftcut-agent/outputs/state-diagnostic-v1 --d2-dir research/liftcut-agent/outputs/d2-prepared-a --tokenizer-dir PINNED_TOKENIZER
+python research/liftcut-agent/plot_g3_results.py --review NEW_PUBLIC_DIR/review.json --output-dir NEW_PUBLIC_DIR/figures
+```
+
+发布工具只复制原始证据和真实回执，排除两份权重，不制造ACK。复盘完整保留111题/组，
+其中门槛分组覆盖110题，额外记忆负对照也必须留下。即使前12步一致，公开文字与图表仍
+说明G2是历史对照，不能等同本轮新训完整对照。实际两组结果未恢复前，不生成成绩图。
