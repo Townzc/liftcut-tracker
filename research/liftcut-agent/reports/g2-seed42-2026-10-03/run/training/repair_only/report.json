@@ -1,0 +1,31 @@
+{
+  "arm": "repair_only",
+  "binding": {
+    "version": "g2-arm-binding-v1",
+    "plan_digest": "fab5e9670c56d9a1a9cadbdd2db24d8bb881b59a7ab54015398483337c2b4e50",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "arm": "repair_only",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "initial_adapter_sha256": "f403d9a13af8b10692e99c94c32fdccf193f1b23bcf373ab1812e17d2042ad04",
+  "steps": 126,
+  "processed": {
+    "input_tokens": 1905456,
+    "supervised_tokens": 41788,
+    "decisions": 1008
+  },
+  "optimization_seconds": 1522.7823866643012,
+  "first_step_loss": 0.1245998568502939,
+  "last_step_loss": 0.0018791565876946055,
+  "changed_adapter_tensors": 504,
+  "peak_allocated_bytes": 12778967552,
+  "peak_reserved_bytes": 16420700160,
+  "reload_close": true,
+  "reload_max_logit_difference": 0.0,
+  "adapter_sha256": {
+    "adapter_config.json": "1286b602e2ce9cce3a5769c7244cddef1e952e0904757f18f3270c85e99b0fca",
+    "adapter_model.safetensors": "062dc258e1534d21f7213983d5b2434fac9ee3ce9801b93f39ef0f76ed38013a"
+  },
+  "finished_at_utc": "2026-10-03T01:24:04.741429+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "binding": {
+    "version": "g2-arm-binding-v1",
+    "plan_digest": "fab5e9670c56d9a1a9cadbdd2db24d8bb881b59a7ab54015398483337c2b4e50",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "arm": "repair_only",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "initialization_seed": 42,
+  "post_probe_seed": 42,
+  "initial_adapter_sha256": "f403d9a13af8b10692e99c94c32fdccf193f1b23bcf373ab1812e17d2042ad04"
+}

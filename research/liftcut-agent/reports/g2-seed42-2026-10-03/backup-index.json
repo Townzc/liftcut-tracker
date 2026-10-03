@@ -1,0 +1,38 @@
+{
+  "version": "g2-backup-v1",
+  "binding": {
+    "version": "g2-window-binding-v1",
+    "execution_plan_sha256": "41cccf70110b887bab250a7f374f64f78989f6ecf5b8286df8d9f9018451646b",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+    "work_cutoff": "2026-10-03T03:25:41.883470+00:00",
+    "hard_cutoff": "2026-10-03T03:55:41.883470+00:00",
+    "test_episodes": 0
+  },
+  "evidence_kind": "model",
+  "status": "complete",
+  "archives": [
+    {
+      "part": "repair_only",
+      "path": "training/repair_only.tar.gz",
+      "archive": "repair_only.tar.gz",
+      "bytes": 122441129,
+      "sha256": "d3b644f273665d409c68c0b955097970c8295d8649360be05ec1a3ffbe8d352f"
+    },
+    {
+      "part": "coverage_mix",
+      "path": "training/coverage_mix.tar.gz",
+      "archive": "coverage_mix.tar.gz",
+      "bytes": 122405701,
+      "sha256": "de36f1e678013bf3b2754a5c27cfd7352c473b1a3cf999c3ffcc895029694c25"
+    },
+    {
+      "part": "evidence",
+      "path": "evidence.tar.gz",
+      "archive": "evidence.tar.gz",
+      "bytes": 567482,
+      "sha256": "4d3305d1f80a7e613d3f83f35e70cd938e8bdeae5a240cfc86268a86bc9b6f28"
+    }
+  ]
+}

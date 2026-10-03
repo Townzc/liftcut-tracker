@@ -15,14 +15,30 @@ research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
-Latest preparation (2026-10-03 UTC): [G2 context-coverage pilot](../../docs/research/2026-10-03-g2-state-coverage-pilot.md)
-tests repair-only versus matched clean/repair conditioning at the same target-token
-budget. Two CPU preparations, state-coverage assertions and the222-case operating
-drill pass; this is not a new model result. See the [runbook](../../docs/research/G2_RUNBOOK.md)
-for bounded startup, genuine restoration and shutdown after a new user opening.
-Mechanism recovery and full candidate protections have separate prespecified gates.
+For a compact research narrative and direct raw-evidence links, start with the
+[research index](../../docs/research/RESEARCH_INDEX.md) and
+[learning checkpoints](../../docs/research/AGENT_LEARNING_GUIDE.md).
+The [standalone G1 trajectory viewer](reports/g1-trajectory-demo-2026-10-03.html)
+replays all12 paired full tasks, including failures and external user events;
+download the HTML and open it locally. It makes no model or product calls.
+Rebuild to a new output with:
 
-Latest model result (2026-10-02): [G1 paired pilot and failure analysis](../../docs/research/2026-10-02-g1-complete-results.md)
+```sh
+python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/outputs/g1-demo.html
+```
+
+Latest result (2026-10-03 UTC): [G2 complete analysis](../../docs/research/2026-10-03-g2-complete-results.md)
+reports full tasks2/12→10/12, repair3/4→4/4, true infeasible2/4→0/4. Both original
+mechanism and candidate gates FAIL. Both new weights,222 native/environment
+episodes and439 actual generations are restored/audited; three local context guards
+are separate. Platform OFF is user-confirmed; compute proxy CNY3.07.
+[Public evidence](reports/g2-seed42-2026-10-03/README.md) and the
+[G2 saved trajectory viewer](reports/g2-trajectory-demo-2026-10-03.html) preserve all
+gains and regressions. [Next local plan](../../docs/research/2026-10-03-post-g2-next-plan.md)
+targets stopping contexts, while treating memory selection separately. No new opening
+is needed yet; no extra seed or reserved48 evaluation is authorized.
+
+Historical model result (2026-10-02): [G1 paired pilot and failure analysis](../../docs/research/2026-10-02-g1-complete-results.md)
 is complete. Repair improves1/4→3/4, but full tasks regress9/12→2/12 and true
 infeasible4/4→2/4. Original gate FAIL; no adapter promotion or further G1 seeds.
 [Public evidence and CPU reproduction](reports/g1-seed42-2026-10-02/README.md)

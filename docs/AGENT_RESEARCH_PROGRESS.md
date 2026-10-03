@@ -1,6 +1,64 @@
 # Agent research progress and handoff
 
-## Current: G2 state-coverage pilot prepared locally; waiting for a new server opening
+## Current: G2 complete; stopping regression blocks both original gates
+
+Updated 2026-10-03 UTC. [Complete G2 review](research/2026-10-03-g2-complete-results.md)
+publishes both actual new weights' restoration provenance,222 native/environment
+episodes and439 generated-token records plus3 local context refusals. Frozen4041159
+and all57 sources remain unchanged. Normal2/12→10/12, repair3/4→4/4 and premature
+false-infeasible8→0 improve, but true infeasible2/4→0/4. Original mechanism FAIL;
+candidate FAIL also retains fixed-S0 memory24/48<26/48 and ID6/12<7/12 protections.
+The current control reproduces historical G1 repair weights and111 outputs exactly;
+it is not another training seed and does not replace the current paired comparison.
+
+Post-hoc scheduled coverage has64 clean and64 after-error validation targets, but
+all8 infeasible target exposures remain clean-search-only. Four D2 infeasible
+cases loop8 times; normal infeasible loops15 times before a local context refusal.
+Memory first/middle/last16/16,0/16,8/16: all24 wrong selections choose older-valid
+records. [Next local plan](research/2026-10-03-post-g2-next-plan.md) isolates stopping
+contexts before any new GPU request, and tracks memory as a separate intervention.
+No G3 training, extra seeds, paid API, reopening or reserved48 evaluation.
+
+Full genuine receipt atomically published02:20:03.957246UTC; collector ended on
+connection loss02:20:04.704871 after successful backup. Server ACK consumption and
+shutdown return remain unobserved. Later user confirms AutoDL OFF, recorded separately.
+Compute proxy5062.821401s×2.18/hour=CNY3.0658≈3.07; excludes storage, not invoice.
+There is no active cloud run and no further platform/fee question is needed.
+
+Evidence, plots, saved G2 trajectory viewer, research journal and next plan are
+delivered through [PR35](https://github.com/Townzc/liftcut-tracker/pull/35).
+Final exact-head checks precede merge; operational closure proof is kept locally.
+The [research index](research/RESEARCH_INDEX.md) links all experiments and the
+[learning guide](research/AGENT_LEARNING_GUIDE.md) now includes G2 failure exercises.
+
+## Historical: G2 seed42 running; result tools prepared without changing frozen execution
+
+Updated 2026-10-03 UTC. User opened the server for the bounded G2 pilot.
+[Execution record](research/2026-10-03-g2-seed42-window.md) preserves the actual
+opening, launch and read-only observation. Exact checked4041159 runs on4090 with
+the original dependencies;25 assets verified. Earlier container boot00:55:41.883470
+fixes work03:25:41.883470/hard03:55:41.883470 UTC, CNY8 reserve at2.18/hour.
+Sole launcher/collector15554; train-repair_only started00:58:05.474359. Snapshot
+01:03:00 shows23/126 updates, GPU100%/16139MiB,3126-token no-update probe passed and
+both hard guards alive. No complete G2 training/evaluation result yet.
+
+Publication, paired-case/normal-chain/history-repeat analysis and figures are
+prepared on the result branch.8 focused checks and527 full regressions pass (613.921s); all57 frozen G2 sources remain
+unchanged. Real-weight/222-case/native/token restoration must precede publication;
+partial/scripted evidence is rejected. Preserve the fresh current control even if
+it differs from historical G1. Quiet heartbeat follows this window only. Complete
+or fail means automatic shutdown and persistent data retention, then review and
+final exact-head checks before merge. Fees use duration estimates, not invoice requests.
+No new seed, API, expansion, reopening or reserved48 evaluation.
+
+Local learning delivery: the [research index](research/RESEARCH_INDEX.md),
+[guided learning checks](research/AGENT_LEARNING_GUIDE.md) and saved G1 trajectory
+viewer now connect the experiment history to24 audited paired normal episodes.
+Browser checks exercised preview, external user approval, end-of-trajectory and
+repeated-invalid/context-guard displays.3 additional focused tests pass; the HTML
+is rebuilt byte-for-byte in CI. These are saved G1 traces, not new G2 results.
+
+## Historical: G2 state-coverage pilot prepared locally; waiting for a new server opening
 
 Updated 2026-10-03 UTC. Following the user's new instruction to continue improving
 until GPU is needed, [G2](research/2026-10-03-g2-state-coverage-pilot.md) tests a

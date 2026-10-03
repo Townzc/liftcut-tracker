@@ -1,0 +1,64 @@
+{
+  "version": "g2-window-observation-v1",
+  "complete_model_result": false,
+  "binding": {
+    "version": "g2-window-binding-v1",
+    "execution_plan_sha256": "41cccf70110b887bab250a7f374f64f78989f6ecf5b8286df8d9f9018451646b",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+    "work_cutoff": "2026-10-03T03:25:41.883470+00:00",
+    "hard_cutoff": "2026-10-03T03:55:41.883470+00:00",
+    "test_episodes": 0
+  },
+  "observed_at_utc": "2026-10-03T01:03:00.664465+00:00",
+  "observed_training_arm": "repair_only",
+  "observed_step": 23,
+  "observed_gpu": "NVIDIA GeForce RTX 4090, 100 %, 16139 MiB, 24564 MiB",
+  "live_longest_example_probe": {
+    "sequence_tokens": 3126,
+    "forward_backward_passed": true,
+    "optimizer_steps": 0,
+    "binding": {
+      "version": "g2-arm-binding-v1",
+      "plan_digest": "fab5e9670c56d9a1a9cadbdd2db24d8bb881b59a7ab54015398483337c2b4e50",
+      "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+      "arm": "repair_only",
+      "seed": 42,
+      "test_episodes": 0
+    },
+    "initial_parameters_unchanged": true,
+    "peak_allocated_bytes": 12374085120,
+    "peak_reserved_bytes": 16024338432
+  },
+  "budget": {
+    "hourly_cny": 2.18,
+    "reserve_cny": 8,
+    "setup_minutes": 10,
+    "work_minutes": 150,
+    "hard_minutes": 180,
+    "compute_proxy_cny": 6.54,
+    "storage_expansion": false,
+    "separate_new_opening_required": true
+  },
+  "startup_checks": {
+    "immutable_checkout_and_assets": true,
+    "asset_count": 25,
+    "live_runtime_verified": true
+  },
+  "shutdown_guard_processes_observed": [
+    1220,
+    1306
+  ],
+  "original_prelaunch_guard_completed": true,
+  "raw_file_sha256": {
+    "deadline-guard.json": "306239637177631bb11572f0fff0c02a7a6521ba4ceff206f8c95a500105d8c5",
+    "launch.json": "3bf9b5b9c9ba25cbc52e4e1d84235bb8d162eb8a6e0518b51caa036afa10cfac",
+    "observation.json": "c7e3d1094d3a4661d2dc1730e5de0b21371174a6f46c99048fc411a0bee70b4e",
+    "opening.json": "ecc441db8202f1d04fb0197bc4d9a275040e385d6d07ba65d5d66f75b6876354",
+    "setup-guard.json": "66ce19994c57062ec8b34759ccb52d45933b85385f8ed3bd2bc0dee421e7eaef",
+    "startup-events.jsonl": "83d3e062b71406ce84d5e6d68c034630015fe7d953b893d0f717082145789e2b"
+  },
+  "test_episodes": 0,
+  "scope": "Read-only snapshot of a running G2 window, not completed training or agent performance."
+}

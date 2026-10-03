@@ -1,0 +1,481 @@
+{
+  "version": "g2-posthoc-boundary-audit-v1",
+  "arms": {
+    "repair_only": {
+      "scheduled_state_targets": {
+        "other": {
+          "request_clarification": 64,
+          "get_context": 200,
+          "propose_plan": 128,
+          "search_exercises": 136,
+          "get_memories": 200,
+          "finish:awaiting_user": 16,
+          "finish:previewed": 96,
+          "finish:declined": 16,
+          "apply_plan": 8,
+          "finish:applied": 8
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 128
+        },
+        "clean_search_before_any_validation": {
+          "finish:infeasible": 8
+        }
+      },
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "invalid_or_duplicate_exercise_ids": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 2,
+          "maximum_repeats_of_same_invalid_validation": 2,
+          "validation_issue_counts": {
+            "wrong_action": 2
+          },
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 2,
+          "maximum_repeats_of_same_invalid_validation": 2,
+          "validation_issue_counts": {
+            "wrong_action": 2
+          },
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "infeasible"
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        }
+      ],
+      "normal_failures": [
+        {
+          "scenario_id": "r2-05-preview",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-approved",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-pending",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-declined",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-revoked",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-missing_time",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-missing_equipment",
+          "outcome": "infeasible",
+          "validation_attempts": 3,
+          "maximum_repeats_of_same_invalid_validation": 3,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-missing_days",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-memory",
+          "outcome": "infeasible",
+          "validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "local_refusals": {},
+          "policy_failure": null
+        },
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "outcome": null,
+          "validation_attempts": 9,
+          "maximum_repeats_of_same_invalid_validation": 9,
+          "local_refusals": {
+            "context_limit": 1
+          },
+          "policy_failure": "expected_single_tool_call"
+        }
+      ],
+      "actual_model_generations": 202,
+      "local_non_generation_records": 1
+    },
+    "coverage_mix": {
+      "scheduled_state_targets": {
+        "other": {
+          "request_clarification": 64,
+          "get_context": 200,
+          "propose_plan": 128,
+          "search_exercises": 136,
+          "get_memories": 200,
+          "finish:awaiting_user": 16,
+          "finish:previewed": 96,
+          "finish:declined": 16,
+          "apply_plan": 8,
+          "finish:applied": 8
+        },
+        "clean_search_before_any_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 8
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 64
+        }
+      },
+      "continuation_cases": [
+        {
+          "case_id": "d2-repair-unknown_evidence-v0",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v0",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        },
+        {
+          "case_id": "d2-repair-unknown_evidence-v1",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v0",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-repair-session_count_mismatch-v1",
+          "correct": true,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "propose_plan",
+            "finish"
+          ],
+          "invalid_validation_attempts": 0,
+          "maximum_repeats_of_same_invalid_validation": 0,
+          "validation_issue_counts": {},
+          "stop_reason": "environment_done",
+          "policy_failure": null,
+          "terminal_outcome": "previewed"
+        },
+        {
+          "case_id": "d2-infeasible-unknown_evidence-v1",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v0",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 7,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        },
+        {
+          "case_id": "d2-infeasible-session_count_mismatch-v1",
+          "correct": false,
+          "scripted_prefix_excluded": 4,
+          "autonomous_tools": [
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan",
+            "validate_plan"
+          ],
+          "invalid_validation_attempts": 8,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "validation_issue_counts": {
+            "wrong_action": 8
+          },
+          "stop_reason": "request_limit",
+          "policy_failure": null,
+          "terminal_outcome": null
+        }
+      ],
+      "normal_failures": [
+        {
+          "scenario_id": "r2-05-infeasible",
+          "outcome": null,
+          "validation_attempts": 15,
+          "maximum_repeats_of_same_invalid_validation": 15,
+          "local_refusals": {
+            "context_limit": 1
+          },
+          "policy_failure": "expected_single_tool_call"
+        },
+        {
+          "scenario_id": "r2-05-memory_missing_time",
+          "outcome": null,
+          "validation_attempts": 10,
+          "maximum_repeats_of_same_invalid_validation": 8,
+          "local_refusals": {
+            "context_limit": 1
+          },
+          "policy_failure": "expected_single_tool_call"
+        }
+      ],
+      "actual_model_generations": 237,
+      "local_non_generation_records": 2
+    }
+  },
+  "source_sha256": {
+    "publication": "454eed5791257770e0a3858d5ad38b3cca2f31d9df1cc445d8c39ca89b66d92f",
+    "execution": "7e0b034b9ac99d959c40dceefc6e4888ecad10d016912eea8126b80488208cf4"
+  },
+  "new_model_calls": 0,
+  "new_training": false,
+  "test_episodes": 0,
+  "scope": "Post-hoc training coverage and observed failure chains. No changed G2 gates, causal proof, or independent evaluation."
+}
