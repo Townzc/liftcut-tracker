@@ -1,0 +1,10 @@
+{
+  "opening_id": "20261003-051200",
+  "first_observed_user_opening_at_utc": "2026-10-03T05:12:00+00:00",
+  "authorization": "User says code is updated, server opened, directly start experiment; existing automatic backup/shutdown and CNY8 budget plan retained.",
+  "execution_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+  "branch": "feat/g3-seed42-results",
+  "pr36_checks": "all five SUCCESS on execution commit",
+  "preflight": "real pinned tokenizer passed; initial sandbox-only known_hosts access failure resolved using authorized escalation; no training launch",
+  "recorded_at_utc": "2026-10-03T05:17:07.046346+00:00"
+}

@@ -1,6 +1,26 @@
 # Agent research progress and handoff
 
-## Current: G3 data, gates and execution chain ready on CPU; only exact-head CI precedes a server request
+## Current: G3 ready for a new opening; first setup window failed before training
+
+Updated2026-10-03 UTC. PR36 merged; all five checks passed exact execution commit
+eaa132538fefdf28973d808dd56a159e19b86d67, including real-tokenizer reconstruction.
+Final local delta installation now verifies30 assets/74 frozen sources, original
+4041159 base unchanged. [Startup failure](research/2026-10-03-g3-startup-failure.md)
+records the first user-opened window: offline known_hosts sandbox access initially
+failed, then passed with authorized access; local installation rehearsal consumed
+paid setup time. Sole launcher77742 connected at05:18:55; actual earlier boot
+05:09:28 fixed setup cutoff05:19:28. Asset transfer ended on EOF05:19:27.877189,
+launch_issued=false, no dispatch file, zero training/evaluation/model calls.
+
+Hard/prelaunch guards were armed, shutdown execution was not retrieved; later user
+confirms AutoDL OFF. Cost proxy599.458175s×2.18/hour=CNY0.3630, excludes storage/not
+invoice. No active collector or heartbeat; no restart or fee/status question needed.
+Preserve failed-opening evidence and partial staging. The next NEW opening can use
+the existing checked bundle directly through one maintained launcher; do not repeat
+local clone/rehearsal while billed or reset deadlines. Existing CNY8,10/150/180-minute
+conditions remain. G3 model outcomes are still unrun;48 reserved tasks unused.
+
+## Historical: G3 data, gates and execution chain ready on CPU; only exact-head CI precedes a server request
 
 Updated 2026-10-03 UTC. [G3 design](research/2026-10-03-g3-stop-boundary-design.md) implements
 local stage A of the post-G2 plan. `prepare_g3.py` replays the four train-only infeasible

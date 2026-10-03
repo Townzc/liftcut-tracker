@@ -1,0 +1,22 @@
+{"event":"ssh_connected","at_utc":"2026-10-03T05:18:55.983399+00:00"}
+{"event":"transfer_started","at_utc":"2026-10-03T05:18:57.330296+00:00","name":"g3_setup.py","verified_prefix_bytes":0,"remaining_bytes":6946}
+{"event":"remote_command","at_utc":"2026-10-03T05:18:58.530238+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-03T05:18:58.541265+00:00","name":"g3_setup.py","bytes":6946,"resumed_bytes":0,"sha256":"848777ffbb895322112ff2b682ec3caaf974af746c96477c410db918a33b5653"}
+{"event":"transfer_started","at_utc":"2026-10-03T05:18:58.988394+00:00","name":"shutdown_guard.py","verified_prefix_bytes":0,"remaining_bytes":2462}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:00.990157+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-03T05:19:01.001203+00:00","name":"shutdown_guard.py","bytes":2462,"resumed_bytes":0,"sha256":"07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0"}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:01.758155+00:00","label":"setup-guard","returncode":0}
+{"event":"original_guard_armed","at_utc":"2026-10-03T05:19:01.791144+00:00","guard_armed":true,"booted_at_proxy":"2026-10-03T05:09:28.419014+00:00","hard_cutoff":"2026-10-03T08:09:28.419014+00:00"}
+{"event":"transfer_started","at_utc":"2026-10-03T05:19:02.165942+00:00","name":"g3_prelaunch_guard.py","verified_prefix_bytes":0,"remaining_bytes":3800}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:03.753546+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-03T05:19:03.767609+00:00","name":"g3_prelaunch_guard.py","bytes":3800,"resumed_bytes":0,"sha256":"3b173326603262d272bfdda84e89937f686c3777c85816130bd06e00ccf4b7c4"}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:04.406128+00:00","label":"prelaunch-guard","returncode":0}
+{"event":"prelaunch_guard_armed","at_utc":"2026-10-03T05:19:05.956138+00:00","deadline":"2026-10-03T05:19:28.419014+00:00"}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:06.579744+00:00","label":"live-preflight","returncode":0}
+{"event":"live_preflight_passed","at_utc":"2026-10-03T05:19:06.586589+00:00","disk_free_bytes":34292101120,"gpu":"NVIDIA GeForce RTX 4090, 24564 MiB","python":"3.12.3","packages":{"torch":"2.8.0+cu128","transformers":"4.57.6","tokenizers":"0.22.2","jinja2":"3.1.6","accelerate":"1.10.1","peft":"0.17.1","bitsandbytes":"0.47.0"},"hourly_cny_assumed":2.18,"provider_price_independently_verified":false}
+{"event":"transfer_started","at_utc":"2026-10-03T05:19:06.923864+00:00","name":"asset-index.json","verified_prefix_bytes":0,"remaining_bytes":4286}
+{"event":"remote_command","at_utc":"2026-10-03T05:19:08.431166+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-03T05:19:08.446959+00:00","name":"asset-index.json","bytes":4286,"resumed_bytes":0,"sha256":"533bfc6dc61f11a64a981a7f5daf03b553e8f4a9bb4321446f5529e4e4351d0c"}
+{"event":"transfer_started","at_utc":"2026-10-03T05:19:09.244030+00:00","name":"assets.tar.gz","verified_prefix_bytes":0,"remaining_bytes":3216977}
+{"event":"transfer_progress","at_utc":"2026-10-03T05:19:19.978034+00:00","name":"assets.tar.gz","queued_bytes":786432,"total_bytes":3216977,"acknowledged_complete":false,"elapsed_seconds":10.734000000054948}
+{"event":"launcher_or_collector_stopped","at_utc":"2026-10-03T05:19:27.877189+00:00","error_type":"EOFError","launch_issued":false,"provider_billing_stopped":"unknown","no_automatic_reconnect":true}

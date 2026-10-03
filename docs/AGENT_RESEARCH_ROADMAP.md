@@ -8,17 +8,19 @@ remain below fixed S0. Both new weights and222 native/environment episodes with
 proxy CNY3.07 at2.18/hour, not an invoice. G1's failure remains unchanged.
 
 Update 2026-10-03 UTC: [G3 stop-boundary data and gates](research/2026-10-03-g3-stop-boundary-design.md)
-are frozen locally (stop_half and stop_all vs the reused, reproduction-checked G2
-coverage_mix control). The [memory audit](research/2026-10-03-memory-arrangement-audit.md)
+are frozen locally (stop_half and stop_all vs the reused G2 coverage_mix control,
+with a shared-prefix reproduction check planned during training). The [memory audit](research/2026-10-03-memory-arrangement-audit.md)
 shows training covers only 4 of the record orders D2 uses; all coverage_mix memory
-errors fall in unseen orders. The G3 execution chain now passes its CPU drill; exact-head CI precedes any new opening.
+errors fall in unseen orders. G3 exact-head CI and final local installation now pass.
+The [first setup window](research/2026-10-03-g3-startup-failure.md) ended during upload
+before training; platform OFF is user-confirmed, compute proxy CNY0.36. Next is a new
+opening using the retained verified bundle, with no repeat local rehearsal while billed.
 
 [Next local work](research/2026-10-03-post-g2-next-plan.md) isolates the stopping
-boundary: keep normal/repair coverage and move one exposure of each existing
-train-only infeasible target behind actual invalid feedback. This is a proposal,
-not a ready or executed G3 experiment. Exact CPU coverage, matching, recovery and
-Git checks must pass before requesting a new server opening. No additional paid
-seed, API, expansion or reuse of the closed G2 opening. Memory latest-valid
+boundary: keep normal/repair coverage and move exposures of existing train-only
+infeasible targets behind actual invalid feedback. This proposed phase is now
+implemented by the frozen G3 plan above; model outcomes remain unrun. No additional
+seed, API, expansion or reuse of the closed G2/failed G3 openings. Memory latest-valid
 selection is a separate shortfall, not silently bundled into stopping training.
 
 The [evidence index](research/RESEARCH_INDEX.md), saved G1/G2 trajectory viewers,
