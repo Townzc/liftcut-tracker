@@ -1,0 +1,7 @@
+{"event":"phase_started","at_utc":"2026-10-03T08:29:57.076904+00:00","phase":"train-control"}
+{"event":"phase_completed","at_utc":"2026-10-03T08:55:27.390680+00:00","phase":"train-control"}
+{"event":"phase_started","at_utc":"2026-10-03T08:55:36.247428+00:00","phase":"evaluate-control"}
+{"event":"phase_completed","at_utc":"2026-10-03T09:06:02.069570+00:00","phase":"evaluate-control"}
+{"event":"phase_started","at_utc":"2026-10-03T09:06:02.070430+00:00","phase":"train-permuted"}
+{"event":"phase_completed","at_utc":"2026-10-03T09:31:28.137580+00:00","phase":"train-permuted"}
+{"event":"phase_started","at_utc":"2026-10-03T09:31:36.886549+00:00","phase":"evaluate-permuted"}

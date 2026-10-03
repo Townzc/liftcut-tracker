@@ -1,0 +1,13 @@
+{
+  "binding": {
+    "version": "g4-arm-binding-v1",
+    "plan_digest": "ad5bbb820e0e4b3cf61c1aaa47a5b2f83358836564ad79fb8ceb1db229f61f32",
+    "code_commit": "10a729eb0f8f55ba9d1b6888f5d6cdb9ac88fd28",
+    "arm": "permuted",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "initialization_seed": 42,
+  "post_probe_seed": 42,
+  "initial_adapter_sha256": "f403d9a13af8b10692e99c94c32fdccf193f1b23bcf373ab1812e17d2042ad04"
+}

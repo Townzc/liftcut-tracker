@@ -1,5 +1,61 @@
 # Agent research progress and handoff
 
+## 2026-10-03 10:05 UTC：G4真实结果已恢复，整体候选失败
+
+[G4完整复盘](research/2026-10-03-g4-complete-results.md)：新control/permuted记忆11/48→20/48，
+旧记忆6/8→4/8，ID2/12→4/12；正常12/12、授权、修复/不可行4/4和零误停均保留。
+全111状态13收益/4回退，62→71；最新记录首16/16、中4/16、末0/16，剩余28记忆错误
+全部选旧有效项。两组ID改名均无成败翻转，不能把低绝对分等同于ID捷径。
+原机制与固定S0整体保护均FAIL，不晋升模型。完整126步/最终权重复现历史G3，但正式
+比较采用本次新control；48保留任务未用，无独立泛化主张。
+
+固定恢复已检查2实际权重、222 native/environment回放、378生成及token；09:51:04
+真实回执消费，唯一collector7427结束0。原14:00 guard保留，服务器依授权仍ON。
+累计至收集代理¥9.6670（含先前失败），与G4窗口¥2.9610重叠，不相加，也非最终账单。
+图表已实际渲染核查，原始文件/全111逐例表已发布；PR41最终精确检查与合并待完成。
+
+下一步按事前I1条件：固定G4新control做raw/view各111条新推理，确定性最新有效记忆
+投影属于系统干预；真实参考/独立冻结/CPU/Git全检查和时间条件齐备才唯一启动。
+晨报已更新G4事实，I1与最终关闭仍待实际证据。历史状态按时间保留下方。
+
+## Offline follow-up preparation while G4 is still training
+
+2026-10-03 08:45 UTC. G4 sole collector7427/PID37388 remains live; no new model
+result yet. PR41 preparation heada37ae9d passed all5 checks but remains draft.
+Independent I1 projection transport now records both raw policy and actual model
+inputs.3 focused checks reject missing/tampered/wrong-arm inputs and token counters;
+the pinned-tokenizer CPU drill replays222 scripted native/environment episodes and
+376 generation records.79 view requests change. These are protocol checks, no model
+benefit and no complete weight/archive recovery. Running87 G4 sources stay unchanged.
+I1 still requires the real G4 trigger, preselected control weight hashes, separate
+freeze and full recovery readiness, enough original time and a unique authorized
+dispatch. See the conditional pre-plan and journal. No cloud intervention occurred.
+
+## Current: G4 train-control started under the original overnight power guard
+
+2026-10-03 UTC. PR40 passed all5 checks at10a729e, merged678e3dc, merge/head tree
+verified equal. Corrected single launcher/collector7427 installed frozen87 sources
+and26 prepared files, then dispatched controller6321 in newrun082710. Actual trial
+start08:29:35.210056; work cutoff10:29:35.210056, collection11:14:35.210056 UTC.
+The actual cloud event records train-control starting08:29:57.076904. No G4 outcome
+is available yet. Old failed080715 attempt is retained, not relabeled as training.
+
+Existing independent guard3560 still protects14:00 UTC/07:00 Los Angeles. Original
+05:35 boot, cumulativeCNY20 and rate2.18/hour remain unchanged. No duplicate launcher,
+extra seeds, expansion, paid API, reboot or reserved48. Running frozen conditions
+must not change. Full artifacts/true local restoration precede any complete claim.
+
+The independent result branch prepares publication, all111 paired case comparisons,
+memory-role/position and false-stop analysis, figures, and a
+[morning report draft](research/2026-10-03-morning-agent-report.md). The report explicitly
+keeps G4 results and final shutdown pending.6 publication-boundary tests pass; the full591-test suite passes174.449s.
+A [conditional I1 pre-plan](research/2026-10-03-i1-memory-view-draft.md) is saved before
+seeing G4 results; its pure memory-view helper is not imported by any G4 runner.
+3 unit checks and an offline projection of189 historical G3 requests pass;79 requests
+change. This is no new inference/performance evidence and authorizes no immediate I1
+dispatch. Next: actual G4 restoration, pre-registered gates, then decide whether an
+independently frozen system comparison fits the original lease.
+
 ## Current: inspected G4 pre-dispatch path failure; portable fix awaiting final checks
 
 G4 PR39 passed all5 checks at389527f and mergedbe528c3. Attempt080715 ended before

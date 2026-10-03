@@ -1,0 +1,14 @@
+{
+  "version": "g4-startup-observation-v1",
+  "model_result": false,
+  "window_state": "train-control phase started; outcomes pending",
+  "local_collector_session": 7427,
+  "local_collector_pid": 37388,
+  "remote_controller_pid": 6321,
+  "files": {
+    "events-at-observation.jsonl": "fb084e389ca1a4ee1926217b1c75294545f9a0bdb41fdbe3e4f80a45b10e5cdb",
+    "launch.json": "ee8000ea02aae708151c2c19182f873587986af863896c789936da9af84a0e47",
+    "opening.json": "de3c44c325bc712a618f31ce390cfdd43783af09056209ad21e76a1e42e52774",
+    "server-events-at-observation.jsonl": "12add74ec1ce60e6d7164c0f9458f792420c29daac46291c2898cb301350cfca"
+  }
+}

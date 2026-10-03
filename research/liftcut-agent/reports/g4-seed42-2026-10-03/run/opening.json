@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "version": "g4-window-binding-v1",
+    "execution_plan_sha256": "e9cc50b563c3fc099536e74bcd31616b2068f98659836bba46609c56d7defffa",
+    "code_commit": "10a729eb0f8f55ba9d1b6888f5d6cdb9ac88fd28",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "trial_started_at_utc": "2026-10-03T08:29:35.210056+00:00",
+    "work_cutoff": "2026-10-03T10:29:35.210056+00:00",
+    "collection_cutoff": "2026-10-03T11:14:35.210056+00:00",
+    "hard_cutoff": "2026-10-03T14:00:00+00:00",
+    "test_episodes": 0
+  },
+  "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+  "trial_started_at_utc": "2026-10-03T08:29:35.210056+00:00",
+  "budget": {
+    "continuous_lease": true,
+    "instance_boot": "2026-10-03T05:35:00.409447+00:00",
+    "power_deadline": "2026-10-03T14:00:00+00:00",
+    "work_latest": "2026-10-03T11:45:00+00:00",
+    "collection_latest": "2026-10-03T12:30:00+00:00",
+    "work_minutes": 120,
+    "collection_minutes": 45,
+    "minimum_work_minutes_at_launch": 95,
+    "hourly_cny": 2.18,
+    "cumulative_reserve_cny": 20,
+    "earlier_failed_opening_cny": 0.3630052281944445,
+    "reboot": false,
+    "storage_expansion": false
+  },
+  "evidence_kind": "model",
+  "started_at_utc": "2026-10-03T08:29:48.751134+00:00",
+  "lease_configuration_digest": "fff1c654dbaec8ee0f9becc6d540f55df655ed557d0e1ff0ff1138d05f9cf758"
+}
