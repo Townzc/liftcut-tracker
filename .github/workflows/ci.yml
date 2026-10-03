@@ -531,6 +531,29 @@ jobs:
           assert not list((r/'outputs/ci-g4-drill').rglob('off-instance-backup.json'))
           PY
 
+      - name: Verify frozen I1 source and actual G4 reference provenance without private weights
+        run: |
+          python research/liftcut-agent/i1_protocol.py --verify --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          root=Path('research/liftcut-agent')
+          sys.path.insert(0,str(root))
+          from d2_execution import read
+          from liftcut_agent.interactive import digest
+          from server_workspace import sha256
+          from publish_g4_results import publication_integrity
+          public=root/'reports/g4-seed42-2026-10-03'
+          publication_integrity(public)
+          ref=read(root/'reports/i1-reference-v1.json')
+          assert ref['g4_comparison_digest']==digest(read(public/'run/comparison.json'))
+          assert ref['g4_restore_receipt_sha256']==sha256(public/'restore-receipt.json')
+          for name,checksum in ref['control_evaluation_sha256'].items():
+              assert sha256(public/'run/evaluation/control'/name)==checksum
+          assert ref['adapter_sha256']==read(public/'run/training/control/report.json')['adapter_sha256']
+          assert read(root/'reports/i1-readiness-v1.json')['scripted_contract_source_sha256']==read(root/'reports/i1-execution-v1.json')['source_sha256']
+          PY
+
       - name: Rehearse conditional I1 inference and partial archive recovery with scripted native actions
         run: |
           python research/liftcut-agent/drill_i1.py --output-dir research/liftcut-agent/outputs/ci-i1-drill --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
