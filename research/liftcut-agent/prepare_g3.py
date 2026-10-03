@@ -334,7 +334,7 @@ def epoch_assignment(stop_rows):
     return result
 
 
-def schedules(pool_dir, stop_dir):
+def stop_schedules(pool_dir, stop_dir):
     control, tokens, pools = g2_reference(pool_dir)
     stop_rows, stop_tokens, _ = load_stop_pool(stop_dir)
     audits = {r['pair_id']: r for r in read_jsonl(stop_dir / 'stop-audit.jsonl')}
@@ -370,11 +370,33 @@ def state_of(row):
     return context['state'], target
 
 
-def build_report(pool_dir, stop_dir):
+def layout(prepared):
+    """One prepared directory: pool/ (byte-identical G1/G2 pools) and stop/."""
+    actual = {p.name for p in prepared.iterdir()} if prepared.is_dir() else set()
+    if actual != {'pool', 'stop'}:
+        raise ValueError('G3 prepared directory must contain exactly pool/ and stop/')
+    return prepared / 'pool', prepared / 'stop'
+
+
+def schedules(prepared):
+    """Execution interface shared with G2 runners: (schedule, tokens, decisions)."""
+    schedule, tokens, pools, _ = stop_schedules(*layout(prepared))
+    return schedule, tokens, pools
+
+
+def arm_binding(plan, commit, arm):
+    if arm not in ARMS:
+        raise ValueError('unknown G3 arm')
+    return {'version': 'g3-arm-binding-v1', 'plan_digest': digest(plan), 'code_commit': commit,
+            'arm': arm, 'seed': 42, 'test_episodes': 0}
+
+
+def build_report(prepared):
     g2 = read(G2_REVIEW)
     if g2['gates']['mechanism_passed'] or g2['episodes_replayed'] != 222 or not g2['model_result']:
         raise ValueError('G3 follows the complete failed G2 pilot only')
-    schedule, tokens, pools, epochs = schedules(pool_dir, stop_dir)
+    pool_dir, stop_dir = layout(prepared)
+    schedule, tokens, pools, epochs = stop_schedules(pool_dir, stop_dir)
     arms, contexts, divergence = {}, {}, {}
     logged = read_jsonl(G2_TRAINING / 'training.jsonl')
     for arm, items in schedule.items():
@@ -449,6 +471,9 @@ def build_report(pool_dir, stop_dir):
         'stop_contexts': [{k: a[k] for k in ('scenario_id', 'error_family', 'hidden_issues_audit_only', 'infeasibility_proof')}
                           for a in stop_audit],
         'stop_pool_report_sha256': sha256(stop_dir / 'report.json'),
+        'files': {**{'pool/' + k: v for k, v in read(ROOT / 'reports/g2-preparation-v1.json')['files'].items()},
+                  **{'stop/' + p.relative_to(stop_dir).as_posix(): sha256(p) for p in sorted(stop_dir.rglob('*')) if p.is_file()}},
+        'model': read(ROOT / 'reports/qwen-gpu-pilot-2026-09-28/model-files.json'),
         'g2_preparation_sha256': sha256(ROOT / 'reports/g2-preparation-v1.json'),
         'source_sha256': {name: sha256(ROOT / name) for name in SOURCES},
         'training': {**read(ROOT / 'reports/g2-preparation-v1.json')['training'],
@@ -466,17 +491,26 @@ def build_report(pool_dir, stop_dir):
         'gpu_execution_ready': False}
 
 
-def verify_prepared(pool_dir, stop_dir):
-    result = build_report(pool_dir, stop_dir)
+def verify_prepared(prepared):
+    result = build_report(prepared)
     if result != read(REVIEWED):
         raise ValueError('G3 preparation differs from the frozen reviewed design')
     return result
 
 
+def prepare(output, tokenizer_dir):
+    """Build pool/ exactly as G2 did, then the new stop/ pool beside it."""
+    from g1_pair_feasibility import check_pairs
+    if output.exists():
+        raise ValueError('new G3 prepared directory required')
+    output.mkdir(parents=True)
+    check_pairs(output / 'pool', tokenizer_dir, ROOT / 'reports/d2-fixed-seed42-2026-10-02/review.json')
+    build_stop_pool(output / 'stop', output / 'pool', tokenizer_dir)
+
+
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter, allow_abbrev=False)
-    p.add_argument('--pool-dir', required=True, type=Path, help='G1/G2 paired pools (verified against G2 freeze)')
-    p.add_argument('--stop-dir', required=True, type=Path, help='new or existing G3 stop pool')
+    p.add_argument('--output-dir', required=True, type=Path, help='new (or, with --verify-only, existing) prepared dir')
     p.add_argument('--tokenizer-dir', type=Path)
     p.add_argument('--verify-only', action='store_true')
     p.add_argument('--write-initial-report', action='store_true')
@@ -484,10 +518,10 @@ if __name__ == '__main__':
     if not a.verify_only:
         if a.tokenizer_dir is None:
             p.error('pinned tokenizer required')
-        build_stop_pool(a.stop_dir, a.pool_dir, a.tokenizer_dir)
+        prepare(a.output_dir, a.tokenizer_dir)
     if a.write_initial_report:
-        result = build_report(a.pool_dir, a.stop_dir)
+        result = build_report(a.output_dir)
         dump_new(REVIEWED, result)
     else:
-        result = verify_prepared(a.pool_dir, a.stop_dir)
+        result = verify_prepared(a.output_dir)
     print(json.dumps({k: result[k] for k in ('arms', 'divergence', 'runtime_estimate')}, indent=1))

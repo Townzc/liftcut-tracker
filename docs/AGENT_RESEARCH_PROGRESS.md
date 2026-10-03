@@ -1,6 +1,6 @@
 # Agent research progress and handoff
 
-## Current: G3 stop-boundary data frozen locally; memory gap localized; no server needed yet
+## Current: G3 data, gates and execution chain ready on CPU; only exact-head CI precedes a server request
 
 Updated 2026-10-03 UTC. [G3 design](research/2026-10-03-g3-stop-boundary-design.md) implements
 local stage A of the post-G2 plan. `prepare_g3.py` replays the four train-only infeasible
@@ -28,10 +28,20 @@ revision comparison. Training-coverage and deterministic-view routes stay separa
 Verification: a pure-Python tokenizer stand-in (development only, not committed)
 reproduced the published mask audit and regenerated all nine G1 pool files matching the
 G2 freeze; G1/G2 pools and the G3 stop pool are byte-identical across two builds;
-12 new tests pass. CI regenerates everything with the real tokenizer.
-No GPU, model call, paid API or reserved-48 read. Next: G3 execution chain with the
-12-step reproduction check, CPU production-path drill and exact-head CI, then request a
-new window (estimate 85-90 min, CNY3.1-3.3, CNY8 reserve, 150/180-minute limits).
+CI regenerates everything with the real tokenizer.
+
+Execution chain ([runbook](research/G3_RUNBOOK.md)): G2's proven runner, collector,
+restore and launcher are reused with G3 arms and a pool/+stop/ prepared layout.
+`gpu_train_g3.py` writes `control-reproduction.json` after step 12; `audit_g3.py`
+scores each arm against the published G2 evaluation and forbids paired claims without
+reproduction. CPU drill: 222 scripted episodes, 376 real token reconstructions, early
+archives, container restore with unchanged historical T bytes, local receipt and stub
+shutdown; synthetic logs correctly fail reproduction. Controller dry-run, offline monitor
+preflight and a delta-bundle install rehearsal from G2 commit 4041159 pass. 23 targeted
+and 557 full regressions pass. [Readiness](../research/liftcut-agent/reports/g3-readiness-v1.json).
+No GPU, model call, paid API or reserved-48 read. Next: push the branch, exact-head CI,
+merge, final local stage, then request a new window (estimate 85-90 min, CNY3.1-3.3,
+CNY8 reserve, 150/180-minute limits).
 
 ## Historical: G2 complete; stopping regression blocks both original gates
 
