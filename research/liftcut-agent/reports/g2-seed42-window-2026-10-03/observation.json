@@ -1,0 +1,79 @@
+{
+  "observed_at_utc": "2026-10-03T01:03:00.664465+00:00",
+  "read_only": true,
+  "gpu": "NVIDIA GeForce RTX 4090, 100 %, 16139 MiB, 24564 MiB",
+  "processes": [
+    {
+      "pid": 1220,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/staging/g2-4041159/shutdown_guard.py --arm --deadline 2026-10-03T03:55:41.883470+00:00 --receipt /root/autodl-tmp/liftcut/runs/g2-ops-20261003-005616/setup-guard.jsonl "
+    },
+    {
+      "pid": 1299,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/404115971f3db97577433769a88dbb2486058d99/research/liftcut-agent/run_g2_window.py --model-dir /root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554 --model-manifest /root/autodl-tmp/liftcut/data/qwen-model-manifest.json --prepared-dir /root/autodl-tmp/liftcut/data/g2-4041159/prepared --diagnostic-dir /root/autodl-tmp/liftcut/data/g2-4041159/diagnostic --d2-dir /root/autodl-tmp/liftcut/data/g2-4041159/d2 --tokenizer-dir /root/autodl-tmp/liftcut/data/g2-4041159/tokenizer --output-dir /root/autodl-tmp/liftcut/runs/g2-run-20261003-005616 --expected-code-commit 404115971f3db97577433769a88dbb2486058d99 --hourly-cny 2.18 --booted-at 2026-10-03T00:55:41.883470+00:00 --setup-guard /root/autodl-tmp/liftcut/runs/g2-ops-20261003-005616/setup-guard.jsonl --execute --shutdown-when-done "
+    },
+    {
+      "pid": 1306,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/404115971f3db97577433769a88dbb2486058d99/research/liftcut-agent/shutdown_guard.py --arm --deadline 2026-10-03T03:55:41.883470+00:00 --receipt /root/autodl-tmp/liftcut/runs/g2-run-20261003-005616/deadline-guard.jsonl "
+    },
+    {
+      "pid": 1311,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python /root/autodl-tmp/liftcut/code/404115971f3db97577433769a88dbb2486058d99/research/liftcut-agent/gpu_train_g2.py --model-dir /root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554 --model-manifest /root/autodl-tmp/liftcut/data/qwen-model-manifest.json --prepared-dir /root/autodl-tmp/liftcut/data/g2-4041159/prepared --run-dir /root/autodl-tmp/liftcut/runs/g2-run-20261003-005616 --expected-code-commit 404115971f3db97577433769a88dbb2486058d99 --arm repair_only --output-dir /root/autodl-tmp/liftcut/runs/g2-run-20261003-005616/training/repair_only --allow-gpu "
+    },
+    {
+      "pid": 1553,
+      "argv": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python -c \nimport json, subprocess\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nrun = Path('/root/autodl-tmp/liftcut/runs/g2-run-20261003-005616')\nops = Path('/root/autodl-tmp/liftcut/runs/g2-ops-20261003-005616')\ndef read(p):\n    return json.loads(p.read_text()) if p.is_file() else None\ndef tail(p, n=1):\n    return p.read_text().splitlines()[-n:] if p.is_file() else []\nprocesses = []\nfor p in Path('/proc').iterdir():\n    if not p.name.isdigit():\n        continue\n    try:\n        argv = (p / 'cmdline').read_bytes().replace(b'\\x00', b' ').decode()\n        if len(argv) < 6000 and ('g2-run-20261003-005616' in argv or 'g2-ops-20261003-005616' in argv):\n            processes.append({'pid': int(p.name), 'argv': argv})\n    except (OSError, UnicodeError):\n        pass\nresult = {'observed_at_utc': datetime.now(timezone.utc).isoformat(), 'read_only': True,\n 'gpu': subprocess.check_output(['nvidia-smi','--query-gpu=name,utilization.gpu,memory.used,memory.total','--format=csv,noheader'], text=True, timeout=10).strip(),\n 'processes': processes, 'server_events_tail': tail(run / 'events.jsonl', 8),\n 'setup_guard': tail(ops / 'setup-guard.jsonl', 2),\n 'prelaunch_guard': tail(ops / 'prelaunch-guard.jsonl', 2),\n 'deadline_guard': tail(run / 'deadline-guard.jsonl', 2), 'arms': {}}\nfor arm in ('repair_only', 'coverage_mix'):\n    training = run / 'training' / arm\n    result['arms'][arm] = {'last_training_step': tail(training / 'training.jsonl'),\n      'probe': read(training / 'memory-probe.json'), 'report': read(training / 'report.json'),\n      'episodes': {panel: sum(1 for _ in (run / 'evaluation' / arm / panel / 'episodes.jsonl').open())\n        if (run / 'evaluation' / arm / panel / 'episodes.jsonl').is_file() else 0\n        for panel in ('normal','diagnostic','d2')}}\nprint(json.dumps(result))\n "
+    }
+  ],
+  "server_events_tail": [
+    "{\"event\":\"phase_started\",\"at_utc\":\"2026-10-03T00:58:05.474359+00:00\",\"phase\":\"train-repair_only\"}"
+  ],
+  "setup_guard": [
+    "{\"status\": \"armed\", \"at_utc\": \"2026-10-03T00:57:22.225879+00:00\", \"deadline\": \"2026-10-03T03:55:41.883470+00:00\", \"command\": [\"/bin/bash\", \"/usr/bin/shutdown\"]}"
+  ],
+  "prelaunch_guard": [
+    "{\"event\": \"armed\", \"at_utc\": \"2026-10-03T00:57:24.541269+00:00\", \"deadline\": \"2026-10-03T01:05:41.883470+00:00\"}",
+    "{\"event\": \"controller_opening_observed\", \"at_utc\": \"2026-10-03T00:57:57.548738+00:00\"}"
+  ],
+  "deadline_guard": [
+    "{\"status\": \"armed\", \"at_utc\": \"2026-10-03T00:57:57.038338+00:00\", \"deadline\": \"2026-10-03T03:55:41.883470+00:00\", \"command\": [\"/bin/bash\", \"/usr/bin/shutdown\"]}"
+  ],
+  "arms": {
+    "repair_only": {
+      "last_training_step": [
+        "{\"binding_digest\":\"4b059a5f7dc0bde4262152a36d6e837f3f51b7a069eb77c010f0f45b2b138202\",\"step\":23,\"loss\":0.005555134363197153,\"gradient_norm_before_clip\":0.1494835764169693,\"elapsed_seconds\":263.7606766037643,\"input_tokens\":337333,\"supervised_tokens\":7752,\"decisions\":184}"
+      ],
+      "probe": {
+        "sequence_tokens": 3126,
+        "forward_backward_passed": true,
+        "optimizer_steps": 0,
+        "binding": {
+          "version": "g2-arm-binding-v1",
+          "plan_digest": "fab5e9670c56d9a1a9cadbdd2db24d8bb881b59a7ab54015398483337c2b4e50",
+          "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+          "arm": "repair_only",
+          "seed": 42,
+          "test_episodes": 0
+        },
+        "initial_parameters_unchanged": true,
+        "peak_allocated_bytes": 12374085120,
+        "peak_reserved_bytes": 16024338432
+      },
+      "report": null,
+      "episodes": {
+        "normal": 0,
+        "diagnostic": 0,
+        "d2": 0
+      }
+    },
+    "coverage_mix": {
+      "last_training_step": [],
+      "probe": null,
+      "report": null,
+      "episodes": {
+        "normal": 0,
+        "diagnostic": 0,
+        "d2": 0
+      }
+    }
+  }
+}

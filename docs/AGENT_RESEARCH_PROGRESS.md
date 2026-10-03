@@ -1,6 +1,26 @@
 # Agent research progress and handoff
 
-## Current: G2 state-coverage pilot prepared locally; waiting for a new server opening
+## Current: G2 seed42 running; result tools prepared without changing frozen execution
+
+Updated 2026-10-03 UTC. User opened the server for the bounded G2 pilot.
+[Execution record](research/2026-10-03-g2-seed42-window.md) preserves the actual
+opening, launch and read-only observation. Exact checked4041159 runs on4090 with
+the original dependencies;25 assets verified. Earlier container boot00:55:41.883470
+fixes work03:25:41.883470/hard03:55:41.883470 UTC, CNY8 reserve at2.18/hour.
+Sole launcher/collector15554; train-repair_only started00:58:05.474359. Snapshot
+01:03:00 shows23/126 updates, GPU100%/16139MiB,3126-token no-update probe passed and
+both hard guards alive. No complete G2 training/evaluation result yet.
+
+Publication, paired-case/normal-chain/history-repeat analysis and figures are
+prepared on the result branch.8 focused checks and527 full regressions pass (613.921s); all57 frozen G2 sources remain
+unchanged. Real-weight/222-case/native/token restoration must precede publication;
+partial/scripted evidence is rejected. Preserve the fresh current control even if
+it differs from historical G1. Quiet heartbeat follows this window only. Complete
+or fail means automatic shutdown and persistent data retention, then review and
+final exact-head checks before merge. Fees use duration estimates, not invoice requests.
+No new seed, API, expansion, reopening or reserved48 evaluation.
+
+## Historical: G2 state-coverage pilot prepared locally; waiting for a new server opening
 
 Updated 2026-10-03 UTC. Following the user's new instruction to continue improving
 until GPU is needed, [G2](research/2026-10-03-g2-state-coverage-pilot.md) tests a

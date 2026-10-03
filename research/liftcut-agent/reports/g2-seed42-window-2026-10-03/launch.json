@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+    "/root/autodl-tmp/liftcut/code/404115971f3db97577433769a88dbb2486058d99/research/liftcut-agent/run_g2_window.py",
+    "--model-dir",
+    "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+    "--model-manifest",
+    "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json",
+    "--prepared-dir",
+    "/root/autodl-tmp/liftcut/data/g2-4041159/prepared",
+    "--diagnostic-dir",
+    "/root/autodl-tmp/liftcut/data/g2-4041159/diagnostic",
+    "--d2-dir",
+    "/root/autodl-tmp/liftcut/data/g2-4041159/d2",
+    "--tokenizer-dir",
+    "/root/autodl-tmp/liftcut/data/g2-4041159/tokenizer",
+    "--output-dir",
+    "/root/autodl-tmp/liftcut/runs/g2-run-20261003-005616",
+    "--expected-code-commit",
+    "404115971f3db97577433769a88dbb2486058d99",
+    "--hourly-cny",
+    "2.18",
+    "--booted-at",
+    "2026-10-03T00:55:41.883470+00:00",
+    "--setup-guard",
+    "/root/autodl-tmp/liftcut/runs/g2-ops-20261003-005616/setup-guard.jsonl",
+    "--execute",
+    "--shutdown-when-done"
+  ],
+  "at_utc": "2026-10-03T00:57:51.644822+00:00",
+  "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00"
+}
