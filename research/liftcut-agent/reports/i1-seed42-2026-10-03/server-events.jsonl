@@ -1,0 +1,9 @@
+{"event":"phase_started","at_utc":"2026-10-03T10:41:49.071346+00:00","phase":"evaluate-raw"}
+{"event":"phase_completed","at_utc":"2026-10-03T10:51:57.193435+00:00","phase":"evaluate-raw"}
+{"event":"phase_started","at_utc":"2026-10-03T10:51:57.194084+00:00","phase":"evaluate-view"}
+{"event":"phase_completed","at_utc":"2026-10-03T11:02:03.973716+00:00","phase":"evaluate-view"}
+{"event":"phase_started","at_utc":"2026-10-03T11:02:03.974773+00:00","phase":"audit"}
+{"event":"phase_completed","at_utc":"2026-10-03T11:02:30.985159+00:00","phase":"audit"}
+{"event":"backup_ready","at_utc":"2026-10-03T11:02:40.317173+00:00","index":{"version":"i1-backup-v1","binding":{"version":"i1-window-binding-v1","code_commit":"2bf816a02e116a3d26961bba817c49c590ccb910","execution_plan_digest":"2d0c7dc49f769d2eb7b5d8f087e982ac126174839ee4ce04f9b3ffa2ec0b2b11","reference_digest":"7f86fb9ca29179af0357f3babc612f34d5d90ef8189d395f284814f0e3063157","booted_at_proxy":"2026-10-03T05:35:00.409447+00:00","trial_started_at_utc":"2026-10-03T10:41:37.327382+00:00","work_cutoff":"2026-10-03T11:31:37.327382+00:00","collection_cutoff":"2026-10-03T12:01:37.327382+00:00","hard_cutoff":"2026-10-03T14:00:00+00:00","test_episodes":0,"new_training":false},"evidence_kind":"model","status":"complete","archives":[{"path":"evidence.tar.gz","archive":"evidence.tar.gz","bytes":123295152,"sha256":"08e277498970957ffd7205554e17ddac358743550773c58887397ebc36b3e055"}]}}
+{"event":"server_receipt_consumed","at_utc":"2026-10-03T11:04:40.334477+00:00","status":"complete"}
+{"event":"i1_controller_finished","at_utc":"2026-10-03T11:04:40.335782+00:00","status":"complete","acknowledged":true,"independent_overnight_guard_retained":true,"power_deadline":"2026-10-03T14:00:00+00:00"}

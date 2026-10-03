@@ -135,3 +135,24 @@ I1无论效果如何都属于固定权重的系统干预。能够从两组相同
 模型得出的结论不同。预先固定较弱的G4control是为了遵守比较设计，不能在看到结果后
 换成permuted再声称原试验成功。练习写出I1过门槛和不过门槛时各自允许的下一步；
 两种情况都不允许把重复开发状态改称独立泛化，也不允许本夜追加第三轮救分。
+
+## I1真实结果：一次收益、两种失败、两个分母
+
+先看[I1完整复盘](2026-10-03-i1-complete-results.md)，再打开
+[全111配对表](../../research/liftcut-agent/reports/i1-seed42-2026-10-03/paired-cases.md)
+与[失败输入定位](../../research/liftcut-agent/reports/i1-seed42-2026-10-03/failure-localization.json)。
+
+1. 手算记忆11→42的31收益，与旧记忆2、ID4为何合计37；正常/授权/修复/不可行没有
+   变化。解释99/111为何不是完整用户任务成功率，也不是111个独立样本。
+2. 选择`d2-memory-v1-c0-first-unconfirmed`：从`run/evaluation/view/d2/inputs.jsonl`
+   找到实际模型输入，确认只有一条machine最新记忆，get_context仍有dumbbell。
+   对照模型search动作，说明此错误为何已不同于从多条记录选错revision。
+3. 比较`d2-memory-v0-c0-first-unconfirmed`及其identity版本：规范化两个不透明ID后
+   其余模型请求相同，动作barbell→dumbbell。解释为何这能说明输入敏感性，却不能
+   断言哪一个ID单独导致，或断言模型读取了被移除的旧记录。
+4. 解释相对fresh raw没有损失，但相对固定S0的ID为2收益、3损失，因此保护失败。
+   原ID门槛10而实际6，也没有因为整体99分而被豁免。
+5. 独立运行README里的两个CPU重建命令。明确它们重新核验公开轨迹/token，既不
+   重新做GPU推理，也不加载未发布的私有权重。
+
+能讲清这五步后，再阅读来源解析/稳定ID的2×2下一方案；不要先背技术名词。
