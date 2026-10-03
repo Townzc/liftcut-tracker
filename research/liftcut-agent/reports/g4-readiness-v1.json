@@ -1,0 +1,29 @@
+{
+  "version": "g4-readiness-v1",
+  "evidence_kind": "cpu_preparation",
+  "model_result": false,
+  "prepared_files": 26,
+  "two_preparations_identical": true,
+  "source_count": 87,
+  "cpu_drill": {
+    "version": "g4-operating-drill-v1",
+    "evidence_kind": "scripted_contract",
+    "model_result": false,
+    "episodes_replayed": 222,
+    "generation_records": 376,
+    "real_token_ids_reconstructed": true,
+    "production_phases_and_early_archives_exercised": true,
+    "historical_T_bytes_used_as_container_only": true,
+    "complete_restore_and_local_receipt": true,
+    "gpu_calls": 0,
+    "new_model_calls": 0,
+    "test_episodes": 0,
+    "real_shutdown_calls": 0,
+    "sftp_tested_by_this_drill": false,
+    "scope": "Oracle text, synthetic training/probe counters; no actual G4 training or GPU memory result"
+  },
+  "gpu_calls": 0,
+  "reserved_test_episodes": 0,
+  "sftp_real_transfer_tested": false,
+  "scope": "Real tokenizer/environment and historical unchanged T weight container; no G4 model result."
+}
