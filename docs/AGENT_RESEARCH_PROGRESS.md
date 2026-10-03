@@ -1,5 +1,15 @@
 # Agent research progress and handoff
 
+## 2026-10-03 10:22 UTC：G4已合main；I1真实参考已冻结，等待最终检查
+
+PR41最终bae5723五项SUCCESS，合并7b810a8且树一致。I1独立分支合入main，保留双方
+全部CI与日志；98源再次核验与原CPU演练一致。实际G4完整恢复重新审计通过后生成
+reference，固定预注册新control权重adb76deb…；原机制/候选失败为真实触发。
+raw/view各111新推理，40/48记忆、净增12、ID10/12及S0保护不变；系统干预不冒称
+新训练。完整CPU合同595测试与222脚本回放的边界保留，最终精确Git检查待过。
+尚未派发I1；路径配置已准备，不含密码，后续唯一派发仍检查原guard/无worker/实际
+G4服务器ACK和时间。原14:00UTC/累计¥20、48保留任务未用；无第三轮实验。
+
 ## 2026-10-03 10:05 UTC：G4真实结果已恢复，整体候选失败
 
 [G4完整复盘](research/2026-10-03-g4-complete-results.md)：新control/permuted记忆11/48→20/48，
