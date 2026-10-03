@@ -1,18 +1,29 @@
 # LiftCut-AgentLab research roadmap
 
-Updated: 2026-10-02 (project work date). Status: approved direction; milestones below are targets.
-Current result: [G1 paired pilot](research/2026-10-02-g1-complete-results.md) is complete
+Updated: 2026-10-03 UTC (October2 local project date). Status: approved direction;
+milestones below are targets. Latest user instruction authorizes local preparation
+of [G2 state coverage](research/2026-10-03-g2-state-coverage-pilot.md), then notification
+when a new GPU opening is necessary. G2 compares fresh repair-only versus matched
+clean/repair context exposure, holding correct targets, order,126 updates and41,788
+supervised tokens fixed. CPU preparation, coverage checks and recovery drill pass;
+there are no new model results. Mechanism recovery and full candidate protections
+are evaluated separately. Work150/hard180 minutes, CNY8 reserve at2.18/hour; exact
+checks and staged installation precede a new opening. Reserved48 stay unused.
+
+Current model result: [G1 paired pilot](research/2026-10-02-g1-complete-results.md) is complete
 and fails its original gate. Repair1/4→3/4 is outweighed by full-task9/12→2/12 and
 infeasible4/4→2/4 regressions. Both actual weights and222 native/token evaluations
 are restored; platform OFF is user-confirmed, compute estimate CNY3.00. G1 seed43/44
-and G2 stop here. No qualified adapter is promoted; reserved48 remain unused.
+stop here. The new G2 study does not change G1's failure or authorize more G1 seeds.
+No qualified adapter is promoted; reserved48 remain unused.
 
-The [next local phase](research/2026-10-02-post-g1-release-plan.md) completes the
+The [parallel local deliverables](research/2026-10-02-post-g1-release-plan.md) remain the
 research evidence index, saved-trajectory demo, state-coverage audit and learning
 report. All64 clean first-validation targets moved to after-error contexts in G1;
 this post-hoc finding is a mechanism hypothesis, not a proven causal intervention.
 Publish S0 baseline and negative findings with development-only limits; independent
-evaluation is still unfinished. No server opening is needed for this local phase.
+evaluation is still unfinished. Those publication tasks require no server; the
+new G2 model experiment waits for a separately opened window after CPU readiness.
 
 The preparation/execution updates below are historical; current status is above
 and in [progress](AGENT_RESEARCH_PROGRESS.md).
