@@ -1,0 +1,6 @@
+{"event":"phase_started","at_utc":"2026-10-03T10:41:49.071346+00:00","phase":"evaluate-raw"}
+{"event":"phase_completed","at_utc":"2026-10-03T10:51:57.193435+00:00","phase":"evaluate-raw"}
+{"event":"phase_started","at_utc":"2026-10-03T10:51:57.194084+00:00","phase":"evaluate-view"}
+{"event":"phase_completed","at_utc":"2026-10-03T11:02:03.973716+00:00","phase":"evaluate-view"}
+{"event":"phase_started","at_utc":"2026-10-03T11:02:03.974773+00:00","phase":"audit"}
+{"event":"phase_completed","at_utc":"2026-10-03T11:02:30.985159+00:00","phase":"audit"}

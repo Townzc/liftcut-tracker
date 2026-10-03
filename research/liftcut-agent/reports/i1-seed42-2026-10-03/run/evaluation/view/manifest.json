@@ -1,0 +1,48 @@
+{
+  "version": "i1-evaluation-v1",
+  "binding": {
+    "version": "i1-window-binding-v1",
+    "code_commit": "2bf816a02e116a3d26961bba817c49c590ccb910",
+    "execution_plan_digest": "2d0c7dc49f769d2eb7b5d8f087e982ac126174839ee4ce04f9b3ffa2ec0b2b11",
+    "reference_digest": "7f86fb9ca29179af0357f3babc612f34d5d90ef8189d395f284814f0e3063157",
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "trial_started_at_utc": "2026-10-03T10:41:37.327382+00:00",
+    "work_cutoff": "2026-10-03T11:31:37.327382+00:00",
+    "collection_cutoff": "2026-10-03T12:01:37.327382+00:00",
+    "hard_cutoff": "2026-10-03T14:00:00+00:00",
+    "test_episodes": 0,
+    "new_training": false
+  },
+  "arm": "view",
+  "evidence_kind": "model",
+  "reference_digest": "7f86fb9ca29179af0357f3babc612f34d5d90ef8189d395f284814f0e3063157",
+  "adapter_sha256": {
+    "adapter_config.json": "2e82c81f8f9a68f270cdfd9f7f4fc92cb877e87efc1ea0bbb4d131c601a29a84",
+    "adapter_model.safetensors": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0"
+  },
+  "config": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "token_limit_field": "max_completion_tokens",
+    "thinking_mode": null,
+    "temperature": 0,
+    "send_parallel_tool_calls": true,
+    "max_output_tokens": 512,
+    "max_requests": 2000,
+    "max_reserved_output_tokens": 1024000,
+    "max_request_bytes": 100000,
+    "max_response_bytes": 1000000,
+    "timeout_seconds": 60,
+    "input_usd_per_million": "0",
+    "output_usd_per_million": "0",
+    "max_reserved_usd": "0",
+    "pricing_note": "Local GPU or explicitly identified scripted prefix; no hosted API spend",
+    "tool_protocol": "read_batch",
+    "prompt_revision": "pending_approval_v1"
+  },
+  "parser": "qwen-native-content-v2",
+  "precision": "NF4 double quantization/BF16 compute; fp32 nonquantized layers in every arm",
+  "system_projection": true,
+  "test_episodes": 0,
+  "new_training": false
+}

@@ -586,6 +586,11 @@ jobs:
           assert receipt['episodes_replayed'] == 0 and not receipt['complete_study_replayed']
           PY
 
+      - name: Reconstruct I1 actual raw/view evidence, projection tokens and remaining failures
+        run: |
+          python research/liftcut-agent/analyze_i1_results.py --public-dir research/liftcut-agent/reports/i1-seed42-2026-10-03 --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
+          python research/liftcut-agent/analyze_i1_failures.py --public-dir research/liftcut-agent/reports/i1-seed42-2026-10-03 --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

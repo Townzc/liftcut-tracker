@@ -1,0 +1,390 @@
+{
+  "version": "i1-failure-localization-v1",
+  "post_hoc": true,
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "review_sha256": "ea516472ce82a0ffa9d78d780c9e85809608c0440798018e069c772acce1991f",
+  "failures": [
+    {
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "dumbbell"
+      ],
+      "visible_memory_equipment": [
+        "machine"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-53b812610805"
+      ],
+      "selected_matches_pruned_memory_value": false,
+      "selected_present_in_visible_context_or_memory": true,
+      "classification": "raw_context_override",
+      "actual_input_digest": "682357613e2f0aae8463dfba288242b28a4614bd4d38cccc385d1b0734db55fd"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "selected_equipment": [
+        "dumbbell"
+      ],
+      "raw_context_equipment": [
+        "bodyweight"
+      ],
+      "visible_memory_equipment": [
+        "barbell"
+      ],
+      "user_corrections": {},
+      "visible_memory_ids": [
+        "memory-06cfabacd6fa"
+      ],
+      "selected_matches_pruned_memory_value": true,
+      "selected_present_in_visible_context_or_memory": false,
+      "classification": "matches_removed_value",
+      "actual_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    }
+  ],
+  "failure_classes": {
+    "raw_context_override": 6,
+    "matches_removed_value": 6
+  },
+  "identity_pairs": [
+    {
+      "original": "d2-memory-v0-c0-first-unconfirmed",
+      "renamed": "d2-identity-v0-c0-first-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c1-last-expired",
+      "renamed": "d2-identity-v0-c1-last-expired",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    },
+    {
+      "original": "d2-memory-v0-c0-first-expired",
+      "renamed": "d2-identity-v0-c0-first-expired",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c0-middle-unconfirmed",
+      "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c0-middle-expired",
+      "renamed": "d2-identity-v0-c0-middle-expired",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c0-last-unconfirmed",
+      "renamed": "d2-identity-v0-c0-last-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c0-last-expired",
+      "renamed": "d2-identity-v0-c0-last-expired",
+      "original_correct": true,
+      "renamed_correct": false,
+      "score_flip": true,
+      "normalized_action_sequence_changed": true,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "6441f9a6c20b62111113baf3438f9c2fb42822542fdbacc3ff0e82d9fba174bb",
+      "renamed_input_digest": "fafaf9452466364c9d84c43e19bb5e9b7bca971bb25f43cfd83878b57e8dd67e"
+    },
+    {
+      "original": "d2-memory-v0-c1-first-unconfirmed",
+      "renamed": "d2-identity-v0-c1-first-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    },
+    {
+      "original": "d2-memory-v0-c1-first-expired",
+      "renamed": "d2-identity-v0-c1-first-expired",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    },
+    {
+      "original": "d2-memory-v0-c1-middle-unconfirmed",
+      "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    },
+    {
+      "original": "d2-memory-v0-c1-middle-expired",
+      "renamed": "d2-identity-v0-c1-middle-expired",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    },
+    {
+      "original": "d2-memory-v0-c1-last-unconfirmed",
+      "renamed": "d2-identity-v0-c1-last-unconfirmed",
+      "original_correct": true,
+      "renamed_correct": true,
+      "score_flip": false,
+      "normalized_action_sequence_changed": false,
+      "actual_projected_inputs_equal_except_source_ids": true,
+      "original_input_digest": "0d7ce984769ec7bffe8495dee9bd899cf84125a6eef5aa1f5e3439f21d7684f8",
+      "renamed_input_digest": "d37c1e01c07a5563ee1998e02382ba61a8747c15ccd99a60e974ca6748c4375b"
+    }
+  ],
+  "identity_score_flips": 6,
+  "identity_action_changes": 6,
+  "caution": "Matching a pruned value does not establish retrieval of that record. Joint record/memory ID changes cannot isolate which ID caused sensitivity. Reused dev states are not independent samples."
+}

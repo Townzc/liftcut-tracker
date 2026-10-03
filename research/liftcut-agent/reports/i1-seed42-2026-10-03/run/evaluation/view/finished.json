@@ -1,0 +1,20 @@
+{
+  "binding": {
+    "version": "i1-window-binding-v1",
+    "code_commit": "2bf816a02e116a3d26961bba817c49c590ccb910",
+    "execution_plan_digest": "2d0c7dc49f769d2eb7b5d8f087e982ac126174839ee4ce04f9b3ffa2ec0b2b11",
+    "reference_digest": "7f86fb9ca29179af0357f3babc612f34d5d90ef8189d395f284814f0e3063157",
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "trial_started_at_utc": "2026-10-03T10:41:37.327382+00:00",
+    "work_cutoff": "2026-10-03T11:31:37.327382+00:00",
+    "collection_cutoff": "2026-10-03T12:01:37.327382+00:00",
+    "hard_cutoff": "2026-10-03T14:00:00+00:00",
+    "test_episodes": 0,
+    "new_training": false
+  },
+  "arm": "view",
+  "finished_at_utc": "2026-10-03T11:02:02.868958+00:00",
+  "inference_wall_seconds": 580.7711407504976,
+  "total_wall_seconds_including_load": 593.9163432512432,
+  "new_training": false
+}

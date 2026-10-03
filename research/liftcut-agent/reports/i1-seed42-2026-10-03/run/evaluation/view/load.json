@@ -1,0 +1,32 @@
+{
+  "binding": {
+    "version": "i1-window-binding-v1",
+    "code_commit": "2bf816a02e116a3d26961bba817c49c590ccb910",
+    "execution_plan_digest": "2d0c7dc49f769d2eb7b5d8f087e982ac126174839ee4ce04f9b3ffa2ec0b2b11",
+    "reference_digest": "7f86fb9ca29179af0357f3babc612f34d5d90ef8189d395f284814f0e3063157",
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "trial_started_at_utc": "2026-10-03T10:41:37.327382+00:00",
+    "work_cutoff": "2026-10-03T11:31:37.327382+00:00",
+    "collection_cutoff": "2026-10-03T12:01:37.327382+00:00",
+    "hard_cutoff": "2026-10-03T14:00:00+00:00",
+    "test_episodes": 0,
+    "new_training": false
+  },
+  "arm": "view",
+  "runtime": {
+    "packages": {
+      "torch": "2.8.0+cu128",
+      "transformers": "4.57.6",
+      "tokenizers": "0.22.2",
+      "jinja2": "3.1.6",
+      "accelerate": "1.10.1",
+      "peft": "0.17.1",
+      "bitsandbytes": "0.47.0"
+    },
+    "python": "3.12.3",
+    "cuda_build": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 4090"
+  },
+  "seconds": 13.144833764061332,
+  "at_utc": "2026-10-03T10:52:22.097479+00:00"
+}

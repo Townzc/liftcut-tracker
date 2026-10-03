@@ -1,5 +1,17 @@
 # LiftCut-AgentLab research roadmap
 
+Latest: [I1 complete](research/2026-10-03-i1-complete-results.md). Same fixed checkpoint,
+fresh raw/view62→99/111 reused dev states (37gains/0losses), memory11→42/48.
+ID6/12 remains below10 and fixedS0's7, so mechanism/candidate FAIL; no promotion.
+Six raw-context overrides and six ID-sensitive errors remain. Rule-based projection
+is a system intervention, not learned memory selection.48reserved tasks untouched.
+[Next offline design](research/2026-10-03-post-i1-plan.md): public-source precedence
+and stable evidence aliases, then a separately frozen2×2 comparison. No third
+overnight trial, extra seed or API. Actual I1 restore/ACK complete11:04UTC; final
+power/Git closure pending under the original14:00UTC/CNY20 lease. See the
+[morning capability/shortfall/ETA report](research/2026-10-03-morning-agent-report.md).
+Earlier stage snapshots below remain historical.
+
 Latest verified result: [G4 complete](research/2026-10-03-g4-complete-results.md).
 Fresh paired memory11/48→20/48, but old memory6/8→4/8 and latest-last0/16; both
 mechanism and candidate gates FAIL. All111:13 gains/4 losses. Invalid-record choices
