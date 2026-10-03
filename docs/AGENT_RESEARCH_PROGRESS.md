@@ -1,6 +1,39 @@
 # Agent research progress and handoff
 
-## Current: G1 pilot complete; original gate failed, stop expanding training
+## Current: G2 state-coverage pilot prepared locally; waiting for a new server opening
+
+Updated 2026-10-03 UTC. Following the user's new instruction to continue improving
+until GPU is needed, [G2](research/2026-10-03-g2-state-coverage-pilot.md) tests a
+specific G1 failure hypothesis. A fresh repair-only control sees each correct
+target twice with repair history; a fresh coverage-mix arm sees it once with clean
+history and once with repair history. First-epoch scenario assignment is balanced
+within category/error strata and reverses in epoch2. Targets, index order,1008
+exposures,41,788 supervised tokens and126 updates are matched. Input tokens differ
+by1.41%; no claim of exactly equal compute. T remains on, M remains off.
+
+Two independent CPU preparations match all9 original G1 pool files. Coverage-mix
+restores64 clean first-validation targets and retains64 after-error validation
+targets.21 focused regressions and519 full regressions passed;222 scripted
+native/environment episodes and376 generation records passed the production-path
+drill, including actual historical-weight container restoration and stub shutdown.
+These are CPU contract checks, not new G2 training/performance or a live GPU probe.
+[Readiness evidence](../research/liftcut-agent/reports/g2-readiness-v1.json) and
+[runbook](research/G2_RUNBOOK.md) record the operating boundaries.
+
+The mechanism screen requires full-task recovery, fewer premature false-infeasible
+stops, preserved repair, all true infeasible/consent cases and zero unapproved
+write attempts. Candidate eligibility additionally retains original fixed-S0
+memory/normal/ID protections. G1 remains a failed historical result; no automatic
+additional seeds. All111 cases are reused development states, reserved48 unused.
+
+Final exact-commit checks/merge and actual local staged-bundle installation precede
+the new opening request. Reserve CNY8 at2.18/hour; planning proxy131 minutes/CNY4.76,
+work150/hard180 minutes from original boot proxy, ten-minute setup allowance.
+No current cloud run, server connection or model calls. G1 PR33 merged, platform OFF
+is user-confirmed and its heartbeat is paused. Fees use recorded duration estimates;
+do not repeatedly request invoices. Keep the research index/demo/learning deliverables.
+
+## Historical: G1 pilot complete; original gate failed, stop expanding training
 
 Updated 2026-10-02 UTC. [G1 complete results](research/2026-10-02-g1-complete-results.md)
 publish both fresh seed42 adapters' actual restoration, 222 native/environment

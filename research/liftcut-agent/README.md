@@ -15,7 +15,14 @@ research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
-Latest (2026-10-02): [G1 paired pilot and failure analysis](../../docs/research/2026-10-02-g1-complete-results.md)
+Latest preparation (2026-10-03 UTC): [G2 context-coverage pilot](../../docs/research/2026-10-03-g2-state-coverage-pilot.md)
+tests repair-only versus matched clean/repair conditioning at the same target-token
+budget. Two CPU preparations, state-coverage assertions and the222-case operating
+drill pass; this is not a new model result. See the [runbook](../../docs/research/G2_RUNBOOK.md)
+for bounded startup, genuine restoration and shutdown after a new user opening.
+Mechanism recovery and full candidate protections have separate prespecified gates.
+
+Latest model result (2026-10-02): [G1 paired pilot and failure analysis](../../docs/research/2026-10-02-g1-complete-results.md)
 is complete. Repair improves1/4→3/4, but full tasks regress9/12→2/12 and true
 infeasible4/4→2/4. Original gate FAIL; no adapter promotion or further G1 seeds.
 [Public evidence and CPU reproduction](reports/g1-seed42-2026-10-02/README.md)

@@ -422,6 +422,28 @@ jobs:
             --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 \
             --prepared-dir research/liftcut-agent/outputs/ci-g1-a --check
 
+      - name: Reproduce G2 matched contexts and production recovery contract without GPU
+        run: |
+          for COPY in a b; do
+            python research/liftcut-agent/prepare_g2.py --output-dir research/liftcut-agent/outputs/ci-g2-$COPY --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          done
+          diff -r research/liftcut-agent/outputs/ci-g2-a research/liftcut-agent/outputs/ci-g2-b
+          python research/liftcut-agent/drill_g2.py --output-dir research/liftcut-agent/outputs/ci-g2-drill --prepared-dir research/liftcut-agent/outputs/ci-g2-a --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          python research/liftcut-agent/run_g2_window.py --model-dir model --model-manifest manifest --prepared-dir research/liftcut-agent/outputs/ci-g2-a --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-g2-dry-run --expected-code-commit "$(git rev-parse HEAD)" --hourly-cny 2.18
+          test ! -e research/liftcut-agent/outputs/ci-g2-dry-run
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r = Path('research/liftcut-agent')
+          actual = json.loads((r / 'outputs/ci-g2-drill/drill-report.json').read_text())
+          expected = json.loads((r / 'reports/g2-readiness-v1.json').read_text())['cpu_drill']
+          # No private weights in CI: keep local container restoration distinct.
+          expected['historical_T_bytes_used_as_container_only'] = False
+          expected['complete_restore_and_local_receipt'] = False
+          assert actual == expected
+          assert not list((r / 'outputs/ci-g2-drill').rglob('off-instance-backup.json'))
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
