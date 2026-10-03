@@ -1,5 +1,18 @@
 # Agent research progress and handoff
 
+## Offline follow-up preparation while G4 is still training
+
+2026-10-03 08:45 UTC. G4 sole collector7427/PID37388 remains live; no new model
+result yet. PR41 preparation heada37ae9d passed all5 checks but remains draft.
+Independent I1 projection transport now records both raw policy and actual model
+inputs.3 focused checks reject missing/tampered/wrong-arm inputs and token counters;
+the pinned-tokenizer CPU drill replays222 scripted native/environment episodes and
+376 generation records.79 view requests change. These are protocol checks, no model
+benefit and no complete weight/archive recovery. Running87 G4 sources stay unchanged.
+I1 still requires the real G4 trigger, preselected control weight hashes, separate
+freeze and full recovery readiness, enough original time and a unique authorized
+dispatch. See the conditional pre-plan and journal. No cloud intervention occurred.
+
 ## Current: G4 train-control started under the original overnight power guard
 
 2026-10-03 UTC. PR40 passed all5 checks at10a729e, merged678e3dc, merge/head tree

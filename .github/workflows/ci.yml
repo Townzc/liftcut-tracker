@@ -531,6 +531,14 @@ jobs:
           assert not list((r/'outputs/ci-g4-drill').rglob('off-instance-backup.json'))
           PY
 
+      - name: Verify conditional I1 raw/view inputs with scripted native actions and original environment replay
+        run: >-
+          python research/liftcut-agent/drill_i1_projection.py
+          --output-dir research/liftcut-agent/outputs/ci-i1-projection
+          --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics
+          --d2-dir research/liftcut-agent/outputs/ci-d2-a
+          --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
