@@ -1,0 +1,26 @@
+{
+  "version": "g4-backup-receipt-v1",
+  "binding": {
+    "version": "g4-window-binding-v1",
+    "execution_plan_sha256": "e9cc50b563c3fc099536e74bcd31616b2068f98659836bba46609c56d7defffa",
+    "code_commit": "10a729eb0f8f55ba9d1b6888f5d6cdb9ac88fd28",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T05:35:00.409447+00:00",
+    "trial_started_at_utc": "2026-10-03T08:29:35.210056+00:00",
+    "work_cutoff": "2026-10-03T10:29:35.210056+00:00",
+    "collection_cutoff": "2026-10-03T11:14:35.210056+00:00",
+    "hard_cutoff": "2026-10-03T14:00:00+00:00",
+    "test_episodes": 0
+  },
+  "index_digest": "af38f43f4dfde6f3b260554c54c72564342841758f3abce7ca59db60ab1450c0",
+  "evidence_kind": "model",
+  "run_status": "complete",
+  "all_inventory_files_verified": true,
+  "complete_study_replayed": true,
+  "episodes_replayed": 222,
+  "adapter_files_verified": true,
+  "token_ids_verified": true,
+  "model_result": true,
+  "test_episodes": 0,
+  "verified_files": 56
+}

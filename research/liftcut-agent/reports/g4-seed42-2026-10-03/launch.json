@@ -1,0 +1,28 @@
+{
+  "pid": 6321,
+  "argv": [
+    "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+    "/root/autodl-tmp/liftcut/code/10a729eb0f8f55ba9d1b6888f5d6cdb9ac88fd28/research/liftcut-agent/run_g4_window.py",
+    "--model-dir",
+    "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+    "--model-manifest",
+    "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json",
+    "--prepared-dir",
+    "/root/autodl-tmp/liftcut/data/g4-10a729eb0f8f",
+    "--diagnostic-dir",
+    "/root/autodl-tmp/liftcut/data/g3-eaa1325/diagnostic",
+    "--d2-dir",
+    "/root/autodl-tmp/liftcut/data/g3-eaa1325/d2",
+    "--tokenizer-dir",
+    "/root/autodl-tmp/liftcut/data/g3-eaa1325/tokenizer",
+    "--output-dir",
+    "/root/autodl-tmp/liftcut/runs/g4-run-20261003-082710",
+    "--expected-code-commit",
+    "10a729eb0f8f55ba9d1b6888f5d6cdb9ac88fd28",
+    "--trial-started-at",
+    "2026-10-03T08:29:35.210056+00:00",
+    "--execute"
+  ],
+  "trial_started_at_utc": "2026-10-03T08:29:35.210056+00:00",
+  "instance_boot": "2026-10-03T05:35:00.409447+00:00"
+}

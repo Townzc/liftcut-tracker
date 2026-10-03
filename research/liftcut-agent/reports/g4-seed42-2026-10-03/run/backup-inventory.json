@@ -1,0 +1,194 @@
+{
+  "files": [
+    {
+      "path": "audit.log",
+      "bytes": 81,
+      "sha256": "35ee1702cabc9e800a257c80ec07470e66f82d9905a2dbd8ef9fb8ff81803a01"
+    },
+    {
+      "path": "comparison.json",
+      "bytes": 182121,
+      "sha256": "117da9329be823b7ee7f29b61599db3c221f10f4b08d74e7964eeb5daef54907"
+    },
+    {
+      "path": "early-index.jsonl",
+      "bytes": 1435,
+      "sha256": "d032d534f696156a09df1093149b1ab5072fec975ad7f1f3108b98780da43857"
+    },
+    {
+      "path": "evaluate-control.log",
+      "bytes": 479,
+      "sha256": "bad84956ff4890aad7984ec5266f577a63125ff5502490da64c447e666b2b78a"
+    },
+    {
+      "path": "evaluate-permuted.log",
+      "bytes": 572,
+      "sha256": "95fbb2d7824ecafe955d0cf0366e0dffdec4b13dc7a11b6ed0e4946b104633fc"
+    },
+    {
+      "path": "evaluation/control/d2/calls.jsonl",
+      "bytes": 763369,
+      "sha256": "2f5688031005a34ba31af5f76ee4e4b503841cba2e5178eaa8d008ba84cfed9a"
+    },
+    {
+      "path": "evaluation/control/d2/episodes.jsonl",
+      "bytes": 3598526,
+      "sha256": "ec6d396effe78cfe5c70e6dd67e594daf00b8569c9803c6f2c28b6d59ac1c81b"
+    },
+    {
+      "path": "evaluation/control/d2/generations.jsonl",
+      "bytes": 40138,
+      "sha256": "ba015f85f6049f93a2d08cefa45343b5e3d123a4df7d0e86e2a161533cd4cade"
+    },
+    {
+      "path": "evaluation/control/d2/report.json",
+      "bytes": 1488,
+      "sha256": "787051532b8c7cb05252a97ea9babe4a667e061ff9af171665c576cf79ce3088"
+    },
+    {
+      "path": "evaluation/control/diagnostic/calls.jsonl",
+      "bytes": 170627,
+      "sha256": "295178cf26448c64232b390971f7c6dfe8c10d0aee37609a3dd53e50d9f289d3"
+    },
+    {
+      "path": "evaluation/control/diagnostic/episodes.jsonl",
+      "bytes": 977414,
+      "sha256": "64a5514bfcfe862a0ed6abf53fa11c65b5302e66ec2bebe9a528b564dc483962"
+    },
+    {
+      "path": "evaluation/control/diagnostic/generations.jsonl",
+      "bytes": 7714,
+      "sha256": "f41eb0e787ed2a4a83fe8b457612177c1135a572e7b7b51e7fd4904a2a86559a"
+    },
+    {
+      "path": "evaluation/control/diagnostic/report.json",
+      "bytes": 13035,
+      "sha256": "501c337d4f90de9bfeb6e166ea8a2fb6f6cdc5c3c9314e685ac486e1e0c2d589"
+    },
+    {
+      "path": "evaluation/control/load.json",
+      "bytes": 689,
+      "sha256": "728a0ed098929f613ec0eb3c635d53b9b01a05036290dc6b3479ca7e9e1ce834"
+    },
+    {
+      "path": "evaluation/control/manifest.json",
+      "bytes": 1434,
+      "sha256": "ab4d8f648eb8b913e14a48a2f491427148014c97a71981e53514d2d3693892d6"
+    },
+    {
+      "path": "evaluation/control/normal/calls.jsonl",
+      "bytes": 650570,
+      "sha256": "a08d1310dbbed29dbe03add7ccd8e907c7a983635db566cd3f9622f7ee18f573"
+    },
+    {
+      "path": "evaluation/control/normal/episodes.jsonl",
+      "bytes": 746267,
+      "sha256": "84687c2922d3cada7f2303abfbbe8ff5d75420241836043e66ad6c46906607cf"
+    },
+    {
+      "path": "evaluation/control/normal/generations.jsonl",
+      "bytes": 42244,
+      "sha256": "4796d7adffdd760431bab4e1677a33d6ea8e00f2884bd7bceebdda1182aa2f83"
+    },
+    {
+      "path": "evaluation/control/normal/report.json",
+      "bytes": 4195,
+      "sha256": "c1f9904132350c6528248dab4dcad5265aaac50e83f5985f7667a07f03ab5f0c"
+    },
+    {
+      "path": "evaluation/permuted/d2/calls.jsonl",
+      "bytes": 763355,
+      "sha256": "93f81959f8965dda4cd9f2b0ee7326b3bd98d3c249ef44d4baf71b7a940cebe7"
+    },
+    {
+      "path": "evaluation/permuted/d2/episodes.jsonl",
+      "bytes": 3597883,
+      "sha256": "339585f28188967f529d77ba8ff3030ac03f025d1a5f6f5fa213e3ef31f3f6b5"
+    },
+    {
+      "path": "evaluation/permuted/d2/generations.jsonl",
+      "bytes": 40039,
+      "sha256": "cb46eb785c47c5feddcca82b8763bb18de47681bd357961162ae3f09d142d6bf"
+    },
+    {
+      "path": "evaluation/permuted/d2/report.json",
+      "bytes": 1488,
+      "sha256": "0e46aeeae82199e48a7338f2928bb93b50e07089ee21d4c6d946532e7e173a11"
+    },
+    {
+      "path": "evaluation/permuted/diagnostic/calls.jsonl",
+      "bytes": 170619,
+      "sha256": "47101d18005110c77b64a9a42585e0c60f2edf6016fe1aae26ea0d67e63e6ddc"
+    },
+    {
+      "path": "evaluation/permuted/diagnostic/episodes.jsonl",
+      "bytes": 977276,
+      "sha256": "48969956912c5a45e91e07b18c9345836cfd54f640d22279420069d3c3549be1"
+    },
+    {
+      "path": "evaluation/permuted/diagnostic/generations.jsonl",
+      "bytes": 7704,
+      "sha256": "098bc2c8f79b04d1de1b09bb2739ecc35274a27d0db69af684d0ffdc6e51fc59"
+    },
+    {
+      "path": "evaluation/permuted/diagnostic/report.json",
+      "bytes": 13029,
+      "sha256": "c79a5b8b99c5e570b8254023b7500fa064bc3790ccc2dd3b298b8417484cafef"
+    },
+    {
+      "path": "evaluation/permuted/load.json",
+      "bytes": 691,
+      "sha256": "82b1e21e6c52ea0df586094a98f5cb02b74c39d0b880dd30a7e35d4aafeec039"
+    },
+    {
+      "path": "evaluation/permuted/manifest.json",
+      "bytes": 1435,
+      "sha256": "6482420a770830ae4532b4e726d94dc04f5292dc6e6c6493abe5f72e36a6d208"
+    },
+    {
+      "path": "evaluation/permuted/normal/calls.jsonl",
+      "bytes": 650567,
+      "sha256": "2e417860afb31aa9431ff4e86a754f086ce1ff4b067456db2a665093536b3991"
+    },
+    {
+      "path": "evaluation/permuted/normal/episodes.jsonl",
+      "bytes": 746264,
+      "sha256": "7f97c9bfd2c7e64abeec865166acc3b867e99a7a0f60a7fdadcd0dfb6f31bd9a"
+    },
+    {
+      "path": "evaluation/permuted/normal/generations.jsonl",
+      "bytes": 42241,
+      "sha256": "1133a409ec1c714da9c1ab7d420e485736b35a918f4c481f93e85277e8a5b8c5"
+    },
+    {
+      "path": "evaluation/permuted/normal/report.json",
+      "bytes": 4195,
+      "sha256": "c1f9904132350c6528248dab4dcad5265aaac50e83f5985f7667a07f03ab5f0c"
+    },
+    {
+      "path": "events.jsonl",
+      "bytes": 950,
+      "sha256": "5438dfb3bb709355733b9c528929b7d2933a162ef44919807e6b16caa32dae7f"
+    },
+    {
+      "path": "opening.json",
+      "bytes": 1371,
+      "sha256": "de3c44c325bc712a618f31ce390cfdd43783af09056209ad21e76a1e42e52774"
+    },
+    {
+      "path": "train-control.log",
+      "bytes": 35137,
+      "sha256": "d1dfdf1c2030a8f59556ba1d6d7c038fd3d230f9812a9056512e3e156df47870"
+    },
+    {
+      "path": "train-permuted.log",
+      "bytes": 35096,
+      "sha256": "5b8b6ed632c381b8a3099a97100a6a27d33334dd72bfddc9621715c00bb9d43b"
+    },
+    {
+      "path": "window-status.json",
+      "bytes": 689,
+      "sha256": "f49a1dbd607022954e5908a70228d5be907f9b305bc55855574ce24e0620cc30"
+    }
+  ]
+}
