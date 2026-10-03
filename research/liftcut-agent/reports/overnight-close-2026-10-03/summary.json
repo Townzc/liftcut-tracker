@@ -1,0 +1,76 @@
+{
+  "schema": "liftcut-overnight-close-observations-v1",
+  "observer_session": 54085,
+  "local_python_pid": 24508,
+  "guard_verified_at_utc": "2026-10-03T13:50:44.383397+00:00",
+  "guard_pid": 3560,
+  "deadline_utc": "2026-10-03T14:00:00+00:00",
+  "ssh_channel_finished": {
+    "event": "ssh_channel_finished",
+    "at_utc": "2026-10-03T13:59:59.254246+00:00",
+    "exit_status": -1,
+    "transport_active": false,
+    "provider_power_verified": false,
+    "provider_billing_verified": false
+  },
+  "shutdown_request_observed": false,
+  "shutdown_return_observed": false,
+  "last_captured_server_events_at_utc": "2026-10-03T13:50:44.383687+00:00",
+  "provider_power_status": "unknown_pending_single_user_confirmation",
+  "provider_billing_stopped": "unknown",
+  "compute_proxy": {
+    "booted_at_utc": "2026-10-03T05:35:00.409447+00:00",
+    "end_proxy_utc": "2026-10-03T13:59:59.254246+00:00",
+    "end_basis": "local observed SSH transport closure; NOT provider shutdown or billing timestamp",
+    "elapsed_hours": 8.4163457775,
+    "hourly_cny": 2.18,
+    "current_opening_cny": 18.347633794950003,
+    "earlier_failed_opening_cny": 0.3630052281944445,
+    "cumulative_to_disconnect_cny": 18.71063902314445,
+    "planned_through_deadline_cny": 18.711090618622226,
+    "reserve_cny": 20,
+    "is_invoice": false,
+    "window_costs_overlap_cumulative": true
+  },
+  "limits": [
+    "Only guard verification and transport loss were captured; shutdown request/return are unobserved, not fabricated.",
+    "Transport closure near the deadline is consistent with planned shutdown but does not establish its cause.",
+    "Server and local timestamps come from distinct clocks; do not infer a subsecond shutdown time.",
+    "The captured server events are a pre-shutdown snapshot, not a complete final server log.",
+    "A single TCP probe timed out; this is reachability evidence, not provider power/billing evidence.",
+    "No cloud reboot, new experiment, repeated collector or extra model call was performed."
+  ],
+  "files": {
+    "local-events.jsonl": {
+      "sha256": "dbb7002034adae64e58820b5b37ba4c8c13c44a4f3c7f92b98f9b4f71c613063",
+      "bytes": 496,
+      "source": "exact local capture bytes"
+    },
+    "server-stream.jsonl": {
+      "sha256": "4b95e3db5b7ab4257f673cfafe5a78d1a3b84d49f06de7dc72658eab55cb69b8",
+      "bytes": 10656,
+      "source": "exact local capture bytes"
+    },
+    "stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "source": "exact local capture bytes"
+    },
+    "remote-observer.py": {
+      "sha256": "e46894dd30b5ac6f19baeedd15a33cf3f83445592d8de92dafefb8e0cc113e27",
+      "bytes": 1722,
+      "source": "exact local capture bytes"
+    },
+    "connectivity-observation.json": {
+      "sha256": "f1f0395136d3c8756227bf506555e9b3b50c82516589ffca777d352c44e6dcb1",
+      "bytes": 415,
+      "source": "exact local capture bytes"
+    },
+    "last-captured-events.jsonl": {
+      "sha256": "7b3856f9b1507e5dc03620f58298aa1e1dee172806d3398a816597ed60e7320a",
+      "bytes": 3588,
+      "source": "exact server snapshot embedded in capture",
+      "observed_at_utc": "2026-10-03T13:50:44.383687+00:00"
+    }
+  }
+}

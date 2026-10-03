@@ -8,7 +8,10 @@ is a system intervention, not learned memory selection.48reserved tasks untouche
 [Next offline design](research/2026-10-03-post-i1-plan.md): public-source precedence
 and stable evidence aliases, then a separately frozen2×2 comparison. No third
 overnight trial, extra seed or API. Actual I1 restore/ACK complete11:04UTC; final
-power/Git closure pending under the original14:00UTC/CNY20 lease. See the
+Git delivery completed in PR43; the original14:00UTC/CNY20 guard was verified before
+SSH disconnected near the deadline. Shutdown request/return were not captured and
+provider status remains pending one confirmation. See the
+[closing evidence and duration proxy](research/2026-10-03-overnight-closure.md) and
 [morning capability/shortfall/ETA report](research/2026-10-03-morning-agent-report.md).
 Earlier stage snapshots below remain historical.
 
