@@ -1,6 +1,29 @@
 # Agent research progress and handoff
 
-## Current: G3 second opening is training; result publication tools prepared
+## Current: authorized overnight window; G3 recovery collector and new power guard active
+
+The maintainer explicitly confirmed Los Angeles 2026-10-03 07:00 / UTC14:00 and a
+cumulative CNY20 reserve at2.18/hour. [Overnight plan](research/2026-10-03-overnight-plan.md)
+supersedes the old end-of-G3 shutdown policy, not the frozen G3 scientific conditions
+or its08:05 compute cutoff. Subsequent evidence-driven pilots are authorized inside
+this continuous lease, after preparation and a new Git freeze. No expansion, paid
+API, reboot or reserved48; leave the last45 minutes for backup and the morning report.
+
+At06:28 the tool no longer recognized8131; a06:30 process inspection found no old
+Python collector. Its exact loss time/cause is unknown. The06:31 cloud observation
+confirmed training continued: stop_half126 updates/111 evaluation episodes written,
+stop_all85 updates. Both shared12-step records match; complete local replay is pending.
+The101,777,408-byte old partial and original events are retained untouched.
+
+Inspected recovery49175 started in a NEW064210 directory, without launching training.
+At06:49:10 the replacement14:00 guard3560 and completion watcher3561 were actually
+armed outside the frozen checkout. The monitor validated the original binding,
+verified the retained archive prefix against the cloud, and resumed a copy. It reports
+evaluate-stop_all started06:39:27. Actual final restoration/receipt and controller
+handoff are still pending. Frozen74 source files are unchanged;7 focused power/recovery
+tests pass. Full-suite/CI results on this new commit are pending. DraftPR38 remains open.
+
+## Historical: G3 second opening is training; result publication tools prepared
 
 2026-10-03 UTC. After the first opening was closed, the user explicitly reopened.
 New opening20261003-053547 uses checked eaa1325 unchanged. Assets resumed only after

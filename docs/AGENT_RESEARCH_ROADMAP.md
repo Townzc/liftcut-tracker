@@ -1,5 +1,15 @@
 # LiftCut-AgentLab research roadmap
 
+Current authorization update: the maintainer confirmed an overnight continuous lease
+through2026-10-03 07:00 Los Angeles /14:00 UTC, cumulative CNY20. The
+[overnight plan](research/2026-10-03-overnight-plan.md) allows evidence-driven follow-up
+pilots after G3 analysis and a separately checked freeze. G3 itself keeps its original
+training/score conditions and08:05 compute cutoff. Recovery49175 and the new14:00
+guard are active; full local G3 results remain pending. Complete the morning capability,
+shortfall, next-step and remaining-time report within this window. Older per-window
+shutdown/budget statements below describe history and are superseded only where the
+new explicit authorization says so. No reserved48, paid API, expansion or reboot.
+
 Updated: 2026-10-03 UTC. [G2 complete results](research/2026-10-03-g2-complete-results.md)
 restore full tasks2/12→10/12 and repair3/4→4/4, but true infeasible2/4→0/4.
 Both original mechanism and candidate gates FAIL; memory24/48 and ID6/12 also

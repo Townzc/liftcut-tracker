@@ -48,6 +48,18 @@ class LeaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             self.assertIsNone(lease.archive_ready(Path(temp),config()))
 
+    def test_only_original_verified_guard_child_is_exempt_from_worker_check(self):
+        guard={'pid':1334,'ppid':1325,'argv':['python','original-guard'],
+               'start_ticks':'99','state':'S'}
+        with patch.object(Path,'iterdir',return_value=[Path('/proc/1334')]):
+            with patch.object(lease,'process',return_value=guard):
+                lease.verify_no_worker_children({'pid':1325},[guard])
+                with self.assertRaisesRegex(ValueError,'live worker'):
+                    lease.verify_no_worker_children({'pid':1325},[])
+            with patch.object(lease,'process',return_value={**guard,'start_ticks':'100'}):
+                with self.assertRaisesRegex(ValueError,'PID identity'):
+                    lease.verify_no_worker_children({'pid':1325},[guard])
+
 
 if __name__=='__main__':
     unittest.main()

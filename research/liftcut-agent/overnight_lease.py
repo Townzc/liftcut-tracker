@@ -133,6 +133,24 @@ def archive_ready(run, cfg):
     return index
 
 
+def verify_no_worker_children(controller, guards):
+    for p in Path('/proc').iterdir():
+        if not p.name.isdigit():
+            continue
+        try:
+            child = process(int(p.name))
+        except (OSError, ValueError):
+            continue
+        if child['ppid'] != controller['pid'] or child['state'] == 'Z':
+            continue
+        # The original power guard is also a controller child. Only its saved
+        # identity is exempt; a training/evaluation child still blocks handoff.
+        known = next((g for g in guards if g['pid'] == child['pid']), None)
+        if known is None:
+            raise ValueError('controller still has a live worker')
+        checked_process(known)
+
+
 def handoff(cfg, folder):
     validate_lease(cfg, now())
     guard_alive(folder, cfg)
@@ -149,14 +167,7 @@ def handoff(cfg, folder):
             try:
                 checked_process(controller)
                 # G3 backup finalization has no remaining worker process. Never stop a training child.
-                for p in Path('/proc').iterdir():
-                    if p.name.isdigit():
-                        try:
-                            child = process(int(p.name))
-                        except (OSError, ValueError):
-                            continue
-                        if child['ppid'] == controller['pid'] and child['state'] != 'Z':
-                            raise ValueError('controller still has a live worker')
+                verify_no_worker_children(controller, cfg['original_guard_identities'])
                 guard_alive(folder, cfg)
                 for original in cfg['original_guard_identities']:
                     checked_process(original)
