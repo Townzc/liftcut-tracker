@@ -1,5 +1,30 @@
 # Agent research progress and handoff
 
+## Current: G4 train-control started under the original overnight power guard
+
+2026-10-03 UTC. PR40 passed all5 checks at10a729e, merged678e3dc, merge/head tree
+verified equal. Corrected single launcher/collector7427 installed frozen87 sources
+and26 prepared files, then dispatched controller6321 in newrun082710. Actual trial
+start08:29:35.210056; work cutoff10:29:35.210056, collection11:14:35.210056 UTC.
+The actual cloud event records train-control starting08:29:57.076904. No G4 outcome
+is available yet. Old failed080715 attempt is retained, not relabeled as training.
+
+Existing independent guard3560 still protects14:00 UTC/07:00 Los Angeles. Original
+05:35 boot, cumulativeCNY20 and rate2.18/hour remain unchanged. No duplicate launcher,
+extra seeds, expansion, paid API, reboot or reserved48. Running frozen conditions
+must not change. Full artifacts/true local restoration precede any complete claim.
+
+The independent result branch prepares publication, all111 paired case comparisons,
+memory-role/position and false-stop analysis, figures, and a
+[morning report draft](research/2026-10-03-morning-agent-report.md). The report explicitly
+keeps G4 results and final shutdown pending.6 publication-boundary tests pass; the full591-test suite passes174.449s.
+A [conditional I1 pre-plan](research/2026-10-03-i1-memory-view-draft.md) is saved before
+seeing G4 results; its pure memory-view helper is not imported by any G4 runner.
+3 unit checks and an offline projection of189 historical G3 requests pass;79 requests
+change. This is no new inference/performance evidence and authorizes no immediate I1
+dispatch. Next: actual G4 restoration, pre-registered gates, then decide whether an
+independently frozen system comparison fits the original lease.
+
 ## Current: inspected G4 pre-dispatch path failure; portable fix awaiting final checks
 
 G4 PR39 passed all5 checks at389527f and mergedbe528c3. Attempt080715 ended before
