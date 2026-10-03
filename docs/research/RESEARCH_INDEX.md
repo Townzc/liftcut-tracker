@@ -1,6 +1,7 @@
 # LiftCut-AgentLab：研究证据入口
 
 更新：2026-10-03 UTC。G2已完成：正常和修复恢复，但真正不可行退步，原机制/候选门槛均失败。
+G3停止边界的数据与门槛已在本地冻结，尚未训练；记忆排列缺口已定位。
 最新运行状态以[进度](../AGENT_RESEARCH_PROGRESS.md)为准；本页用于理解研究主线，
 不能用较早阶段的高分代替最新候选判定。
 
@@ -19,6 +20,8 @@
 | D2：固定原seed42，80状态/组 | 记忆顺序、标识符、授权、修复、不可行分别弱在哪里？ | T授权12/12、修复1/4；TM三次未授权尝试均被拦截。80个派生状态不是80个独立任务 | [D2复盘](2026-10-02-d2-complete-results.md)、[完整公开包](../../research/liftcut-agent/reports/d2-fixed-seed42-2026-10-02/README.md) |
 | G1：两组新seed42训练，111例/组 | 错误反馈后的正确监督能否提高恢复？ | 修复1/4→3/4，同时完整任务9/12→2/12、真不可行4/4→2/4，原门槛失败 | [G1复盘](2026-10-02-g1-complete-results.md)、[实际权重恢复与222条回放](../../research/liftcut-agent/reports/g1-seed42-2026-10-02/README.md) |
 | G2：正常/纠错条件覆盖 | 保留正常首次决策监督能否恢复完整任务并保住修复？ | 正常2/12→10/12、修复3/4→4/4，真不可行2/4→0/4；原机制/候选均FAIL | [完整复盘](2026-10-03-g2-complete-results.md)、[222条实际回放公开包](../../research/liftcut-agent/reports/g2-seed42-2026-10-03/README.md)、[原冻结门槛](2026-10-03-g2-state-coverage-pilot.md) |
+| G3（已准备，未训练）：停止条件覆盖 | 只把不可行停止目标挪到真实无效验证之后，能否修复循环验证？ | 数据、门槛与执行链已冻结并通过CPU演练；两组仅改4/8个曝光；对照复用G2并要求前12步逐位复现 | [预注册设计](2026-10-03-g3-stop-boundary-design.md)、[操作手册](G3_RUNBOOK.md)、[准备报告](../../research/liftcut-agent/reports/g3-preparation-v1.json)、[就绪证据](../../research/liftcut-agent/reports/g3-readiness-v1.json) |
+| 记忆排列审计 | 记忆错误是否来自训练覆盖缺口？ | 训练只有4种记录排列；coverage_mix的24个错误全在未见过的旧值在前排列，全部选旧有效值（事后描述） | [审计](2026-10-03-memory-arrangement-audit.md)、[数据](../../research/liftcut-agent/reports/memory-coverage-2026-10-03/audit.json) |
 
 S0是固定比较基线，T表示读取后授权相关的训练状态覆盖，M表示记忆相关覆盖，TM为
 两者组合；它们不是四个基础模型。后来的G1/G2在各自研究中重新训练，不能拼成R1的
@@ -66,4 +69,5 @@ python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir researc
 与负结果诊断。每轮选择和结果在[实验日志](EXPERIMENT_LOG.md)中记录；
 [路线图](../AGENT_RESEARCH_ROADMAP.md)管理后续优先级。
 [G2后续方案](2026-10-03-post-g2-next-plan.md)先准备停止边界的训练条件对照，单独处理
-记忆位置和旧有效值选择。当前不需要开服务器；不自动扩训，不提前消耗保留任务。
+记忆位置和旧有效值选择；其中[G3设计](2026-10-03-g3-stop-boundary-design.md)已冻结，
+执行链演练完成后才需要开服务器。不自动扩训，不提前消耗保留任务。

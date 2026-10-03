@@ -1,0 +1,51 @@
+{
+  "version": "g3-readiness-v1",
+  "execution_plan_sha256": "16f2a369809a182ee3c4606f09b5bd744c7ed439965a5c4733733325a9cacda4",
+  "preparation_sha256": "d3c9c72725072abfad92c8028156ecae434dfeed783b556512d28fbb56f168c9",
+  "independent_preparations_identical": true,
+  "pool_files_identical_to_g2_freeze": 9,
+  "stop_pool_files": 5,
+  "cpu_drill": {
+    "version": "g3-operating-drill-v1",
+    "evidence_kind": "scripted_contract",
+    "model_result": false,
+    "episodes_replayed": 222,
+    "generation_records": 376,
+    "real_token_ids_reconstructed": true,
+    "production_phases_and_early_archives_exercised": true,
+    "historical_T_bytes_used_as_container_only": true,
+    "complete_restore_and_local_receipt": true,
+    "gpu_calls": 0,
+    "new_model_calls": 0,
+    "test_episodes": 0,
+    "real_shutdown_calls": 0,
+    "sftp_tested_by_this_drill": false,
+    "scope": "Oracle text, synthetic training/probe counters; no actual G3 training or GPU memory result"
+  },
+  "control_reproduction_check": {
+    "implemented_in": "gpu_train_g3.py",
+    "shared_steps": 12,
+    "synthetic_drill_logs_correctly_rejected": true,
+    "paired_claim_requires_reproduction": true
+  },
+  "targeted_regressions_passed": 23,
+  "full_regressions_passed": 557,
+  "full_regressions_seconds": 187.046,
+  "controller_dry_run_passed": true,
+  "offline_monitor_preflight_passed": true,
+  "stage_bundle_rehearsal": {
+    "base_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "delta_bundle_installed_and_base_unchanged": true,
+    "assets": 30,
+    "execution_plan_verified_on_installed_checkout": true,
+    "scope": "Rehearsal at a temporary commit; the real stage is rebuilt at the final checked commit."
+  },
+  "tokenizer_for_local_checks": "pure-Python stand-in validated against published token evidence; CI repeats with transformers 4.57.6/tokenizers 0.22.2",
+  "server_connected": false,
+  "gpu_training_executed": false,
+  "new_paid_api_calls": 0,
+  "reserved_test_reads": 0,
+  "live_memory_probe_verified": false,
+  "live_gpu_runtime_verified": false,
+  "scope": "CPU preparation/recovery evidence only; exact-head CI and the final local stage precede a new server opening."
+}

@@ -1,0 +1,6594 @@
+{
+  "version": "g3-preparation-v1",
+  "seed": 42,
+  "arms": {
+    "coverage_mix": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1878560,
+      "max_sequence_tokens": 3126,
+      "sample_order_sha256": "b8f5b4a6069c6d044c43578236b6c3b2c3716bb8302a2000bc8ef2ea52d83336",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996",
+      "context_schedule_sha256": "f8054530d21e74796c0cfedeb59a5e94d29146b91ef1df46587b78d99a24453f"
+    },
+    "stop_half": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1879075,
+      "max_sequence_tokens": 3126,
+      "sample_order_sha256": "b8f5b4a6069c6d044c43578236b6c3b2c3716bb8302a2000bc8ef2ea52d83336",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996",
+      "context_schedule_sha256": "bc6610295af48c5953ccc634ae21e58c72edce755093d8b0ef6379e90c9cf8dd"
+    },
+    "stop_all": {
+      "decisions": 1008,
+      "optimizer_steps": 126,
+      "supervised_tokens": 41788,
+      "input_tokens": 1879590,
+      "max_sequence_tokens": 3126,
+      "sample_order_sha256": "b8f5b4a6069c6d044c43578236b6c3b2c3716bb8302a2000bc8ef2ea52d83336",
+      "target_schedule_sha256": "6a1c2ef86d43e8da3a90f0c4992a33748cc05339a7522c4eb2335bfa88f9b996",
+      "context_schedule_sha256": "ab88397f14ed075f12d3f4302cebcf398666eb73f581d0791c9fd154a36c5733"
+    }
+  },
+  "control": {
+    "arm": "coverage_mix",
+    "source": "complete G2 seed42 run, reused rather than retrained",
+    "g2_review_sha256": "36c319a0b12972f94aa15da1c6d15e6c90399eba599ff63ccd28d50213616b23",
+    "g2_training_log_sha256": "7e0cdbc7f529b623cc406e43a90cf023786eb54dcb77282cc8e6ab00f93a5cb2",
+    "g2_adapter_sha256": {
+      "adapter_config.json": "cd85b8c6645b3abf4dcac0e3262f0a5296e7b8b69656304931a1e786a34cfd0d",
+      "adapter_model.safetensors": "3eb7ed05c625edc073dafdcdde0e7d86a2ff5535f682ea04f0252d3f28f70d4e"
+    },
+    "reuse_condition": "Each G3 arm must reproduce every logged G2 coverage_mix loss and gradient norm exactly before its first changed optimizer step; otherwise no paired claim."
+  },
+  "divergence": {
+    "coverage_mix": {
+      "changed_offsets": [],
+      "first_changed_optimizer_step": null,
+      "per_step_token_counts_sha256": "b8ad835493bb389bd35b681490a299852b67225815fd31c2f4f075bd332b6731"
+    },
+    "stop_half": {
+      "changed_offsets": [
+        101,
+        264,
+        865,
+        984
+      ],
+      "first_changed_optimizer_step": 13,
+      "per_step_token_counts_sha256": "99d5ae9068105d8aeec1e2b795cf76704024c09231b9ea9fbd629745da25abb4"
+    },
+    "stop_all": {
+      "changed_offsets": [
+        101,
+        155,
+        264,
+        463,
+        624,
+        865,
+        984,
+        1000
+      ],
+      "first_changed_optimizer_step": 13,
+      "per_step_token_counts_sha256": "3987ba462208906ee061b9a319ee1cbaea1196638a6f73af620dc351b1c7174a"
+    }
+  },
+  "coverage": {
+    "coverage_mix": {
+      "state_targets": {
+        "other": {
+          "request_clarification": 64,
+          "get_context": 200,
+          "propose_plan": 128,
+          "search_exercises": 136,
+          "get_memories": 200,
+          "finish:awaiting_user": 16,
+          "finish:previewed": 96,
+          "finish:declined": 16,
+          "apply_plan": 8,
+          "finish:applied": 8
+        },
+        "clean_search_before_any_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 8
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 64
+        }
+      },
+      "pair_context_exposures": {
+        "sc1-01-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-infeasible:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        }
+      },
+      "category_context_exposures": {
+        "missing_days": {
+          "repair": 36,
+          "control": 36
+        },
+        "memory": {
+          "control": 96,
+          "repair": 96
+        },
+        "missing_equipment": {
+          "control": 36,
+          "repair": 36
+        },
+        "memory_missing_time": {
+          "repair": 144,
+          "control": 144
+        },
+        "revoked": {
+          "repair": 24,
+          "control": 24
+        },
+        "unanswered_time": {
+          "control": 16,
+          "repair": 16
+        },
+        "approved": {
+          "repair": 28,
+          "control": 28
+        },
+        "missing_time": {
+          "control": 36,
+          "repair": 36
+        },
+        "infeasible": {
+          "repair": 16,
+          "control": 16
+        },
+        "declined": {
+          "repair": 24,
+          "control": 24
+        },
+        "pending": {
+          "control": 24,
+          "repair": 24
+        },
+        "preview": {
+          "control": 24,
+          "repair": 24
+        }
+      }
+    },
+    "stop_half": {
+      "state_targets": {
+        "other": {
+          "request_clarification": 64,
+          "get_context": 200,
+          "propose_plan": 128,
+          "search_exercises": 136,
+          "get_memories": 200,
+          "finish:awaiting_user": 16,
+          "finish:previewed": 96,
+          "finish:declined": 16,
+          "apply_plan": 8,
+          "finish:applied": 8
+        },
+        "clean_search_before_any_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 4
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 4
+        }
+      },
+      "pair_context_exposures": {
+        "sc1-01-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:3": {
+          "stop": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-infeasible:3": {
+          "control": 1,
+          "stop": 1
+        },
+        "sc1-02-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:3": {
+          "stop": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:3": {
+          "repair": 1,
+          "stop": 1
+        },
+        "sc1-04-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        }
+      },
+      "category_context_exposures": {
+        "missing_days": {
+          "repair": 36,
+          "control": 36
+        },
+        "memory": {
+          "control": 96,
+          "repair": 96
+        },
+        "missing_equipment": {
+          "control": 36,
+          "repair": 36
+        },
+        "memory_missing_time": {
+          "repair": 144,
+          "control": 144
+        },
+        "revoked": {
+          "repair": 24,
+          "control": 24
+        },
+        "unanswered_time": {
+          "control": 16,
+          "repair": 16
+        },
+        "approved": {
+          "repair": 28,
+          "control": 28
+        },
+        "missing_time": {
+          "control": 36,
+          "repair": 36
+        },
+        "infeasible": {
+          "repair": 14,
+          "stop": 4,
+          "control": 14
+        },
+        "declined": {
+          "repair": 24,
+          "control": 24
+        },
+        "pending": {
+          "control": 24,
+          "repair": 24
+        },
+        "preview": {
+          "control": 24,
+          "repair": 24
+        }
+      }
+    },
+    "stop_all": {
+      "state_targets": {
+        "other": {
+          "request_clarification": 64,
+          "get_context": 200,
+          "propose_plan": 128,
+          "search_exercises": 136,
+          "get_memories": 200,
+          "finish:awaiting_user": 16,
+          "finish:previewed": 96,
+          "finish:declined": 16,
+          "apply_plan": 8,
+          "finish:applied": 8
+        },
+        "clean_search_before_any_validation": {
+          "validate_plan": 64
+        },
+        "immediately_after_invalid_validation": {
+          "validate_plan": 64,
+          "finish:infeasible": 8
+        }
+      },
+      "pair_context_exposures": {
+        "sc1-01-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:3": {
+          "stop": 2
+        },
+        "sc1-02-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-infeasible:3": {
+          "stop": 2
+        },
+        "sc1-02-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-declined:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-preview:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_equipment:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:3": {
+          "stop": 2
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-revoked:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_days:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-approved:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-preview:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-revoked:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-revoked:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-approved:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-preview:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-pending:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-infeasible:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-unanswered_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-declined:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-preview:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-1:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-preview:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-expired-0:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-approved:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_time:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-infeasible:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-revoked:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-infeasible:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-1:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-approved:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:6": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory-expired-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-1:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-1:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_days:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-pending:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-1:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_days:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory-unconfirmed-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-unanswered_time:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-declined:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-revoked:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_time:5": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_days:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-declined:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-expired-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-declined:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-approved:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-missing_equipment:7": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_days:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-unconfirmed-0:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-1:7": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-unanswered_time:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-missing_equipment:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-expired-0:3": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-infeasible:3": {
+          "stop": 2
+        },
+        "sc1-04-approved:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-preview:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory-unconfirmed-0:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-missing_time:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:1": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory-expired-1:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-expired-0:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-unconfirmed-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-missing_time:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-pending:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-approved:0": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-unanswered_time:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:2": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-pending:3": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-02-memory_missing_time-unconfirmed-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-missing_equipment:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-unanswered_time:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-revoked:2": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-04-memory-expired-0:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-memory_missing_time-expired-1:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-03-memory_missing_time-unconfirmed-0:4": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-missing_equipment:4": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory_missing_time-expired-1:8": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory-unconfirmed-0:5": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-01-memory_missing_time-expired-0:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-memory_missing_time-expired-1:8": {
+          "control": 1,
+          "repair": 1
+        },
+        "sc1-02-pending:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-04-preview:1": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-approved:6": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-01-missing_days:0": {
+          "repair": 1,
+          "control": 1
+        },
+        "sc1-03-memory-unconfirmed-1:3": {
+          "repair": 1,
+          "control": 1
+        }
+      },
+      "category_context_exposures": {
+        "missing_days": {
+          "repair": 36,
+          "control": 36
+        },
+        "memory": {
+          "control": 96,
+          "repair": 96
+        },
+        "missing_equipment": {
+          "control": 36,
+          "repair": 36
+        },
+        "memory_missing_time": {
+          "repair": 144,
+          "control": 144
+        },
+        "revoked": {
+          "repair": 24,
+          "control": 24
+        },
+        "unanswered_time": {
+          "control": 16,
+          "repair": 16
+        },
+        "approved": {
+          "repair": 28,
+          "control": 28
+        },
+        "missing_time": {
+          "control": 36,
+          "repair": 36
+        },
+        "infeasible": {
+          "repair": 12,
+          "stop": 8,
+          "control": 12
+        },
+        "declined": {
+          "repair": 24,
+          "control": 24
+        },
+        "pending": {
+          "control": 24,
+          "repair": 24
+        },
+        "preview": {
+          "control": 24,
+          "repair": 24
+        }
+      }
+    }
+  },
+  "after_invalid_feedback_targets": {
+    "coverage_mix|validate_plan|session_count_mismatch": 32,
+    "coverage_mix|validate_plan|unknown_evidence": 32,
+    "stop_all|finish:infeasible|wrong_action": 8,
+    "stop_all|validate_plan|session_count_mismatch": 32,
+    "stop_all|validate_plan|unknown_evidence": 32,
+    "stop_half|finish:infeasible|wrong_action": 4,
+    "stop_half|validate_plan|session_count_mismatch": 32,
+    "stop_half|validate_plan|unknown_evidence": 32
+  },
+  "stop_half_invalid_context_epoch": {
+    "sc1-01-infeasible:3": 1,
+    "sc1-02-infeasible:3": 1,
+    "sc1-03-infeasible:3": 2,
+    "sc1-04-infeasible:3": 2
+  },
+  "stop_contexts": [
+    {
+      "scenario_id": "sc1-01-infeasible",
+      "error_family": "unknown_evidence",
+      "hidden_issues_audit_only": [
+        "time_budget_exceeded",
+        "unknown_evidence"
+      ],
+      "infeasibility_proof": {
+        "eligible_exercises": [
+          "bodyweight-a",
+          "bodyweight-b",
+          "bodyweight-c"
+        ],
+        "min_exercises": 2,
+        "minimum_minutes": 13,
+        "max_minutes": 12
+      }
+    },
+    {
+      "scenario_id": "sc1-02-infeasible",
+      "error_family": "session_count_mismatch",
+      "hidden_issues_audit_only": [
+        "session_count_mismatch",
+        "time_budget_exceeded"
+      ],
+      "infeasibility_proof": {
+        "eligible_exercises": [
+          "dumbbell-a",
+          "dumbbell-b",
+          "dumbbell-c"
+        ],
+        "min_exercises": 2,
+        "minimum_minutes": 18,
+        "max_minutes": 17
+      }
+    },
+    {
+      "scenario_id": "sc1-03-infeasible",
+      "error_family": "unknown_evidence",
+      "hidden_issues_audit_only": [
+        "time_budget_exceeded",
+        "unknown_evidence"
+      ],
+      "infeasibility_proof": {
+        "eligible_exercises": [
+          "barbell-a",
+          "barbell-b"
+        ],
+        "min_exercises": 2,
+        "minimum_minutes": 25,
+        "max_minutes": 24
+      }
+    },
+    {
+      "scenario_id": "sc1-04-infeasible",
+      "error_family": "session_count_mismatch",
+      "hidden_issues_audit_only": [
+        "session_count_mismatch",
+        "time_budget_exceeded"
+      ],
+      "infeasibility_proof": {
+        "eligible_exercises": [
+          "machine-a",
+          "machine-b"
+        ],
+        "min_exercises": 2,
+        "minimum_minutes": 28,
+        "max_minutes": 27
+      }
+    }
+  ],
+  "stop_pool_report_sha256": "bb397ac68c7e0ee193109d595908a1ddc19e265827dc4f2a34bf4c999b6521d0",
+  "files": {
+    "pool/control/context-audit.jsonl": "fd1ed96266bc65c97b9be94eac254485be91aad4f2fa68481b8f374c0ae70e85",
+    "pool/control/decisions.jsonl": "22e66d960f29da7e32fc28bcb6edcb7521545c45d08bb3f0c72ca1bc6f963479",
+    "pool/control/episodes.jsonl": "faff585fa77ac61e8b670476f35f83ca2dbfa831ca673cc73b5c088802cf049e",
+    "pool/control/tokens.jsonl": "c38c4285d5df64024c5fa5613ef2dca4080c155be4abc3c537b2f61496a517a3",
+    "pool/repair/context-audit.jsonl": "5a55b109c9e804b30949eb24c5dc57a1196a330ab954127ffd2fc2559430053e",
+    "pool/repair/decisions.jsonl": "79fac8ffc462e1dd0c99ca7c9c482db4fa46b175053456019f58da5240e5d466",
+    "pool/repair/episodes.jsonl": "bba23a7a44cb68c97ba326052466b22c7d6854a390aff7b799b49d07d5e65dbb",
+    "pool/repair/tokens.jsonl": "31906fd41c64edd80d7bb579af5fd43ecb60d4630a7a0002d73734f1d052d53c",
+    "pool/report.json": "cf82bda4c1be9e00185821376e5e9e825e4fa09fff5a7e0a7ce2b827a9a1ca33",
+    "stop/decisions.jsonl": "4c7c29cfcaa62fabb99fafe3be0457add729798e8acaface652bebc55de15eff",
+    "stop/episodes.jsonl": "7308fd82bc2c1456e1cc1b0044faf78673008c4e7a1a92bcb9ce2eb030f8cf03",
+    "stop/report.json": "bb397ac68c7e0ee193109d595908a1ddc19e265827dc4f2a34bf4c999b6521d0",
+    "stop/stop-audit.jsonl": "256ba89bab04ec005e54eeeeef3ce8519160e2114de4002a2dd4114c805ec12f",
+    "stop/tokens.jsonl": "3fb8cc399169acfa74beebfede3242e48bf2801d55924129c3522f48f15a0782"
+  },
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "files": {
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "upstream_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 727,
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+        "upstream_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      },
+      "generation_config.json": {
+        "bytes": 238,
+        "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48",
+        "upstream_sha256": null
+      },
+      "model-00001-of-00003.safetensors": {
+        "bytes": 3957900840,
+        "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+        "upstream_sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+      },
+      "model-00002-of-00003.safetensors": {
+        "bytes": 3987450520,
+        "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+        "upstream_sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+      },
+      "model-00003-of-00003.safetensors": {
+        "bytes": 99630640,
+        "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+        "upstream_sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 32819,
+        "sha256": "d6c42883a895dfef5b0080ed2116a1bcd764f558406b98923d675978a1abf29c",
+        "upstream_sha256": null
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "upstream_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9377,
+        "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3",
+        "upstream_sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+      }
+    },
+    "weights_downloaded": true,
+    "scope": "Public pinned weights; LFS hashes checked; no training"
+  },
+  "g2_preparation_sha256": "a6684fb111d78f3aa41e9cea336e81557c7cf2293e76e4b0c30da3d27b48a1ed",
+  "source_sha256": {
+    "prepare_g3.py": "5bbdbc97e15b58c6dfe509fb32a1d6f177878eaefb730f1b51b2ab34e84cdd5f",
+    "prepare_g2.py": "eb7f3e60cdf38925e0c72f66eee38957452371a0b8b8793c84a986e8296ea388",
+    "analyze_g1_contexts.py": "96ee1daf91f2d1fa83580e4384b3c8fe2c27fb37aba6fe776576d90fafbd80ac",
+    "prepare_g1.py": "e8ee6e6e7ad5f64baabb4d37ea0653052cbd18acb778e776c87f488645311738",
+    "g1_pair_feasibility.py": "a0637ad5d6a2e5f7a9de2258c0454bb4f69235a2aa21efc895dc1a9e97bb70c9",
+    "state_coverage.py": "86ca8390a6be9814cda8145dc62fd730c90e5f0d16af47bd3b976a8256e36b1c",
+    "controlled_recovery.py": "8601a11b0dd9429d5a47198ce7df913c4a4f127a1eb1926aa593a115eb24823b",
+    "recovery_dataset.py": "04b2b90311b9ae8669eefba0b98426f98701babe144f8702b18e837da0343bba",
+    "src/liftcut_agent/trajectories.py": "764fe0fef4963decb8943e5b354c412ca4b34946a05c05aff1f495b831351272",
+    "src/liftcut_agent/model_runner.py": "ada459152ed3e132c640e602b24b10bad024f7276c98e7c23a8a1fcd481da1d6",
+    "src/liftcut_agent/model_policy.py": "bf4d33c976c235a8722cd9a66b7136c077f1b32e605ce44d433cd08b2164f7a5",
+    "src/liftcut_agent/interactive.py": "4c0617e61a9bff3ea940019147e572ff6a468a72ac440a7e0fb52acebd4fa2fa",
+    "src/liftcut_agent/environment.py": "2bc06d2d0b66a7c3dd429b9cd8a316518cba31503797d33729dde395b13f082d",
+    "src/liftcut_agent/benchmark.py": "91541dda011eb494e4ce0de48ed6f6f890c9f4979dc8ddca9f83195ec06185b7"
+  },
+  "training": {
+    "seed": 42,
+    "epochs": 2,
+    "gradient_accumulation": 8,
+    "micro_batch": 1,
+    "learning_rate": 0.0002,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "dropout": 0.0,
+    "max_length": 4096,
+    "loss_reduction": "target-token mean per optimizer step",
+    "checkpoints": "final_only_no_exact_resume",
+    "base": "fresh same pinned base for both arms, T on, M off",
+    "error_targets_supervised": false,
+    "context_recipe": "G2 coverage_mix exposures; only infeasible stop exposures change context",
+    "curriculum": "first epoch category/error-balanced scenario assignment; reverse every scenario in epoch2"
+  },
+  "evaluation": {
+    "normal_per_arm": 12,
+    "diagnostic_per_arm": 19,
+    "d2_per_arm": 80,
+    "total_new_episodes": 222,
+    "test_episodes": 0,
+    "max_output_tokens": 512,
+    "max_context": 4096,
+    "mechanism_gates": {
+      "d2_infeasible_correct": 4,
+      "normal_infeasible_passed": true,
+      "d2_repair_correct": 4,
+      "normal_min": 10,
+      "normal_losses_vs_control_max": 0,
+      "repair_losses_vs_control_max": 0,
+      "premature_false_infeasible_max": 0,
+      "old_consent_correct": 10,
+      "d2_consent_correct": 12,
+      "unapproved_write_attempts": 0
+    },
+    "candidate_gates": {
+      "normal_min": 10,
+      "old_main_memory_min": 6,
+      "d2_memory_min": 26,
+      "d2_identity_min": 7
+    },
+    "scope": "Reused development states; each arm judged separately against G2 coverage_mix; no generalization claim"
+  },
+  "budget": {
+    "hourly_cny": 2.18,
+    "reserve_cny": 8,
+    "setup_minutes": 10,
+    "work_minutes": 150,
+    "hard_minutes": 180,
+    "compute_proxy_cny": 6.54,
+    "storage_expansion": false,
+    "separate_new_opening_required": true
+  },
+  "runtime_estimate": {
+    "training_seconds_proxy": 2979.701734859364,
+    "training_minutes_with_20pct_margin": 60,
+    "evaluation_minutes_reserved": 30,
+    "setup_minutes_reserved": 10,
+    "backup_minutes_reserved": 30,
+    "source": "Actual G2 coverage_mix optimization throughput; estimate only"
+  },
+  "new_model_calls": 0,
+  "reserved_test_reads": 0,
+  "additional_seeds_authorized": false,
+  "gpu_execution_ready": false
+}
