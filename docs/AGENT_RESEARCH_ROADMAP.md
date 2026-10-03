@@ -28,6 +28,11 @@ Publish S0 baseline and negative findings with development-only limits; independ
 evaluation is still unfinished. Those publication tasks require no server; the
 new G2 model experiment is running in its separately opened, bounded window.
 
+The [evidence index](research/RESEARCH_INDEX.md), standalone24-trajectory G1 viewer,
+data/evaluation checklist and [learning guide](research/AGENT_LEARNING_GUIDE.md) are
+now prepared and locally verified. Final G2 synthesis and independent evaluation
+remain outstanding; teaching artifacts do not close those evidence gaps.
+
 The preparation/execution updates below are historical; current status is above
 and in [progress](AGENT_RESEARCH_PROGRESS.md).
 

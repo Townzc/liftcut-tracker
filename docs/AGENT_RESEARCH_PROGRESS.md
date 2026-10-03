@@ -20,6 +20,13 @@ or fail means automatic shutdown and persistent data retention, then review and
 final exact-head checks before merge. Fees use duration estimates, not invoice requests.
 No new seed, API, expansion, reopening or reserved48 evaluation.
 
+Local learning delivery: the [research index](research/RESEARCH_INDEX.md),
+[guided learning checks](research/AGENT_LEARNING_GUIDE.md) and saved G1 trajectory
+viewer now connect the experiment history to24 audited paired normal episodes.
+Browser checks exercised preview, external user approval, end-of-trajectory and
+repeated-invalid/context-guard displays.3 additional focused tests pass; the HTML
+is rebuilt byte-for-byte in CI. These are saved G1 traces, not new G2 results.
+
 ## Historical: G2 state-coverage pilot prepared locally; waiting for a new server opening
 
 Updated 2026-10-03 UTC. Following the user's new instruction to continue improving

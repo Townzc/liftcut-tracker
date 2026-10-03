@@ -116,6 +116,14 @@ DeepSeek V4 requests explicitly use non-thinking mode for bounded structured gen
 
 ## Agent research: evaluation before training
 
+Start with the [research evidence index](docs/research/RESEARCH_INDEX.md),
+[saved trajectory viewer](research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html),
+and [learning checkpoints](docs/research/AGENT_LEARNING_GUIDE.md).
+The latest completed G1 pilot improved local repair but regressed full tasks and
+failed its original gate. G2 is testing the resulting context-coverage hypothesis;
+its complete result is pending. No overall adapter has been promoted, and the48
+reserved tasks remain unused. The index distinguishes historical and current claims.
+
 LiftCut-AgentLab studies tool use and post-training for plan adjustments under changing constraints. The dependency-free Python lab now includes **30 proposal development cases and 14 interactive development scenarios**, eight typed tools, versioned user confirmation, temporal preferences, controlled timeouts, and executable trace replay. It runs without GPU or API access.
 
 ```bash
@@ -134,7 +142,7 @@ The next protocol version supports bounded read-only batches and a separately te
 
 The subsequent [corrected controlled study](docs/research/2026-09-29-controlled-recovery-results.md) completed normal development tasks at **0/12 (base), 10/12 (clean SFT), and 11/12 (recovery SFT)**. The recovery gain missed its preregistered gate. [Fixed-state diagnostics](docs/research/2026-09-29-state-diagnostic-results.md) then exposed sensitivity to read history and memory order.
 
-The [completed four-arm state-coverage study](docs/research/2026-09-29-state-coverage-results.md) trained matched-target S0/T/M/TM adapters: normal tasks **10/12, 9/12, 11/12, 9/12**. T improves read-history consent from 0/3 to 3/3 in the S0 comparison, while M misses its memory gate and TM adds three unapproved-write attempts, all blocked by the environment. All **124 episodes and 407 native generations** replay; actual adapters were backed up. Training curves, failures and scripted repair diagnostics are public. These are single-seed, reused-development results; stability and independent validation remain pending.
+The [completed four-arm state-coverage study](docs/research/2026-09-29-state-coverage-results.md) trained matched-target S0/T/M/TM adapters: normal tasks **10/12, 9/12, 11/12, 9/12**. T improves read-history consent from 0/3 to 3/3 in the S0 comparison, while M misses its memory gate and TM adds three unapproved-write attempts, all blocked by the environment. All **124 episodes and 407 native generations** replay; actual adapters were backed up. These are the original seed42 results. The subsequent [R1 three-seed review](docs/research/2026-10-02-r1-three-seed-results.md) repeats the local S0→T screen3/3 but finds no treatment satisfying all-seed candidate protections. Independent validation remains pending.
 
 | Phase | Deliverable | Write access |
 | --- | --- | --- |

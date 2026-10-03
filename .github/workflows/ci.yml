@@ -37,6 +37,9 @@ jobs:
       - name: Run evaluator regression tests
         run: python -m unittest discover -s research/liftcut-agent/tests -v
 
+      - name: Rebuild the saved G1 trajectory viewer without model calls
+        run: python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html --check
+
       - name: Run deterministic contract baseline
         run: python research/liftcut-agent/run.py baseline
 

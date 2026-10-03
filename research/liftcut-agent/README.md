@@ -15,6 +15,18 @@ research fixture, not the product's authorization implementation.
 See the [roadmap](../../docs/AGENT_RESEARCH_ROADMAP.md) and
 [current progress](../../docs/AGENT_RESEARCH_PROGRESS.md).
 
+For a compact research narrative and direct raw-evidence links, start with the
+[research index](../../docs/research/RESEARCH_INDEX.md) and
+[learning checkpoints](../../docs/research/AGENT_LEARNING_GUIDE.md).
+The [standalone G1 trajectory viewer](reports/g1-trajectory-demo-2026-10-03.html)
+replays all12 paired full tasks, including failures and external user events;
+download the HTML and open it locally. It makes no model or product calls.
+Rebuild to a new output with:
+
+```sh
+python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/outputs/g1-demo.html
+```
+
 Latest preparation (2026-10-03 UTC): [G2 context-coverage pilot](../../docs/research/2026-10-03-g2-state-coverage-pilot.md)
 tests repair-only versus matched clean/repair conditioning at the same target-token
 budget. Two CPU preparations, state-coverage assertions and the222-case operating
