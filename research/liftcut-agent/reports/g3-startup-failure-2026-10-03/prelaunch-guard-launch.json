@@ -1,0 +1,16 @@
+{
+  "pid": 1449,
+  "argv": [
+    "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+    "/root/autodl-tmp/liftcut/staging/g3-eaa1325/g3_prelaunch_guard.py",
+    "--arm",
+    "--booted-at",
+    "2026-10-03T05:09:28.419014+00:00",
+    "--commit",
+    "eaa132538fefdf28973d808dd56a159e19b86d67",
+    "--opening",
+    "/root/autodl-tmp/liftcut/runs/g3-run-20261003-051200/opening.json",
+    "--receipt",
+    "/root/autodl-tmp/liftcut/runs/g3-ops-20261003-051200/prelaunch-guard.jsonl"
+  ]
+}

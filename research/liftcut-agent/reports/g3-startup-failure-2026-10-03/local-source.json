@@ -1,0 +1,7 @@
+{
+  "cloud_commit": "eaa132538fefdf28973d808dd56a159e19b86d67",
+  "local_source_sha256": {
+    "launch_g3_remote.py": "b18132be8fbeadb3147452d3cd84a615fe716e8c71049f411a0378968146ce74",
+    "g3_prelaunch_guard.py": "3b173326603262d272bfdda84e89937f686c3777c85816130bd06e00ccf4b7c4"
+  }
+}

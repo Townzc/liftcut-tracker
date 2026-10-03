@@ -1,0 +1,10 @@
+{
+  "version": "g3-startup-operator-status-v1",
+  "opening_id": "20261003-051200",
+  "recorded_at_utc": "2026-10-03T05:25:27.722834+00:00",
+  "source": "user reply in this conversation: AutoDL shows powered off",
+  "platform_power_state": "off_user_confirmed",
+  "exact_shutdown_timestamp": null,
+  "shutdown_execution_return": "unobserved",
+  "provider_invoice_cny": null
+}

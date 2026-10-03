@@ -5,3 +5,6 @@ research/liftcut-agent/**/*.png -text
 research/liftcut-agent/reports/d2-startup-failure-2026-10-02/*.jsonl -text whitespace=cr-at-eol
 research/liftcut-agent/reports/d2-partial-s0-2026-10-02/**/*.tar.gz -text
 research/liftcut-agent/reports/d2-fixed-seed42-2026-10-02/**/*.tar.gz -text
+# Preserve the exact bytes of the original Windows G3 startup records.
+research/liftcut-agent/reports/g3-startup-failure-2026-10-03/local-install-rehearsal.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/g3-startup-failure-2026-10-03/opening-authorization.json -text whitespace=cr-at-eol
