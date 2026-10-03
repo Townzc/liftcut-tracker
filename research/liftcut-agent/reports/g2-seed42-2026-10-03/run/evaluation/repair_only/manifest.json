@@ -1,0 +1,39 @@
+{
+  "version": "g2-evaluation-v1",
+  "binding": {
+    "version": "g2-arm-binding-v1",
+    "plan_digest": "fab5e9670c56d9a1a9cadbdd2db24d8bb881b59a7ab54015398483337c2b4e50",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "arm": "repair_only",
+    "seed": 42,
+    "test_episodes": 0
+  },
+  "evidence_kind": "model",
+  "adapter_sha256": {
+    "adapter_config.json": "1286b602e2ce9cce3a5769c7244cddef1e952e0904757f18f3270c85e99b0fca",
+    "adapter_model.safetensors": "062dc258e1534d21f7213983d5b2434fac9ee3ce9801b93f39ef0f76ed38013a"
+  },
+  "parser": "qwen-native-content-v2",
+  "precision": "NF4 double quantization/BF16 compute; fp32 nonquantized layers in every arm",
+  "config": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "token_limit_field": "max_completion_tokens",
+    "thinking_mode": null,
+    "temperature": 0,
+    "send_parallel_tool_calls": true,
+    "max_output_tokens": 512,
+    "max_requests": 2000,
+    "max_reserved_output_tokens": 1024000,
+    "max_request_bytes": 100000,
+    "max_response_bytes": 1000000,
+    "timeout_seconds": 60,
+    "input_usd_per_million": "0",
+    "output_usd_per_million": "0",
+    "max_reserved_usd": "0",
+    "pricing_note": "Local GPU or explicitly identified scripted prefix; no hosted API spend",
+    "tool_protocol": "read_batch",
+    "prompt_revision": "pending_approval_v1"
+  },
+  "test_episodes": 0
+}

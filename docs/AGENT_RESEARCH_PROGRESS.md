@@ -1,6 +1,37 @@
 # Agent research progress and handoff
 
-## Current: G2 seed42 running; result tools prepared without changing frozen execution
+## Current: G2 complete; stopping regression blocks both original gates
+
+Updated 2026-10-03 UTC. [Complete G2 review](research/2026-10-03-g2-complete-results.md)
+publishes both actual new weights' restoration provenance,222 native/environment
+episodes and439 generated-token records plus3 local context refusals. Frozen4041159
+and all57 sources remain unchanged. Normal2/12→10/12, repair3/4→4/4 and premature
+false-infeasible8→0 improve, but true infeasible2/4→0/4. Original mechanism FAIL;
+candidate FAIL also retains fixed-S0 memory24/48<26/48 and ID6/12<7/12 protections.
+The current control reproduces historical G1 repair weights and111 outputs exactly;
+it is not another training seed and does not replace the current paired comparison.
+
+Post-hoc scheduled coverage has64 clean and64 after-error validation targets, but
+all8 infeasible target exposures remain clean-search-only. Four D2 infeasible
+cases loop8 times; normal infeasible loops15 times before a local context refusal.
+Memory first/middle/last16/16,0/16,8/16: all24 wrong selections choose older-valid
+records. [Next local plan](research/2026-10-03-post-g2-next-plan.md) isolates stopping
+contexts before any new GPU request, and tracks memory as a separate intervention.
+No G3 training, extra seeds, paid API, reopening or reserved48 evaluation.
+
+Full genuine receipt atomically published02:20:03.957246UTC; collector ended on
+connection loss02:20:04.704871 after successful backup. Server ACK consumption and
+shutdown return remain unobserved. Later user confirms AutoDL OFF, recorded separately.
+Compute proxy5062.821401s×2.18/hour=CNY3.0658≈3.07; excludes storage, not invoice.
+There is no active cloud run and no further platform/fee question is needed.
+
+Evidence, plots, saved G2 trajectory viewer, research journal and next plan are
+delivered through [PR35](https://github.com/Townzc/liftcut-tracker/pull/35).
+Final exact-head checks precede merge; operational closure proof is kept locally.
+The [research index](research/RESEARCH_INDEX.md) links all experiments and the
+[learning guide](research/AGENT_LEARNING_GUIDE.md) now includes G2 failure exercises.
+
+## Historical: G2 seed42 running; result tools prepared without changing frozen execution
 
 Updated 2026-10-03 UTC. User opened the server for the bounded G2 pilot.
 [Execution record](research/2026-10-03-g2-seed42-window.md) preserves the actual

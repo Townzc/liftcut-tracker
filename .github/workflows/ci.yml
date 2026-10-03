@@ -40,6 +40,9 @@ jobs:
       - name: Rebuild the saved G1 trajectory viewer without model calls
         run: python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html --check
 
+      - name: Rebuild the saved G2 trajectory viewer without model calls
+        run: python research/liftcut-agent/trajectory_demo.py --study g2 --public-dir research/liftcut-agent/reports/g2-seed42-2026-10-03 --output research/liftcut-agent/reports/g2-trajectory-demo-2026-10-03.html --check
+
       - name: Run deterministic contract baseline
         run: python research/liftcut-agent/run.py baseline
 
@@ -446,6 +449,19 @@ jobs:
           assert actual == expected
           assert not list((r / 'outputs/ci-g2-drill').rglob('off-instance-backup.json'))
           PY
+
+      - name: Reconstruct complete G2 results and stopping boundary audit
+        run: |
+          # Metadata/native/token replay; actual local weights remain separate.
+          python research/liftcut-agent/analyze_g2_results.py \
+            --public-dir research/liftcut-agent/reports/g2-seed42-2026-10-03 \
+            --prepared-dir research/liftcut-agent/outputs/ci-g2-a \
+            --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics \
+            --d2-dir research/liftcut-agent/outputs/ci-d2-a \
+            --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
+          python research/liftcut-agent/analyze_g2_boundaries.py \
+            --public-dir research/liftcut-agent/reports/g2-seed42-2026-10-03 \
+            --prepared-dir research/liftcut-agent/outputs/ci-g2-a --check
 
   quality:
     runs-on: ubuntu-latest

@@ -10,6 +10,16 @@ from trajectory_demo import collect, render
 
 
 class TrajectoryDemoTests(unittest.TestCase):
+    def test_saved_g2_replays_recovery_and_both_remaining_failures(self):
+        data = collect(ROOT / 'reports/g2-seed42-2026-10-03', 'g2')
+        self.assertEqual([data['scores'][a]['passed'] for a in data['arms']], [2, 10])
+        failures = {e['scenario_id']: e for e in data['episodes']['coverage_mix']
+                    if not e['trace']['score']['passed']}
+        self.assertEqual(set(failures), {'r2-05-infeasible', 'r2-05-memory_missing_time'})
+        self.assertEqual(failures['r2-05-infeasible']['failure_chain']['maximum_repeats_of_same_invalid_validation'], 15)
+        self.assertEqual(failures['r2-05-memory_missing_time']['failure_chain']['local_refusals'], {'context_limit': 1})
+        self.assertEqual(data['new_model_calls'], 0)
+
     def test_saved_g1_replay_keeps_all_failures_and_external_user_events(self):
         data = collect(ROOT / 'reports/g1-seed42-2026-10-02', 'g1')
         self.assertEqual(data['episodes_replayed'], 24)

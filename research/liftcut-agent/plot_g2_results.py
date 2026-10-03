@@ -55,7 +55,7 @@ def plot(source, output):
     mechanism = 'PASS' if report['gates']['mechanism_passed'] else 'FAIL'
     fig.suptitle(f'G2 seed42 | mechanism: {mechanism} | candidate: {verdict}', x=.06, ha='left', fontsize=16)
     fig.text(.06, .03, '222 evaluations on 111 reused development cases; one training seed. No independent generalization claim.', fontsize=9, color='#4B5563')
-    fig.subplots_adjust(left=.08, right=.98, top=.84, bottom=.27, wspace=.44)
+    fig.subplots_adjust(left=.115, right=.98, top=.84, bottom=.27, wspace=.44)
     save(fig, output, 'g2-panels-and-paired-changes')
     plt.close(fig)
 

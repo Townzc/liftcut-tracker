@@ -1,0 +1,24 @@
+{
+  "version": "g2-backup-receipt-v1",
+  "binding": {
+    "version": "g2-window-binding-v1",
+    "execution_plan_sha256": "41cccf70110b887bab250a7f374f64f78989f6ecf5b8286df8d9f9018451646b",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+    "work_cutoff": "2026-10-03T03:25:41.883470+00:00",
+    "hard_cutoff": "2026-10-03T03:55:41.883470+00:00",
+    "test_episodes": 0
+  },
+  "index_digest": "80d1aaee2e45b78b9046ceb3b8182890ef7d34e9082c93a9c376de80a02c7402",
+  "evidence_kind": "model",
+  "run_status": "complete",
+  "all_inventory_files_verified": true,
+  "complete_study_replayed": true,
+  "episodes_replayed": 222,
+  "adapter_files_verified": true,
+  "token_ids_verified": true,
+  "model_result": true,
+  "test_episodes": 0,
+  "verified_files": 56
+}

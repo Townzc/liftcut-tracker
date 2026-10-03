@@ -117,12 +117,14 @@ DeepSeek V4 requests explicitly use non-thinking mode for bounded structured gen
 ## Agent research: evaluation before training
 
 Start with the [research evidence index](docs/research/RESEARCH_INDEX.md),
-[saved trajectory viewer](research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html),
+[saved G2 trajectory viewer](research/liftcut-agent/reports/g2-trajectory-demo-2026-10-03.html),
 and [learning checkpoints](docs/research/AGENT_LEARNING_GUIDE.md).
-The latest completed G1 pilot improved local repair but regressed full tasks and
-failed its original gate. G2 is testing the resulting context-coverage hypothesis;
-its complete result is pending. No overall adapter has been promoted, and the48
-reserved tasks remain unused. The index distinguishes historical and current claims.
+The [completed G2 pilot](docs/research/2026-10-03-g2-complete-results.md) restores
+full tasks2/12→10/12 and repair3/4→4/4, but true infeasible cases regress2/4→0/4.
+Its original mechanism and candidate gates both fail; memory remains below fixed
+S0. No overall adapter has been promoted, and the48 reserved tasks remain unused.
+The [next local plan](docs/research/2026-10-03-post-g2-next-plan.md) separates stopping
+decisions from memory selection; no additional paid experiment has started.
 
 LiftCut-AgentLab studies tool use and post-training for plan adjustments under changing constraints. The dependency-free Python lab now includes **30 proposal development cases and 14 interactive development scenarios**, eight typed tools, versioned user confirmation, temporal preferences, controlled timeouts, and executable trace replay. It runs without GPU or API access.
 

@@ -1,0 +1,14 @@
+{
+  "version": "g2-operator-status-v1",
+  "opening_id": "20261003-005616",
+  "recorded_at_utc": "2026-10-03T02:23:57.195564+00:00",
+  "source": "user reply in this conversation: AutoDL shows powered off",
+  "platform_power_state": "off_user_confirmed",
+  "exact_shutdown_timestamp": null,
+  "provider_invoice_cny": null,
+  "hourly_cny_user_supplied": 2.18,
+  "compute_proxy_cny": 3.0658196261611117,
+  "compute_proxy_interval": "original boot proxy to collector connection loss, 5062.821401 seconds",
+  "billing_preference": "Use duration at CNY2.18/hour; do not repeatedly request invoice.",
+  "scope": "Later user confirmation of platform off; server receipt consumption and shutdown-command return remain unobserved. Estimate is not an invoice and excludes storage."
+}

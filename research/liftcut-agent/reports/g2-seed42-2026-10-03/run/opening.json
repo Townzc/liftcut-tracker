@@ -1,0 +1,25 @@
+{
+  "binding": {
+    "version": "g2-window-binding-v1",
+    "execution_plan_sha256": "41cccf70110b887bab250a7f374f64f78989f6ecf5b8286df8d9f9018451646b",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+    "work_cutoff": "2026-10-03T03:25:41.883470+00:00",
+    "hard_cutoff": "2026-10-03T03:55:41.883470+00:00",
+    "test_episodes": 0
+  },
+  "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+  "budget": {
+    "hourly_cny": 2.18,
+    "reserve_cny": 8,
+    "setup_minutes": 10,
+    "work_minutes": 150,
+    "hard_minutes": 180,
+    "compute_proxy_cny": 6.54,
+    "storage_expansion": false,
+    "separate_new_opening_required": true
+  },
+  "evidence_kind": "model",
+  "started_at_utc": "2026-10-03T00:57:56.984670+00:00"
+}

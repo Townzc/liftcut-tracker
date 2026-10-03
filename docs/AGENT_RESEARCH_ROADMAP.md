@@ -1,37 +1,26 @@
 # LiftCut-AgentLab research roadmap
 
-Updated: 2026-10-03 UTC (October2 local project date). Status: approved direction;
-milestones below are targets. The user has now opened the bounded
-[G2 window](research/2026-10-03-g2-seed42-window.md), executing checked4041159 on4090.
-Earlier boot00:55:41.883470 fixes work03:25:41.883470/hard03:55:41.883470 UTC; no
-extension, extra seeds or reserved48 use. Real training is observed, complete G2
-model results remain pending. [G2 state coverage](research/2026-10-03-g2-state-coverage-pilot.md)
-compares fresh repair-only versus matched
-clean/repair context exposure, holding correct targets, order,126 updates and41,788
-supervised tokens fixed. CPU preparation, coverage checks and recovery drill pass;
-there are no new model results. Mechanism recovery and full candidate protections
-are evaluated separately. Work150/hard180 minutes, CNY8 reserve at2.18/hour; exact
-checks and staged installation passed before this opening. Reserved48 stay unused.
+Updated: 2026-10-03 UTC. [G2 complete results](research/2026-10-03-g2-complete-results.md)
+restore full tasks2/12→10/12 and repair3/4→4/4, but true infeasible2/4→0/4.
+Both original mechanism and candidate gates FAIL; memory24/48 and ID6/12 also
+remain below fixed S0. Both new weights and222 native/environment episodes with
+439 actual generations were restored; platform OFF is user-confirmed. Compute
+proxy CNY3.07 at2.18/hour, not an invoice. G1's failure remains unchanged.
 
-Current model result: [G1 paired pilot](research/2026-10-02-g1-complete-results.md) is complete
-and fails its original gate. Repair1/4→3/4 is outweighed by full-task9/12→2/12 and
-infeasible4/4→2/4 regressions. Both actual weights and222 native/token evaluations
-are restored; platform OFF is user-confirmed, compute estimate CNY3.00. G1 seed43/44
-stop here. The new G2 study does not change G1's failure or authorize more G1 seeds.
-No qualified adapter is promoted; reserved48 remain unused.
+[Next local work](research/2026-10-03-post-g2-next-plan.md) isolates the stopping
+boundary: keep normal/repair coverage and move one exposure of each existing
+train-only infeasible target behind actual invalid feedback. This is a proposal,
+not a ready or executed G3 experiment. Exact CPU coverage, matching, recovery and
+Git checks must pass before requesting a new server opening. No additional paid
+seed, API, expansion or reuse of the closed G2 opening. Memory latest-valid
+selection is a separate shortfall, not silently bundled into stopping training.
 
-The [parallel local deliverables](research/2026-10-02-post-g1-release-plan.md) remain the
-research evidence index, saved-trajectory demo, state-coverage audit and learning
-report. All64 clean first-validation targets moved to after-error contexts in G1;
-this post-hoc finding is a mechanism hypothesis, not a proven causal intervention.
-Publish S0 baseline and negative findings with development-only limits; independent
-evaluation is still unfinished. Those publication tasks require no server; the
-new G2 model experiment is running in its separately opened, bounded window.
-
-The [evidence index](research/RESEARCH_INDEX.md), standalone24-trajectory G1 viewer,
-data/evaluation checklist and [learning guide](research/AGENT_LEARNING_GUIDE.md) are
-now prepared and locally verified. Final G2 synthesis and independent evaluation
-remain outstanding; teaching artifacts do not close those evidence gaps.
+The [evidence index](research/RESEARCH_INDEX.md), saved G1/G2 trajectory viewers,
+[learning guide](research/AGENT_LEARNING_GUIDE.md), complete review and research
+journal are available. All gains and regressions stay visible. No overall adapter
+has been promoted; fixed representative seed42 remains unchanged, all48 reserved
+tasks remain unused and independent evaluation remains unfinished. Repeated
+same-seed development improvements do not establish generalization.
 
 The preparation/execution updates below are historical; current status is above
 and in [progress](AGENT_RESEARCH_PROGRESS.md).

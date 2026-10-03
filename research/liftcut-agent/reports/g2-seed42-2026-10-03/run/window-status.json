@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "failures": [],
+  "binding": {
+    "version": "g2-window-binding-v1",
+    "execution_plan_sha256": "41cccf70110b887bab250a7f374f64f78989f6ecf5b8286df8d9f9018451646b",
+    "code_commit": "404115971f3db97577433769a88dbb2486058d99",
+    "seed": 42,
+    "booted_at_proxy": "2026-10-03T00:55:41.883470+00:00",
+    "work_cutoff": "2026-10-03T03:25:41.883470+00:00",
+    "hard_cutoff": "2026-10-03T03:55:41.883470+00:00",
+    "test_episodes": 0
+  },
+  "finished_work_at_utc": "2026-10-03T02:19:06.740906+00:00",
+  "provider_billing_stopped": "unknown"
+}
