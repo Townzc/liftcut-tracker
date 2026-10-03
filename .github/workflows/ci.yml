@@ -463,6 +463,17 @@ jobs:
             --public-dir research/liftcut-agent/reports/g2-seed42-2026-10-03 \
             --prepared-dir research/liftcut-agent/outputs/ci-g2-a --check
 
+      - name: Reproduce G3 stop contexts twice with the real tokenizer and verify the frozen design
+        run: |
+          for COPY in a b; do
+            python research/liftcut-agent/prepare_g3.py --pool-dir research/liftcut-agent/outputs/ci-g2-a --stop-dir research/liftcut-agent/outputs/ci-g3-stop-$COPY --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          done
+          diff -r research/liftcut-agent/outputs/ci-g3-stop-a research/liftcut-agent/outputs/ci-g3-stop-b
+          python research/liftcut-agent/prepare_g3.py --pool-dir research/liftcut-agent/outputs/ci-g2-b --stop-dir research/liftcut-agent/outputs/ci-g3-stop-a --verify-only
+
+      - name: Reproduce the memory arrangement audit from the exact G2 training pools
+        run: python research/liftcut-agent/analyze_memory_coverage.py --prepared-dir research/liftcut-agent/outputs/ci-g2-a --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

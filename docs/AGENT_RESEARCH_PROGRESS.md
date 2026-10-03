@@ -1,6 +1,39 @@
 # Agent research progress and handoff
 
-## Current: G2 complete; stopping regression blocks both original gates
+## Current: G3 stop-boundary data frozen locally; memory gap localized; no server needed yet
+
+Updated 2026-10-03 UTC. [G3 design](research/2026-10-03-g3-stop-boundary-design.md) implements
+local stage A of the post-G2 plan. `prepare_g3.py` replays the four train-only infeasible
+scenarios with one really executed invalid `validate_plan` (visible result: only
+`wrong_action`) before the unchanged `finish(infeasible)` target; the injected call is
+not supervised. Two arms: stop_half (4 clean / 4 after-invalid stop exposures) and
+stop_all (0 / 8). Decisions 1008, updates 126, supervised tokens 41,788, target
+sequence and sample order equal G2 coverage_mix; input tokens +0.03%/+0.06%.
+Only 4/8 exposure offsets change; the first changed optimizer step is 13.
+
+Plan changes, written before training: the control reuses the complete G2
+coverage_mix run instead of retraining it, because G1 repair and G2 repair_only
+reproduced all 126 losses and identical adapter weights. Reuse is valid only if each
+G3 arm reproduces G2's first 12 logged losses/gradient norms bit-for-bit; otherwise the
+comparison is historical only. The saved arm becomes the stop_all dose arm.
+Per-arm mechanism and candidate gates and the carry-forward rule are frozen in
+`prepare_g3.gates` and [g3-preparation-v1.json](../research/liftcut-agent/reports/g3-preparation-v1.json).
+
+[Memory audit](research/2026-10-03-memory-arrangement-audit.md): training contains only
+VOU/VUO/OXV/XOV record orders (V latest valid, O older valid, U/X distractors). All 24
+coverage_mix D2 memory errors fall in unseen OVU/OVX/OUV and all choose the older valid
+record; S0/T show the same pattern. Interpreted post hoc as a position template, not
+revision comparison. Training-coverage and deterministic-view routes stay separate.
+
+Verification: a pure-Python tokenizer stand-in (development only, not committed)
+reproduced the published mask audit and regenerated all nine G1 pool files matching the
+G2 freeze; G1/G2 pools and the G3 stop pool are byte-identical across two builds;
+12 new tests pass. CI regenerates everything with the real tokenizer.
+No GPU, model call, paid API or reserved-48 read. Next: G3 execution chain with the
+12-step reproduction check, CPU production-path drill and exact-head CI, then request a
+new window (estimate 85-90 min, CNY3.1-3.3, CNY8 reserve, 150/180-minute limits).
+
+## Historical: G2 complete; stopping regression blocks both original gates
 
 Updated 2026-10-03 UTC. [Complete G2 review](research/2026-10-03-g2-complete-results.md)
 publishes both actual new weights' restoration provenance,222 native/environment

@@ -7,6 +7,12 @@ remain below fixed S0. Both new weights and222 native/environment episodes with
 439 actual generations were restored; platform OFF is user-confirmed. Compute
 proxy CNY3.07 at2.18/hour, not an invoice. G1's failure remains unchanged.
 
+Update 2026-10-03 UTC: [G3 stop-boundary data and gates](research/2026-10-03-g3-stop-boundary-design.md)
+are frozen locally (stop_half and stop_all vs the reused, reproduction-checked G2
+coverage_mix control). The [memory audit](research/2026-10-03-memory-arrangement-audit.md)
+shows training covers only 4 of the record orders D2 uses; all coverage_mix memory
+errors fall in unseen orders. The G3 execution chain and drill precede any new opening.
+
 [Next local work](research/2026-10-03-post-g2-next-plan.md) isolates the stopping
 boundary: keep normal/repair coverage and move one exposure of each existing
 train-only infeasible target behind actual invalid feedback. This is a proposal,

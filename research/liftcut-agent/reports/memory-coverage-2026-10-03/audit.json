@@ -1,0 +1,308 @@
+{
+  "version": "memory-coverage-audit-v1",
+  "training": {
+    "repair_only": {
+      "decisions_seeing_memories": {
+        "OXV": 88,
+        "VOU": 88,
+        "VUO": 88,
+        "XOV": 88
+      },
+      "equipment_selection_targets": {
+        "OXV": 16,
+        "VOU": 16,
+        "VUO": 16,
+        "XOV": 16
+      }
+    },
+    "coverage_mix": {
+      "decisions_seeing_memories": {
+        "OXV": 88,
+        "VOU": 88,
+        "VUO": 88,
+        "XOV": 88
+      },
+      "equipment_selection_targets": {
+        "OXV": 16,
+        "VOU": 16,
+        "VUO": 16,
+        "XOV": 16
+      }
+    }
+  },
+  "d2_by_arrangement": {
+    "d2_s0": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 5,
+        "chose:U": 1,
+        "chose:V": 2,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 7,
+        "chose:X": 1,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      }
+    },
+    "d2_t": {
+      "identity|OUV": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:V": 1,
+        "chose:X": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 1,
+        "chose:X": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 6,
+        "chose:V": 2,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 4,
+        "chose:U": 2,
+        "chose:V": 2,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 1,
+        "chose:V": 2,
+        "chose:X": 5,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 5,
+        "chose:X": 3,
+        "correct": 5,
+        "total": 8
+      }
+    },
+    "repair_only": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:O": 1,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 7,
+        "chose:V": 1,
+        "correct": 1,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 6,
+        "chose:X": 2,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:O": 6,
+        "chose:V": 2,
+        "correct": 2,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      }
+    },
+    "coverage_mix": {
+      "identity|OUV": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVU": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OVX": {
+        "chose:O": 2,
+        "correct": 0,
+        "total": 2
+      },
+      "identity|OXV": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOU": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "identity|VOX": {
+        "chose:V": 2,
+        "correct": 2,
+        "total": 2
+      },
+      "memory|OUV": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVU": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OVX": {
+        "chose:O": 8,
+        "correct": 0,
+        "total": 8
+      },
+      "memory|OXV": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOU": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      },
+      "memory|VOX": {
+        "chose:V": 8,
+        "correct": 8,
+        "total": 8
+      }
+    }
+  },
+  "source_sha256": {
+    "g2_preparation": "a6684fb111d78f3aa41e9cea336e81557c7cf2293e76e4b0c30da3d27b48a1ed",
+    "g2_publication": "454eed5791257770e0a3858d5ad38b3cca2f31d9df1cc445d8c39ca89b66d92f"
+  },
+  "new_model_calls": 0,
+  "test_episodes": 0,
+  "scope": "Post-hoc coverage description; D2 states are reused development cases, not independent tests."
+}
