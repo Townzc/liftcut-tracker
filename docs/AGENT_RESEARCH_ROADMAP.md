@@ -1,5 +1,15 @@
 # LiftCut-AgentLab research roadmap
 
+Latest verified result: [G4 complete](research/2026-10-03-g4-complete-results.md).
+Fresh paired memory11/48→20/48, but old memory6/8→4/8 and latest-last0/16; both
+mechanism and candidate gates FAIL. All111:13 gains/4 losses. Invalid-record choices
+fall15→0 but28 older-valid choices remain. ID renaming flips no scores in either arm;
+low subset accuracy is not evidence of an ID shortcut here. Preserve fixedS0 and48unused.
+Next conditional I1 uses the preselected new CONTROL weight, fresh raw/view inference,
+public latest-valid projection and separate input/native audits. No further blind SFT
+or seeds tonight. Complete G4 PR then actual reference/freeze/checks/time-fit before I1.
+The original CNY20/14:00UTC lease remains; morning report has G4 evidence, final close pending.
+
 Next isolated experiment: [G4 memory-order coverage](research/2026-10-03-g4-memory-order-design.md).
 G3 is fully delivered in mergedPR38. Fresh control versus permuted memory records
 will test the position-coverage hypothesis while preserving stopping and consent;

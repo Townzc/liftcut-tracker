@@ -531,6 +531,15 @@ jobs:
           assert not list((r/'outputs/ci-g4-drill').rglob('off-instance-backup.json'))
           PY
 
+      - name: Reconstruct G4 actual paired evidence and all gains and losses
+        run: >-
+          python research/liftcut-agent/analyze_g4_results.py
+          --public-dir research/liftcut-agent/reports/g4-seed42-2026-10-03
+          --prepared-dir research/liftcut-agent/outputs/ci-g4-a
+          --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics
+          --d2-dir research/liftcut-agent/outputs/ci-d2-a
+          --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
+
       - name: Verify conditional I1 raw/view inputs with scripted native actions and original environment replay
         run: >-
           python research/liftcut-agent/drill_i1_projection.py
