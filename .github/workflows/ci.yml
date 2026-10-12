@@ -591,6 +591,40 @@ jobs:
           python research/liftcut-agent/analyze_i1_results.py --public-dir research/liftcut-agent/reports/i1-seed42-2026-10-03 --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --check
           python research/liftcut-agent/analyze_i1_failures.py --public-dir research/liftcut-agent/reports/i1-seed42-2026-10-03 --check
 
+      - name: Verify I2 fixed reference, frozen sources and saved-state input invariance
+        run: |
+          python research/liftcut-agent/i2_protocol.py --verify --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          python research/liftcut-agent/audit_i2_inputs.py --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output research/liftcut-agent/reports/i2-input-readiness-v1.json --check
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          root=Path('research/liftcut-agent');sys.path.insert(0,str(root))
+          from d2_execution import read
+          from liftcut_agent.interactive import digest
+          from server_workspace import sha256
+          p=root/'reports/i1-seed42-2026-10-03'
+          ref=read(root/'reports/i2-reference-v1.json')
+          assert ref['i1_comparison_digest']==digest(read(p/'run/comparison.json'))
+          assert ref['i1_receipt_sha256']==sha256(p/'restore-receipt.json')
+          assert ref['checkpoint']==read(p/'run/reference/manifest.json')
+          for name,h in ref['i1_view_sha256'].items():assert sha256(p/'run/evaluation/view'/name)==h
+          PY
+
+      - name: Rehearse I2 four-arm native projection and partial recovery without private weights
+        run: |
+          python research/liftcut-agent/drill_i2.py --output-dir research/liftcut-agent/outputs/ci-i2-drill --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path('research/liftcut-agent')
+          actual=json.loads((r/'outputs/ci-i2-drill/drill-report.json').read_text())
+          expected=json.loads((r/'reports/i2-readiness-v1.json').read_text())['cpu_drill']
+          expected.update(actual_preselected_checkpoint_verified=False,complete_scripted_restore=False,archive_status='partial')
+          assert actual==expected and not actual['model_result']
+          receipt=json.loads((r/'outputs/ci-i2-drill/restored/off-instance-backup.json').read_text())
+          assert receipt['episodes_replayed']==0 and not receipt['complete_study_replayed']
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
