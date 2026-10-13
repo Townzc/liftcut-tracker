@@ -612,7 +612,8 @@ function buildWorkoutExerciseLogs(plan: TrainingPlan, weekNumber: number, dayNum
     name: exercise.name,
     actualWeight: Number((40 + idx * 5 + weekNumber * 0.5).toFixed(1)),
     actualReps: Math.max(5, Number.parseInt(exercise.repRange.split("-")[0] || "8", 10)),
-    actualRpe: Number((exercise.targetRpe + 0.2).toFixed(1)),
+    // Synthetic reports include an unreported RPE; prescription is never its fallback.
+    actualRpe: idx === 0 ? null : 8,
     completed: true,
   }));
 }

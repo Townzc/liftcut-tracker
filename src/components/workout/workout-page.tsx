@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { todayString } from "@/lib/date";
 import { normalizeActionError } from "@/lib/error-utils";
+import { GUEST_USER_ID } from "@/lib/guest-mode";
 import { estimateWorkoutCalories } from "@/lib/workout-calories";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import type { ExerciseLog, ExercisePlan, PlanDay, TrainingPlan, WorkoutLog } from "@/types";
@@ -40,9 +41,9 @@ function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): Exerc
       workoutLogId: existingExercise?.workoutLogId ?? "",
       exercisePlanId: exercise.id,
       name: exercise.name,
-      actualWeight: existingExercise?.actualWeight ?? 0,
-      actualReps: existingExercise?.actualReps ?? 0,
-      actualRpe: existingExercise?.actualRpe ?? exercise.targetRpe,
+      actualWeight: existingExercise?.actualWeight ?? null,
+      actualReps: existingExercise?.actualReps ?? null,
+      actualRpe: existingExercise?.actualRpe ?? null,
       completed: existingExercise?.completed ?? false,
     };
   });
@@ -171,28 +172,37 @@ function WorkoutDraftForm({
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-4">
             <div className="space-y-2">
-              <Label>{t("actualWeight")}</Label>
+              <Label htmlFor={`weight-${exercise.exercisePlanId}`}>{t("actualWeight")}</Label>
               <NumericInput
+                id={`weight-${exercise.exercisePlanId}`}
+                nullable
                 value={exercise.actualWeight}
+                placeholder={t("unknownPlaceholder")}
                 min={0}
                 onValueChange={(value) => updateRow(index, { actualWeight: value })}
               />
             </div>
             <div className="space-y-2">
-              <Label>{t("actualReps")}</Label>
+              <Label htmlFor={`reps-${exercise.exercisePlanId}`}>{t("actualReps")}</Label>
               <NumericInput
+                id={`reps-${exercise.exercisePlanId}`}
+                nullable
                 value={exercise.actualReps}
+                placeholder={t("targetPlaceholder", { value: currentDay.exercises[index].repRange })}
                 allowDecimal={false}
                 min={0}
                 onValueChange={(value) => updateRow(index, { actualReps: value })}
               />
             </div>
             <div className="space-y-2">
-              <Label>{t("actualRpe")}</Label>
+              <Label htmlFor={`rpe-${exercise.exercisePlanId}`}>{t("actualRpe")}</Label>
               <NumericInput
+                id={`rpe-${exercise.exercisePlanId}`}
+                nullable
                 value={exercise.actualRpe}
+                placeholder={t("targetPlaceholder", { value: currentDay.exercises[index].targetRpe })}
                 step="0.1"
-                min={0}
+                min={1}
                 max={10}
                 onValueChange={(value) => updateRow(index, { actualRpe: value })}
               />
@@ -311,7 +321,7 @@ export function WorkoutPage() {
   const t = useTranslations("workout");
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
-  const { user, loading: authLoading } = useAuth();
+  const { user, authMode, loading: authLoading } = useAuth();
 
   const trainingPlan = useTrackerStore((state) => state.trainingPlan);
   const settings = useTrackerStore((state) => state.settings);
@@ -368,7 +378,8 @@ export function WorkoutPage() {
       return "loading";
     }
 
-    if (!user) {
+    const viewerId = authMode === "guest" ? GUEST_USER_ID : user?.id;
+    if (!viewerId) {
       return "unauthorized";
     }
 
@@ -376,12 +387,12 @@ export function WorkoutPage() {
       return "not-found";
     }
 
-    if (selectedRecentLog.userId !== user.id) {
+    if (selectedRecentLog.userId !== viewerId) {
       return "unauthorized";
     }
 
     return "ready";
-  }, [authLoading, selectedRecentLog, selectedRecentLogId, trackerLoading, user]);
+  }, [authLoading, authMode, selectedRecentLog, selectedRecentLogId, trackerLoading, user]);
 
   const draftKey = `${workoutDate}-${currentWeek?.weekNumber ?? 1}-${currentDay?.dayNumber ?? 1}-${existingLog?.id ?? "new"}`;
 
@@ -604,11 +615,14 @@ export function WorkoutPage() {
                       </div>
                       <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                         {t("detailExerciseMeta", {
-                          weight: exercise.actualWeight,
-                          reps: exercise.actualReps,
-                          rpe: exercise.actualRpe,
+                          weight: exercise.actualWeight ?? "—",
+                          reps: exercise.actualReps ?? "—",
+                          rpe: exercise.actualRpe ?? "—",
                         })}
                       </p>
+                      {exercise.actualWeight === 0 || exercise.actualReps === 0 ? (
+                        <p className="mt-1 text-xs text-slate-500">{t("legacyZeroNote")}</p>
+                      ) : null}
                     </div>
                   ))
                 )}

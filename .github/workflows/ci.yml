@@ -835,6 +835,12 @@ jobs:
       - run: npm ci
       - run: npm run test:p1:setup
       - run: npm run test:p1
+      - name: Verify W1a migration against a fresh local PostgreSQL database
+        env:
+          W1A_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_w1a_ci
+        run: |
+          psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1_w1a_ci;'
+          node --import tsx --test tests/product-db/workout-values.test.ts
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
@@ -848,9 +854,24 @@ jobs:
           key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
       - name: Verify P1-M pinned tokenizer cache
         run: python tools/ci_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-p1m-tokenizer --cache-dir research/liftcut-agent/outputs/ci-tokenizer-cache
+      # P1-M is a frozen research system, not a freeze of the evolving product schema.
+      # Keep every original check, but run it against its exact reviewed sources/database.
+      - uses: actions/checkout@v7
+        with:
+          ref: 1c7e25bdcde8eb0acdd4f171e8b8e23475ec9d06
+          path: node_modules/p1m-frozen
+      - name: Prepare isolated frozen P1-M database and dependencies
+        working-directory: node_modules/p1m-frozen
+        run: |
+          npm ci
+          psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1m_ci;'
+          P1_TEST_DATABASE_URL=postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1m_ci npm run test:p1:setup
       - name: Check P1-M immutable sources, negative gates and actual database/native recovery
+        working-directory: node_modules/p1m-frozen
         env:
-          P1M_TOKENIZER: research/liftcut-agent/outputs/ci-p1m-tokenizer
+          P1M_TOKENIZER: ${{ github.workspace }}/research/liftcut-agent/outputs/ci-p1m-tokenizer
+          P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1m_ci
+          P1_RUNTIME_DATABASE_URL: postgresql://liftcut_agent:p1-local-fixture-only@127.0.0.1:5432/liftcut_p1m_ci
         run: |
           python research/p1-model/prepare.py check > /tmp/p1m-source-check.json
           python -m unittest discover -s research/p1-model -p test_protocol.py -v
@@ -880,9 +901,9 @@ jobs:
           name: p1-browser-evidence
           path: |
             research/liftcut-agent/outputs/p1-browser*
-            research/liftcut-agent/outputs/ci-p1m/
-            research/liftcut-agent/outputs/ci-p1m-restored/
-            research/liftcut-agent/outputs/ci-p1m-published-restored/
+            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m/
+            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m-restored/
+            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m-published-restored/
 
   quality:
     runs-on: ubuntu-latest
@@ -912,3 +933,16 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - name: Verify W1a mobile guest save and reload without hosted services
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test --config playwright.w1a.config.ts
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: w1a-browser-evidence
+          include-hidden-files: true
+          path: |
+            node_modules/.cache/w1a/*.png
+            node_modules/.cache/w1a/browser/

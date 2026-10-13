@@ -1,0 +1,49 @@
+
+> liftcut-tracker@0.1.0 build
+> next build
+
+▲ Next.js 16.2.9 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 22.5s
+  Running TypeScript ...
+  Finished TypeScript in 9.1s ...
+  Collecting page data using 19 workers ...
+  Generating static pages using 19 workers (0/23) ...
+  Generating static pages using 19 workers (5/23)
+  Generating static pages using 19 workers (11/23)
+  Generating static pages using 19 workers (17/23)
+✓ Generating static pages using 19 workers (23/23) in 528ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/agent/runs
+├ ƒ /api/agent/runs/[id]
+├ ƒ /api/agent/runs/[id]/[action]
+├ ƒ /api/ai/generate-nutrition-plan
+├ ƒ /api/ai/generate-training-plan
+├ ƒ /api/ai/history
+├ ƒ /api/ai/save-nutrition-plan
+├ ƒ /api/ai/save-training-plan
+├ ƒ /auth/callback
+├ ○ /body
+├ ○ /demo
+├ ○ /forgot-password
+├ ○ /login
+├ ○ /nutrition
+├ ○ /onboarding
+├ ○ /plan
+├ ○ /plan/ai
+├ ○ /plan/review
+├ ○ /register
+├ ○ /settings
+└ ○ /workout
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

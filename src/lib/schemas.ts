@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { actualWeightSchema, actualRepsSchema, actualRpeSchema } from "@/lib/workout-values";
 
 const positiveNumber = z.coerce.number().finite().nonnegative();
 const genderSchema = z.enum(["male", "female", "other", "unknown"]);
@@ -76,9 +77,9 @@ export const exerciseLogSchema = z.object({
   workoutLogId: z.string().min(1).optional().default(""),
   exercisePlanId: z.string().min(1),
   name: z.string().min(1),
-  actualWeight: positiveNumber.max(1000),
-  actualReps: positiveNumber.max(100),
-  actualRpe: positiveNumber.max(10),
+  actualWeight: actualWeightSchema,
+  actualReps: actualRepsSchema,
+  actualRpe: actualRpeSchema,
   completed: z.boolean(),
 });
 
