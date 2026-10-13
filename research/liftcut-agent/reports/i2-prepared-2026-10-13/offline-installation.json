@@ -1,0 +1,62 @@
+{
+  "version": "i2-compact-install-v2",
+  "commit": "32fbbac18d48493a8f37221a3e4b090e3b431cf2",
+  "base_commit": "2bf816a02e116a3d26961bba817c49c590ccb910",
+  "network_calls": 0,
+  "gpu_calls": 0,
+  "model_result": false,
+  "bundle": {
+    "checkout_verified": true,
+    "base_commit": "2bf816a02e116a3d26961bba817c49c590ccb910",
+    "network_calls": 0
+  },
+  "assets": {
+    "verified_files": 31,
+    "network_calls": 0,
+    "cached_weight_copied": true
+  },
+  "frozen_sources": 114,
+  "imports_from_installed_checkout": true,
+  "actual_weight_sha256": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0",
+  "actual_weight_bytes": 132187888,
+  "original_weight_unchanged": true,
+  "weight_copy_not_hardlink": true,
+  "original_I1_base_unchanged": true,
+  "source_freeze_sha256": "659a4724f14c286cf3fbd7208eb534cc7e35a6fc36d98e5f681edbe70032b55b",
+  "stage_files": {
+    "asset-index.json": {
+      "bytes": 4507,
+      "sha256": "8b0cb1eed7a83380dda1125ece13ebe34cbbed248e330d0ba987290ba156cfa8"
+    },
+    "assets.tar.gz": {
+      "bytes": 2712929,
+      "sha256": "33bf9e3ec4742c4754afc82cf2a0c3d5c4e9f6776c759ea098d07b7e4c53cb25"
+    },
+    "code.bundle": {
+      "bytes": 686146,
+      "sha256": "4e196ef31024dcd36957b604a90e5cdbb446338843c8c35d909938eb82e991ac"
+    },
+    "d2_bundle.py": {
+      "bytes": 1706,
+      "sha256": "ca4ec7b41431dbac0ff2169199a96fd24c526d17d6d475525916ac22b5c33a9a"
+    },
+    "i2_assets.py": {
+      "bytes": 3453,
+      "sha256": "d2fba653d6d74537f0ef91eb36dc2f5e1d48446ad15adbd90e0c0be2752f7fd0"
+    },
+    "i2_setup.py": {
+      "bytes": 16267,
+      "sha256": "7b794c55a69a337a98467af42295cde4126e79564ec18ed20302abaeec3648cb"
+    },
+    "reference.json": {
+      "bytes": 6667,
+      "sha256": "2bf1f878b5b4bc3d64a2dbe98c77ed7fca108a291b0e81bc3ea5c9d3d90f2f88"
+    },
+    "shutdown_guard.py": {
+      "bytes": 2462,
+      "sha256": "07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0"
+    }
+  },
+  "stage_file_bytes": 3434137,
+  "scope": "Real offline Windows delta installation with original actual historical weights and installed-checkout imports; Linux no-GPU preparation and I2 model evaluation remain unrun."
+}

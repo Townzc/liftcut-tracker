@@ -1,0 +1,8 @@
+{
+  "recorded_at_utc": "2026-10-13T01:51:44.170005+00:00",
+  "source": "direct_user_reply_in_this_conversation",
+  "reply": "已显示关机",
+  "scope": "User confirms the current no-GPU instance displays OFF; exact platform shutdown timestamp and final billing receipt not observed",
+  "provider_power_state": "off_user_confirmed",
+  "provider_billing_receipt_available": false
+}

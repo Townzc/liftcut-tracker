@@ -1,0 +1,15 @@
+{
+  "at_utc": "2026-10-13T01:46:14.260182+00:00",
+  "original_booted_at_proxy": "2026-10-13T01:22:28+00:00",
+  "original_hard_cutoff": "2026-10-13T03:22:28+00:00",
+  "new_preparation_id": "20261013-014614",
+  "reviewed_commit": "32fbbac18d48493a8f37221a3e4b090e3b431cf2",
+  "stage": "i2-stage-32fbbac",
+  "first_launcher_exitcode": 1,
+  "known_failure_before_remote_ops_or_model_dispatch": true,
+  "inspection": "C:\\Users\\tangzhice\\Desktop\\exercise\\liftcut-tracker\\research\\liftcut-agent\\outputs\\autodl\\i2-prep-continuation-inspection-20261013-013853",
+  "independent_original_guard_pid": 1245,
+  "inspection_at_utc": "2026-10-13T01:39:12.887997+00:00",
+  "preserved_local_reservation": "C:\\Users\\tangzhice\\Desktop\\exercise\\liftcut-tracker\\research\\liftcut-agent\\outputs\\autodl\\i2-prep-20261013-012228-operations\\failed-local-reservation.json",
+  "action": "one explicit known-failure continuation after exact checks; no reboot, no deadline reset, no automatic retry"
+}

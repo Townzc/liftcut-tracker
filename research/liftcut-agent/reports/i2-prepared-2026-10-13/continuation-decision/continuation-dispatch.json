@@ -1,0 +1,11 @@
+{
+  "observed_at_utc": "2026-10-13T01:47:27.550263+00:00",
+  "actual_preparation_id": "20261013-014645",
+  "sole_session": 24406,
+  "local_pid": 12508,
+  "opening": "2026-10-13T01:22:28+00:00",
+  "hard_cutoff": "2026-10-13T03:22:28+00:00",
+  "frozen_commit": "32fbbac18d48493a8f37221a3e4b090e3b431cf2",
+  "earlier_local_only_parse_failure": "local-invocation-error.json",
+  "scientific_dispatch": false
+}
