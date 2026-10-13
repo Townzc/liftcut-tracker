@@ -783,6 +783,9 @@ jobs:
           LIFTCUT_TOKENIZER_DIR: research/liftcut-agent/outputs/ci-i2-tokenizer
         run: python -m unittest discover -s research/liftcut-agent/tests -p test_e1_evidence.py -v
 
+      - name: Reconstruct actual E1 full tasks, gates, tokens and observed resources without private weights
+        run: python research/liftcut-agent/analyze_e1_results.py --public-dir research/liftcut-agent/reports/e1-seed42-2026-10-13 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

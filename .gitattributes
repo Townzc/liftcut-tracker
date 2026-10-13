@@ -35,3 +35,5 @@ research/liftcut-agent/reports/i3-startup-2026-10-13/** -text whitespace=cr-at-e
 research/liftcut-agent/reports/i3-seed42-2026-10-13/** -text whitespace=cr-at-eol
 # Preserve exact final observer source/capture bytes and their published hashes.
 research/liftcut-agent/reports/overnight-close-2026-10-13/** -text whitespace=cr-at-eol
+# Preserve E1 restored inventory and independently captured telemetry bytes.
+research/liftcut-agent/reports/e1-seed42-2026-10-13/** -text whitespace=cr-at-eol

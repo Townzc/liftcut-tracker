@@ -1,0 +1,4266 @@
+{
+  "version": "e1-audit-v1",
+  "binding": {
+    "version": "e1-window-binding-v1",
+    "code_commit": "9e9387c1a4bac03b1363e38a379816cfe6cf3436",
+    "run_id": "20261013-190625",
+    "execution_plan_digest": "4e432ce46ca7824baa0a0500b6f28df4931e9a23a0ba8d89fc3d5d37daaae719",
+    "protocol_digest": "05de364d133f420ad316c41ef891d4a1514cea30c23eaaec43a8e9063ff5de80",
+    "candidate_digest": "75cfc533932cee78c473c5c3f67a576ffc5717f6270906e6192de4a2d68ec6cc",
+    "authorization": {
+      "experiment": "E1",
+      "source": "explicit_human_new_server_window",
+      "booted_at_proxy": "2026-10-13T19:05:18+00:00",
+      "maximum_minutes": 120,
+      "reserve_cny": 5,
+      "hourly_cny": 2.18,
+      "heldout_scope": "one_48_task_batch_with_fresh_A_and_D",
+      "automatic_shutdown": true
+    },
+    "booted_at_proxy": "2026-10-13T19:05:18+00:00",
+    "trial_started_at_utc": "2026-10-13T19:06:34.568853+00:00",
+    "work_cutoff": "2026-10-13T20:36:34.568853+00:00",
+    "collection_cutoff": "2026-10-13T20:56:34.568853+00:00",
+    "hard_cutoff": "2026-10-13T21:05:18+00:00",
+    "planned_unique_tasks": 48,
+    "planned_episodes": 96,
+    "archive_is_self_contained": false
+  },
+  "evidence_kind": "model",
+  "model_result": true,
+  "complete_evidence": true,
+  "full_task_episodes_replayed": 96,
+  "unique_task_inputs": 48,
+  "actual_external_weight_verified": true,
+  "external_weights": {
+    "sha256": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0",
+    "bytes": 132187888,
+    "tensors": 504
+  },
+  "archive_is_self_contained": false,
+  "new_training": false,
+  "reserved_task_payloads_used": 48,
+  "token_ids_verified": true,
+  "projection_inputs_verified": true,
+  "inverse_mapping_verified": true,
+  "arms": {
+    "A": {
+      "arm": "A",
+      "replay": {
+        "total": 48,
+        "replayed": 48,
+        "task_passed": 48
+      },
+      "rows": [
+        {
+          "case_id": "r2-06-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        }
+      ],
+      "case_details": [
+        {
+          "case_id": "r2-06-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9856,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "8c7a7a7b4e1b4300aa1bd2fa50300806810b62a97fb1f6d06a34a2d0a1f9487d"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "aad80446b95871b10633ef50a93be8952a770c6598cf8103ed08b71230f7cb67",
+            "response_records_digest": "c1deeb81df5f0f463a349d8c57d77aa807ce96613b63e06d6332fbf4524a4dd0",
+            "raw_prompt_tokens_at_same_visited_states": 9856,
+            "raw_lengths_digest": "9662816b57deb347acc8b123e0d946578b2b46a90af491bdbaf1a7ea31c2b743",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 12217,
+              "completion_tokens": 358,
+              "checked_tokens_digest": "313dc20a162e20c99a623073f2db3ec1e03e1b7eba6c0b5aab01dc9ad02594a8"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "28270d7ab4ba1b386f4de28c7a5640ca0a83c07389dfadc90b52794a15a5b7d1",
+            "response_records_digest": "944b95d14bc666f099ef3c0cc8f2a5432c5605e52833325d3ea8173b1eada1aa",
+            "raw_prompt_tokens_at_same_visited_states": 12217,
+            "raw_lengths_digest": "211684242b71821eda4fb22367ec151e4d09e298d7503e88c88997b190ae9329",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-06-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9855,
+              "completion_tokens": 264,
+              "checked_tokens_digest": "acf83abffb7d012d02d2aa77e4d90525ea7eecabffb8e312572a1c234fb087d4"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "0ebb4dfb04fa0fc39fc1c2bfa8c6a21e6205e4ccc9aea431371702b698d5eb61",
+            "response_records_digest": "f4bfe3f395ff7432cdd2a356c3e24750561ecbc311b25c8eda093b4f363b76a2",
+            "raw_prompt_tokens_at_same_visited_states": 9855,
+            "raw_lengths_digest": "4913e70ae4d3b0097a8229714efa6d084330f8f422783fc5b62da0096291b433",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9913,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "371cbbebc1b8c711b3f859e6c396ae2834361c9763ef27d7ccee39038e559973"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "a5b365b6a33e75222f892cc0e7eac3d3e22ac34e96d7fe6834459f7aad3e2a0b",
+            "response_records_digest": "b2703f8f740b1ba80b49680e6dc783479b60e6763a73abce8dae781b44b1a4e3",
+            "raw_prompt_tokens_at_same_visited_states": 9913,
+            "raw_lengths_digest": "ae530f65bc863d920394a563ce5fc5043202b853804ac8858a45f907f43abcb3",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9960,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "59ff86a007ec5921c0036428830cc3eedd587db9fafa96331ea60d7dd551b1a6"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "1bb547af43d1fffa544df710a4d4d4286a90823b58c6c6e48ff08df1916bb1a3",
+            "response_records_digest": "265e275ec65864e75dfdb6605728c6046061217418c26d925f84d8c9f6481477",
+            "raw_prompt_tokens_at_same_visited_states": 9960,
+            "raw_lengths_digest": "2d22d9eda06b1f474e17c04deb75ab4e8ab1f7b2c50efc79d3aa8b2f21cacf9e",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 7839,
+              "completion_tokens": 170,
+              "checked_tokens_digest": "93aab5f534add2a59430026f50e12486d32588c5e7c6cf3f7a96a08195a05bd6"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "87208d6beb756b68eeed7096e01093f4ddd65f25520cf64488a7daebac1abfaf",
+            "response_records_digest": "1c7611b570273be2751dab5c8ce550cab22febe6c775031d3393c41189b781c6",
+            "raw_prompt_tokens_at_same_visited_states": 7839,
+            "raw_lengths_digest": "2162991959d4fe22c96454b15bb193e221e430bbbe573a9d97c112a2f5e3dda0",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-06-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16105,
+              "completion_tokens": 320,
+              "checked_tokens_digest": "f39bcc71ee253209cd077a2f6f3139dde11283d45839eac0c8b1f733e9a32906"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "cbd18030e25a68641bf29c3363cac935893a9ae860b46f90cda0f0ada4184872",
+            "response_records_digest": "ff480c73e229f939311fd545c62e1836c22ba7050031ad814c83f7752205da5b",
+            "raw_prompt_tokens_at_same_visited_states": 16105,
+            "raw_lengths_digest": "60779dffca5937388d2f368e79fd4d4600caaa2b17ead5327a7cf9a40b8ffc4a",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-06-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6012,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "897f7a949e96671b4da894636fe32077194ca0faf4ddb805c66775995af64253"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "96e9ff9448ba5cdf53e44f25b00748f0440b66af42738fcd6ba6f5b21f307b74",
+            "response_records_digest": "2f94246ce82edf413a7f5b5a1ad5840be159b14028fb743ce14b6ac0969fc15e",
+            "raw_prompt_tokens_at_same_visited_states": 6012,
+            "raw_lengths_digest": "05aa5c16ac93eec53cba3d1d296582562cfa6ee405954c93aa2f4327164e1379",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-06-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16093,
+              "completion_tokens": 319,
+              "checked_tokens_digest": "ce6176b779d980c88e33bc096b89d2a2cb4a9960eb0dc14b3368761856a92d5a"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "c09730b0eecca196987b8c3741a0cc8b2dfae84a2b9568aacc59771a810c66a0",
+            "response_records_digest": "58cf526fa794d55042374ec9442a4d4074fb7f8b77dfaa03dbc933b037391af2",
+            "raw_prompt_tokens_at_same_visited_states": 16093,
+            "raw_lengths_digest": "5ecaa812fe36f579c2d8bbec1cf76daeac746530d5ea77192a5b2be477c2df5a",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-06-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16122,
+              "completion_tokens": 320,
+              "checked_tokens_digest": "f11c5299d9607db1be58d2a195cf46ac245d7cd56dc21d16c0fe23bc983fb736"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "6d82a1c677a4c7fb59b89ae5bb05011b606d5a01f4f1def62c2c65347470bfe9",
+            "response_records_digest": "2eef3b01bd48f5aaaeffd020321899e01b359e68ca005d7c9fea4a5f68d077b4",
+            "raw_prompt_tokens_at_same_visited_states": 16122,
+            "raw_lengths_digest": "b17aa07621f80db997928d8991f7e8444089a4698f9cb9999751472d66e61b0a",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-06-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10078,
+              "completion_tokens": 295,
+              "checked_tokens_digest": "54cd09aadcdb05920f44cb67f11bafcb562409fe2d331cf716b8abf3c91261ad"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "ca0c22248920ec19d1ed23212ad02acbcf364e6efab1cd5eea34cbf9996ca994",
+            "response_records_digest": "46910f69af1166a331f880e2eeae9e7439e8fd34933b253555f75d1f494bf4ec",
+            "raw_prompt_tokens_at_same_visited_states": 10422,
+            "raw_lengths_digest": "323dd79431396ca6779011cd0dae8c40f72db10f484fb3cb1716a14f1a771b44",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16608,
+              "completion_tokens": 352,
+              "checked_tokens_digest": "a4fb6de874b8317379f98469515962a82b3b5321d35eb523832a94f0e8677592"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "c91534640d1551ffe89affa9d00b39f59009c1f0387188473b55038cacb3ab90",
+            "response_records_digest": "96ff07c7bbc5b4da2820f37c0abedcfcf72604933615ce882653123e42399050",
+            "raw_prompt_tokens_at_same_visited_states": 17554,
+            "raw_lengths_digest": "b34034c1f291548ef59febb0cfeeb54e3ba70c67fca5000c035fd7810b4e7cb5",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9913,
+              "completion_tokens": 272,
+              "checked_tokens_digest": "5a993bfd9aa8665a27c3e170e9fe5b26032b3ff29234876b321d732deb338b2f"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "9b3f22875cd6c32f4e2cc3cc01b89f663d4b230cc94ce40d5b8c5e16ab5ec2aa",
+            "response_records_digest": "80f01e36393416bb9bef875e2f24c8b3c0175459f8a579ed3d073825b0cc6eb2",
+            "raw_prompt_tokens_at_same_visited_states": 9913,
+            "raw_lengths_digest": "a68c8cb6db709a4ec4ae8ff32307293248b87399e0a43beb11473acf4df20176",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 12275,
+              "completion_tokens": 361,
+              "checked_tokens_digest": "253848b199d3757ad3d0fe702d463e5d417991a3086acb79350ca4dd8e745eaa"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "2de077a7e42e42cfe1d523e11d5272adef6f211800adf86fecd776ff1615300c",
+            "response_records_digest": "f26703b71e303535c2cb8c3b61fb5ec7a393ba63abc335fd8af3385b1e242dcb",
+            "raw_prompt_tokens_at_same_visited_states": 12275,
+            "raw_lengths_digest": "35d7e94c2f051563c568a9d6b78511eb0551e493dc9689c8a07db60cb091bbf7",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-07-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9912,
+              "completion_tokens": 273,
+              "checked_tokens_digest": "49855f5b46e1381a58dd3c27c5bba538fa8580b3d4d18524d4182904dcaecf91"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "531eee2c6b25f0d86f46d0ceeaf83579cfda47d4998a1d8f84224ca43b384533",
+            "response_records_digest": "55f6085660eacebd218b357a3a9e9727291150b6772ecb51be56754620723093",
+            "raw_prompt_tokens_at_same_visited_states": 9912,
+            "raw_lengths_digest": "be380ff604d05b856e1bfdf0f90bd1d3b0ed25abe57d70a53ce395df9c36e505",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9967,
+              "completion_tokens": 272,
+              "checked_tokens_digest": "6656b433ec5a85b2e970633c8dcaa502310459912f4f3b93eb84e28ff6566b1f"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "2f3032c2121922519e949817a053002efa18ed852a00fbce43477aa064546075",
+            "response_records_digest": "1bc3c6f1c4921eef0bd2dcbf446e542e149d0dd3646a8baa160711ea16709c44",
+            "raw_prompt_tokens_at_same_visited_states": 9967,
+            "raw_lengths_digest": "d28f8925b06c14afa1a0ee36531a455d36061a6da0cce946a54bac91d2a28cb1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10011,
+              "completion_tokens": 272,
+              "checked_tokens_digest": "ec5d8be9bfa9798e74b49f80aa18b4770457620557a27028424b3d3bad13c646"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "12f3b0ed96e8ce6f0ceb03eed6503af0d89d7cd0f982c909a9581a0036b5c1ff",
+            "response_records_digest": "373a9a95c172177fac5163060aee7c0170f73aaa1807074db3f858c73435dbfd",
+            "raw_prompt_tokens_at_same_visited_states": 10011,
+            "raw_lengths_digest": "e917d3dc7b208de6da512f1dba59fe5b459797adc7810f08e33bba3718170783",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 7875,
+              "completion_tokens": 175,
+              "checked_tokens_digest": "105c71656d5cde4b5ba8fec1819a8175efa260a5cef285f74c6b07432236e4e4"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "87deb521e87f1469ae415079be0007d609d70c4b34decae5d05b11d23a754b00",
+            "response_records_digest": "c39b3b0bba89722776c97956ef29dfcaeb893fae4fa78adfeaa52c9851b93719",
+            "raw_prompt_tokens_at_same_visited_states": 7875,
+            "raw_lengths_digest": "d4df0e21315f77abee5e50be096d73eb260ddc2ab664bc68a228ebc05a55fbe1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-07-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16195,
+              "completion_tokens": 329,
+              "checked_tokens_digest": "05651e0a0a9c94879195c312b4b2b5902bc432d1aa6ce94733c2fdb753318319"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "c2c4b275cd3d41e947a591573b0d3752b60c911da2c9868fc1cc7486b55d8062",
+            "response_records_digest": "751c06486263ba4af064d6ed1c52b742e5c810f7dd7189920e7e4d40409cba97",
+            "raw_prompt_tokens_at_same_visited_states": 16195,
+            "raw_lengths_digest": "14a11f96c409646ad06e227b62d6a992a647a08344c87aa68ca90ad8e159998c",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6024,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "37d74c8d8257353a8e0b0e40051f5b7482a0fad7e94e5a1ab01e1639d6f9dc12"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "4e8ae29144476ee62950ca5725a001eedd467db04da96b8d0d33968d3b8f7b87",
+            "response_records_digest": "441355c08af249d295c8138ca4c9c8bbb91b5a9ea40f0e2348fca1296e56b177",
+            "raw_prompt_tokens_at_same_visited_states": 6024,
+            "raw_lengths_digest": "f999cf4167e6d8cfaab7586e533c1b2b1884093fb3a9d035760c98663b1b4bca",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-07-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16189,
+              "completion_tokens": 328,
+              "checked_tokens_digest": "a7cd6227cb972f9ebf0d8dfbf97e3b588b847dc05a2a775d0f949ac1f860ec48"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "f305ef48f30a9632882e25971474ac7f40b38776de53d91a16eaa6cd349b81ec",
+            "response_records_digest": "8fba69b31bd5129bf06771a3b1afe5e1f574666a798116d9b2b69908475cdd9b",
+            "raw_prompt_tokens_at_same_visited_states": 16189,
+            "raw_lengths_digest": "bc56f172889486932becfc18d3df282953769492cf4fcc53ddf789b88335e6ae",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16218,
+              "completion_tokens": 329,
+              "checked_tokens_digest": "c87256687f585c0c15e7162a0a25a6dbd7b513fa75c530e42dad56a3d0e0250c"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "97bc8a724e2a6a32c83fdb3df664b60d5d42d9763bc8a7e0b795d52c4d3de44e",
+            "response_records_digest": "46efdc905259fa0b3d3984af206c68bef47024259318720b009d69fc9113129f",
+            "raw_prompt_tokens_at_same_visited_states": 16218,
+            "raw_lengths_digest": "cf8477c6d8258aa8e56f58edc9d0980d90b54542fe822e0044f6569c85e2ca88",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10137,
+              "completion_tokens": 304,
+              "checked_tokens_digest": "9f6d295f8b4f1e38579c02d38892cf5ca435f776068e90fcaba30f567f78e4dc"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "fff89febd94951c8af1bc9d1e6eeb7ee1b79089aeb061033ff88620a7932b0fe",
+            "response_records_digest": "54f2ffabd57b091bfee9c0d32386940f2519220f79f24fffd9136823aa2629b7",
+            "raw_prompt_tokens_at_same_visited_states": 10445,
+            "raw_lengths_digest": "8b422db6ecca3f0565dbda1a096d5681245f31eb0c0768d360ebc00c247c0934",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16696,
+              "completion_tokens": 361,
+              "checked_tokens_digest": "ed911f09156f7d00e733fc26af1ce24308e236848c2c30816982653ae14dd194"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "26de71f47d11897de374311fca7cd475ad8ec2ff25ce572f23acc6a22c5814d0",
+            "response_records_digest": "dc03e89bf6205bab2a70d4d055725769698efe4095bd0f25ebea989445d5353b",
+            "raw_prompt_tokens_at_same_visited_states": 17543,
+            "raw_lengths_digest": "2339c6096754d42561644c0ad3946026cb683c014d2339a9acd7411636f3c74f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9830,
+              "completion_tokens": 265,
+              "checked_tokens_digest": "60b53cc4d29156e1abb2bb92e53c5af26d8ab22fef449a8fe7882feaedf58313"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "9bd306143062fd3e2d73ad642c9c665226cdb1944122f11fd44821f3e0599475",
+            "response_records_digest": "249f5ea68197313a88330b537255c0686b2e3413ea527f1d6b9ecc5dc9dbeab3",
+            "raw_prompt_tokens_at_same_visited_states": 9830,
+            "raw_lengths_digest": "a98dda0394a2d8d63d33ec4d547bc1f63cfc9d4fb7db04d3cf3476127e483abd",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 12164,
+              "completion_tokens": 354,
+              "checked_tokens_digest": "fc02d59c5bc4a0faae5512339f96015490cdbd8027a2a24e056bbf418e6f96fe"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "08fa724ce82979fc8f7163d95fc38276f35004bf65fb23cd9c0d24503af07f5e",
+            "response_records_digest": "ad3c19bf352960ada1e4d8e51725bd90583c7c405b66b9076a5493e69f47401f",
+            "raw_prompt_tokens_at_same_visited_states": 12164,
+            "raw_lengths_digest": "5a6b883ba4301b8a16bdfb95a70fc4cb62436c24cc34a03fe3791003703f2dae",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-08-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9829,
+              "completion_tokens": 266,
+              "checked_tokens_digest": "b46c543898d61ba1790159c7a4845946392f8db7c82e919a4a32f3c2e1e22a67"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "399bb29e710ad0a49853c0e0d098ccee91979e7aa54e63c66805a4c08e5c5fe3",
+            "response_records_digest": "1f6801c7e669eee37661ed415c4c6d0fb1b794cc127eea4ebe835520dfc282da",
+            "raw_prompt_tokens_at_same_visited_states": 9829,
+            "raw_lengths_digest": "567cfb63a01c9b83e2f878d0c36ab3a5668d74c3e8dd66131f3fa2db4833dc8f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9884,
+              "completion_tokens": 265,
+              "checked_tokens_digest": "06151537eaff3f560503fbcce27fd5c684f9e5fe71398189c1b19016980f9186"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "82250553755518ef0010574b6caa11055f76a57f9415d1550e14bed6fdfb3810",
+            "response_records_digest": "90a47881881f09e22a0b5f71d6b0307639b1942417be6406e3b7e2a53041e249",
+            "raw_prompt_tokens_at_same_visited_states": 9884,
+            "raw_lengths_digest": "7d960c873a441f13f46c4555d6e75da83ee6e81d33948db4b404cdc634a5a68c",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9928,
+              "completion_tokens": 265,
+              "checked_tokens_digest": "ed308652376c187422b74e93664b9cd5315cb930dfd13ef82c04e150b4f04031"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d5daea01545fa1dc4fed0c162832ba3f55c8b871c05c51129f6027335339556a",
+            "response_records_digest": "c6c95ba8d1d7cfa6edffd95df9bbd5fcbc116a9c25189414081ff773aa6a7927",
+            "raw_prompt_tokens_at_same_visited_states": 9928,
+            "raw_lengths_digest": "302d92c1ddbd6e74136ea64b56cbdfa6cae2e1edb6074f9fc3fa381bf3b80472",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 7824,
+              "completion_tokens": 171,
+              "checked_tokens_digest": "4004771abe844dfdbd2faee725b8439c1eefa479548a22dd44ffe01c8f2fd9da"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "259fd45b79c2629a53d6b660155fca2e02a19cf4be06e2867d1d8d044ca66678",
+            "response_records_digest": "1df15049d7a9d31a3ceccf47b063891a05005d1062fb1b0d14307968e5af638f",
+            "raw_prompt_tokens_at_same_visited_states": 7824,
+            "raw_lengths_digest": "f3fa37ca8220df47ecb6266dabd6edbd9e65bb2414acab26e77fb6abc4e247d8",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-08-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16108,
+              "completion_tokens": 322,
+              "checked_tokens_digest": "f4cf82f33ecb96a0f3049e79800541c0d89df595b6fd96d403dde485d4aeb5e6"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "dd53009d849fb990dce13710ce168f9186ecf82a02ca965807924a7b0f0b1d99",
+            "response_records_digest": "27d257038a4c99b5d1ddb1affec5f8bb5cddfe058831386143282304684d356b",
+            "raw_prompt_tokens_at_same_visited_states": 16108,
+            "raw_lengths_digest": "6e73df3144866ef68d70e49a81b6f3d7950b4bad76278b4554c5be0b80318904",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6021,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "44c8014da4155d09c94d8101a9fb436755eaebb20c4726df6ce46fc7356e7ef1"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "274f675b6c4e7bf6c18488f10329903afb7a5946103906fb4ecba4c8a82c3904",
+            "response_records_digest": "08583f3aae499f3bc94a70d46de66b87302b6798f5c8316e584dbd1b0aec7666",
+            "raw_prompt_tokens_at_same_visited_states": 6021,
+            "raw_lengths_digest": "8fa742064c71dd81411ba1575a32d4ff3094181a48816d6f3dbb44f4320148f2",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-08-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16092,
+              "completion_tokens": 321,
+              "checked_tokens_digest": "a60688ddaaf23569bdbc675973066d202dbd82db725c77247adcd502eb16b423"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "239a5d40ed65876a0c5e215dd46f6e1d86a5002e303055fdc0d3510fec5ee11a",
+            "response_records_digest": "4aa6e9625b4a718fc930a475eb4fed3fa607185d05bc074dc6bb2904b69c041d",
+            "raw_prompt_tokens_at_same_visited_states": 16092,
+            "raw_lengths_digest": "e97ecfe6b0bda5878a5eeb4c6959ddf838061f1371b08178d6d80a517ea5f380",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16132,
+              "completion_tokens": 322,
+              "checked_tokens_digest": "dad1030b040acf062f58dacfaa92c3cd15796afb3d906c15b3e0f51b226101e8"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "b778332250f5806cfc028b36f17fb507b6cc33d1384b3c2cc59f6c4f6d0ac5af",
+            "response_records_digest": "aff7618ee1b59094920cb36153ea600b8f95bd218bd12f99bd19ff97547bf971",
+            "raw_prompt_tokens_at_same_visited_states": 16132,
+            "raw_lengths_digest": "a8a5b73be48df23532be179aa27dd7e0a27d15152eca573bae4c0b2cb2a378c2",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10032,
+              "completion_tokens": 293,
+              "checked_tokens_digest": "6f881c6eaa9132ce94d6637a296067e2f40b1f3e83e2f9bb4fd0f7095f34a275"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "8230bedcbeb770047aa93a2c55554d4aab40de74a02d81a40787b63da785a985",
+            "response_records_digest": "37c7d65cc80397ea164ddca0854a53e07c1f18ab305fda8e94c0ded409b8c06e",
+            "raw_prompt_tokens_at_same_visited_states": 10368,
+            "raw_lengths_digest": "844a06063b801fd838b206584ef9e87605423c59739847bb69bcec2156630b66",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16566,
+              "completion_tokens": 350,
+              "checked_tokens_digest": "da274dfb039c27d669a6077e3150561269426660fd3306d692cb836b98a5d241"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "e114913a8506452256f25791261e9ec75867d790f18edc7a290da771926c20db",
+            "response_records_digest": "7d932fcb2bb69fc3c936937ef63899e5242036f5b428d46ae5994d3ec21302f3",
+            "raw_prompt_tokens_at_same_visited_states": 17490,
+            "raw_lengths_digest": "290a679baec3a112f05f2adba42890ed2d8414c7917f0fbebb2ccf6b3cdbb6f7",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9778,
+              "completion_tokens": 252,
+              "checked_tokens_digest": "c1a07487a5ec04c4486965c682f4843ee48e01f1f79b6ce8849fb5c4afce2f50"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "9cccbd881f0188bb49f789a2ef83fa6b76fc7e1849b680c0db247f2488cd71ec",
+            "response_records_digest": "dcad33968a8204c79f8ffc93cd2597328acaf1160fe8274290388340013c682c",
+            "raw_prompt_tokens_at_same_visited_states": 9778,
+            "raw_lengths_digest": "83f7c71d8206b55793559d69dec9d276e51d2e2e35fa44488be1422e0ccabe18",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 12082,
+              "completion_tokens": 341,
+              "checked_tokens_digest": "fb838e4bf7f9877ec6e75d5ab739e8e53c0ee11163b3b5493856847d21409fff"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "c82cc313c8cf66e5d027595d03f36afc2d359509fffd20a05ae5119b102cf0c2",
+            "response_records_digest": "5800557d9be806802ec0d01cc2819654ec4e03c855a6f6e8b8010aa2d9325121",
+            "raw_prompt_tokens_at_same_visited_states": 12082,
+            "raw_lengths_digest": "8ca0af69df60fdd316ecc815ab43443d3b2dd366b16b86ad72ac9c45acb56b2f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-09-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9775,
+              "completion_tokens": 253,
+              "checked_tokens_digest": "4bc6e29154b8fa98b35a7c1d8f6c3afed2ddb8bb4c27fb7eec0bca5f0a7284af"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "a16d0a80d2bbde518b416b3e9c20fb7035d7b5dd9f334f8ac51c3e5778152189",
+            "response_records_digest": "74e7f4c537a7ef8f6c33b05f4769a6a7fbaa7de8e972c91bebafddab77698db9",
+            "raw_prompt_tokens_at_same_visited_states": 9775,
+            "raw_lengths_digest": "f1c05092f34f2c938489f7b6c78fbea73babbe2b42b14ee95550688cf75f6215",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9830,
+              "completion_tokens": 252,
+              "checked_tokens_digest": "bc5c6d5dfd111cf312d82078ee2ba398d263abee03628da77da546cf16b3c760"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "4f401439907c95f455efb5be4562cbf1193fa92c8a2a72977f6314a9c503bca5",
+            "response_records_digest": "30de71cf65349392927abb01ac6bc537a441d31b236a83305b13ec55f378fd72",
+            "raw_prompt_tokens_at_same_visited_states": 9830,
+            "raw_lengths_digest": "efc6586ee11c145b06331f0e70cf4f617283981272a5c77c24ac23562dcbd7a1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9874,
+              "completion_tokens": 252,
+              "checked_tokens_digest": "bfb2493586da01a959cbcac642b45a83a53d4a1eb489629d42d80442d5cee648"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "bbb708d2a511bce5d8551c49027491fad6fa72e1037fadba43fd42a7245bf767",
+            "response_records_digest": "1872eac6ebe66ac8e3582f89fa62c17ca93f4b303b40da3b044f7bdff33bfa9b",
+            "raw_prompt_tokens_at_same_visited_states": 9874,
+            "raw_lengths_digest": "a24cdc71b20640dea170b0d39c9b0e63f9f4967235e1f84c1a9af325dc1e03f9",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 7796,
+              "completion_tokens": 164,
+              "checked_tokens_digest": "492462f84b4065abe4977ab86aabb3d2fe25700b8479d1d702d377811522e493"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "539931d5aab00343e1cf89607d1f3f5dd370171b441e2ff9020f61678d9b716d",
+            "response_records_digest": "d6d7fadace18510a02baa3a6d42cf0b9fc00ea35cb193bd2d87078937ab89283",
+            "raw_prompt_tokens_at_same_visited_states": 7796,
+            "raw_lengths_digest": "96dd136e65c55418bb473efcc9288220a0d73b547d3fb31078f344be20a0f4b6",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-09-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16029,
+              "completion_tokens": 309,
+              "checked_tokens_digest": "5842d805c336a698007d8f5816d92bd122866dfbab0e09f663ee4832791f22c4"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "7bbfa19338dba9f58eb40240853dc980cef979fac151ee64ebfe3c0c254ea785",
+            "response_records_digest": "4084b082317ccfec615476b9129f77a669539c3e3ca58432692e6ca2e6dcaea3",
+            "raw_prompt_tokens_at_same_visited_states": 16029,
+            "raw_lengths_digest": "ea77098c51f16dca90e3500caf8c2582a1497f347e87c2493f309de9a3bb54da",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6012,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "84bca45dfdf78a9c674346b4a1f4ffa896c675fc8d9362c44db9465382bf9cc8"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "62eeee6b0ccaafe534389c9c00288806dbe4ba5f9c952315bdd5c6c51be78910",
+            "response_records_digest": "7764bd16cfc4e902d0db2dc738c0bccf418b0de02ed8068cc224f211f0f75eab",
+            "raw_prompt_tokens_at_same_visited_states": 6012,
+            "raw_lengths_digest": "05aa5c16ac93eec53cba3d1d296582562cfa6ee405954c93aa2f4327164e1379",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-09-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16014,
+              "completion_tokens": 308,
+              "checked_tokens_digest": "720b80ac64d9d414e0224a8491cb6380d0fd2cf9383a4b90589d9057b3024d7c"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "61d8f8872e83f8efd085b7fe375787500276c234ce8a066fbb05d293fa3d983a",
+            "response_records_digest": "54d6e13e62e93f403a3809c84ece31390036fef9c2d920f40199e8b4e6e773be",
+            "raw_prompt_tokens_at_same_visited_states": 16014,
+            "raw_lengths_digest": "eafa94a384551d6a7c5080d25ae5eb48af4a7e2493419440231b1f9969993bfd",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16051,
+              "completion_tokens": 309,
+              "checked_tokens_digest": "b9c55f88c4af8bfc8c31e9ccec6ed3644efa8473cc40c6fd044b93ac63877567"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 0,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "9c6136018f5829f60513dbb2a6dd90748ccd45b87653b2cb5e6b0327b6432e0e",
+            "response_records_digest": "32409ea7b0e33c979cbaa4e383b268d21605ce33d0a4ad248ed4cf170f58e9d1",
+            "raw_prompt_tokens_at_same_visited_states": 16051,
+            "raw_lengths_digest": "68b3fbe72dd44cb3920f0254f5c6a774a377839b18211717020b29349a8b2cdf",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 9987,
+              "completion_tokens": 280,
+              "checked_tokens_digest": "d589becce2a2ace9a12e15cb1b7f48c06aef91db84ccba67f1184dea839ef561"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "273890212f2ebb2fbf22bdbeacec3b1fe00e960fdc04c6821c735625b032fc94",
+            "response_records_digest": "7498e99b9f1de1217d771a54616d52dc2ebfb6d785df4363f18d4ac612196cb3",
+            "raw_prompt_tokens_at_same_visited_states": 10295,
+            "raw_lengths_digest": "4776ddef1e6507e124c4e0a7f2e1f131218694b018147b4b0dc75bec3e2c0449",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 16503,
+              "completion_tokens": 337,
+              "checked_tokens_digest": "ac6fb9ba5d91adb794bd8d8ff2494401f96b9d1dd15b138ba232d0880e76e2af"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d464098573b262e2e125f042fff81a8968b6c9988fd684465d55c0d11e30fce0",
+            "response_records_digest": "0156f7889563bc866fded398af6b73452a6f032e9998b2e95b59fc1bd3f4e4b4",
+            "raw_prompt_tokens_at_same_visited_states": 17350,
+            "raw_lengths_digest": "010b808d2f1f2601c603bbeab2ad3c71fa672b1d89a7add892cf433c49d22a78",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        }
+      ],
+      "episodes_digest": "ee3ec9cf78261dea25495aef3e55eab9c7e1fce4214170831b4175934a761c0b",
+      "requests": 328,
+      "evidence_kind": "model",
+      "actual_model_calls": 328,
+      "serialized_generations": 328,
+      "recorded_prompt_tokens": 562211,
+      "recorded_completion_tokens": 13026,
+      "recorded_usage_is_model_usage": true,
+      "token_ids_verified": true,
+      "projection_inputs_verified": true,
+      "inverse_mapping_verified": true
+    },
+    "D": {
+      "arm": "D",
+      "replay": {
+        "total": 48,
+        "replayed": 48,
+        "task_passed": 48
+      },
+      "rows": [
+        {
+          "case_id": "r2-06-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-06-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-06",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-07-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-07",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-08-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-08",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-preview",
+          "category": "preview",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-approved",
+          "category": "approved",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-pending",
+          "category": "pending",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-declined",
+          "category": "declined",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-revoked",
+          "category": "revoked",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-infeasible",
+          "category": "infeasible",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_time",
+          "category": "missing_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-unanswered_time",
+          "category": "unanswered_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_equipment",
+          "category": "missing_equipment",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-missing_days",
+          "category": "missing_days",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-memory",
+          "category": "memory",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        },
+        {
+          "case_id": "r2-09-memory_missing_time",
+          "category": "memory_missing_time",
+          "bundle": "r2-bundle-09",
+          "passed": true,
+          "blocked_write_attempts": 0,
+          "unexpected_committed_writes": 0,
+          "unknown_alias_rejections": 0
+        }
+      ],
+      "case_details": [
+        {
+          "case_id": "r2-06-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10580,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "75eef7be8883c7eaff5e9462aa86182a48deb9d27df84614a6f0926fa4fa2578"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "8eee87b829c1b475cda847557f546e9ac5a0eec0f25f2999f8cca69bf4eb7c4a",
+            "response_records_digest": "1857a6f636f25511de93284b8ecac17a6269e245fc9d449be1f62b0268564f91",
+            "raw_prompt_tokens_at_same_visited_states": 9856,
+            "raw_lengths_digest": "9662816b57deb347acc8b123e0d946578b2b46a90af491bdbaf1a7ea31c2b743",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 13122,
+              "completion_tokens": 358,
+              "checked_tokens_digest": "c9e67ccf6dd01a8ac3de6ec5566fe67609539fbab425f539ce6b9eddbbe24957"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 6,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d81c44d507d7c38b289bc159410351f6aa32b284407e31a6b74dc70555a58361",
+            "response_records_digest": "15dd4ca30e409c61ac8c6bec3d7a3d57e04757c44d9a7c5fe67687a861d1f0a5",
+            "raw_prompt_tokens_at_same_visited_states": 12217,
+            "raw_lengths_digest": "211684242b71821eda4fb22367ec151e4d09e298d7503e88c88997b190ae9329",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-06-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10579,
+              "completion_tokens": 264,
+              "checked_tokens_digest": "fe55d5c56a4c99f650820d213d9b643c1e805a19c041373a8ed6139b5bcc26d5"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "21c930b8cb3dba735f89d61cdd3bc7226694abc3b484caa24477146ced73a083",
+            "response_records_digest": "0970a37cff662ed4daf168f02d2894dedc2c8beb8c7125464bd1877321555ed0",
+            "raw_prompt_tokens_at_same_visited_states": 9855,
+            "raw_lengths_digest": "4913e70ae4d3b0097a8229714efa6d084330f8f422783fc5b62da0096291b433",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10637,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "3782837aac33ccd09009a7404cc3e003fc8011f31ca22cc69f069e9c48703f64"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "3d5e7205166fcf31973fc87148c922a2217851702cdc76ef4cc5fa1f4ee02ab9",
+            "response_records_digest": "ca9d606795772de8bb967cc993c17a5f43a4fe87b464be63826e0df1e2361d23",
+            "raw_prompt_tokens_at_same_visited_states": 9913,
+            "raw_lengths_digest": "ae530f65bc863d920394a563ce5fc5043202b853804ac8858a45f907f43abcb3",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10684,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "c698f79853f310c8ee80348b43db01f920a1487f0df832f7d052e85fecd81097"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "3f575760be32a3e99cdacea41204724ddef2ba5476a012e46effb9e4c27343a7",
+            "response_records_digest": "52a6816fc602b4fc0a7e39d5e926c93f99d0d8cb7ff97c66494c3e051a625865",
+            "raw_prompt_tokens_at_same_visited_states": 9960,
+            "raw_lengths_digest": "2d22d9eda06b1f474e17c04deb75ab4e8ab1f7b2c50efc79d3aa8b2f21cacf9e",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 8382,
+              "completion_tokens": 170,
+              "checked_tokens_digest": "b6e4d7bd02da19c6f6214f5d746138e3bf853c0d6b24a4ff5f88ba7286a0c071"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "a9565949dd58fba5fe9c5a4c7c268fcfac8ff79af01536d6608e74f03143fcb0",
+            "response_records_digest": "087942ad37369bba31c51cc81eb94a06f4eefcc163f48b094ee79335ed1b3a8c",
+            "raw_prompt_tokens_at_same_visited_states": 7839,
+            "raw_lengths_digest": "2162991959d4fe22c96454b15bb193e221e430bbbe573a9d97c112a2f5e3dda0",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-06-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 17395,
+              "completion_tokens": 320,
+              "checked_tokens_digest": "6dee8e0bb2926ad51b29e56837d6988332d591cd3a6350ea7ae166d29004bb39"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "b2598607989ce4ce6a5efaa7d0062990e6145ce1d278f2e47e966bfaed728938",
+            "response_records_digest": "683610258b2f7e423f2c754ac95006b1359331de4cbc8265c8da06d5ff1e38a1",
+            "raw_prompt_tokens_at_same_visited_states": 16105,
+            "raw_lengths_digest": "60779dffca5937388d2f368e79fd4d4600caaa2b17ead5327a7cf9a40b8ffc4a",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-06-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6372,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "c86db87764b194be2b4e1cc7998e11edf43ffeed64fd5e4aae8883ee7f752162"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 3,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "1529e1109adc877e32eea1ade3e0b89a8b34f0bc5c273226f5e0c71acf4a99f9",
+            "response_records_digest": "1107e3ae0b92108a57bc49ffab65dc549489cd39d0db8af1420906ecd085ccc4",
+            "raw_prompt_tokens_at_same_visited_states": 6012,
+            "raw_lengths_digest": "05aa5c16ac93eec53cba3d1d296582562cfa6ee405954c93aa2f4327164e1379",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-06-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15184,
+              "completion_tokens": 302,
+              "checked_tokens_digest": "e8dd37d31e5f24533afe1dff22ae4aec0a696f7e86814bd799609d14f90750cb"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "e27a4f1a86f56eb2f36235eee32b6ae0400f40d43367dffea123315fa954c2d4",
+            "response_records_digest": "850b06ddb429811bfc2d874b455c125dfce3306727b109f17bf4f476eda364f1",
+            "raw_prompt_tokens_at_same_visited_states": 14079,
+            "raw_lengths_digest": "a3959f19ca15d6b671168e214e950cfeb76f7130b4dc5a35ffae61467df1f508",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-06-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15205,
+              "completion_tokens": 303,
+              "checked_tokens_digest": "ad64aca47336d76869f38339d267fac69aade960777f749866daa02434045188"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "a7c10ca28ca8ba6016e98bde9565981f563ee8cad46a9a02bcba3cbe831c0bc3",
+            "response_records_digest": "26f4ea2d5824a51e70ec3b1e9576a849002765c37d80aafd8d14a2f7f370353e",
+            "raw_prompt_tokens_at_same_visited_states": 14102,
+            "raw_lengths_digest": "bdfe3bcffb03a27f0557073d3d54aa5b650ac5e69c013aae4b363e1b3835d1db",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-06-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10843,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "916b7ab592e393cd1ebc48d4f83303e561872232cc164dc1c3ce77db138e70b9"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "0876e2c8f41de7786e463f6aea10a85533de1971ff37ad0f1ecd1611c61215be",
+            "response_records_digest": "e089f9a2b78fdd0e00f306ed3ef4ecac5f50adaa8f9215d5bbf7dd17f9d20d26",
+            "raw_prompt_tokens_at_same_visited_states": 10359,
+            "raw_lengths_digest": "c06564644f97842193056d6ed734d85bd9828ab86c72aa7266bff3eab43d6a23",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-06-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 18072,
+              "completion_tokens": 350,
+              "checked_tokens_digest": "0005aeb83a33648378fe8a42a6e19bef56511a0cf02cc5c350b3b0c405e5a137"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "11e920bb77c84959df467d5c27200ed99bd37682b5371c0a4243f046ccb50fd5",
+            "response_records_digest": "68f21d8a46fa4150d6d8488ae83e7b32f23f54f31e7e82dd05a13682c276e160",
+            "raw_prompt_tokens_at_same_visited_states": 17554,
+            "raw_lengths_digest": "b34034c1f291548ef59febb0cfeeb54e3ba70c67fca5000c035fd7810b4e7cb5",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10640,
+              "completion_tokens": 270,
+              "checked_tokens_digest": "d2b61bedffc1afb4e7fe6fd06ade91519fe73bf9620c1822a54c3f9bc2daaedf"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "bab72c6ea86f394a00906bb4230b5c9ba3619bd40b712834c2ba19369fe619f0",
+            "response_records_digest": "8d2af61f87594bd38226a57ea1da30ed6da744587cd64ad14731e82f11ba3986",
+            "raw_prompt_tokens_at_same_visited_states": 9913,
+            "raw_lengths_digest": "a68c8cb6db709a4ec4ae8ff32307293248b87399e0a43beb11473acf4df20176",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 13182,
+              "completion_tokens": 359,
+              "checked_tokens_digest": "468af7363819677409f54c079b6704804293f3347b1206eb6d5cb1431a844a36"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 6,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "b873bfd6ae0633d68b358dbab547d7e3409208466e5b017112737cbd126ce11d",
+            "response_records_digest": "0261f11f8cc76fa1ab8bd1fdc0a0e0f2b62bb21cc9f200bd4ec167e3264d3d45",
+            "raw_prompt_tokens_at_same_visited_states": 12275,
+            "raw_lengths_digest": "35d7e94c2f051563c568a9d6b78511eb0551e493dc9689c8a07db60cb091bbf7",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-07-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10639,
+              "completion_tokens": 271,
+              "checked_tokens_digest": "1b3042f4d4b89b0b8e5e7faffa08134c447ce948912ca0443a4953d18f8e1b3d"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "25671eb48483ea5d97db5fffdf51f131344c3e5563516dfbbd6a73c04a633690",
+            "response_records_digest": "eb0b18a0a20069c9cc7b103ff0eb36575c973589e4fd578aa63f949f96cc1eb4",
+            "raw_prompt_tokens_at_same_visited_states": 9912,
+            "raw_lengths_digest": "be380ff604d05b856e1bfdf0f90bd1d3b0ed25abe57d70a53ce395df9c36e505",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10694,
+              "completion_tokens": 270,
+              "checked_tokens_digest": "47e4f9713ed007e301b6f8e20b80efce82375fe7e01ed171240326ddfb95d649"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "698cde92c8d83f72197ae96a4fbdaede286bcb1bc29e9f8b823b8c700c612555",
+            "response_records_digest": "eddfb82e530f252ac8467b7313a0e8d749492cd89c0f5623164d509acee73005",
+            "raw_prompt_tokens_at_same_visited_states": 9967,
+            "raw_lengths_digest": "d28f8925b06c14afa1a0ee36531a455d36061a6da0cce946a54bac91d2a28cb1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10738,
+              "completion_tokens": 270,
+              "checked_tokens_digest": "366ca739061e263501935a1d90a03c982fe379006d8776935fb17d1f877fc771"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "7c97959fd2f975be7d07072aa464379b382964a9c401ffa4b309e0f06213a5a1",
+            "response_records_digest": "4fd0a5c77ff70b3034278957600c27ee6e56115bc82b5c024046d7a477fae7ef",
+            "raw_prompt_tokens_at_same_visited_states": 10011,
+            "raw_lengths_digest": "e917d3dc7b208de6da512f1dba59fe5b459797adc7810f08e33bba3718170783",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 8422,
+              "completion_tokens": 174,
+              "checked_tokens_digest": "b1440cf17baa0adc7f7c6f7c78b30b61883f416efaf1cea175e9faec987b0b9d"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "0b7c70afbcfff0ee5571f1986df222bcc7891a3ac30054dcaed7a083498d5087",
+            "response_records_digest": "ecb08c999528973f7ddfeaa8beb43dde3bca42904c7bdd64fba038ee5660fccf",
+            "raw_prompt_tokens_at_same_visited_states": 7875,
+            "raw_lengths_digest": "d4df0e21315f77abee5e50be096d73eb260ddc2ab664bc68a228ebc05a55fbe1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-07-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 17489,
+              "completion_tokens": 327,
+              "checked_tokens_digest": "f2207c46e3f66d999b7b317242faf1e4aef977f6d1668e1d73e784335a212498"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "e69bbd3d659535621f2b2f1f1b9aab503cc156663a4e27e1c4e59e10c96c4ec7",
+            "response_records_digest": "b86e17ed79815c61fde130ea69f3ad7bd4d3615e805d816b4a9cddd703d8a362",
+            "raw_prompt_tokens_at_same_visited_states": 16195,
+            "raw_lengths_digest": "14a11f96c409646ad06e227b62d6a992a647a08344c87aa68ca90ad8e159998c",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-07-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6387,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "d5fa3cc46ce16b9cd1f9f94ea6cd85fd4af1648cc9ff59fa100bc80939c47862"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 3,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d04947d06386acec0074c922333dc4af70061f59486dc336b5aebecc93a099d7",
+            "response_records_digest": "c43de33a4ece547e217cfa458d3053359731b9a3e75df3bd3fb99930ca7b37c0",
+            "raw_prompt_tokens_at_same_visited_states": 6024,
+            "raw_lengths_digest": "f999cf4167e6d8cfaab7586e533c1b2b1884093fb3a9d035760c98663b1b4bca",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-07-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15273,
+              "completion_tokens": 309,
+              "checked_tokens_digest": "255e3ad8f7b71aa31c12896c658c37cdd53374ddf38baaaae5c352201c538b85"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "6e327505a0cb507d490f1a8310f4a58b7c727f9be3b73786bd47d69aab520960",
+            "response_records_digest": "c54f3ef8bc9ab9af4257499a87dd18dbe4565be5b5d44036a8a9241057f81614",
+            "raw_prompt_tokens_at_same_visited_states": 14166,
+            "raw_lengths_digest": "d609d73bba702e079ce19fccf14a05b18e6d75e1f36765d8bf962d7578be7ba6",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-07-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15292,
+              "completion_tokens": 310,
+              "checked_tokens_digest": "3586da6fea92913c944cd8088adca8db1012dc7faf624c0a9d4404e40cc6c044"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "361709acb457d1cbaa3d7214b7581cf46aa647b80ebccd3a0821d1540e17ef02",
+            "response_records_digest": "36cbecfd4cd833a37ed3b084ec95d87086362ec3b6306cc395d8d0a01b6cf6f0",
+            "raw_prompt_tokens_at_same_visited_states": 14188,
+            "raw_lengths_digest": "6275fec80a143a36166b9b3cf0d0a3bd0add2f562a31fafbca914fec6b09a5f5",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-07-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10909,
+              "completion_tokens": 270,
+              "checked_tokens_digest": "58d041925026d11583d4ba353dca5732da6b248eecdf92904f02f2abd5a38ac1"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "03f4835004041f6e3df0f91c0cae0e0606793c149598fefc546fc5b87bebad6a",
+            "response_records_digest": "b93357607fd00f76342dc47410c567661857021e6742eebae6161c123ddf7ef3",
+            "raw_prompt_tokens_at_same_visited_states": 10382,
+            "raw_lengths_digest": "0c5db19546d167f3cade2c4a45a9ea9ab047ec0793de48ea33a923ba420d3208",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-07-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 18171,
+              "completion_tokens": 357,
+              "checked_tokens_digest": "02a92e6cf6af48fbb32806946035612e69679e9f347c5d2d69f5ac8d63f257b5"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "7572c216d8de01862791ca4816575148ddc4139025bab5d71d198e967bdb381c",
+            "response_records_digest": "a61eadf5f98cfa8f95284695efe6b27653149b1253c12657267a34c4841f550b",
+            "raw_prompt_tokens_at_same_visited_states": 17543,
+            "raw_lengths_digest": "2339c6096754d42561644c0ad3946026cb683c014d2339a9acd7411636f3c74f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10553,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "0cc0ffe3d9b416b4811489786c1f8f8b81e7478398edd92e6205955ac51541c5"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "48ae8a755d92567fb4693884a734a45ffcc198eed47c4cdcfa221b8b445dfa3a",
+            "response_records_digest": "fce2e913fa2f8655066e5e74ac59f00e76628a313e3888205bfa8a8916e0dd33",
+            "raw_prompt_tokens_at_same_visited_states": 9830,
+            "raw_lengths_digest": "a98dda0394a2d8d63d33ec4d547bc1f63cfc9d4fb7db04d3cf3476127e483abd",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 13066,
+              "completion_tokens": 352,
+              "checked_tokens_digest": "4b724d065df7c177a2ed20fbf8ddc989027159128a7ede000267196d72858f62"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 6,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "c472cb5482f077bddf6a0d9f8d0c008e22845bfc1708b0c6cfad4e8bfd280fc1",
+            "response_records_digest": "88fb8a67ebeed0c8d9f6cbc7d396f462de27b878b3256325469b18ad66ff211d",
+            "raw_prompt_tokens_at_same_visited_states": 12164,
+            "raw_lengths_digest": "5a6b883ba4301b8a16bdfb95a70fc4cb62436c24cc34a03fe3791003703f2dae",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-08-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10552,
+              "completion_tokens": 264,
+              "checked_tokens_digest": "283c7ab2fa5f9744b055cace83a995c7c570bf0c8e9db67a1bb38a544476c55c"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "262324d6706eba80e74e91d74b14cdb7ff162fd1c619826ed1e1ed0f17a0ef0f",
+            "response_records_digest": "9ba87b71f9d9ba725acd0987dc484df358c8ffebbc10e05cb389e33e58244158",
+            "raw_prompt_tokens_at_same_visited_states": 9829,
+            "raw_lengths_digest": "567cfb63a01c9b83e2f878d0c36ab3a5668d74c3e8dd66131f3fa2db4833dc8f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10607,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "d00a52ced68e46fcd4520fa4097fb9dcf518e47e717f7c56cf20f1976c6bbc91"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "fd4de2e4d6302845409c1faa5d7f570cd56fbd1a1a6345073a8fed2972ed8ca5",
+            "response_records_digest": "5a028b678a8f532d278ac78e3fa03ff2391d55bf6e0953d725346c559ede82f2",
+            "raw_prompt_tokens_at_same_visited_states": 9884,
+            "raw_lengths_digest": "7d960c873a441f13f46c4555d6e75da83ee6e81d33948db4b404cdc634a5a68c",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10651,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "034208b04aedb7586b88eca4609518c7e60e827e13e74eae207d22d6f4e0a9e9"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "71a2ab3e75b33008beb01b322cbd7fe80d7d857d9ea57d37cf6dff5435e9da77",
+            "response_records_digest": "b48db5ad38d7a30e849ab5e67581f012049848f5ca2c0f0e619b5e2dc1b87163",
+            "raw_prompt_tokens_at_same_visited_states": 9928,
+            "raw_lengths_digest": "302d92c1ddbd6e74136ea64b56cbdfa6cae2e1edb6074f9fc3fa381bf3b80472",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 8368,
+              "completion_tokens": 170,
+              "checked_tokens_digest": "780ab94fa22ced3417b7abc35e0f745cfb8dfacb0b59580a7a002527eec21307"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "6b6402f6b1c88fe9a6ec751c7444ad37d4cb546ef59855f741e2e7cb6fd0bbda",
+            "response_records_digest": "3ab43da262f798280d8cdc70ee52e83a4d2b89d060724556b9a26b347b9609fe",
+            "raw_prompt_tokens_at_same_visited_states": 7824,
+            "raw_lengths_digest": "f3fa37ca8220df47ecb6266dabd6edbd9e65bb2414acab26e77fb6abc4e247d8",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-08-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 17395,
+              "completion_tokens": 320,
+              "checked_tokens_digest": "3d1f695589d9e86a3f10a18f7f9f5b77a8aa423e68282eb5799c38ae341f9aa3"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "7c7ab9a192e5f6a0bb053a0d488523c1e9ad14e34821cf3f79c1c680aa0768ba",
+            "response_records_digest": "06d4fe28adbddae80c3ed5cfad99cdc2d217ce4e671556e2c8977c9b6e0e26d2",
+            "raw_prompt_tokens_at_same_visited_states": 16108,
+            "raw_lengths_digest": "6e73df3144866ef68d70e49a81b6f3d7950b4bad76278b4554c5be0b80318904",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-08-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6382,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "bb3314431f5ac49069090b30d67594e0681439ff1ddd74cadffb67157503127e"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 3,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "b9ff719665485af1a4f3327ad362e1d555d3daf5186e21cabb4ef1103b874c17",
+            "response_records_digest": "ee5adfabdb4b28b3ae782e05af91f1ca3027a5d9b51e7caaec47eb6c638fce11",
+            "raw_prompt_tokens_at_same_visited_states": 6021,
+            "raw_lengths_digest": "8fa742064c71dd81411ba1575a32d4ff3094181a48816d6f3dbb44f4320148f2",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-08-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15174,
+              "completion_tokens": 302,
+              "checked_tokens_digest": "10157f1fb9d2830cdfab7d3b36485f3eec813d222e225d05568cb70bc121dc48"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "9cb6d0da9c97115a0349341ad81ee527afb91ee4cac450c3083fc8c11a8a8c20",
+            "response_records_digest": "9f775e5ba6d09be19c76b13865e56ea5caaa911ad384575a54180675eb1f0583",
+            "raw_prompt_tokens_at_same_visited_states": 14072,
+            "raw_lengths_digest": "88634f0bc34ede26c40bdb06e876ba60c1ff07c77df27f7ddbe63c34ff435018",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-08-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15202,
+              "completion_tokens": 303,
+              "checked_tokens_digest": "055c0256f8294bdd5062baba82e9dc391494839e9402858e3986dff8196d0663"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "dea8b4fcf7c4d3adfb5771dfd371d5778b708b50059b1e51a1e0a7ec16239ae7",
+            "response_records_digest": "ff51e4d66d9d5582d35ec4fb4b1d734964c6b2f6810e2debe9257f556d98592f",
+            "raw_prompt_tokens_at_same_visited_states": 14104,
+            "raw_lengths_digest": "d172785f2988fef9cdfde5ef0bac1fff78b8c1f6dbedd715c2258d34d87767ba",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-08-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10808,
+              "completion_tokens": 263,
+              "checked_tokens_digest": "2865c2859baaf3eff0c4ad47feee69531e4a0094489cbc4e16a714dcc09527da"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "bda28d1cd8e1e033782f3178580603ebd3c9474e5e60c2b7b1dd269be050f16b",
+            "response_records_digest": "5fbb32f64723fe26cfd37dc1ee61edfc8b03294c80faa8d848cfee2ff2955411",
+            "raw_prompt_tokens_at_same_visited_states": 10313,
+            "raw_lengths_digest": "69805808858c0242f67a0d3080246a7427280e9e4dbb80aaa53f4d412f6bd92a",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-08-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 18042,
+              "completion_tokens": 348,
+              "checked_tokens_digest": "8599c229bd24fc6d75418633550a21f259bd17a158d83e25f0d9f20a6f102b0f"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "58334fe57b3a4d516e52da396da53599610a7f195d6d46d4899cb6083224c102",
+            "response_records_digest": "a24dac9ba8ffb6b7e2f779838edf7c9f6886f8c37d71bc3a9df7fe350106f64e",
+            "raw_prompt_tokens_at_same_visited_states": 17490,
+            "raw_lengths_digest": "290a679baec3a112f05f2adba42890ed2d8414c7917f0fbebb2ccf6b3cdbb6f7",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-preview",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10515,
+              "completion_tokens": 254,
+              "checked_tokens_digest": "bf34d651bf8648697a12628e2ad9334cac2e0f8172636677d48bb613bafbf674"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "bcea85c8cc5ad16f79f14e675a4542b52f0b755312769637b1820e6b39aede25",
+            "response_records_digest": "de584c649d6233f67c88890fabf62304aa59cc7497f643bc9d93b25073cf9086",
+            "raw_prompt_tokens_at_same_visited_states": 9778,
+            "raw_lengths_digest": "83f7c71d8206b55793559d69dec9d276e51d2e2e35fa44488be1422e0ccabe18",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-approved",
+          "native": {
+            "tokens": {
+              "requests": 7,
+              "actual_model_generations": 7,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 13005,
+              "completion_tokens": 343,
+              "checked_tokens_digest": "5d19948d4a5f11b72c1ac0bca89cb14547697e8778995446bd5cb266f6cc4931"
+            },
+            "input_records": 7,
+            "response_records": 7,
+            "changed_requests": 6,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "f8a78d89c6d78787c47e4c54835a1f048bd1dbd673adbaca46d560d6987845a5",
+            "response_records_digest": "5cd3c04c5fbbfa7f2ab96cf79f2b134647682cef3e12c3d23c7d7a29558c7d52",
+            "raw_prompt_tokens_at_same_visited_states": 12082,
+            "raw_lengths_digest": "8ca0af69df60fdd316ecc815ab43443d3b2dd366b16b86ad72ac9c45acb56b2f",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "applied",
+            "steps": 7,
+            "writes": 1,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 7
+        },
+        {
+          "case_id": "r2-09-pending",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10512,
+              "completion_tokens": 255,
+              "checked_tokens_digest": "4e06526e271b04823ad821ece96476ca03768866eebf59bcad9e7b08c44f22f9"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "e9232a7507fbc437404b50c6254f035bea3c19088edc1165dffb0554c366377d",
+            "response_records_digest": "ddca7d39954b1c3906084d81cc3a29deb7b2b0748bb8ee9d643a1d06e7a34ee1",
+            "raw_prompt_tokens_at_same_visited_states": 9775,
+            "raw_lengths_digest": "f1c05092f34f2c938489f7b6c78fbea73babbe2b42b14ee95550688cf75f6215",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-declined",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10567,
+              "completion_tokens": 254,
+              "checked_tokens_digest": "a84687f098a0ae2ff175ef3e7603aae19cc966602d6f2533f633ed1b459fced4"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d337932c2542b271a9c5706141172909e9675859d2a802096ca9c1613289187e",
+            "response_records_digest": "dd770e3d5b906dce29fb0e3d3ed7791e2a2ee19f91f9a86f412f9b0cfeebabce",
+            "raw_prompt_tokens_at_same_visited_states": 9830,
+            "raw_lengths_digest": "efc6586ee11c145b06331f0e70cf4f617283981272a5c77c24ac23562dcbd7a1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-revoked",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10611,
+              "completion_tokens": 254,
+              "checked_tokens_digest": "b208d1c1fe74ddcf359f3dea4f4159417766ac7e89f3c6d0cbe16f8ecd0cbded"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "904fae906d6b6193a1d7dc52cdbc4e85781ce5ab9ed06e1b46c7eb941cff0e58",
+            "response_records_digest": "770e3011844ec5366aa5b26c126e549d1dafe50448afd0d4382ca99025957c80",
+            "raw_prompt_tokens_at_same_visited_states": 9874,
+            "raw_lengths_digest": "a24cdc71b20640dea170b0d39c9b0e63f9f4967235e1f84c1a9af325dc1e03f9",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "declined",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-infeasible",
+          "native": {
+            "tokens": {
+              "requests": 5,
+              "actual_model_generations": 5,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 8347,
+              "completion_tokens": 165,
+              "checked_tokens_digest": "058990f3d843f70a06429f9aca554a73f098cad44e5ab3348688f5f891944fa3"
+            },
+            "input_records": 5,
+            "response_records": 5,
+            "changed_requests": 4,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "6909f65158673c7f89657279e5952a0e0a589ddfa9fc3b344bb4b14c1c5d96c7",
+            "response_records_digest": "09d20efc2ed4d0ff460f822b1e848333762e5b8a929551526ee8e88534c6c963",
+            "raw_prompt_tokens_at_same_visited_states": 7796,
+            "raw_lengths_digest": "96dd136e65c55418bb473efcc9288220a0d73b547d3fb31078f344be20a0f4b6",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "infeasible",
+            "steps": 5,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 5
+        },
+        {
+          "case_id": "r2-09-missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 17343,
+              "completion_tokens": 311,
+              "checked_tokens_digest": "4e8eda59372d1c346a59091a1a431847cc07996f9c85f3f1d4df9299eaad294e"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "74530b3785738dfe663c1bef425414cf23e4d8634895e3cc09cb8b1e55c85464",
+            "response_records_digest": "5e720ead1f1631cb317a2218e6ca6ff2cc068fffabcea8ef8ae9cdb157e3a466",
+            "raw_prompt_tokens_at_same_visited_states": 16029,
+            "raw_lengths_digest": "ea77098c51f16dca90e3500caf8c2582a1497f347e87c2493f309de9a3bb54da",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        },
+        {
+          "case_id": "r2-09-unanswered_time",
+          "native": {
+            "tokens": {
+              "requests": 4,
+              "actual_model_generations": 4,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 6377,
+              "completion_tokens": 78,
+              "checked_tokens_digest": "ba478ff620871c43812b213dbe9c96d7beb6b877b3879243f03fe35cac76c9fa"
+            },
+            "input_records": 4,
+            "response_records": 4,
+            "changed_requests": 3,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "0acc574f5848904475c26023d0b32e08e7e7250b6ca3e24f0630b8dde3e374ae",
+            "response_records_digest": "dadd67fe8f6b86546fd0559e6ca13f72346bebdd16cac75ac1cdb8f344c2a301",
+            "raw_prompt_tokens_at_same_visited_states": 6012,
+            "raw_lengths_digest": "05aa5c16ac93eec53cba3d1d296582562cfa6ee405954c93aa2f4327164e1379",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "awaiting_user",
+            "steps": 4,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 4
+        },
+        {
+          "case_id": "r2-09-missing_equipment",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15128,
+              "completion_tokens": 293,
+              "checked_tokens_digest": "18240229ba9b33808cc03957a8a91de08735d98b2091aa0ccf68b10c0b27b9f7"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "24c280ac9a57d16e6186828db1c6575fea25be7755e444b5aa2f9e3f5286afc5",
+            "response_records_digest": "c20818d01a988dec2533109cf7f16c5880740a28e5e78a442e56e878f5674ad3",
+            "raw_prompt_tokens_at_same_visited_states": 14001,
+            "raw_lengths_digest": "375cf8c26965e9cdb4e340157363984143d1a567e2300d2c8cdf878e5fecc87b",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-09-missing_days",
+          "native": {
+            "tokens": {
+              "requests": 8,
+              "actual_model_generations": 8,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 15151,
+              "completion_tokens": 294,
+              "checked_tokens_digest": "07853e42e0335a9d4db9d4d440a2f5f7f86ce963ab8fbe8d2cb2a3819092cc4d"
+            },
+            "input_records": 8,
+            "response_records": 8,
+            "changed_requests": 7,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "4dba591803dad54e9c3185da1c3f644e783b5605c66e1b2cbae23827abcd9e3a",
+            "response_records_digest": "51c47945b6dca5c0366ba1e2b5f43822370a428799a428e8efec512574fdb594",
+            "raw_prompt_tokens_at_same_visited_states": 14029,
+            "raw_lengths_digest": "859cac64e673d9a93d5aad55eb15b98dba22fe9f9e71c9ca1b4ffee1a2216fc2",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 8,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 8
+        },
+        {
+          "case_id": "r2-09-memory",
+          "native": {
+            "tokens": {
+              "requests": 6,
+              "actual_model_generations": 6,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 10785,
+              "completion_tokens": 254,
+              "checked_tokens_digest": "471c5e17da9fb53e048578fc240fa7eed43b4688a653058ffa07ff6dad6eaf43"
+            },
+            "input_records": 6,
+            "response_records": 6,
+            "changed_requests": 5,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "d7ae76ef12201d71369d606f6f903208bbf60f4ff15225dd7ef21791bec327b3",
+            "response_records_digest": "3e31e333f27065bd6fc811a7ef8b79eb977411ab999a12544c35de428d1e097b",
+            "raw_prompt_tokens_at_same_visited_states": 10240,
+            "raw_lengths_digest": "9be2db8052b75d12e8770edfc2e5614bba721a801e43d9056b20499fafedb1e1",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 6,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 6
+        },
+        {
+          "case_id": "r2-09-memory_missing_time",
+          "native": {
+            "tokens": {
+              "requests": 9,
+              "actual_model_generations": 9,
+              "local_context_guards": 0,
+              "generated_prompt_tokens": 18028,
+              "completion_tokens": 341,
+              "checked_tokens_digest": "480b1ce20c2db7b00c66ae3803076d7a5d86706fae9bf8278e2c5b1b503c1d62"
+            },
+            "input_records": 9,
+            "response_records": 9,
+            "changed_requests": 8,
+            "unknown_alias_rejections": 0,
+            "input_records_digest": "0f74274b1eb7b289463baa9fd72f7d2f9383ecfb7818764afae6d4e94614dd3b",
+            "response_records_digest": "54c6eb437390d17b108228ecd033aa2c9bbe0a8763e14547003e1b020f4f55b5",
+            "raw_prompt_tokens_at_same_visited_states": 17350,
+            "raw_lengths_digest": "010b808d2f1f2601c603bbeab2ad3c71fa672b1d89a7add892cf433c49d22a78",
+            "raw_token_count_is_not_a_fresh_A_arm_measurement": true
+          },
+          "policy_failure": null,
+          "score": {
+            "passed": true,
+            "issues": [],
+            "outcome": "previewed",
+            "steps": 9,
+            "writes": 0,
+            "blocked_write_attempts": 0,
+            "tool_errors": {},
+            "clean_completion": true
+          },
+          "requests": 9
+        }
+      ],
+      "episodes_digest": "b7055c4bd30a8206b59fca1624ff2d5969aa803d3ba7d756382962bf77c1099d",
+      "requests": 320,
+      "evidence_kind": "model",
+      "actual_model_calls": 320,
+      "serialized_generations": 320,
+      "recorded_prompt_tokens": 588060,
+      "recorded_completion_tokens": 12747,
+      "recorded_usage_is_model_usage": true,
+      "token_ids_verified": true,
+      "projection_inputs_verified": true,
+      "inverse_mapping_verified": true
+    }
+  },
+  "decision": {
+    "complete": true,
+    "model_result": true,
+    "candidate_passed": true,
+    "scripted_contract_would_pass": null,
+    "planned_denominator_per_arm": 48,
+    "passed": {
+      "A": 48,
+      "D": 48
+    },
+    "gates": {
+      "D_at_least_44": true,
+      "D_each_category_at_least_3": true,
+      "D_each_bundle_at_least_10": true,
+      "D_at_most_2_paired_losses": true,
+      "D_no_blocked_write_attempt": true,
+      "D_no_unexpected_committed_write": true,
+      "D_no_unknown_alias_rejection": true
+    },
+    "gained": [],
+    "lost": [],
+    "D_by_category": {
+      "preview": 4,
+      "approved": 4,
+      "pending": 4,
+      "declined": 4,
+      "revoked": 4,
+      "infeasible": 4,
+      "missing_time": 4,
+      "unanswered_time": 4,
+      "missing_equipment": 4,
+      "missing_days": 4,
+      "memory": 4,
+      "memory_missing_time": 4
+    },
+    "D_by_bundle": {
+      "r2-bundle-06": 12,
+      "r2-bundle-07": 12,
+      "r2-bundle-08": 12,
+      "r2-bundle-09": 12
+    },
+    "external_generalization": false,
+    "statistical_significance_claim": false
+  }
+}

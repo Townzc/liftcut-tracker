@@ -1,0 +1,144 @@
+{
+  "files": [
+    {
+      "path": "audit.log",
+      "bytes": 77,
+      "sha256": "705919615529fc33b0e7dd0f5770a54b0993e9f3c4b4d7fca0159d72f32cd8fe"
+    },
+    {
+      "path": "comparison.json",
+      "bytes": 163461,
+      "sha256": "c33bb143a672aeca63f4773da51b1bc23be053b09688b9d7a6d9646f62fc87e9"
+    },
+    {
+      "path": "dataset/cases.jsonl",
+      "bytes": 33522,
+      "sha256": "7485de3ec860262bb96d127cb42fafa15895aeaa47070c532cce1411becd9119"
+    },
+    {
+      "path": "dataset/data-opened.json",
+      "bytes": 2850,
+      "sha256": "741b16dba389a3ff50879972cc6a65e2985bf9bcdc6005e1090f6d6b5928bcb7"
+    },
+    {
+      "path": "dataset/open-attempt.json",
+      "bytes": 1400,
+      "sha256": "4421ce29a1cdced3b8d7d7d8916b2328e0522e487e7f483102da165de88ec87c"
+    },
+    {
+      "path": "dataset/reservation.json",
+      "bytes": 1429,
+      "sha256": "453af436571a95fa1cd1d6fdc8b0f51bd95c50683dceb61e2d27e4e7d92b29e4"
+    },
+    {
+      "path": "evaluate-A.log",
+      "bytes": 572,
+      "sha256": "3ae144bf52e68416b1ebc77bd60379c065b12a1a245f540d850c72c336f96eaf"
+    },
+    {
+      "path": "evaluate-D.log",
+      "bytes": 572,
+      "sha256": "66620ea6cc4bf4bd4925488082dd7476eecf3eb115d3f9dfd7454522a21d7a42"
+    },
+    {
+      "path": "evaluation/A/episodes/calls.jsonl",
+      "bytes": 2595867,
+      "sha256": "926499ec5b8658741032504d9f9e3901e9522be35c5c4ed5239eba31e287b618"
+    },
+    {
+      "path": "evaluation/A/episodes/episodes.jsonl",
+      "bytes": 2977365,
+      "sha256": "f9d6d81dfbb42d3f7038e6db234f2f70f3a4ff131ce68e3b7df74e09f8d73185"
+    },
+    {
+      "path": "evaluation/A/episodes/generations.jsonl",
+      "bytes": 167310,
+      "sha256": "4eb05ab7766d10a4131be91927a3fe9dd4debd7f2352df71bc045d2e6ad33350"
+    },
+    {
+      "path": "evaluation/A/episodes/inputs.jsonl",
+      "bytes": 4758210,
+      "sha256": "3cf69bfddede756beb81dd50618c7bfe36649041cd01ed8e3caabc04b4bfc488"
+    },
+    {
+      "path": "evaluation/A/episodes/responses.jsonl",
+      "bytes": 391222,
+      "sha256": "e7b972d3f3738f7b4521df50173f0ee2edf97700d52f16bc6a05a6d7a9a2fcab"
+    },
+    {
+      "path": "evaluation/A/finished.json",
+      "bytes": 1349,
+      "sha256": "79827e26afc6f262bd03760f413ccb1439f840a18c7b0b35b92dc75292bb2de3"
+    },
+    {
+      "path": "evaluation/A/load.json",
+      "bytes": 1589,
+      "sha256": "5be01c5ad9c5206d83bee3f2bb9991e291261e8222b676d8fb0f9cb5ad213ce0"
+    },
+    {
+      "path": "evaluation/A/manifest.json",
+      "bytes": 2235,
+      "sha256": "99b3861da29688ce1f5ce01b54f8a6262d59868fc7a145905fae43ed6e19d5f5"
+    },
+    {
+      "path": "evaluation/D/episodes/calls.jsonl",
+      "bytes": 2520373,
+      "sha256": "fcbec5f33bb856abffb3f0c7a331d1d2ae1a91a4f7ad4373dfd412c45dc00432"
+    },
+    {
+      "path": "evaluation/D/episodes/episodes.jsonl",
+      "bytes": 2900003,
+      "sha256": "bea2f2a3378a2a0f718bd76ca36db0df1ad5781090265bfccf5d8b4c4c41d04c"
+    },
+    {
+      "path": "evaluation/D/episodes/generations.jsonl",
+      "bytes": 163629,
+      "sha256": "0f3ebc58b58d1904f632506f8f921d1411f85dec88502b3aafa0c830ac3a74a2"
+    },
+    {
+      "path": "evaluation/D/episodes/inputs.jsonl",
+      "bytes": 5001078,
+      "sha256": "783b4ed70aec947cb7c960bff845fd41e41acf9c9576c72a8b1b65f2d1decd93"
+    },
+    {
+      "path": "evaluation/D/episodes/responses.jsonl",
+      "bytes": 381870,
+      "sha256": "a2220ae41279ff99291ceb46e54a59522467e9be214e97d6175d7de5744efb30"
+    },
+    {
+      "path": "evaluation/D/finished.json",
+      "bytes": 1348,
+      "sha256": "86c0b0c313ad828f6ffe7ff049a9cf9ab5fc78b3f5188851b93bb0a3ae307975"
+    },
+    {
+      "path": "evaluation/D/load.json",
+      "bytes": 1589,
+      "sha256": "73c07459340486700c659d68f6ba6630980fb26fe41925d52d13dffd877dfa27"
+    },
+    {
+      "path": "evaluation/D/manifest.json",
+      "bytes": 2235,
+      "sha256": "54aea824a6120ff980dffc245711e80a31a5fee58b1e48a7dd2986f67ad6885d"
+    },
+    {
+      "path": "events.jsonl",
+      "bytes": 668,
+      "sha256": "d1f8c33f9117a7f3fd4bbc416942310d1f9f5a1f72ecea51abfe195c918830b3"
+    },
+    {
+      "path": "opening.json",
+      "bytes": 1231,
+      "sha256": "1619d8071f6450e46d5803cf494aef3a6dc9c7c809184288a0f14c5c972748c9"
+    },
+    {
+      "path": "reference.json",
+      "bytes": 5771,
+      "sha256": "1c4cb78c8a97d6c4d97aae8443f3f43976ee3b46a8238cb48c624807168ef626"
+    },
+    {
+      "path": "window-status.json",
+      "bytes": 1297,
+      "sha256": "2ad269ec977d5b35f42d9748d3adcea0fde27fed3396296f70f2472f9a3b2069"
+    }
+  ]
+}
