@@ -37,3 +37,6 @@ research/liftcut-agent/reports/i3-seed42-2026-10-13/** -text whitespace=cr-at-eo
 research/liftcut-agent/reports/overnight-close-2026-10-13/** -text whitespace=cr-at-eol
 # Preserve E1 restored inventory and independently captured telemetry bytes.
 research/liftcut-agent/reports/e1-seed42-2026-10-13/** -text whitespace=cr-at-eol
+# Preserve measured local P1 transaction/restore/browser evidence byte-for-byte.
+research/liftcut-agent/reports/p1-application-2026-10-13/** -text whitespace=cr-at-eol
+research/liftcut-agent/reports/p1-application-2026-10-13/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

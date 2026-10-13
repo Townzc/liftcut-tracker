@@ -1,0 +1,34 @@
+
+> liftcut-tracker@0.1.0 test:p1
+> node --conditions=react-server --import tsx --test tests/agent-db/*.test.ts
+
+✔ cookie mutation gate rejects cross-origin, missing origin and simple form posts (27.8615ms)
+✔ chunked body limit is enforced without trusting Content-Length (6.1111ms)
+✔ transport errors never report success and do not leak SQL/connection secrets (1.9924ms)
+✔ model capability port cannot approve, revoke, create a run or impersonate another user (0.2117ms)
+✔ runtime login is non-owner, no BYPASSRLS, private tables inaccessible to browser roles (42.5929ms)
+✔ preview and no approval: attempt1, business commits0 (72.0352ms)
+✔ 12 concurrent same-key executes commit one complete plan and return one receipt (216.6918ms)
+✔ different keys for same approved proposal still at most one business commit (70.7945ms)
+✔ response lost then connection pool replaced: recover and replay original receipt (105.2771ms)
+✔ actual child process dies after COMMIT; a new worker reads and replays the durable result (584.914ms)
+✔ unsafe database administrator connection is refused before entering the transaction (20.3887ms)
+✔ uncommitted profile update serializes before execution and invalidates old approval (44.914ms)
+✔ same key changed content or changed run rejected, even after success (60.3678ms)
+✔ revoke before execution blocks commit and late approval cannot revive the proposal (41.7505ms)
+✔ concurrent revoke/execute obey one linear order with auditable events (197.9865ms)
+✔ execute committed first: subsequent revoke does not pretend to undo the plan (43.6354ms)
+✔ new context, new proposal or actual profile update invalidate old approval (117.3444ms)
+✔ cross-user read, approve, revoke, execute and direct RLS query denied (49.6709ms)
+✔ fault on exercise insertion rolls back activation and ALL partial rows, same-key retry works (71.1172ms)
+✔ schema, invalid aliases, constraint feedback and budget deny before business writes (37.0269ms)
+✔ runtime cannot rewrite proposals, receipts or events (20.0757ms)
+✔ creation key replay returns same run; changed context conflicts (27.8075ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2444.1546

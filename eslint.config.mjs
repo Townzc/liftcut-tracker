@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local research restores contain archived copies, not current application source.
+    "research/liftcut-agent/outputs/**",
   ]),
 ]);
 

@@ -1,0 +1,704 @@
+{
+  "evidenceKind": "scripted_application_postgres",
+  "modelCalls": 0,
+  "fixture": {
+    "id": "p1-2-decline",
+    "flow": "decline",
+    "context": {
+      "weeklyDays": 2,
+      "sessionMinutes": 45,
+      "equipment": [
+        "dumbbell"
+      ],
+      "notes": "Synthetic B; no real health information"
+    },
+    "plan": {
+      "plan_name": "P1 fixture 2",
+      "goal_type": "maintenance",
+      "summary": "Supplied synthetic draft; not medical advice or model output",
+      "reasoning_summary": "Persistence workflow only",
+      "warnings": [],
+      "weeks": [
+        {
+          "week_number": 1,
+          "focus": "Synthetic",
+          "days": [
+            {
+              "day_number": 1,
+              "title": "Fixture day",
+              "notes": "Not a real prescription",
+              "estimated_duration_minutes": 20,
+              "exercises": [
+                {
+                  "name": "Dumbbell row",
+                  "sets": 2,
+                  "rep_range": "8",
+                  "target_rpe": 6,
+                  "rest_seconds": 90,
+                  "notes": "Synthetic",
+                  "alternative_exercises": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "expectedStatus": "declined",
+    "expectedWrites": 0
+  },
+  "user": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+  "runId": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+  "trace": [
+    {
+      "action": "create",
+      "input": {
+        "requestKey": "21cc3cee-aaa3-4a6d-89f6-d96b0b07373a",
+        "context": {
+          "weeklyDays": 2,
+          "sessionMinutes": 45,
+          "equipment": [
+            "dumbbell"
+          ],
+          "notes": "Synthetic B; no real health information"
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+          "version": "p1-app-v1",
+          "status": "planning",
+          "revision": 0,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": null,
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "594",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic B; no real health information",
+                  "equipment": [
+                    "dumbbell"
+                  ],
+                  "weeklyDays": 2,
+                  "sessionMinutes": 45
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.872Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.932Z",
+      "elapsedMs": 6.115800000000036
+    },
+    {
+      "action": "propose",
+      "input": {
+        "expectedRevision": 0,
+        "plan": {
+          "plan_name": "P1 fixture 2",
+          "goal_type": "maintenance",
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "reasoning_summary": "Persistence workflow only",
+          "warnings": [],
+          "weeks": [
+            {
+              "week_number": 1,
+              "focus": "Synthetic",
+              "days": [
+                {
+                  "day_number": 1,
+                  "title": "Fixture day",
+                  "notes": "Not a real prescription",
+                  "estimated_duration_minutes": 20,
+                  "exercises": [
+                    {
+                      "name": "Dumbbell row",
+                      "sets": 2,
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "notes": "Synthetic",
+                      "alternative_exercises": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+          "version": "p1-app-v1",
+          "status": "awaiting_approval",
+          "revision": 1,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+            "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Dumbbell row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 2",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "594",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic B; no real health information",
+                  "equipment": [
+                    "dumbbell"
+                  ],
+                  "weeklyDays": 2,
+                  "sessionMinutes": 45
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.872Z"
+            },
+            {
+              "sequence": "595",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+                "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949"
+              },
+              "at": "2026-10-13T21:01:47.879Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.938Z",
+      "elapsedMs": 6.874000000000024
+    },
+    {
+      "action": "external_user_event",
+      "input": {
+        "action": "decline",
+        "binding": {
+          "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+          "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+          "contextRevision": 0
+        },
+        "expectedRevision": 1
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+          "version": "p1-app-v1",
+          "status": "declined",
+          "revision": 2,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+            "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Dumbbell row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 2",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "594",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic B; no real health information",
+                  "equipment": [
+                    "dumbbell"
+                  ],
+                  "weeklyDays": 2,
+                  "sessionMinutes": 45
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.872Z"
+            },
+            {
+              "sequence": "595",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+                "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949"
+              },
+              "at": "2026-10-13T21:01:47.879Z"
+            },
+            {
+              "sequence": "596",
+              "type": "decline",
+              "actor": "user",
+              "data": {
+                "approvalId": null,
+                "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+                "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:47.885Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.945Z",
+      "elapsedMs": 6.2672999999999774
+    },
+    {
+      "action": "final_read",
+      "input": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+          "version": "p1-app-v1",
+          "status": "declined",
+          "revision": 2,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+            "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Dumbbell row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 2",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "594",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic B; no real health information",
+                  "equipment": [
+                    "dumbbell"
+                  ],
+                  "weeklyDays": 2,
+                  "sessionMinutes": 45
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.872Z"
+            },
+            {
+              "sequence": "595",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+                "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949"
+              },
+              "at": "2026-10-13T21:01:47.879Z"
+            },
+            {
+              "sequence": "596",
+              "type": "decline",
+              "actor": "user",
+              "data": {
+                "approvalId": null,
+                "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+                "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:47.885Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.951Z",
+      "elapsedMs": 5.399499999999989
+    }
+  ],
+  "final": {
+    "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+    "version": "p1-app-v1",
+    "status": "declined",
+    "revision": 2,
+    "contextRevision": 0,
+    "context": {
+      "notes": "Synthetic B; no real health information",
+      "equipment": [
+        "dumbbell"
+      ],
+      "weeklyDays": 2,
+      "sessionMinutes": 45
+    },
+    "attempts": 0,
+    "approvalId": null,
+    "proposal": {
+      "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+      "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+      "contextRevision": 0,
+      "version": 1,
+      "plan": {
+        "weeks": [
+          {
+            "days": [
+              {
+                "notes": "Not a real prescription",
+                "title": "Fixture day",
+                "exercises": [
+                  {
+                    "name": "Dumbbell row",
+                    "sets": 2,
+                    "notes": "Synthetic",
+                    "rep_range": "8",
+                    "target_rpe": 6,
+                    "rest_seconds": 90,
+                    "alternative_exercises": []
+                  }
+                ],
+                "day_number": 1,
+                "estimated_duration_minutes": 20
+              }
+            ],
+            "focus": "Synthetic",
+            "week_number": 1
+          }
+        ],
+        "summary": "Supplied synthetic draft; not medical advice or model output",
+        "warnings": [],
+        "goal_type": "maintenance",
+        "plan_name": "P1 fixture 2",
+        "reasoning_summary": "Persistence workflow only"
+      }
+    },
+    "receipt": null,
+    "events": [
+      {
+        "sequence": "594",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "version": "p1-app-v1"
+        },
+        "at": "2026-10-13T21:01:47.872Z"
+      },
+      {
+        "sequence": "595",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+          "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949"
+        },
+        "at": "2026-10-13T21:01:47.879Z"
+      },
+      {
+        "sequence": "596",
+        "type": "decline",
+        "actor": "user",
+        "data": {
+          "approvalId": null,
+          "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+          "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+          "contextRevision": 0
+        },
+        "at": "2026-10-13T21:01:47.885Z"
+      }
+    ]
+  },
+  "database": {
+    "settings": [
+      {
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "gender": "unknown",
+        "age": 0,
+        "fitness_goal": "fat_loss",
+        "training_experience": "beginner",
+        "training_location": "mixed",
+        "available_equipment": [],
+        "session_duration_minutes": 0,
+        "diet_preference": "none",
+        "food_restrictions": "",
+        "injury_notes": "",
+        "lifestyle_notes": "",
+        "height": "0",
+        "current_weight": "0",
+        "target_weight": "0",
+        "weekly_training_days": 0,
+        "calorie_target": 0,
+        "protein_target": 0,
+        "target_weekly_loss_min": "0",
+        "target_weekly_loss_max": "0",
+        "updated_at": "2026-10-13T21:01:47.868Z"
+      }
+    ],
+    "run": [
+      {
+        "id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "request_key": "21cc3cee-aaa3-4a6d-89f6-d96b0b07373a",
+        "request_hash": "1cc22def463073123e5fe61d9eb0565464899c676edd8098f6869e5b90c7bd1c",
+        "version": "p1-app-v1",
+        "context": {
+          "notes": "Synthetic B; no real health information",
+          "equipment": [
+            "dumbbell"
+          ],
+          "weeklyDays": 2,
+          "sessionMinutes": 45
+        },
+        "context_revision": 0,
+        "profile_hash": "35aae49364175c339094d7abaea28acb30ae6c3a6637310c00e8b264faa70aa2",
+        "revision": 2,
+        "status": "declined",
+        "current_proposal": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+        "approval_id": null,
+        "attempts": 0,
+        "created_at": "2026-10-13T21:01:47.869Z"
+      }
+    ],
+    "proposals": [
+      {
+        "id": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "run_id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+        "version": 1,
+        "context_revision": 0,
+        "content_hash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+        "plan": {
+          "weeks": [
+            {
+              "days": [
+                {
+                  "notes": "Not a real prescription",
+                  "title": "Fixture day",
+                  "exercises": [
+                    {
+                      "name": "Dumbbell row",
+                      "sets": 2,
+                      "notes": "Synthetic",
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "alternative_exercises": []
+                    }
+                  ],
+                  "day_number": 1,
+                  "estimated_duration_minutes": 20
+                }
+              ],
+              "focus": "Synthetic",
+              "week_number": 1
+            }
+          ],
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "warnings": [],
+          "goal_type": "maintenance",
+          "plan_name": "P1 fixture 2",
+          "reasoning_summary": "Persistence workflow only"
+        },
+        "created_at": "2026-10-13T21:01:47.876Z"
+      }
+    ],
+    "events": [
+      {
+        "sequence": "594",
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "run_id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic B; no real health information",
+            "equipment": [
+              "dumbbell"
+            ],
+            "weeklyDays": 2,
+            "sessionMinutes": 45
+          },
+          "version": "p1-app-v1"
+        },
+        "created_at": "2026-10-13T21:01:47.872Z"
+      },
+      {
+        "sequence": "595",
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "run_id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+          "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949"
+        },
+        "created_at": "2026-10-13T21:01:47.879Z"
+      },
+      {
+        "sequence": "596",
+        "user_id": "674709ce-8f14-40fc-9b9a-cc9645444ed3",
+        "run_id": "6a2af040-c7b6-4eca-b3f8-f9d30588d5bc",
+        "type": "decline",
+        "actor": "user",
+        "data": {
+          "approvalId": null,
+          "proposalId": "3bd79367-0cc5-4849-b863-ef08ac411cc6",
+          "contentHash": "a6e6705780ad4871f4287773bfe28c2f35a568a249f417a9c9935faec7946949",
+          "contextRevision": 0
+        },
+        "created_at": "2026-10-13T21:01:47.885Z"
+      }
+    ],
+    "keys": [],
+    "receipts": [],
+    "plans": [],
+    "weeks": [],
+    "days": [],
+    "exercises": []
+  }
+}

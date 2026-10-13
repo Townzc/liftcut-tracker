@@ -1,0 +1,11 @@
+# CLI configuration for explicit --db-url audits and incremental migrations.
+# Apply schema.sql first; this is not a fresh hosted/local-stack provisioning recipe.
+project_id = "liftcut-tracker"
+
+[api]
+schemas = ["public", "graphql_public"]
+
+[db]
+# Supported CLI stack default; tests use an explicit PostgreSQL16 --db-url.
+# No Supabase local stack is provisioned by this change.
+major_version = 17

@@ -1,0 +1,25 @@
+{
+  "evidence_kind": "actual_local_postgresql_backup_restore",
+  "recorded_at_utc": "2026-10-13T21:05:03.253455+00:00",
+  "source_database": "liftcut_p1_dev2",
+  "target_database": "liftcut_p1_restore_20261013",
+  "dump_format": "pg_dump_custom",
+  "dump_sha256": "a69176810acae86c081a549c93e8c2d1d744d800689e56546b70512b587c67eb",
+  "dump_bytes": 149965,
+  "pg_restore_exit_code": 0,
+  "restricted_runtime_snapshot_audit_exit_code": 0,
+  "verified_workflows": 24,
+  "real_business_commits": 9,
+  "execution_attempts": 18,
+  "exact_full_snapshots_and_receipts": true,
+  "model_calls": 0,
+  "restored_artifact": "all_local_synthetic_fixture_tables",
+  "backup_published": false,
+  "frozen_e1_source_count": 146,
+  "frozen_e1_source_hashes_unchanged": true,
+  "limitations": [
+    "not a model experiment backup receipt",
+    "auth.users fixture is not GoTrue",
+    "no hosted or production migration applied"
+  ]
+}
