@@ -18,7 +18,7 @@ from e1_execution import binding
 from e1_receipt import fields, transfer_receipt
 from liftcut_agent.interactive import digest
 from monitor_coverage_replication import TimeBudget
-from prepare_e1_execution import scripted_authorization
+from prepare_e1_execution import scripted_authorization, scripted_day_authorization
 from server_workspace import dump_new
 from test_d2_launcher import SFTP
 from test_replication_receipt_transfer import Clock, FakeSFTP, REMOTE, FINAL
@@ -76,7 +76,57 @@ class E1OperationTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     launch.collect(sftp, {'operations': out}, {}, {}, None, lambda *_a, **_k: None)
 
-    def transport(self, unknown=False, failed_upload=False):
+    def day_collector_fixture(self, *, consumed=True, inconsistent=False):
+        # Transport-state unit fixtures only, not an attestation of model/weight
+        # recovery. The complete scripted restorer is exercised by the CPU drill.
+        start = aware('2026-10-14T00:01:00+00:00')
+        plan = {'protocol': {'UNIT_FIXTURE_ONLY': True}, 'candidate_digest': 'b' * 64}
+        b = binding(plan, '0' * 40, scripted_day_authorization(), '20261014-000100', start.isoformat())
+        index = {'version': 'e1-delta-index-v1', 'binding': b, 'status': 'complete', 'evidence_kind': 'model',
+                 'archive_is_self_contained': False, 'archives': [
+                     {'path': 'evidence.tar.gz', 'archive': 'evidence.tar.gz', 'bytes': 1, 'sha256': 'c' * 64}]}
+        close = {'binding': b, 'off_instance_acknowledged': consumed,
+                 'experiment_status': 'partial' if inconsistent else 'complete',
+                 'power_action': 'retained_under_original_day_lease', 'shutdown_at_utc': b['power_shutdown_at_utc']}
+        bodies = {'events.jsonl': b'', 'backup-index.json': json.dumps(index).encode(),
+                  'backup-copy-status.json': json.dumps({'off_instance_acknowledged': consumed}).encode(),
+                  'window-close.json': json.dumps(close).encode(), 'gpu-samples.jsonl': b'SYNTHETIC OBSERVATION ONLY'}
+        def remote(_sftp, path, _budget, **kwargs):
+            if path.endswith('gpu-samples.jsonl'):
+                self.assertGreaterEqual(kwargs['limit'], 1_000_000)
+            return bodies.get(Path(path).name)
+        def stub_restorer(argv, **_kwargs):
+            output = Path(argv[argv.index('--output-dir') + 1]); output.mkdir(parents=True)
+            dump_new(output / 'off-instance-backup.json', {**fields(index, b), 'verified_files': 1})
+        with tempfile.TemporaryDirectory(prefix='SCRIPTED-COLLECTOR-UNIT-') as directory:
+            cfg = {key: Path(directory) / key for key in ('operations', 'downloads', 'restored')}
+            for folder in cfg.values(): folder.mkdir()
+            cfg.update({key: Path(directory) / ('UNUSED-' + key) for key in (
+                'restore_python', 'tokenizer', 'parent_run_local', 'parent_receipt_local', 'parent_index_local')})
+            cfg.update(remote_run='/SCRIPTED/e1-run', remote_ops='/SCRIPTED/e1-ops')
+            budget = TimeBudget(aware(b['collection_cutoff']), now=lambda: start, monotonic=lambda: 0)
+            with patch.object(launch, 'remote_bytes', side_effect=remote), patch.object(launch, 'download'), \
+                 patch.object(launch.subprocess, 'run', side_effect=stub_restorer), \
+                 patch.object(launch, 'transfer_receipt', return_value={'status': 'published', 'UNIT_FIXTURE_ONLY': True}), \
+                 patch.object(launch.time, 'sleep', side_effect=AssertionError('must not idle after recorded closure')):
+                result = launch._collect(Mock(), cfg, plan, {'binding': b, 'at_utc': start.isoformat(),
+                                          'evidence_kind': 'model'}, budget, lambda *_a, **_k: None)
+            self.assertEqual(result['server_consumed'], consumed)
+            self.assertEqual(result['status'], 'trial_closed_power_retained')
+            self.assertEqual(result['provider_billing_stopped'], 'unknown')
+            self.assertTrue((cfg['operations'] / 'window-close.json').exists())
+
+    def test_day_collector_returns_after_recorded_consumption_and_closure(self):
+        self.day_collector_fixture()
+
+    def test_day_collector_preserves_recorded_failed_consumption(self):
+        self.day_collector_fixture(consumed=False)
+
+    def test_day_collector_rejects_conflicting_archive_and_closure_status(self):
+        with self.assertRaisesRegex(ValueError, 'original day trial closure differs'):
+            self.day_collector_fixture(inconsistent=True)
+
+    def transport(self, unknown=False, failed_upload=False, day=False):
         with tempfile.TemporaryDirectory() as directory, redirect_stdout(io.StringIO()):
             root = Path(directory); stage = root / 'stage'; stage.mkdir()
             for name in ('code.bundle', *launch.BOOTSTRAP):
@@ -94,8 +144,9 @@ class E1OperationTests(unittest.TestCase):
                        remote_run='/root/autodl-tmp/liftcut/runs/e1-run-20261014-000100',
                        remote_ops='/root/autodl-tmp/liftcut/runs/e1-ops-20261014-000100')
             config = root / 'config.json'; auth = root / 'SYNTHETIC-AUTH-ONLY.json'
-            dump_new(config, {}); dump_new(auth, scripted_authorization())
-            b = binding(plan, commit, scripted_authorization(), '20261014-000100', start.isoformat())
+            authorization = scripted_day_authorization() if day else scripted_authorization()
+            dump_new(config, {}); dump_new(auth, authorization)
+            b = binding(plan, commit, authorization, '20261014-000100', start.isoformat())
             opening = {'binding': b, 'at_utc': start.isoformat(), 'evidence_kind': 'model'}
             labels = []; network = SFTP(); client = Mock()
             @contextmanager
@@ -148,6 +199,8 @@ class E1OperationTests(unittest.TestCase):
     def test_full_upload_dispatch_has_one_reservation(self): self.transport()
     def test_unknown_dispatch_is_never_repeated_or_aborted(self): self.transport(unknown=True)
     def test_known_upload_failure_requests_shutdown_in_same_session(self): self.transport(failed_upload=True)
+    def test_day_full_transfer_keeps_original_binding_and_single_reservation(self): self.transport(day=True)
+    def test_day_unknown_dispatch_still_never_retries(self): self.transport(day=True, unknown=True)
 
 
 if __name__ == '__main__':

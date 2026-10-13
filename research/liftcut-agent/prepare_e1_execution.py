@@ -2,6 +2,7 @@
 import argparse
 from copy import deepcopy
 from pathlib import Path
+from datetime import timedelta
 import shutil
 import sys
 from audit_e1 import audit
@@ -45,7 +46,22 @@ def scripted_authorization():
             'heldout_scope': 'one_48_task_batch_with_fresh_A_and_D', 'automatic_shutdown': True}
 
 
-def drill(output, tokenizer_dir, parent=None, receipt=None, index=None):
+def scripted_day_authorization():
+    """Synthetic fixture, never a real opening or a file ready for launch."""
+    auth = scripted_authorization()
+    auth['source'] = 'explicit_human_new_server_day'
+    auth['power_lease'] = {'version': 'liftcut-research-day-v1',
+        'authorization': 'explicit_human_20261013_one_day_after_ready',
+        'booted_at_proxy': auth['booted_at_proxy'],
+        'shutdown_at_utc': (aware(auth['booted_at_proxy']) + timedelta(hours=24)).isoformat(),
+        'hourly_cny': 2.18, 'reserve_cny': 55, 'automatic_shutdown': True, 'automatic_reboot': False,
+        'paid_api_calls': 0, 'disk_expansion': False,
+        'heldout_scope': 'E1_one_48_task_batch_with_fresh_A_and_D',
+        'maximum_followup_gpu_trials': 2, 'final_collection_buffer_minutes': 45}
+    return auth
+
+
+def drill(output, tokenizer_dir, parent=None, receipt=None, index=None, *, day=False):
     if output.exists():
         raise ValueError('fresh offline rehearsal output required')
     plan = deepcopy(verify_plan()); cases = development_fixture()
@@ -54,7 +70,8 @@ def drill(output, tokenizer_dir, parent=None, receipt=None, index=None):
     plan['protocol']['dataset']['test_file_sha256_from_existing_manifest'] = sha256(payload)
     plan['scripted_development_fixture_only'] = True
     start = '2026-10-14T00:01:00+00:00'; clock = lambda: aware(start)
-    b = binding(plan, '0' * 40, scripted_authorization(), '20261014-000100', start)
+    authorization = scripted_day_authorization() if day else scripted_authorization()
+    b = binding(plan, '0' * 40, authorization, '20261014-000100', start)
     run = output / 'SCRIPTED-E1-DEVELOPMENT-ONLY'; run.mkdir()
     dump_new(run / 'opening.json', {'binding': b, 'at_utc': start, 'evidence_kind': 'scripted_contract'})
     dump_new(run / 'reference.json', plan['parent_reference'])
@@ -97,6 +114,7 @@ def drill(output, tokenizer_dir, parent=None, receipt=None, index=None):
                     'recorded_completion_tokens', 'recorded_usage_is_model_usage')} for a in ARMS},
               'scripted_decision': result['decision'], 'future_window_authorized': False,
               'scripted_receipt_sha256': sha256(output / 'restored/off-instance-backup.json')}
+    report['power_mode'] = 'synthetic_day_lease' if day else 'synthetic_standalone'
     dump_new(output / 'scripted-plan.json', plan); dump_new(output / 'readiness.json', report)
     return report
 
@@ -107,10 +125,11 @@ if __name__ == '__main__':
     mode.add_argument('--freeze', action='store_true'); mode.add_argument('--drill', action='store_true')
     for n in ('output-dir', 'tokenizer-dir', 'parent-run', 'parent-receipt', 'parent-index'):
         p.add_argument('--' + n, type=Path)
+    p.add_argument('--day', action='store_true')
     a = p.parse_args(); sys.addaudithook(forbid_reserved_payload)
     if a.freeze:
         plan = execution_plan(); dump_new(EXECUTION, plan)
         print({'frozen_sources': len(plan['source_sha256']), 'new_model_calls': 0, 'heldout_tasks_read': 0})
     else:
-        value = drill(a.output_dir, a.tokenizer_dir, a.parent_run, a.parent_receipt, a.parent_index)
+        value = drill(a.output_dir, a.tokenizer_dir, a.parent_run, a.parent_receipt, a.parent_index, day=a.day)
         print({k: v for k, v in value.items() if k not in ('source_sha256', 'scripted_decision')})

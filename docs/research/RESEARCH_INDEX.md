@@ -1,5 +1,8 @@
 # LiftCut-AgentLab：研究证据入口
 
+- [新24小时研究日计划](2026-10-13-next-day-plan.md) · [整日E1执行手册](E1_DAY_RUNBOOK.md)：用户要求准备好再开机；E1完整任务、应用批准/幂等流程、条件实验和企业方法取舍。新146源/开发脚本恢复已在本机核验，模型结果未发生。
+- [历史租期效率基线](../../research/liftcut-agent/reports/prior-lease-efficiency-20261013.json)：六份实际finished时长和最后收集事件带来源SHA；评估进程占比与GPU利用率明确区分，不重复累加子窗口费用。
+
 - [10月13日最终关闭观察与成本](2026-10-13-overnight-closure.md)：原守护核验、真实断连、七份文件哈希；命令返回和平台状态缺口单列。晨报/学习已在截止前随PR57六项成功交付。
 - [真实案例逐步拆解](2026-10-13-agent-case-walkthrough.md) · [一小时学习路线](2026-10-13-agent-learning-review.md)：来源冲突、ID翻转、完整澄清与批准/撤销；直接定位原始JSONL行和只读复核代码。
 - [E1执行准备与数据访问边界](2026-10-13-e1-execution-preparation.md) · [未来运行手册](E1_RUNBOOK.md)：96开发复制脚本回合、真实父权重恢复、partial与故障检查，无E1模型结果。

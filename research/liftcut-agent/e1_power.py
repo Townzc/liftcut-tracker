@@ -63,11 +63,20 @@ def active_workers():
 
 def validate_bound_power(b, at):
     auth = b['authorization']; boot = aware(b['booted_at_proxy']); hard = aware(b['hard_cutoff'])
+    day = auth.get('power_lease')
+    expected = {'experiment': 'E1', 'source': 'explicit_human_new_server_window',
+                'booted_at_proxy': b['booted_at_proxy'], 'maximum_minutes': 120,
+                'reserve_cny': 5, 'hourly_cny': 2.18,
+                'heldout_scope': 'one_48_task_batch_with_fresh_A_and_D', 'automatic_shutdown': True}
+    if day is not None:
+        from day_lease import validate
+        validate(day, at)
+        expected.update(source='explicit_human_new_server_day', power_lease=day)
+        if (b.get('power_lease') != day or day['booted_at_proxy'] != b['booted_at_proxy']
+                or b.get('power_shutdown_at_utc') != day['shutdown_at_utc']):
+            raise ValueError('original day power binding differs')
     if (boot < NOT_BEFORE or hard != boot + timedelta(minutes=120)
-            or auth != {'experiment': 'E1', 'source': 'explicit_human_new_server_window',
-                        'booted_at_proxy': b['booted_at_proxy'], 'maximum_minutes': 120,
-                        'reserve_cny': 5, 'hourly_cny': 2.18,
-                        'heldout_scope': 'one_48_task_batch_with_fresh_A_and_D', 'automatic_shutdown': True}
+            or auth != expected
             or not boot <= aware(b['trial_started_at_utc']) <= at <= boot + timedelta(minutes=10)
             or not re.fullmatch(r'\d{8}-\d{6}', b['run_id'])
             or not re.fullmatch('[0-9a-f]{40}', b['code_commit'])):
@@ -91,6 +100,16 @@ def arm(ops, b):
     ops.mkdir(parents=True, exist_ok=False)
     key = hashlib.sha256(b['booted_at_proxy'].encode()).hexdigest()[:20]
     write_new(PERSIST / 'ops' / ('e1-opening-' + key + '.json'), {'binding': b, 'ops': str(ops)})
+    if 'power_lease' in b:
+        from day_lease import arm as arm_day
+        from gpu_telemetry import start as start_observer
+        day_guard = arm_day(ops, b['power_lease'])
+        value = {'version': 'e1-day-guard-v1', 'binding': b, 'day_guard': day_guard}
+        write_new(ops / 'guard.json', value)
+        verify_guard(ops, b)
+        # Pure observation, independent of the model process and its conditions.
+        start_observer(ops)
+        return value
     script = Path(__file__).with_name('shutdown_guard.py')
     argv = [sys.executable, str(script), '--arm', '--deadline', b['hard_cutoff'],
             '--receipt', str(ops / 'power-events.jsonl')]
@@ -116,6 +135,13 @@ def arm(ops, b):
 def verify_guard(ops, b):
     safe_ops(ops, b)
     guard = json.loads((ops / 'guard.json').read_text(encoding='utf-8'))
+    if 'power_lease' in b:
+        from day_lease import verify_live, lease_path, read
+        if (guard != {'version': 'e1-day-guard-v1', 'binding': b,
+                      'day_guard': read(ops / 'day-guard.json')}
+                or verify_live(lease_path(ops), b['power_lease']) != b['power_lease']):
+            raise ValueError('original independent day guard differs')
+        return guard
     rows = [json.loads(x) for x in (ops / 'power-events.jsonl').read_text(encoding='utf-8').splitlines()]
     if (guard['version'] != 'e1-power-v1' or guard['binding'] != b
             or guard['identity'] != identity(guard['identity']['pid'])
@@ -160,5 +186,11 @@ if __name__ == '__main__':
         gpu = subprocess.check_output(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader'], text=True)
         if (a.ops / 'dispatch-reservation.json').exists() or active_workers() or gpu.strip():
             raise ValueError('dispatch may exist; cannot abort setup')
-        value = shutdown(a.ops, 'known_E1_setup_failure_before_dispatch')
+        if 'power_lease' in b:
+            value = {'power_action': 'retained_under_original_day_lease',
+                     'reason': 'known_E1_setup_failure_before_dispatch',
+                     'shutdown_at_utc': b['power_shutdown_at_utc'], 'provider_billing_stopped': 'unknown'}
+            write_new(a.ops / 'setup-failure-power-retained.json', value)
+        else:
+            value = shutdown(a.ops, 'known_E1_setup_failure_before_dispatch')
     print(json.dumps(value))

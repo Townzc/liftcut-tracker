@@ -1,4 +1,4 @@
-"""E1 execution binding for a separately authorized future two-hour window."""
+"""E1's unchanged two-hour experiment, optionally inside an explicit day lease."""
 from datetime import timedelta
 from pathlib import Path
 import re
@@ -14,12 +14,13 @@ from liftcut_agent.interactive import digest, validate_scenarios
 from liftcut_agent.benchmark import read_jsonl
 from server_workspace import sha256, command
 
-EXECUTION = ROOT / 'reports/e1-execution-v1.json'
+EXECUTION = ROOT / 'reports/e1-execution-v2.json'
 NOT_BEFORE = '2026-10-13T15:00:00+00:00'
 NEW_SOURCES = ('candidate_d.py', 'e1_protocol.py', 'prepare_e1.py', 'e1_data_use.py',
                'e1_rollout.py', 'e1_execution.py', 'gpu_e1.py', 'audit_e1.py',
                'run_e1_window.py', 'e1_setup.py', 'e1_receipt.py', 'restore_e1.py',
-               'prepare_e1_execution.py', 'launch_e1.py', 'e1_power.py')
+               'prepare_e1_execution.py', 'launch_e1.py', 'e1_power.py',
+               'day_lease.py', 'gpu_telemetry.py', 'analyze_resource_usage.py')
 
 
 def execution_plan():
@@ -27,7 +28,15 @@ def execution_plan():
     checked = validate(read(SNAPSHOT))
     parent = parent_plan()
     sources = set(parent['source_sha256']) | set(NEW_SOURCES)
-    return {'version': 'e1-execution-v1', 'protocol': science,
+    previous = read(ROOT / 'reports/e1-execution-v1.json')
+    if science != previous['protocol'] or checked['contract_digest'] != previous['candidate_digest']:
+        raise ValueError('day execution cannot change E1 science or candidate')
+    changed_operations = {'e1_execution.py', 'e1_power.py', 'e1_setup.py',
+                          'run_e1_window.py', 'launch_e1.py', 'prepare_e1_execution.py'}
+    for name, expected in previous['source_sha256'].items():
+        if name not in changed_operations and sha256(ROOT / name) != expected:
+            raise ValueError('day preparation changed a frozen scientific source: ' + name)
+    return {'version': 'e1-execution-v2', 'protocol': science,
             'candidate_digest': checked['contract_digest'],
             'source_sha256': {n: sha256(ROOT / n) for n in sorted(sources)},
             'parent_reference': parent['reference'],
@@ -36,7 +45,8 @@ def execution_plan():
             'archive_is_self_contained': False, 'parent_weight_required': True,
             'historical_data_access': 'Legacy structural tests parse all split files. E1 is first candidate model evaluation, not a never-read secret blind dataset.',
             'historical_data_access_audit_sha256': sha256(ROOT / 'reports/e1-data-exposure-audit-v1.json'),
-            'scope': 'Single future batch; historical science readiness is not a launch grant.'}
+            'previous_execution_sha256': sha256(ROOT / 'reports/e1-execution-v1.json'),
+            'scope': 'Single E1 batch; unchanged trial limits; standalone or explicitly authorized day power lease.'}
 
 
 def verify_plan():
@@ -49,8 +59,16 @@ def verify_plan():
 def binding(plan, commit, authorization, run_id, started):
     required = {'experiment', 'source', 'booted_at_proxy', 'maximum_minutes', 'reserve_cny',
                 'hourly_cny', 'heldout_scope', 'automatic_shutdown'}
+    day = authorization.get('power_lease')
+    if day is not None:
+        from day_lease import validate
+        validate(day, aware(started))
+        required = required | {'power_lease'}
+        if day['booted_at_proxy'] != authorization['booted_at_proxy']:
+            raise ValueError('E1 must retain the actual original day opening')
+    source = 'explicit_human_new_server_day' if day is not None else 'explicit_human_new_server_window'
     if (set(authorization) != required or authorization['experiment'] != 'E1'
-            or authorization['source'] != 'explicit_human_new_server_window'
+            or authorization['source'] != source
             or authorization['maximum_minutes'] != 120 or authorization['reserve_cny'] != 5
             or authorization['hourly_cny'] != 2.18 or authorization['automatic_shutdown'] is not True
             or authorization['heldout_scope'] != 'one_48_task_batch_with_fresh_A_and_D'):
@@ -62,13 +80,17 @@ def binding(plan, commit, authorization, run_id, started):
         raise ValueError('cannot use the old night or reset a late E1 opening')
     work = min(start + timedelta(minutes=90), boot + timedelta(minutes=100))
     collect = min(work + timedelta(minutes=20), boot + timedelta(minutes=118))
-    return {'version': 'e1-window-binding-v1', 'code_commit': commit, 'run_id': run_id,
+    result = {'version': 'e1-window-binding-v1', 'code_commit': commit, 'run_id': run_id,
             'execution_plan_digest': digest(plan), 'protocol_digest': digest(plan['protocol']),
             'candidate_digest': plan['candidate_digest'], 'authorization': authorization,
             'booted_at_proxy': authorization['booted_at_proxy'], 'trial_started_at_utc': started,
             'work_cutoff': work.isoformat(), 'collection_cutoff': collect.isoformat(),
             'hard_cutoff': (boot + timedelta(minutes=120)).isoformat(),
             'planned_unique_tasks': 48, 'planned_episodes': 96, 'archive_is_self_contained': False}
+    if day is not None:
+        result.update(version='e1-day-window-binding-v1', power_lease=day,
+                      power_shutdown_at_utc=day['shutdown_at_utc'])
+    return result
 
 
 def validate_opening(opening, plan, *, scripted=False):
