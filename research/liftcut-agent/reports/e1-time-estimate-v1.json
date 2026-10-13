@@ -1,0 +1,39 @@
+{
+  "version": "e1-prospective-time-estimate-v1",
+  "new_model_calls": 0,
+  "basis": {
+    "A": {
+      "evidence": "reports/i2-seed42-2026-10-13/run/evaluation/A/normal/generations.jsonl",
+      "sha256": "7c93c146429b0938da1c306ad8b43f942e6ffd367f760da763a190d25d67d11b",
+      "full_development_tasks": 12,
+      "actual_generations": 82,
+      "sum_generation_seconds": 287.36887200549245,
+      "maximum_generation_seconds": 9.305334167554975,
+      "prompt_tokens": 141135,
+      "output_tokens": 3325
+    },
+    "D": {
+      "evidence": "reports/i2-seed42-2026-10-13/run/evaluation/D/normal/generations.jsonl",
+      "sha256": "aaba996408f29fdf18f1af85dac322f33179ea9df76dfbe62a6a0b39a2a86366",
+      "full_development_tasks": 12,
+      "actual_generations": 80,
+      "sum_generation_seconds": 288.1485422272235,
+      "maximum_generation_seconds": 9.918297192081809,
+      "prompt_tokens": 147802,
+      "output_tokens": 3282
+    }
+  },
+  "linear_generation_seconds_for_48_each": 2302.069656930864,
+  "safety_factor": 1.5,
+  "two_future_load_margin_seconds": 240,
+  "audit_margin_seconds": 300,
+  "planning_seconds": 3993.104485396296,
+  "planning_minutes": 66.5517414232716,
+  "work_cap_minutes": 90,
+  "total_future_window_minutes": 120,
+  "reserve_cny": 5,
+  "compute_proxy_cap_cny": 4.36,
+  "not_a_guarantee": true,
+  "if_slower": "stop at original cutoffs; preserve partial; no extension",
+  "not_extra_night_cost": true
+}
