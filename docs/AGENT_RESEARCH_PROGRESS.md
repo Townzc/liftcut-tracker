@@ -1,5 +1,12 @@
 # Agent research progress and handoff
 
+## 2026-10-13 10:15：E1完整任务执行准备；尚无E1模型结果
+
+PR55精确d2f0837六项SUCCESS后09:43合main23d8394，树一致。当前独立feat/e1-execution-preparation新增143源执行计划，原128及PR55的3源不变。数据SHA预约先于读取、结果未知不自动重试；新未来120分钟窗口使用独立守护，不能重用本夜opening。实际96个开发复制脚本回合/648模拟请求、原父adapter读取、570170字节增量完整恢复通过；无权重演练保持partial。33项针对检查包含10项真实token故障验证；全库720检查通过（默认跳过该10项，另行跑）。最终精确六项CI/实际增量安装继续，无E1新GPU/48任务模型评估。
+
+[原因、实现、结果、局限与下一步](research/2026-10-13-e1-execution-preparation.md)，[操作手册](research/E1_RUNBOOK.md)。静态数据访问审查发现历史load_frozen全分区结构检查会读取保留payload；修正为“未用于候选模型训练/效果评估”，不称从未读取的秘密盲测。新E1命令有拒绝test.jsonl的准备审计钩子，实际只演练DEV复制。未来规划4090最多120分钟/¥5，真实I2时长推算66.55分钟，非保证、不叠加本夜成本。原04:27..15:00/guard1552不变，14:45观察器尚未启动，实例按授权保留。
+
+
 ## 2026-10-13 09:21：I3已交付，完整D快照与E1科学协议完成
 
 PR54精确eba484078685c81f4b7cd5a7df5827c5ff3814be六项SUCCESS后合main48c175f22ad061a15c8d97aa882a194c7ea5d0e4，受检/合并树一致。新feat/candidate-d-readiness冻结完整D系统，实际本机adapter及tokenizer再次核验；公共核验明确不重读私有权重/基座。[快照与准备](research/2026-10-13-candidate-d-freeze.md)绑定原128源、来源/ID投影、原生解析、8工具、权限、预算和真实I2/I3来源，科学条件没有变化。

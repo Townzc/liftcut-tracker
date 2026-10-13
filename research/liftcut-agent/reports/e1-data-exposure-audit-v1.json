@@ -1,0 +1,73 @@
+{
+  "version": "e1-data-exposure-audit-v1",
+  "method": "static source review only; no reserved task payload read by this audit",
+  "source_evidence": [
+    {
+      "path": "tests/test_controlled_recovery.py",
+      "sha256": "10c21d4c63e623e5d120f38640693da83c0dc3b83ced96254eec8d5a49c4b504",
+      "matching_source_lines": [
+        {
+          "line": 34,
+          "text": "cls.cases = load_frozen(DATA)"
+        },
+        {
+          "line": 41,
+          "text": "for row in self.cases:"
+        },
+        {
+          "line": 59,
+          "text": "for row in [s for s in self.cases if s[\"category\"] == \"memory\"]:"
+        }
+      ]
+    },
+    {
+      "path": "controlled_recovery.py",
+      "sha256": "8601a11b0dd9429d5a47198ce7df913c4a4f127a1eb1926aa593a115eb24823b",
+      "matching_source_lines": [
+        {
+          "line": 168,
+          "text": "cases = load_frozen(DATA)"
+        }
+      ]
+    },
+    {
+      "path": "prepare_controlled.py",
+      "sha256": "93fb0a52ab4ead9de9b2df08192f03eed4d2c6278b16e775fe50e7558a9c3230",
+      "matching_source_lines": [
+        {
+          "line": 23,
+          "text": "train_ids = sorted(s[\"id\"] for s in load_frozen(DATA) if s[\"split\"] == \"train\")"
+        }
+      ]
+    },
+    {
+      "path": "recovery_dataset.py",
+      "sha256": "04b2b90311b9ae8669eefba0b98426f98701babe144f8702b18e837da0343bba",
+      "matching_source_lines": [
+        {
+          "line": 111,
+          "text": "for split in (\"train\", \"dev\", \"test\"):"
+        },
+        {
+          "line": 116,
+          "text": "\"files\": {f\"{split}.jsonl\": sha256(output / f\"{split}.jsonl\") for split in (\"train\", \"dev\", \"test\")},"
+        },
+        {
+          "line": 123,
+          "text": "def load_frozen(directory=DATA):"
+        }
+      ]
+    }
+  ],
+  "new_E1_preparation_guard": "prepare_e1.forbid_reserved_payload blocks any test.jsonl open in the E1 CLI drills",
+  "historical_scope": "Legacy whole-repository tests/preparation parse all split files to check schema, bundle structure, identity leakage and deterministic constraint invariance.",
+  "no_model_evaluation_claim": "No original reserved task candidate Qwen rollout or training is introduced by these checks; full-suite success is not a 48-task model score.",
+  "claim_allowed": "Candidate frozen before first model evaluation on 48 same-author shared-template combination tasks.",
+  "claim_disallowed": [
+    "Never accessed by any code",
+    "Secret blind benchmark",
+    "External distribution generalization",
+    "48 statistically independent tasks"
+  ],
+  "next_stricter_validation": "New independently authored or external licensed tasks after candidate freeze, with dataset access logging; not this E1 batch."
+}
