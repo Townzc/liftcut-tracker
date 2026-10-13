@@ -1,5 +1,6 @@
 # LiftCut-AgentLab：研究证据入口
 
+- [10月13日最终关闭观察与成本](2026-10-13-overnight-closure.md)：原守护核验、真实断连、七份文件哈希；命令返回和平台状态缺口单列。晨报/学习已在截止前随PR57六项成功交付。
 - [真实案例逐步拆解](2026-10-13-agent-case-walkthrough.md) · [一小时学习路线](2026-10-13-agent-learning-review.md)：来源冲突、ID翻转、完整澄清与批准/撤销；直接定位原始JSONL行和只读复核代码。
 - [E1执行准备与数据访问边界](2026-10-13-e1-execution-preparation.md) · [未来运行手册](E1_RUNBOOK.md)：96开发复制脚本回合、真实父权重恢复、partial与故障检查，无E1模型结果。
 

@@ -1,0 +1,17 @@
+{
+  "kind": "single_tcp_connectivity_observation",
+  "started_at_utc": "2026-10-13T15:02:52.225734+00:00",
+  "host": "connect.bjb1.seetacloud.com",
+  "port": 15138,
+  "timeout_seconds": 8,
+  "ssh_login": false,
+  "remote_command": false,
+  "automatic_retry": false,
+  "tcp_connection_succeeded": false,
+  "error_type": "ConnectionRefusedError",
+  "error": "[WinError 10061] 由于目标计算机积极拒绝，无法连接。",
+  "ended_at_utc": "2026-10-13T15:02:58.753185+00:00",
+  "elapsed_seconds": 6.515000000130385,
+  "provider_power_state": "unknown",
+  "provider_billing_stopped": "unknown"
+}

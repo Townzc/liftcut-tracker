@@ -1,0 +1,106 @@
+{
+  "schema": "liftcut-overnight-close-observations-v1",
+  "record_created_at_utc": "2026-10-13T15:08:04.907545+00:00",
+  "observer_session": 61710,
+  "local_python_pid": 15328,
+  "observer_process_exit_code": 0,
+  "observer_exit_is_shutdown_confirmation": false,
+  "guard_verified_at_utc": "2026-10-13T14:53:13.390252+00:00",
+  "guard_identity": {
+    "pid": 1552,
+    "start_ticks": "1580472148",
+    "argv": [
+      "/root/miniconda3/bin/python",
+      "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/research_lease.py",
+      "--guard",
+      "--lease",
+      "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json"
+    ],
+    "kernel_boot_id": "969726ac-7391-4fe7-87a4-2dd957b19c67"
+  },
+  "deadline_utc": "2026-10-13T15:00:00+00:00",
+  "ssh_channel_finished": {
+    "event": "ssh_channel_return",
+    "at_utc": "2026-10-13T14:59:59.230673+00:00",
+    "returncode": -1,
+    "transport_active": false,
+    "provider_power_state": "unknown",
+    "provider_billing_stopped": "unknown"
+  },
+  "shutdown_request_observed": false,
+  "shutdown_return_observed": false,
+  "last_captured_server_events_at_utc": "2026-10-13T14:53:13.391128+00:00",
+  "provider_power_status": "unknown_pending_single_user_confirmation",
+  "provider_billing_stopped": "unknown",
+  "user_platform_status_requests_this_night": 1,
+  "cost_scope": "only the continuous 2026-10-13 overnight opening; earlier setup/no-GPU windows separately recorded",
+  "compute_proxy": {
+    "booted_at_utc": "2026-10-13T04:27:00+00:00",
+    "end_proxy_utc": "2026-10-13T14:59:59.230673+00:00",
+    "end_basis": "local observed SSH transport closure, NOT provider shutdown or billing timestamp",
+    "elapsed_seconds": 37979.230673,
+    "elapsed_hours": 10.549786298055555,
+    "hourly_cny": 2.18,
+    "current_opening_cny": 22.99853412976111,
+    "planned_through_deadline_cny": 22.999000000000002,
+    "reserve_cny": 25,
+    "is_invoice": false,
+    "window_costs_overlap_cumulative": true
+  },
+  "research_delivery": {
+    "pr": "https://github.com/Townzc/liftcut-tracker/pull/57",
+    "checked_head": "52053a89024cff1e135514399a8a61dc4e4b2be8",
+    "all_six_checks_success": true,
+    "merged_at_utc": "2026-10-13T10:52:49Z",
+    "main_commit": "3d3ff639cac3a6a4b448a85d1e2709b311b941b0",
+    "checked_and_merged_tree": "620a7bc9d4a9553b7031e395070a5bd496ea55b1"
+  },
+  "limits": [
+    "Only original guard verification and transport loss were captured; shutdown request and command return are unobserved.",
+    "Local observer exit 0 confirms logging completed, not shutdown success.",
+    "The captured event snapshot predates shutdown; absence is not evidence of a failed guard.",
+    "Server and local clocks are distinct; no subsecond shutdown time or ordering is inferred.",
+    "One later TCP connection was refused, without SSH login; this does not establish provider power or billing status.",
+    "No cloud reboot, extra experiment, repeated collector, new model call, ACK or changed lease was performed.",
+    "I2 original receipt timeout remains distinct from later read-only verification and I3 actual consumer success.",
+    "E1 is prepared only; no new future opening or reserved-task candidate evaluation was authorized or performed."
+  ],
+  "files": {
+    "local-events.jsonl": {
+      "sha256": "b6f95d548faac01912c6e532761b56021d3bb1afd6455527b759f9097995ef56",
+      "bytes": 557,
+      "source": "exact local capture bytes"
+    },
+    "server-stream.jsonl": {
+      "sha256": "5796e02a8399d3568ef51d156ece44e26cfc45351fe3e8bd56fc70d79488f3c4",
+      "bytes": 1260,
+      "source": "exact local capture bytes"
+    },
+    "stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "source": "exact local capture bytes"
+    },
+    "remote-observer.py": {
+      "sha256": "1836322c761c4f13ea518e59df32ebdbb344e461f56c9ddf9b294ec9cfbedb59",
+      "bytes": 1074,
+      "source": "exact local capture bytes"
+    },
+    "connectivity-observation.json": {
+      "sha256": "0dce2e05f7aa025717b04cd0f19c3d710cf1feff20cf8ab429e11fc66e306539",
+      "bytes": 601,
+      "source": "exact local capture bytes"
+    },
+    "local-observer.py": {
+      "sha256": "9fc6a7b70798bfb37e82ed103762c9e3fee5e82426fba7178b952d3e5777a481",
+      "bytes": 4161,
+      "source": "exact source executed locally, no embedded credential"
+    },
+    "last-captured-events.jsonl": {
+      "sha256": "10137597f1b386c80210681ae680f00051889e521497019202eb606e07de843a",
+      "bytes": 198,
+      "source": "UTF-8 text extracted from captured server-stream; no independent final remote file hash",
+      "observed_at_utc": "2026-10-13T14:53:13.391128+00:00"
+    }
+  }
+}

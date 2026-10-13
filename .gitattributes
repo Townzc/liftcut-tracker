@@ -33,3 +33,5 @@ research/liftcut-agent/reports/i2-transfer-failure-2026-10-13/** -text whitespac
 research/liftcut-agent/reports/i2-seed42-2026-10-13/** -text whitespace=cr-at-eol
 research/liftcut-agent/reports/i3-startup-2026-10-13/** -text whitespace=cr-at-eol
 research/liftcut-agent/reports/i3-seed42-2026-10-13/** -text whitespace=cr-at-eol
+# Preserve exact final observer source/capture bytes and their published hashes.
+research/liftcut-agent/reports/overnight-close-2026-10-13/** -text whitespace=cr-at-eol
