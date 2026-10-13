@@ -1,0 +1,57 @@
+{
+  "version": "i2-offline-install-v1",
+  "commit": "75826d0e33fd20d1c0b2490429ca9ba7654076be",
+  "network_calls": 0,
+  "gpu_calls": 0,
+  "bundle": {
+    "checkout_verified": true,
+    "base_commit": null,
+    "network_calls": 0
+  },
+  "assets": {
+    "verified_files": 31,
+    "network_calls": 0
+  },
+  "actual_weight": {
+    "sha256": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0",
+    "bytes": 132187888,
+    "tensors": 504
+  },
+  "frozen_verification": "{'frozen_sources': 114, 'gpu_calls': 0, 'test_episodes': 0}",
+  "source_freeze_sha256": "c72016ece8daba7fc5d0526cc1c4261a87df3558fd1a04727cb490a8576fd09b",
+  "stage_files": {
+    "asset-index.json": {
+      "bytes": 4507,
+      "sha256": "8b0cb1eed7a83380dda1125ece13ebe34cbbed248e330d0ba987290ba156cfa8"
+    },
+    "assets.tar.gz": {
+      "bytes": 125135157,
+      "sha256": "3871de3cebc8ad2f2f5ba2217685b207c9498af6f9ddc5e08faa779c717360fb"
+    },
+    "code.bundle": {
+      "bytes": 33810685,
+      "sha256": "0961eaf4cca4d00a6fe22ccd054a34ebffe978f52407367af5b8bd9e546d0839"
+    },
+    "d2_bundle.py": {
+      "bytes": 1706,
+      "sha256": "ca4ec7b41431dbac0ff2169199a96fd24c526d17d6d475525916ac22b5c33a9a"
+    },
+    "i2_assets.py": {
+      "bytes": 2281,
+      "sha256": "61903e3efd34ad6c1fb6605b6c01347c493c488653219c7b603e9e5b40945e28"
+    },
+    "i2_setup.py": {
+      "bytes": 8415,
+      "sha256": "b9573d3a094990229c76e6e6bd24b9af0fcd899640f22eb9a572cd626d003391"
+    },
+    "reference.json": {
+      "bytes": 6667,
+      "sha256": "2bf1f878b5b4bc3d64a2dbe98c77ed7fca108a291b0e81bc3ea5c9d3d90f2f88"
+    },
+    "shutdown_guard.py": {
+      "bytes": 2462,
+      "sha256": "07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0"
+    }
+  },
+  "scope": "Offline Windows installation of the source-identical implementation commit; not cloud Linux runtime verification. The final delivery commit must be staged and verified separately before opening."
+}

@@ -7,8 +7,10 @@ public-source resolution are separate factors.114 sources frozen,629 offline tes
 444 scripted traces/752 generations and actual unchanged weight restoration verified.
 No I2 model calls or held-out use. See [runbook](research/I2_RUNBOOK.md) and
 [preparation evidence](../research/liftcut-agent/reports/i2-readiness-v1.json).
-Next: exact-head Git checks and local migration round-trip, then notify readiness for a
-NEW90-minute/CNY4 proposed server window. Actual complete restoration and all paired gates
+Local migration round-trip verifies31 assets, actual weights and114 sources in a fresh
+checkout. [PR45](https://github.com/Townzc/liftcut-tracker/pull/45) delivers this preparation;
+next is a NEW90-minute/CNY4 proposed server window after final exact-head Git checks,
+final-stage verification and the user's new opening notice. Actual restoration and all paired gates
 precede any candidate claim; independent evaluation remains later and unrun.
 
 The result and operating snapshots below describe earlier dates.
