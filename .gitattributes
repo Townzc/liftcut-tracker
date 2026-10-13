@@ -29,3 +29,5 @@ research/liftcut-agent/reports/i2-prepared-2026-10-13/** -text whitespace=cr-at-
 # Preserve captured overnight guard/preflight evidence separately from live source.
 research/liftcut-agent/reports/i2-overnight-preflight-2026-10-13/** -text whitespace=cr-at-eol
 research/liftcut-agent/reports/i2-transfer-failure-2026-10-13/** -text whitespace=cr-at-eol
+# Keep the published four-arm evidence byte-identical to its restored inventory.
+research/liftcut-agent/reports/i2-seed42-2026-10-13/** -text whitespace=cr-at-eol

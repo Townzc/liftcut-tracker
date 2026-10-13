@@ -1,0 +1,66 @@
+{
+  "version": "i2-evaluation-v1",
+  "binding": {
+    "version": "i2-window-binding-v1",
+    "code_commit": "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+    "execution_plan_digest": "b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad",
+    "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+    "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+    "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+    "work_cutoff": "2026-10-13T06:34:46.344357+00:00",
+    "collection_cutoff": "2026-10-13T06:54:46.344357+00:00",
+    "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+    "test_episodes": 0,
+    "new_training": false,
+    "power_lease": {
+      "version": "liftcut-research-lease-v1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+      "hourly_cny": 2.18,
+      "reserve_cny": 25,
+      "automatic_shutdown": true,
+      "automatic_reboot": false,
+      "paid_api_calls": 0,
+      "disk_expansion": false,
+      "heldout_tasks_allowed": 0,
+      "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+      "maximum_followup_trials": 2,
+      "final_collection_buffer_minutes": 45
+    }
+  },
+  "arm": "A",
+  "flags": [
+    false,
+    false
+  ],
+  "evidence_kind": "model",
+  "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+  "adapter_sha256": {
+    "adapter_config.json": "2e82c81f8f9a68f270cdfd9f7f4fc92cb877e87efc1ea0bbb4d131c601a29a84",
+    "adapter_model.safetensors": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0"
+  },
+  "config": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "token_limit_field": "max_completion_tokens",
+    "thinking_mode": null,
+    "temperature": 0,
+    "send_parallel_tool_calls": true,
+    "max_output_tokens": 512,
+    "max_requests": 2000,
+    "max_reserved_output_tokens": 1024000,
+    "max_request_bytes": 100000,
+    "max_response_bytes": 1000000,
+    "timeout_seconds": 60,
+    "input_usd_per_million": "0",
+    "output_usd_per_million": "0",
+    "max_reserved_usd": "0",
+    "pricing_note": "Local GPU or explicitly identified scripted prefix; no hosted API spend",
+    "tool_protocol": "read_batch",
+    "prompt_revision": "pending_approval_v1"
+  },
+  "parser": "qwen-native-content-v2",
+  "precision": "NF4 double quantization/BF16 compute; fp32 nonquantized layers in every arm",
+  "test_episodes": 0,
+  "new_training": false
+}

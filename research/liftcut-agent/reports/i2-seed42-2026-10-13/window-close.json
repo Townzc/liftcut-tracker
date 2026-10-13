@@ -1,0 +1,8 @@
+{
+  "at_utc": "2026-10-13T06:36:55.793065+00:00",
+  "off_instance_acknowledged": false,
+  "experiment_status": "complete",
+  "power_action": "retain_under_original_overnight_guard",
+  "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+  "provider_billing_stopped": false
+}
