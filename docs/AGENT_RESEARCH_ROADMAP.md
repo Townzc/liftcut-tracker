@@ -1,5 +1,16 @@
 # LiftCut-AgentLab research roadmap
 
+Current2026-10-13: actual no-GPU preparation COMPLETE, platform OFF confirmed by user.
+Run014645 installs checked execution32fbbac after PR47 all5SUCCESS/merge9aa7064. Real
+31assets/114sources/runtime/base model/fixed weight/input verification passed; genuine
+prepared.json uploaded and hash-verified before shutdown. Helper stdout returns0,
+SSH channel-1; these are recorded separately. CPU elapsed proxyCNY0.04426, not invoice.
+Original120-minute lease/CNY0.20 unchanged. No I2 model result. The remaining step is
+evidence delivery, then a user-opened fresh4090 window: zero asset uploads, actual GPU
+preflight, original four-arm I2/90minutes/CNY4 reserve and automatic shutdown.
+[Actual preparation and next trigger](research/2026-10-13-i2-no-gpu-preparation.md).
+Earlier snapshots below are historical; no new training, API calls or held-out use.
+
 Current2026-10-13: user opened no-GPU preparation at01:22:28UTC; original120-minute
 deadline03:22:28 and CNY0.20 retained. AutoDL exposes a zero-byte nvidia-smi executable,
 causing ENOEXEC before preparation guard/installation. Actual inspection found no GPU

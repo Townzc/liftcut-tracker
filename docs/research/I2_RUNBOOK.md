@@ -4,6 +4,12 @@
 四组科学方案及预选D保持不变，部署分两个独立开机窗口。命令从research/liftcut-agent执行。
 本机tokenizer/恢复解释器为.venv/Scripts/python.exe，SSH为E:/anaconda/python.exe。
 
+2026-10-13已实际完成无卡准备，用户确认平台关闭。
+[完整记录](2026-10-13-i2-no-gpu-preparation.md)。执行提交固定
+32fbbac18d48493a8f37221a3e4b090e3b431cf2，stage为outputs/autodl/i2-stage-32fbbac，
+真实准备记录为outputs/autodl/i2-prep-20261013-014645-operations/prepared.json。
+保持同一实例数据时，不再执行阶段一；等待用户另一次正式4090开机后进入阶段二。
+
 ## 离线准备
 
 真实I1参考已核验，保留reports/i2-reference-v1.json，不重选权重。源变更重新冻结
@@ -26,6 +32,11 @@ diagnostic、d2、tokenizer、remote_python、bootstrap_python、remote_model、
 remote_model_manifest、remote_cached_weight。bootstrap使用/root/miniconda3/bin/python，
 remote_python使用固定持久盘环境；远端资产使用/root/autodl-tmp/liftcut/下规范POSIX路径。
 密码仅getpass内存读取。严格known_hosts，不自动接受新主机密钥。
+
+PowerShell可将JSON中的ISO字符串自动转成DateTime，传给原生命令时变为当地日期
+格式。`--booted-at`必须传明确带时区的ISO字符串（如单引号包围的实际UTC），
+不要直接传ConvertFrom-Json产生的日期对象。准备与GPU时间都来自各自真实开机，
+示例日期或旧窗口时间不能用于新实验。
 
 ## 阶段一：用户新开无卡模式
 

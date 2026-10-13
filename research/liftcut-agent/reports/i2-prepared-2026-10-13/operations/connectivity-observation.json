@@ -1,0 +1,12 @@
+{
+  "tcp_connected": false,
+  "error_type": "TimeoutError",
+  "error": "timed out",
+  "ssh_login_attempted": false,
+  "started_at_utc": "2026-10-13T01:49:37.732228+00:00",
+  "finished_at_utc": "2026-10-13T01:49:46.443862+00:00",
+  "elapsed_seconds": 8.718000000109896,
+  "provider_power_state": "unknown",
+  "provider_billing_stopped": "unknown",
+  "scope": "One unauthenticated connectivity observation; not a power or billing receipt"
+}

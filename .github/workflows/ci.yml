@@ -618,6 +618,11 @@ jobs:
           initial=read(nogpu/'initial-execution.json')
           assert {k:v for k,v in initial.items() if k!='source_sha256'}=={k:v for k,v in current.items() if k!='source_sha256'}
           assert {k for k in initial['source_sha256'] if initial['source_sha256'][k]!=current['source_sha256'][k]}=={'i2_setup.py','launch_i2.py'}
+          prepared=root/'reports/i2-prepared-2026-10-13'
+          for name,h in read(prepared/'sha256.json').items():assert sha256(prepared/name)==h
+          actual=read(prepared/'operations/prepared.json')
+          assert actual['execution_plan_digest']==digest(current) and actual['model_result'] is False
+          assert actual['installation']['frozen_sources']==len(current['source_sha256'])==114
           PY
 
       - name: Rehearse I2 four-arm native projection and partial recovery without private weights

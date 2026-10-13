@@ -1,0 +1,12 @@
+{
+  "at_utc": "2026-10-13T01:46:45.588494+00:00",
+  "attempted_preparation_id": "20261013-014614",
+  "exitcode": 1,
+  "phase": "local argument parsing before local reservation/getpass/SSH",
+  "error": "PowerShell ConvertFrom-Json coerced original_booted_at_proxy to DateTime; native argument became 10/12/2026 18:22:28",
+  "resolution": "Pass the original ISO opening as an explicit literal; use a fresh actual UTC directory",
+  "original_booted_at_proxy": "2026-10-13T01:22:28+00:00",
+  "remote_calls": 0,
+  "new_local_reservation": false,
+  "no_deadline_reset": true
+}

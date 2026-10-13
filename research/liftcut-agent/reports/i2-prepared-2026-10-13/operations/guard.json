@@ -1,0 +1,39 @@
+{
+  "version": "i2-setup-guard-v1",
+  "identity": {
+    "pid": 1279,
+    "argv": [
+      "/root/miniconda3/bin/python",
+      "/root/autodl-tmp/liftcut/staging/i2-prep-20261013-014645/shutdown_guard.py",
+      "--arm",
+      "--deadline",
+      "2026-10-13T03:22:28+00:00",
+      "--receipt",
+      "/root/autodl-tmp/liftcut/preparations/i2-prep-20261013-014645/setup-guard.jsonl"
+    ],
+    "start_ticks": "2397958131"
+  },
+  "argv": [
+    "/root/miniconda3/bin/python",
+    "/root/autodl-tmp/liftcut/staging/i2-prep-20261013-014645/shutdown_guard.py",
+    "--arm",
+    "--deadline",
+    "2026-10-13T03:22:28+00:00",
+    "--receipt",
+    "/root/autodl-tmp/liftcut/preparations/i2-prep-20261013-014645/setup-guard.jsonl"
+  ],
+  "booted_at_proxy": "2026-10-13T01:22:28+00:00",
+  "hard_cutoff": "2026-10-13T03:22:28+00:00",
+  "armed_at_utc": "2026-10-13T01:47:13.597448+00:00",
+  "budget_kind": "no_gpu_preparation",
+  "hourly_cny": 0.1,
+  "reserve_cny": 0.2,
+  "gpu_probe": {
+    "query_returncode": null,
+    "visible_gpu_uuids": [],
+    "unavailable_reason": "autodl_zero_byte_nvidia_smi",
+    "executable_bytes": 0,
+    "gpu_device_nodes": [],
+    "scope": "empty management executable and no NVIDIA device nodes; not a provider billing receipt"
+  }
+}
