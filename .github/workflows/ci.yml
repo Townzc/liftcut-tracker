@@ -864,14 +864,14 @@ jobs:
         working-directory: node_modules/p1m-frozen
         run: |
           npm ci
-          psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1m_ci;'
-          P1_TEST_DATABASE_URL=postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1m_ci npm run test:p1:setup
+          psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1_model_ci;'
+          P1_TEST_DATABASE_URL=postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_model_ci npm run test:p1:setup
       - name: Check P1-M immutable sources, negative gates and actual database/native recovery
         working-directory: node_modules/p1m-frozen
         env:
           P1M_TOKENIZER: ${{ github.workspace }}/research/liftcut-agent/outputs/ci-p1m-tokenizer
-          P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1m_ci
-          P1_RUNTIME_DATABASE_URL: postgresql://liftcut_agent:p1-local-fixture-only@127.0.0.1:5432/liftcut_p1m_ci
+          P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_model_ci
+          P1_RUNTIME_DATABASE_URL: postgresql://liftcut_agent:p1-local-fixture-only@127.0.0.1:5432/liftcut_p1_model_ci
         run: |
           python research/p1-model/prepare.py check > /tmp/p1m-source-check.json
           python -m unittest discover -s research/p1-model -p test_protocol.py -v
