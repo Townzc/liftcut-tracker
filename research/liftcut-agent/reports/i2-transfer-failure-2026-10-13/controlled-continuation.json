@@ -1,0 +1,13 @@
+{
+  "at_utc": "2026-10-13T05:12:01.180689+00:00",
+  "failed_run_id": "20261013-050255",
+  "inspection_sha256": "5934c0b367843ee487ae21c615dd23c6a43f329648600287a4ae9b939387941e",
+  "basis": "Known local TypeError before upload or dispatch; actual remote inspection shows empty stage and no worker/reservation/run/checkout.",
+  "action": "Preserve failed local reservation; permit one reviewed fixed launcher with a fresh run ID inside the original lease.",
+  "automatic_retry": false,
+  "new_run_dispatched": false,
+  "original_opening": "2026-10-13T04:27:00+00:00",
+  "original_power_deadline": "2026-10-13T15:00:00+00:00",
+  "scientific_conditions_changed": false,
+  "model_calls_so_far": 0
+}

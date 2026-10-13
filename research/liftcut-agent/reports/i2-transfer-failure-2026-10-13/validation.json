@@ -1,0 +1,14 @@
+{
+  "full_suite": {
+    "tests": 644,
+    "seconds": 160.35,
+    "status": "PASS",
+    "log_sha256": "a0a6d4b100f9ec4f2a1b930ea153de452922048456ac92768a7b7e4bf3035f02"
+  },
+  "real_transport_integration": "PASS",
+  "old_callback_mutation_detected": true,
+  "frozen_sources": 116,
+  "only_changed_source": "launch_i2_overnight.py",
+  "model_calls": 0,
+  "science_unchanged": true
+}

@@ -1,0 +1,54 @@
+{
+  "controlled-continuation.json": {
+    "bytes": 708,
+    "sha256": "434e8d8ead059baf7bf5393e1bbd3d821bd4492c07b950eaf1b47e2ba1ebb8f9"
+  },
+  "events.jsonl": {
+    "bytes": 736,
+    "sha256": "593ee6998933c20ba7c1ebd5fc4178e71bd0f354c8643433b739a1a9b9b4d49d"
+  },
+  "original-local-reservation.json": {
+    "bytes": 697,
+    "sha256": "73610fd5e99d811030bce6f957b995199d13c604a103f625b516b17de0a3b2b4"
+  },
+  "previous-execution.json": {
+    "bytes": 19858,
+    "sha256": "bda9ac1dcc131004f3982bfedfb4e19751fdbf162039fe61842c33a0c1df4f64"
+  },
+  "regression-old-writer.txt": {
+    "bytes": 1448,
+    "sha256": "0f906c242cc7946224c3862ee9005a6b5cd4177af56a8244f21edea7885c07fb"
+  },
+  "remote-001-verify-original-power-guard.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "remote-001-verify-original-power-guard.stdout": {
+    "bytes": 511,
+    "sha256": "9947f533f1f0d4a19d7e0e48fda3f802db4e2f13502a1ca8ae101a6a0c010532"
+  },
+  "remote-002-create-new-code-stage.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "remote-002-create-new-code-stage.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "inspection/observation.json": {
+    "bytes": 185,
+    "sha256": "047f47d6754a53ed3ffa1aad2cfaa239281efb60ffdd9e85a46447a069688276"
+  },
+  "inspection/remote-read-only.py": {
+    "bytes": 1697,
+    "sha256": "ad9ef8d407d04fe34e70ab7d3a4b1991947713c18de63b230fdfc6cf7766cd69"
+  },
+  "inspection/stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "inspection/stdout": {
+    "bytes": 1163,
+    "sha256": "5934c0b367843ee487ae21c615dd23c6a43f329648600287a4ae9b939387941e"
+  }
+}

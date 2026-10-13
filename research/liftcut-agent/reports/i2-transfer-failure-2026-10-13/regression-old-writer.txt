@@ -1,0 +1,19 @@
+E
+======================================================================
+ERROR: test_full_transport_uploads_and_verifies_before_one_dispatch (test_i2_overnight.OvernightTests.test_full_transport_uploads_and_verifies_before_one_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\research\liftcut-agent\tests\test_i2_overnight.py", line 82, in test_full_transport_uploads_and_verifies_before_one_dispatch
+    result=launch.execute(stage,config,run_id,lease_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\research\liftcut-agent\launch_i2_overnight.py", line 164, in execute
+    for name in spec['files']:upload_verified(directory/name,str(remote_stage/name),sftp,remote_hash,setup,emit)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\research\liftcut-agent\launch_g3_remote.py", line 70, in upload_verified
+    emit("transfer_started", name=local.name, verified_prefix_bytes=start, remaining_bytes=size-start)
+TypeError: old_writer.<locals>.<lambda>() got multiple values for argument 'name'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (errors=1)
