@@ -1,0 +1,15 @@
+{
+  "schema": "liftcut-user-power-confirmation-v1",
+  "source": "user reply in this conversation to the single AutoDL platform-status question for the 2026-10-13 overnight opening",
+  "statement": "已显示关机",
+  "recorded_at_utc": "2026-10-13T17:14:16.187645+00:00",
+  "recorded_time_is_exact_message_time": false,
+  "provider_displayed_power_state": "off",
+  "direct_provider_api_or_screenshot_verified": false,
+  "exact_platform_shutdown_at_utc": null,
+  "shutdown_request_or_command_return_recovered": false,
+  "provider_billing_stopped": "not_separately_verified",
+  "provider_billing_receipt_available": false,
+  "new_ssh_connection_or_reboot_performed": false,
+  "original_capture_and_summary_preserved": true
+}
