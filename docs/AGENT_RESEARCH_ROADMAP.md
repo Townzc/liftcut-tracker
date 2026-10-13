@@ -1,5 +1,14 @@
 # LiftCut-AgentLab research roadmap
 
+Current2026-10-13: user opened no-GPU preparation at01:22:28UTC; original120-minute
+deadline03:22:28 and CNY0.20 retained. AutoDL exposes a zero-byte nvidia-smi executable,
+causing ENOEXEC before preparation guard/installation. Actual inspection found no GPU
+devices or workers. A separately verified original-deadline guard protects the lease.
+Accept only this observed empty-placeholder case, retain other errors, and allow a
+documented continuation with at least30minutes remaining in the original CPU lease;
+GPU startup and all scientific conditions are unchanged. No I2 model calls.
+[No-GPU record](research/2026-10-13-i2-no-gpu-preparation.md) tracks actual readiness.
+
 Current plan,2026-10-13: [I2 startup recovery](research/2026-10-13-i2-startup-recovery.md).
 The new4090 window ended before model dispatch because PATH and slow transfer blocked
 deployment; user confirms platform OFF. No I2 efficacy result. Separate deployment into

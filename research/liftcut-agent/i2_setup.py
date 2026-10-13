@@ -1,17 +1,20 @@
 """Small bootstrap plus single-dispatch I2 setup; safe to upload before checkout."""
 import argparse
+import errno
 from datetime import datetime, timedelta, timezone
 import json
 import hashlib
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import time
 
 PERSIST = Path('/root/autodl-tmp/liftcut')
 PREPARATION_MINUTES = 120
+MINIMUM_PREPARATION_MINUTES = 30
 
 
 def identity(pid):
@@ -100,20 +103,41 @@ def no_visible_gpu():
     except FileNotFoundError:
         return {'query_returncode':None,'visible_gpu_uuids':[],
                 'scope':'nvidia-smi unavailable; no model or CUDA allocation is attempted'}
+    except OSError as error:
+        # AutoDL no-GPU mode can expose an empty executable placeholder. Do not
+        # treat arbitrary permission/format errors or real GPU devices as absent.
+        executable = shutil.which('nvidia-smi')
+        devices = [str(p) for p in Path('/dev').glob('nvidia*')]
+        if (error.errno != errno.ENOEXEC or not executable or devices
+                or not Path(executable).is_file() or Path(executable).stat().st_size != 0):
+            raise
+        return {'query_returncode':None,'visible_gpu_uuids':[],
+                'unavailable_reason':'autodl_zero_byte_nvidia_smi','executable_bytes':0,
+                'gpu_device_nodes':devices,
+                'scope':'empty management executable and no NVIDIA device nodes; not a provider billing receipt'}
+
+
+def preparation_deadline(booted, now):
+    boot = datetime.fromisoformat(booted)
+    if boot.utcoffset() is None or now.utcoffset() is None:
+        raise ValueError('timezone-aware original preparation opening required')
+    hard = boot+timedelta(minutes=PREPARATION_MINUTES)
+    if not boot <= now <= hard-timedelta(minutes=MINIMUM_PREPARATION_MINUTES):
+        raise ValueError('original no-GPU lease needs at least 30 minutes remaining; no reset')
+    return hard
 
 
 def arm_preparation(ops, booted):
     preparation_path(ops)
     boot = datetime.fromisoformat(booted); now = datetime.now(timezone.utc)
-    if sys.platform != 'linux' or boot.utcoffset() is None or not 0 <= (now-boot).total_seconds() < 600:
-        raise ValueError('fresh no-GPU opening required')
+    hard = preparation_deadline(booted,now).isoformat()
+    if sys.platform != 'linux': raise ValueError('Linux no-GPU preparation required')
     if active_workers(): raise ValueError('existing experiment worker; do not prepare')
     probe = no_visible_gpu()
     ops.mkdir(parents=True, exist_ok=False)
     key = hashlib.sha256(boot.astimezone(timezone.utc).isoformat().encode()).hexdigest()[:20]
     with (ops.parent/('opening-'+key+'.json')).open('x') as f:
         json.dump({'ops':str(ops),'booted_at_proxy':booted},f)
-    hard = (boot+timedelta(minutes=PREPARATION_MINUTES)).isoformat()
     argv = [sys.executable,str(Path(__file__).with_name('shutdown_guard.py')),'--arm',
             '--deadline',hard,'--receipt',str(ops/'setup-guard.jsonl')]
     with (ops/'guard.log').open('x') as log:
