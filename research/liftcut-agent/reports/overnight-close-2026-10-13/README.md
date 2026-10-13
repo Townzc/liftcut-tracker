@@ -5,8 +5,14 @@ unchanged15:00UTC deadline. The single observer's SSH channel ended at local tim
 14:59:59.230673 with status-1 and inactive transport. Its local exit0 means logging
 ended normally. One subsequent unauthenticated TCP connection was refused.
 
-**Shutdown request and command return were not captured. Provider power and billing
-status remain unknown pending one requested user confirmation.** The captured event
+**Later user confirmation, recorded2026-10-13T17:14:16.187645Z:** AutoDL displays the
+instance as powered off. [user-power-confirmation.json](user-power-confirmation.json)
+preserves the statement and its source. This is a user-reported platform observation,
+not a direct API check or an exact shutdown timestamp. No further confirmation is pending.
+
+Shutdown request and command return were not captured. Billing timing and the invoice
+remain separately unverified. The original15:08 `summary.json` and seven evidence files
+are unchanged snapshots of what was known then, before the user's reply. The captured event
 file contains only the earlier armed event; it is a pre-shutdown snapshot, not a
 complete final server log. Different host clocks do not establish subsecond ordering.
 
@@ -18,6 +24,7 @@ complete final server log. Different host clocks do not establish subsecond orde
 - `connectivity-observation.json`: one later TCP reachability check, no login or retry.
 - `last-captured-events.jsonl`: UTF-8 text extracted from the stream snapshot, without an independent final remote-file hash.
 - `summary.json`: derived facts, explicit unknowns, duration proxy and seven evidence-file hashes.
+- `user-power-confirmation.json`: separately recorded later human confirmation; does not alter the historical seven-file inventory.
 
 The observer did not modify the lease, send a new shutdown request, create an ACK or
 restart an experiment. No reboot was performed to recover missing logs. At ¥2.18/hour,
