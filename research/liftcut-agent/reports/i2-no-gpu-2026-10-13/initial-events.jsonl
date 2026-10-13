@@ -1,0 +1,11 @@
+{"event":"preparation_reserved","at_utc":"2026-10-13T01:22:48.543920+00:00","pid":28464,"opening":"2026-10-13T01:22:28+00:00","hard_cutoff":"2026-10-13T03:22:28+00:00","hourly_cny":0.1,"reserve_cny":0.2}
+{"event":"ssh_connected","at_utc":"2026-10-13T01:23:09.167703+00:00"}
+{"event":"remote_command","at_utc":"2026-10-13T01:23:11.434734+00:00","label":"create-preparation","returncode":0}
+{"event":"transfer_started","at_utc":"2026-10-13T01:23:12.123460+00:00","name":"i2_setup.py","verified_prefix_bytes":0,"remaining_bytes":15032}
+{"event":"remote_command","at_utc":"2026-10-13T01:23:14.416109+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-13T01:23:14.420113+00:00","name":"i2_setup.py","bytes":15032,"resumed_bytes":0,"sha256":"801653d781c84837871e63b7a6e5d1769460e6b09cb1e566e9f435dd02768b57"}
+{"event":"transfer_started","at_utc":"2026-10-13T01:23:15.103851+00:00","name":"shutdown_guard.py","verified_prefix_bytes":0,"remaining_bytes":2462}
+{"event":"remote_command","at_utc":"2026-10-13T01:23:17.917354+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-13T01:23:17.921361+00:00","name":"shutdown_guard.py","bytes":2462,"resumed_bytes":0,"sha256":"07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0"}
+{"event":"remote_command","at_utc":"2026-10-13T01:23:19.357244+00:00","label":"arm-preparation","returncode":1}
+{"event":"preparation_stopped","at_utc":"2026-10-13T01:23:19.360612+00:00","error_type":"RuntimeError","guard_verified":false,"no_automatic_retry":true}

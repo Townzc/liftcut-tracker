@@ -1,6 +1,7 @@
 """Deployment regressions from the real PATH/slow-transfer startup failure."""
 from contextlib import contextmanager
 from copy import deepcopy
+import errno
 import hashlib
 import io
 import json
@@ -141,6 +142,30 @@ class PreparationTests(unittest.TestCase):
             for key,value in [('bootstrap_python','python3;whoami'),('remote_cached_weight','/etc/passwd'),
                               ('remote_cached_weight','/root/autodl-tmp/liftcut/../outside')]:
                 with self.assertRaises(ValueError):launcher.parse_config({**cfg,key:value})
+
+    def test_autodl_empty_cli_is_supported_only_without_gpu_devices(self):
+        with tempfile.TemporaryDirectory() as directory:
+            executable=Path(directory)/'nvidia-smi';executable.write_bytes(b'')
+            for kind in ('empty','nonempty','gpu_device','permission'):
+                executable.write_bytes(b'ELF' if kind=='nonempty' else b'')
+                error=OSError(errno.EACCES if kind=='permission' else errno.ENOEXEC,'SCRIPTED OS error')
+                devices=[Path('/dev/nvidia0')] if kind=='gpu_device' else []
+                with patch.object(i2_setup.subprocess,'run',side_effect=error), \
+                     patch.object(i2_setup.shutil,'which',return_value=str(executable)), \
+                     patch.object(i2_setup.Path,'glob',return_value=devices):
+                    if kind=='empty':
+                        value=i2_setup.no_visible_gpu()
+                        self.assertEqual(value['unavailable_reason'],'autodl_zero_byte_nvidia_smi')
+                        self.assertEqual(value['gpu_device_nodes'],[])
+                    else:
+                        with self.assertRaises(OSError):i2_setup.no_visible_gpu()
+
+    def test_cpu_continuation_preserves_original_deadline_and_remaining_margin(self):
+        boot='2026-10-13T01:22:28+00:00'
+        hard=i2_setup.preparation_deadline(boot,aware('2026-10-13T02:22:28+00:00'))
+        self.assertEqual(hard,aware('2026-10-13T03:22:28+00:00'))
+        for now in ('2026-10-13T01:22:27+00:00','2026-10-13T02:52:29+00:00'):
+            with self.assertRaises(ValueError):i2_setup.preparation_deadline(boot,aware(now))
 
     def test_preparation_is_bound_to_exact_code_assets_paths_and_original_cpu_clock(self):
         plan={'source_sha256':{'example':'a'*64}};spec={'commit':'c'*40,'files':{'asset-index.json':{'sha256':'d'*64}}}

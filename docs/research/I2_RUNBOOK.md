@@ -33,6 +33,12 @@ remote_python使用固定持久盘环境；远端资产使用/root/autodl-tmp/li
 参考¥0.10/小时、预留¥0.20。无卡0.5核/2GB，只用流式哈希、软件版本和tokenizer，
 不加载基座模型、不创建CUDA上下文。[官方说明](https://www.autodl.com/docs/save_money/)。
 
+现场确认AutoDL可能将nvidia-smi替换为零字节占位文件，调用返回ENOEXEC。
+仅该错误且文件确实为空、没有NVIDIA设备节点时按不可用记录处理；权限错误、
+非空坏文件或GPU设备节点仍拒绝。已知失败的受控继续必须保存失败/无派发证据，
+使用新目录且仍用原CPU开机+120分钟截止，至少留30分钟准备余量；不重置时钟、
+不自动重试。GPU预检的10分钟限制不变。
+
 ```powershell
 & E:/anaconda/python.exe launch_i2.py --prepare-instance --stage-dir outputs/autodl/i2-stage-<commit> --config outputs/autodl/i2-preparation-config-20261013.json --run-id <实际UTC的YYYYMMDD-HHMMSS> --booted-at <本次无卡新开机ISO>
 ```

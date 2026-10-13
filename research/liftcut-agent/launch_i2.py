@@ -20,6 +20,7 @@ import uuid
 from d2_execution import event_file, read, utcnow
 from i2_protocol import BUDGET, EXECUTION, ROOT, I1_COMMIT, aware, deadlines, validate_opening, verify_adapter, verify_plan
 from i2_assets import WEIGHT
+from i2_setup import preparation_deadline
 from i2_receipt_transfer import transfer_receipt, validate_index, validate_receipt
 from launch_g3_remote import Remote, upload_verified
 from launch_g4_overnight import download
@@ -157,8 +158,7 @@ def prepare_instance(stage_dir, config_file, run_id, booted):
     if spec['cached_weight'] and 'remote_cached_weight' not in cfg:
         raise ValueError('compact preparation requires the original cached fixed weight path')
     now=utcnow();boot=aware(booted)
-    if not 0 <= (now-boot).total_seconds() < 600: raise ValueError('fresh no-GPU opening required')
-    hard=boot+timedelta(minutes=120);budget=TimeBudget(hard)
+    hard=preparation_deadline(booted,now);budget=TimeBudget(hard)
     key=digest(boot.astimezone(timezone.utc).isoformat())[:20]
     local=ROOT/'outputs/autodl'/('i2-prep-'+run_id+'-operations')
     local.mkdir(parents=True,exist_ok=False)

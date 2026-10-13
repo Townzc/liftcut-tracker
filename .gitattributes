@@ -22,3 +22,5 @@ research/liftcut-agent/reports/i2-startup-2026-10-13/shutdown-request.json -text
 research/liftcut-agent/reports/i2-startup-2026-10-13/user-power-confirmation.json -text whitespace=cr-at-eol
 research/liftcut-agent/reports/i2-startup-2026-10-13/summary.json -text whitespace=cr-at-eol
 research/liftcut-agent/reports/i2-startup-2026-10-13/sha256.json -text whitespace=cr-at-eol
+# Preserve the original no-GPU inspection receipt bytes.
+research/liftcut-agent/reports/i2-no-gpu-2026-10-13/inspection-result.json -text whitespace=cr-at-eol

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/root/autodl-tmp/liftcut/staging/i2-prep-20261013-012228/i2_setup.py", line 255, in <module>
+    if a.arm_preparation: result = arm_preparation(a.ops,a.booted_at)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/liftcut/staging/i2-prep-20261013-012228/i2_setup.py", line 111, in arm_preparation
+    probe = no_visible_gpu()
+            ^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/liftcut/staging/i2-prep-20261013-012228/i2_setup.py", line 94, in no_visible_gpu
+    probe = subprocess.run(['nvidia-smi','--query-gpu=uuid','--format=csv,noheader'],
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/root/miniconda3/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+OSError: [Errno 8] Exec format error: 'nvidia-smi'
