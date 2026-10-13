@@ -1,0 +1,27 @@
+{"event":"exclusive_local_dispatch_reserved","at_utc":"2026-10-13T00:40:30.384950+00:00","pid":31988,"opening":"2026-10-13T00:36:20+00:00","hard_cutoff":"2026-10-13T02:06:20+00:00"}
+{"event":"ssh_connected","at_utc":"2026-10-13T00:40:44.328550+00:00"}
+{"event":"remote_command","at_utc":"2026-10-13T00:40:45.960906+00:00","label":"create-stage","returncode":0}
+{"event":"transfer_started","at_utc":"2026-10-13T00:40:46.633225+00:00","name":"i2_setup.py","verified_prefix_bytes":0,"remaining_bytes":8415}
+{"event":"remote_command","at_utc":"2026-10-13T00:40:48.575732+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-13T00:40:48.578899+00:00","name":"i2_setup.py","bytes":8415,"resumed_bytes":0,"sha256":"b9573d3a094990229c76e6e6bd24b9af0fcd899640f22eb9a572cd626d003391"}
+{"event":"transfer_started","at_utc":"2026-10-13T00:40:49.268961+00:00","name":"shutdown_guard.py","verified_prefix_bytes":0,"remaining_bytes":2462}
+{"event":"remote_command","at_utc":"2026-10-13T00:40:51.205402+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-13T00:40:51.207400+00:00","name":"shutdown_guard.py","bytes":2462,"resumed_bytes":0,"sha256":"07c35e8059d22492b6c76fa96363bbbf11c00c66c8cd87835205e192a509eef0"}
+{"event":"remote_command","at_utc":"2026-10-13T00:40:52.445176+00:00","label":"arm-original-guard","returncode":0}
+{"event":"independent_guard_verified","at_utc":"2026-10-13T00:40:52.447177+00:00","value":{"version":"i2-setup-guard-v1","identity":{"pid":1635,"argv":["/usr/local/bin/python3","/root/autodl-tmp/liftcut/staging/i2-20261013-004026/shutdown_guard.py","--arm","--deadline","2026-10-13T02:06:20+00:00","--receipt","/root/autodl-tmp/liftcut/runs/i2-ops-20261013-004026/setup-guard.jsonl"],"start_ticks":"2397560057"},"argv":["/usr/local/bin/python3","/root/autodl-tmp/liftcut/staging/i2-20261013-004026/shutdown_guard.py","--arm","--deadline","2026-10-13T02:06:20+00:00","--receipt","/root/autodl-tmp/liftcut/runs/i2-ops-20261013-004026/setup-guard.jsonl"],"booted_at_proxy":"2026-10-13T00:36:20+00:00","hard_cutoff":"2026-10-13T02:06:20+00:00","armed_at_utc":"2026-10-13T00:40:52.763528+00:00"}}
+{"event":"transfer_started","at_utc":"2026-10-13T00:40:53.074707+00:00","name":"asset-index.json","verified_prefix_bytes":0,"remaining_bytes":4507}
+{"event":"remote_command","at_utc":"2026-10-13T00:40:55.017879+00:00","label":"hash","returncode":0}
+{"event":"staged_file_verified","at_utc":"2026-10-13T00:40:55.019879+00:00","name":"asset-index.json","bytes":4507,"resumed_bytes":0,"sha256":"8b0cb1eed7a83380dda1125ece13ebe34cbbed248e330d0ba987290ba156cfa8"}
+{"event":"transfer_started","at_utc":"2026-10-13T00:40:55.684530+00:00","name":"assets.tar.gz","verified_prefix_bytes":0,"remaining_bytes":125135155}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:41:06.463183+00:00","name":"assets.tar.gz","queued_bytes":524288,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":10.780999999959022}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:41:17.317853+00:00","name":"assets.tar.gz","queued_bytes":983040,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":21.625}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:41:28.643075+00:00","name":"assets.tar.gz","queued_bytes":1507328,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":32.95299999997951}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:41:39.566726+00:00","name":"assets.tar.gz","queued_bytes":1966080,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":43.875}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:41:49.754184+00:00","name":"assets.tar.gz","queued_bytes":2621440,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":54.062000000150874}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:00.598797+00:00","name":"assets.tar.gz","queued_bytes":3276800,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":64.90599999995902}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:11.671951+00:00","name":"assets.tar.gz","queued_bytes":3932160,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":75.98399999993853}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:21.953429+00:00","name":"assets.tar.gz","queued_bytes":4456448,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":86.26500000013039}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:31.951362+00:00","name":"assets.tar.gz","queued_bytes":4980736,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":96.26500000013039}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:42.230966+00:00","name":"assets.tar.gz","queued_bytes":5570560,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":106.54700000002049}
+{"event":"transfer_progress","at_utc":"2026-10-13T00:42:52.590600+00:00","name":"assets.tar.gz","queued_bytes":6160384,"total_bytes":125135155,"acknowledged_complete":false,"elapsed_seconds":116.90599999995902}
+{"event":"collector_stopped","at_utc":"2026-10-13T00:43:02.060873+00:00","error_type":"SSHException","message":"Server connection dropped: ","independent_guard_verified":true,"dispatch_may_have_started":false,"no_automatic_reconnect":true,"provider_power_state":"unknown","provider_billing_stopped":"unknown"}

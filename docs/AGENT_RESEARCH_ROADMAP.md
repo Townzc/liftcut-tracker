@@ -1,5 +1,18 @@
 # LiftCut-AgentLab research roadmap
 
+Current plan,2026-10-13: [I2 startup recovery](research/2026-10-13-i2-startup-recovery.md).
+The new4090 window ended before model dispatch because PATH and slow transfer blocked
+deployment; user confirms platform OFF. No I2 efficacy result. Separate deployment into
+a bounded no-GPU preparation (120min/CNY0.20) and a later fresh4090 opening (90min/CNY4).
+Reuse only verified actual cached weights/clean I1 Git base, upload a compact delta,
+and bind a genuine preparation record; GPU execution uploads no assets. Three operating
+sources change; all scientific conditions and48held-out boundary remain fixed.
+636 local tests and full/partial scripted recovery pass. Exact committed compact package
+installation and final Git checks precede notifying no-GPU opening; CPU cloud preparation
+itself remains unrun. [Runbook](research/I2_RUNBOOK.md),
+[new evidence](../research/liftcut-agent/reports/i2-startup-readiness-v2.json).
+Earlier snapshots below remain historical.
+
 Current plan,2026-10-12: [I2 source/ID factorial preparation](research/2026-10-12-i2-source-id-design.md)
 implements the morning report's next offline step. Same preselected fixed checkpoint;
 fresh A/B/C/D each111 dev states, D preselected. Stable evidence aliases and explicit

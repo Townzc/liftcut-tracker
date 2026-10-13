@@ -14,3 +14,11 @@ research/liftcut-agent/reports/g3-seed42-2026-10-03/collector-history/manifest.j
 research/liftcut-agent/reports/g4-startup-2026-10-03/inspection.json -text whitespace=cr-at-eol
 # Preserve the original Windows TCP observation bytes in the closing evidence.
 research/liftcut-agent/reports/overnight-close-2026-10-03/connectivity-observation.json -text whitespace=cr-at-eol
+# Preserve exact captured/hashed bytes for the failed I2 setup window.
+research/liftcut-agent/reports/i2-startup-2026-10-13/controlled-continuation.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/pre-shutdown.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/shutdown-observation.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/shutdown-request.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/user-power-confirmation.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/summary.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-startup-2026-10-13/sha256.json -text whitespace=cr-at-eol

@@ -1,0 +1,9 @@
+{
+  "at_utc": "2026-10-13T00:44:03.687336+00:00",
+  "event": "authorized_setup_abort_request_dispatched",
+  "reason": "transfer rate cannot meet original startup window",
+  "model_dispatches": 0,
+  "booted_at_proxy": "2026-10-13T00:36:20+00:00",
+  "hard_cutoff": "2026-10-13T02:06:20+00:00",
+  "provider_state": "unknown"
+}
