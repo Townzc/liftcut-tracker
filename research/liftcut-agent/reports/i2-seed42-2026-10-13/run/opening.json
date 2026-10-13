@@ -1,0 +1,48 @@
+{
+  "binding": {
+    "version": "i2-window-binding-v1",
+    "code_commit": "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+    "execution_plan_digest": "b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad",
+    "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+    "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+    "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+    "work_cutoff": "2026-10-13T06:34:46.344357+00:00",
+    "collection_cutoff": "2026-10-13T06:54:46.344357+00:00",
+    "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+    "test_episodes": 0,
+    "new_training": false,
+    "power_lease": {
+      "version": "liftcut-research-lease-v1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+      "hourly_cny": 2.18,
+      "reserve_cny": 25,
+      "automatic_shutdown": true,
+      "automatic_reboot": false,
+      "paid_api_calls": 0,
+      "disk_expansion": false,
+      "heldout_tasks_allowed": 0,
+      "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+      "maximum_followup_trials": 2,
+      "final_collection_buffer_minutes": 45
+    }
+  },
+  "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+  "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+  "started_at_utc": "2026-10-13T05:34:46.521842+00:00",
+  "budget": {
+    "hourly_cny": 2.18,
+    "reserve_cny": 4,
+    "setup_minutes": 10,
+    "work_minutes": 60,
+    "collection_minutes": 20,
+    "hard_minutes": 90,
+    "minimum_work_minutes_at_launch": 50,
+    "minimum_collection_minutes_at_launch": 15,
+    "automatic_reboot": false,
+    "paid_api_calls": 0,
+    "disk_expansion": false
+  },
+  "evidence_kind": "model",
+  "guard_path": "/root/autodl-tmp/liftcut/runs/i2-ops-20261013-053401/guard.json"
+}

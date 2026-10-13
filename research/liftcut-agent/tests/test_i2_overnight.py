@@ -19,6 +19,7 @@ from drill_d2_execution import ScriptClock
 from test_research_lease import lease
 from test_d2_launcher import SFTP
 import launch_i2_overnight as launch
+from monitor_coverage_replication import TimeBudget
 
 
 class OvernightTests(unittest.TestCase):
@@ -72,9 +73,14 @@ class OvernightTests(unittest.TestCase):
                     raise AssertionError(label)
             collector=Mock(return_value={'synthetic_transport_only':True})
             paramiko=SimpleNamespace(SSHClient=lambda:client,RejectPolicy=lambda:object())
+            # Patch both clocks, retaining the real deadline checker. Patching
+            # only launch.utcnow leaves TimeBudget's captured default on wall
+            # time, so this fixed historical fixture expires as the night passes.
+            def budget(deadline):return TimeBudget(deadline,now=lambda:start,monotonic=lambda:0)
             with patch.object(launch,'ROOT',root),patch.object(launch,'verify_stage',return_value=spec), \
                  patch.object(launch,'verify_plan',return_value=plan),patch.object(launch,'parse_config',return_value=cfg), \
                  patch.object(launch,'utcnow',return_value=start),patch.object(launch.subprocess,'run'), \
+                 patch.object(launch,'TimeBudget',side_effect=budget), \
                  patch.object(launch,'Remote',Remote),patch.object(launch,'collect',collector), \
                  patch.object(launch,'remote_bytes',side_effect=lambda s,p,b:s.files.get(p)), \
                  patch.object(launch.getpass,'getpass',return_value='SYNTHETIC-NOT-A-CREDENTIAL'), \

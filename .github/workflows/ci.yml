@@ -661,6 +661,28 @@ jobs:
           assert close['shutdown_at_utc']=='2026-10-13T15:00:00+00:00'
           PY
 
+  i2-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: research/liftcut-agent/requirements-tokenizer.txt
+      - name: Install tokenizer-only dependencies (no model weights or paid API)
+        run: pip install -r research/liftcut-agent/requirements-tokenizer.txt
+      - name: Rebuild the frozen development inputs for I2
+        run: |
+          python research/liftcut-agent/fetch_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-i2-tokenizer
+          python research/liftcut-agent/prepare_state_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --output-dir research/liftcut-agent/outputs/ci-i2-diagnostic
+          python research/liftcut-agent/prepare_counterfactual_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --output-dir research/liftcut-agent/outputs/ci-i2-d2
+      - name: Reconstruct all 444 actual I2 traces, token IDs, inverse mappings and five paired comparisons
+        run: |
+          python research/liftcut-agent/analyze_i2_results.py --public-dir research/liftcut-agent/reports/i2-seed42-2026-10-13 --diagnostic-dir research/liftcut-agent/outputs/ci-i2-diagnostic --d2-dir research/liftcut-agent/outputs/ci-i2-d2 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
+          python research/liftcut-agent/analyze_i2_failures.py --public-dir research/liftcut-agent/reports/i2-seed42-2026-10-13 --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -1,0 +1,53 @@
+{
+  "identity": {
+    "pid": 3222,
+    "start_ticks": "1580841294",
+    "argv": [
+      "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+      "/root/autodl-tmp/liftcut/code/acbba44cb16dce519823f2277206a8cdf3fcfca6/research/liftcut-agent/research_lease.py",
+      "--trial-guard",
+      "--target-json",
+      "{\"pid\": 3216, \"start_ticks\": \"1580841277\", \"argv\": [\"/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python\", \"/root/autodl-tmp/liftcut/code/acbba44cb16dce519823f2277206a8cdf3fcfca6/research/liftcut-agent/run_i2_window.py\", \"--model-dir\", \"/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554\", \"--model-manifest\", \"/root/autodl-tmp/liftcut/data/qwen-model-manifest.json\", \"--diagnostic-dir\", \"/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/diagnostic\", \"--d2-dir\", \"/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/d2\", \"--tokenizer-dir\", \"/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/tokenizer\", \"--reference-dir\", \"/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/reference\", \"--output-dir\", \"/root/autodl-tmp/liftcut/runs/i2-run-20261013-053401\", \"--expected-code-commit\", \"acbba44cb16dce519823f2277206a8cdf3fcfca6\", \"--booted-at\", \"2026-10-13T04:27:00+00:00\", \"--trial-started-at\", \"2026-10-13T05:34:46.344357+00:00\", \"--guard-path\", \"/root/autodl-tmp/liftcut/runs/i2-ops-20261013-053401/guard.json\", \"--power-lease\", \"/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json\", \"--execute\"], \"kernel_boot_id\": \"969726ac-7391-4fe7-87a4-2dd957b19c67\"}",
+      "--deadline",
+      "2026-10-13T07:04:46.344357+00:00",
+      "--log",
+      "/root/autodl-tmp/liftcut/runs/i2-run-20261013-053401/trial-watchdog-events.jsonl"
+    ],
+    "kernel_boot_id": "969726ac-7391-4fe7-87a4-2dd957b19c67"
+  },
+  "target": {
+    "pid": 3216,
+    "start_ticks": "1580841277",
+    "argv": [
+      "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+      "/root/autodl-tmp/liftcut/code/acbba44cb16dce519823f2277206a8cdf3fcfca6/research/liftcut-agent/run_i2_window.py",
+      "--model-dir",
+      "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+      "--model-manifest",
+      "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json",
+      "--diagnostic-dir",
+      "/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/diagnostic",
+      "--d2-dir",
+      "/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/d2",
+      "--tokenizer-dir",
+      "/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/tokenizer",
+      "--reference-dir",
+      "/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/reference",
+      "--output-dir",
+      "/root/autodl-tmp/liftcut/runs/i2-run-20261013-053401",
+      "--expected-code-commit",
+      "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+      "--booted-at",
+      "2026-10-13T04:27:00+00:00",
+      "--trial-started-at",
+      "2026-10-13T05:34:46.344357+00:00",
+      "--guard-path",
+      "/root/autodl-tmp/liftcut/runs/i2-ops-20261013-053401/guard.json",
+      "--power-lease",
+      "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json",
+      "--execute"
+    ],
+    "kernel_boot_id": "969726ac-7391-4fe7-87a4-2dd957b19c67"
+  },
+  "deadline": "2026-10-13T07:04:46.344357+00:00"
+}

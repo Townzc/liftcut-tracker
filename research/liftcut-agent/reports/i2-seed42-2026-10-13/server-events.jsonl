@@ -1,0 +1,11 @@
+{"event":"phase_started","at_utc":"2026-10-13T05:34:47.057489+00:00","phase":"evaluate-A"}
+{"event":"phase_completed","at_utc":"2026-10-13T05:45:01.339637+00:00","phase":"evaluate-A"}
+{"event":"phase_started","at_utc":"2026-10-13T05:45:01.522649+00:00","phase":"evaluate-B"}
+{"event":"phase_completed","at_utc":"2026-10-13T05:55:10.601423+00:00","phase":"evaluate-B"}
+{"event":"phase_started","at_utc":"2026-10-13T05:55:10.779791+00:00","phase":"evaluate-C"}
+{"event":"phase_completed","at_utc":"2026-10-13T06:05:31.613756+00:00","phase":"evaluate-C"}
+{"event":"phase_started","at_utc":"2026-10-13T06:05:31.793235+00:00","phase":"evaluate-D"}
+{"event":"phase_completed","at_utc":"2026-10-13T06:16:02.882757+00:00","phase":"evaluate-D"}
+{"event":"phase_started","at_utc":"2026-10-13T06:16:03.060541+00:00","phase":"audit"}
+{"event":"phase_completed","at_utc":"2026-10-13T06:16:45.549826+00:00","phase":"audit"}
+{"event":"backup_ready","at_utc":"2026-10-13T06:16:55.791581+00:00","index":{"version":"i2-backup-v1","binding":{"version":"i2-window-binding-v1","code_commit":"acbba44cb16dce519823f2277206a8cdf3fcfca6","execution_plan_digest":"b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad","reference_digest":"dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1","booted_at_proxy":"2026-10-13T04:27:00+00:00","trial_started_at_utc":"2026-10-13T05:34:46.344357+00:00","work_cutoff":"2026-10-13T06:34:46.344357+00:00","collection_cutoff":"2026-10-13T06:54:46.344357+00:00","hard_cutoff":"2026-10-13T07:04:46.344357+00:00","test_episodes":0,"new_training":false,"power_lease":{"version":"liftcut-research-lease-v1","booted_at_proxy":"2026-10-13T04:27:00+00:00","shutdown_at_utc":"2026-10-13T15:00:00+00:00","hourly_cny":2.18,"reserve_cny":25,"automatic_shutdown":true,"automatic_reboot":false,"paid_api_calls":0,"disk_expansion":false,"heldout_tasks_allowed":0,"authorization":"2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report","maximum_followup_trials":2,"final_collection_buffer_minutes":45}},"evidence_kind":"model","status":"complete","archives":[{"path":"evidence.tar.gz","archive":"evidence.tar.gz","bytes":125180025,"sha256":"886171dc475186d132ccb8551c1166361cc7380761c73a8afbf42f72d8aaa08f"}]}}

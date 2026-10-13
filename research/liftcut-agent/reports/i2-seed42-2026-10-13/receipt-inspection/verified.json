@@ -1,0 +1,140 @@
+{
+  "version": "i2-separate-receipt-verification-v1",
+  "at_utc": "2026-10-13T06:46:56.826319+00:00",
+  "binding": {
+    "version": "i2-window-binding-v1",
+    "code_commit": "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+    "execution_plan_digest": "b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad",
+    "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+    "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+    "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+    "work_cutoff": "2026-10-13T06:34:46.344357+00:00",
+    "collection_cutoff": "2026-10-13T06:54:46.344357+00:00",
+    "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+    "test_episodes": 0,
+    "new_training": false,
+    "power_lease": {
+      "version": "liftcut-research-lease-v1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+      "hourly_cny": 2.18,
+      "reserve_cny": 25,
+      "automatic_shutdown": true,
+      "automatic_reboot": false,
+      "paid_api_calls": 0,
+      "disk_expansion": false,
+      "heldout_tasks_allowed": 0,
+      "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+      "maximum_followup_trials": 2,
+      "final_collection_buffer_minutes": 45
+    }
+  },
+  "receipt_sha256": "73cb287f2997c1f6a42824f44a653018128b7c2d23d3c229909e6eb0476dcc4e",
+  "receipt": {
+    "version": "i2-backup-receipt-v1",
+    "binding": {
+      "version": "i2-window-binding-v1",
+      "code_commit": "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+      "execution_plan_digest": "b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad",
+      "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+      "work_cutoff": "2026-10-13T06:34:46.344357+00:00",
+      "collection_cutoff": "2026-10-13T06:54:46.344357+00:00",
+      "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+      "test_episodes": 0,
+      "new_training": false,
+      "power_lease": {
+        "version": "liftcut-research-lease-v1",
+        "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+        "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+        "hourly_cny": 2.18,
+        "reserve_cny": 25,
+        "automatic_shutdown": true,
+        "automatic_reboot": false,
+        "paid_api_calls": 0,
+        "disk_expansion": false,
+        "heldout_tasks_allowed": 0,
+        "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+        "maximum_followup_trials": 2,
+        "final_collection_buffer_minutes": 45
+      }
+    },
+    "index_digest": "ba65731b5e120807c833b39ec3ab9fb7694170e9dc8084401ed3327441c2964f",
+    "evidence_kind": "model",
+    "run_status": "complete",
+    "all_inventory_files_verified": true,
+    "complete_study_replayed": true,
+    "episodes_replayed": 444,
+    "adapter_files_verified": true,
+    "token_ids_verified": true,
+    "projection_inputs_verified": true,
+    "inverse_evidence_mapping_verified": true,
+    "model_result": true,
+    "test_episodes": 0,
+    "new_training": false,
+    "verified_files": 124
+  },
+  "index": {
+    "version": "i2-backup-v1",
+    "binding": {
+      "version": "i2-window-binding-v1",
+      "code_commit": "acbba44cb16dce519823f2277206a8cdf3fcfca6",
+      "execution_plan_digest": "b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad",
+      "reference_digest": "dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "trial_started_at_utc": "2026-10-13T05:34:46.344357+00:00",
+      "work_cutoff": "2026-10-13T06:34:46.344357+00:00",
+      "collection_cutoff": "2026-10-13T06:54:46.344357+00:00",
+      "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+      "test_episodes": 0,
+      "new_training": false,
+      "power_lease": {
+        "version": "liftcut-research-lease-v1",
+        "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+        "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+        "hourly_cny": 2.18,
+        "reserve_cny": 25,
+        "automatic_shutdown": true,
+        "automatic_reboot": false,
+        "paid_api_calls": 0,
+        "disk_expansion": false,
+        "heldout_tasks_allowed": 0,
+        "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+        "maximum_followup_trials": 2,
+        "final_collection_buffer_minutes": 45
+      }
+    },
+    "evidence_kind": "model",
+    "status": "complete",
+    "archives": [
+      {
+        "path": "evidence.tar.gz",
+        "archive": "evidence.tar.gz",
+        "bytes": 125180025,
+        "sha256": "886171dc475186d132ccb8551c1166361cc7380761c73a8afbf42f72d8aaa08f"
+      }
+    ]
+  },
+  "actual_remote_weights_verified": true,
+  "original_server_status": {
+    "off_instance_acknowledged": false,
+    "hard_cutoff": "2026-10-13T07:04:46.344357+00:00",
+    "provider_billing_stopped": "unknown"
+  },
+  "original_window_close": {
+    "at_utc": "2026-10-13T06:36:55.793065+00:00",
+    "off_instance_acknowledged": false,
+    "experiment_status": "complete",
+    "power_action": "retain_under_original_overnight_guard",
+    "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+    "provider_billing_stopped": false
+  },
+  "original_server_events": "{\"event\":\"phase_started\",\"at_utc\":\"2026-10-13T05:34:47.057489+00:00\",\"phase\":\"evaluate-A\"}\n{\"event\":\"phase_completed\",\"at_utc\":\"2026-10-13T05:45:01.339637+00:00\",\"phase\":\"evaluate-A\"}\n{\"event\":\"phase_started\",\"at_utc\":\"2026-10-13T05:45:01.522649+00:00\",\"phase\":\"evaluate-B\"}\n{\"event\":\"phase_completed\",\"at_utc\":\"2026-10-13T05:55:10.601423+00:00\",\"phase\":\"evaluate-B\"}\n{\"event\":\"phase_started\",\"at_utc\":\"2026-10-13T05:55:10.779791+00:00\",\"phase\":\"evaluate-C\"}\n{\"event\":\"phase_completed\",\"at_utc\":\"2026-10-13T06:05:31.613756+00:00\",\"phase\":\"evaluate-C\"}\n{\"event\":\"phase_started\",\"at_utc\":\"2026-10-13T06:05:31.793235+00:00\",\"phase\":\"evaluate-D\"}\n{\"event\":\"phase_completed\",\"at_utc\":\"2026-10-13T06:16:02.882757+00:00\",\"phase\":\"evaluate-D\"}\n{\"event\":\"phase_started\",\"at_utc\":\"2026-10-13T06:16:03.060541+00:00\",\"phase\":\"audit\"}\n{\"event\":\"phase_completed\",\"at_utc\":\"2026-10-13T06:16:45.549826+00:00\",\"phase\":\"audit\"}\n{\"event\":\"backup_ready\",\"at_utc\":\"2026-10-13T06:16:55.791581+00:00\",\"index\":{\"version\":\"i2-backup-v1\",\"binding\":{\"version\":\"i2-window-binding-v1\",\"code_commit\":\"acbba44cb16dce519823f2277206a8cdf3fcfca6\",\"execution_plan_digest\":\"b25734f9ecba62f0d91aa012af056a99d9803e864a9c23a3c93088e3f225c4ad\",\"reference_digest\":\"dc0af2f9fca808c44e247fa3e1f11001ec9a7bad8102f972aceab8e8c03f16e1\",\"booted_at_proxy\":\"2026-10-13T04:27:00+00:00\",\"trial_started_at_utc\":\"2026-10-13T05:34:46.344357+00:00\",\"work_cutoff\":\"2026-10-13T06:34:46.344357+00:00\",\"collection_cutoff\":\"2026-10-13T06:54:46.344357+00:00\",\"hard_cutoff\":\"2026-10-13T07:04:46.344357+00:00\",\"test_episodes\":0,\"new_training\":false,\"power_lease\":{\"version\":\"liftcut-research-lease-v1\",\"booted_at_proxy\":\"2026-10-13T04:27:00+00:00\",\"shutdown_at_utc\":\"2026-10-13T15:00:00+00:00\",\"hourly_cny\":2.18,\"reserve_cny\":25,\"automatic_shutdown\":true,\"automatic_reboot\":false,\"paid_api_calls\":0,\"disk_expansion\":false,\"heldout_tasks_allowed\":0,\"authorization\":\"2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report\",\"maximum_followup_trials\":2,\"final_collection_buffer_minutes\":45}},\"evidence_kind\":\"model\",\"status\":\"complete\",\"archives\":[{\"path\":\"evidence.tar.gz\",\"archive\":\"evidence.tar.gz\",\"bytes\":125180025,\"sha256\":\"886171dc475186d132ccb8551c1166361cc7380761c73a8afbf42f72d8aaa08f\"}]}}\n{\"event\":\"experiment_closed_instance_retained\",\"at_utc\":\"2026-10-13T06:36:55.793514+00:00\",\"acknowledged\":false}\n",
+  "original_controller_consumption": false,
+  "separate_read_only_validator": true,
+  "new_receipts_created": 0,
+  "remote_files_modified": 0,
+  "new_model_calls": 0,
+  "deadline_extended": false
+}
