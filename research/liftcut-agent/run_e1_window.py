@@ -46,15 +46,29 @@ def finalise(run, ops, status, failures, b, clock, *, scripted=False,
                  'original_collection_cutoff': b['collection_cutoff'], 'provider_billing_stopped': 'unknown'})
     finally:
         # Archive/ACK/log failures cannot bypass the already authorized shutdown.
-        try:
-            dump_new(run / 'window-close.json', {'at_utc': clock.now().isoformat(),
+        if 'power_lease' in b:
+            verify_guard(ops, b)
+            dump_new(run / 'window-close.json', {'at_utc': clock.now().isoformat(), 'binding': b,
                 'experiment_status': status, 'off_instance_acknowledged': acknowledged,
-                'power_action': 'shutdown_after_backup_or_original_cutoff', 'provider_billing_stopped': 'unknown'})
-            event_file(run / 'events.jsonl', 'shutdown_about_to_be_requested', backup_acknowledged=acknowledged)
-            sleep(min(2, max(0, (aware(b['hard_cutoff']) - clock.now()).total_seconds())))
-        finally:
-            power(ops, 'E1_complete_or_failed_original_window')
+                'power_action': 'retained_under_original_day_lease',
+                'shutdown_at_utc': b['power_shutdown_at_utc'], 'provider_billing_stopped': 'unknown'})
+            event_file(run / 'events.jsonl', 'trial_closed_power_retained', backup_acknowledged=acknowledged,
+                       original_shutdown_at_utc=b['power_shutdown_at_utc'])
+        else:
+            close_standalone(run, ops, status, acknowledged, b, clock, sleep, power)
     return index
+
+
+def close_standalone(run, ops, status, acknowledged, b, clock, sleep, power):
+    """Preserve the separately authorized original two-hour standalone mode."""
+    try:
+        dump_new(run / 'window-close.json', {'at_utc': clock.now().isoformat(),
+            'experiment_status': status, 'off_instance_acknowledged': acknowledged,
+            'power_action': 'shutdown_after_backup_or_original_cutoff', 'provider_billing_stopped': 'unknown'})
+        event_file(run / 'events.jsonl', 'shutdown_about_to_be_requested', backup_acknowledged=acknowledged)
+        sleep(min(2, max(0, (aware(b['hard_cutoff']) - clock.now()).total_seconds())))
+    finally:
+        power(ops, 'E1_complete_or_failed_original_window')
 
 
 def phases(a, b):

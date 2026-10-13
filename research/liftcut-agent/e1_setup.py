@@ -53,6 +53,9 @@ def dispatch(a):
                                  stderr=subprocess.STDOUT, start_new_session=True)
     value = {'opening': opening, 'controller_pid': child.pid, 'controller_identity': identity(child.pid),
              'original_deadlines_preserved': True, 'new_training': False}
+    if 'power_lease' in b:
+        from day_lease import start_trial_guard
+        value['trial_guard'] = start_trial_guard(a.ops, value['controller_identity'], b['hard_cutoff'])
     dump_new(a.ops / 'launch.json', value)
     return value
 

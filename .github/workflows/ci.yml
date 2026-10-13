@@ -740,7 +740,7 @@ jobs:
           from pathlib import Path
           r=Path('research/liftcut-agent')
           actual=json.loads((r/'outputs/ci-e1-runtime/readiness.json').read_text())
-          expected=json.loads((r/'reports/e1-execution-readiness-v1.json').read_text())
+          expected=json.loads((r/'reports/e1-execution-readiness-v2.json').read_text())
           for key in ('source_sha256','frozen_execution_digest','scripted_fixture_plan_digest','arms',
                       'model_result','new_model_calls','reserved_task_payloads_read',
                       'development_original_tasks','development_copies','full_scripted_episodes'):
@@ -752,6 +752,29 @@ jobs:
           assert not receipt['model_result'] and not receipt['actual_external_weight_verified']
           for item in json.loads((r/'reports/e1-data-exposure-audit-v1.json').read_text())['source_evidence']:
               assert hashlib.sha256((r/item['path']).read_bytes()).hexdigest()==item['sha256']
+          PY
+
+      - name: Rehearse original E1 trial limits inside the separate day lease
+        run: |
+          python research/liftcut-agent/prepare_e1_execution.py --drill --day --output-dir research/liftcut-agent/outputs/ci-e1-day --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          r=Path('research/liftcut-agent')
+          sys.path.insert(0,str(r))
+          actual=json.loads((r/'outputs/ci-e1-day/readiness.json').read_text())
+          expected=json.loads((r/'reports/e1-day-readiness-v1.json').read_text())
+          for key in ('source_sha256','frozen_execution_digest','scripted_fixture_plan_digest','arms',
+                      'model_result','new_model_calls','reserved_task_payloads_read',
+                      'development_original_tasks','development_copies','full_scripted_episodes','power_mode'):
+              assert actual[key]==expected[key],key
+          assert not actual['actual_parent_weight_verified'] and not actual['complete_scripted_delta_restore']
+          receipt=json.loads((r/'outputs/ci-e1-day/restored/off-instance-backup.json').read_text())
+          assert receipt['episodes_replayed']==0 and not receipt['complete_study_replayed']
+          assert not receipt['model_result'] and not receipt['actual_external_weight_verified']
+          from analyze_prior_lease import analyze
+          assert analyze()==json.loads((r/'reports/prior-lease-efficiency-20261013.json').read_text())
           PY
 
       - name: Reject altered E1 native tokens, inverse mappings, episodes and archive bytes

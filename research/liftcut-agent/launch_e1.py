@@ -27,7 +27,7 @@ from monitor_coverage_replication import TimeBudget, remote_bytes, json_lines, p
 from server_workspace import command, dump_new, sha256
 
 PERSIST = PurePosixPath('/root/autodl-tmp/liftcut')
-BOOTSTRAP = ('e1_power.py', 'shutdown_guard.py', 'd2_bundle.py')
+BOOTSTRAP = ('e1_power.py', 'shutdown_guard.py', 'd2_bundle.py', 'day_lease.py', 'gpu_telemetry.py')
 
 
 def stage(output, commit, ref):
@@ -110,7 +110,26 @@ def _collect(sftp, cfg, plan, opening, budget, emit):
         raw = remote_bytes(sftp, cfg['remote_run'] + '/backup-copy-status.json', budget)
         if raw and consumed is None:
             value = json.loads(raw); persist_json(cfg['operations'] / 'backup-copy-status.json', value)
-            consumed = value['off_instance_acknowledged']; emit('server_receipt_observed', value=value)
+            consumed = value['off_instance_acknowledged']
+            if type(consumed) is not bool:
+                raise ValueError('server consumption must be an observed boolean')
+            emit('server_receipt_observed', value=value)
+        if 'power_lease' in b and sent is not None and consumed is not None:
+            raw = remote_bytes(sftp, cfg['remote_run'] + '/window-close.json', budget)
+            if raw:
+                close = json.loads(raw)
+                if (close['binding'] != b or close['off_instance_acknowledged'] is not consumed
+                        or close['experiment_status'] != index['status']
+                        or close['power_action'] != 'retained_under_original_day_lease'
+                        or close['shutdown_at_utc'] != b['power_shutdown_at_utc']):
+                    raise ValueError('original day trial closure differs')
+                persist_json(cfg['operations'] / 'window-close.json', close)
+                telemetry = remote_bytes(sftp, cfg['remote_ops'] + '/gpu-samples.jsonl', budget, limit=16_777_216)
+                if telemetry is not None:
+                    (cfg['operations'] / 'gpu-samples-at-collection.jsonl').write_bytes(telemetry)
+                return {'status': 'trial_closed_power_retained', 'receipt_transfer': sent,
+                        'server_consumed': consumed, 'power_action': close['power_action'],
+                        'shutdown_at_utc': b['power_shutdown_at_utc'], 'provider_billing_stopped': 'unknown'}
         # These are observations, not inferences from a successful local exit.
         for filename in ('shutdown-request.json', 'shutdown-return.json'):
             target = cfg['operations'] / filename

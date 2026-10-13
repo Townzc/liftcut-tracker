@@ -1,0 +1,95 @@
+{
+  "version": "liftcut-prior-lease-efficiency-v1",
+  "evidence_kind": "retrospective_published_timing",
+  "phases": [
+    {
+      "study": "i2",
+      "arm": "A",
+      "inference_wall_seconds": 588.1437403913587,
+      "evaluation_wall_seconds_including_load": 601.6203284524381
+    },
+    {
+      "study": "i2",
+      "arm": "B",
+      "inference_wall_seconds": 585.2860077209771,
+      "evaluation_wall_seconds_including_load": 596.9125131331384
+    },
+    {
+      "study": "i2",
+      "arm": "C",
+      "inference_wall_seconds": 597.4668254423887,
+      "evaluation_wall_seconds_including_load": 608.6588917765766
+    },
+    {
+      "study": "i2",
+      "arm": "D",
+      "inference_wall_seconds": 605.4189427103847,
+      "evaluation_wall_seconds_including_load": 618.7266634553671
+    },
+    {
+      "study": "i3",
+      "arm": "C",
+      "inference_wall_seconds": 70.82553785480559,
+      "evaluation_wall_seconds_including_load": 82.34464588202536
+    },
+    {
+      "study": "i3",
+      "arm": "D",
+      "inference_wall_seconds": 71.50112411752343,
+      "evaluation_wall_seconds_including_load": 84.75358963012695
+    }
+  ],
+  "evaluation_wall_seconds_including_load_sum": 2593.0166323296726,
+  "evaluation_wall_fraction_of_lease_proxy": 0.06827459604580897,
+  "same_opening_cost_proxy_cny": 22.99853412976111,
+  "lease_elapsed_seconds_proxy": 37979.230673,
+  "last_collector_finished_at_utc": "2026-10-13T08:37:44.473843+00:00",
+  "end_proxy_utc": "2026-10-13T14:59:59.230673+00:00",
+  "post_collection_reserved_wall_seconds": 22934.75683,
+  "post_collection_reserved_cost_proxy_cny": 13.888269413722222,
+  "gpu_sm_utilization": null,
+  "ttft_seconds": null,
+  "inter_token_latency_seconds": null,
+  "model_calls_in_this_analysis": 0,
+  "sources": {
+    "reports/overnight-close-2026-10-13/summary.json": {
+      "sha256": "c9d0fcedd1c01c343aa773c806dc32fbccc60a0d747a9a590c723c5c63407eed",
+      "bytes": 4697
+    },
+    "reports/i2-seed42-2026-10-13/run/evaluation/A/finished.json": {
+      "sha256": "8151cd455ae26ba585d6c509eae85fd8c6ac7c9d5ee29b196b8d7213276d910a",
+      "bytes": 1467
+    },
+    "reports/i2-seed42-2026-10-13/run/evaluation/B/finished.json": {
+      "sha256": "6d352ea95ab1edc6ced8c13daeb7aaeb8fcb3fa0bb23f6fc467a5814d329589b",
+      "bytes": 1467
+    },
+    "reports/i2-seed42-2026-10-13/run/evaluation/C/finished.json": {
+      "sha256": "49b2e3b786a72384b73a0a843b9ada6848aee6fadbe29fcdcb20731d6460c779",
+      "bytes": 1467
+    },
+    "reports/i2-seed42-2026-10-13/run/evaluation/D/finished.json": {
+      "sha256": "a5bdc8a05cc7cb93e2e1b63b64e0602c06af27f9638a7eac55c61a36beb47a2a",
+      "bytes": 1467
+    },
+    "reports/i3-seed42-2026-10-13/run/evaluation/C/finished.json": {
+      "sha256": "02a90edaf05a7a81799d258a713dc96d6dcf7e404d3afa01faf25d25d601e6af",
+      "bytes": 1498
+    },
+    "reports/i3-seed42-2026-10-13/run/evaluation/D/finished.json": {
+      "sha256": "70f1e630532c9200c815857e42c79c07b7833d44bd3bb499e659eb75e5e1f218",
+      "bytes": 1498
+    },
+    "reports/i3-seed42-2026-10-13/operations.jsonl": {
+      "sha256": "095c08a4956400148840385d6cf617f5d6eec36822ec1543c3a58b60bf395182",
+      "bytes": 11619
+    }
+  },
+  "limits": [
+    "Evaluation process wall time is not exact GPU-active time or GPU utilization.",
+    "The post-collection interval included local development, CI and user-authorized retention; it is not measured GPU idle time.",
+    "UTC and process timers have different scopes; no exhaustive phase partition is inferred.",
+    "Costs are overlapping subinterval proxies of one opening, not additive fees or an invoice.",
+    "No E1 task payload, private weight, live server or model is read by this analysis."
+  ]
+}
