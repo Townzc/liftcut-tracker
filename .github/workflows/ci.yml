@@ -683,6 +683,24 @@ jobs:
           python research/liftcut-agent/analyze_i2_results.py --public-dir research/liftcut-agent/reports/i2-seed42-2026-10-13 --diagnostic-dir research/liftcut-agent/outputs/ci-i2-diagnostic --d2-dir research/liftcut-agent/outputs/ci-i2-d2 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
           python research/liftcut-agent/analyze_i2_failures.py --public-dir research/liftcut-agent/reports/i2-seed42-2026-10-13 --check
 
+      - name: Rehearse I3 ID diagnostics with scripted calls and explicit partial recovery
+        run: |
+          python research/liftcut-agent/prepare_i3.py --drill --output-dir research/liftcut-agent/outputs/ci-i3-drill --d2-dir research/liftcut-agent/outputs/ci-i2-d2 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path('research/liftcut-agent')
+          actual=json.loads((r/'outputs/ci-i3-drill/readiness.json').read_text())
+          expected=json.loads((r/'reports/i3-readiness-v1.json').read_text())
+          # Archive timestamps differ. CI deliberately has no private weights.
+          expected.update(actual_parent_weight_verified=False,complete_scripted_delta_restore=False)
+          actual.pop('delta_archive_bytes');expected.pop('delta_archive_bytes')
+          assert actual==expected and not actual['model_result']
+          receipt=json.loads((r/'outputs/ci-i3-drill/restored/off-instance-backup.json').read_text())
+          assert receipt['episodes_replayed']==0 and not receipt['complete_study_replayed']
+          assert not receipt['actual_external_weight_verified'] and not receipt['archive_is_self_contained']
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
