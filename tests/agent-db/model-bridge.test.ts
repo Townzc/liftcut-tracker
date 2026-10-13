@@ -6,7 +6,7 @@ import { localDatabase, runtimeUrl } from "../../research/p1-application/evidenc
 import { cases } from "../../research/p1-application/cases";
 import { ApplicationTools, publicState, LIMITS } from "../../research/p1-model/contract";
 import { createCase, parseReply, step, scripted } from "../../research/p1-model/engine";
-import { checkData, semantic } from "../../research/p1-model/replay";
+import { checkData, semantic, sourceTimeZone } from "../../research/p1-model/replay";
 import { snapshot } from "../../research/p1-model/database";
 
 const db = new Pool({ connectionString: localDatabase().toString() });
@@ -94,4 +94,23 @@ test("raw PostgreSQL microseconds are kept for exact profile hash reconstruction
   checkData(data);
   const changed = clone(data); changed.settings_json.updated_at = "2000-01-01T00:00:00+00:00";
   assert.throws(() => checkData(changed));
+});
+
+test("restore recovers the recorded SQL timezone without changing timestamp or profile hash", async () => {
+  const source = new Pool({ connectionString: localDatabase().toString(), options: "-c TimeZone=UTC-05:30" });
+  const agent = new Pool({ connectionString: runtimeUrl(), options: "-c TimeZone=UTC-05:30" });
+  const utc = new Pool({ connectionString: localDatabase().toString(), options: "-c TimeZone=UTC" });
+  let restored: Pool | undefined;
+  try {
+    const c = await createCase(source, new AgentStore(agent), 0);
+    const original = await snapshot(source, c.owner, c.runId); checkData(original);
+    const different = await snapshot(utc, c.owner, c.runId);
+    assert.deepEqual(different.settings, original.settings);
+    assert.throws(() => checkData(different));
+    assert.equal(sourceTimeZone([original]), "UTC-05:30");
+    assert.throws(() => sourceTimeZone([original, different]), /mixed source offsets/);
+    restored = new Pool({ connectionString: localDatabase().toString(), options: `-c TimeZone=${sourceTimeZone([original])}` });
+    const recovered = await snapshot(restored, c.owner, c.runId);
+    assert.deepEqual(recovered, original); checkData(recovered);
+  } finally { await restored?.end(); await source.end(); await agent.end(); await utc.end(); }
 });

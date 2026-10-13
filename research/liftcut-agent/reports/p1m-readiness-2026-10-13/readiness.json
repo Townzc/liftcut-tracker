@@ -2,7 +2,7 @@
   "stage": "CPU_PREPARATION_COMPLETE_PENDING_EXACT_CI",
   "study": "p1-model-tools-v1",
   "source_count": 189,
-  "manifest_sha256": "972476597e7bdebc045897c91a3e9e9c6bf5167f9f897be40664181da764c771",
+  "manifest_sha256": "fcf572c12b1746f96693a5b58ab9b483b1cd1d0309e2dc7bd11b981209a06043",
   "historical_e1_frozen_sources_unchanged": 146,
   "scripted_workflows": 24,
   "scripted_decisions": 120,
@@ -25,13 +25,13 @@
     "max_requested_prompt_tokens": 1896,
     "planned_process_restarts": 3
   },
-  "engineering_tests": 31,
+  "engineering_tests": 32,
   "protocol_native_negative_tests": 11,
   "stage_install": {
     "source_count": 189,
     "cli_imports": 4,
-    "bytes": 417116,
-    "sha256": "79798a1d8ce72a784a7eda7271f4d1ccb9743dd655c0a6dcf326590116b17831",
+    "bytes": 417668,
+    "sha256": "38ea747f38823a7591be6611d2a70c0fc69eab0a867f40a5cea652d2a1d32715",
     "assets_uploaded": 0
   },
   "limits": {
@@ -56,5 +56,6 @@
     "each_matches_existing_git_blob": true,
     "original_cpu_evidence_preserved": true,
     "record": "source-portability.json"
-  }
+  },
+  "ci_portability_fix": "ci-portability.json"
 }

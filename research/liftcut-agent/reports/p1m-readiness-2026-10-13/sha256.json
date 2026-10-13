@@ -24,8 +24,8 @@
     "sha256": "318dd338d8a8f1dab137b6f793985f2da505287431cc30c9ac6d472e2d0395b1"
   },
   "readiness.json": {
-    "bytes": 1900,
-    "sha256": "d362cee0dedf3b9c38b3abe0d0f8dea2c5a69eed70fb0b095ac71822eb8dbf5a"
+    "bytes": 1947,
+    "sha256": "f365869b9684ef10a5c61f637597395bf0521d6028269ff528dacd67db15273a"
   },
   "replay-process.json": {
     "bytes": 385,
@@ -42,5 +42,25 @@
   "source-portability.json": {
     "bytes": 4873,
     "sha256": "f74ac88a3e612b3cb8b3a27198a2925fef7ebfa51e5d2ca0a73ba4b9da38411d"
+  },
+  "timezone-engineering.log": {
+    "bytes": 3256,
+    "sha256": "6a5316a41dacf2d66d1a4dbc5e9e0a342ec8307747afe9e45fd223c179d696fa"
+  },
+  "timezone-database-replay.json": {
+    "bytes": 304,
+    "sha256": "22b519a6cd9787c4b468707c3cc5911314e566584b5bfac7912db9a4108b91c4"
+  },
+  "timezone-replay-process.json": {
+    "bytes": 418,
+    "sha256": "150f67e869f3a639330d83aaedbe07f1022937c89835c00a0347ac0c1e6b65e3"
+  },
+  "timezone-backup-receipt.json": {
+    "bytes": 889,
+    "sha256": "43501b8bf2baf53a3331e3aab33a04c32d0eb15b641295280ec58ab114abf4eb"
+  },
+  "ci-portability.json": {
+    "bytes": 1510,
+    "sha256": "0bf308cee516e3e66791a496fed234d55fba195466db1478d77027e4e71d5780"
   }
 }

@@ -878,7 +878,11 @@ jobs:
         if: always()
         with:
           name: p1-browser-evidence
-          path: research/liftcut-agent/outputs/p1-browser*
+          path: |
+            research/liftcut-agent/outputs/p1-browser*
+            research/liftcut-agent/outputs/ci-p1m/
+            research/liftcut-agent/outputs/ci-p1m-restored/
+            research/liftcut-agent/outputs/ci-p1m-published-restored/
 
   quality:
     runs-on: ubuntu-latest

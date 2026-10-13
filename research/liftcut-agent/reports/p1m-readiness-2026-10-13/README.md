@@ -16,7 +16,7 @@ identity provider nor an AutoDL model was contacted.
 - `engineering.log`: 31 real database / API / model-bridge checks.
 - `protocol-tests.log`: 11 native, original-deadline, partial and failure checks.
 - `lint.log`: zero errors, two unchanged historical warnings.
-- `sha256.json`: eleven public file hashes, including source portability; this explanatory README is not
+- `sha256.json`: sixteen public file hashes, including source and SQL portability; this explanatory README is not
   an experimental observation.
 
 The three application restarts are **planned checkpointed process exits**, not
@@ -35,3 +35,5 @@ verification claim. The original local receipt records that separate actual chec
 See [design, failures and next trigger](../../../../docs/research/2026-10-13-p1m-readiness.md).
 
 最终源码跨平台核验另见[source-portability.json](source-portability.json)：15个既有依赖只做CRLF→LF规范化，每个等于既有Git对象，旧146源与原CPU证据不改。当前代码包417116字节，原417512字节包保留在ignored输出；当前SHA清单共11份文件。
+
+首次Linux CI差异与修正：[ci-portability.json](ci-portability.json)。原31工程日志保留，新增`timezone-engineering.log`为32检查，`timezone-*.json`记录原公开数据库在固定源偏移下的再次真实恢复；原有归档和回执未替换。最终189源码包417668字节，历史包均保留。

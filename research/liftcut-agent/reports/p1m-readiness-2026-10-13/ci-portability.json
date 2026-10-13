@@ -1,0 +1,26 @@
+{
+  "recorded_at_utc": "2026-10-13T22:30:02.550662+00:00",
+  "failed_checked_head": "f92efa1be56c5abb6346287cfec4d25c14b1d9c9",
+  "ci_job": "https://github.com/Townzc/liftcut-tracker/actions/runs/38477455991/job/115571559407",
+  "original_ci_log_sha256": "e8aacac3bce70bb242a00b89f597657fce687994ac96ed2bfe41a31061c63522",
+  "new_ci_cpu_cases_passed": 24,
+  "new_ci_database_restore_passed": true,
+  "failed_stage": "restore original Windows-produced public database",
+  "source_serialized_offset": "-07:00",
+  "ci_database_timezone": "Etc/UTC",
+  "cause": "PostgreSQL to_jsonb(timestamptz) renders the session timezone; same absolute time gives different profile JSON and hash.",
+  "fix": "Recover the consistent offset from all original profile JSON values and bind only replay connection TimeZone. Preserve all original timestamps, hashes and stored data. Reject mixed offsets.",
+  "real_regression_cases": [
+    "original +05:30 database snapshot validates",
+    "same SQL values viewed in UTC fail original profile hash",
+    "recovery in recorded offset exactly reproduces original snapshot and hash",
+    "mixed source offsets rejected"
+  ],
+  "engineering_tests_after_fix": 32,
+  "new_public_archive_restore_passed": true,
+  "new_model_calls": 0,
+  "old_cpu_files_rewritten": false,
+  "historical_e1_frozen_sources_changed": 0,
+  "original_manifest_preserved": "outputs/p1m-pre-timezone-source-freeze.json",
+  "new_manifest_sha256": "fcf572c12b1746f96693a5b58ab9b483b1cd1d0309e2dc7bd11b981209a06043"
+}

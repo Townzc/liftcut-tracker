@@ -11,6 +11,25 @@ import { createCase, step, score, type Checkpoint } from "./engine";
 import { publicState, LIMITS, VERSION } from "./contract";
 
 type Data = Awaited<ReturnType<typeof snapshot>>;
+// timestamptz values are absolute, but to_jsonb renders their source session's
+// offset. Recover that recorded representation before checking the ORIGINAL
+// profile hash. Never rewrite the archive's timestamps or weaken the hash check.
+export function sourceTimeZone(data: Data[]): string {
+  const offsets = data.map(d => {
+    const text = d.settings_json?.updated_at;
+    assert.equal(typeof text, "string");
+    const match = /(Z|([+-])(\d{2}):(\d{2}))$/.exec(text);
+    assert.ok(match, "source profile timezone offset missing");
+    if (match[1] === "Z") return "UTC";
+    const hours = Number(match[3]), minutes = Number(match[4]);
+    assert.ok(hours <= 14 && minutes < 60 && (hours < 14 || minutes === 0), "invalid source offset");
+    if (!hours && !minutes) return "UTC";
+    // PostgreSQL POSIX timezone offsets have the opposite sign to ISO8601.
+    return `UTC${match[2] === "+" ? "-" : "+"}${match[3]}:${match[4]}`;
+  });
+  assert.ok(offsets.length > 0 && offsets.every(x => x === offsets[0]), "mixed source offsets require explicit recovery");
+  return offsets[0];
+}
 // SQL snapshots are deserialized data; their contents are checked below and against actual SQL.
 export function checkData(d: Data) {
   assert.equal(d.run.length, 1); assert.equal(d.settings.length, 1);
@@ -79,12 +98,15 @@ export async function replay(directory: string, reportFile: string) {
   assert.deepEqual(await load(join(directory, "cases.json")), cases);
   const summary = await load(join(directory, "summary.json"));
   assert.equal(summary.version, VERSION); assert.equal(summary.status, "complete"); assert.equal(summary.cases, 24);
-  const db = new Pool({ connectionString: localDatabase().toString() }), pool = new Pool({ connectionString: runtimeUrl() });
+  const originals = await Promise.all(cases.map((_, i) => load(join(directory, `case-${i}.json`))));
+  const timezone = sourceTimeZone(originals.map(x => x.result.database));
+  const options = `-c TimeZone=${timezone}`;
+  const db = new Pool({ connectionString: localDatabase().toString(), options }), pool = new Pool({ connectionString: runtimeUrl(), options });
   const store = new AgentStore(pool);
   let requests = 0, writes = 0, attempts = 0, passed = 0;
   try {
     for (let index = 0; index < cases.length; index++) {
-      const original = await load(join(directory, `case-${index}.json`));
+      const original = originals[index];
       const saved: Checkpoint = original.checkpoint;
       assert.equal(saved.caseIndex, index); assert.equal(original.kind, summary.kind);
       assert.ok(saved.finished); assert.ok(saved.steps.length > 0 && saved.steps.length <= LIMITS.requestsPerCase);
@@ -124,7 +146,7 @@ export async function replay(directory: string, reportFile: string) {
       requests += n; writes += result.writes; attempts += result.attempts; passed += Number(result.passed);
     }
     for (const [key, value] of Object.entries({ requests, writes, attempts, passed })) assert.equal(summary[key], value);
-    const report = { version: VERSION, kind: summary.kind, cases: 24, requests, writes, attempts, passed,
+    const report = { version: VERSION, kind: summary.kind, cases: 24, requests, writes, attempts, passed, sourceTimeZone: timezone,
       exactRestoredSnapshots: true, restrictedReads: true, actualFreshSqlReplay: true, nativeValidatedSeparately: true };
     await writeFile(reportFile, JSON.stringify(report, null, 2) + "\n", { flag: "wx" });
     console.log(JSON.stringify(report));
