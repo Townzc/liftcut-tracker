@@ -4,6 +4,8 @@
 | --- | --- |
 | [Agent Research Roadmap](./AGENT_RESEARCH_ROADMAP.md) | Approved technical direction, milestones, experiments and revision rules |
 | [Agent Research Progress](./AGENT_RESEARCH_PROGRESS.md) | Completed work, evidence, decisions and the next task; start here when resuming |
+| [E1 Full-Task Results](./research/2026-10-13-e1-complete-results.md) | Real 48-pair evaluation, fixed D acceptance, no incremental win, resource sampling and confirmed closure |
+| [Post-E1 Plan](./research/2026-10-13-post-e1-plan.md) | Application approval/revocation/idempotency first; conditional next model and performance experiments |
 | [AgentLab Quickstart](../research/liftcut-agent/README.md) | Offline proposal benchmark, interactive tools, workflow and replay commands |
 | [Interactive Environment Experiment](./research/2026-09-28-interactive-environment.md) | Approval and memory contracts, trace walkthrough, actual control results and limits |
 | [Model-Policy Adapter](./research/2026-09-28-model-policy.md) | Function-call protocol, request budgets, raw response accounting and replay |

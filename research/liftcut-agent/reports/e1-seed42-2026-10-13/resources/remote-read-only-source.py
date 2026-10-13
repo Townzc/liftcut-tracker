@@ -1,0 +1,41 @@
+import sys,json,time,hashlib,subprocess
+from datetime import datetime,timezone
+from pathlib import Path
+b=json.loads('{"version": "e1-window-binding-v1", "code_commit": "9e9387c1a4bac03b1363e38a379816cfe6cf3436", "run_id": "20261013-190625", "execution_plan_digest": "4e432ce46ca7824baa0a0500b6f28df4931e9a23a0ba8d89fc3d5d37daaae719", "protocol_digest": "05de364d133f420ad316c41ef891d4a1514cea30c23eaaec43a8e9063ff5de80", "candidate_digest": "75cfc533932cee78c473c5c3f67a576ffc5717f6270906e6192de4a2d68ec6cc", "authorization": {"experiment": "E1", "source": "explicit_human_new_server_window", "booted_at_proxy": "2026-10-13T19:05:18+00:00", "maximum_minutes": 120, "reserve_cny": 5, "hourly_cny": 2.18, "heldout_scope": "one_48_task_batch_with_fresh_A_and_D", "automatic_shutdown": true}, "booted_at_proxy": "2026-10-13T19:05:18+00:00", "trial_started_at_utc": "2026-10-13T19:06:34.568853+00:00", "work_cutoff": "2026-10-13T20:36:34.568853+00:00", "collection_cutoff": "2026-10-13T20:56:34.568853+00:00", "hard_cutoff": "2026-10-13T21:05:18+00:00", "planned_unique_tasks": 48, "planned_episodes": 96, "archive_is_self_contained": false}')
+root=Path('/root/autodl-tmp/liftcut/code')/b['code_commit']/'research/liftcut-agent'
+source=root/'gpu_telemetry.py'
+assert hashlib.sha256(source.read_bytes()).hexdigest()=='99331db32e0a319826ef4c5d6c659b476e260d3f0d1eb773b331d099be5605d4'
+sys.path.insert(0,str(root))
+from gpu_telemetry import sample
+from e1_power import verify_guard,identity
+ops=Path('/root/autodl-tmp/liftcut/runs/e1-ops-20261013-190625')
+run=Path('/root/autodl-tmp/liftcut/runs/e1-run-20261013-190625')
+assert json.loads((run/'opening.json').read_text())['binding']==b
+guard=verify_guard(ops,b)
+assert identity(1825)==json.loads('{"pid": 1825, "start_ticks": "254297284", "argv": ["/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python", "/root/autodl-tmp/liftcut/code/9e9387c1a4bac03b1363e38a379816cfe6cf3436/research/liftcut-agent/run_e1_window.py", "--execute", "--ops", "/root/autodl-tmp/liftcut/runs/e1-ops-20261013-190625", "--run", "/root/autodl-tmp/liftcut/runs/e1-run-20261013-190625", "--parent-run", "/root/autodl-tmp/liftcut/runs/i2-run-20261013-053401", "--model-dir", "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554", "--model-manifest", "/root/autodl-tmp/liftcut/data/qwen-model-manifest.json", "--tokenizer-dir", "/root/autodl-tmp/liftcut/data/i2-prepared-20261013-014645/tokenizer", "--data-ledger", "/root/autodl-tmp/liftcut/ops/e1-data-use/reserved-7485de3ec860262bb96d127cb42fafa15895aeaa47070c532cce1411becd9119.json"], "kernel_boot_id": "cc70296b-d14b-43bb-9078-ef77ede1b7e3"}')
+end=datetime.fromisoformat(b['hard_cutoff'])
+stop=time.monotonic()+max(0,(end-datetime.now(timezone.utc)).total_seconds())
+print(json.dumps({'kind':'verified_read_only_observer','at_utc':datetime.now(timezone.utc).isoformat(),'binding':b,'guard':guard,'controller_pid':1825,'gpu_sample_source_sha256':hashlib.sha256(source.read_bytes()).hexdigest()}),flush=True)
+previous={}
+while time.monotonic()<stop:
+    begin=time.monotonic()
+    row={'kind':'actual_nvidia_smi_observation','at_utc':datetime.now(timezone.utc).isoformat(),'monotonic_seconds':begin,'interval_seconds':5}
+    try:
+        row.update(status='observed',gpus=sample())
+    except (OSError,ValueError,subprocess.SubprocessError) as e:
+        row.update(status='unknown',gpus=None,error_type=type(e).__name__)
+    row['probe_wall_seconds']=time.monotonic()-begin
+    print(json.dumps(row),flush=True)
+    for name in ('power-events.jsonl','shutdown-request.json','shutdown-return.json','backup-copy-status.json'):
+        path=ops/name
+        try:
+            raw=path.read_bytes()
+        except FileNotFoundError:
+            continue
+        assert len(raw)<1048576
+        h=hashlib.sha256(raw).hexdigest()
+        if previous.get(name)!=h:
+            print(json.dumps({'kind':'read_only_power_snapshot','at_utc':datetime.now(timezone.utc).isoformat(),'name':name,'sha256':h,'text':raw.decode('utf-8')}),flush=True)
+            previous[name]=h
+    time.sleep(min(max(0,5-(time.monotonic()-begin)),max(0,stop-time.monotonic())))
+print(json.dumps({'kind':'original_observation_deadline','at_utc':datetime.now(timezone.utc).isoformat()}),flush=True)

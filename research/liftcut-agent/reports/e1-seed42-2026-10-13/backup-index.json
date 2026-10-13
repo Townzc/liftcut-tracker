@@ -1,0 +1,40 @@
+{
+  "version": "e1-delta-index-v1",
+  "binding": {
+    "version": "e1-window-binding-v1",
+    "code_commit": "9e9387c1a4bac03b1363e38a379816cfe6cf3436",
+    "run_id": "20261013-190625",
+    "execution_plan_digest": "4e432ce46ca7824baa0a0500b6f28df4931e9a23a0ba8d89fc3d5d37daaae719",
+    "protocol_digest": "05de364d133f420ad316c41ef891d4a1514cea30c23eaaec43a8e9063ff5de80",
+    "candidate_digest": "75cfc533932cee78c473c5c3f67a576ffc5717f6270906e6192de4a2d68ec6cc",
+    "authorization": {
+      "experiment": "E1",
+      "source": "explicit_human_new_server_window",
+      "booted_at_proxy": "2026-10-13T19:05:18+00:00",
+      "maximum_minutes": 120,
+      "reserve_cny": 5,
+      "hourly_cny": 2.18,
+      "heldout_scope": "one_48_task_batch_with_fresh_A_and_D",
+      "automatic_shutdown": true
+    },
+    "booted_at_proxy": "2026-10-13T19:05:18+00:00",
+    "trial_started_at_utc": "2026-10-13T19:06:34.568853+00:00",
+    "work_cutoff": "2026-10-13T20:36:34.568853+00:00",
+    "collection_cutoff": "2026-10-13T20:56:34.568853+00:00",
+    "hard_cutoff": "2026-10-13T21:05:18+00:00",
+    "planned_unique_tasks": 48,
+    "planned_episodes": 96,
+    "archive_is_self_contained": false
+  },
+  "status": "complete",
+  "evidence_kind": "model",
+  "archive_is_self_contained": false,
+  "archives": [
+    {
+      "path": "evidence.tar.gz",
+      "archive": "evidence.tar.gz",
+      "bytes": 622831,
+      "sha256": "d02a9189a9082697a879623e2904fa42268f58dbd6bfe5e87254cea666d79d96"
+    }
+  ]
+}

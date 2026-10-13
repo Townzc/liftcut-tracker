@@ -1,0 +1,5 @@
+{"event": "exclusive_observer_reserved", "at_utc": "2026-10-13T19:10:07.130375+00:00", "pid": 34688, "deadline": "2026-10-13T21:05:18+00:00"}
+{"event": "ssh_connected", "at_utc": "2026-10-13T19:10:20.756627+00:00"}
+{"event": "read_only_observer_dispatched", "at_utc": "2026-10-13T19:10:21.131330+00:00", "remote_source_sha256": "2a1ab30e57eb5dc039a4fd650368d1a05764304a3c7a10e04040b98883bef0ce"}
+{"event": "channel_ended", "at_utc": "2026-10-13T19:46:06.250645+00:00", "returncode": -1, "transport_active": false, "provider_power_state": "unknown"}
+{"event": "observer_closed", "at_utc": "2026-10-13T19:46:06.257036+00:00", "provider_power_state": "unknown"}

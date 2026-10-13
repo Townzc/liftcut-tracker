@@ -1,0 +1,7 @@
+{"event":"reserved_dataset_opened_once","at_utc":"2026-10-13T19:07:24.757340+00:00","planned_tasks":48,"planned_episodes":96}
+{"event":"phase_started","at_utc":"2026-10-13T19:07:24.757757+00:00","phase":"evaluate-A"}
+{"event":"phase_completed","at_utc":"2026-10-13T19:26:21.967827+00:00","phase":"evaluate-A"}
+{"event":"phase_started","at_utc":"2026-10-13T19:26:21.968319+00:00","phase":"evaluate-D"}
+{"event":"phase_completed","at_utc":"2026-10-13T19:45:19.004332+00:00","phase":"evaluate-D"}
+{"event":"phase_started","at_utc":"2026-10-13T19:45:19.005583+00:00","phase":"audit"}
+{"event":"phase_completed","at_utc":"2026-10-13T19:45:34.545849+00:00","phase":"audit"}

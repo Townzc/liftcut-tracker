@@ -1,0 +1,15 @@
+{
+  "version": "e1-user-power-confirmation-v1",
+  "run_id": "20261013-190625",
+  "recorded_at_utc": "2026-10-13T19:51:53.966276+00:00",
+  "source": "human_reply_to_E1_platform_question",
+  "user_statement": "已关机",
+  "user_message_timestamp": null,
+  "platform_power_state": "off_user_confirmed",
+  "platform_ui_directly_observed_by_agent": false,
+  "provider_invoice_observed": false,
+  "provider_billing_stop_timestamp": null,
+  "shutdown_request_timestamp": null,
+  "shutdown_command_return": null,
+  "note": "User confirmation does not retroactively create missing server request/return records."
+}
