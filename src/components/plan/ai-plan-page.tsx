@@ -944,6 +944,9 @@ export function AiPlanPage() {
                     {loading === "save-training" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
                     {loading === "save-training" ? t("savingTrainingPlan") : t("saveTrainingPlan")}
                   </Button>
+                  {authMode === "authenticated" && <Link href="/plan/review" className="ml-3 text-sm underline" onClick={() => {
+                    sessionStorage.setItem("liftcut-p1-draft", JSON.stringify(trainingPlanDraft));
+                  }}>{requestLocale === "zh-CN" ? "检查版本并批准保存" : "Review version and approve"}</Link>}
                 </>
               )}
             </TabsContent>

@@ -786,6 +786,50 @@ jobs:
       - name: Reconstruct actual E1 full tasks, gates, tokens and observed resources without private weights
         run: python research/liftcut-agent/analyze_e1_results.py --public-dir research/liftcut-agent/reports/e1-seed42-2026-10-13 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
 
+  p1-database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: p1-admin-fixture-only
+          POSTGRES_DB: liftcut_p1_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_ci
+      P1_RUNTIME_DATABASE_URL: postgresql://liftcut_agent:p1-local-fixture-only@127.0.0.1:5432/liftcut_p1_ci
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run test:p1:setup
+      - run: npm run test:p1
+      - name: Check original published P1 hashes and approval/receipt consistency
+        run: node --conditions=react-server --import tsx research/p1-application/audit-publication.ts research/liftcut-agent/reports/p1-application-2026-10-13
+      - name: Verify 24 scripted workflows and recover their exact database snapshots
+        run: |
+          npm run p1:rehearse -- research/liftcut-agent/outputs/ci-p1-workflows
+          npm run p1:audit -- research/liftcut-agent/outputs/ci-p1-workflows
+          pg_dump "$P1_TEST_DATABASE_URL" --format=custom --file=/tmp/p1-ci.dump
+          psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1_restored;'
+          RESTORED_URL="${P1_TEST_DATABASE_URL/liftcut_p1_ci/liftcut_p1_restored}"
+          pg_restore --exit-on-error --dbname="$RESTORED_URL" /tmp/p1-ci.dump
+          P1_TEST_DATABASE_URL="$RESTORED_URL" npm run p1:audit -- research/liftcut-agent/outputs/ci-p1-workflows
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --config playwright.p1.config.ts
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: p1-browser-evidence
+          path: research/liftcut-agent/outputs/p1-browser*
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

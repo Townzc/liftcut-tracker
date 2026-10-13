@@ -1,0 +1,14 @@
+[WebServer] (node:17992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:19264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\agent-browser\approval.spec.ts:30:5 › browser preview → approve → commit response lost → reload → same durable receipt (3.6s)
+  ok 2 tests\agent-browser\approval.spec.ts:55:5 › browser revoke blocks late API execute; changing constraints invalidates approved version (2.1s)
+  ok 3 tests\agent-browser\approval.spec.ts:75:5 › API rejects missing session and cross-origin mutations (35ms)
+
+  3 passed (8.6s)

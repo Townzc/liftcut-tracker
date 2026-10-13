@@ -1,0 +1,186 @@
+{
+  "version": "p1-cpu-workflows-v1",
+  "startedAt": "2026-10-13T21:01:46.399Z",
+  "finishedAt": "2026-10-13T21:01:47.486Z",
+  "elapsedSeconds": 1.0858186,
+  "databaseVersion": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)",
+  "cases": 24,
+  "passed": 24,
+  "businessCommits": 9,
+  "executeAttempts": 18,
+  "rows": [
+    {
+      "id": "p1-1-preview",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-1-approve",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-1-no_reply",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-1-decline",
+      "status": "declined",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-1-revoke",
+      "status": "revoked",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-1-context_update",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-1-lost_response",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "p1-1-resume",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-2-preview",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-2-approve",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-2-no_reply",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-2-decline",
+      "status": "declined",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-2-revoke",
+      "status": "revoked",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-2-context_update",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-2-lost_response",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "p1-2-resume",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-3-preview",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-3-approve",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-3-no_reply",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-3-decline",
+      "status": "declined",
+      "writes": 0,
+      "attempts": 0,
+      "passed": true
+    },
+    {
+      "id": "p1-3-revoke",
+      "status": "revoked",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-3-context_update",
+      "status": "awaiting_approval",
+      "writes": 0,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "p1-3-lost_response",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "p1-3-resume",
+      "status": "applied",
+      "writes": 1,
+      "attempts": 1,
+      "passed": true
+    }
+  ],
+  "modelCalls": 0,
+  "cloudCalls": 0,
+  "authentication": "synthetic_identity_fixture_not_GoTrue",
+  "independentGeneralization": false,
+  "gpuReady": false
+}

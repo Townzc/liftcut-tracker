@@ -1,0 +1,23 @@
+✔ runtime login is non-owner, no BYPASSRLS, private tables inaccessible to browser roles (29.089ms)
+✔ preview and no approval: attempt1, business commits0 (53.7227ms)
+✔ 12 concurrent same-key executes commit one complete plan and return one receipt (119.5514ms)
+✔ different keys for same approved proposal still at most one business commit (45.61ms)
+✔ response lost then process/pool replaced: recover and replay original receipt (64.0357ms)
+✔ same key changed content or changed run rejected, even after success (146.0838ms)
+✔ revoke before execution blocks commit and late approval cannot revive the proposal (49.2674ms)
+✔ concurrent revoke/execute obey one linear order with auditable events (177.1512ms)
+✔ execute committed first: subsequent revoke does not pretend to undo the plan (48.5022ms)
+✔ new context, new proposal or actual profile update invalidate old approval (118.1692ms)
+✔ cross-user read, approve, revoke, execute and direct RLS query denied (53.9797ms)
+✔ fault on exercise insertion rolls back activation and ALL partial rows, same-key retry works (67.6099ms)
+✔ schema, invalid aliases, constraint feedback and budget deny before business writes (39.5389ms)
+✔ runtime cannot rewrite proposals, receipts or events (22.0127ms)
+✔ creation key replay returns same run; changed context conflicts (27.7561ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1631.9469

@@ -1,0 +1,552 @@
+{
+  "evidenceKind": "scripted_application_postgres",
+  "modelCalls": 0,
+  "fixture": {
+    "id": "p1-1-preview",
+    "flow": "preview",
+    "context": {
+      "weeklyDays": 1,
+      "sessionMinutes": 30,
+      "equipment": [
+        "bodyweight"
+      ],
+      "notes": "Synthetic A; no real health information"
+    },
+    "plan": {
+      "plan_name": "P1 fixture 1",
+      "goal_type": "maintenance",
+      "summary": "Supplied synthetic draft; not medical advice or model output",
+      "reasoning_summary": "Persistence workflow only",
+      "warnings": [],
+      "weeks": [
+        {
+          "week_number": 1,
+          "focus": "Synthetic",
+          "days": [
+            {
+              "day_number": 1,
+              "title": "Fixture day",
+              "notes": "Not a real prescription",
+              "estimated_duration_minutes": 20,
+              "exercises": [
+                {
+                  "name": "Bodyweight squat",
+                  "sets": 2,
+                  "rep_range": "8",
+                  "target_rpe": 6,
+                  "rest_seconds": 90,
+                  "notes": "Synthetic",
+                  "alternative_exercises": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "expectedStatus": "awaiting_approval",
+    "expectedWrites": 0
+  },
+  "user": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+  "runId": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+  "trace": [
+    {
+      "action": "create",
+      "input": {
+        "requestKey": "fbd3911e-fb3c-4f56-8c39-efba6e179dbc",
+        "context": {
+          "weeklyDays": 1,
+          "sessionMinutes": 30,
+          "equipment": [
+            "bodyweight"
+          ],
+          "notes": "Synthetic A; no real health information"
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+          "version": "p1-app-v1",
+          "status": "planning",
+          "revision": 0,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic A; no real health information",
+            "equipment": [
+              "bodyweight"
+            ],
+            "weeklyDays": 1,
+            "sessionMinutes": 30
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": null,
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "548",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic A; no real health information",
+                  "equipment": [
+                    "bodyweight"
+                  ],
+                  "weeklyDays": 1,
+                  "sessionMinutes": 30
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.389Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.426Z",
+      "elapsedMs": 29.564900000000023
+    },
+    {
+      "action": "propose",
+      "input": {
+        "expectedRevision": 0,
+        "plan": {
+          "plan_name": "P1 fixture 1",
+          "goal_type": "maintenance",
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "reasoning_summary": "Persistence workflow only",
+          "warnings": [],
+          "weeks": [
+            {
+              "week_number": 1,
+              "focus": "Synthetic",
+              "days": [
+                {
+                  "day_number": 1,
+                  "title": "Fixture day",
+                  "notes": "Not a real prescription",
+                  "estimated_duration_minutes": 20,
+                  "exercises": [
+                    {
+                      "name": "Bodyweight squat",
+                      "sets": 2,
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "notes": "Synthetic",
+                      "alternative_exercises": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+          "version": "p1-app-v1",
+          "status": "awaiting_approval",
+          "revision": 1,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic A; no real health information",
+            "equipment": [
+              "bodyweight"
+            ],
+            "weeklyDays": 1,
+            "sessionMinutes": 30
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+            "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Bodyweight squat",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 1",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "548",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic A; no real health information",
+                  "equipment": [
+                    "bodyweight"
+                  ],
+                  "weeklyDays": 1,
+                  "sessionMinutes": 30
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.389Z"
+            },
+            {
+              "sequence": "549",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+                "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28"
+              },
+              "at": "2026-10-13T21:01:47.406Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.455Z",
+      "elapsedMs": 13.256199999999922
+    },
+    {
+      "action": "final_read",
+      "input": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+          "version": "p1-app-v1",
+          "status": "awaiting_approval",
+          "revision": 1,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic A; no real health information",
+            "equipment": [
+              "bodyweight"
+            ],
+            "weeklyDays": 1,
+            "sessionMinutes": 30
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+            "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Bodyweight squat",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 1",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "548",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic A; no real health information",
+                  "equipment": [
+                    "bodyweight"
+                  ],
+                  "weeklyDays": 1,
+                  "sessionMinutes": 30
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:47.389Z"
+            },
+            {
+              "sequence": "549",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+                "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28"
+              },
+              "at": "2026-10-13T21:01:47.406Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:46.469Z",
+      "elapsedMs": 6.692900000000009
+    }
+  ],
+  "final": {
+    "id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+    "version": "p1-app-v1",
+    "status": "awaiting_approval",
+    "revision": 1,
+    "contextRevision": 0,
+    "context": {
+      "notes": "Synthetic A; no real health information",
+      "equipment": [
+        "bodyweight"
+      ],
+      "weeklyDays": 1,
+      "sessionMinutes": 30
+    },
+    "attempts": 0,
+    "approvalId": null,
+    "proposal": {
+      "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+      "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28",
+      "contextRevision": 0,
+      "version": 1,
+      "plan": {
+        "weeks": [
+          {
+            "days": [
+              {
+                "notes": "Not a real prescription",
+                "title": "Fixture day",
+                "exercises": [
+                  {
+                    "name": "Bodyweight squat",
+                    "sets": 2,
+                    "notes": "Synthetic",
+                    "rep_range": "8",
+                    "target_rpe": 6,
+                    "rest_seconds": 90,
+                    "alternative_exercises": []
+                  }
+                ],
+                "day_number": 1,
+                "estimated_duration_minutes": 20
+              }
+            ],
+            "focus": "Synthetic",
+            "week_number": 1
+          }
+        ],
+        "summary": "Supplied synthetic draft; not medical advice or model output",
+        "warnings": [],
+        "goal_type": "maintenance",
+        "plan_name": "P1 fixture 1",
+        "reasoning_summary": "Persistence workflow only"
+      }
+    },
+    "receipt": null,
+    "events": [
+      {
+        "sequence": "548",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic A; no real health information",
+            "equipment": [
+              "bodyweight"
+            ],
+            "weeklyDays": 1,
+            "sessionMinutes": 30
+          },
+          "version": "p1-app-v1"
+        },
+        "at": "2026-10-13T21:01:47.389Z"
+      },
+      {
+        "sequence": "549",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+          "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28"
+        },
+        "at": "2026-10-13T21:01:47.406Z"
+      }
+    ]
+  },
+  "database": {
+    "settings": [
+      {
+        "user_id": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+        "gender": "unknown",
+        "age": 0,
+        "fitness_goal": "fat_loss",
+        "training_experience": "beginner",
+        "training_location": "mixed",
+        "available_equipment": [],
+        "session_duration_minutes": 0,
+        "diet_preference": "none",
+        "food_restrictions": "",
+        "injury_notes": "",
+        "lifestyle_notes": "",
+        "height": "0",
+        "current_weight": "0",
+        "target_weight": "0",
+        "weekly_training_days": 0,
+        "calorie_target": 0,
+        "protein_target": 0,
+        "target_weekly_loss_min": "0",
+        "target_weekly_loss_max": "0",
+        "updated_at": "2026-10-13T21:01:47.366Z"
+      }
+    ],
+    "run": [
+      {
+        "id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+        "user_id": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+        "request_key": "fbd3911e-fb3c-4f56-8c39-efba6e179dbc",
+        "request_hash": "84f45ffce86089e28f86e033745744aee02c4e8f9272ac47840978c36dfa03dd",
+        "version": "p1-app-v1",
+        "context": {
+          "notes": "Synthetic A; no real health information",
+          "equipment": [
+            "bodyweight"
+          ],
+          "weeklyDays": 1,
+          "sessionMinutes": 30
+        },
+        "context_revision": 0,
+        "profile_hash": "01ec35c925ef88a0cccc22e7fe6fc95a7729097218017505925760c61a18b36c",
+        "revision": 1,
+        "status": "awaiting_approval",
+        "current_proposal": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+        "approval_id": null,
+        "attempts": 0,
+        "created_at": "2026-10-13T21:01:47.380Z"
+      }
+    ],
+    "proposals": [
+      {
+        "id": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+        "user_id": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+        "run_id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+        "version": 1,
+        "context_revision": 0,
+        "content_hash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28",
+        "plan": {
+          "weeks": [
+            {
+              "days": [
+                {
+                  "notes": "Not a real prescription",
+                  "title": "Fixture day",
+                  "exercises": [
+                    {
+                      "name": "Bodyweight squat",
+                      "sets": 2,
+                      "notes": "Synthetic",
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "alternative_exercises": []
+                    }
+                  ],
+                  "day_number": 1,
+                  "estimated_duration_minutes": 20
+                }
+              ],
+              "focus": "Synthetic",
+              "week_number": 1
+            }
+          ],
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "warnings": [],
+          "goal_type": "maintenance",
+          "plan_name": "P1 fixture 1",
+          "reasoning_summary": "Persistence workflow only"
+        },
+        "created_at": "2026-10-13T21:01:47.400Z"
+      }
+    ],
+    "events": [
+      {
+        "sequence": "548",
+        "user_id": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+        "run_id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic A; no real health information",
+            "equipment": [
+              "bodyweight"
+            ],
+            "weeklyDays": 1,
+            "sessionMinutes": 30
+          },
+          "version": "p1-app-v1"
+        },
+        "created_at": "2026-10-13T21:01:47.389Z"
+      },
+      {
+        "sequence": "549",
+        "user_id": "e987aa8b-db1a-4a3f-8a96-96e0c499a6f9",
+        "run_id": "75e655f5-c4c7-4cd9-9e8b-b106bea475c3",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "be1b4f44-8cc0-44ec-9e26-235594e948a8",
+          "contentHash": "c92beb8e2498f7ce92edd94f266c94cf14baf786a718acdec4eb722c917f3d28"
+        },
+        "created_at": "2026-10-13T21:01:47.406Z"
+      }
+    ],
+    "keys": [],
+    "receipts": [],
+    "plans": [],
+    "weeks": [],
+    "days": [],
+    "exercises": []
+  }
+}

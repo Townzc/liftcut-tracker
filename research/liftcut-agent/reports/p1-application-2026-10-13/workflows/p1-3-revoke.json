@@ -1,0 +1,968 @@
+{
+  "evidenceKind": "scripted_application_postgres",
+  "modelCalls": 0,
+  "fixture": {
+    "id": "p1-3-revoke",
+    "flow": "revoke",
+    "context": {
+      "weeklyDays": 3,
+      "sessionMinutes": 60,
+      "equipment": [
+        "machine"
+      ],
+      "notes": "Synthetic C; no real health information"
+    },
+    "plan": {
+      "plan_name": "P1 fixture 3",
+      "goal_type": "maintenance",
+      "summary": "Supplied synthetic draft; not medical advice or model output",
+      "reasoning_summary": "Persistence workflow only",
+      "warnings": [],
+      "weeks": [
+        {
+          "week_number": 1,
+          "focus": "Synthetic",
+          "days": [
+            {
+              "day_number": 1,
+              "title": "Fixture day",
+              "notes": "Not a real prescription",
+              "estimated_duration_minutes": 20,
+              "exercises": [
+                {
+                  "name": "Machine row",
+                  "sets": 2,
+                  "rep_range": "8",
+                  "target_rpe": 6,
+                  "rest_seconds": 90,
+                  "notes": "Synthetic",
+                  "alternative_exercises": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "expectedStatus": "revoked",
+    "expectedWrites": 0
+  },
+  "user": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+  "runId": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+  "trace": [
+    {
+      "action": "create",
+      "input": {
+        "requestKey": "5e67c99b-ae46-493d-b4d9-cf68d6c05090",
+        "context": {
+          "weeklyDays": 3,
+          "sessionMinutes": 60,
+          "equipment": [
+            "machine"
+          ],
+          "notes": "Synthetic C; no real health information"
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+          "version": "p1-app-v1",
+          "status": "planning",
+          "revision": 0,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": null,
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "634",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic C; no real health information",
+                  "equipment": [
+                    "machine"
+                  ],
+                  "weeklyDays": 3,
+                  "sessionMinutes": 60
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:48.234Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:47.294Z",
+      "elapsedMs": 5.23050000000012
+    },
+    {
+      "action": "propose",
+      "input": {
+        "expectedRevision": 0,
+        "plan": {
+          "plan_name": "P1 fixture 3",
+          "goal_type": "maintenance",
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "reasoning_summary": "Persistence workflow only",
+          "warnings": [],
+          "weeks": [
+            {
+              "week_number": 1,
+              "focus": "Synthetic",
+              "days": [
+                {
+                  "day_number": 1,
+                  "title": "Fixture day",
+                  "notes": "Not a real prescription",
+                  "estimated_duration_minutes": 20,
+                  "exercises": [
+                    {
+                      "name": "Machine row",
+                      "sets": 2,
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "notes": "Synthetic",
+                      "alternative_exercises": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+          "version": "p1-app-v1",
+          "status": "awaiting_approval",
+          "revision": 1,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+            "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Machine row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 3",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "634",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic C; no real health information",
+                  "equipment": [
+                    "machine"
+                  ],
+                  "weeklyDays": 3,
+                  "sessionMinutes": 60
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:48.234Z"
+            },
+            {
+              "sequence": "635",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+              },
+              "at": "2026-10-13T21:01:48.240Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:47.299Z",
+      "elapsedMs": 6.949000000000069
+    },
+    {
+      "action": "external_user_event",
+      "input": {
+        "action": "approve",
+        "binding": {
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "expectedRevision": 1
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+          "version": "p1-app-v1",
+          "status": "approved",
+          "revision": 2,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "attempts": 0,
+          "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+          "proposal": {
+            "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+            "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Machine row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 3",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "634",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic C; no real health information",
+                  "equipment": [
+                    "machine"
+                  ],
+                  "weeklyDays": 3,
+                  "sessionMinutes": 60
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:48.234Z"
+            },
+            {
+              "sequence": "635",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+              },
+              "at": "2026-10-13T21:01:48.240Z"
+            },
+            {
+              "sequence": "636",
+              "type": "approve",
+              "actor": "user",
+              "data": {
+                "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.247Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:47.306Z",
+      "elapsedMs": 6.757599999999911
+    },
+    {
+      "action": "external_user_event",
+      "input": {
+        "action": "revoke",
+        "binding": {
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "expectedRevision": 2
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+          "version": "p1-app-v1",
+          "status": "revoked",
+          "revision": 3,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "attempts": 0,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+            "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Machine row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 3",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "634",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic C; no real health information",
+                  "equipment": [
+                    "machine"
+                  ],
+                  "weeklyDays": 3,
+                  "sessionMinutes": 60
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:48.234Z"
+            },
+            {
+              "sequence": "635",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+              },
+              "at": "2026-10-13T21:01:48.240Z"
+            },
+            {
+              "sequence": "636",
+              "type": "approve",
+              "actor": "user",
+              "data": {
+                "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.247Z"
+            },
+            {
+              "sequence": "637",
+              "type": "revoke",
+              "actor": "user",
+              "data": {
+                "approvalId": null,
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.253Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:47.313Z",
+      "elapsedMs": 6.19439999999986
+    },
+    {
+      "action": "execute",
+      "input": {
+        "binding": {
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+        "idempotencyKey": "e3c3de43-1634-40b7-8b6d-91ab2242b024"
+      },
+      "result": {
+        "ok": false,
+        "error": "NOT_APPROVED",
+        "retryable": false
+      },
+      "at": "2026-10-13T21:01:47.319Z",
+      "elapsedMs": 6.2198000000000775
+    },
+    {
+      "action": "final_read",
+      "input": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+          "version": "p1-app-v1",
+          "status": "revoked",
+          "revision": 3,
+          "contextRevision": 0,
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "attempts": 1,
+          "approvalId": null,
+          "proposal": {
+            "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+            "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+            "contextRevision": 0,
+            "version": 1,
+            "plan": {
+              "weeks": [
+                {
+                  "days": [
+                    {
+                      "notes": "Not a real prescription",
+                      "title": "Fixture day",
+                      "exercises": [
+                        {
+                          "name": "Machine row",
+                          "sets": 2,
+                          "notes": "Synthetic",
+                          "rep_range": "8",
+                          "target_rpe": 6,
+                          "rest_seconds": 90,
+                          "alternative_exercises": []
+                        }
+                      ],
+                      "day_number": 1,
+                      "estimated_duration_minutes": 20
+                    }
+                  ],
+                  "focus": "Synthetic",
+                  "week_number": 1
+                }
+              ],
+              "summary": "Supplied synthetic draft; not medical advice or model output",
+              "warnings": [],
+              "goal_type": "maintenance",
+              "plan_name": "P1 fixture 3",
+              "reasoning_summary": "Persistence workflow only"
+            }
+          },
+          "receipt": null,
+          "events": [
+            {
+              "sequence": "634",
+              "type": "run_created",
+              "actor": "user",
+              "data": {
+                "context": {
+                  "notes": "Synthetic C; no real health information",
+                  "equipment": [
+                    "machine"
+                  ],
+                  "weeklyDays": 3,
+                  "sessionMinutes": 60
+                },
+                "version": "p1-app-v1"
+              },
+              "at": "2026-10-13T21:01:48.234Z"
+            },
+            {
+              "sequence": "635",
+              "type": "proposal_published",
+              "actor": "draft_import",
+              "data": {
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+              },
+              "at": "2026-10-13T21:01:48.240Z"
+            },
+            {
+              "sequence": "636",
+              "type": "approve",
+              "actor": "user",
+              "data": {
+                "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.247Z"
+            },
+            {
+              "sequence": "637",
+              "type": "revoke",
+              "actor": "user",
+              "data": {
+                "approvalId": null,
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.253Z"
+            },
+            {
+              "sequence": "638",
+              "type": "execute_attempt",
+              "actor": "executor",
+              "data": {
+                "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+                "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+                "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+                "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+                "contextRevision": 0
+              },
+              "at": "2026-10-13T21:01:48.259Z"
+            },
+            {
+              "sequence": "639",
+              "type": "execute_rejected",
+              "actor": "database",
+              "data": {
+                "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+                "code": "NOT_APPROVED"
+              },
+              "at": "2026-10-13T21:01:48.261Z"
+            }
+          ]
+        }
+      },
+      "at": "2026-10-13T21:01:47.325Z",
+      "elapsedMs": 4.861599999999953
+    }
+  ],
+  "final": {
+    "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+    "version": "p1-app-v1",
+    "status": "revoked",
+    "revision": 3,
+    "contextRevision": 0,
+    "context": {
+      "notes": "Synthetic C; no real health information",
+      "equipment": [
+        "machine"
+      ],
+      "weeklyDays": 3,
+      "sessionMinutes": 60
+    },
+    "attempts": 1,
+    "approvalId": null,
+    "proposal": {
+      "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+      "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+      "contextRevision": 0,
+      "version": 1,
+      "plan": {
+        "weeks": [
+          {
+            "days": [
+              {
+                "notes": "Not a real prescription",
+                "title": "Fixture day",
+                "exercises": [
+                  {
+                    "name": "Machine row",
+                    "sets": 2,
+                    "notes": "Synthetic",
+                    "rep_range": "8",
+                    "target_rpe": 6,
+                    "rest_seconds": 90,
+                    "alternative_exercises": []
+                  }
+                ],
+                "day_number": 1,
+                "estimated_duration_minutes": 20
+              }
+            ],
+            "focus": "Synthetic",
+            "week_number": 1
+          }
+        ],
+        "summary": "Supplied synthetic draft; not medical advice or model output",
+        "warnings": [],
+        "goal_type": "maintenance",
+        "plan_name": "P1 fixture 3",
+        "reasoning_summary": "Persistence workflow only"
+      }
+    },
+    "receipt": null,
+    "events": [
+      {
+        "sequence": "634",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "version": "p1-app-v1"
+        },
+        "at": "2026-10-13T21:01:48.234Z"
+      },
+      {
+        "sequence": "635",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+        },
+        "at": "2026-10-13T21:01:48.240Z"
+      },
+      {
+        "sequence": "636",
+        "type": "approve",
+        "actor": "user",
+        "data": {
+          "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "at": "2026-10-13T21:01:48.247Z"
+      },
+      {
+        "sequence": "637",
+        "type": "revoke",
+        "actor": "user",
+        "data": {
+          "approvalId": null,
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "at": "2026-10-13T21:01:48.253Z"
+      },
+      {
+        "sequence": "638",
+        "type": "execute_attempt",
+        "actor": "executor",
+        "data": {
+          "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+          "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "at": "2026-10-13T21:01:48.259Z"
+      },
+      {
+        "sequence": "639",
+        "type": "execute_rejected",
+        "actor": "database",
+        "data": {
+          "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+          "code": "NOT_APPROVED"
+        },
+        "at": "2026-10-13T21:01:48.261Z"
+      }
+    ]
+  },
+  "database": {
+    "settings": [
+      {
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "gender": "unknown",
+        "age": 0,
+        "fitness_goal": "fat_loss",
+        "training_experience": "beginner",
+        "training_location": "mixed",
+        "available_equipment": [],
+        "session_duration_minutes": 0,
+        "diet_preference": "none",
+        "food_restrictions": "",
+        "injury_notes": "",
+        "lifestyle_notes": "",
+        "height": "0",
+        "current_weight": "0",
+        "target_weight": "0",
+        "weekly_training_days": 0,
+        "calorie_target": 0,
+        "protein_target": 0,
+        "target_weekly_loss_min": "0",
+        "target_weekly_loss_max": "0",
+        "updated_at": "2026-10-13T21:01:48.230Z"
+      }
+    ],
+    "run": [
+      {
+        "id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "request_key": "5e67c99b-ae46-493d-b4d9-cf68d6c05090",
+        "request_hash": "dbfdb5ef4bdde8b484c77114b9d2b8fb7ede73ef2b700918b0f74d912b900455",
+        "version": "p1-app-v1",
+        "context": {
+          "notes": "Synthetic C; no real health information",
+          "equipment": [
+            "machine"
+          ],
+          "weeklyDays": 3,
+          "sessionMinutes": 60
+        },
+        "context_revision": 0,
+        "profile_hash": "86f9020bcc10d77e2f65f0dc86c3c61a6386d636688338596e1f27956c2c8373",
+        "revision": 3,
+        "status": "revoked",
+        "current_proposal": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+        "approval_id": null,
+        "attempts": 1,
+        "created_at": "2026-10-13T21:01:48.231Z"
+      }
+    ],
+    "proposals": [
+      {
+        "id": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "version": 1,
+        "context_revision": 0,
+        "content_hash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+        "plan": {
+          "weeks": [
+            {
+              "days": [
+                {
+                  "notes": "Not a real prescription",
+                  "title": "Fixture day",
+                  "exercises": [
+                    {
+                      "name": "Machine row",
+                      "sets": 2,
+                      "notes": "Synthetic",
+                      "rep_range": "8",
+                      "target_rpe": 6,
+                      "rest_seconds": 90,
+                      "alternative_exercises": []
+                    }
+                  ],
+                  "day_number": 1,
+                  "estimated_duration_minutes": 20
+                }
+              ],
+              "focus": "Synthetic",
+              "week_number": 1
+            }
+          ],
+          "summary": "Supplied synthetic draft; not medical advice or model output",
+          "warnings": [],
+          "goal_type": "maintenance",
+          "plan_name": "P1 fixture 3",
+          "reasoning_summary": "Persistence workflow only"
+        },
+        "created_at": "2026-10-13T21:01:48.237Z"
+      }
+    ],
+    "events": [
+      {
+        "sequence": "634",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "run_created",
+        "actor": "user",
+        "data": {
+          "context": {
+            "notes": "Synthetic C; no real health information",
+            "equipment": [
+              "machine"
+            ],
+            "weeklyDays": 3,
+            "sessionMinutes": 60
+          },
+          "version": "p1-app-v1"
+        },
+        "created_at": "2026-10-13T21:01:48.234Z"
+      },
+      {
+        "sequence": "635",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "proposal_published",
+        "actor": "draft_import",
+        "data": {
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218"
+        },
+        "created_at": "2026-10-13T21:01:48.240Z"
+      },
+      {
+        "sequence": "636",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "approve",
+        "actor": "user",
+        "data": {
+          "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "created_at": "2026-10-13T21:01:48.247Z"
+      },
+      {
+        "sequence": "637",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "revoke",
+        "actor": "user",
+        "data": {
+          "approvalId": null,
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "created_at": "2026-10-13T21:01:48.253Z"
+      },
+      {
+        "sequence": "638",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "execute_attempt",
+        "actor": "executor",
+        "data": {
+          "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+          "approvalId": "17034a05-6c07-45e6-948b-f5113295dff1",
+          "proposalId": "6813827b-5456-4c28-b82d-2b0601fd4fa1",
+          "contentHash": "2791b86af48c5c1366d00cbdd7caad005b96ac75e0d5550023c8928a93927218",
+          "contextRevision": 0
+        },
+        "created_at": "2026-10-13T21:01:48.259Z"
+      },
+      {
+        "sequence": "639",
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "type": "execute_rejected",
+        "actor": "database",
+        "data": {
+          "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+          "code": "NOT_APPROVED"
+        },
+        "created_at": "2026-10-13T21:01:48.261Z"
+      }
+    ],
+    "keys": [
+      {
+        "user_id": "bc8f4f55-ab69-4d2f-aa94-634d558e9bf4",
+        "key": "e3c3de43-1634-40b7-8b6d-91ab2242b024",
+        "run_id": "5794ba56-d65d-43c3-8c40-5387a305c37b",
+        "intent_hash": "b7a475fefd476f8c84613c0a870e335812e5e7541072ab6e05d58179acdb8920",
+        "created_at": "2026-10-13T21:01:48.257Z"
+      }
+    ],
+    "receipts": [],
+    "plans": [],
+    "weeks": [],
+    "days": [],
+    "exercises": []
+  }
+}

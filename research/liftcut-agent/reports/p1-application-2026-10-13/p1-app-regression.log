@@ -1,0 +1,67 @@
+
+> liftcut-tracker@0.1.0 test
+> node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts
+
+✔ intl provider configures a stable default time zone (2.4278ms)
+✔ guest mode enters the app without forcing onboarding (1.4849ms)
+✔ guest AI requests receive profile defaults before validation (0.863ms)
+✔ dashboard exposes the primary daily actions (1.4614ms)
+✔ guest migration keeps the active user plan inactive when importing guest plans (0.8386ms)
+✔ default demo and equipment support Chinese-first onboarding (1.0348ms)
+✔ localized selects display labels instead of raw enum values (4.0322ms)
+✔ workout page shows estimated calorie burn without changing the database schema (2.1638ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.0824
+✔ normalizeMealType maps Chinese meal types to English enums (7.0897ms)
+✔ normalizeAiNutritionPlan handles wrapper output (0.4412ms)
+✔ buildNutritionPlanPrompt includes strict schema instructions (1.3217ms)
+✔ NUTRITION_PROMPT_VERSION is updated (0.173ms)
+✔ normalizeAiNutritionPlan rejects invalid plans (0.6344ms)
+✔ beginner demo keeps source IDs unique (0.7791ms)
+✔ filters by focus (0.2664ms)
+✔ searches Chinese and English labels (1.1085ms)
+✔ combines query and focus filters (0.1428ms)
+✔ getTodayNutritionSummary returns zeros for no logs (1.2354ms)
+✔ getTodayNutritionSummary sums matching date logs (0.3425ms)
+✔ getNutritionByDate returns zeros for no matching logs (0.2649ms)
+✔ getNutritionByDate sums matching date (0.2765ms)
+✔ getSuggestedTrainingDayNumber returns valid day number (0.6666ms)
+✔ getSuggestedTrainingDayNumber handles 1 training day (0.1593ms)
+✔ getAverageWeightByDays returns null for empty logs (0.4868ms)
+✔ getAverageWeightByDays computes average correctly (0.7292ms)
+✔ parsePlanText returns error for empty input (0.9218ms)
+✔ parsePlanText returns error for whitespace-only input (0.2087ms)
+✔ parsePlanText parses English template successfully (0.9391ms)
+✔ parsePlanText parses Chinese template successfully (0.4128ms)
+✔ parsePlanText extracts exercise fields correctly (0.1918ms)
+✔ parsePlanText handles rep ranges (0.1395ms)
+✔ parsePlanText defaults RPE to 7 when missing (0.141ms)
+✔ parsePlanText handles multiple weeks and days (0.1096ms)
+✔ parsePlanText uses custom plan name (0.0872ms)
+✔ parsePlanText handles notes after exercise (0.1278ms)
+✔ userSettingsSchema accepts valid settings (2.826ms)
+✔ userSettingsSchema rejects negative age (0.6178ms)
+✔ userSettingsSchema accepts boundary values (0.1824ms)
+✔ quickFoodItemSchema accepts valid item (0.501ms)
+✔ quickFoodItemSchema rejects missing required fields (0.3458ms)
+✔ returns 0 for empty exercises (0.6593ms)
+✔ uses defaults when body weight and duration are zero (0.3333ms)
+✔ returns higher calories for higher RPE (0.2567ms)
+✔ returns higher calories for heavier body weight (0.1984ms)
+✔ uses plan exercise sets when provided (0.1393ms)
+✔ prefers completed exercises over incomplete (0.0848ms)
+✔ falls back to all exercises when none completed (0.099ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4078.6595
