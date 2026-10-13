@@ -1,0 +1,43 @@
+
+> liftcut-tracker@0.1.0 test:p1
+> node --conditions=react-server --import tsx --test tests/agent-db/*.test.ts
+
+✔ cookie mutation gate rejects cross-origin, missing origin and simple form posts (26.7313ms)
+✔ chunked body limit is enforced without trusting Content-Length (5.8466ms)
+✔ transport errors never report success and do not leak SQL/connection secrets (1.7261ms)
+✔ model capability port cannot approve, revoke, create a run or impersonate another user (0.1848ms)
+✔ model cannot inject a human event, owner, run or modified supplied draft (113.6569ms)
+✔ same public intent after adapter recreation returns the original receipt, one write (108.9081ms)
+✔ revocation and updated constraints make previously plausible handles unusable (164.4395ms)
+✔ unknown aliases do not reach SQL execution and claimed success needs an actual receipt (85.8852ms)
+✔ public model requests contain no expected scores, identities or database access (65.3918ms)
+✔ prose and multi-action native outputs are rejected without fixing model text (0.4636ms)
+✔ durable case budget stops a non-finishing policy after twelve decisions (216.3662ms)
+✔ SQL evidence audit rejects a deleted approval, altered intent and extra commit (91.9267ms)
+✔ raw PostgreSQL microseconds are kept for exact profile hash reconstruction (17.8831ms)
+✔ runtime login is non-owner, no BYPASSRLS, private tables inaccessible to browser roles (35.7175ms)
+✔ preview and no approval: attempt1, business commits0 (51.9373ms)
+✔ 12 concurrent same-key executes commit one complete plan and return one receipt (125.7793ms)
+✔ different keys for same approved proposal still at most one business commit (52.2047ms)
+✔ response lost then connection pool replaced: recover and replay original receipt (66.1205ms)
+✔ actual child process dies after COMMIT; a new worker reads and replays the durable result (566.8457ms)
+✔ unsafe database administrator connection is refused before entering the transaction (20.6366ms)
+✔ uncommitted profile update serializes before execution and invalidates old approval (44.357ms)
+✔ same key changed content or changed run rejected, even after success (59.5168ms)
+✔ revoke before execution blocks commit and late approval cannot revive the proposal (41.5284ms)
+✔ concurrent revoke/execute obey one linear order with auditable events (166.407ms)
+✔ execute committed first: subsequent revoke does not pretend to undo the plan (43.4437ms)
+✔ new context, new proposal or actual profile update invalidate old approval (105.3719ms)
+✔ cross-user read, approve, revoke, execute and direct RLS query denied (49.8122ms)
+✔ fault on exercise insertion rolls back activation and ALL partial rows, same-key retry works (64.4725ms)
+✔ schema, invalid aliases, constraint feedback and budget deny before business writes (36.9197ms)
+✔ runtime cannot rewrite proposals, receipts or events (22.9736ms)
+✔ creation key replay returns same run; changed context conflicts (30.7089ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2149.2247

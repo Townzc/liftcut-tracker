@@ -1,0 +1,17 @@
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+test_changed_input_token_output_token_and_usage_rejected (test_protocol.NativeTests.test_changed_input_token_output_token_and_usage_rejected) ... ok
+test_parsed_action_cannot_be_repaired_after_native_generation (test_protocol.NativeTests.test_parsed_action_cannot_be_repaired_after_native_generation) ... ok
+test_real_token_serialization_and_kind_not_promotable (test_protocol.NativeTests.test_real_token_serialization_and_kind_not_promotable) ... ok
+test_deadlines_cannot_extend (test_protocol.ProtocolTests.test_deadlines_cannot_extend) ... ok
+test_inventory_rejects_modified_and_unlisted_files (test_protocol.ProtocolTests.test_inventory_rejects_modified_and_unlisted_files) ... ok
+test_lost_ssh_output_cannot_skip_shutdown_request (test_protocol.ProtocolTests.test_lost_ssh_output_cannot_skip_shutdown_request) ... ok
+test_old_or_future_opening_cannot_dispatch (test_protocol.ProtocolTests.test_old_or_future_opening_cannot_dispatch) ... ok
+test_partial_cannot_create_model_receipt_or_touch_database (test_protocol.ProtocolTests.test_partial_cannot_create_model_receipt_or_touch_database) ... ok
+test_previous_study_or_missing_authorization_hash_rejected (test_protocol.ProtocolTests.test_previous_study_or_missing_authorization_hash_rejected) ... ok
+test_scripted_or_partial_receipt_cannot_be_acked (test_protocol.ProtocolTests.test_scripted_or_partial_receipt_cannot_be_acked) ... ok
+test_uncertain_transport_stops_without_duplicate_process (test_protocol.ProtocolTests.test_uncertain_transport_stops_without_duplicate_process) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.455s
+
+OK

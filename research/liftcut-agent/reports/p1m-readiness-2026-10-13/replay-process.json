@@ -1,0 +1,6 @@
+{
+  "returncode": 0,
+  "stdout": "{\"version\":\"p1-model-tools-v1\",\"kind\":\"scripted\",\"cases\":24,\"requests\":120,\"writes\":9,\"attempts\":9,\"passed\":24,\"exactRestoredSnapshots\":true,\"restrictedReads\":true,\"actualFreshSqlReplay\":true,\"nativeValidatedSeparately\":true}\n",
+  "stderr": "",
+  "restored_database": "liftcut_p1_restore_6c2629f475364821b392cfb93a3431c2"
+}

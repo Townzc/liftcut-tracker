@@ -1,7 +1,7 @@
 # LiftCut-AgentLab：研究证据入口
 
 - [P1应用批准/撤销/幂等真实数据库验证](2026-10-13-p1-application-transactions.md) · [原始证据](../../research/liftcut-agent/reports/p1-application-2026-10-13/README.md)：22工程检查、3浏览器流程、24脚本工作流与实际数据库恢复；18尝试/9提交，合成身份，无新模型成绩或生产迁移。
-- [下一轮P1-M准备](2026-10-13-p1m-preparation.md)：24开发流程清单、零安全错误门槛、模型连接器/恢复/独立冻结缺口与开机触发；当前`gpuReady=false`，服务器继续关闭。
+- [P1-M准备结果与固定协议](2026-10-13-p1m-readiness.md) · [运行手册](P1M_RUNBOOK.md) · [原始CPU证据](../../research/liftcut-agent/reports/p1m-readiness-2026-10-13/README.md)：31工程/11负向检查、24脚本工作流、120原生编码/SQL逐步重放、真实新库恢复、189源小包安装通过，0模型调用。最终精确七项CI成功后通知新4090/90分钟/¥4窗口；[初始清单](2026-10-13-p1m-preparation.md)保留为历史。
 
 - [E1完整任务真实结果](2026-10-13-e1-complete-results.md) · [全部48配对与原始证据](../../research/liftcut-agent/reports/e1-seed42-2026-10-13/README.md)：A/D48/48，D原门槛PASS但0增量收益；96完整回合、648实际生成及GPU采样，用户已确认关机。
 - [E1之后的P1与性能计划](2026-10-13-post-e1-plan.md)：先真实应用批准/撤销/幂等事务，下一模型联调待CPU/存储/冻结准备；约¥1.48短租期经验继续，旧24小时保留方案已由用户分段选择取代。

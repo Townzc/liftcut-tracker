@@ -1,0 +1,15 @@
+{
+  "version": "p1-model-tools-v1",
+  "kind": "scripted",
+  "status": "complete",
+  "cases": 24,
+  "passed": 24,
+  "requests": 120,
+  "startedAt": "2026-10-13T22:07:06.996Z",
+  "finishedAt": "2026-10-13T22:07:13.601Z",
+  "scriptedUserEvents": true,
+  "independentGeneralization": false,
+  "modelCalls": 0,
+  "writes": 9,
+  "attempts": 9
+}

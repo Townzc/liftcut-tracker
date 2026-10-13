@@ -1,0 +1,35 @@
+{
+  "version": "p1-model-backup-receipt-v1",
+  "status": "complete",
+  "kind": "scripted",
+  "complete_model_receipt": false,
+  "inventory_sha256": "fec11342226e6055beaa8c40af8dbbb17bff31db0b9a7c840df9d020265953a3",
+  "native": {
+    "kind": "scripted",
+    "cases": 24,
+    "requests": 120,
+    "model_calls": 0,
+    "prompt_tokens": 133302,
+    "completion_tokens": 2124,
+    "max_requested_prompt_tokens": 1896,
+    "planned_process_restarts": 3
+  },
+  "actual_parent_sha256": {
+    "adapter_config.json": "2e82c81f8f9a68f270cdfd9f7f4fc92cb877e87efc1ea0bbb4d131c601a29a84",
+    "adapter_model.safetensors": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0"
+  },
+  "database": {
+    "version": "p1-model-tools-v1",
+    "kind": "scripted",
+    "cases": 24,
+    "requests": 120,
+    "writes": 9,
+    "attempts": 9,
+    "passed": 24,
+    "exactRestoredSnapshots": true,
+    "restrictedReads": true,
+    "actualFreshSqlReplay": true,
+    "nativeValidatedSeparately": true
+  },
+  "verified_at_utc": "2026-10-13T22:07:22.705700+00:00"
+}

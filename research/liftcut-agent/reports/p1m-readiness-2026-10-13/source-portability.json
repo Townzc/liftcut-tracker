@@ -1,0 +1,114 @@
+{
+  "unlaunched_draft_correction": true,
+  "historical_e1_sources_changed": 0,
+  "code_semantics_changed": false,
+  "prior_manifest_sha256": "8372981e0287bba3254762091e73a7fe0c6fa686c92ac862a549892b4edca3c9",
+  "manifest_sha256": "972476597e7bdebc045897c91a3e9e9c6bf5167f9f897be40664181da764c771",
+  "normalized_files": [
+    {
+      "path": "package-lock.json",
+      "old_sha256": "4a3d9f12170a0b7492ca7619aa0ce2479a79a895ea9bfbadb3506ba6c1b31531",
+      "new_sha256": "1e04da09019aa6f129d9c38dc2be9a29ae7738b321ab75012075516b4f9e5951",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "package.json",
+      "old_sha256": "b7e124e216d468c690b440852eb0a13ce213229473ab1b5728af54f890d6deda",
+      "new_sha256": "27ebfb0d5e749fde1113d1b2353cc2354c6e5e6e135e6abafa7381fb29619993",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "research/p1-application/cases.ts",
+      "old_sha256": "659e86d3eaf86a57f11c7cb21c8ff9b98225b34b992d37230383438617466f28",
+      "new_sha256": "72e5370b0e121da43a74bc21ab277d71692137e6b1e3e28fcd8ed1f13d2c5eae",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "research/p1-application/evidence.ts",
+      "old_sha256": "d89c266ae6b24496222721619376d7e0462f680a6c2c234084f9170192a20625",
+      "new_sha256": "6d17686ba744cc5358a2f73524d3443bbb72aa903ff07615147997d8e29bad2d",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/lib/agent/contracts.ts",
+      "old_sha256": "ee560e73439e8be06fcfa33d74afaf608cb2bb91595f9cbc0bc1df281c4fe281",
+      "new_sha256": "91e9fa08507628f14025b7c483114c04dcd8c932eb5267dc814c06bff0213587",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/lib/ai/schemas.ts",
+      "old_sha256": "2d05c73a7a98b46dc0e2626d650666dc823c9aade6721219e7fb999cf11ab232",
+      "new_sha256": "0f8cb4a6cb67c8205b36b2fd41641202d51d86dc08238f5c7b90901e59f97803",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/services/agent/database.ts",
+      "old_sha256": "8e7e12d24c077d3e4a2bf78a772953e100fdf2eace94e9e8f39171a24f2fa8a1",
+      "new_sha256": "52e7f2f6ff8b40c50aa4362639ca5d4e1a1066448b9a52daffc2192052706f20",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/services/agent/http.ts",
+      "old_sha256": "ea8db2687d095a6c9c4b575796041e157943500ddf4bc9621b5970396747619e",
+      "new_sha256": "4914f0d4af2be02e11a014c86068f11fdecfef70b8f811176ab1bcf6e2d2eb8a",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/services/agent/store.ts",
+      "old_sha256": "a5f58c4a563cd2c4c4ccca57bae6681e240a3b9ac0c5236ab039a4e2816a81eb",
+      "new_sha256": "4494af0d436d00a1a44b223497b1d835e4b6b55d842406f3b861f17dab683f74",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "src/services/agent/tool-port.ts",
+      "old_sha256": "47b2d8559d1277b9b59091fb1e591c9eff6aa999df3557bd497ebb1d8ab138a4",
+      "new_sha256": "5e75b1b7cb8ea306108d5ace784c9cf01f5ba006ef9472c96c4cb821894da491",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "supabase/migrations/20261013203030_p1_application_transactions.sql",
+      "old_sha256": "fb065305e0ebb487f92938b020140ded461918cf1e4c2940c257630d9bb252df",
+      "new_sha256": "ec34e77dc5ab58501de61847b238fb95d35ad4c77c9b715ed4496d6a1f64254c",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "supabase/schema.sql",
+      "old_sha256": "241a3f4da364bdf7ddb5a0bcaedf7e96221454ac3e3647c2acdd567cc200e2ab",
+      "new_sha256": "de0fd8935f82b340afa54fd84d05238384e0e71d3325421c8874f0110e347016",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "tests/agent-db/bootstrap.sql",
+      "old_sha256": "41f6bafdd469166e4c409917df1656032225e6c1c16fae8056ee17361d530c4b",
+      "new_sha256": "9cef7faeb6374b19ea1fe513d481c20374266fa8596dfffef2136ee40fd7162d",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "tests/agent-db/setup.ts",
+      "old_sha256": "8d7425f17cee3206c79a203d1f76146279750b93bd5aa55ee299be1a9a0cefc3",
+      "new_sha256": "3d840b8ba0e21aa2127b63fa56bb105357eed97a5117a961ce477d0b9c3c708c",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    },
+    {
+      "path": "tsconfig.json",
+      "old_sha256": "407985863bca93f42b89d7e916f5321862bf0b3055fbec84a535ff15b01fed4c",
+      "new_sha256": "519f5483357c2482d0d43c2f0a13daf6e73b94d9c20c43e4d75bb85fb038c8b9",
+      "only_crlf_to_lf": true,
+      "equal_existing_git_blob": true
+    }
+  ]
+}
