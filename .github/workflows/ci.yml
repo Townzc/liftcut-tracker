@@ -835,6 +835,32 @@ jobs:
       - run: npm ci
       - run: npm run test:p1:setup
       - run: npm run test:p1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: research/liftcut-agent/requirements-tokenizer.txt
+      - run: pip install -r research/liftcut-agent/requirements-tokenizer.txt
+      - uses: actions/cache/restore@v6
+        id: p1m-tokenizer-cache
+        with:
+          path: research/liftcut-agent/outputs/ci-tokenizer-cache
+          key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
+      - name: Verify P1-M pinned tokenizer cache
+        run: python tools/ci_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-p1m-tokenizer --cache-dir research/liftcut-agent/outputs/ci-tokenizer-cache
+      - name: Check P1-M immutable sources, negative gates and actual database/native recovery
+        env:
+          P1M_TOKENIZER: research/liftcut-agent/outputs/ci-p1m-tokenizer
+        run: |
+          python research/p1-model/prepare.py check > /tmp/p1m-source-check.json
+          python -m unittest discover -s research/p1-model -p test_protocol.py -v
+          python research/p1-model/relay.py --output-dir research/liftcut-agent/outputs/ci-p1m --tokenizer-dir "$P1M_TOKENIZER"
+          python research/p1-model/restore.py backup --directory research/liftcut-agent/outputs/ci-p1m > /tmp/p1m-inventory.json
+          python research/p1-model/restore.py restore --directory research/liftcut-agent/outputs/ci-p1m --output research/liftcut-agent/outputs/ci-p1m-restored --tokenizer-dir "$P1M_TOKENIZER"
+          python tools/check_p1m_publication.py --extract-dir research/liftcut-agent/outputs/ci-p1m-published
+          python research/p1-model/restore.py restore --directory research/liftcut-agent/outputs/ci-p1m-published --output research/liftcut-agent/outputs/ci-p1m-published-restored --tokenizer-dir "$P1M_TOKENIZER"
+          python research/p1-model/prepare.py stage --output /tmp/p1m-code.tar.gz
+          python research/p1-model/prepare.py install --archive /tmp/p1m-code.tar.gz --output /tmp/p1m-installed
       - name: Check original published P1 hashes and approval/receipt consistency
         run: node --conditions=react-server --import tsx research/p1-application/audit-publication.ts research/liftcut-agent/reports/p1-application-2026-10-13
       - name: Verify 24 scripted workflows and recover their exact database snapshots
@@ -852,7 +878,11 @@ jobs:
         if: always()
         with:
           name: p1-browser-evidence
-          path: research/liftcut-agent/outputs/p1-browser*
+          path: |
+            research/liftcut-agent/outputs/p1-browser*
+            research/liftcut-agent/outputs/ci-p1m/
+            research/liftcut-agent/outputs/ci-p1m-restored/
+            research/liftcut-agent/outputs/ci-p1m-published-restored/
 
   quality:
     runs-on: ubuntu-latest

@@ -1,0 +1,61 @@
+{
+  "stage": "CPU_PREPARATION_COMPLETE_PENDING_EXACT_CI",
+  "study": "p1-model-tools-v1",
+  "source_count": 189,
+  "manifest_sha256": "fcf572c12b1746f96693a5b58ab9b483b1cd1d0309e2dc7bd11b981209a06043",
+  "historical_e1_frozen_sources_unchanged": 146,
+  "scripted_workflows": 24,
+  "scripted_decisions": 120,
+  "business_commits": 9,
+  "execute_attempts": 9,
+  "actual_planned_application_process_restarts": 3,
+  "model_calls": 0,
+  "new_cloud_connections": 0,
+  "actual_parent_weight_sha256": {
+    "adapter_config.json": "2e82c81f8f9a68f270cdfd9f7f4fc92cb877e87efc1ea0bbb4d131c601a29a84",
+    "adapter_model.safetensors": "adb76deb48609137e0d7865f1c1b92dda2206d896bc08771332eae1df1bba0b0"
+  },
+  "scripted_tokenizer_encoding": {
+    "kind": "scripted",
+    "cases": 24,
+    "requests": 120,
+    "model_calls": 0,
+    "prompt_tokens": 133302,
+    "completion_tokens": 2124,
+    "max_requested_prompt_tokens": 1896,
+    "planned_process_restarts": 3
+  },
+  "engineering_tests": 32,
+  "protocol_native_negative_tests": 11,
+  "stage_install": {
+    "source_count": 189,
+    "cli_imports": 4,
+    "bytes": 417668,
+    "sha256": "38ea747f38823a7591be6611d2a70c0fc69eab0a867f40a5cea652d2a1d32715",
+    "assets_uploaded": 0
+  },
+  "limits": {
+    "requestsPerCase": 12,
+    "cases": 24,
+    "outputTokens": 512,
+    "contextTokens": 4096
+  },
+  "window_minutes": {
+    "work": 60,
+    "collection": 80,
+    "hard": 90
+  },
+  "reserve_cny": 4,
+  "hourly_cny": 2.18,
+  "scripted_evidence_archive_sha256": "a728e85be505aa58575df40d107e12688b517622c2826d2c4d3da169417a974f",
+  "production_authentication_tested": false,
+  "gpu_ready_requires_exact_final_ci_and_new_user_opening": true,
+  "source_portability": {
+    "normalized_existing_files": 15,
+    "semantic_changes": 0,
+    "each_matches_existing_git_blob": true,
+    "original_cpu_evidence_preserved": true,
+    "record": "source-portability.json"
+  },
+  "ci_portability_fix": "ci-portability.json"
+}

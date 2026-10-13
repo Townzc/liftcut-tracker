@@ -1,6 +1,19 @@
 # Keep research input hashes stable across Windows and Linux checkouts.
 research/liftcut-agent/** text eol=lf
 research/liftcut-agent/**/*.png -text
+# P1-M binds these existing application dependencies and its new runner byte-for-byte.
+research/p1-model/** text eol=lf
+research/p1-application/** text eol=lf
+src/services/agent/** text eol=lf
+src/lib/agent/contracts.ts text eol=lf
+src/lib/ai/schemas.ts text eol=lf
+supabase/schema.sql text eol=lf
+supabase/migrations/20261013203030_p1_application_transactions.sql text eol=lf
+tests/agent-db/bootstrap.sql text eol=lf
+tests/agent-db/setup.ts text eol=lf
+package.json text eol=lf
+package-lock.json text eol=lf
+tsconfig.json text eol=lf
 # Preserve captured event bytes, including the Windows shutdown observer's CRLF.
 research/liftcut-agent/reports/d2-startup-failure-2026-10-02/*.jsonl -text whitespace=cr-at-eol
 research/liftcut-agent/reports/d2-partial-s0-2026-10-02/**/*.tar.gz -text
@@ -40,3 +53,7 @@ research/liftcut-agent/reports/e1-seed42-2026-10-13/** -text whitespace=cr-at-eo
 # Preserve measured local P1 transaction/restore/browser evidence byte-for-byte.
 research/liftcut-agent/reports/p1-application-2026-10-13/** -text whitespace=cr-at-eol
 research/liftcut-agent/reports/p1-application-2026-10-13/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+# Byte-bound P1-M CPU observations; do not normalize captured logs or JSON.
+research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.json -text whitespace=cr-at-eol
+research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.tar.gz -text

@@ -1,0 +1,15 @@
+{
+  "study": "p1-model-tools-v1",
+  "host": "requires-current-user-endpoint.invalid",
+  "port": 22,
+  "hostKeySha256": null,
+  "knownHosts": null,
+  "codeCommit": null,
+  "bootstrapPython": "/root/miniconda3/bin/python",
+  "remotePython": "/root/autodl-tmp/liftcut/envs/qwen-pilot-py312/bin/python",
+  "model": "/root/autodl-tmp/liftcut/cache/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+  "adapter": "/root/autodl-tmp/liftcut/runs/i2-run-20261013-053401/reference/final",
+  "localAdapter": null,
+  "tokenizer": null,
+  "restorePython": null
+}
