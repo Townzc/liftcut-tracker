@@ -716,6 +716,21 @@ jobs:
         run: |
           python research/liftcut-agent/analyze_i3_results.py --public-dir research/liftcut-agent/reports/i3-seed42-2026-10-13 --d2-dir research/liftcut-agent/outputs/ci-i2-d2 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
 
+      - name: Verify fixed D system and rehearse E1 on development tasks only
+        run: |
+          python research/liftcut-agent/candidate_d.py --check
+          python research/liftcut-agent/prepare_e1.py --output-dir research/liftcut-agent/outputs/ci-e1-development
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path('research/liftcut-agent')
+          actual=json.loads((r/'outputs/ci-e1-development/report.json').read_text())
+          expected=json.loads((r/'reports/e1-offline-readiness-v1.json').read_text())
+          assert actual==expected
+          assert not actual['model_result'] and not actual['can_launch']
+          assert actual['heldout_tasks_read']==actual['model_calls']==0
+          PY
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
