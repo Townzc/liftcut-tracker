@@ -24,7 +24,7 @@ import counterfactual_diagnostics as d2
 import state_diagnostics as diagnostic
 
 
-def drill(output, diagnostic_dir, d2_dir, tokenizer_dir, actual_adapter=None):
+def drill(output, diagnostic_dir, d2_dir, tokenizer_dir, actual_adapter=None, power_lease=None):
     if output.exists(): raise ValueError('fresh scripted I2 output required')
     tokenizer, _ = load_tokenizer(tokenizer_dir)
     cases = {'normal': None, 'diagnostic': diagnostic.load_prepared(diagnostic_dir),
@@ -33,8 +33,10 @@ def drill(output, diagnostic_dir, d2_dir, tokenizer_dir, actual_adapter=None):
     reference['model_result'] = False
     plan = execution_plan(reference, scripted=True)
     start, boot = '2026-10-12T10:05:00+00:00', '2026-10-12T10:00:00+00:00'
+    if power_lease:
+        boot=power_lease['booted_at_proxy'];start=(aware(boot)+timedelta(minutes=30)).isoformat()
     clock = ScriptClock(); clock.value = aware(start)
-    bind = binding(plan, '0'*40, boot, start)
+    bind = binding(plan, '0'*40, boot, start,power_lease=power_lease)
     run = output/'SYNTHETIC-I2-CONTRACT-ONLY'
     dump_new(run/'opening.json', {'binding': bind, 'booted_at_proxy': boot, 'trial_started_at_utc': start,
         'budget': BUDGET, 'evidence_kind': 'scripted_contract', 'started_at_utc': start})
@@ -92,7 +94,8 @@ def drill(output, diagnostic_dir, d2_dir, tokenizer_dir, actual_adapter=None):
         bind, aware(bind['collection_cutoff']), clock, kind='scripted_contract', sleep=recover,
         shutdown=simulated_shutdown)
     validate_receipt((run/'off-instance-backup.json').read_bytes(), index, bind, kind='scripted_contract')
-    if len(shutdown_calls) != 1 or not read(run/'backup-copy-status.json')['off_instance_acknowledged']:
+    expected_shutdowns=0 if power_lease else 1
+    if len(shutdown_calls) != expected_shutdowns or not read(run/'backup-copy-status.json')['off_instance_acknowledged']:
         raise ValueError('scripted restore consumption/automatic shutdown contract failed')
     summary = {'version':'i2-cpu-readiness-v1','evidence_kind':'scripted_contract','model_result':False,
         'gpu_calls':0,'new_training':False,'test_episodes':0,'episodes_replayed':444,
@@ -111,5 +114,7 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
     for n in ('output-dir','diagnostic-dir','d2-dir','tokenizer-dir'): p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--actual-adapter-dir',type=Path)
+    p.add_argument('--power-lease',type=Path)
     a = p.parse_args()
-    print(drill(a.output_dir,a.diagnostic_dir,a.d2_dir,a.tokenizer_dir,a.actual_adapter_dir))
+    print(drill(a.output_dir,a.diagnostic_dir,a.d2_dir,a.tokenizer_dir,a.actual_adapter_dir,
+                read(a.power_lease) if a.power_lease else None))

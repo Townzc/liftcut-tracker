@@ -1,0 +1,17 @@
+{
+  "identity": {
+    "pid": 1552,
+    "start_ticks": "1580472148",
+    "argv": [
+      "/root/miniconda3/bin/python",
+      "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/research_lease.py",
+      "--guard",
+      "--lease",
+      "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json"
+    ],
+    "kernel_boot_id": "969726ac-7391-4fe7-87a4-2dd957b19c67"
+  },
+  "lease_digest": "452c2f667f371174bdf24a45016a47bdddcf83ccc755b1e6265cbb25a7f95a9a",
+  "source": "/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/research_lease.py",
+  "source_sha256": "12cc45a6fdb71d3b7bb2b4e7efb1197d8deea815387430444662c99bcb88c0cd"
+}

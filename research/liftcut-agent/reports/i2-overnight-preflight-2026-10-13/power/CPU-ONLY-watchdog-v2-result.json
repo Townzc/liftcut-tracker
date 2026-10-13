@@ -1,0 +1,7 @@
+{
+  "cpu_only": true,
+  "model_calls": 0,
+  "watcher_exit": 0,
+  "sleep_group_exit": -9,
+  "deadline": "2026-10-13T04:42:26.470035+00:00"
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+  File "/root/miniconda3/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/root/miniconda3/bin/python', '-c', 'import time;time.sleep(60)']' timed out after 3 seconds

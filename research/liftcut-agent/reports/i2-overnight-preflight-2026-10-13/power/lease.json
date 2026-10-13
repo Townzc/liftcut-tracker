@@ -1,0 +1,15 @@
+{
+  "version": "liftcut-research-lease-v1",
+  "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+  "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+  "hourly_cny": 2.18,
+  "reserve_cny": 25,
+  "automatic_shutdown": true,
+  "automatic_reboot": false,
+  "paid_api_calls": 0,
+  "disk_expansion": false,
+  "heldout_tasks_allowed": 0,
+  "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+  "maximum_followup_trials": 2,
+  "final_collection_buffer_minutes": 45
+}

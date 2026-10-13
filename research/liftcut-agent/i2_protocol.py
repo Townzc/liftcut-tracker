@@ -22,7 +22,7 @@ BUDGET = {'hourly_cny': 2.18, 'reserve_cny': 4, 'setup_minutes': 10,
 NEW_SOURCES = ('i2_view.py', 'i2_rollout.py', 'i2_gates.py', 'i2_protocol.py', 'gpu_i2.py',
                'audit_i2.py', 'run_i2_window.py', 'i2_receipt_transfer.py', 'restore_i2.py',
                'launch_i2.py', 'i2_setup.py', 'i2_assets.py', 'drill_i2.py', 'i2_oracle.py',
-               'drill_i2_projection.py', 'audit_i2_inputs.py')
+               'drill_i2_projection.py', 'audit_i2_inputs.py', 'research_lease.py', 'launch_i2_overnight.py')
 SOURCES = tuple(sorted(set(read(ROOT/'reports/i1-execution-v1.json')['source_sha256']) | set(NEW_SOURCES)))
 
 
@@ -90,10 +90,22 @@ def verify_plan():
     return plan
 
 
-def deadlines(booted, started, now, *, launching=True):
+def deadlines(booted, started, now, *, launching=True, power_lease=None):
     boot, start = aware(booted), aware(started)
     if now.utcoffset() is None or not boot <= start <= now:
         raise ValueError('actual new opening and trial start required')
+    if power_lease is not None:
+        from research_lease import validate
+        end = validate(power_lease, now)
+        if booted != power_lease['booted_at_proxy']:
+            raise ValueError('original overnight opening cannot be reset')
+        work = start + timedelta(minutes=BUDGET['work_minutes'])
+        collect = work + timedelta(minutes=BUDGET['collection_minutes'])
+        hard = start + timedelta(minutes=BUDGET['hard_minutes'])
+        if (hard > end-timedelta(minutes=power_lease['final_collection_buffer_minutes'])
+                or (launching and (now-start).total_seconds()>60)):
+            raise TimeoutError('insufficient original overnight time for a bounded I2 trial')
+        return work,collect,hard
     setup = boot + timedelta(minutes=BUDGET['setup_minutes'])
     hard = boot + timedelta(minutes=BUDGET['hard_minutes'])
     work = min(start+timedelta(minutes=BUDGET['work_minutes']), hard-timedelta(minutes=BUDGET['collection_minutes']))
@@ -105,24 +117,26 @@ def deadlines(booted, started, now, *, launching=True):
     return work, collect, hard
 
 
-def binding(plan, commit, booted, started):
+def binding(plan, commit, booted, started, *, power_lease=None):
     if not re.fullmatch(r'[0-9a-f]{40}', commit):
         raise ValueError('exact execution commit required')
-    work, collect, hard = deadlines(booted, started, aware(started))
-    return {'version': 'i2-window-binding-v1', 'code_commit': commit, 'execution_plan_digest': digest(plan),
+    work, collect, hard = deadlines(booted, started, aware(started),power_lease=power_lease)
+    result = {'version': 'i2-window-binding-v1', 'code_commit': commit, 'execution_plan_digest': digest(plan),
             'reference_digest': digest(plan['reference']), 'booted_at_proxy': booted,
             'trial_started_at_utc': started, 'work_cutoff': work.isoformat(),
             'collection_cutoff': collect.isoformat(), 'hard_cutoff': hard.isoformat(),
             'test_episodes': 0, 'new_training': False}
+    if power_lease is not None:result['power_lease']=power_lease
+    return result
 
 
 def validate_opening(opening, plan, *, scripted=False):
     b = opening['binding']
-    expected = binding(plan, b['code_commit'], opening['booted_at_proxy'], opening['trial_started_at_utc'])
+    expected = binding(plan, b['code_commit'], opening['booted_at_proxy'], opening['trial_started_at_utc'],power_lease=b.get('power_lease'))
     if (b != expected or opening['budget'] != BUDGET
             or opening['evidence_kind'] != ('scripted_contract' if scripted else 'model')):
         raise ValueError('I2 opening/lease binding differs')
-    deadlines(b['booted_at_proxy'], b['trial_started_at_utc'], aware(opening['started_at_utc']))
+    deadlines(b['booted_at_proxy'], b['trial_started_at_utc'], aware(opening['started_at_utc']),power_lease=b.get('power_lease'))
     return b
 
 
@@ -143,7 +157,13 @@ def verify_worker(run, commit):
     if utcnow() >= aware(bind['work_cutoff']):
         raise TimeoutError('original I2 work cutoff reached')
     from i2_setup import verify_guard
-    verify_guard(Path(read(run/'opening.json')['guard_path']), bind['hard_cutoff'])
+    guard=verify_guard(Path(read(run/'opening.json')['guard_path']), bind['hard_cutoff'])
+    if 'power_lease' in bind:
+        if guard.get('power_lease')!=bind['power_lease']:raise ValueError('worker and original power lease differ')
+        from research_lease import identity
+        watchdog=read(run/'trial-watchdog.json')
+        if watchdog['deadline']!=bind['hard_cutoff'] or identity(watchdog['identity']['pid'])!=watchdog['identity']:
+            raise ValueError('original bounded trial watchdog missing')
     verify_adapter(run/'reference/final', plan['reference']['checkpoint'])
     return plan, bind
 

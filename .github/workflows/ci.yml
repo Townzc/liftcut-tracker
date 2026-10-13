@@ -610,7 +610,7 @@ jobs:
           for name,h in ref['i1_view_sha256'].items():assert sha256(p/'run/evaluation/view'/name)==h
           failed=root/'reports/i2-startup-2026-10-13'
           for name,h in read(failed/'sha256.json').items():assert sha256(failed/name)==h
-          old=read(failed/'original-execution.json');current=read(root/'reports/i2-execution-v1.json')
+          old=read(failed/'original-execution.json');current=read(root/'reports/i2-overnight-preflight-2026-10-13/previous-execution.json')
           assert {k:v for k,v in old.items() if k!='source_sha256'}=={k:v for k,v in current.items() if k!='source_sha256'}
           assert {k for k in old['source_sha256'] if old['source_sha256'][k]!=current['source_sha256'][k]}=={'i2_assets.py','i2_setup.py','launch_i2.py'}
           nogpu=root/'reports/i2-no-gpu-2026-10-13'
@@ -623,6 +623,11 @@ jobs:
           actual=read(prepared/'operations/prepared.json')
           assert actual['execution_plan_digest']==digest(current) and actual['model_result'] is False
           assert actual['installation']['frozen_sources']==len(current['source_sha256'])==114
+          from launch_i2_overnight import science_unchanged
+          from i2_protocol import verify_plan
+          night=verify_plan();science_unchanged(current,night)
+          assert set(night['source_sha256'])-set(current['source_sha256'])=={'research_lease.py','launch_i2_overnight.py'}
+          assert {k for k in current['source_sha256'] if current['source_sha256'][k]!=night['source_sha256'][k]}=={'drill_i2.py','i2_protocol.py','i2_setup.py','launch_i2.py','run_i2_window.py'}
           PY
 
       - name: Rehearse I2 four-arm native projection and partial recovery without private weights
@@ -635,9 +640,25 @@ jobs:
           actual=json.loads((r/'outputs/ci-i2-drill/drill-report.json').read_text())
           expected=json.loads((r/'reports/i2-nogpu-readiness-v3.json').read_text())['cpu_drill']
           expected.update(actual_preselected_checkpoint_verified=False,complete_scripted_restore=False,archive_status='partial')
+          expected['frozen_source_digest']=json.loads((r/'reports/i2-execution-v1.json').read_text())['source_sha256']
           assert actual==expected and not actual['model_result']
           receipt=json.loads((r/'outputs/ci-i2-drill/restored/off-instance-backup.json').read_text())
           assert receipt['episodes_replayed']==0 and not receipt['complete_study_replayed']
+          PY
+
+      - name: Rehearse overnight I2 partial recovery without shutting down the instance
+        run: |
+          python research/liftcut-agent/drill_i2.py --output-dir research/liftcut-agent/outputs/ci-i2-night-drill --diagnostic-dir research/liftcut-agent/outputs/ci-state-diagnostics --d2-dir research/liftcut-agent/outputs/ci-d2-a --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --power-lease research/liftcut-agent/reports/i2-overnight-preflight-2026-10-13/lease.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path('research/liftcut-agent/outputs/ci-i2-night-drill')
+          report=json.loads((r/'drill-report.json').read_text())
+          assert report['simulated_shutdown_calls']==0 and not report['model_result']
+          assert report['archive_status']=='partial' and not report['complete_scripted_restore']
+          close=json.loads((r/'SYNTHETIC-I2-CONTRACT-ONLY/window-close.json').read_text())
+          assert close['power_action']=='retain_under_original_overnight_guard'
+          assert close['shutdown_at_utc']=='2026-10-13T15:00:00+00:00'
           PY
 
   quality:

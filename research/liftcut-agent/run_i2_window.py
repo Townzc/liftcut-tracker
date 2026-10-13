@@ -2,6 +2,7 @@
 import argparse
 from datetime import timedelta
 import json
+import os
 from pathlib import Path
 import platform
 import shutil
@@ -75,6 +76,14 @@ def finalize(output, status, failures, bind, collect, clock, *, kind='model', sl
     except Exception as error:
         event_file(output/'events.jsonl','backup_failure',error_type=type(error).__name__,persistent_bytes_retained=True)
     finally:
+        if 'power_lease' in bind:
+            dump_new(output/'window-close.json',{'at_utc':clock.now().isoformat(),
+                'off_instance_acknowledged':acknowledged,'experiment_status':status,
+                'power_action':'retain_under_original_overnight_guard',
+                'shutdown_at_utc':bind['power_lease']['shutdown_at_utc'],
+                'provider_billing_stopped':False})
+            event_file(output/'events.jsonl','experiment_closed_instance_retained',acknowledged=acknowledged)
+            return index
         try:
             event_file(output/'events.jsonl','shutdown_requested',acknowledged=acknowledged)
         except Exception: pass
@@ -96,25 +105,46 @@ def main():
         p.add_argument('--'+n,type=Path,required=n!='guard-path')
     for n in ('expected-code-commit','booted-at','trial-started-at'):p.add_argument('--'+n)
     p.add_argument('--execute',action='store_true');p.add_argument('--shutdown-when-done',action='store_true')
+    p.add_argument('--power-lease',type=Path)
     a=p.parse_args(); plan=verify_plan()
     commands=phases(a.model_dir,a.model_manifest,a.diagnostic_dir,a.d2_dir,a.tokenizer_dir,a.output_dir,a.expected_code_commit)
     if not a.execute:
         print(json.dumps({'dry_run':True,'gpu_calls':0,'budget':BUDGET,'phases':commands}));return 0
-    if platform.system()!='Linux' or not a.shutdown_when_done or a.guard_path is None:
+    if platform.system()!='Linux' or (bool(a.shutdown_when_done)==bool(a.power_lease)) or a.guard_path is None:
         raise ValueError('authorized Linux execution with automatic shutdown required')
     from i2_setup import verify_guard
-    work,collect,hard=deadlines(a.booted_at,a.trial_started_at,utcnow())
-    verify_guard(a.guard_path,hard.isoformat())
+    power_lease=None
+    if a.power_lease:
+        from research_lease import verify_live
+        power_lease=verify_live(a.power_lease)
+    work,collect,hard=deadlines(a.booted_at,a.trial_started_at,utcnow(),power_lease=power_lease)
+    guard=verify_guard(a.guard_path,hard.isoformat())
+    if power_lease and guard.get('power_lease')!=power_lease:
+        raise ValueError('controller and power lease differ')
     if (a.output_dir.exists() or a.output_dir.resolve().parent!=Path('/root/autodl-tmp/liftcut/runs')
             or not a.output_dir.name.startswith('i2-run-') or command(['git','status','--porcelain'],ROOT)
             or command(['git','rev-parse','HEAD'],ROOT)!=a.expected_code_commit):
         raise ValueError('fresh persistent run and exact clean checkout required')
     output,clock,status,failures=a.output_dir,Clock(),'partial',[]
     output.mkdir(parents=True,exist_ok=False)
-    bind=binding(plan,a.expected_code_commit,a.booted_at,a.trial_started_at)
+    bind=binding(plan,a.expected_code_commit,a.booted_at,a.trial_started_at,power_lease=power_lease)
     dump_new(output/'opening.json',{'binding':bind,'booted_at_proxy':a.booted_at,'trial_started_at_utc':a.trial_started_at,
         'started_at_utc':utcnow().isoformat(),'budget':BUDGET,'evidence_kind':'model','guard_path':str(a.guard_path)})
     try:
+        if power_lease:
+            from research_lease import identity
+            target=identity(os.getpid())
+            log=output/'trial-watchdog-events.jsonl'
+            with (output/'trial-watchdog.log').open('x') as stream:
+                child=subprocess.Popen([sys.executable,str(ROOT/'research_lease.py'),'--trial-guard',
+                    '--target-json',json.dumps(target),'--deadline',hard.isoformat(),'--log',str(log)],
+                    stdin=subprocess.DEVNULL,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+            for _ in range(100):
+                if log.exists() and log.stat().st_size:break
+                if child.poll() is not None:raise ValueError('trial watchdog failed; no inference')
+                time.sleep(.1)
+            else:raise ValueError('trial watchdog not observed; no inference')
+            dump_new(output/'trial-watchdog.json',{'identity':identity(child.pid),'target':target,'deadline':hard.isoformat()})
         if shutil.disk_usage(output).free<3_000_000_000:raise ValueError('3GB free disk required; no expansion')
         copy_reference(a.reference_dir,output,plan['reference'])
         execute_phases(commands,output,work,clock)
