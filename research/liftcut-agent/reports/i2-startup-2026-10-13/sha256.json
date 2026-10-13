@@ -1,0 +1,14 @@
+{
+  "continuation-events.jsonl": "63a466ebe8cc5f31c20ce0267f3afa5ed17a3354450f299430d2c957c42f23d7",
+  "controlled-continuation.json": "7b25924ab332ab93eaf7db662c89ba4e2708cde592e4bbdfb14378cab3adefef",
+  "first-attempt-events.jsonl": "517cdce97c180603acf9398f8f123041df8badc8021d1bc74e066b6bcf3b86b6",
+  "missing-python.stderr": "d1a2f935b65cf083dee984b9425be17b5bb97db72492c6f616b4bea127f1049b",
+  "original-execution.json": "c72016ece8daba7fc5d0526cc1c4261a87df3558fd1a04727cb490a8576fd09b",
+  "path-recovery.json": "617d6f1b1069497ce09e5ab5dc7d58c33e24de15d79ea475a8ef4871851bd8bb",
+  "pre-shutdown.json": "37e61ed3174343f118c5500fef4a5720f57e74d9afd2445030c90672dc513691",
+  "runtime-inspection.json": "6a498897068af833f3548b25fb97357f6f0b8354e246ad7a2123ef610cb13b7c",
+  "shutdown-observation.json": "97adfdacb9e272e7d7d81f3c319ee78b20785e230dc0a8ae852fa0dc999dd480",
+  "shutdown-request.json": "7bb238bd3858a4aa08883211986541e04e952eab8f9405be5b2968b8c49c3034",
+  "summary.json": "84525b9945c50a3b4b9441a2166306cc00259f98ca7dff994f7a726444513b59",
+  "user-power-confirmation.json": "2bd7c647ad08c87e4ee93be22c7121221f7e8c1c18eb69e6f2b7958988f584bf"
+}

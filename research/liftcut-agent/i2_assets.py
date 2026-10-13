@@ -5,6 +5,8 @@ from pathlib import Path, PurePosixPath
 import shutil
 import tarfile
 
+WEIGHT = 'reference/final/adapter_model.safetensors'
+
 
 def sha(path):
     with Path(path).open('rb') as f:
@@ -13,7 +15,7 @@ def sha(path):
         return value.hexdigest()
 
 
-def install_assets(archive, index, destination):
+def install_assets(archive, index, destination, *, cached_weight=None, cache_root=None):
     destination = Path(destination)
     if (destination.exists() or destination.is_symlink() or not index or len(index) > 150
             or any(type(v['bytes']) is not int or v['bytes'] < 0 for v in index.values())
@@ -23,10 +25,17 @@ def install_assets(archive, index, destination):
         p = PurePosixPath(name)
         if p.is_absolute() or '\\' in name or ':' in name or '..' in p.parts or str(p) != name:
             raise ValueError('unsafe asset name')
+    omitted = {WEIGHT} if cached_weight is not None else set()
+    if omitted:
+        cached_source = Path(cached_weight).resolve(strict=True)
+        root = Path(cache_root or '/root/autodl-tmp/liftcut').resolve(strict=True)
+        if (WEIGHT not in index or not cached_source.is_relative_to(root) or not cached_source.is_file()
+                or cached_source.stat().st_size != index[WEIGHT]['bytes'] or sha(cached_source) != index[WEIGHT]['sha256']):
+            raise ValueError('cached fixed weight differs; no download or replacement')
     # Verify all archive names/types/sizes before any extraction.
     with tarfile.open(archive, 'r:gz') as tar:
         members = tar.getmembers()
-        if len(members) != len(index) or {m.name for m in members} != set(index):
+        if len(members) != len(index)-len(omitted) or {m.name for m in members} != set(index)-omitted:
             raise ValueError('asset inventory differs')
         if any(not m.isfile() or m.size != index[m.name]['bytes'] for m in members):
             raise ValueError('unsafe asset member')
@@ -37,12 +46,20 @@ def install_assets(archive, index, destination):
             path.parent.mkdir(parents=True, exist_ok=True)
             with tar.extractfile(m) as source, path.open('xb') as sink: shutil.copyfileobj(source, sink)
             if sha(path) != index[m.name]['sha256']: raise ValueError('asset SHA differs')
-    return {'verified_files': len(index), 'network_calls': 0}
+    if omitted:
+        path = destination/WEIGHT; path.parent.mkdir(parents=True, exist_ok=True)
+        with cached_source.open('rb') as source, path.open('xb') as sink:
+            shutil.copyfileobj(source, sink)
+        if sha(path) != index[WEIGHT]['sha256'] or path.stat().st_size != index[WEIGHT]['bytes']:
+            raise ValueError('cached weight changed during copy')
+    return {'verified_files': len(index), 'network_calls': 0,
+            'cached_weight_copied': bool(omitted)}
 
 
 if __name__ == '__main__':
     import argparse
     p = argparse.ArgumentParser(allow_abbrev=False)
     for n in ('archive', 'index', 'destination'): p.add_argument('--'+n, type=Path, required=True)
+    p.add_argument('--cached-weight', type=Path)
     a = p.parse_args()
-    print(json.dumps(install_assets(a.archive, json.loads(a.index.read_text()), a.destination)))
+    print(json.dumps(install_assets(a.archive, json.loads(a.index.read_text()), a.destination, cached_weight=a.cached_weight)))

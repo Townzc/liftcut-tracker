@@ -1,0 +1,7 @@
+{
+  "at_utc": "2026-10-13T00:44:04.848254+00:00",
+  "label": "shutdown-command",
+  "returncode": -1,
+  "stdout": "{\"returncode\": 0, \"provider_billing_stopped\": \"unknown\"}\n",
+  "stderr": ""
+}

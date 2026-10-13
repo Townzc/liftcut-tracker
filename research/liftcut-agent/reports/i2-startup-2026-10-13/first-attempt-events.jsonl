@@ -1,0 +1,4 @@
+{"event":"exclusive_local_dispatch_reserved","at_utc":"2026-10-13T00:37:10.987532+00:00","pid":27832,"opening":"2026-10-13T00:36:20+00:00","hard_cutoff":"2026-10-13T02:06:20+00:00"}
+{"event":"ssh_connected","at_utc":"2026-10-13T00:37:23.370134+00:00"}
+{"event":"remote_command","at_utc":"2026-10-13T00:37:25.117397+00:00","label":"create-stage","returncode":127}
+{"event":"collector_stopped","at_utc":"2026-10-13T00:37:25.119719+00:00","error_type":"RuntimeError","message":"remote step failed: create-stage","independent_guard_verified":false,"dispatch_may_have_started":false,"no_automatic_reconnect":true,"provider_power_state":"unknown","provider_billing_stopped":"unknown"}

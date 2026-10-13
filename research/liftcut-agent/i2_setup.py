@@ -11,6 +11,7 @@ import sys
 import time
 
 PERSIST = Path('/root/autodl-tmp/liftcut')
+PREPARATION_MINUTES = 120
 
 
 def identity(pid):
@@ -81,6 +82,107 @@ def verify_guard(path, hard):
     return data
 
 
+def preparation_path(ops):
+    if (ops.parent != PERSIST/'preparations' or not re.fullmatch(r'i2-prep-[0-9]{8}-[0-9]{6}', ops.name)
+            or ops.is_symlink() or ops.resolve() != ops):
+        raise ValueError('fresh preparation directory on the persistent volume required')
+
+
+def no_visible_gpu():
+    """A management query only; no CUDA context or model is created."""
+    try:
+        probe = subprocess.run(['nvidia-smi','--query-gpu=uuid','--format=csv,noheader'],
+                               capture_output=True, text=True, timeout=15)
+        if probe.returncode == 0 and probe.stdout.strip():
+            raise ValueError('GPU visible: use no-GPU mode for deployment')
+        return {'query_returncode':probe.returncode,'visible_gpu_uuids':[],
+                'scope':'no visible GPU from management query, not a provider billing receipt'}
+    except FileNotFoundError:
+        return {'query_returncode':None,'visible_gpu_uuids':[],
+                'scope':'nvidia-smi unavailable; no model or CUDA allocation is attempted'}
+
+
+def arm_preparation(ops, booted):
+    preparation_path(ops)
+    boot = datetime.fromisoformat(booted); now = datetime.now(timezone.utc)
+    if sys.platform != 'linux' or boot.utcoffset() is None or not 0 <= (now-boot).total_seconds() < 600:
+        raise ValueError('fresh no-GPU opening required')
+    if active_workers(): raise ValueError('existing experiment worker; do not prepare')
+    probe = no_visible_gpu()
+    ops.mkdir(parents=True, exist_ok=False)
+    key = hashlib.sha256(boot.astimezone(timezone.utc).isoformat().encode()).hexdigest()[:20]
+    with (ops.parent/('opening-'+key+'.json')).open('x') as f:
+        json.dump({'ops':str(ops),'booted_at_proxy':booted},f)
+    hard = (boot+timedelta(minutes=PREPARATION_MINUTES)).isoformat()
+    argv = [sys.executable,str(Path(__file__).with_name('shutdown_guard.py')),'--arm',
+            '--deadline',hard,'--receipt',str(ops/'setup-guard.jsonl')]
+    with (ops/'guard.log').open('x') as log:
+        child = subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+    for _ in range(100):
+        if (ops/'setup-guard.jsonl').exists() and (ops/'setup-guard.jsonl').stat().st_size: break
+        if child.poll() is not None: raise ValueError('preparation guard failed')
+        time.sleep(.1)
+    else: raise ValueError('guard outcome unknown; inspect before any retry')
+    value = {'version':'i2-setup-guard-v1','identity':identity(child.pid),'argv':argv,
+             'booted_at_proxy':booted,'hard_cutoff':hard,'armed_at_utc':datetime.now(timezone.utc).isoformat(),
+             'budget_kind':'no_gpu_preparation','hourly_cny':0.1,'reserve_cny':0.2,'gpu_probe':probe}
+    with (ops/'guard.json').open('x') as f: json.dump(value,f,indent=2)
+    verify_guard(ops/'guard.json',hard)
+    return value
+
+
+def verify_installation(data, model, model_manifest, commit, asset_index):
+    """CPU-only deployment check, also re-run before a fresh GPU dispatch."""
+    from d2_execution import expected_runtime
+    from i2_protocol import ROOT, verify_plan, verify_adapter
+    from gpu_counterfactual_diagnostics import verify_model
+    from prepare_state_diagnostics import verify_prepared as diagnostic
+    from prepare_counterfactual_diagnostics import verify_prepared as d2, load_tokenizer
+    from server_workspace import command, sha256
+    from liftcut_agent.interactive import digest
+    import importlib.metadata
+    import platform
+    plan = verify_plan()
+    if command(['git','rev-parse','HEAD'],ROOT) != commit or command(['git','status','--porcelain'],ROOT):
+        raise ValueError('clean exact deployment commit required')
+    runtime = expected_runtime()
+    actual = {'python':platform.python_version(),
+              'packages':{k:importlib.metadata.version(k) for k in runtime['packages']}}
+    if actual != {k:runtime[k] for k in ('python','packages')}:
+        raise ValueError('pinned runtime unavailable; no installation during deployment')
+    index = json.loads(asset_index.read_text())
+    if not index or len(index)>150: raise ValueError('bounded asset inventory required')
+    for name, item in index.items():
+        path = data/name
+        if (not path.resolve().is_relative_to(data.resolve()) or path.is_symlink()
+                or not path.is_file() or path.stat().st_size != item['bytes'] or sha256(path) != item['sha256']):
+            raise ValueError('deployed asset mismatch: '+name)
+    if {p.relative_to(data).as_posix() for p in data.rglob('*') if p.is_file()} != set(index):
+        raise ValueError('unexpected deployed data files')
+    diagnostic(data/'diagnostic'); d2(data/'d2'); load_tokenizer(data/'tokenizer')
+    verify_model(model,model_manifest)
+    verify_adapter(data/'reference/final',plan['reference']['checkpoint'])
+    return {'version':'i2-installed-v1','commit':commit,'execution_plan_digest':digest(plan),
+            'frozen_sources':len(plan['source_sha256']),'asset_index_sha256':sha256(asset_index),
+            'verified_asset_files':len(index),'runtime':actual,'model_manifest_sha256':sha256(model_manifest),
+            'model_calls':0,'gpu_runtime_verified':False,'model_result':False}
+
+
+def close_preparation(ops, booted):
+    preparation_path(ops)
+    hard = (datetime.fromisoformat(booted)+timedelta(minutes=PREPARATION_MINUTES)).isoformat()
+    guard = verify_guard(ops/'guard.json',hard)
+    if guard.get('budget_kind') != 'no_gpu_preparation' or active_workers():
+        raise ValueError('wrong preparation lease or active experiment')
+    from shutdown_guard import shutdown_command
+    with (ops/'shutdown-request.json').open('x') as f:
+        json.dump({'at_utc':datetime.now(timezone.utc).isoformat(),'reason':'preparation_complete_or_failed'},f)
+    result = subprocess.run(shutdown_command(Path('/usr/bin/shutdown')),capture_output=True,timeout=30)
+    value = {'returncode':result.returncode,'provider_billing_stopped':'unknown'}
+    with (ops/'shutdown-return.json').open('x') as f: json.dump(value,f)
+    return value
+
+
 def dispatch(ops, data, model, model_manifest, commit, booted):
     from d2_execution import expected_runtime, utcnow
     from i2_protocol import ROOT, deadlines, verify_plan
@@ -143,9 +245,15 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
     p.add_argument('--arm-bootstrap',action='store_true'); p.add_argument('--dispatch',action='store_true')
     p.add_argument('--abort-setup',action='store_true')
-    for name in ('ops','data','model','model-manifest'): p.add_argument('--'+name,type=Path)
+    p.add_argument('--arm-preparation',action='store_true'); p.add_argument('--close-preparation',action='store_true')
+    p.add_argument('--verify-installation',action='store_true')
+    for name in ('ops','data','model','model-manifest','asset-index'): p.add_argument('--'+name,type=Path)
     for name in ('booted-at','commit'): p.add_argument('--'+name)
     a=p.parse_args()
-    if sum((a.arm_bootstrap,a.dispatch,a.abort_setup)) != 1: p.error('one explicit mode required')
-    result = arm(a.ops,a.booted_at) if a.arm_bootstrap else abort_setup(a.ops,a.booted_at) if a.abort_setup else dispatch(a.ops,a.data,a.model,a.model_manifest,a.commit,a.booted_at)
+    if sum((a.arm_bootstrap,a.dispatch,a.abort_setup,a.arm_preparation,a.close_preparation,a.verify_installation)) != 1:
+        p.error('one explicit mode required')
+    if a.arm_preparation: result = arm_preparation(a.ops,a.booted_at)
+    elif a.close_preparation: result = close_preparation(a.ops,a.booted_at)
+    elif a.verify_installation: result = verify_installation(a.data,a.model,a.model_manifest,a.commit,a.asset_index)
+    else: result = arm(a.ops,a.booted_at) if a.arm_bootstrap else abort_setup(a.ops,a.booted_at) if a.abort_setup else dispatch(a.ops,a.data,a.model,a.model_manifest,a.commit,a.booted_at)
     print(json.dumps(result))
