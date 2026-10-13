@@ -1,5 +1,6 @@
 # LiftCut-AgentLab research roadmap
 
+2026-10-13 09:21更新：[D全系统快照](research/2026-10-13-candidate-d-freeze.md)已实际核验权重/tokenizer，[E1科学协议](research/2026-10-13-e1-full-task-protocol.md)已定新A/D完整任务门槛与预算。24开发脚本回合/686测试通过；无E1模型结果，执行器/一次性预约/恢复待补，can_launch=false。后续先完成E1准备与[应用闭环契约](research/2026-10-13-application-agent-contract.md)，本夜48保留任务不运行、不追加无依据GPU试验。
 2026-10-13 08:42更新：[I3真实完成](research/2026-10-13-i3-complete-results.md)，C31/32、D32/32，固定D原门槛PASS；新编码下1个收益证明本批稳定ID的增量价值，但仅8业务锚点，无独立泛化。完整外部权重恢复和原消费者真实ACK完成。下一阶段按[post-I3计划](research/2026-10-13-post-i3-plan.md)优先冻结系统、独立完整任务协议、真实应用接通与维护者学习。第二后续GPU名额未用，不为租期刷同类变体；48保留任务本夜封存。
 2026-10-13 I3准备更新：固定D/C的8锚点×4公开ID编码、64首决策已完成正式设计和128源冻结；原I2的116源未变。669测试、实际父权重完整脚本恢复、partial及6项故障拒绝通过，尚无I3模型调用。最终六项CI和真实增量安装后唯一派发；原15:00及后续最多两轮边界保持。见[I3方案](research/2026-10-13-i3-id-robustness-design.md)。
 

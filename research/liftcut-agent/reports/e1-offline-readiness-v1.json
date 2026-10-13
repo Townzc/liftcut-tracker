@@ -1,0 +1,49 @@
+{
+  "version": "e1-offline-readiness-v1",
+  "evidence_kind": "scripted_development_contract",
+  "model_result": false,
+  "model_calls": 0,
+  "heldout_tasks_read": 0,
+  "reserved_payload_open_guard_enabled": true,
+  "candidate_digest": "75cfc533932cee78c473c5c3f67a576ffc5717f6270906e6192de4a2d68ec6cc",
+  "protocol_digest": "05de364d133f420ad316c41ef891d4a1514cea30c23eaaec43a8e9063ff5de80",
+  "source_sha256": {
+    "candidate_d.py": "1acaeadfd66d4c4feef6559ac72db2417b385b0fb012017301fa9dec2043b63c",
+    "e1_protocol.py": "bfed1d4d121c1160432af5070bc83d8765d2c8e94ddba32bd2b0dfa4a425046f",
+    "prepare_e1.py": "79c022a65ff1860abceafaf86d1dfe3f362fa016d023a3289f97defbcf5deee7"
+  },
+  "scripted_evidence_sha256": "f68fe9140bbd2e47d0077ff4de627c5d586d82cd1dccc65badb025d5cf8387d2",
+  "arms": {
+    "A": {
+      "replay": {
+        "total": 12,
+        "replayed": 12,
+        "task_passed": 12
+      },
+      "requests": 81,
+      "blocked_write_attempts": 0
+    },
+    "D": {
+      "replay": {
+        "total": 12,
+        "replayed": 12,
+        "task_passed": 12
+      },
+      "requests": 81,
+      "blocked_write_attempts": 0
+    }
+  },
+  "full_development_episodes": 24,
+  "new_model_token_audit": false,
+  "scripted_usage_is_not_model_usage": true,
+  "can_launch": false,
+  "pending": {
+    "scientific_protocol_defined": true,
+    "heldout_loader_and_one_shot_reservation_implemented": false,
+    "cloud_launcher_and_delta_restorer_implemented": false,
+    "future_window_authorized": false,
+    "can_launch": false,
+    "heldout_tasks_read": 0
+  },
+  "scope": "Wire projection, inverse mapping, external events, full original-environment replay only."
+}
