@@ -1,5 +1,6 @@
 # LiftCut-AgentLab：研究证据入口
 
+2026-10-13 08:42 UTC：最新[I3完整结果](2026-10-13-i3-complete-results.md)为C31/32、D32/32，1收益0回退，D通过事前诊断门槛。真回执已实际被原服务器消费，全部64真实回放/token与外部父权重已核验。[下一步](2026-10-13-post-i3-plan.md)转向完整候选冻结、[独立验收草案](2026-10-13-independent-evaluation-draft.md)和应用契约；[学习路线](2026-10-13-agent-learning-review.md)帮助从单条错误独立解释项目。[晨报](2026-10-13-morning-agent-report.md)同步真实功能、困难与ETA。下文“尚未执行”均为历史快照。
 2026-10-13 08:08 UTC：[I3启动路径错误与受控继续](2026-10-13-i3-startup-recovery.md)。PR52已通过合并，但首次在上传前失败，实际只读检查确认没有模型调用/运行残留；修复科学条件不变，须新精确提交检查后继续。此条覆盖下文“准备完成”的运行状态，I3效果仍未知。
 
 2026-10-13 I3准备：[事前设计](2026-10-13-i3-id-robustness-design.md)、[执行手册](I3_RUNBOOK.md)、[CPU完整依赖恢复](../../research/liftcut-agent/reports/i3-readiness-v1.json)、[6项真实归档/轨迹故障检查](../../research/liftcut-agent/reports/i3-fault-readiness-v1.json)。669项离线测试通过；I3尚无模型结果，正式派发前仍需最终精确提交CI与增量安装核验。I2已在PR51六项SUCCESS后合main，旧失败与局限保留。

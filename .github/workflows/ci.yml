@@ -712,6 +712,10 @@ jobs:
           assert observed['remote_files_modified']==0 and observed['new_model_calls']==0
           PY
 
+      - name: Reconstruct actual I3 ID decisions and genuine receipt consumption
+        run: |
+          python research/liftcut-agent/analyze_i3_results.py --public-dir research/liftcut-agent/reports/i3-seed42-2026-10-13 --d2-dir research/liftcut-agent/outputs/ci-i2-d2 --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --check
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
