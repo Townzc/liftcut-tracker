@@ -28,3 +28,4 @@ research/liftcut-agent/reports/i2-no-gpu-2026-10-13/inspection-result.json -text
 research/liftcut-agent/reports/i2-prepared-2026-10-13/** -text whitespace=cr-at-eol
 # Preserve captured overnight guard/preflight evidence separately from live source.
 research/liftcut-agent/reports/i2-overnight-preflight-2026-10-13/** -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i2-transfer-failure-2026-10-13/** -text whitespace=cr-at-eol

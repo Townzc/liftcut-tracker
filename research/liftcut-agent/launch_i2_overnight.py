@@ -29,6 +29,15 @@ BASE='32fbbac18d48493a8f37221a3e4b090e3b431cf2'
 PERSIST=PurePosixPath('/root/autodl-tmp/liftcut')
 
 
+def event_writer(path):
+    # Upload events carry a `name` payload (the filename). Do not name the first
+    # positional argument `name`, or transport stops before writing any bytes.
+    def emit(event,**fields):
+        event_file(path,event,**fields)
+        print(json.dumps({'event':event,**fields}),flush=True)
+    return emit
+
+
 def science_unchanged(previous,current):
     if ({k:v for k,v in previous.items() if k!='source_sha256'}
             != {k:v for k,v in current.items() if k!='source_sha256'}):
@@ -126,7 +135,7 @@ def execute(directory,config_file,run_id,lease_path):
     cfg['remote_run']=str(PERSIST/'runs'/('i2-run-'+run_id))
     dump_new(cfg['operations']/'config.json',{k:str(v) if isinstance(v,Path) else v for k,v in cfg.items()})
     dump_new(cfg['operations']/'stage.json',spec)
-    emit=lambda name,**kw:(event_file(cfg['operations']/'events.jsonl',name,**kw),print(json.dumps({'event':name,**kw}),flush=True))
+    emit=event_writer(cfg['operations']/'events.jsonl')
     emit('exclusive_local_dispatch_reserved',pid=os.getpid(),booted_at_proxy=lease['booted_at_proxy'])
     import paramiko
     client=paramiko.SSHClient();client.load_host_keys(str(cfg['known_hosts']));client.set_missing_host_key_policy(paramiko.RejectPolicy())

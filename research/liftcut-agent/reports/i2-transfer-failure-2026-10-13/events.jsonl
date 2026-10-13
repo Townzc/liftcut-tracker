@@ -1,0 +1,5 @@
+{"event":"exclusive_local_dispatch_reserved","at_utc":"2026-10-13T05:03:00.742291+00:00","pid":46288,"booted_at_proxy":"2026-10-13T04:27:00+00:00"}
+{"event":"ssh_connected","at_utc":"2026-10-13T05:03:11.215192+00:00"}
+{"event":"remote_command","at_utc":"2026-10-13T05:03:14.877724+00:00","label":"verify-original-power-guard","returncode":0}
+{"event":"remote_command","at_utc":"2026-10-13T05:03:15.553195+00:00","label":"create-new-code-stage","returncode":0}
+{"event":"collector_stopped","at_utc":"2026-10-13T05:03:15.988961+00:00","error_type":"TypeError","message":"execute.<locals>.<lambda>() got multiple values for argument 'name'","dispatch_may_have_started":false,"no_automatic_retry":true,"original_power_guard_retained":true}
