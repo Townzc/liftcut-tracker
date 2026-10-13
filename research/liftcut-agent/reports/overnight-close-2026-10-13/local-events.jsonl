@@ -1,0 +1,4 @@
+{"event": "ssh_connected", "at_utc": "2026-10-13T14:53:12.141052+00:00", "local_pid": 15328}
+{"event": "read_only_stream_requested", "at_utc": "2026-10-13T14:53:12.525594+00:00", "original_power_deadline": "2026-10-13T15:00:00+00:00"}
+{"event": "ssh_channel_return", "at_utc": "2026-10-13T14:59:59.230673+00:00", "returncode": -1, "transport_active": false, "provider_power_state": "unknown", "provider_billing_stopped": "unknown"}
+{"event": "observer_closed", "at_utc": "2026-10-13T14:59:59.230673+00:00", "local_exit_is_not_power_confirmation": true}
