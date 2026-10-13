@@ -1,5 +1,7 @@
 # LiftCut-AgentLab：研究证据入口
 
+2026-10-13 I3准备：[事前设计](2026-10-13-i3-id-robustness-design.md)、[执行手册](I3_RUNBOOK.md)、[CPU完整依赖恢复](../../research/liftcut-agent/reports/i3-readiness-v1.json)、[6项真实归档/轨迹故障检查](../../research/liftcut-agent/reports/i3-fault-readiness-v1.json)。669项离线测试通过；I3尚无模型结果，正式派发前仍需最终精确提交CI与增量安装核验。I2已在PR51六项SUCCESS后合main，旧失败与局限保留。
+
 2026-10-13 06:55 UTC：[I2完整结果](2026-10-13-i2-complete-results.md)已恢复核验；四组99/105/111/111，D开发候选通过，但无独立泛化或真实应用完成声明。完整五条配对边、来源/ID定位、图表和自动ACK等待缺口都在报告中。[晨报](2026-10-13-morning-agent-report.md)给出真实功能、困难及条件式ETA，[下一步](2026-10-13-post-i2-plan.md)记录仍待冻结执行的ID扰动方案。下文运行中状态为历史记录。
 
 2026-10-13 05:34 UTC：I2四组正式运行中，尚无完整结果。新[晨报工作稿](2026-10-13-morning-agent-report.md)明确区分历史证据与本夜待核验数据。[整夜计划](2026-10-13-i2-overnight-plan.md)与[上传前失败修复](2026-10-13-i2-transfer-failure.md)保存本夜决策依据，以下较早“等待开机”等状态均为历史记录。
