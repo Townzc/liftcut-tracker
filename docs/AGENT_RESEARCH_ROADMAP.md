@@ -1,5 +1,7 @@
 # LiftCut-AgentLab research roadmap
 
+2026-10-13 10:34更新：E1执行准备PR56精确955c24a六项SUCCESS后合main b55cd33，受检/合并树一致；332,089字节增量本机新目录143源/5CLI安装核验通过。下一次实际E1仍需单独新窗口，今夜不运行原48任务。新增[逐条真实案例学习材料](research/2026-10-13-agent-case-walkthrough.md)，补齐首决策/完整任务、原生/逆映射和外部批准的理解；下一研发优先级仍是完整任务迁移及真实应用接入，不为租期追加重复GPU实验。
+
 2026-10-13 10:15更新：[E1执行准备](research/2026-10-13-e1-execution-preparation.md)已完成96开发复制脚本回合/实际父权重恢复与partial、故障验证；最终CI/安装和新窗口授权后才实际评估。143源固定，原科学门槛不变。历史结构测试解析保留payload，因此不称秘密盲测；尚无该48任务模型评估。优先完成固定候选的完整任务验收，再接真实应用闭环。
 
 2026-10-13 09:21更新：[D全系统快照](research/2026-10-13-candidate-d-freeze.md)已实际核验权重/tokenizer，[E1科学协议](research/2026-10-13-e1-full-task-protocol.md)已定新A/D完整任务门槛与预算。24开发脚本回合/686测试通过；无E1模型结果，执行器/一次性预约/恢复待补，can_launch=false。后续先完成E1准备与[应用闭环契约](research/2026-10-13-application-agent-contract.md)，本夜48保留任务不运行、不追加无依据GPU试验。
