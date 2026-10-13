@@ -1,5 +1,9 @@
 # LiftCut-AgentLab research roadmap
 
+## 当前调整：2026-10-13整夜研究窗口
+
+用户授权保留4090到洛杉矶10月13日08:00。执行顺序为I2真实四组→完整归档恢复→逐例因子分析→至多两轮有机制依据的小试验→晨报和Git交付；原开发/保留任务边界、固定候选门槛不变。原04:27UTC开机代理、15:00UTC最终电源截止固定，最后45分钟不新增计算。约¥22.999计算代理，规划预留¥25。详见[整夜计划](research/2026-10-13-i2-overnight-plan.md)，未完成阶段不当作结果。
+
 Current2026-10-13: actual no-GPU preparation COMPLETE, platform OFF confirmed by user.
 Run014645 installs checked execution32fbbac after PR47 all5SUCCESS/merge9aa7064. Real
 31assets/114sources/runtime/base model/fixed weight/input verification passed; genuine

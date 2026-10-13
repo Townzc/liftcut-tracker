@@ -75,6 +75,13 @@ def arm(ops, booted):
 
 def verify_guard(path, hard):
     data = json.loads(path.read_text())
+    if data.get('version')=='i2-overnight-guard-v1':
+        from research_lease import verify_live,validate
+        validate(data['power_lease'])
+        verify_live(Path(data['lease_path']),data['power_lease'])
+        if data['hard_cutoff']!=hard:
+            raise ValueError('original I2 trial hard limit differs')
+        return data
     if data['version'] != 'i2-setup-guard-v1' or data['hard_cutoff'] != hard:
         raise ValueError('original I2 guard deadline differs')
     observed = identity(data['identity']['pid'])

@@ -273,6 +273,16 @@ def collect(sftp,cfg,plan,opening,budget,emit):
         if raw and consumed is None:
             status=json.loads(raw);persist_json(cfg['operations']/'backup-copy-status.json',status)
             consumed=status['off_instance_acknowledged'];emit('server_receipt_observed',value=status)
+        if 'power_lease' in bind:
+            raw=remote_bytes(sftp,cfg['remote_run']+'/window-close.json',budget)
+            if raw:
+                value=json.loads(raw);persist_json(cfg['operations']/'window-close.json',value)
+                if (value['power_action']!='retain_under_original_overnight_guard'
+                        or value['shutdown_at_utc']!=bind['power_lease']['shutdown_at_utc']):
+                    raise ValueError('overnight retention policy changed')
+                emit('experiment_closed_instance_retained',value=value)
+                return {'receipt_transfer':sent,'server_consumed':consumed,'window_close':value,
+                        'provider_power_state':'intentionally_retained','provider_billing_stopped':False}
         raw=remote_bytes(sftp,cfg['remote_run']+'/shutdown-request.json',budget)
         if raw:
             value=json.loads(raw);persist_json(cfg['operations']/'shutdown-request.json',value)

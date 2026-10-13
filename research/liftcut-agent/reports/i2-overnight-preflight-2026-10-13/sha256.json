@@ -1,0 +1,15 @@
+{
+  "inspection/first-watchdog.stderr": "a674b585711c6d727fcc43670905444f0e4364ab14202ffa3324aaed066d6948",
+  "inspection/first-watchdog.stdout": "8849b8a9b7dda230a63fd535ca63bb8c69caddd585c3d1194280f198176b5948",
+  "inspection/initial-gpu.stdout": "3bc9bc0daad2325438176350c874a32105c37c977470be144ee84da40ee09410",
+  "lease.json": "b22866184f287644b0d726ebed64a66ed86847b1b7dcbab11ebe39ebb5f2d509",
+  "power/CPU-ONLY-watchdog-v2-result.json": "a29415ced8da527b635971ad99396cf18c38d6686b17a380e850227ed1372fca",
+  "power/CPU-ONLY-watchdog-v2.jsonl": "38751eb6824329fd520ffcdcd8d830fa2e8aecd8ffaddb38822fe8b425afa00d",
+  "power/events.jsonl": "10137597f1b386c80210681ae680f00051889e521497019202eb606e07de843a",
+  "power/guard.json": "8bdb7d2f721c69c2b0a2bd5e0d8af81e4480f41114e5dab00da1c7a8b0a77b1f",
+  "power/lease.json": "cfdf87ac49c18c4e4dc1f41ae054ebed32a3c6e86c129b6c17add21041d2116a",
+  "power/research_lease.py": "12cc45a6fdb71d3b7bb2b4e7efb1197d8deea815387430444662c99bcb88c0cd",
+  "previous-execution.json": "659a4724f14c286cf3fbd7208eb534cc7e35a6fc36d98e5f681edbe70032b55b",
+  "readiness.json": "f1c70b9d40b01b9cfb0816745e6c0a017a92d73015e4d60a3b7f1328dad846fa",
+  "README.md": "91db416ebc4beeb345109996214dc3d55530388e842727fa17821ffba4603710"
+}

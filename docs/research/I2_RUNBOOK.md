@@ -1,5 +1,9 @@
 # I2：无卡准备与4090执行手册
 
+## 本次覆盖：2026-10-13用户授权整夜保留实例
+
+本次用户明确要求保留到洛杉矶08:00，**不得使用下文立即关机的普通execute入口**。改用经过最终精确提交检查的`launch_i2_overnight.py`和原独立lease。04:27UTC实例开机不变，15:00UTC电源截止不变；I2实际开始后60/20/90分钟，只结束实验进程组。既有32fbbac准备目录只读复核，只上传小代码delta，原科学方案不变。[原因、测试和启动边界](2026-10-13-i2-overnight-plan.md)。下文普通独立开机模式保留为历史/未来单窗口操作说明。
+
 对应[事前设计](2026-10-12-i2-source-id-design.md)及[启动复盘](2026-10-13-i2-startup-recovery.md)。
 四组科学方案及预选D保持不变，部署分两个独立开机窗口。命令从research/liftcut-agent执行。
 本机tokenizer/恢复解释器为.venv/Scripts/python.exe，SSH为E:/anaconda/python.exe。
