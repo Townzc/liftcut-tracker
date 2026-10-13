@@ -167,6 +167,14 @@
     "gpu_reserve_cny": 4,
     "gpu_asset_uploads": 0
   },
-  "compact_installation": "pending exact committed package rehearsal",
+  "compact_installation": {
+    "report": "i2-compact-install-readiness-v2.json",
+    "commit": "dff058a53e9917f8894698d14057adb7d4726b0a",
+    "passed": true,
+    "stage_file_bytes": 3416449,
+    "actual_cached_weight_verified": true,
+    "original_base_and_weight_unchanged": true,
+    "final_delivery_stage_requires_separate_check": true
+  },
   "scope": "Local tests and SCRIPTED replays with unchanged real historical weight; no no-GPU cloud preparation yet, no I2 model result."
 }

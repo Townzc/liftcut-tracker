@@ -7,8 +7,10 @@ a bounded no-GPU preparation (120min/CNY0.20) and a later fresh4090 opening (90m
 Reuse only verified actual cached weights/clean I1 Git base, upload a compact delta,
 and bind a genuine preparation record; GPU execution uploads no assets. Three operating
 sources change; all scientific conditions and48held-out boundary remain fixed.
-636 local tests and full/partial scripted recovery pass. Exact committed compact package
-installation and final Git checks precede notifying no-GPU opening; CPU cloud preparation
+636 local tests and full/partial scripted recovery pass. Exact implementation dff058a
+installs successfully from an isolated I1 base with31 assets/114 sources/actual weights;
+the upload is3.42MB instead of roughly159MB. Final delivery packaging and Git checks
+precede notifying no-GPU opening; CPU cloud preparation
 itself remains unrun. [Runbook](research/I2_RUNBOOK.md),
 [new evidence](../research/liftcut-agent/reports/i2-startup-readiness-v2.json).
 Earlier snapshots below remain historical.
