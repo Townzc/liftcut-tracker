@@ -37,6 +37,9 @@ jobs:
       - name: Run evaluator regression tests
         run: python -m unittest discover -s research/liftcut-agent/tests -v
 
+      - name: Verify CI tokenizer cache integrity and bounded retry
+        run: python -m unittest discover -s tests/ci -v
+
       - name: Rebuild the saved G1 trajectory viewer without model calls
         run: python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html --check
 
@@ -87,8 +90,18 @@ jobs:
           cache-dependency-path: research/liftcut-agent/requirements-tokenizer.txt
       - name: Install tokenizer-only dependencies (no training framework)
         run: pip install -r research/liftcut-agent/requirements-tokenizer.txt
-      - name: Fetch hash-pinned public tokenizer files (no weights or paid API)
-        run: python research/liftcut-agent/fetch_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-tokenizer
+      - uses: actions/cache/restore@v6
+        id: tokenizer-cache
+        with:
+          path: research/liftcut-agent/outputs/ci-tokenizer-cache
+          key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
+      - name: Verify cached hashes or fetch public tokenizer with bounded backoff
+        run: python tools/ci_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-tokenizer --cache-dir research/liftcut-agent/outputs/ci-tokenizer-cache
+      - uses: actions/cache/save@v6
+        if: steps.tokenizer-cache.outputs.cache-hit != 'true'
+        with:
+          path: research/liftcut-agent/outputs/ci-tokenizer-cache
+          key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
       - name: Reproduce the real tokenizer loss-mask audit on CPU
         run: |
           python research/liftcut-agent/tokenize_decisions.py --decisions-dir research/liftcut-agent/reports/development-decisions-2026-09-28 --tokenizer-dir research/liftcut-agent/outputs/ci-tokenizer --output-dir research/liftcut-agent/outputs/ci-mask --max-length 4096
@@ -673,9 +686,20 @@ jobs:
           cache-dependency-path: research/liftcut-agent/requirements-tokenizer.txt
       - name: Install tokenizer-only dependencies (no model weights or paid API)
         run: pip install -r research/liftcut-agent/requirements-tokenizer.txt
+      - uses: actions/cache/restore@v6
+        id: tokenizer-cache
+        with:
+          path: research/liftcut-agent/outputs/ci-tokenizer-cache
+          key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
+      - name: Verify cached hashes or fetch public tokenizer with bounded backoff
+        run: python tools/ci_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-i2-tokenizer --cache-dir research/liftcut-agent/outputs/ci-tokenizer-cache
+      - uses: actions/cache/save@v6
+        if: steps.tokenizer-cache.outputs.cache-hit != 'true'
+        with:
+          path: research/liftcut-agent/outputs/ci-tokenizer-cache
+          key: pinned-tokenizer-v1-${{ hashFiles('research/liftcut-agent/configs/qwen3-4b-tokenizer.json') }}
       - name: Rebuild the frozen development inputs for I2
         run: |
-          python research/liftcut-agent/fetch_tokenizer.py --output-dir research/liftcut-agent/outputs/ci-i2-tokenizer
           python research/liftcut-agent/prepare_state_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --output-dir research/liftcut-agent/outputs/ci-i2-diagnostic
           python research/liftcut-agent/prepare_counterfactual_diagnostics.py --tokenizer-dir research/liftcut-agent/outputs/ci-i2-tokenizer --output-dir research/liftcut-agent/outputs/ci-i2-d2
       - name: Reconstruct all 444 actual I2 traces, token IDs, inverse mappings and five paired comparisons
@@ -798,7 +822,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+          --health-cmd "pg_isready -U postgres -d liftcut_p1_ci" --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_ci
       P1_RUNTIME_DATABASE_URL: postgresql://liftcut_agent:p1-local-fixture-only@127.0.0.1:5432/liftcut_p1_ci

@@ -125,7 +125,7 @@ function getGuestQuotaRemaining(data: Record<string, unknown>): number | null {
   return typeof remaining === "number" ? remaining : null;
 }
 
-export function AiPlanPage() {
+export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: boolean }) {
   const t = useTranslations("ai");
   const tNav = useTranslations("nav");
   const tNutrition = useTranslations("nutrition");
@@ -944,7 +944,7 @@ export function AiPlanPage() {
                     {loading === "save-training" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
                     {loading === "save-training" ? t("savingTrainingPlan") : t("saveTrainingPlan")}
                   </Button>
-                  {authMode === "authenticated" && <Link href="/plan/review" className="ml-3 text-sm underline" onClick={() => {
+                  {approvalEnabled && authMode === "authenticated" && <Link href="/plan/review" className="ml-3 text-sm underline" onClick={() => {
                     sessionStorage.setItem("liftcut-p1-draft", JSON.stringify(trainingPlanDraft));
                   }}>{requestLocale === "zh-CN" ? "检查版本并批准保存" : "Review version and approve"}</Link>}
                 </>

@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { Pool } from "pg";
 import { AgentStore } from "../../src/services/agent/store";
 import type { Outcome, RunView, Binding } from "../../src/lib/agent/contracts";
@@ -12,6 +12,7 @@ const unwrap = <T>(r: Outcome<T>): T => { assert.equal(r.ok, true, JSON.stringif
 const bind = (r: RunView): Binding => ({ proposalId: r.proposal!.proposalId, contentHash: r.proposal!.contentHash, contextRevision: r.proposal!.contextRevision });
 async function main() {
   const output = process.argv[2]; assert.ok(output, "Pass a new evidence directory");
+  await mkdir(dirname(output), { recursive: true });
   await mkdir(output); // Existing output is never overwritten or silently resumed.
   const db = new Pool({ connectionString: localDatabase().toString() });
   const pool = new Pool({ connectionString: runtimeUrl() });
