@@ -1,0 +1,272 @@
+{
+  "version": "i2-saved-state-input-audit-v1",
+  "model_result": false,
+  "new_model_calls": 0,
+  "test_episodes": 0,
+  "saved_I1_states": 111,
+  "saved_I1_requests": 189,
+  "source_calls_sha256": {
+    "normal": "300c0f50895fa6917564ade376c8a3a5e6d00a7c02e173a7aeed58acb6b0c647",
+    "diagnostic": "a2998cadf88fbd371fb732c9c48d48cf9c3aec8b4d44b86f1943b100fec53d16",
+    "d2": "d0d272064a8bef259100b2bb5a28e41c15cb6da42a4cae7e3af70f2c392d13c0"
+  },
+  "arms": {
+    "A": {
+      "same_visited_states_prompt_tokens": 341220,
+      "max_prompt_tokens": 2464,
+      "completion_allowance": 512,
+      "projection_digest": "7a0788ff84a170db063cf3675a9b0f804f3746dd86fe4b4402049c9ca84c8083"
+    },
+    "B": {
+      "same_visited_states_prompt_tokens": 341484,
+      "max_prompt_tokens": 2464,
+      "completion_allowance": 512,
+      "projection_digest": "c1df7d8ad218d6fa99f089f650a20d3baf3fa319ceae3e4459401c10649f8802"
+    },
+    "C": {
+      "same_visited_states_prompt_tokens": 373867,
+      "max_prompt_tokens": 2678,
+      "completion_allowance": 512,
+      "projection_digest": "3dd884e5b35ba21834552a420672c31c1d4c95e3afb5290fd64d81e2f147c8f1"
+    },
+    "D": {
+      "same_visited_states_prompt_tokens": 374036,
+      "max_prompt_tokens": 2677,
+      "completion_allowance": 512,
+      "projection_digest": "5e96a1bec5285d2e7964e18c5b79c1f252de81b243787232ab0ecf8d89455845"
+    }
+  },
+  "identity_pairs": [
+    {
+      "original": "d2-memory-v0-c0-first-unconfirmed",
+      "renamed": "d2-identity-v0-c0-first-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-last-expired",
+      "renamed": "d2-identity-v0-c1-last-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c0-first-expired",
+      "renamed": "d2-identity-v0-c0-first-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c0-middle-unconfirmed",
+      "renamed": "d2-identity-v0-c0-middle-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c0-middle-expired",
+      "renamed": "d2-identity-v0-c0-middle-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c0-last-unconfirmed",
+      "renamed": "d2-identity-v0-c0-last-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c0-last-expired",
+      "renamed": "d2-identity-v0-c0-last-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-first-unconfirmed",
+      "renamed": "d2-identity-v0-c1-first-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-first-expired",
+      "renamed": "d2-identity-v0-c1-first-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-middle-unconfirmed",
+      "renamed": "d2-identity-v0-c1-middle-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-middle-expired",
+      "renamed": "d2-identity-v0-c1-middle-expired",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    },
+    {
+      "original": "d2-memory-v0-c1-last-unconfirmed",
+      "renamed": "d2-identity-v0-c1-last-unconfirmed",
+      "projected_inputs_equal": {
+        "A": false,
+        "B": true,
+        "C": false,
+        "D": true
+      }
+    }
+  ],
+  "prior_failures_public_resolution": [
+    {
+      "case_id": "d2-memory-v1-c0-first-unconfirmed",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-unconfirmed",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-first-expired",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-unconfirmed",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-middle-expired",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-unconfirmed",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-memory-v1-c0-last-expired",
+      "historical_classification": "raw_context_override",
+      "public_effective_equipment": [
+        "machine"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-first-expired",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-unconfirmed",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-middle-expired",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-unconfirmed",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    },
+    {
+      "case_id": "d2-identity-v0-c0-last-expired",
+      "historical_classification": "matches_removed_value",
+      "public_effective_equipment": [
+        "barbell"
+      ],
+      "source_kind": "latest_valid_memory",
+      "new_model_success": "unmeasured"
+    }
+  ],
+  "scope": "Counterfactual token/semantic audit of saved I1 paths, NOT fresh I2 paths, cost, accuracy or latency"
+}

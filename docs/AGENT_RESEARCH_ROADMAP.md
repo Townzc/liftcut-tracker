@@ -1,5 +1,20 @@
 # LiftCut-AgentLab research roadmap
 
+Current plan,2026-10-12: [I2 source/ID factorial preparation](research/2026-10-12-i2-source-id-design.md)
+implements the morning report's next offline step. Same preselected fixed checkpoint;
+fresh A/B/C/D each111 dev states, D preselected. Stable evidence aliases and explicit
+public-source resolution are separate factors.114 sources frozen,629 offline tests pass,
+444 scripted traces/752 generations and actual unchanged weight restoration verified.
+No I2 model calls or held-out use. See [runbook](research/I2_RUNBOOK.md) and
+[preparation evidence](../research/liftcut-agent/reports/i2-readiness-v1.json).
+Local migration round-trip verifies31 assets, actual weights and114 sources in a fresh
+checkout. [PR45](https://github.com/Townzc/liftcut-tracker/pull/45) delivers this preparation;
+next is a NEW90-minute/CNY4 proposed server window after final exact-head Git checks,
+final-stage verification and the user's new opening notice. Actual restoration and all paired gates
+precede any candidate claim; independent evaluation remains later and unrun.
+
+The result and operating snapshots below describe earlier dates.
+
 Latest: [I1 complete](research/2026-10-03-i1-complete-results.md). Same fixed checkpoint,
 fresh raw/view62→99/111 reused dev states (37gains/0losses), memory11→42/48.
 ID6/12 remains below10 and fixedS0's7, so mechanism/candidate FAIL; no promotion.
