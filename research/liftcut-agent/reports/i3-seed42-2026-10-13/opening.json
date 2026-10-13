@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "version": "i3-window-binding-v1",
+    "execution_plan_digest": "127271afdeddf4646aa22090966b2c7b801c49602f0726bf3a153ed940e9d715",
+    "code_commit": "2576cd3c0913fbdac122c0b216830c16ec80c5c1",
+    "reference_digest": "4de5762b1da6da47bc8691626060f9a77a835c04b78560811a95111bb5114787",
+    "power_lease": {
+      "version": "liftcut-research-lease-v1",
+      "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+      "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+      "hourly_cny": 2.18,
+      "reserve_cny": 25,
+      "automatic_shutdown": true,
+      "automatic_reboot": false,
+      "paid_api_calls": 0,
+      "disk_expansion": false,
+      "heldout_tasks_allowed": 0,
+      "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+      "maximum_followup_trials": 2,
+      "final_collection_buffer_minutes": 45
+    },
+    "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+    "trial_started_at_utc": "2026-10-13T08:33:45.394286+00:00",
+    "work_cutoff": "2026-10-13T08:53:45.394286+00:00",
+    "collection_cutoff": "2026-10-13T09:13:45.394286+00:00",
+    "hard_cutoff": "2026-10-13T09:18:45.394286+00:00",
+    "archive_is_self_contained": false,
+    "new_training": false,
+    "test_episodes": 0
+  },
+  "at_utc": "2026-10-13T08:33:45.397085+00:00",
+  "evidence_kind": "model",
+  "budget": {
+    "setup_minutes": 10,
+    "work_minutes": 20,
+    "collection_minutes": 20,
+    "hard_minutes": 45,
+    "new_training": false,
+    "paid_api_calls": 0,
+    "heldout_tasks": 0,
+    "automatic_reboot": false,
+    "disk_expansion": false
+  },
+  "followup_slot": 0
+}
