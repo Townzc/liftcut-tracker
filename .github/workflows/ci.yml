@@ -699,6 +699,17 @@ jobs:
           receipt=json.loads((r/'outputs/ci-i3-drill/restored/off-instance-backup.json').read_text())
           assert receipt['episodes_replayed']==0 and not receipt['complete_study_replayed']
           assert not receipt['actual_external_weight_verified'] and not receipt['archive_is_self_contained']
+          import hashlib
+          failed=r/'reports/i3-startup-2026-10-13'
+          for name,h in json.loads((failed/'sha256.json').read_text()).items():
+              assert hashlib.sha256((failed/name).read_bytes()).hexdigest()==h
+          old=json.loads((failed/'original-execution.json').read_text())
+          current=json.loads((r/'reports/i3-execution-v1.json').read_text())
+          assert {k:v for k,v in old.items() if k!='source_sha256'}=={k:v for k,v in current.items() if k!='source_sha256'}
+          assert {k for k in old['source_sha256'] if old['source_sha256'][k]!=current['source_sha256'][k]}=={'launch_i3.py'}
+          observed=json.loads((failed/'inspection/verified.json').read_text())
+          assert not observed['workers'] and not observed['gpu_pids'] and not any(observed['path_exists'].values())
+          assert observed['remote_files_modified']==0 and observed['new_model_calls']==0
           PY
 
   quality:

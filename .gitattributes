@@ -31,3 +31,4 @@ research/liftcut-agent/reports/i2-overnight-preflight-2026-10-13/** -text whites
 research/liftcut-agent/reports/i2-transfer-failure-2026-10-13/** -text whitespace=cr-at-eol
 # Keep the published four-arm evidence byte-identical to its restored inventory.
 research/liftcut-agent/reports/i2-seed42-2026-10-13/** -text whitespace=cr-at-eol
+research/liftcut-agent/reports/i3-startup-2026-10-13/** -text whitespace=cr-at-eol

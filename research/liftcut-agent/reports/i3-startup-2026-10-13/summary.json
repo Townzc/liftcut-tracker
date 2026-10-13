@@ -1,0 +1,29 @@
+{
+  "version": "i3-startup-failure-v1",
+  "failed_execution": "62d1342a00d488c02ac0e8d7ee363a24da7a1e4c",
+  "failed_run_id": "20261013-080401",
+  "observed_error": "Windows Path converted remote POSIX lease to backslashes before upload",
+  "remote_files_modified": 0,
+  "new_model_calls": 0,
+  "trial_opening_created": false,
+  "followup_slots_used": 0,
+  "actual_server_inspection_utc": "2026-10-13T08:07:56.773491+00:00",
+  "original_power_lease": {
+    "version": "liftcut-research-lease-v1",
+    "booted_at_proxy": "2026-10-13T04:27:00+00:00",
+    "shutdown_at_utc": "2026-10-13T15:00:00+00:00",
+    "hourly_cny": 2.18,
+    "reserve_cny": 25,
+    "automatic_shutdown": true,
+    "automatic_reboot": false,
+    "paid_api_calls": 0,
+    "disk_expansion": false,
+    "heldout_tasks_allowed": 0,
+    "authorization": "2026-10-12 user: retain opened 4090 until tomorrow 08:00 America/Los_Angeles; iterate experiments and morning report",
+    "maximum_followup_trials": 2,
+    "final_collection_buffer_minutes": 45
+  },
+  "only_changed_execution_source": "launch_i3.py",
+  "local_original_reservation_preserved": true,
+  "controlled_continuation_requires_new_CI_install_and_directory": true
+}
