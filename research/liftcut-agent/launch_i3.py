@@ -26,6 +26,16 @@ from server_workspace import command,dump_new,sha256
 PERSIST=PurePosixPath('/root/autodl-tmp/liftcut')
 
 
+def remote_lease(value):
+    """Remote identifiers stay POSIX strings even when this launcher is on Windows."""
+    if not isinstance(value,(str,PurePosixPath)) or '\\' in str(value):
+        raise ValueError('remote lease requires a POSIX string, not a local Windows Path')
+    p=PurePosixPath(value)
+    if str(p)!=str(value) or not p.is_relative_to(PERSIST/'ops') or '..' in p.parts or p.name!='lease.json':
+        raise ValueError('canonical original persistent lease path required')
+    return str(p)
+
+
 def stage(output,commit,ref,lease_path):
     verify_plan();lease=read(lease_path);validate(lease)
     if (output.exists() or not re.fullmatch('[0-9a-f]{40}',commit)
@@ -119,6 +129,7 @@ def collect(sftp,cfg,plan,opening,budget,emit):
 
 
 def execute(stage_dir,config_file,run_id,lease_path):
+    lease_path=remote_lease(lease_path)
     cfg=configure(read(config_file),run_id);spec=verify_stage(stage_dir);plan=verify_plan();lease=spec['power_lease']
     binding(plan,spec['commit'],lease,utcnow().isoformat())
     verify_parent_files(cfg['parent_run_local'],plan['reference'],cfg['parent_receipt_local'],cfg['parent_index_local'])
@@ -176,10 +187,17 @@ def execute(stage_dir,config_file,run_id,lease_path):
         password=None;client.close();timer.cancel()
 
 
-if __name__=='__main__':
+def parser():
     p=argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
     mode=p.add_mutually_exclusive_group(required=True);mode.add_argument('--stage',action='store_true');mode.add_argument('--execute',action='store_true')
-    for n in ('output-dir','stage-dir','config','lease'):p.add_argument('--'+n,type=Path)
+    for n in ('output-dir','stage-dir','config'):p.add_argument('--'+n,type=Path)
+    # In --stage this denotes a local file; in --execute it denotes a remote path.
+    # Do not run the remote string through WindowsPath during argument parsing.
+    p.add_argument('--lease')
     for n in ('commit','ref','run-id'):p.add_argument('--'+n)
-    a=p.parse_args()
-    print(stage(a.output_dir,a.commit,a.ref,a.lease) if a.stage else execute(a.stage_dir,a.config,a.run_id,a.lease))
+    return p
+
+
+if __name__=='__main__':
+    a=parser().parse_args()
+    print(stage(a.output_dir,a.commit,a.ref,Path(a.lease)) if a.stage else execute(a.stage_dir,a.config,a.run_id,a.lease))

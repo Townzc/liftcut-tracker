@@ -8,7 +8,7 @@
   "actual_parent_weight_verified": true,
   "complete_scripted_delta_restore": true,
   "archive_is_self_contained": false,
-  "delta_archive_bytes": 208594,
+  "delta_archive_bytes": 208615,
   "source_sha256": {
     "analyze_d2_partial.py": "e77446a9f8b0729e8fda8dd61ecad48be825b123ff6043dac79c53470466169c",
     "analyze_d2_results.py": "87939e0276b5a11ada3d6a9edb142a9c6d927258b3d5fa4c4bee3b2bb503e8a0",
@@ -91,7 +91,7 @@
     "launch_i1_overnight.py": "2bb5abf85683eeb2e06f73b52a4f7618863c2a0db42a3360cb377fdc73e186e8",
     "launch_i2.py": "415b4e8b472012c3b41c14f7a62a61e0449ff6ca823bb4bf91f5e6c4639c17be",
     "launch_i2_overnight.py": "097412c14c51756d48cdefa7ccf81f633e81ef47b49955c6d67f7229c43524d7",
-    "launch_i3.py": "77a1646331fd3011ec6f6a59c5dd36ec5b1c4e30303b1f7050372cc385db2fd4",
+    "launch_i3.py": "05b3bff7814cc994d52f031aea4bbd78c489bea76d01bb1f0d2ea2dfe913a343",
     "memory_order_coverage.py": "76d0ed2b4958c70f2caf1a305412ad2bbc0d8dea767a261569b46ad45f720d55",
     "memory_view.py": "29e2423d3701df474083e2c4ee70dc5c71222c71e254cc3e68c697e082fa6c4f",
     "monitor_counterfactual_diagnostics.py": "c377bca988956f34cb77cfd7fb5a0b11306e7f499df7995bd1dc7a8f985a67df",

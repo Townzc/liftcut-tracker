@@ -1,0 +1,16 @@
+{
+  "events.jsonl": "9d5875bb6418c386c3a0e78950e4e11f4c49f70d28104e7988687a10bb5fef33",
+  "inspection/inspection-source.py": "d1a2bf1e9758030cb129c1b045940f6fa56d2c3598f11c04f6fe7d97bbd7b169",
+  "inspection/request.json": "0ace6ba37df8f92a302d01e354eeb378fa9763248d6fcbb62ff06793df6d6963",
+  "inspection/return.json": "6596d919af0975d39c48bc640aea922d53aad8ef0b572351423226b0b127df32",
+  "inspection/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "inspection/stdout.json": "ad548a0fe0496d34ea50e841b94aa213ba1caa1bc1abffca2884f47d4a19a9cb",
+  "inspection/verified.json": "cc434a6d77351000167e9cfab819a33b32dbf36bd5405521dd9c3756fa44a55d",
+  "original-execution.json": "501cc5899d9738fb56339bc887eb5a903e9d08ea350b630579de9548e4485750",
+  "original-launch_i3.py": "77a1646331fd3011ec6f6a59c5dd36ec5b1c4e30303b1f7050372cc385db2fd4",
+  "original-readiness.json": "078156bda4e7400bd546e8e90e48283a3dc78bdb3427221b5880102273c22620",
+  "original-reservation.json": "cf464fd46223430f4fec362360bccdba878f2d6b31f45a432bbc32e772a12dae",
+  "remote-001-verify-original-power-guard.stderr": "d6263104484b02fbe9b2185a5dc1ad603fdfa2c21a8ec5f05ef9f56561c2c98e",
+  "remote-001-verify-original-power-guard.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "summary.json": "b8e6b97888568ad06e298a84b2bfb95df3480d534158aa79665182e8b141b194"
+}

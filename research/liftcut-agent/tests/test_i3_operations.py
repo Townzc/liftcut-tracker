@@ -129,6 +129,13 @@ class I3OperationsTests(unittest.TestCase):
             for key,value in [('password','secret'),('remote_data','/tmp/escape')]:
                 with self.assertRaises(ValueError):launch.configure({**raw,key:value},'20261013-080000')
 
+    def test_execute_cli_keeps_remote_lease_POSIX_on_Windows(self):
+        path='/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json'
+        args=launch.parser().parse_args(['--execute','--lease',path])
+        self.assertIsInstance(args.lease,str);self.assertEqual(launch.remote_lease(args.lease),path)
+        for bad in ('\\root\\autodl-tmp\\liftcut\\ops\\lease.json','/tmp/lease.json','/root/autodl-tmp/liftcut/ops/../lease.json'):
+            with self.assertRaises(ValueError):launch.remote_lease(bad)
+
     def transport(self,unknown=False):
         with tempfile.TemporaryDirectory() as directory,redirect_stdout(io.StringIO()):
             root=Path(directory);stage=root/'stage';stage.mkdir()
@@ -144,6 +151,7 @@ class I3OperationsTests(unittest.TestCase):
                 remote_ops='/root/autodl-tmp/liftcut/runs/i3-ops-20261013-080000')
             config=root/'config.json';dump_new(config,{})
             opening={'binding':binding(p,commit,lease(),start.isoformat()),'at_utc':start.isoformat(),'budget':BUDGET,'evidence_kind':'model'}
+            lease_path='/root/autodl-tmp/liftcut/ops/overnight-20261013-042700/lease.json'
             labels=[];network=SFTP();client=Mock()
             @contextmanager
             def connection():yield network
@@ -154,6 +162,10 @@ class I3OperationsTests(unittest.TestCase):
                     labels.append(label)
                     if '-c' in argv:
                         code=argv[argv.index('-c')+1];compile(code,'<SCRIPTED transport>','exec')
+                    if label=='verify-original-power-guard':
+                        call=next(x for x in ast.walk(ast.parse(code)) if isinstance(x,ast.Call) and isinstance(x.func,ast.Name) and x.func.id=='verify_live')
+                        self_path=ast.literal_eval(call.args[0])
+                        if self_path!=lease_path or '\\' in self_path:raise AssertionError('remote path converted by local platform')
                     if label=='hash':
                         call=next(x for x in ast.walk(ast.parse(code)) if isinstance(x,ast.Call) and isinstance(x.func,ast.Name) and x.func.id=='Path')
                         return network.digest(ast.literal_eval(call.args[0]))
@@ -170,9 +182,9 @@ class I3OperationsTests(unittest.TestCase):
                  patch.object(launch,'collect',collector),patch.object(launch.getpass,'getpass',return_value='SCRIPTED-NOT-SECRET'), \
                  patch.dict(sys.modules,{'paramiko':SimpleNamespace(SSHClient=lambda:client,RejectPolicy=lambda:object())}):
                 if unknown:
-                    with self.assertRaises(TimeoutError):launch.execute(stage,config,'20261013-080000',Path('/original/lease.json'))
-                else:self.assertTrue(launch.execute(stage,config,'20261013-080000',Path('/original/lease.json'))['scripted_transport_only'])
-                with self.assertRaises(FileExistsError):launch.execute(stage,config,'20261013-080000',Path('/original/lease.json'))
+                    with self.assertRaises(TimeoutError):launch.execute(stage,config,'20261013-080000',lease_path)
+                else:self.assertTrue(launch.execute(stage,config,'20261013-080000',lease_path)['scripted_transport_only'])
+                with self.assertRaises(FileExistsError):launch.execute(stage,config,'20261013-080000',lease_path)
             self.assertEqual(labels.count('dispatch'),1);self.assertEqual(labels.count('hash'),2)
             self.assertLess(labels.index('hash'),labels.index('install-new-checkout'))
             client.connect.assert_called_once();client.close.assert_called_once()
