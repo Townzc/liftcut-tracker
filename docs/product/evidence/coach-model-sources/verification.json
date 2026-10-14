@@ -1,0 +1,60 @@
+{
+  "observedAt": "2026-10-14T19:17:43.693Z",
+  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; fix has 87 unit and 43 full local browser tests plus one screenshot check. Local model is a scripted double; final hosted resume pending.",
+  "files": [
+    {
+      "name": "unit.log",
+      "bytes": 7556,
+      "sha256": "1acae19d24788671446f991051e0cdba814c0a40c5cf9ba543103f43991f1936",
+      "originalSha256": "2d727d16acd66d346f95302987e4248f069f9b4a83d20a0d0ec249364f9d8303"
+    },
+    {
+      "name": "build.log",
+      "bytes": 1494,
+      "sha256": "3bbb632fda27269ba87f1aafc413f5027ed970189d5b66df5df0a4a02d4b4700",
+      "originalSha256": "549ab3888926fc9844ce6c6429a81f3e91edb98c9bb3ecfdcd900251b1f3766b"
+    },
+    {
+      "name": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "browser.log",
+      "bytes": 8594,
+      "sha256": "75ef1dd4f7b8d490e98ff0a1ca72047848ee1f468d8f8489a7a4649e8bd4d210",
+      "originalSha256": "34a2b1bf9516c8ba4e6af4b981494c56bc34b94d1817839a2fd74cf51135f890"
+    },
+    {
+      "name": "screenshot-check.log",
+      "bytes": 2131,
+      "sha256": "bb722d2f7d5066a76c2b82b52dcf8e7e67ccc92e19d86fa59938de114d3c819a",
+      "originalSha256": "ccb02c80162e427950cdb51ad33ba211816205614b34269b87273816fb8a5387"
+    },
+    {
+      "name": "initial-hosted-failure.json",
+      "bytes": 15138,
+      "sha256": "54db9d7251d21ca38116daa62a4e592fdcc270397312e7109f33b1274579f486",
+      "originalSha256": "fe0c2ce2208931497cf71eabd7261669acf548f09e2aa49178a9db10cad5caa7"
+    },
+    {
+      "name": "initial-deployment.json",
+      "bytes": 797,
+      "sha256": "75fda4752ce9f12c7bd416111475a7819bb7710111a3aa13c7ea9fa5a23dadb1",
+      "originalSha256": "75fda4752ce9f12c7bd416111475a7819bb7710111a3aa13c7ea9fa5a23dadb1"
+    },
+    {
+      "name": "current-workout-source.png",
+      "bytes": 58605,
+      "sha256": "f4c8673ecbcccf794f8acacbe92963eeefc173c2962b04583d3df050b1a77481",
+      "originalSha256": "f4c8673ecbcccf794f8acacbe92963eeefc173c2962b04583d3df050b1a77481"
+    }
+  ]
+}

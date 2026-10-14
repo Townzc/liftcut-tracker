@@ -11,6 +11,7 @@ export function CoachSources({sources}:{sources:CoachSource[]}){
     <div className="mt-2 space-y-4 rounded-xl border p-3">{sources.map((s,i)=><section key={`${s.id}:${i}`} className="space-y-2">
       <p className="font-medium text-foreground">{en?s.topic:labels[s.topic]} · {s.from} — {s.to}</p>
       <p>{en?"Read at":"读取于"} {new Date(s.readAt).toLocaleTimeString()} · {s.summary.recordCount as number} {en?"records":"条记录"}{s.truncated?(en?" · partial results":" · 结果未全部显示"):""}</p>
+      {s.id.startsWith("workout:current:")&&<p>{en?"Current workout only; not your full training history.":"仅本次训练，不代表完整训练历史。"}</p>}
       {!s.rows.length&&<p>{en?"No saved records in this range.":"此范围内没有已保存的记录。"}</p>}
       {s.rows.slice(0,10).map((row,n)=><div key={n} className="break-words border-t pt-2"><p>{fields(row,en)}{row.legacy?(en?" · legacy":" · 旧记录"):""}</p>
         {Array.isArray(row.actualSets)&&row.actualSets.slice(0,8).map((set,j)=><p key={j}>{fields(set,en)}</p>)}</div>)}

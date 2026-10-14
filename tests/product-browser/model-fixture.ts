@@ -20,11 +20,12 @@ createServer(async(req,res)=>{
   let chosen;
   if(priorCall?.function.name==="read_records"){
     const food=text.includes("午餐")||text.includes("吃了")||text.includes("food");
-    chosen=call("finish_response",{message:result.error?"暂时无法读取记录。":food?`已查到 ${result.summary.recordCount} 条饮食记录。未填写的热量和蛋白质保持未知。`:
+    chosen=text.includes("昨天呢")&&since.filter(x=>x.role==="tool").length===1?
+      call("read_records",{topic:"body",from:shifted(-1),to:shifted(-1)}):call("finish_response",{message:result.error?"暂时无法读取记录。":food?`已查到 ${result.summary.recordCount} 条饮食记录。未填写的热量和蛋白质保持未知。`:
       `已查到 ${result.summary.recordCount} 条身体记录，最近体重 ${result.summary.latestWeightKg??"未知"} kg。`,sourceIds:result.id?[result.id]:[]});
   }else if(priorCall?.function.name==="current_workout"){
     const exercise=result.exercises?.find((x:{name:string})=>x.name==="深蹲")??result.exercises?.[0];
-    chosen=exercise?call("prepare_workout",{exerciseId:exercise.id,kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null}):call("finish_response",{message:"请先开始本次训练。",sourceIds:[]});
+    chosen=text.includes("[current-read]")?call("finish_response",{message:"本次已记录的实际组，请核对来源。",sourceIds:[]}):exercise?call("prepare_workout",{exerciseId:exercise.id,kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null}):call("finish_response",{message:"请先开始本次训练。",sourceIds:[]});
   }else if(priorCall?.function.name?.startsWith("prepare_")){
     chosen=call("finish_response",{message:result.ok===false?"请补充明确的数值和单位，我没有保存数据。":"整理好了，请核对下方草稿并确认。尚未保存。",sourceIds:[]});
   }else if(text.includes("[invent]")){
@@ -33,7 +34,7 @@ createServer(async(req,res)=>{
     chosen=call("prepare_personal",{...empty,kind:"body",weightQuote:"七十二点五公斤",dateQuote:text.includes("昨天")?"昨天":null});
   }else if(text.includes("吃了一碗牛肉面")){
     chosen=call("prepare_personal",{...empty,kind:"food",foodQuote:"一碗牛肉面",mealQuote:"中午"});
-  }else if(text.includes("实打实"))chosen=call("current_workout",{});
+  }else if(text.includes("实打实")||text.includes("[current-read]"))chosen=call("current_workout",{});
   else if(text.includes("体重")||text.includes("昨天呢")||text.includes("午餐")||text.includes("吃了")){
     chosen=call("read_records",{topic:text.includes("午餐")||text.includes("吃了")?"food":"body",from:text.includes("昨天")?shifted(-1):shifted(-27),to:text.includes("昨天")?shifted(-1):today});
   }else chosen=call("finish_response",{message:"你好，可以自然地问我记录，也可以告诉我今天的变化。",sourceIds:[]});

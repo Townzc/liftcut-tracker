@@ -28,7 +28,7 @@ For an actual body or meal report, call prepare_personal using exact literal quo
 For workout reports/correction first call current_workout. Match an existing exercise uniquely or ask; use selectedExerciseId only if unambiguous. prepare_workout accepts reps quotes (Chinese numerals allowed), an optional explicit weight/unit quote, and optional RPE quote. Do not copy target reps/RPE or fill omitted sets. Correction currently changes reps only. If no active session, guide the user to '本次训练' / 'Current workout' to start one. Unsupported history edits use the existing entry/receipt tools. Long-term plan changes must use the plan proposal/approval page, not these entry tools.
 Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Do not imply memory beyond this bounded conversation.
 General advice: be modest and practical; no diagnosis, prescriptions, extreme calorie restriction, or aggressive exercise through pain. For acute chest pain, fainting or severe symptoms advise stopping exercise and seeking urgent local medical help. Avoid claiming clinical expertise.
-Always end by calling finish_response with a concise helpful message and sourceIds from THIS request's read_records calls only (empty for general chat/clarification/drafts). Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
+Always end by calling finish_response with a concise helpful message and sourceIds from THIS request's read_records or current_workout calls (empty for general chat/clarification/drafts). current_workout is evidence about that session only, not complete historical statistics. Answer only the requested period; do not repeat statistics from previous replies without a fresh read covering that period. Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
 
 export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>):Promise<CoachResponse>{
   const config=requireAiProviderConfig(),name=modelName(config.provider,config.model),pool=todayPool();
@@ -37,7 +37,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const userTexts=[...input.history.filter(m=>m.role==="user").slice(-6).map(m=>m.content.slice(0,400)),input.text];
   const provenance:ModelProvenance={provider:config.provider,model:name,sourceTexts:[],version:"coach-v1"};
   const quoted=(args:Record<string,unknown>)=>[...new Set(Object.entries(args).filter(([k])=>/Quotes?$/.test(k)).flatMap(([,v])=>Array.isArray(v)?v:typeof v==="string"?[v]:[]))] as string[];
-  const sources:CoachSource[]=[];let proposal:CoachProposal|undefined,session:Session|null=null;
+  const sources:CoachSource[]=[];let proposal:CoachProposal|undefined,session:Session|null=null,currentSource:CoachSource|undefined;
   let final:{message:string;sourceIds:string[]}|null=null,readFailed=false;
   const hash=(v:unknown)=>createHash("sha256").update(workoutCanonical(v)).digest("hex");
   const provider=createOpenAICompatible({name:"liftcut",apiKey:config.apiKey,baseURL:config.baseURL,
@@ -66,9 +66,13 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
       current_workout:tool({description:"Load the current active workout for a report/correction; targets and actual sets are separate. No write.",inputSchema:z.object({}).strict(),
         execute:async()=>{
           ensureTime();try{session=(await new TodayStore(pool).load(owner)).session;
-            return session?{id:session.id,revision:session.revision,exercises:session.prescription.exercises.map(e=>({id:e.id,name:e.name})),
+            const actualSets=session?.sets.filter(s=>s.status==="done").map(s=>({exercise:s.exerciseName,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe}))??[];
+            currentSource={id:`workout:current:${session?.id??"none"}`,topic:"workout",from:session?.localDate??anchor,to:session?.localDate??anchor,readAt:new Date().toISOString(),
+              rows:session?[{id:session.id,date:session.localDate,status:session.status,actualSets}]:[],
+              summary:{recordCount:session?1:0,complete:true,completedSessions:session?.status==="ended"&&actualSets.length?1:0,scope:"Current session only; not full date-range history"},truncated:false};
+            return session?{sourceId:currentSource.id,readAt:currentSource.readAt,date:session.localDate,status:session.status,id:session.id,revision:session.revision,exercises:session.prescription.exercises.map(e=>({id:e.id,name:e.name})),
               actualSets:session.sets.map(s=>({exerciseId:s.planExerciseId,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe,status:s.status})),
-              selectedExerciseId:input.selectedExerciseId??null}:{active:false};
+              selectedExerciseId:input.selectedExerciseId??null}:{sourceId:currentSource.id,active:false};
           }catch{readFailed=true;return {error:"READ_UNAVAILABLE"};}
         }}),
       prepare_personal:tool({description:"Prepare ONE unsaved body/meal entry. Supply literal user quotes; absent values must be null. Requires a separate confirmation in the UI.",inputSchema:personalExtractionSchema,
@@ -97,7 +101,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
       finish_response:tool({description:"Finish the response with natural language. Cite only source IDs read in this request. A draft is unsaved until the UI confirms.",
         inputSchema:z.object({message:z.string().min(1).max(2400),sourceIds:z.array(z.string().max(100)).max(4)}).strict(),
         execute:async args=>{
-          if(args.sourceIds.some(id=>!sources.some(s=>s.id===id)))return {error:"UNVERIFIED_SOURCE"};
+          if(args.sourceIds.some(id=>!sources.some(s=>s.id===id)&&currentSource?.id!==id))return {error:"UNVERIFIED_SOURCE"};
           if(sources.length&&!readFailed&&!args.sourceIds.length)return {error:"CITE_THE_READ_SOURCES"};
           final=args;return {complete:true};
         }}),
@@ -111,7 +115,11 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   console.info("coach_model",JSON.stringify({requestId:input.id,model:name,steps:result.steps.length,durationMs:Date.now()-began,inputTokens:result.totalUsage.inputTokens,outputTokens:result.totalUsage.outputTokens,reads:sources.length,draft:proposal?.kind??null}));
   const completed=final as {message:string;sourceIds:string[]}|null;
   if(!completed)throw new Error("MODEL_DID_NOT_FINISH");
+  // Display the actual reads, not a model-selected subset that can omit the
+  // workout behind an otherwise accurate answer. Repeated reads keep the latest.
+  const evidence=[...sources,...(!proposal&&currentSource?[currentSource]:[])];
+  const displayedSources=Array.from(new Map(evidence.map(s=>[s.id,s])).values());
   const failure=input.locale==="en"?"I couldn't read the requested records. Please try again. A failed read does not mean you have no records.":"暂时无法读取你要查的记录，请稍后重试。读取失败不代表没有记录。";
   return {message:readFailed?failure:completed.message,provider:config.provider,model:name,
-    sources:readFailed?[]:sources.filter(s=>completed.sourceIds.includes(s.id)),...(proposal&&!readFailed?{proposal}:{}),requestId:input.id};
+    sources:readFailed?[]:displayedSources,...(proposal&&!readFailed?{proposal}:{}),requestId:input.id};
 }

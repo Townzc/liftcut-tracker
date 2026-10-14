@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-10-14T19:09:29.903Z",
+  "id": "dpl_jPxB2JXboB6ih9jzMmXCtcyS9nA4",
+  "url": "liftcut-tracker-pyc3oyz3w-townzcs-projects.vercel.app",
+  "readyState": "READY",
+  "createdAt": 1792004897591,
+  "meta": {
+    "githubCommitRef": "main",
+    "githubCommitSha": "0b7785bb4971fe2cd792016f36ad84ede26cfce0",
+    "githubCommitMessage": "Merge pull request #79 from Townzc/feat/agent-model-conversation\n\nfeat: grounded model conversations and confirmed data entry",
+    "githubRepo": "liftcut-tracker",
+    "githubOrg": "Townzc"
+  },
+  "alias": [
+    "www.liftcuttracker.com",
+    "liftcut-tracker.vercel.app",
+    "liftcuttracker.com",
+    "liftcut-tracker-townzcs-projects.vercel.app",
+    "liftcut-tracker-git-main-townzcs-projects.vercel.app"
+  ],
+  "regions": [
+    "icn1"
+  ]
+}

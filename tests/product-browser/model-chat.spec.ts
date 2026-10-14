@@ -26,6 +26,7 @@ test("model consent, oral body draft, no write until confirmation, signed replay
   await send(page,"帮我看看最近几天体重变化怎么样");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
   await page.getByTestId("coach-sources").last().locator("summary").click();await expect(page.getByTestId("coach-sources").last()).toContainText("腰围 cm: —");
   await send(page,"那昨天呢");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
+  await expect(page.getByTestId("coach-sources").last().locator("summary")).toHaveText("查看依据 · 1");
   await page.screenshot({path:"node_modules/.cache/coach-model/body-and-followup.png",fullPage:true});
   await page.getByTestId("coach-consent").locator("summary").click();await page.getByRole("button",{name:"关闭并清空对话"}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(0);
   expect(errors).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
@@ -73,6 +74,13 @@ test("natural workout report uses the existing versioned queue and preserves sou
     await expect.poll(async()=>(await db.query("select reps from set_logs where user_id=$1",[owner])).rows.map(r=>r.reps)).toEqual([8]);
     const row=(await db.query("select receipt from workout_commands where user_id=$1 order by created_at desc limit 1",[owner])).rows[0].receipt;
     expect(row.text).toContain("实打实");expect(row.model).toBeTruthy();expect(row.changes[0].after.rpe).toBe(null);
+    const reply=page.waitForResponse(r=>r.url().includes("/api/ai/coach")&&r.request().method()==="POST");
+    await send(page,"看看本次实际训练 [current-read]");const response=await(await reply).json();
+    expect(response.sources).toHaveLength(1);expect(response.sources[0].summary.completedSessions).toBe(0);
+    expect(response.sources[0].rows[0].actualSets).toEqual([{exercise:"深蹲",setIndex:1,reps:8,weightKg:50,rpe:null}]);
+    await page.getByTestId("coach-sources").last().locator("summary").click();
+    await expect(page.getByTestId("coach-sources").last()).toContainText("仅本次训练");await expect(page.getByTestId("coach-sources").last()).toContainText("RPE: —");
+    await page.getByRole("log").evaluate(e=>{e.scrollTop=e.scrollHeight;});
     await page.screenshot({path:"node_modules/.cache/coach-model/workout-model.png",fullPage:true});
   }finally{await db.query("delete from workout_sessions where user_id=$1 and training_plan_id=$2",[owner,plan]);await db.query("delete from training_plans where id=$1",[plan]);}
 });
