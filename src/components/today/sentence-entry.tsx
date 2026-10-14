@@ -8,6 +8,7 @@ import type { CommandReceipt, CommandRequest, ParsePreview } from "@/lib/workout
 import { parseWorkoutLog } from "@/lib/workout-log-parser";
 import { localContextHash, workoutContext } from "@/lib/workout-context";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
+import { SetHistory } from "./set-history";
 
 export type TodayPending = WorkoutOperation;
 export function SentenceEntry({session,busy,submit}:{session:Session;busy:boolean;submit:(p:TodayPending)=>Promise<boolean>}) {
@@ -75,7 +76,7 @@ export function SentenceReceipts({receipts,busy,submit,pendingIds=[]}:{receipts:
     {receipts.map(r=><Card key={r.id} data-testid={`receipt-${r.id}`}><CardContent className="space-y-2 pt-4 text-sm">
       <p className="break-words font-medium">“{r.text}”</p>
       <p className="text-xs text-muted-foreground">{new Date(r.createdAt).toLocaleString()} · {t(pendingIds.includes(r.id) || (r.undo && pendingIds.includes(r.undo.id)) ? "pending" : r.undo?"undone":"saved")}</p>
-      {r.changes.map(c=><p key={c.after.id}>{c.exerciseName} · {t("set",{n:c.after.setIndex})}: {c.before?actual(c.before):"—"} → {c.after.status==="skipped"?t("skipped"):actual(c.after)}</p>)}
+      {r.changes.map(c=><div key={c.after.id}><p>{c.exerciseName} · {t("set",{n:c.after.setIndex})}: {c.before?actual(c.before):"—"} → {c.after.status==="skipped"?t("skipped"):actual(c.after)}</p><SetHistory id={c.after.id} /></div>)}
       {r.undo ? <div className="rounded bg-muted p-2"><p>{t("compensation")}</p>{r.undo.changes.map(c=><p key={c.after.id}>
         {t("set",{n:c.after.setIndex})}: {c.after.status==="voided"?t("voided"):actual(c.after)} · v{c.after.revision}</p>)}</div>
         : <Button variant="outline" disabled={busy} onClick={()=>void submit({action:"undo",body:{id:crypto.randomUUID(),commandId:r.id,version:1}})}>{t("undo")}</Button>}

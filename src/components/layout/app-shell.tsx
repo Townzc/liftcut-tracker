@@ -2,157 +2,54 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import {
-  Activity,
-  Apple,
-  CalendarCheck,
-  Dumbbell,
-  Home,
-  MessageCircle,
-  Settings,
-  Sparkles,
-  Weight,
-} from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
-
+import { useLocale, useTranslations } from "next-intl";
+import { ArrowLeft, Home, MessageCircle, Settings } from "lucide-react";
+import type { ReactNode } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
-import { GuestModeStatus } from "@/components/shared/guest-mode-status";
 import { UserAvatar } from "@/components/shared/user-avatar";
+import { PersonalRecordsProvider } from "@/components/agent/personal-records-provider";
 import { cn } from "@/lib/utils";
 
-interface NavItem {
-  href: string;
-  label: string;
-  shortLabel: string;
-  icon: ComponentType<{ className?: string }>;
-  showInMobile?: boolean;
-}
-
 const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding", "/demo"];
+const primaryRoutes = ["/", "/agent", "/coach", "/settings"];
 
-function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }) {
-  const pathname = usePathname();
-  const active = pathname === item.href;
-  const Icon = item.icon;
-
-  return (
-    <Link
-      href={item.href}
-      className={cn(
-        "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-        active
-          ? "bg-brand-dark text-lime-100 shadow-sm"
-          : "text-slate-600 hover:bg-white hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-slate-100",
-        compact && "flex-1 min-w-0 flex-col justify-center gap-1 px-1 py-1.5",
-      )}
-    >
-      <Icon className={cn("h-4 w-4", compact && "h-4 w-4")} />
-      {compact ? (
-        <span className="w-full truncate text-center text-[10px] leading-tight">{item.shortLabel}</span>
-      ) : (
-        <span>{item.label}</span>
-      )}
-    </Link>
-  );
-}
-
-export function AppShell({ children, todayEnabled = false }: { children: ReactNode; todayEnabled?: boolean }) {
-  const tNav = useTranslations("nav");
-  const tCommon = useTranslations("common");
-  const tGuest = useTranslations("guest");
-  const pathname = usePathname();
+export function AppShell({ children }: { children: ReactNode; todayEnabled?: boolean }) {
+  const pathname = usePathname(), locale = useLocale(), t = useTranslations("common");
   const { loading, profile, user, authMode } = useAuth();
-
+  const en = locale === "en";
   const email = profile?.email || user?.email || "";
-  const displayName =
-    authMode === "guest"
-      ? tGuest("badge")
-      : profile?.displayName || email.split("@")[0] || "User";
-  const secondaryLabel = authMode === "guest" ? tGuest("localOnlyHint") : email || "-";
-
-  const navItems: NavItem[] = [
-    { href: "/", label: tNav("dashboard"), shortLabel: tNav("dashboardShort"), icon: Home },
-    { href: "/plan", label: tNav("plan"), shortLabel: tNav("planShort"), icon: CalendarCheck },
-    { href: "/plan/ai", label: tNav("aiPlanner"), shortLabel: tNav("aiPlannerShort"), icon: Sparkles, showInMobile: !(todayEnabled && authMode === "authenticated") },
-    { href: "/workout", label: tNav("workout"), shortLabel: tNav("workoutShort"), icon: Dumbbell },
-    { href: "/nutrition", label: tNav("nutrition"), shortLabel: tNav("nutritionShort"), icon: Apple },
-    { href: "/body", label: tNav("body"), shortLabel: tNav("bodyShort"), icon: Weight },
-    { href: "/settings", label: tNav("settings"), shortLabel: tNav("settingsShort"), icon: Settings },
+  const displayName = authMode === "guest" ? (en ? "Guest" : "访客") : profile?.displayName || email.split("@")[0] || "LiftCut";
+  const nav = [
+    { href: "/", label: en ? "Home" : "首页", icon: Home, active: pathname === "/" },
+    { href: "/agent", label: "Agent", icon: MessageCircle, active: !["/", "/settings"].includes(pathname) },
+    { href: "/settings", label: en ? "Settings" : "设置", icon: Settings, active: pathname === "/settings" },
   ];
-  if (todayEnabled && authMode === "authenticated") navItems.splice(3, 0,
-    { href: "/coach", label: tNav("coach"), shortLabel: tNav("coachShort"), icon: MessageCircle },
-    { href: "/today", label: tNav("today"), shortLabel: tNav("today"), icon: Dumbbell });
-
-  if (shellFreeRoutes.some((route) => pathname.startsWith(route))) {
-    return (
-      <div className="relative min-h-screen bg-sidebar-bg">
-        <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 md:px-8">
-          {children}
-        </main>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-        {tCommon("loading")}
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative min-h-screen bg-shell-bg">
-      <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-slate-200/70 bg-sidebar-bg/95 p-4 backdrop-blur dark:border-slate-700/50 md:block">
-        <div className="mb-6 flex items-center gap-2 px-2">
-          <div className="rounded-xl bg-brand-dark p-2 text-lime-200">
-            <Activity className="h-4 w-4" />
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">LiftCut Tracker</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">{tNav("subtitle")}</p>
-          </div>
+  if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
+  if (loading) return <div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>;
+  return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null}>
+    <div className="min-h-dvh bg-background">
+      <header className="mx-auto flex h-20 max-w-5xl items-center justify-between px-6 sm:px-10">
+        <Link href="/" className="text-lg font-semibold tracking-[-0.06em]" aria-label="LiftCut">liftcut<span className="text-muted-foreground">.</span></Link>
+        <Link href="/settings" className="flex min-h-11 items-center gap-2.5 rounded-full text-sm text-muted-foreground transition-colors hover:text-foreground" aria-label={en ? "Account settings" : "账号设置"}>
+          <span className="max-w-32 truncate">{displayName}</span>
+          <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="size-8 bg-muted text-foreground" textClassName="text-xs" />
+        </Link>
+      </header>
+      <main id="main-content" className="mx-auto w-full max-w-4xl px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-10">
+        <GuestUpgradeBanner />
+        {authMode === "guest" && <p className="mb-5 text-center text-xs text-muted-foreground">{en ? "Guest · data stays on this device" : "访客模式 · 数据保存在本机"}<Link href="/login" className="ml-3 underline underline-offset-4">{en ? "Sign in" : "登录同步"}</Link></p>}
+        {!primaryRoutes.includes(pathname) && <Link href="/agent" className="mb-6 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" />{en ? "Back to Agent" : "返回 Agent"}</Link>}
+        {children}
+      </main>
+      <nav aria-label={en ? "Main navigation" : "主导航"} className="fixed inset-x-0 bottom-0 z-30 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
+        <div className="mx-auto grid h-[72px] max-w-md grid-cols-3 items-center px-5">
+          {nav.map(({icon: Icon, ...item}) => <Link key={item.href} href={item.href} aria-current={item.active ? "page" : undefined}
+            className={cn("mx-auto flex min-h-12 w-24 flex-col items-center justify-center gap-1.5 rounded-2xl text-[11px] transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2", item.active ? "font-semibold text-foreground" : "text-muted-foreground")}>
+            <Icon className="size-5" strokeWidth={item.active ? 2 : 1.5} aria-hidden="true" /><span>{item.label}</span>
+          </Link>)}
         </div>
-
-        <div className="mb-4 flex items-center gap-3 rounded-2xl border border-white/80 bg-white/75 p-3 shadow-sm dark:border-slate-700/50 dark:bg-slate-800/60">
-          <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-9 w-9" />
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-slate-900 dark:text-slate-100">{displayName}</p>
-            <p className="truncate text-xs text-slate-500 dark:text-slate-400">{secondaryLabel}</p>
-          </div>
-        </div>
-
-        <nav className="space-y-1">
-          {navItems.map((item) => (
-            <NavLink key={item.href} item={item} />
-          ))}
-        </nav>
-      </aside>
-
-      <div className="pb-20 md:ml-64 md:pb-0">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 pt-4 md:hidden">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-8 w-8" textClassName="text-xs" />
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-slate-900 dark:text-slate-100">{displayName}</p>
-              <p className="truncate text-xs text-slate-500 dark:text-slate-400">{secondaryLabel}</p>
-            </div>
-          </div>
-        </div>
-        <main className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-8">
-          <GuestModeStatus />
-          <GuestUpgradeBanner />
-          {children}
-        </main>
-      </div>
-
-      <nav className="fixed bottom-0 left-0 right-0 z-20 flex items-center gap-1 border-t border-slate-200 bg-white/95 p-2 shadow-[0_-10px_30px_rgba(15,23,42,0.08)] backdrop-blur dark:border-slate-700/50 dark:bg-slate-900/95 md:hidden">
-        {navItems.filter((item) => item.showInMobile !== false).map((item) => (
-          <NavLink key={item.href} item={item} compact />
-        ))}
       </nav>
     </div>
-  );
+  </PersonalRecordsProvider>;
 }

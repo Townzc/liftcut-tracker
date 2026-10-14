@@ -62,6 +62,17 @@ export class TodayStore {
       return sessions;
     });
   }
+  async trace(user: string, setId: string) {
+    z.uuid().parse(setId);
+    return this.tx(user, async db => {
+      if (!(await db.query("select id from public.set_logs where id=$1",[setId])).rowCount) return fail("NOT_FOUND");
+      const events = (await db.query(`select sequence::text,type,data,created_at from public.workout_session_events
+        where set_log_id=$1 order by sequence`,[setId])).rows;
+      const sources = [...new Set(events.flatMap(e=>[e.data.before?.sourceRef,e.data.after?.sourceRef]).filter(Boolean))];
+      const commands = (await db.query("select receipt from public.workout_commands where id::text=any($1::text[])",[sources])).rows.map(r=>r.receipt);
+      return {setId,events:events.map(e=>({...e,created_at:e.created_at.toISOString()})),commands};
+    });
+  }
   async load(user: string): Promise<TodayData> {
     return this.tx(user, async db => {
       const active = (await db.query("select id from public.workout_sessions where status='active'")).rows[0];

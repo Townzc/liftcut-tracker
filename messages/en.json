@@ -395,7 +395,7 @@
     "saved": "Settings saved.",
     "saveFailed": "Failed to save settings.",
     "planAndExportTitle": "Data Export",
-    "planAndExportDesc": "Manage profile targets and export your full data backup.",
+    "planAndExportDesc": "Download saved data, including Agent entries and undo history.",
     "exportAll": "Export All Data JSON",
     "exportingData": "Exporting data...",
     "downloadSample": "Download Sample Plan JSON",
@@ -850,7 +850,7 @@
     }
   },
   "coach": {
-    "title": "Training assistant",
+    "title": "Agent",
     "intro": "Describe this workout. Review a draft before saving.",
     "goToday": "Switch to today’s training card",
     "goCoach": "Chat with the training assistant",
@@ -867,11 +867,11 @@
     },
     "messages": "Chat messages",
     "you": "You",
-    "assistant": "Training assistant",
+    "assistant": "Agent",
     "replies": {
-      "help": "I can show this session’s plan and progress, draft actual training records, help replace an exercise for this session, and show receipts to undo. Saving needs confirmation; open-ended Q&A is not supported yet.",
-      "noSession": "Choose a training day above and start a workout first. Ended sessions are in history; previous confirmed sentences have receipts below.",
-      "invalid": "Describe this workout in 1–400 characters.",
+      "help": "I can look up your weight, meals and training history, and turn explicit numbers into entries for you to confirm. Try “my recent weight” or “log weight 72.5 kg”. Training actions use the current workout. I use rules and saved data, not free-form AI answers.",
+      "noSession": "To log sets, expand “This workout” above and choose a day. You can already ask about weight, meals or training history, without starting a workout.",
+      "invalid": "Use 1–400 characters to ask a question or describe an entry.",
       "plan": "These are the plan targets saved when this session started, not actual results:",
       "progress": "These are the current records, including locally queued operations:",
       "receipts": "Records and sync status are listed below. Choose a specific receipt to undo; I will not guess which one you mean.",
@@ -895,7 +895,7 @@
     "send": "Send",
     "snapshot": "Snapshot at the time of this question. Ask again after changes. Unreported values display as —.",
     "receiptTitle": "Records and receipts",
-    "receiptHint": "Latest 20 sentence receipts and this session’s replacement receipts. Pending is not server-confirmed. See history for ended sessions.",
+    "receiptHint": "Saved entries keep their source and undo history. Pending entries have not been confirmed by the cloud.",
     "emptyReceipts": "No receipts yet. Confirmed drafts will appear here.",
     "anotherSession": "Start another workout"
   }

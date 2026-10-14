@@ -119,7 +119,8 @@ test("language switch changes labels without altering stored action name or requ
   await page.goto("/settings");await page.getByRole("combobox").filter({hasText:"中文"}).click();await page.getByRole("option",{name:"English",exact:true}).click();
   // The local profile HTTP double always returns zh-CN on a hard reload.
   // Exercise the actual in-app language switch; hosted verification also reloads real persisted preferences.
-  await page.getByRole("link",{name:"Today",exact:true}).click();await expect(page.getByText("Dumbbell floor press",{exact:true}).first()).toBeVisible();
+  await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();
+  await page.getByRole("link",{name:"Switch to today’s training card",exact:true}).click();await expect(page.getByText("Dumbbell floor press",{exact:true}).first()).toBeVisible();
   await expect(page.getByRole("button",{name:"Replace for this session",exact:true})).toBeVisible();
   expect((await live(page)).prescription).toEqual(before.prescription);expect((await live(page)).replacements).toEqual(before.replacements);
 });

@@ -21,6 +21,7 @@ async function login(page:Page,email="p1-fixture@example.invalid",port=3103){
 const synced=async(page:Page)=>expect(page.getByTestId("outbox-status")).toHaveText("已同步");
 const read=async(page:Page):Promise<TodayData>=> (await page.request.get("/api/workout-sessions")).json();
 async function start(page:Page){await login(page);await page.goto("/coach");await synced(page);
+  await page.getByTestId("start-session-panel").locator("summary").click();
   await page.getByLabel("选择今天的训练日").selectOption(day);await page.getByRole("button",{name:"开始训练",exact:true}).click();
   await expect(page.getByLabel("当前动作（可选）")).toBeVisible();await synced(page);
 }
@@ -33,6 +34,7 @@ test("chat reads, clarification, cancellation, batch confirmation and correction
   const errors:string[]=[],modelRequests:string[]=[];page.on("pageerror",e=>errors.push(e.message));
   page.on("request",r=>{if(/\/api\/(ai|agent)/.test(new URL(r.url()).pathname))modelRequests.push(r.url());});
   await start(page);const original=(await read(page)).session!;
+  await page.getByText("训练工具与使用示例",{exact:true}).click();
   await page.getByRole("button",{name:"今天练什么",exact:true}).click();await expect(page.getByRole("log")).toContainText("计划目标，不代表实际完成");
   await page.getByRole("button",{name:"已完成多少",exact:true}).click();await expect(page.getByRole("log")).toContainText("已完成 0 / 6 组");
   await send(page,"8 次");await page.getByTestId("coach-clarify").getByRole("button",{name:"杠铃卧推",exact:true}).click();
@@ -51,6 +53,8 @@ test("chat reads, clarification, cancellation, batch confirmation and correction
   await expect(page.getByTestId(`receipt-${r.id}`)).toContainText("撤销回执");await synced(page);
   expect((await read(page)).session!.sets.map(s=>s.reps)).toEqual([10,8]);
   await expect(page.getByTestId(`receipt-${r.id}`)).toContainText("撤销回执");
+  const source=page.getByTestId(`receipt-${r.id}`).getByTestId(`trace-${r.changes[0].after.id}`);
+  await source.locator("summary").click();await expect(source).toContainText("对话确认");await expect(source).toContainText("v3");
   await send(page,"跳过 深蹲 第 1 组");await expect(page.getByTestId("coach-draft")).toBeVisible();await send(page,"今天练什么");
   await expect(page.getByTestId("coach-draft")).toHaveCount(0);expect((await read(page)).session!.sets).toHaveLength(2);
   await send(page,"计划杠铃卧推 100 公斤 10 次");await expect(page.getByTestId("coach-draft")).toHaveCount(0);
@@ -106,6 +110,7 @@ test("chat replacement preview and compensation leave the long-term plan and nex
   await send(page,"练完了");await page.getByRole("button",{name:"确认结束训练",exact:true}).click();
   await expect(page.getByTestId("coach-draft")).toHaveCount(0);await synced(page);
   await page.getByRole("button",{name:"开始另一次训练",exact:true}).click();
+  await page.getByTestId("start-session-panel").locator("summary").click();
   await page.getByLabel("选择今天的训练日").selectOption(day);await page.getByRole("button",{name:"开始训练",exact:true}).click();
   await expect(page.getByLabel("当前动作（可选）")).toBeVisible();await synced(page);
   expect((await read(page)).session!.prescription.exercises.some(e=>e.id===bench&&e.name==="杠铃卧推")).toBe(true);
@@ -119,12 +124,12 @@ test("IME and multiline input never auto-submit; flag, account isolation and Eng
   await page.goto("/settings");await page.getByRole("button",{name:"退出登录",exact:true}).click();
   await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);
   await login(page,"offline-second@example.invalid");await page.goto("/coach");await synced(page);await expect(page.getByTestId("coach-turn")).toHaveCount(0);
-  await expect(page.getByLabel("发给训练助手",{exact:true})).toHaveValue("");await expect(page.getByRole("button",{name:"开始训练",exact:true})).toBeDisabled();
+  await expect(page.getByLabel("发给训练助手",{exact:true})).toHaveValue("");await page.getByTestId("start-session-panel").locator("summary").click();await expect(page.getByRole("button",{name:"开始训练",exact:true})).toBeDisabled();
   await page.goto("/settings");await page.getByRole("combobox").filter({hasText:"中文"}).click();await page.getByRole("option",{name:"English",exact:true}).click();
   // The local Auth HTTP fixture returns zh-CN on hard reload; use the real SPA preference switch.
-  await page.getByRole("link",{name:"Chat",exact:true}).click();
-  await expect(page.getByRole("heading",{name:"Training assistant",exact:true})).toBeVisible();await page.getByRole("button",{name:"show plan",exact:true}).click();
-  await expect(page.getByRole("log")).toContainText("start a workout first");await page.screenshot({path:"node_modules/.cache/coach/chat-english.png",fullPage:true});
+  await page.getByRole("link",{name:"Agent",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Agent",exact:true})).toBeVisible();await page.getByText("Training tools & examples",{exact:true}).click();await page.getByRole("button",{name:"show plan",exact:true}).click();
+  await expect(page.getByRole("log")).toContainText("No active plan yet");await page.screenshot({path:"node_modules/.cache/coach/chat-english.png",fullPage:true});
   const disabled=await context.newPage();await disabled.goto("http://localhost:3104/coach");await expect(disabled.getByTestId("coach-conversation")).toHaveCount(0);await disabled.close();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

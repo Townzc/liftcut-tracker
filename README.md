@@ -2,12 +2,12 @@
 
 <p align="center">
   <a href="https://www.liftcuttracker.com/">
-    <img src="docs/assets/liftcut-readme-hero.png" alt="LiftCut Tracker connects beginner-friendly exercise, nutrition, body progress, and intelligent coaching" width="100%" />
+    <img src="docs/product/evidence/minimal-agent/home-desktop.png" alt="LiftCut: a monochrome home with Home, Agent and Settings navigation; synthetic account" width="100%" />
   </a>
 </p>
 
 <p align="center">
-  <strong>从第一次安全训练，到每天看得见的进步。</strong><br />
+  <strong>训练、饮食、身体变化，问 Agent 就好。</strong><br />
   An open-source fitness application and tool-using agent research project by <a href="https://townzc.github.io/">Zhice Tang</a>.
 </p>
 
@@ -30,6 +30,16 @@
 </p>
 
 LiftCut brings workout completion, exercise performance, food logs, body trends, and AI-generated plans into one bilingual product. Its AI layer treats model output as untrusted structured data: every plan is extracted, normalized, strictly validated, shown in an editable preview, and saved only after user confirmation.
+
+## Current product experience · October 2026
+
+The primary navigation is **Home · Agent · Settings**, in black, white and neutral gray. Home keeps manual entry optional. Agent reads saved body measurements, meals and workout history, and prepares entries from explicit numbers for confirmation. Training details and plan tools are reached through Agent.
+
+Try `最近体重`, `今天吃了什么`, `本周训练`, `记下体重 72.5 公斤`, or `记录午餐 鸡肉饭 600 千卡 蛋白质 35 克`. English examples include `my recent weight` and `log lunch rice`. Unknown values stay `null`; entering a food name does not estimate nutrients. Saved receipts retain the original input and compensating undo history. Training sets can expose their source and revision events.
+
+This conversational surface currently uses **deterministic rules and saved data**, not open-ended model answers. Writes require confirmation and authenticated API validation. Workout requests use the existing IndexedDB outbox; independent body/food entries use account-scoped immutable localStorage requests and the new PostgreSQL receipt ledger. Offline support requires an already loaded page; there is no offline cold-start or background-delivery guarantee.
+
+See the [current verification report](docs/product/MINIMAL_AGENT_VERIFICATION.md), [product engineering Q&A](docs/product/PRODUCT_ENGINEERING_QA.md), and [90-second walkthrough script](docs/product/MINIMAL_AGENT_WALKTHROUGH.md). Screenshots use synthetic data. The research sections below retain their original historical context; the [current product plan](docs/product/2026-10-13-showcase-plan.md) defines the delivery priority.
 
 ## Project at a glance
 
@@ -75,7 +85,7 @@ These historical reported results cover 293 held-out evaluation cases and should
 flowchart TB
   User["Browser / mobile user"] --> Guard["Auth + onboarding guard"]
   Guard --> App["Next.js App Router"]
-  App --> Features["Dashboard · plans · workout · nutrition · body · demo"]
+  App --> Features["Home · Agent · Settings; optional deep tools and demo"]
   Features <--> Store["Zustand + guest localStorage"]
   Features --> Repo["Data repository"]
   Repo --> Supabase["Supabase Auth · Postgres · Storage"]
@@ -168,13 +178,16 @@ pending; see the adapter report for cost and limitations.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Daily dashboard and trends |
+| `/` | Minimal home, Agent prompts and optional manual body/food entries |
+| `/agent` | Unified saved-data queries, confirmed entries and workout conversation |
+| `/coach` | Compatibility route for the Agent workspace |
+| `/today` | Detailed training card, opened from Agent |
 | `/demo` | Public beginner movement explorer |
 | `/plan` | Training plan management and PDF export |
 | `/plan/ai` | AI plan generation, structured preview, edit, and save |
 | `/workout` | Workout execution and history |
-| `/nutrition` | Food logging and daily nutrition summary |
-| `/body` | Weight and waist trends |
+| `/nutrition` | Legacy food detail tool; new nullable entries are read in Agent |
+| `/body` | Legacy body detail tool; new nullable entries are read in Agent |
 | `/settings` | Profile, goals, preferences, language, and data controls |
 | `/onboarding` | First-run profile setup |
 

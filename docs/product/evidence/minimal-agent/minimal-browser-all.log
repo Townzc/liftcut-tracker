@@ -1,0 +1,95 @@
+[WebServer] (node:39176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:39176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:48868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:63220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:16992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 35 tests using 1 worker
+
+(node:64016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\coach.spec.ts:33:5 › chat reads, clarification, cancellation, batch confirmation and correction compensation use real API/PG (3.8s)
+  ok  2 tests\product-browser\coach.spec.ts:64:5 › offline chat batch -> correction -> undo -> end persists exact order, NULLs and receipts after refresh (2.1s)
+  ok  3 tests\product-browser\coach.spec.ts:84:5 › a draft becomes stale after another page records; lost confirmation response survives page switching (2.1s)
+  ok  4 tests\product-browser\coach.spec.ts:101:5 › chat replacement preview and compensation leave the long-term plan and next session unchanged (2.0s)
+  ok  5 tests\product-browser\coach.spec.ts:119:5 › IME and multiline input never auto-submit; flag, account isolation and English chat (2.9s)
+  ok  6 tests\product-browser\minimal-agent.spec.ts:14:5 › three-tab monochrome home, optional manual entry, real save/refresh, Agent lookup and compensating undo (1.7s)
+  ok  7 tests\product-browser\minimal-agent.spec.ts:36:5 › Agent food drafts do not invent nutrients, response loss replays one request across pages, source survives reload (1.7s)
+  ok  8 tests\product-browser\minimal-agent.spec.ts:55:5 › phone, desktop and dark views stay monochrome; keyboard prompt and account isolation (2.5s)
+  ok  9 tests\product-browser\minimal-agent.spec.ts:72:5 › offline body entry persists then syncs once; unavailable local storage sends nothing (1.4s)
+  ok 10 tests\product-browser\outbox.spec.ts:46:5 › fresh real-account bootstrap never sends demo plans or observed health records (1.1s)
+  ok 11 tests\product-browser\outbox.spec.ts:59:5 › offline three sets, correction, compensating void and end sync in exact persisted order (2.1s)
+  ok 12 tests\product-browser\outbox.spec.ts:79:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.8s)
+  ok 13 tests\product-browser\outbox.spec.ts:90:5 › lost response survives page close and two tabs claim just one immutable retry (2.9s)
+  ok 14 tests\product-browser\outbox.spec.ts:104:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (2.0s)
+  ok 15 tests\product-browser\outbox.spec.ts:119:5 › storage refusal blocks saving before any network write (2.5s)
+  ok 16 tests\product-browser\outbox.spec.ts:128:5 › account-bound requests fail closed and old outbox stays isolated after account switch (3.0s)
+  ok 17 tests\product-browser\outbox.spec.ts:147:5 › 401 retains the exact operation and pauses until explicit retry (2.5s)
+  ok 18 tests\product-browser\outbox.spec.ts:155:5 › unavailable IndexedDB shows an explicit failure instead of silently using memory (946ms)
+  ok 19 tests\product-browser\outbox.spec.ts:160:5 › a preview made before another local write cannot silently move to later set slots (1.5s)
+  ok 20 tests\product-browser\outbox.spec.ts:167:5 › expired lease from a dead tab is recovered without Web Locks or BroadcastChannel (1.7s)
+  ok 21 tests\product-browser\outbox.spec.ts:182:5 › an abandoned but live lease is respected before the same immutable operation recovers (13.2s)
+  ok 22 tests\product-browser\replacement.spec.ts:41:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only (1.9s)
+  ok 23 tests\product-browser\replacement.spec.ts:53:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities (2.5s)
+  ok 24 tests\product-browser\replacement.spec.ts:70:5 › committed response lost: same request survives refresh, multi-tab retry and later compensation (2.6s)
+  ok 25 tests\product-browser\replacement.spec.ts:80:5 › old device queued set conflicts after another device replaces; no automatic remapping (1.8s)
+  ok 26 tests\product-browser\replacement.spec.ts:88:5 › other device records original exercise: replacement and dependent new set pause together (1.9s)
+  ok 27 tests\product-browser\replacement.spec.ts:99:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (2.0s)
+  ok 28 tests\product-browser\replacement.spec.ts:109:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (1.3s)
+  x  29 tests\product-browser\replacement.spec.ts:117:5 › language switch changes labels without altering stored action name or request identity (1.0m)
+(node:43132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 30 tests\product-browser\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (5.4s)
+  ok 31 tests\product-browser\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (60ms)
+  ok 32 tests\product-browser\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (3.7s)
+  ok 33 tests\product-browser\today.spec.ts:74:5 › server flag off hides navigation and blocks writes while preserving history (993ms)
+  ok 34 tests\product-browser\today.spec.ts:82:5 › API rejects signed-out users and cross-origin writes (20ms)
+  ok 35 tests\product-browser\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (1.3s)
+
+
+  1) tests\product-browser\replacement.spec.ts:117:5 › language switch changes labels without altering stored action name or request identity
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'Today', exact: true })
+
+
+      120 |   // The local profile HTTP double always returns zh-CN on a hard reload.
+      121 |   // Exercise the actual in-app language switch; hosted verification also reloads real persisted preferences.
+    > 122 |   await page.getByRole("link",{name:"Today",exact:true}).click();await expect(page.getByText("Dumbbell floor press",{exact:true}).first()).toBeVisible();
+          |                                                          ^
+      123 |   await expect(page.getByRole("button",{name:"Replace for this session",exact:true})).toBeVisible();
+      124 |   expect((await live(page)).prescription).toEqual(before.prescription);expect((await live(page)).replacements).toEqual(before.replacements);
+      125 | });
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\replacement.spec.ts:122:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\replacement-language-switc-848be-on-name-or-request-identity\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\replacement-language-switc-848be-on-name-or-request-identity\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\replacement-language-switc-848be-on-name-or-request-identity\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\replacement-language-switc-848be-on-name-or-request-identity\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\replacement-language-switc-848be-on-name-or-request-identity\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\product-browser\replacement.spec.ts:117:5 › language switch changes labels without altering stored action name or request identity
+  34 passed (2.5m)
