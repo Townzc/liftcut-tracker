@@ -34,6 +34,7 @@
 | `npm run build` | [生产构建及 TypeScript 通过](evidence/w1b/build.txt)，新 `/today` 和两条 API 路由已生成 |
 | `W1B_TEST_DATABASE_URL=… node --conditions=react-server --import tsx --test tests/product-db/today.test.ts` | [7 项通过](evidence/w1b/database.txt)：从实际 W1a Git schema 升级；并发 start/set、NULL、修正/撤销、原子版本冲突、RLS 跨用户和改 owner 拒绝、两地跨午夜、计划快照、无旧表双写 |
 | `npx playwright test --config playwright.w1b.config.ts` | [4 项通过](evidence/w1b/browser.txt)：登录契约→实际 Next API→真实 PostgreSQL→响应/页面；三组刷新、响应丢失后重试、更正、撤销、历史横线、flag off、未认证/跨域拒绝，及旧访客页保存刷新回归 |
+| `npx playwright test --config playwright.w1a.config.ts --list`，随后实际运行该配置 | 明确只发现旧访客回归 1 项，[实际 1 项通过](evidence/w1b/w1a-config-regression.txt)；修复远端 quality job 误扫描 W1b 数据库流程的问题 |
 | Supabase CLI `db advisors --db-url <本地测试库> --type security --level warn` | [运行成功，1 个基线 warning](evidence/w1b/advisors.txt)：原 schema 的 pgcrypto 在 public。新三表没有额外 security warning；没有移动旧扩展或改研究依赖 |
 
 浏览器认证使用已有 loopback Supabase HTTP **契约替身**，并非托管 GoTrue。它发放测试 cookie，实际应用的 `auth.getUser()` 通过 HTTP 校验该测试身份；新业务 API、事务、数据库和页面是真实实现。不能据此声称托管认证或生产环境端到端验收完成。公开输出只规范化行尾空白、控制字符和绝对本机路径（替换为 `<repo>`）；测试计数、错误与结果未改，原始日志保留在本机忽略目录。
@@ -53,6 +54,7 @@
 3. [第一次浏览器测试](evidence/w1b/browser-first.txt) 已实际保存到数据库，但 `role=alert` 同时匹配 Next 路由播报器和业务提示，导致断言失败。按业务提示文本收窄定位，保留该次日志；新测试库运行最终四项全部通过。
 4. 迁移只授予浏览器 authenticated 角色 SELECT；写入必须过服务端事务，不能绕过 revision 或事件。事件表不授予 UPDATE/DELETE。原批准账本与研究冻结源码没有修改。
 5. `schema.sql` 中新装定义与迁移保持相同；实际部署只执行未执行过的迁移一次，不应反复运行这个非幂等建表迁移。
+6. 首次远端 [quality 失败日志](https://github.com/Townzc/liftcut-tracker/actions/runs/38491128398/job/115616303306)：旧 W1a Playwright 配置默认扫描整个 `tests/product-browser`，误运行需要数据库的 W1b 测试，因该 job 没有数据库而失败；同提交独立 `today-session` job 已通过。将 W1a 配置限定为原 `workout-null.spec.ts`，本地列举只有原 1 项、实际运行通过；W1b job 仍跑全部四项，不删减测试。最终新提交必须重新通过所有检查。
 
 ## 部署顺序、限制与下一步
 
