@@ -21,6 +21,24 @@ test("conversational plans use the approval ledger for both kinds",async t=>{
   try{
     await admin.query("insert into auth.users values($1),($2)",[owner,other]);
     await admin.query("insert into user_settings(user_id,weekly_training_days,session_duration_minutes) values($1,2,45),($2,2,45)",[owner,other]);
+    await t.test("plan writes retain owner locks with hosted auth schema restrictions and both JWT formats",async()=>{
+      assert.equal((await admin.query("select has_schema_privilege('liftcut_agent','auth','usage') allowed")).rows[0].allowed,false);
+      const client=await pool.connect(),contender=await pool.connect();
+      try{
+        for(const format of ["subject","claims"]){
+          await client.query("begin");await contender.query("begin");
+          try{
+            await client.query("select set_config('request.jwt.claim.sub',$1,true),set_config('request.jwt.claims',$2,true)",
+              [format==="subject"?owner:"",format==="claims"?JSON.stringify({sub:owner}):""]);
+            await client.query("insert into training_plans(id,user_id,name,is_active) values($1,$2,'Rollback fixture',true)",[randomUUID(),owner]);
+            assert.equal((await contender.query("select pg_try_advisory_xact_lock(hashtextextended($1,713)) acquired",[owner])).rows[0].acquired,false);
+            assert.equal((await contender.query("select pg_try_advisory_xact_lock(hashtextextended($1,713)) acquired",[other])).rows[0].acquired,true);
+            await assert.rejects(client.query("insert into training_plans(id,user_id,name,is_active) values($1,$2,'Other owner',true)",[randomUUID(),other]),{code:"42501"});
+          }finally{await client.query("rollback");await contender.query("rollback");}
+        }
+        assert.equal((await training()).rowCount,0);
+      }finally{client.release();contender.release();}
+    });
     await t.test("generation, idempotent publication, constraint rejection and zero business writes",async()=>{
       const snapshot=await store.planContext(owner,"training"),id=randomUUID();
       run=value(await store.prepare(owner,id,snapshot,context,trainingFixture));
