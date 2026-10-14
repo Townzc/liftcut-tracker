@@ -66,7 +66,7 @@ test("phone, desktop and dark views stay monochrome; keyboard prompt and account
   await page.goto("/agent");await expect(page.getByTestId("coach-conversation")).toBeVisible();await page.screenshot({path:"node_modules/.cache/minimal/agent-desktop.png",fullPage:true});
   await page.emulateMedia({colorScheme:"dark"});await expect(page.locator("html")).toHaveClass(/dark/);
   expect(await page.locator("body").evaluate(el=>getComputedStyle(el).backgroundColor)).toBe("rgb(33, 33, 33)");
-  await page.screenshot({path:"node_modules/.cache/minimal/agent-dark-desktop.png",fullPage:true});
+  await page.screenshot({path:"node_modules/.cache/minimal/agent-dark-desktop.png",fullPage:true,animations:"disabled"});
   await page.setViewportSize({width:390,height:844});await page.goto("/settings");await expect(page.getByRole("button",{name:"退出登录",exact:true})).toBeVisible();await page.screenshot({path:"node_modules/.cache/minimal/settings-dark-mobile.png",fullPage:true});
   await page.getByRole("button",{name:"退出登录",exact:true}).click();await login(page,"offline-second@example.invalid");await page.goto("/agent");
   await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();await send(page,"最近体重");await expect(page.getByRole("log")).not.toContainText("73 kg");expect(await entries(page)).toEqual([]);

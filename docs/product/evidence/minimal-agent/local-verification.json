@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-10-14T09:37:11.657Z",
+  "observedAt": "2026-10-14T09:49:47.505Z",
   "scope": "Local synthetic accounts; real Next/API/PostgreSQL, HTTP auth double; desktop Chromium at phone/desktop widths",
   "formatting": "Line endings normalized to LF and trailing whitespace removed from published logs; raw ignored originals retained, originalSha256 records their hashes.",
   "counts": {
@@ -10,9 +10,9 @@
   "files": [
     {
       "name": "agent-dark-desktop.png",
-      "bytes": 42103,
-      "sha256": "1d7147c595bbbe63d2fa789e19b1781571d45ab02205f0760ecd01f6e0813f34",
-      "originalSha256": "1d7147c595bbbe63d2fa789e19b1781571d45ab02205f0760ecd01f6e0813f34"
+      "bytes": 43376,
+      "sha256": "2e32ed3a99b365bf82baf1da18b6bc138db2ada2c6b0c439c59cf7b3f49f62c8",
+      "originalSha256": "2e32ed3a99b365bf82baf1da18b6bc138db2ada2c6b0c439c59cf7b3f49f62c8"
     },
     {
       "name": "agent-data-mobile.png",
@@ -30,7 +30,7 @@
       "name": "home-desktop.png",
       "bytes": 35724,
       "sha256": "4955260507d10c95f303ae2572d625512f4d56491b1df90b5226c941d884ffb2",
-      "originalSha256": "4955260507d10c95f303ae2572d625512f4d56491b1df90b5226c941d884ffb2"
+      "originalSha256": "3cb4fa31f5873c0bfdae62ab962a8fb56371b99d5cc8cfa2bd9feab9e82611ec"
     },
     {
       "name": "home-mobile.png",
@@ -49,6 +49,12 @@
       "bytes": 9964,
       "sha256": "fb5e52887953667a27ed3d728a78773fb25dec69021a3e4b86300636d96b209b",
       "originalSha256": "8f727fc1a350c8ca347955e316c761566d3a78618c20f5f02fc53bfb0cd1c222"
+    },
+    {
+      "name": "minimal-browser-dark.log",
+      "bytes": 1756,
+      "sha256": "6bfd27530403a20cd9db70eca61cb98e7ca806c7892ac68530a633d17067e5cf",
+      "originalSha256": "64bdbf542a427c206d8cd1cf6630a3c8e248aa91655f04470f322054d9921eae"
     },
     {
       "name": "minimal-browser-final.log",
