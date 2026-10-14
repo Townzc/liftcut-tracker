@@ -14,7 +14,8 @@
     "bodyShort": "身体",
     "settingsShort": "设置",
     "aiPlanner": "AI计划",
-    "aiPlannerShort": "AI"
+    "aiPlannerShort": "AI",
+    "today": "今日训练"
   },
   "common": {
     "loading": "加载中...",
@@ -667,5 +668,48 @@
     "migrating": "正在迁移游客数据...",
     "migrationSuccess": "游客数据迁移成功。",
     "migrationFailed": "游客数据迁移失败。"
+  },
+  "today": {
+    "title": "今日训练",
+    "intro": "只记录你确认完成的组。未填写的数值保持为空。",
+    "notOpen": "尚未开放",
+    "loginRequired": "今日训练卡仅供登录用户使用，访客可继续使用原训练页。",
+    "legacy": "返回原训练页",
+    "set": "第 {number} 组",
+    "unrecorded": "未记录",
+    "done": "已完成",
+    "skipped": "已跳过",
+    "voided": "已撤销",
+    "correct": "更正",
+    "undo": "撤销",
+    "previous": "上次：{weight} kg × {reps}",
+    "weight": "重量 (kg)",
+    "reps": "次数",
+    "optional": "可选",
+    "invalid": "请检查数值：重量 0–1000 kg，次数 0–100 整数，RPE 1–10 或留空。",
+    "saveCorrection": "保存更正",
+    "complete": "完成",
+    "skip": "跳过",
+    "recover": "查询 / 恢复",
+    "retry": "重试同一操作",
+    "loading": "正在读取训练记录…",
+    "selectDay": "选择今天的训练日",
+    "day": "第 {week} 周 · 第 {day} 天",
+    "noPlan": "尚无可用的激活计划。",
+    "plan": "管理计划",
+    "start": "开始训练",
+    "active": "进行中 · 开始时的计划快照",
+    "ended": "训练已结束",
+    "progress": "已完成 {done} / {total} 组",
+    "target": "计划：{sets} 组 × {reps} 次 · 目标 RPE {rpe}",
+    "endHint": "结束只关闭本次训练，未记录的组仍保持未记录。",
+    "end": "结束训练",
+    "history": "查看训练历史",
+    "errors": {
+      "LOAD_FAILED": "记录读取失败，请查询恢复后再操作。",
+      "CONFLICT": "记录已发生变化，或已有进行中的训练。请查询 / 恢复，继续现有会话。",
+      "UNKNOWN": "本次保存结果尚未确认。请查询记录或重试同一操作，不要重复新建。",
+      "HISTORY_FAILED": "本组已保存，历史暂时未刷新，请查询恢复。"
+    }
   }
 }

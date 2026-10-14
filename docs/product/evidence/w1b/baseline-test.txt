@@ -1,0 +1,100 @@
+
+> liftcut-tracker@0.1.0 test
+> node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts
+
+✔ intl provider configures a stable default time zone (2.4297ms)
+✔ guest mode enters the app without forcing onboarding (0.7135ms)
+✔ guest AI requests receive profile defaults before validation (0.5561ms)
+✔ dashboard exposes the primary daily actions (0.8058ms)
+✔ guest migration keeps the active user plan inactive when importing guest plans (0.2641ms)
+✔ default demo and equipment support Chinese-first onboarding (0.3215ms)
+✔ localized selects display labels instead of raw enum values (1.879ms)
+✔ workout page shows estimated calorie burn without changing the database schema (0.3644ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.0847
+✔ normalizeMealType maps Chinese meal types to English enums (4.9613ms)
+✔ normalizeAiNutritionPlan handles wrapper output (0.2917ms)
+✔ buildNutritionPlanPrompt includes strict schema instructions (0.4376ms)
+✔ NUTRITION_PROMPT_VERSION is updated (0.0739ms)
+✔ normalizeAiNutritionPlan rejects invalid plans (0.3446ms)
+✔ beginner demo keeps source IDs unique (0.5867ms)
+✔ filters by focus (0.2919ms)
+✔ searches Chinese and English labels (1.1215ms)
+✔ combines query and focus filters (0.0914ms)
+✔ getTodayNutritionSummary returns zeros for no logs (0.8477ms)
+✔ getTodayNutritionSummary sums matching date logs (0.2035ms)
+✔ getNutritionByDate returns zeros for no matching logs (0.1171ms)
+✔ getNutritionByDate sums matching date (0.0962ms)
+✔ getSuggestedTrainingDayNumber returns valid day number (0.4177ms)
+✔ getSuggestedTrainingDayNumber handles 1 training day (0.0961ms)
+✔ getAverageWeightByDays returns null for empty logs (0.2106ms)
+✖ getAverageWeightByDays computes average correctly (4.2319ms)
+✔ parsePlanText returns error for empty input (0.7905ms)
+✔ parsePlanText returns error for whitespace-only input (0.1209ms)
+✔ parsePlanText parses English template successfully (0.783ms)
+✔ parsePlanText parses Chinese template successfully (0.2919ms)
+✔ parsePlanText extracts exercise fields correctly (0.1254ms)
+✔ parsePlanText handles rep ranges (0.1224ms)
+✔ parsePlanText defaults RPE to 7 when missing (0.1446ms)
+✔ parsePlanText handles multiple weeks and days (0.1093ms)
+✔ parsePlanText uses custom plan name (0.1005ms)
+✔ parsePlanText handles notes after exercise (0.1305ms)
+✔ userSettingsSchema accepts valid settings (1.9699ms)
+✔ userSettingsSchema rejects negative age (0.4869ms)
+✔ userSettingsSchema accepts boundary values (0.1423ms)
+✔ quickFoodItemSchema accepts valid item (0.4409ms)
+✔ quickFoodItemSchema rejects missing required fields (0.3246ms)
+✔ returns 0 for empty exercises (0.671ms)
+✔ uses defaults when body weight and duration are zero (0.2322ms)
+✔ returns higher calories for higher RPE (0.1128ms)
+✔ returns higher calories for heavier body weight (0.0825ms)
+✔ uses plan exercise sets when provided (0.1443ms)
+✔ prefers completed exercises over incomplete (0.1801ms)
+✔ falls back to all exercises when none completed (0.1172ms)
+✔ untouched blank rows do not claim a workout calorie estimate (0.0649ms)
+✔ null uses documented estimation assumptions without changing the reported measurements (0.6316ms)
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+✔ unreported values normalize to null without coercing booleans or inventing zero (2.1931ms)
+✔ database reads preserve SQL null and reported zero, including numeric strings (0.2977ms)
+✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (6.1474ms)
+✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (11.0232ms)
+✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.0992ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 45
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4989.1489
+
+✖ failing tests:
+
+test at tests\metrics.test.ts:2:4187
+✖ getAverageWeightByDays computes average correctly (4.2319ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(result !== null)
+
+      at TestContext.<anonymous> (<repo>\tests\metrics.test.ts:126:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

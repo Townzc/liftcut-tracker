@@ -73,6 +73,8 @@ export const trainingPlanSchema = z.object({
 });
 
 export const exerciseLogSchema = z.object({
+  recordedSets: z.number().int().min(1).optional(),
+  setIndex: z.number().int().min(1).optional(),
   id: z.string().min(1).optional().default(""),
   workoutLogId: z.string().min(1).optional().default(""),
   exercisePlanId: z.string().min(1),
@@ -84,6 +86,7 @@ export const exerciseLogSchema = z.object({
 });
 
 export const workoutLogSchema = z.object({
+  source: z.literal("session").optional(),
   id: z.string().min(1),
   userId: z.string().min(1).optional().default(""),
   date: z.string().min(1),

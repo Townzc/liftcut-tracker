@@ -19,7 +19,8 @@ async function main() {
   await db.query("insert into auth.users values($1) on conflict do nothing", [user.id]);
   await db.query("insert into public.user_settings(user_id) values($1) on conflict do nothing", [user.id]);
   createServer(async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3101");
+    const allowed = ["http://localhost:3101", "http://localhost:3103", "http://localhost:3104"];
+    res.setHeader("Access-Control-Allow-Origin", allowed.includes(req.headers.origin ?? "") ? req.headers.origin! : allowed[0]);
     res.setHeader("Access-Control-Allow-Headers", req.headers["access-control-request-headers"] || "authorization, apikey, content-type, x-client-info, prefer, x-supabase-api-version");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,HEAD,OPTIONS");
     res.setHeader("Content-Type", "application/json");
@@ -62,6 +63,6 @@ async function main() {
       res.end(JSON.stringify(single ? row : row ? [row] : [])); return;
     }
     res.statusCode=404; res.end('{}');
-  }).listen(55439, "127.0.0.1", () => console.log("P1 synthetic auth/profile fixture listening on loopback 55439; not real Supabase Auth"));
+  }).listen(Number(process.env.AUTH_FIXTURE_PORT ?? 55439), "127.0.0.1", () => console.log("Synthetic auth/profile fixture listening on loopback; not real Supabase Auth"));
 }
 main().catch(error => { console.error(error); process.exitCode=1; });

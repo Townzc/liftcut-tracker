@@ -5,6 +5,7 @@
 | [Showcase Product Plan](./product/2026-10-13-showcase-plan.md) | Current priority since 2026-10-13: scope, rules, milestones, highlights and China compliance; start here for product work |
 | [Week 1 Codex Brief](./product/WEEK1_CODEX_BRIEF.md) | Current task: unknown values stay null, and the feature-flagged today-session card |
 | [Product Log](./product/PRODUCT_LOG.md) | One short entry per product PR |
+| [W1b Verification](./product/W1B_VERIFICATION.md) | Today-session transactions, real PostgreSQL/RLS, browser recovery, evidence and rollout boundaries |
 | [Agent Research Roadmap](./AGENT_RESEARCH_ROADMAP.md) | Approved technical direction, milestones, experiments and revision rules |
 | [Agent Research Progress](./AGENT_RESEARCH_PROGRESS.md) | Completed work, evidence, decisions and the next task; start here when resuming |
 | [E1 Full-Task Results](./research/2026-10-13-e1-complete-results.md) | Real 48-pair evaluation, fixed D acceptance, no incremental win, resource sampling and confirmed closure |

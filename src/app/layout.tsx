@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
+import { connection } from "next/server";
 
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { AppIntlProvider } from "@/components/i18n/app-intl-provider";
@@ -53,11 +54,12 @@ const themeScript = `
 })();
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  await connection();
   return (
     <html lang="en" className={`${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
@@ -68,7 +70,7 @@ export default function RootLayout({
           <HydrationGate>
             <ThemeProvider>
               <AuthProvider>
-                <AppShell>{children}</AppShell>
+                <AppShell todayEnabled={process.env.FEATURE_TODAY_SESSION === "true"}>{children}</AppShell>
               </AuthProvider>
             </ThemeProvider>
           </HydrationGate>

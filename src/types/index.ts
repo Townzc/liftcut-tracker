@@ -91,6 +91,8 @@ export interface TrainingPlanSummary {
 }
 
 export interface ExerciseLog {
+  recordedSets?: number;
+  setIndex?: number;
   id: string;
   workoutLogId: string;
   exercisePlanId: string;
@@ -102,6 +104,7 @@ export interface ExerciseLog {
 }
 
 export interface WorkoutLog {
+  source?: "session";
   id: string;
   userId: string;
   date: string;
