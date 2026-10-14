@@ -1,0 +1,236 @@
+{
+  "phase": "final-version model confirmation and fresh read",
+  "stages": [
+    {
+      "phase": "validate prior committed state",
+      "at": "2026-10-14T20:00:47.649Z",
+      "message": "Previous real hosted writes are independently read before resuming; no initial scenarios replayed or duplicated."
+    },
+    {
+      "phase": "complete actual and plan sources",
+      "at": "2026-10-14T20:00:52.951Z",
+      "message": "Both actual training and target plan evidence are returned; active workout is not counted completed, actual RPE remains NULL and targets remain 3 sets / RPE 7. Workout weight is labelled as load."
+    },
+    {
+      "phase": "fresh multi-topic and unique follow-up sources",
+      "at": "2026-10-14T20:01:02.051Z",
+      "message": "New reads include both body and food; single-day follow-up has no duplicate source IDs and no invented historical measurements."
+    }
+  ],
+  "ids": {
+    "body": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+    "food": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+    "session": "315a1fab-917d-42b8-b6af-f09b84286f45",
+    "set": "2b92f672-00f4-48aa-abc2-2db8bdfa5a06"
+  },
+  "observations": [
+    {
+      "text": "今天实际做了哪些训练组？再查一下计划要求多少组和 RPE，把实际和计划分开列出来。",
+      "at": "2026-10-14T20:00:47.652Z",
+      "latencyMs": 3850,
+      "response": {
+        "message": "今天这次训练（进行中）实际记录：深蹲 1 组，8 次，50 公斤，未记录 RPE。\n\n计划要求（合成训练日）：深蹲 3 组，每组 8–12 次，目标 RPE 7。\n\n也就是说实际只完成了 1 组，还差 2 组；需要的话可以在「本次训练」里继续记录。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "plan:2026-10-14:2026-10-14",
+            "topic": "plan",
+            "from": "2026-10-14",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T20:00:50.919Z",
+            "rows": [
+              {
+                "day": 1,
+                "plan": "Open model synthetic plan",
+                "week": 1,
+                "title": "合成训练日",
+                "actual": false,
+                "exercise": "深蹲",
+                "targetRpe": 7,
+                "targetReps": "8-12",
+                "targetSets": 3
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true
+            },
+            "truncated": false
+          },
+          {
+            "id": "workout:current:315a1fab-917d-42b8-b6af-f09b84286f45",
+            "topic": "workout",
+            "from": "2026-10-14",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T20:00:50.885Z",
+            "rows": [
+              {
+                "id": "315a1fab-917d-42b8-b6af-f09b84286f45",
+                "date": "2026-10-14",
+                "status": "active",
+                "actualSets": [
+                  {
+                    "exercise": "深蹲",
+                    "setIndex": 1,
+                    "reps": 8,
+                    "weightKg": 50,
+                    "rpe": null
+                  }
+                ]
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true,
+              "completedSessions": 0,
+              "scope": "Current session only; not full date-range history"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "accb375d-4857-43f9-8ab3-dcfffe721289"
+      }
+    },
+    {
+      "text": "刚才保存的体重和午餐分别是什么？请重新查一下。",
+      "at": "2026-10-14T20:00:52.952Z",
+      "latencyMs": 3138,
+      "response": {
+        "message": "查到了，都是今天（10月14日）的记录：体重 72.5 公斤；午餐是「一碗牛肉面」，没有记录热量和蛋白质。这两条都已保存在记录里。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "body:2026-09-16:2026-10-14",
+            "topic": "body",
+            "from": "2026-09-16",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T20:00:55.802Z",
+            "rows": [
+              {
+                "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+                "date": "2026-10-14",
+                "kind": "body",
+                "legacy": false,
+                "waistCm": null,
+                "weightKg": 72.5
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true,
+              "latestWeightKg": 72.5,
+              "weightChangeKg": null,
+              "changeScope": "Latest minus earliest reported weight in this date range"
+            },
+            "truncated": false
+          },
+          {
+            "id": "food:2026-09-16:2026-10-14",
+            "topic": "food",
+            "from": "2026-09-16",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T20:00:55.833Z",
+            "rows": [
+              {
+                "id": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+                "date": "2026-10-14",
+                "kind": "food",
+                "legacy": false,
+                "protein": null,
+                "calories": null,
+                "foodName": "一碗牛肉面",
+                "mealType": "lunch"
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true,
+              "calories": null,
+              "caloriesMissing": 1,
+              "protein": null,
+              "proteinMissing": 1,
+              "scope": "Recorded subtotal only; not full intake"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "86b2116a-893c-4361-a409-d58983c6c7e3"
+      }
+    },
+    {
+      "text": "那昨天的体重呢？",
+      "at": "2026-10-14T20:00:57.297Z",
+      "latencyMs": 3549,
+      "response": {
+        "message": "昨天（10月13日）没有查到体重记录，所以无法给出数值。今天（10月14日）的记录是 72.5 公斤。如果你昨天确实称了但没记，可以现在补一条。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "body:2026-10-13:2026-10-13",
+            "topic": "body",
+            "from": "2026-10-13",
+            "to": "2026-10-13",
+            "readAt": "2026-10-14T20:01:00.637Z",
+            "rows": [],
+            "summary": {
+              "recordCount": 0,
+              "complete": true,
+              "latestWeightKg": null,
+              "weightChangeKg": null,
+              "changeScope": "Latest minus earliest reported weight in this date range"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "d464addc-3e96-4202-b661-3c86f1c2b4ae"
+      }
+    }
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n503 !== 200\n",
+  "responses": [
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 503
+    }
+  ],
+  "errors": []
+}

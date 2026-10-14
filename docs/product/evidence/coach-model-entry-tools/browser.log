@@ -1,0 +1,71 @@
+[WebServer] (node:40712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:45952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 44 tests using 1 worker
+
+(node:38400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\coach.spec.ts:33:5 › chat reads, clarification, cancellation, batch confirmation and correction compensation use real API/PG (4.2s)
+  ok  2 tests\product-browser\coach.spec.ts:64:5 › offline chat batch -> correction -> undo -> end persists exact order, NULLs and receipts after refresh (2.5s)
+  ok  3 tests\product-browser\coach.spec.ts:84:5 › query after ending reads committed history while the background cache refresh is still blocked (2.2s)
+  ok  4 tests\product-browser\coach.spec.ts:103:5 › a draft becomes stale after another page records; lost confirmation response survives page switching (2.8s)
+  ok  5 tests\product-browser\coach.spec.ts:120:5 › chat replacement preview and compensation leave the long-term plan and next session unchanged (2.4s)
+  ok  6 tests\product-browser\coach.spec.ts:138:5 › IME and multiline input never auto-submit; flag, account isolation and English chat (3.2s)
+  ok  7 tests\product-browser\minimal-agent.spec.ts:16:5 › three-tab monochrome home, optional manual entry, real save/refresh, Agent lookup and compensating undo (2.6s)
+  ok  8 tests\product-browser\minimal-agent.spec.ts:42:5 › Agent food drafts do not invent nutrients, response loss replays one request across pages, source survives reload (1.6s)
+  ok  9 tests\product-browser\minimal-agent.spec.ts:61:5 › phone, desktop and dark views stay monochrome; keyboard prompt and account isolation (2.9s)
+  ok 10 tests\product-browser\minimal-agent.spec.ts:81:5 › offline body entry persists then syncs once; unavailable local storage sends nothing (1.4s)
+  ok 11 tests\product-browser\minimal-agent.spec.ts:95:5 › data query reads saved measurements even while the initial personal history load is blocked (1.2s)
+  ok 12 tests\product-browser\minimal-agent.spec.ts:112:5 › failed legacy reads, failed new-history reads and offline queries never become empty-history claims (9.2s)
+  ok 13 tests\product-browser\model-chat.spec.ts:16:5 › model consent, oral body draft, no write until confirmation, signed replay, fresh query and follow-up (1.7s)
+  ok 14 tests\product-browser\model-chat.spec.ts:35:5 › natural food draft keeps nulls; tampering, cross-user reuse, response loss and offline confirmation (1.7s)
+  ok 15 tests\product-browser\model-chat.spec.ts:51:5 › a same-day body append after food history survives invalid tool fields and needs no model turn after validation (1.2s)
+[WebServer] coach_model_failed {"kind":"AI_APICallError"}
+[WebServer] coach_model_failed {"kind":"ResponseAborted"}
+  ok 16 tests\product-browser\model-chat.spec.ts:66:5 › untrusted model numbers, provider failure, cancellation and missing consent never write (1.3s)
+  ok 17 tests\product-browser\model-chat.spec.ts:79:5 › natural workout report uses the existing versioned queue and preserves source and nulls (1.4s)
+  ok 18 tests\product-browser\model-chat.spec.ts:105:5 › a failed source read is not empty history; persistent quota returns an explicit limit (973ms)
+  ok 19 tests\product-browser\outbox.spec.ts:46:5 › fresh real-account bootstrap never sends demo plans or observed health records (682ms)
+  ok 20 tests\product-browser\outbox.spec.ts:59:5 › offline three sets, correction, compensating void and end sync in exact persisted order (2.5s)
+  ok 21 tests\product-browser\outbox.spec.ts:79:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.5s)
+  ok 22 tests\product-browser\outbox.spec.ts:90:5 › lost response survives page close and two tabs claim just one immutable retry (1.9s)
+  ok 23 tests\product-browser\outbox.spec.ts:104:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (2.1s)
+  ok 24 tests\product-browser\outbox.spec.ts:119:5 › storage refusal blocks saving before any network write (1.4s)
+  ok 25 tests\product-browser\outbox.spec.ts:128:5 › account-bound requests fail closed and old outbox stays isolated after account switch (3.0s)
+  ok 26 tests\product-browser\outbox.spec.ts:147:5 › 401 retains the exact operation and pauses until explicit retry (1.4s)
+  ok 27 tests\product-browser\outbox.spec.ts:155:5 › unavailable IndexedDB shows an explicit failure instead of silently using memory (604ms)
+  ok 28 tests\product-browser\outbox.spec.ts:160:5 › a preview made before another local write cannot silently move to later set slots (1.3s)
+  ok 29 tests\product-browser\outbox.spec.ts:167:5 › expired lease from a dead tab is recovered without Web Locks or BroadcastChannel (1.7s)
+  ok 30 tests\product-browser\outbox.spec.ts:182:5 › an abandoned but live lease is respected before the same immutable operation recovers (11.5s)
+  ok 31 tests\product-browser\replacement.spec.ts:41:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only (1.5s)
+  ok 32 tests\product-browser\replacement.spec.ts:53:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities (2.6s)
+  ok 33 tests\product-browser\replacement.spec.ts:70:5 › committed response lost: same request survives refresh, multi-tab retry and later compensation (2.1s)
+  ok 34 tests\product-browser\replacement.spec.ts:83:5 › old device queued set conflicts after another device replaces; no automatic remapping (1.4s)
+  ok 35 tests\product-browser\replacement.spec.ts:91:5 › other device records original exercise: replacement and dependent new set pause together (1.8s)
+  ok 36 tests\product-browser\replacement.spec.ts:102:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (1.7s)
+  ok 37 tests\product-browser\replacement.spec.ts:112:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (780ms)
+  ok 38 tests\product-browser\replacement.spec.ts:120:5 › language switch changes labels without altering stored action name or request identity (1.6s)
+  ok 39 tests\product-browser\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.4s)
+  ok 40 tests\product-browser\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (48ms)
+  ok 41 tests\product-browser\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.8s)
+  ok 42 tests\product-browser\today.spec.ts:74:5 › server flag off hides navigation and blocks writes while preserving history (628ms)
+  ok 43 tests\product-browser\today.spec.ts:82:5 › API rejects signed-out users and cross-origin writes (16ms)
+  ok 44 tests\product-browser\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (959ms)
+
+  44 passed (1.7m)

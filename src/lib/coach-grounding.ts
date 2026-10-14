@@ -10,6 +10,14 @@ export const personalExtractionSchema=z.object({
   weightQuote:optionalQuote,waistQuote:optionalQuote,
   foodQuote:optionalQuote,mealQuote:optionalQuote,caloriesQuote:optionalQuote,proteinQuote:optionalQuote,
 }).strict();
+// Each model tool receives only the fields that belong to its entry type.
+// In particular, a body report has no food fields to carry over from history.
+export const bodyExtractionSchema=personalExtractionSchema.pick({dateQuote:true,weightQuote:true,waistQuote:true}).extend({
+  dateQuote:optionalQuote.describe("Exact date phrase from the user, or JSON null for today."),
+  weightQuote:optionalQuote.describe("Exact numeric weight with unit from the user, or JSON null if unreported."),
+  waistQuote:optionalQuote.describe("Exact numeric waist with cm unit, or JSON null if unmeasured. Never quote an unknown-value phrase."),
+});
+export const foodExtractionSchema=personalExtractionSchema.pick({dateQuote:true,foodQuote:true,mealQuote:true,caloriesQuote:true,proteinQuote:true});
 export const workoutExtractionSchema=z.object({
   exerciseId:z.string().min(1).max(150), kind:z.enum(["record","correct"]),
   weightQuote:optionalQuote,repsQuotes:z.array(quote).min(1).max(16),
@@ -80,7 +88,7 @@ export function measurement(span:string|null,texts:string[],type:"weight"|"waist
 export function groundedDate(span:string|null,texts:string[],anchor:string):string {
   if(span===null)return anchor;
   const s=literal(span,texts);let date:string;
-  const relative:Record<string,number>={今天:0,今日:0,今早:0,今早上:0,今晨:0,今天早上:0,今天中午:0,今天晚上:0,今晚:0,刚才:0,today:0,"this morning":0,昨天:-1,昨天早上:-1,昨天中午:-1,昨天晚上:-1,昨晚:-1,yesterday:-1,"yesterday morning":-1,"last night":-1,前天:-2,"the day before yesterday":-2};
+  const relative:Record<string,number>={今天:0,今日:0,现在:0,刚刚:0,今早:0,今早上:0,今晨:0,今天早上:0,今天中午:0,今天晚上:0,今晚:0,刚才:0,today:0,now:0,"just now":0,"this morning":0,昨天:-1,昨天早上:-1,昨天中午:-1,昨天晚上:-1,昨晚:-1,yesterday:-1,"yesterday morning":-1,"last night":-1,前天:-2,"the day before yesterday":-2};
   if(s in relative){const d=new Date(anchor+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+relative[s]);date=d.toISOString().slice(0,10);}
   else if(/^\d{4}-\d{2}-\d{2}$/.test(s))date=s;
   else {const m=/^(\d{1,2})月(\d{1,2})[日号]?$/.exec(s);if(!m)fail("DATE_NEEDS_CLARIFICATION");date=`${anchor.slice(0,4)}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`;}

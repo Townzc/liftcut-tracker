@@ -3,7 +3,8 @@
 import {createServer} from "node:http";
 import {randomUUID} from "node:crypto";
 function call(name:string,args:unknown){return {id:"call_"+randomUUID(),type:"function",function:{name,arguments:JSON.stringify(args)}};}
-const empty={dateQuote:null,weightQuote:null,waistQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
+const bodyEmpty={dateQuote:null,weightQuote:null,waistQuote:null};
+const foodEmpty={dateQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
 createServer(async(req,res)=>{
   res.setHeader("Content-Type","application/json");
   if(req.method==="GET"){res.end('{"fixture":"scripted, not a model"}');return;}
@@ -12,7 +13,7 @@ createServer(async(req,res)=>{
   const current=messages.findLastIndex(x=>x.role==="user"),text=messages[current]?.content??"";
   const since=messages.slice(current+1),lastTool=since.filter(x=>x.role==="tool").at(-1);
   const priorCall=lastTool?since.flatMap(x=>x.tool_calls??[]).find(x=>x.id===lastTool.tool_call_id):undefined;
-  const result=lastTool?JSON.parse(lastTool.content):null;
+  let result=null;try{result=lastTool?JSON.parse(lastTool.content):null;}catch{result={error:lastTool?.content};}
   const today=/Today in the user's timezone is (\d{4}-\d{2}-\d{2})/.exec(messages[0].content)?.[1]??"2026-10-14";
   const shifted=(n:number)=>{const d=new Date(today+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
   if(text.includes("[provider-down]")){res.statusCode=503;res.end('{"error":{"message":"synthetic provider unavailable"}}');return;}
@@ -26,14 +27,21 @@ createServer(async(req,res)=>{
   }else if(priorCall?.function.name==="current_workout"){
     const exercise=result.exercises?.find((x:{name:string})=>x.name==="深蹲")??result.exercises?.[0];
     chosen=text.includes("[current-read]")?call("finish_response",{message:"本次已记录的实际组，请核对来源。",sourceIds:[]}):exercise?call("prepare_workout",{exerciseId:exercise.id,kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null}):call("finish_response",{message:"请先开始本次训练。",sourceIds:[]});
+  }else if(priorCall?.function.name==="prepare_body"&&text.includes("[oral-append]")){
+    if(result.draft){res.statusCode=503;res.end('{"error":{"message":"The valid draft must return without another provider call"}}');return;}
+    chosen=call("prepare_body",{...bodyEmpty,dateQuote:"现在",weightQuote:"七十三点一公斤"});
   }else if(priorCall?.function.name?.startsWith("prepare_")){
     chosen=call("finish_response",{message:result.ok===false?"请补充明确的数值和单位，我没有保存数据。":"整理好了，请核对下方草稿并确认。尚未保存。",sourceIds:[]});
   }else if(text.includes("[invent]")){
-    chosen=call("prepare_personal",{...empty,kind:"body",weightQuote:"82公斤"});
+    chosen=call("prepare_body",{...bodyEmpty,weightQuote:"82公斤"});
+  }else if(text.includes("[oral-append]")){
+    // Deliberately wrong cross-topic field must fail schema validation, then be
+    // corrected. A valid draft must not depend on a further model response.
+    chosen=call("prepare_body",{...bodyEmpty,dateQuote:"现在",weightQuote:"七十三点一公斤",foodQuote:"一碗牛肉面"});
   }else if(text.includes("称")||text.includes("秤")){
-    chosen=call("prepare_personal",{...empty,kind:"body",weightQuote:"七十二点五公斤",dateQuote:text.includes("昨天")?"昨天":null});
+    chosen=call("prepare_body",{...bodyEmpty,weightQuote:"七十二点五公斤",dateQuote:text.includes("昨天")?"昨天":null});
   }else if(text.includes("吃了一碗牛肉面")){
-    chosen=call("prepare_personal",{...empty,kind:"food",foodQuote:"一碗牛肉面",mealQuote:"中午"});
+    chosen=call("prepare_food",{...foodEmpty,foodQuote:"一碗牛肉面",mealQuote:"中午"});
   }else if(text.includes("实打实")||text.includes("[current-read]"))chosen=call("current_workout",{});
   else if(text.includes("体重")||text.includes("昨天呢")||text.includes("午餐")||text.includes("吃了")){
     chosen=call("read_records",{topic:text.includes("午餐")||text.includes("吃了")?"food":"body",from:text.includes("昨天")?shifted(-1):shifted(-27),to:text.includes("昨天")?shifted(-1):today});

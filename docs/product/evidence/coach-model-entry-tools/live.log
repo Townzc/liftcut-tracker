@@ -1,0 +1,9 @@
+coach_model {"requestId":"ae9f5c3b-b612-453a-bf78-8729a04ffa1b","model":"deepseek-flash","steps":2,"durationMs":3174,"inputTokens":5798,"outputTokens":261,"reads":1,"draft":null}
+coach_model {"requestId":"9362fc08-7117-46c3-8860-42306497b8ed","model":"deepseek-flash","steps":2,"durationMs":2478,"inputTokens":6001,"outputTokens":180,"reads":1,"draft":null}
+coach_model {"requestId":"45486631-7f9a-405f-abfd-cf688c4c932c","model":"deepseek-flash","steps":1,"durationMs":1129,"inputTokens":2740,"outputTokens":71,"reads":0,"draft":"personal"}
+coach_model {"requestId":"52bfae28-c223-4df3-9047-6724468f415d","model":"deepseek-flash","steps":1,"durationMs":1147,"inputTokens":2742,"outputTokens":105,"reads":0,"draft":"personal"}
+coach_model {"requestId":"98de5ee4-9ffc-46c5-b9e2-8d88e00b2d16","model":"deepseek-flash","steps":2,"durationMs":3210,"inputTokens":6003,"outputTokens":330,"reads":2,"draft":null}
+coach_model {"requestId":"b1fbf1c3-58d0-4b90-a9c2-cfe80f09ec16","model":"deepseek-flash","steps":2,"durationMs":2474,"inputTokens":5667,"outputTokens":184,"reads":0,"draft":"workout"}
+coach_model {"requestId":"dcf17c27-3635-418c-9c7b-607f799a6713","model":"deepseek-flash","steps":1,"durationMs":1372,"inputTokens":2743,"outputTokens":108,"reads":0,"draft":null}
+coach_model {"requestId":"c22f3b6c-3d32-4d7e-a78e-753a13ab91bb","model":"deepseek-flash","steps":1,"durationMs":1500,"inputTokens":2753,"outputTokens":118,"reads":0,"draft":null}
+LIVE_COACH_EVALUATION_PASS 8

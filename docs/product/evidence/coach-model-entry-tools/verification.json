@@ -1,0 +1,108 @@
+{
+  "observedAt": "2026-10-14T20:11:45.344Z",
+  "scope": "Synthetic accounts only. 90 unit, 44 full local browser, build/type/lint and 8 real provider scenarios passed; exact failed hosted utterance additionally passed twice with one model step each. Browser uses scripted HTTP provider/Auth; real calls use local PostgreSQL. Hosted failures are preserved and final redeployment/retest remains pending.",
+  "files": [
+    {
+      "name": "unit.log",
+      "bytes": 7815,
+      "sha256": "dda7e9faa28edeec5efac343e8d0741c286eb745b9093dcd9a8b0924b7f92efb",
+      "originalSha256": "ec9fa60a68fd01b45803a6dce8348a35e3b5cc89c15c05eea4af29f910f094ef"
+    },
+    {
+      "name": "browser.log",
+      "bytes": 8772,
+      "sha256": "21905addda0c30d102341e2371a0749a9999dbb4e9fe680c2c61786971b5992a",
+      "originalSha256": "8396143f50081be8f05845d7c877db6fcf54977aec525e53dc2c270b5e3e5a5d"
+    },
+    {
+      "name": "build.log",
+      "bytes": 1494,
+      "sha256": "fe236d76f4eecf87502d44ffa7f2dd7696aa32f451c7347c5265bd01be768d63",
+      "originalSha256": "e1b016917f9bf060f0464009960752794933dab17ed8cb35bab061bafba1a286"
+    },
+    {
+      "name": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "live.log",
+      "bytes": 1477,
+      "sha256": "1bd3fddaf3bfe00337a1391e8f9239a23db68a788a17ed4f418aa18b7840497a",
+      "originalSha256": "22282cfe2490e2514b21c73bc0327d319a2c179ff101ecbff06438e4a2423fcd"
+    },
+    {
+      "name": "hosted-step-limit-failure.json",
+      "bytes": 7778,
+      "sha256": "30744e440f56e8bf2e665f9175a4d36821ae9df32519b5c0ce94be59b8dc6f0e",
+      "originalSha256": "30744e440f56e8bf2e665f9175a4d36821ae9df32519b5c0ce94be59b8dc6f0e"
+    },
+    {
+      "name": "hosted-clarification-failure.json",
+      "bytes": 8474,
+      "sha256": "44d9c371e4ef68c1447603783cbb7ad0e751805ffce610a1df0ddafa92ed9c48",
+      "originalSha256": "44d9c371e4ef68c1447603783cbb7ad0e751805ffce610a1df0ddafa92ed9c48"
+    },
+    {
+      "name": "zero-write-after-first-failure.json",
+      "bytes": 2489,
+      "sha256": "118c3ff944ef493dec6d52500100d1f5a416535d2575571bb6aa2dbe08d41e88",
+      "originalSha256": "118c3ff944ef493dec6d52500100d1f5a416535d2575571bb6aa2dbe08d41e88"
+    },
+    {
+      "name": "before-fix-local-tool-steps.json",
+      "bytes": 3303,
+      "sha256": "84c79f362d5ceefe24328bb09021c9d7c136078accdd6dc273aca813db37a7a9",
+      "originalSha256": "901a4de06e72da14ea4f2a44bac1badaf7380d6e685126dbf25d99f76027d291"
+    },
+    {
+      "name": "same-utterance-1-steps.json",
+      "bytes": 899,
+      "sha256": "9de7e777eda83faec0d48abcedfa0d34fee4592954f81d8fceafbd890dd21fd5",
+      "originalSha256": "adf4bea14357bed2a77db7b5458540f2cf6987f3736145e4c59087cc326d751e"
+    },
+    {
+      "name": "same-utterance-1-result.json",
+      "bytes": 711,
+      "sha256": "6f9b0bd4c3da00df19a498f64cbd78b6b07c4db6c33676a350520d1f605f8689",
+      "originalSha256": "bbba4f7083f66ad181ba0336f1681df7514594aa8df208286bccfcdb0271fd77"
+    },
+    {
+      "name": "same-utterance-2-steps.json",
+      "bytes": 899,
+      "sha256": "911edefbe326607e93b8113ada14a3b87995960e40395e49c002f29808a08529",
+      "originalSha256": "20e2926dac6bcfc2f90829ba6673498b0d92a0cf0c30d930db614147eb3258bf"
+    },
+    {
+      "name": "same-utterance-2-result.json",
+      "bytes": 711,
+      "sha256": "3915966e854d3f2df061a72cefbd428ae30f19dbcf7f2d424a762b29ddd7a611",
+      "originalSha256": "86dfdb4e83f6e0e5798a2ee00dca11652b5ac2712b225fa85b1013e28e971be0"
+    },
+    {
+      "name": "workout-draft-return.png",
+      "bytes": 58321,
+      "sha256": "63d5aec4e7f78af2d58e6a786ed2bddd091dae3ce8c5faf5c546e455a1b1f580",
+      "originalSha256": "63d5aec4e7f78af2d58e6a786ed2bddd091dae3ce8c5faf5c546e455a1b1f580"
+    },
+    {
+      "name": "real-model-observations.json",
+      "bytes": 11285,
+      "sha256": "c438d2984648af49e7086ff93d4ca5fe3a76371db3ffe91ef2da4fc1b9496f7c",
+      "originalSha256": "c54d4a9b8c674e57113fce4ef25e225094fde2c6375c4eea51198a9d9179512b"
+    },
+    {
+      "name": "real-model-result.json",
+      "bytes": 167,
+      "sha256": "68cd00c96693ef43879170131c0e45f5c184ed6fbf89f70882fe0eac76f3666d",
+      "originalSha256": "11f75c9d4b7b7627584742867c573e4ec99166a0c3bef666f8e4de3b68654bab"
+    }
+  ]
+}

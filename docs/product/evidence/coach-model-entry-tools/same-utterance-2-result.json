@@ -1,0 +1,24 @@
+{
+  "message": "请核对下方草稿，确认后才会保存。目前尚未写入记录。",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "sources": [],
+  "proposal": {
+    "kind": "personal",
+    "command": {
+      "action": "create",
+      "id": "7ec16274-a9bb-45e9-9761-ab67e31da8dd",
+      "entry": {
+        "kind": "body",
+        "date": "2026-10-14",
+        "weightKg": 73.1,
+        "waistCm": null
+      },
+      "source": "conversation",
+      "text": "现在称到七十三点一公斤，腰围仍没量，帮我追加一条今天的数据",
+      "anchorDate": "2026-10-14",
+      "modelProof": "[removed signature]"
+    }
+  },
+  "requestId": "a9fe06a9-9fae-44e9-8945-6353846ad9c8"
+}
