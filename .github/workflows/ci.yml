@@ -905,6 +905,48 @@ jobs:
             research/liftcut-agent/outputs/p1m-frozen-w1a/research/liftcut-agent/outputs/ci-p1m-restored/
             research/liftcut-agent/outputs/p1m-frozen-w1a/research/liftcut-agent/outputs/ci-p1m-published-restored/
 
+  today-session:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: w1b-admin-fixture-only
+          POSTGRES_DB: liftcut_p1_w1b_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d liftcut_p1_w1b_ci" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      W1B_TEST_DATABASE_URL: postgresql://postgres:w1b-admin-fixture-only@127.0.0.1:5432/liftcut_p1_w1b_ci
+      W1B_RUNTIME_DATABASE_URL: postgresql://liftcut_workout:w1b-local-fixture-only@127.0.0.1:5432/liftcut_p1_w1b_ci
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Upgrade actual W1a schema and verify PostgreSQL transactions and RLS
+        run: node --conditions=react-server --import tsx --test tests/product-db/today.test.ts
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
+        run: npx playwright test --config playwright.w1b.config.ts
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: today-browser-evidence
+          include-hidden-files: true
+          path: |
+            node_modules/.cache/w1b/*.png
+            node_modules/.cache/w1b/browser/
+
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15

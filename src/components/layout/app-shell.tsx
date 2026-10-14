@@ -57,7 +57,7 @@ function NavLink({ item, compact = false }: { item: NavItem; compact?: boolean }
   );
 }
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({ children, todayEnabled = false }: { children: ReactNode; todayEnabled?: boolean }) {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tGuest = useTranslations("guest");
@@ -80,6 +80,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { href: "/body", label: tNav("body"), shortLabel: tNav("bodyShort"), icon: Weight },
     { href: "/settings", label: tNav("settings"), shortLabel: tNav("settingsShort"), icon: Settings },
   ];
+  if (todayEnabled && authMode === "authenticated") navItems.splice(3, 0, { href: "/today", label: tNav("today"), shortLabel: tNav("today"), icon: Dumbbell });
 
   if (shellFreeRoutes.some((route) => pathname.startsWith(route))) {
     return (

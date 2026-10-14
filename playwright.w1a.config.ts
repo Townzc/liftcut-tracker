@@ -1,7 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "tests/product-browser", workers: 1, retries: 0, timeout: 60000,
+  testDir: "tests/product-browser", testMatch: "workout-null.spec.ts", workers: 1, retries: 0, timeout: 60000,
   outputDir: "node_modules/.cache/w1a/browser",
   reporter: [["list"]],
   use: {

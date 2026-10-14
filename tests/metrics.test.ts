@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { todayString } from "../src/lib/date";
 
 import {
   getTodayNutritionSummary,
@@ -117,8 +118,7 @@ test("getAverageWeightByDays returns null for empty logs", () => {
 });
 
 test("getAverageWeightByDays computes average correctly", () => {
-  const now = new Date();
-  const today = now.toISOString().slice(0, 10);
+  const today = todayString(); // Same local-day contract as the production metric, including after UTC midnight.
   const logs = [
     makeBodyLog({ date: today, weight: 80 }),
   ];

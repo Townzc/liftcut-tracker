@@ -1,0 +1,80 @@
+
+> liftcut-tracker@0.1.0 test
+> node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts
+
+✔ intl provider configures a stable default time zone (2.0023ms)
+✔ guest mode enters the app without forcing onboarding (1.0643ms)
+✔ guest AI requests receive profile defaults before validation (1.108ms)
+✔ dashboard exposes the primary daily actions (0.9289ms)
+✔ guest migration keeps the active user plan inactive when importing guest plans (0.2818ms)
+✔ default demo and equipment support Chinese-first onboarding (0.2772ms)
+✔ localized selects display labels instead of raw enum values (1.605ms)
+✔ workout page shows estimated calorie burn without changing the database schema (0.365ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.3436
+✔ normalizeMealType maps Chinese meal types to English enums (4.7993ms)
+✔ normalizeAiNutritionPlan handles wrapper output (0.2818ms)
+✔ buildNutritionPlanPrompt includes strict schema instructions (0.5512ms)
+✔ NUTRITION_PROMPT_VERSION is updated (0.0715ms)
+✔ normalizeAiNutritionPlan rejects invalid plans (0.35ms)
+✔ beginner demo keeps source IDs unique (1.086ms)
+✔ filters by focus (0.4168ms)
+✔ searches Chinese and English labels (1.046ms)
+✔ combines query and focus filters (0.1385ms)
+✔ getTodayNutritionSummary returns zeros for no logs (0.6398ms)
+✔ getTodayNutritionSummary sums matching date logs (0.154ms)
+✔ getNutritionByDate returns zeros for no matching logs (0.0885ms)
+✔ getNutritionByDate sums matching date (0.0796ms)
+✔ getSuggestedTrainingDayNumber returns valid day number (0.321ms)
+✔ getSuggestedTrainingDayNumber handles 1 training day (0.0969ms)
+✔ getAverageWeightByDays returns null for empty logs (0.1841ms)
+✔ getAverageWeightByDays computes average correctly (0.8715ms)
+✔ parsePlanText returns error for empty input (1.5197ms)
+✔ parsePlanText returns error for whitespace-only input (0.2339ms)
+✔ parsePlanText parses English template successfully (1.1472ms)
+✔ parsePlanText parses Chinese template successfully (0.4868ms)
+✔ parsePlanText extracts exercise fields correctly (0.2328ms)
+✔ parsePlanText handles rep ranges (0.2098ms)
+✔ parsePlanText defaults RPE to 7 when missing (0.1913ms)
+✔ parsePlanText handles multiple weeks and days (0.221ms)
+✔ parsePlanText uses custom plan name (0.2183ms)
+✔ parsePlanText handles notes after exercise (0.2532ms)
+✔ userSettingsSchema accepts valid settings (2.1049ms)
+✔ userSettingsSchema rejects negative age (0.5126ms)
+✔ userSettingsSchema accepts boundary values (0.1985ms)
+✔ quickFoodItemSchema accepts valid item (0.4648ms)
+✔ quickFoodItemSchema rejects missing required fields (0.3632ms)
+✔ today dates follow IANA timezone around midnight and DST, not UTC (12.9931ms)
+✔ actuals require reported reps, bounded numbers and matching provenance (2.4174ms)
+✔ adapter excludes voided/skipped sets from history, PR, charts and calorie set totals (0.8793ms)
+✔ returns 0 for empty exercises (1.4221ms)
+✔ uses defaults when body weight and duration are zero (0.4256ms)
+✔ returns higher calories for higher RPE (0.2089ms)
+✔ returns higher calories for heavier body weight (0.1702ms)
+✔ uses plan exercise sets when provided (0.2208ms)
+✔ prefers completed exercises over incomplete (0.2188ms)
+✔ falls back to all exercises when none completed (0.2009ms)
+✔ untouched blank rows do not claim a workout calorie estimate (0.1374ms)
+✔ null uses documented estimation assumptions without changing the reported measurements (0.9624ms)
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+✔ unreported values normalize to null without coercing booleans or inventing zero (2.3763ms)
+✔ database reads preserve SQL null and reported zero, including numeric strings (0.3383ms)
+✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (6.8662ms)
+✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (9.4976ms)
+✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.1776ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1389.9061

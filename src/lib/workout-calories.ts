@@ -3,7 +3,7 @@ import type { ExerciseLog, ExercisePlan } from "@/types";
 export interface WorkoutCalorieInput {
   bodyWeightKg: number;
   durationMinutes: number;
-  exercises: Array<Pick<ExerciseLog, "exercisePlanId" | "actualWeight" | "actualReps" | "actualRpe" | "completed">>;
+  exercises: Array<Pick<ExerciseLog, "exercisePlanId" | "actualWeight" | "actualReps" | "actualRpe" | "completed" | "recordedSets">>;
   planExercises?: Array<Pick<ExercisePlan, "id" | "sets">>;
 }
 
@@ -26,7 +26,7 @@ export function estimateWorkoutCalories(input: WorkoutCalorieInput): number {
 
   const totals = sourceExercises.reduce(
     (acc, exercise) => {
-      const sets = setsByExercise.get(exercise.exercisePlanId) ?? 3;
+      const sets = exercise.recordedSets ?? setsByExercise.get(exercise.exercisePlanId) ?? 3;
       // Estimation-only assumptions for missing reports: 8 reps, 35% body weight,
       // RPE 7. They are never returned as actuals or written to the workout log.
       // A reported zero remains zero; it is not evidence of an unknown value.

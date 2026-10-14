@@ -14,7 +14,8 @@
     "bodyShort": "Body",
     "settingsShort": "Settings",
     "aiPlanner": "AI Planner",
-    "aiPlannerShort": "AI"
+    "aiPlannerShort": "AI",
+    "today": "Today"
   },
   "common": {
     "loading": "Loading...",
@@ -667,5 +668,48 @@
     "migrating": "Migrating guest data...",
     "migrationSuccess": "Guest data migrated successfully.",
     "migrationFailed": "Failed to migrate guest data."
+  },
+  "today": {
+    "title": "Today’s training",
+    "intro": "Record only the sets you confirm. Unreported measurements stay empty.",
+    "notOpen": "Not available yet",
+    "loginRequired": "Sign in to use today’s card. Guests can continue using the original workout page.",
+    "legacy": "Original workout page",
+    "set": "Set {number}",
+    "unrecorded": "Not recorded",
+    "done": "Done",
+    "skipped": "Skipped",
+    "voided": "Voided",
+    "correct": "Correct",
+    "undo": "Undo",
+    "previous": "Last time: {weight} kg × {reps}",
+    "weight": "Weight (kg)",
+    "reps": "Reps",
+    "optional": "Optional",
+    "invalid": "Check weight (0–1000 kg), whole reps (0–100), and RPE (1–10 or blank).",
+    "saveCorrection": "Save correction",
+    "complete": "Complete",
+    "skip": "Skip",
+    "recover": "Query / recover",
+    "retry": "Retry same operation",
+    "loading": "Loading training records…",
+    "selectDay": "Choose today’s training day",
+    "day": "Week {week} · Day {day}",
+    "noPlan": "No active plan available.",
+    "plan": "Manage plans",
+    "start": "Start training",
+    "active": "In progress · Prescription saved at start",
+    "ended": "Training ended",
+    "progress": "{done} / {total} sets completed",
+    "target": "Plan: {sets} sets × {reps} reps · Target RPE {rpe}",
+    "endHint": "Ending closes this session. Unrecorded sets remain unrecorded.",
+    "end": "End training",
+    "history": "View training history",
+    "errors": {
+      "LOAD_FAILED": "Could not load records. Query/recover before continuing.",
+      "CONFLICT": "Records changed, or an active session already exists. Query/recover to continue it.",
+      "UNKNOWN": "Save outcome unknown. Query records or retry the same operation; do not create another.",
+      "HISTORY_FAILED": "Saved, but history could not refresh. Please query/recover."
+    }
   }
 }

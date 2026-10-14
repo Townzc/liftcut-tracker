@@ -733,6 +733,7 @@ export async function appendAiGenerationHistoryForUser(
 }
 
 export async function upsertWorkoutLog(userId: string, log: WorkoutLog): Promise<void> {
+  if (log.source === "session") throw new Error("Session records must use the today transaction path");
   // Validate before any write; guest migrations and imported backups use this path too.
   const exercises = log.exercises.map(normalizeExerciseActuals);
   const supabase = getSupabaseBrowserClient();
@@ -997,6 +998,9 @@ export async function ensureUserBootstrap(userId: string, email: string): Promis
 
 export async function fetchUserDataBundle(userId: string): Promise<UserDataBundle> {
   const supabase = getSupabaseBrowserClient();
+  const sessionResponse = await fetch("/api/workout-sessions/history", { cache: "no-store" });
+  if (!sessionResponse.ok) throw new Error("Unable to load session history");
+  const sessionLogs = await sessionResponse.json() as WorkoutLog[];
 
   const { data: settingsRow, error: settingsError } = await supabase
     .from("user_settings")
@@ -1092,7 +1096,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
     snapshot: {
       settings: normalizeSettings(settingsRow as Record<string, unknown> | null, userId),
       trainingPlan: activePlan,
-      workoutLogs: mapWorkoutLogs(workoutRows, workoutExerciseRows),
+      workoutLogs: [...mapWorkoutLogs(workoutRows, workoutExerciseRows), ...sessionLogs].sort((a,b) => b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt)),
       foodLogs: mapFoodLogs(foodRows),
       bodyMetricLogs: mapBodyLogs(bodyRows),
       quickFoods: defaultQuickFoods,

@@ -350,7 +350,7 @@ export function WorkoutPage() {
     () =>
       workoutLogs.find(
         (log) =>
-          log.date === workoutDate &&
+          log.source !== "session" && log.date === workoutDate &&
           log.weekNumber === (currentWeek?.weekNumber ?? 1) &&
           log.dayNumber === (currentDay?.dayNumber ?? 1),
       ),
@@ -608,7 +608,7 @@ export function WorkoutPage() {
                       className="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <p className="font-medium text-slate-900 dark:text-slate-100">{exercise.name}</p>
+                        <p className="font-medium text-slate-900 dark:text-slate-100">{exercise.name}{exercise.setIndex ? ` · #${exercise.setIndex}` : ""}</p>
                         <Badge variant={exercise.completed ? "default" : "outline"}>
                           {exercise.completed ? t("statusCompleted") : t("statusPending")}
                         </Badge>
@@ -620,7 +620,7 @@ export function WorkoutPage() {
                           rpe: exercise.actualRpe ?? "—",
                         })}
                       </p>
-                      {exercise.actualWeight === 0 || exercise.actualReps === 0 ? (
+                      {selectedRecentLog.source !== "session" && (exercise.actualWeight === 0 || exercise.actualReps === 0) ? (
                         <p className="mt-1 text-xs text-slate-500">{t("legacyZeroNote")}</p>
                       ) : null}
                     </div>

@@ -1,0 +1,63 @@
+[WebServer] (node:11620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:2940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:7256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:57692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 3 tests using 1 worker
+
+(node:63504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\product-browser\today.spec.ts:21:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.1s)
+(node:11600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\product-browser\today.spec.ts:60:5 › server flag off hides navigation and blocks API; legacy guest still works (1.2s)
+  ok 3 tests\product-browser\today.spec.ts:68:5 › API rejects signed-out users, body owner spoofing and cross-origin writes (18ms)
+
+
+  1) tests\product-browser\today.spec.ts:21:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "本次保存结果尚未确认"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" class="space-y-2 rounded-xl border p-3 text-sm">…</div> aka getByText('本次保存结果尚未确认。请查询记录或重试同一操作，不要重复新建。查询 / 恢复重试同一操作')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      31 |   await page.route("**/api/workout-sessions?action=set",async route=>{const response=await route.fetch();expect(response.status()).toBe(200);await route.abort("connectionreset");},{times:1});
+      32 |   await row(3).getByRole("button",{name:"完成",exact:true}).click();
+    > 33 |   await expect(page.getByRole("alert")).toContainText("本次保存结果尚未确认");
+         |                                         ^
+      34 |   await page.getByRole("button",{name:"重试同一操作"}).click(); await expect(row(3).getByText("已完成",{exact:true})).toBeVisible();
+      35 |   await page.reload(); await expect(page.getByText("已完成 3 / 5 组",{exact:true})).toBeVisible();
+      36 |   const read=async()=> (await (await page.request.get("/api/workout-sessions")).json()).session;
+        at <repo>\tests\product-browser\today.spec.ts:33:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\today-mobile-real-API-PG-s-ccc33-tion-undo-history-and-nulls\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\today-mobile-real-API-PG-s-ccc33-tion-undo-history-and-nulls\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\today-mobile-real-API-PG-s-ccc33-tion-undo-history-and-nulls\error-context.md
+
+  1 failed
+    tests\product-browser\today.spec.ts:21:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls
+  2 passed (10.3s)
