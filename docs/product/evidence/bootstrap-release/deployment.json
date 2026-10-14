@@ -1,0 +1,20 @@
+{
+  "id": "dpl_C9PETs4zyju7osYPXSSYMusUnK5K",
+  "source": "git",
+  "state": "READY",
+  "target": "production",
+  "commit": "4b469b3c7da2ed035f3373c4d470c4839f7aab84",
+  "alias": [
+    "www.liftcuttracker.com",
+    "liftcut-tracker.vercel.app",
+    "liftcuttracker.com",
+    "liftcut-tracker-townzcs-projects.vercel.app",
+    "liftcut-tracker-git-main-townzcs-projects.vercel.app"
+  ],
+  "regions": [
+    "icn1"
+  ],
+  "createdAt": "2026-10-14T05:25:58.728Z",
+  "buildingAt": "2026-10-14T05:25:59.690Z",
+  "readyAt": "2026-10-14T05:27:03.962Z"
+}

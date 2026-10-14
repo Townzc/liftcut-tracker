@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-14T05:28:26.617Z",
+  "result": "PASS",
+  "stages": [
+    "Fresh GoTrue identity completed onboarding via production UI with explicitly entered synthetic values.",
+    "No plan, no active session, no receipts and empty session history; Start disabled.",
+    "Refresh and actual logout/re-login preserve the empty account; logged-out API returns 401."
+  ],
+  "writes": [
+    {
+      "path": "/rest/v1/profiles",
+      "method": "POST"
+    },
+    {
+      "path": "/rest/v1/user_settings",
+      "method": "POST"
+    },
+    {
+      "path": "/rest/v1/user_settings",
+      "method": "POST"
+    }
+  ],
+  "errors": [],
+  "modelCalls": [],
+  "limitation": "Chromium mobile viewport; not an iOS, Android or WeChat device test; SQL verification recorded separately."
+}
