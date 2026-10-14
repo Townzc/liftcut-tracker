@@ -1,0 +1,37 @@
+[WebServer] (node:42804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:42804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:48188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:63564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:18408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 16 tests using 1 worker
+
+(node:51120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\outbox.spec.ts:41:5 › offline three sets, correction, compensating void and end sync in exact persisted order (1.9s)
+  ok  2 tests\product-browser\outbox.spec.ts:61:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.5s)
+  ok  3 tests\product-browser\outbox.spec.ts:72:5 › lost response survives page close and two tabs claim just one immutable retry (4.3s)
+  ok  4 tests\product-browser\outbox.spec.ts:86:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (1.4s)
+  ok  5 tests\product-browser\outbox.spec.ts:101:5 › storage refusal blocks saving before any network write (1.1s)
+  ok  6 tests\product-browser\outbox.spec.ts:110:5 › account-bound requests fail closed and old outbox stays isolated after account switch (2.7s)
+  ok  7 tests\product-browser\outbox.spec.ts:125:5 › 401 retains the exact operation and pauses until explicit retry (1.2s)
+  ok  8 tests\product-browser\outbox.spec.ts:133:5 › unavailable IndexedDB shows an explicit failure instead of silently using memory (916ms)
+  ok  9 tests\product-browser\outbox.spec.ts:138:5 › a preview made before another local write cannot silently move to later set slots (1.4s)
+  ok 10 tests\product-browser\outbox.spec.ts:145:5 › expired lease from a dead tab is recovered without Web Locks or BroadcastChannel (1.4s)
+  ok 11 tests\product-browser\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (3.4s)
+  ok 12 tests\product-browser\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (52ms)
+  ok 13 tests\product-browser\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.0s)
+  ok 14 tests\product-browser\today.spec.ts:70:5 › server flag off hides navigation and blocks writes while preserving history (1.0s)
+  ok 15 tests\product-browser\today.spec.ts:78:5 › API rejects signed-out users and cross-origin writes (13ms)
+  ok 16 tests\product-browser\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (1.2s)
+
+  16 passed (31.2s)

@@ -7,6 +7,8 @@
 | [Week 2 Codex Brief](./product/WEEK2_CODEX_BRIEF.md) | Next product increment: rules-only drafts, atomic sentence writes, receipts and compensating undo |
 | [W2a Parser Verification](./product/W2A_VERIFICATION.md) | Authored 150-case rules evaluation, null and correction checks; parser-only increment before W2b, no model evaluation |
 | [W2b Sentence Receipts](./product/W2B_VERIFICATION.md) | Live sentence preview, atomic batch saves, compensating undo, real Auth/production verification and synthetic fixture cleanup |
+| [Week 3 Codex Brief](./product/WEEK3_CODEX_BRIEF.md) | Offline outbox first, then session-only exercise replacement; no GPU work |
+| [W3a Offline Outbox](./product/W3A_VERIFICATION.md) | Account-bound IndexedDB queue, ordered retries, conflict review, actual database and browser verification |
 | [Product Log](./product/PRODUCT_LOG.md) | One short entry per product PR |
 | [W1b Verification](./product/W1B_VERIFICATION.md) | Today-session transactions, real PostgreSQL/RLS, browser recovery, evidence and rollout boundaries |
 | [W1 Hosted Release](./product/W1_DEPLOYMENT.md) | Applied migrations, protected backup, real Auth/database verification, TLS, deployment and rollback |

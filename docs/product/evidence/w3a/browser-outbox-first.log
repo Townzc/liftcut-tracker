@@ -1,0 +1,94 @@
+[WebServer] (node:43656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:43656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:65508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:30344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 6 tests using 1 worker
+
+(node:2656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\product-browser\outbox.spec.ts:36:5 › offline three sets, correction, compensating void and end sync in exact persisted order (2.0s)
+  ok 2 tests\product-browser\outbox.spec.ts:56:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.6s)
+  x  3 tests\product-browser\outbox.spec.ts:67:5 › lost response survives page close and two tabs claim just one immutable retry (1.0m)
+(node:62596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 tests\product-browser\outbox.spec.ts:79:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (1.7s)
+  ok 5 tests\product-browser\outbox.spec.ts:94:5 › storage refusal blocks saving before any network write (1.1s)
+  x  6 tests\product-browser\outbox.spec.ts:103:5 › account-bound requests fail closed and old outbox stays isolated after account switch (1.0m)
+
+
+  1) tests\product-browser\outbox.spec.ts:67:5 › lost response survives page close and two tabs claim just one immutable retry 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '重试同一操作' })
+        - locator resolved to <button tabindex="0" type="button" data-slot="button" class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:bor…>重试同一操作</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+      - element was detached from the DOM, retrying
+
+
+      73 |   await Promise.all([a.goto("/today"),b.goto("/today")]);
+      74 |   await expect(a.getByRole("button",{name:"重试同一操作"})).toBeVisible();await expect(b.getByRole("button",{name:"重试同一操作"})).toBeVisible();
+    > 75 |   await Promise.all([a.getByRole("button",{name:"重试同一操作"}).click(),b.getByRole("button",{name:"重试同一操作"}).click()]);
+         |                                                            ^
+      76 |   await synced(a);await synced(b);expect(sent).toEqual([body]);
+      77 |   const counts=(await db.query("select count(*)::int as n from workout_session_events where session_id=$1 and type='recorded'",[saved.confirmed!.session!.id])).rows[0];expect(counts.n).toBe(1);
+      78 | });
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\outbox.spec.ts:75:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\outbox-lost-response-survi-73bdc-im-just-one-immutable-retry\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\outbox-lost-response-survi-73bdc-im-just-one-immutable-retry\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\outbox-lost-response-survi-73bdc-im-just-one-immutable-retry\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\outbox-lost-response-survi-73bdc-im-just-one-immutable-retry\error-context.md
+
+  2) tests\product-browser\outbox.spec.ts:103:5 › account-bound requests fail closed and old outbox stays isolated after account switch 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('#email')
+
+
+      16 | test.afterAll(async()=>{await db.query("delete from training_plans where id=$1",[plan]);await db.end();});
+      17 | async function login(page:Page,email="p1-fixture@example.invalid") {
+    > 18 |   await page.goto("/login");await page.locator("#email").fill(email);await page.locator("#password").fill("p1-fixture-password");
+         |                                                          ^
+      19 |   await page.locator('button[type="submit"]').click();await page.waitForURL(/\/(?:onboarding)?$/);
+      20 | }
+      21 | const synced=async(page:Page)=>await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+        at login (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\outbox.spec.ts:18:58)
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\outbox.spec.ts:105:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\outbox-account-bound-reque-936b0-olated-after-account-switch\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\outbox-account-bound-reque-936b0-olated-after-account-switch\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\outbox-account-bound-reque-936b0-olated-after-account-switch\error-context.md
+
+  2 failed
+    tests\product-browser\outbox.spec.ts:67:5 › lost response survives page close and two tabs claim just one immutable retry 
+    tests\product-browser\outbox.spec.ts:103:5 › account-bound requests fail closed and old outbox stays isolated after account switch 
+  4 passed (2.2m)

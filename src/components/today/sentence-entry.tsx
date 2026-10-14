@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Session, StoredSet } from "@/lib/today";
 import type { CommandReceipt, CommandRequest, ParsePreview } from "@/lib/workout-commands";
+import { parseWorkoutLog } from "@/lib/workout-log-parser";
+import { localContextHash, workoutContext } from "@/lib/workout-context";
+import type { WorkoutOperation } from "@/lib/workout-outbox";
 
-export type TodayPending = { action:"start" | "set" | "end" | "apply" | "undo"; body:unknown };
+export type TodayPending = WorkoutOperation;
 export function SentenceEntry({session,busy,submit}:{session:Session;busy:boolean;submit:(p:TodayPending)=>Promise<boolean>}) {
   const t = useTranslations("today.sentence");
   const [text,setText] = useState(""), [selected,setSelected] = useState("");
@@ -22,9 +25,8 @@ export function SentenceEntry({session,busy,submit}:{session:Session;busy:boolea
     flight.current=true;setParsing(true);clear();
     try {
       const request = {sessionId:session.id,text, ...(selected?{selectedExerciseId:selected}:{})};
-      const response = await fetch("/api/ai/parse-log",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(request)});
-      if (!response.ok) throw new Error("preview_failed");
-      const value:ParsePreview = await response.json();setPreview(value);
+      const value:ParsePreview = {result:parseWorkoutLog(text,workoutContext(session,selected||undefined)),
+        contextHash:await localContextHash(session),parser:"rules-v1"};setPreview(value);
       if (value.result.status === "draft" && value.result.draft.kind !== "end") {
         const d=value.result.draft, count=d.kind==="record"?d.sets.length:d.kind==="skip"?1:0;
         setCommand({...request,id:crypto.randomUUID(),version:1,contextHash:value.contextHash,
@@ -65,14 +67,14 @@ export function SentenceEntry({session,busy,submit}:{session:Session;busy:boolea
 }
 
 const actual = (s:StoredSet) => `${s.weightKg ?? "—"} kg × ${s.reps ?? "—"} · RPE ${s.rpe ?? "—"}`;
-export function SentenceReceipts({receipts,busy,submit}:{receipts:CommandReceipt[];busy:boolean;submit:(p:TodayPending)=>Promise<boolean>}) {
+export function SentenceReceipts({receipts,busy,submit,pendingIds=[]}:{receipts:CommandReceipt[];busy:boolean;submit:(p:TodayPending)=>Promise<boolean>;pendingIds?:string[]}) {
   const t=useTranslations("today.sentence");
   if (!receipts.length) return null;
   return <section id="sentence-receipts" className="space-y-3 scroll-mt-4" aria-label={t("receipts")}>
     <h2 className="text-lg font-semibold">{t("receipts")}</h2><p className="text-xs text-muted-foreground">{t("receiptHint")}</p>
     {receipts.map(r=><Card key={r.id} data-testid={`receipt-${r.id}`}><CardContent className="space-y-2 pt-4 text-sm">
       <p className="break-words font-medium">“{r.text}”</p>
-      <p className="text-xs text-muted-foreground">{new Date(r.createdAt).toLocaleString()} · {t(r.undo?"undone":"saved")}</p>
+      <p className="text-xs text-muted-foreground">{new Date(r.createdAt).toLocaleString()} · {t(pendingIds.includes(r.id) || (r.undo && pendingIds.includes(r.undo.id)) ? "pending" : r.undo?"undone":"saved")}</p>
       {r.changes.map(c=><p key={c.after.id}>{c.exerciseName} · {t("set",{n:c.after.setIndex})}: {c.before?actual(c.before):"—"} → {c.after.status==="skipped"?t("skipped"):actual(c.after)}</p>)}
       {r.undo ? <div className="rounded bg-muted p-2"><p>{t("compensation")}</p>{r.undo.changes.map(c=><p key={c.after.id}>
         {t("set",{n:c.after.setIndex})}: {c.after.status==="voided"?t("voided"):actual(c.after)} · v{c.after.revision}</p>)}</div>
