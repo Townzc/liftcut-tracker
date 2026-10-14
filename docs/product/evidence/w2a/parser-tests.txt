@@ -1,0 +1,14 @@
+✔ 150 authored rule cases match exact drafts or request clarification; no invented nulls (8.3452ms)
+✔ evaluation detects always-refuse, fabricated RPE and wrong correction target (6.1243ms)
+✔ no mutation or inherited defaults; historical changes do not change new actuals (0.2679ms)
+✔ invalid or conflicting context cannot choose a target silently (0.1855ms)
+✔ existing skipped or voided slots stay occupied; ending synthesizes no actuals (0.2178ms)
+✔ all drafts satisfy bounds, explicit report sources and require downstream authorization (1.2131ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 531.2954

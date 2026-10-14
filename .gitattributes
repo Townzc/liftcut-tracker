@@ -60,3 +60,5 @@ research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.tar.gz -text
 # Keep captured hosted-release logs byte-for-byte, including terminal whitespace.
 docs/product/evidence/w1-release/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 docs/product/evidence/w1-release/*.json -text whitespace=cr-at-eol
+# Preserve captured W2 parser verification output, not regenerated prose.
+docs/product/evidence/w2a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

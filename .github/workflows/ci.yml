@@ -970,6 +970,14 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Evaluate synthetic workout parsing without model calls
+        run: node --import tsx scripts/eval-workout-parser.ts > workout-parser-report.json
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: workout-parser-evaluation
+          path: workout-parser-report.json
+
       - name: Run lint
         run: npm run lint
 

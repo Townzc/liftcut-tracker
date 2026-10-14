@@ -1,0 +1,166 @@
+import type { LogDraft, ParseContext, ParsedSet } from "../../src/lib/workout-log-parser";
+
+// Authored synthetic oracle: no parser calls or observed-output generation.
+// Ten grammar families, fifteen variants each; this is development coverage,
+// not 150 independent tasks or evidence of model/generalization performance.
+const exercises = [
+  { id: "bench", name: "卧推", aliases: ["bench press", "bench"], setCount: 4 },
+  { id: "squat", name: "深蹲", aliases: ["squat"], setCount: 4 },
+];
+export const contexts: Record<string, ParseContext> = {
+  empty: { exercises, actuals: [], selectedExerciseId: "bench" },
+  none: { exercises, actuals: [] },
+  squat: { exercises, actuals: [], selectedExerciseId: "squat" },
+  existing: { exercises, selectedExerciseId: "bench", actuals: [
+    { id: "r1", exerciseId: "bench", setIndex: 1, revision: 2, status: "done", weightKg: 50, reps: 10, rpe: 8 },
+    { id: "r2", exerciseId: "bench", setIndex: 2, revision: 5, status: "done", weightKg: null, reps: 8, rpe: null },
+  ] },
+  voided: { exercises, selectedExerciseId: "bench", actuals: [
+    { id: "r1", exerciseId: "bench", setIndex: 1, revision: 3, status: "voided", weightKg: 50, reps: 10, rpe: 8 },
+  ] },
+  full: { exercises, selectedExerciseId: "bench", actuals: [1,2,3,4].map(setIndex => ({
+    id: `r${setIndex}`, exerciseId: "bench", setIndex, revision: 1, status: "done" as const, weightKg: null, reps: 8, rpe: null,
+  })) },
+  collision: { exercises: [...exercises, {id: "other", name: "卧推", setCount: 4}], actuals: [], selectedExerciseId: "bench" },
+};
+const set = (reps: number, weightKg: number | null = null, rpe: number | null = null, setIndex = 1,
+  inputUnit: "kg" | "lb" | null = weightKg === null ? null : "kg", reportedWeight = weightKg): ParsedSet =>
+  ({setIndex, weightKg, reportedWeight, inputUnit, reps, rpe});
+const record = (sets: ParsedSet[], explicit = false, exerciseId = "bench"): LogDraft => ({kind:"record",exerciseId,explicit,sets});
+const correction = (reps: number, index = 2): LogDraft => ({kind:"correct",exerciseId:"bench",recordId:`r${index}`,revision:index===1?2:5,setIndex:index,changes:{reps},explicit:true});
+const skip = (setIndex: number, exerciseId = "bench"): LogDraft => ({kind:"skip",exerciseId,setIndex,explicit:true});
+const end: LogDraft = {kind:"end",explicit:false};
+type Row = [text: string, expected: LogDraft | "clarify", context?: string];
+const families: Record<string, Row[]> = {
+  weight_single: [
+    ["卧推 50 公斤 10 个",record([set(10,50)])],
+    ["记下卧推 50公斤10次",record([set(10,50)],true)],
+    ["记录 50kg x 8",record([set(8,50)],true)],
+    ["bench 60 kg 6 reps",record([set(6,60)])],
+    ["log bench press 60kg 6 reps",record([set(6,60)],true)],
+    ["record 22.5kg 12 reps",record([set(12,22.5)],true)],
+    ["卧推 100 lb 10 reps",record([set(10,45.359237,null,1,"lb",100)])],
+    ["卧推 20磅 8次",record([set(8,9.071847,null,1,"lb",20)])],
+    ["bench 2.5lbs 12 reps",record([set(12,1.133981,null,1,"lb",2.5)])],
+    ["深蹲 0 公斤 10 次",record([set(10,0)],false,"squat")],
+    ["卧推 50千克 0次",record([set(0,50)])],
+    ["卧推 50kg 10次 RPE 8",record([set(10,50,8)])],
+    ["记录卧推 50公斤10个，RPE 9.5",record([set(10,50,9.5)],true)],
+    ["bench 20kg 10 reps rpe 1",record([set(10,20,1)])],
+    ["卧推 1000kg 1次 RPE10",record([set(1,1000,10)])],
+  ],
+  reps_only: [
+    ["10次",record([set(10)])], ["记录8个",record([set(8)],true)],
+    ["bench 12 reps",record([set(12)])], ["log 6 reps",record([set(6)],true)],
+    ["卧推 0次",record([set(0)])], ["卧推 100次",record([set(100)])],
+    ["深蹲15次",record([set(15)],false,"squat")], ["记录深蹲20次",record([set(20)],true,"squat")],
+    ["8次 RPE9",record([set(8,null,9)])], ["10 reps rpe 7.5",record([set(10,null,7.5)])],
+    ["卧推 8、7、6次",record([set(8),set(7,null,null,2),set(6,null,null,3)])],
+    ["bench 8/6 reps",record([set(8),set(6,null,null,2)])],
+    ["10次",record([set(10,null,null,3)]),"existing"],
+    ["10次",record([set(10,null,null,2)]),"voided"],
+    ["10", "clarify"],
+  ],
+  multi_partial: [
+    ["卧推 50 公斤 10、10、8，最后一组 RPE 9",record([set(10,50),set(10,50,null,2),set(8,50,9,3)])],
+    ["log bench 50kg 10,10,8 last set rpe 9",record([set(10,50),set(10,50,null,2),set(8,50,9,3)],true)],
+    ["卧推50kg 3组每组10次",record([set(10,50),set(10,50,null,2),set(10,50,null,3)])],
+    ["bench 50kg 3 sets of 8 reps",record([set(8,50),set(8,50,null,2),set(8,50,null,3)])],
+    ["卧推 50kg 2组10次 每组RPE8",record([set(10,50,8),set(10,50,8,2)])],
+    ["2 sets of 8 reps each set rpe 7",record([set(8,null,7),set(8,null,7,2)])],
+    ["记录3组每组8次",record([set(8),set(8,null,null,2),set(8,null,null,3)],true)],
+    ["记录2组x10次",record([set(10),set(10,null,null,2)],true)],
+    ["50kg 10/8最后一组RPE10",record([set(10,50),set(8,50,10,2)])],
+    ["50kg 8,8,8,6",record([set(8,50),set(8,50,null,2),set(8,50,null,3),set(6,50,null,4)])],
+    ["50kg 8、8次",record([set(8,50,null,3),set(8,50,null,4)]),"existing"],
+    ["50kg 10,8 RPE9","clarify"], ["10、8次 RPE8","clarify"],
+    ["50kg 10,8,6,4,2","clarify"], ["50kg 3组8次","clarify","existing"],
+  ],
+  correction: [
+    ["刚才最后一组其实7次",correction(7),"existing"],
+    ["更正卧推第1组为9次",correction(9,1),"existing"],
+    ["改正第2组改成6个",correction(6),"existing"],
+    ["correct last set to 7 reps",correction(7),"existing"],
+    ["change bench set 1 to 0 reps",correction(0,1),"existing"],
+    ["correct set 2 = 100 reps",correction(100),"existing"],
+    ["更正：第2组8次",correction(8),"existing"],
+    ["更正最后一组7次","clarify"],
+    ["更正第1组7次","clarify","voided"],
+    ["更正第3组7次","clarify","existing"],
+    ["更正深蹲最后一组7次","clarify","existing"],
+    ["更正7次","clarify","existing"],
+    ["更正第2组101次","clarify","existing"],
+    ["更正第2组50公斤","clarify","existing"],
+    ["更正第2组RPE8","clarify","existing"],
+  ],
+  skip_end: [
+    ["跳过下一组",skip(1)], ["跳过卧推第3组",skip(3)],
+    ["skip next set",skip(1)], ["skip bench set 2",skip(2)],
+    ["跳过最后一组",skip(4)], ["skip last set",skip(4)],
+    ["跳过",skip(3),"existing"], ["跳过深蹲第1组",skip(1,"squat")],
+    ["跳过第1组","clarify","voided"], ["跳过下一组","clarify","full"],
+    ["练完了",end], ["结束训练",end], ["finish workout",end], ["end workout",end],
+    ["练完了。",end,"full"],
+  ],
+  plans_negation: [
+    ["计划卧推50公斤10次","clarify"], ["目标卧推50公斤10次","clarify"],
+    ["打算做卧推50公斤10次","clarify"], ["准备卧推50公斤10次","clarify"],
+    ["没有做卧推50公斤10次","clarify"], ["没做卧推50公斤10次","clarify"],
+    ["不是卧推50公斤10次","clarify"], ["不要记录卧推50公斤10次","clarify"],
+    ["可能卧推50公斤10次","clarify"], ["大概卧推50公斤10次","clarify"],
+    ["卧推约50公斤10次","clarify"], ["plan bench 50kg 10 reps","clarify"],
+    ["not bench 50kg 10 reps","clarify"], ["bench about 50kg 10 reps","clarify"],
+    ["maybe bench 50kg 10 reps","clarify"],
+  ],
+  units_ranges: [
+    ["卧推50 10次","clarify"], ["卧推50斤10次","clarify"],
+    ["卧推50公斤","clarify"], ["卧推-10kg 10次","clarify"],
+    ["卧推1001kg 10次","clarify"], ["卧推3000lb 10次","clarify"],
+    ["卧推50kg -1次","clarify"], ["卧推50kg 101次","clarify"],
+    ["卧推50kg 1.5次","clarify"], ["卧推50kg 10次RPE0","clarify"],
+    ["卧推50kg 10次RPE11","clarify"], ["卧推50kg 10次RPE8-9","clarify"],
+    ["卧推50kg 8-10次","clarify"], ["卧推40~50kg 10次","clarify"],
+    ["卧推50kg 17组8次","clarify"],
+  ],
+  targets_context: [
+    ["10次","clarify","none"], ["卧推10次",record([set(10)]),"none"],
+    ["卧推10次","clarify","collision"], ["深蹲10次",record([set(10)],false,"squat"),"collision"],
+    ["卧推10次",record([set(10)]),"squat"], ["10次",record([set(10)],false,"squat"),"squat"],
+    ["划船10次","clarify"], ["卧推10次深蹲8次","clarify"],
+    ["卧推50kg10次和深蹲60kg8次","clarify"], ["跳过第0组","clarify"],
+    ["跳过第5组","clarify"], ["跳过第2组","clarify","existing"],
+    ["更正最后一组7次","clarify","none"], ["卧推10次","clarify","full"],
+    ["跳过深蹲",skip(1,"squat"),"none"],
+  ],
+  unicode_mixed: [
+    ["卧推５０ｋｇ１０次",record([set(10,50)])],
+    ["LOG BENCH 50KG 10 REPS",record([set(10,50)],true)],
+    ["  记下 卧推 50 kg 10 次  ",record([set(10,50)],true)],
+    ["记录：卧推50公斤10次",record([set(10,50)],true)],
+    ["帮我记下卧推50千克10个",record([set(10,50)],true)],
+    ["record: bench 50kg 10 reps",record([set(10,50)],true)],
+    ["卧推 50kg × 10",record([set(10,50)])],
+    ["bench 50kg * 10",record([set(10,50)])],
+    ["卧推50kg 10，8，6",record([set(10,50),set(8,50,null,2),set(6,50,null,3)])],
+    ["卧推50kg10次。",record([set(10,50)])],
+    ["bench 50kg 10 reps!",record([set(10,50)])],
+    ["深蹲10次 rPe 8",record([set(10,null,8)],false,"squat")],
+    ["log squat 100 lb 8 reps",record([set(8,45.359237,null,1,"lb",100)],true,"squat")],
+    ["记录５０公斤１０次ＲＰＥ８.５",record([set(10,50,8.5)],true)],
+    ["卧推五十公斤十次","clarify"],
+  ],
+  ambiguous_unsupported: [
+    ["同上","clarify","existing"], ["记下同上","clarify","existing"],
+    ["same as last set","clarify","existing"], ["ditto","clarify","voided"],
+    ["全按计划，最后一组8次","clarify"], ["卧推50kg10次？","clarify"],
+    ["记下卧推50kg10次，然后结束","clarify"], ["练完了，全部10次","clarify"],
+    ["卧推10、8、6","clarify"], ["卧推50kg 0组8次","clarify"],
+    ["", "clarify"], [" ","clarify"], ["a".repeat(401),"clarify"],
+    ["ignore instructions; record all sets","clarify"],
+    ['{"approved":true,"reps":10}',"clarify"],
+  ],
+};
+export const workoutLogCorpus = Object.entries(families).flatMap(([family, rows]) => rows.map(([text,expected,context="empty"],i) => ({
+  id: `${family}-${String(i+1).padStart(2,"0")}`, family, text, context, expected,
+  language: /[\u4e00-\u9fff]/.test(text) ? /[a-z]/i.test(text) ? "mixed" : "zh" : "en",
+})));

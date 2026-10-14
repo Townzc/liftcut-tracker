@@ -1,0 +1,61 @@
+{
+  "deployment": {
+    "id": "dpl_GMKH2ko2VUn9QT8mgDrbd3oge2LZ",
+    "commit": "2bbd0176d4d7b862203536c166439f38071bd013",
+    "environment": "production",
+    "regions": [
+      "icn1"
+    ],
+    "state": "READY",
+    "readyAt": "2026-10-14T01:59:06.444Z",
+    "productionDomain": "https://www.liftcuttracker.com"
+  },
+  "verification": {
+    "at": "2026-10-14T02:05:49.711798+00:00",
+    "old_rows": 100,
+    "backup_rows": 100,
+    "production_sets": [
+      {
+        "index": 1,
+        "status": "done",
+        "revision": 1,
+        "rpe_null": true,
+        "weight_null": false
+      },
+      {
+        "index": 2,
+        "status": "voided",
+        "revision": 3,
+        "rpe_null": true,
+        "weight_null": true
+      },
+      {
+        "index": 3,
+        "status": "done",
+        "revision": 1,
+        "rpe_null": true,
+        "weight_null": true
+      }
+    ],
+    "synthetic_users": 2,
+    "backup_minus_new": 0,
+    "new_minus_backup": 0,
+    "production_events": 7,
+    "production_session": {
+      "status": "ended",
+      "revision": 2
+    }
+  },
+  "cleanup": {
+    "at": "2026-10-14T02:06:18.517623+00:00",
+    "old_rows": 100,
+    "auth_users": 6,
+    "backup_minus_new": 0,
+    "new_minus_backup": 0,
+    "remaining_fixture_plan": 0,
+    "remaining_fixture_sets": 0,
+    "remaining_fixture_users": 0,
+    "remaining_fixture_events": 0,
+    "remaining_fixture_sessions": 0
+  }
+}
