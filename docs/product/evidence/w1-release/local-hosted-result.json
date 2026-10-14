@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-14T01:37:39.413Z",
+  "base": "http://localhost:3105",
+  "sessionId": "d793cdb6-550b-4a50-a505-cdaa2626fcfc",
+  "steps": [
+    "real GoTrue password login and SSR cookie",
+    "resumed verified empty synthetic session after harness timeout",
+    "3 unique sets after double-click, committed response loss, retry and refresh; weight/RPE NULL",
+    "correction and compensating void; stale request rejected 409",
+    "second real Auth user cannot read/write first user session",
+    "ended history includes two done sets; void and fourth unreported set excluded"
+  ],
+  "consoleErrors": [],
+  "status": "PASS"
+}
