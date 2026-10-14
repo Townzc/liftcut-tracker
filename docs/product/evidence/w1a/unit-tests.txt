@@ -1,0 +1,77 @@
+
+> liftcut-tracker@0.1.0 test
+> node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts
+
+✔ intl provider configures a stable default time zone (2.4613ms)
+✔ guest mode enters the app without forcing onboarding (0.9562ms)
+✔ guest AI requests receive profile defaults before validation (0.8142ms)
+✔ dashboard exposes the primary daily actions (1.0001ms)
+✔ guest migration keeps the active user plan inactive when importing guest plans (0.3373ms)
+✔ default demo and equipment support Chinese-first onboarding (0.3481ms)
+✔ localized selects display labels instead of raw enum values (1.8117ms)
+✔ workout page shows estimated calorie burn without changing the database schema (0.3809ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75.5676
+✔ normalizeMealType maps Chinese meal types to English enums (6.2282ms)
+✔ normalizeAiNutritionPlan handles wrapper output (0.3429ms)
+✔ buildNutritionPlanPrompt includes strict schema instructions (0.4492ms)
+✔ NUTRITION_PROMPT_VERSION is updated (0.0702ms)
+✔ normalizeAiNutritionPlan rejects invalid plans (0.3537ms)
+✔ beginner demo keeps source IDs unique (0.8716ms)
+✔ filters by focus (0.3071ms)
+✔ searches Chinese and English labels (0.9013ms)
+✔ combines query and focus filters (0.1452ms)
+✔ getTodayNutritionSummary returns zeros for no logs (0.6345ms)
+✔ getTodayNutritionSummary sums matching date logs (0.1493ms)
+✔ getNutritionByDate returns zeros for no matching logs (0.086ms)
+✔ getNutritionByDate sums matching date (0.0831ms)
+✔ getSuggestedTrainingDayNumber returns valid day number (0.3678ms)
+✔ getSuggestedTrainingDayNumber handles 1 training day (0.1017ms)
+✔ getAverageWeightByDays returns null for empty logs (0.1954ms)
+✔ getAverageWeightByDays computes average correctly (0.6469ms)
+✔ parsePlanText returns error for empty input (1.5658ms)
+✔ parsePlanText returns error for whitespace-only input (0.1771ms)
+✔ parsePlanText parses English template successfully (0.8794ms)
+✔ parsePlanText parses Chinese template successfully (0.4083ms)
+✔ parsePlanText extracts exercise fields correctly (0.2006ms)
+✔ parsePlanText handles rep ranges (0.1989ms)
+✔ parsePlanText defaults RPE to 7 when missing (0.2681ms)
+✔ parsePlanText handles multiple weeks and days (0.2148ms)
+✔ parsePlanText uses custom plan name (0.2072ms)
+✔ parsePlanText handles notes after exercise (0.3342ms)
+✔ userSettingsSchema accepts valid settings (2.1413ms)
+✔ userSettingsSchema rejects negative age (0.4905ms)
+✔ userSettingsSchema accepts boundary values (0.1579ms)
+✔ quickFoodItemSchema accepts valid item (0.4602ms)
+✔ quickFoodItemSchema rejects missing required fields (0.3234ms)
+✔ returns 0 for empty exercises (0.688ms)
+✔ uses defaults when body weight and duration are zero (0.1879ms)
+✔ returns higher calories for higher RPE (0.1089ms)
+✔ returns higher calories for heavier body weight (0.0832ms)
+✔ uses plan exercise sets when provided (0.2379ms)
+✔ prefers completed exercises over incomplete (0.138ms)
+✔ falls back to all exercises when none completed (0.1189ms)
+✔ untouched blank rows do not claim a workout calorie estimate (0.0688ms)
+✔ null uses documented estimation assumptions without changing the reported measurements (0.5849ms)
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+✔ unreported values normalize to null without coercing booleans or inventing zero (2.1451ms)
+✔ database reads preserve SQL null and reported zero, including numeric strings (0.3173ms)
+✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (8.535ms)
+✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (9.7016ms)
+✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.4296ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 46
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2328.3351

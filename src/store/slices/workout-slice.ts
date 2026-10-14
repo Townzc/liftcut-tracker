@@ -3,6 +3,7 @@
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
 import type { WorkoutLog } from "@/types";
+import { normalizeExerciseActuals } from "@/lib/workout-values";
 import {
   isGuestMode,
   nowIso,
@@ -32,7 +33,7 @@ export const createWorkoutSlice: StateCreator<TrackerState, [], [], WorkoutSlice
       completed: workoutLog.completed,
       notes: workoutLog.notes,
       createdAt: nowIso(),
-      exercises: workoutLog.exercises.map((exercise, index) => ({
+      exercises: workoutLog.exercises.map((exercise, index) => normalizeExerciseActuals({
         id: exercise.id || `${workoutLogId}-ex-${index + 1}`,
         workoutLogId,
         exercisePlanId: exercise.exercisePlanId,

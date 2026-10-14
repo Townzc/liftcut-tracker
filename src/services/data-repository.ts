@@ -1,5 +1,6 @@
 ﻿import { createDefaultSettings, createDemoSnapshot, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { normalizeExerciseActuals } from "@/lib/workout-values";
 import type { GuestAiHistoryItem } from "@/lib/guest-mode";
 import type {
   AppDataSnapshot,
@@ -155,7 +156,7 @@ function normalizeSettings(row: Record<string, unknown> | null, userId: string):
   };
 }
 
-function mapWorkoutLogs(
+export function mapWorkoutLogs(
   logs: Record<string, unknown>[],
   exerciseRows: Record<string, unknown>[],
 ): WorkoutLog[] {
@@ -164,16 +165,16 @@ function mapWorkoutLogs(
   exerciseRows.forEach((row) => {
     const workoutLogId = String(row.workout_log_id);
     const list = exerciseMap.get(workoutLogId) ?? [];
-    list.push({
+    list.push(normalizeExerciseActuals({
       id: String(row.id),
       workoutLogId,
       exercisePlanId: String(row.exercise_plan_id ?? ""),
       name: String(row.name ?? ""),
-      actualWeight: Number(row.actual_weight ?? 0),
-      actualReps: Number(row.actual_reps ?? 0),
-      actualRpe: Number(row.actual_rpe ?? 0),
+      actualWeight: row.actual_weight,
+      actualReps: row.actual_reps,
+      actualRpe: row.actual_rpe,
       completed: Boolean(row.completed),
-    });
+    }));
     exerciseMap.set(workoutLogId, list);
   });
 
@@ -732,6 +733,8 @@ export async function appendAiGenerationHistoryForUser(
 }
 
 export async function upsertWorkoutLog(userId: string, log: WorkoutLog): Promise<void> {
+  // Validate before any write; guest migrations and imported backups use this path too.
+  const exercises = log.exercises.map(normalizeExerciseActuals);
   const supabase = getSupabaseBrowserClient();
 
   const workoutLogId = log.id || generateId("workout");
@@ -769,7 +772,7 @@ export async function upsertWorkoutLog(userId: string, log: WorkoutLog): Promise
     return;
   }
 
-  const exerciseRows = log.exercises.map((exercise, index) => ({
+  const exerciseRows = exercises.map((exercise, index) => ({
     id: exercise.id || `${workoutLogId}-ex-${index + 1}`,
     workout_log_id: workoutLogId,
     exercise_plan_id: exercise.exercisePlanId,

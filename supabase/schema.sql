@@ -130,11 +130,18 @@ create table if not exists public.workout_log_exercises (
   workout_log_id text not null references public.workout_logs(id) on delete cascade,
   exercise_plan_id text not null,
   name text not null,
-  actual_weight numeric not null,
-  actual_reps int not null,
-  actual_rpe numeric not null,
+  actual_weight numeric,
+  actual_reps int,
+  actual_rpe numeric,
   completed boolean not null default false
 );
+
+-- Compatibility for existing installations; see 20261013234503_unknown_workout_actuals.sql.
+alter table public.workout_log_exercises
+  alter column actual_weight drop not null,
+  alter column actual_reps drop not null,
+  alter column actual_rpe drop not null;
+update public.workout_log_exercises set actual_rpe = null where actual_rpe = 0;
 
 create table if not exists public.food_logs (
   id text primary key,

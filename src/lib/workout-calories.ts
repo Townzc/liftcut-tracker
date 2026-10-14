@@ -17,7 +17,9 @@ export function estimateWorkoutCalories(input: WorkoutCalorieInput): number {
   const setsByExercise = new Map(input.planExercises?.map((exercise) => [exercise.id, exercise.sets]) ?? []);
 
   const activeExercises = input.exercises.filter((exercise) => exercise.completed);
-  const sourceExercises = activeExercises.length > 0 ? activeExercises : input.exercises;
+  const sourceExercises = activeExercises.length > 0 ? activeExercises : input.exercises.filter(
+    (exercise) => exercise.actualWeight != null || exercise.actualReps != null || exercise.actualRpe != null,
+  );
   if (sourceExercises.length === 0) {
     return 0;
   }
@@ -25,9 +27,12 @@ export function estimateWorkoutCalories(input: WorkoutCalorieInput): number {
   const totals = sourceExercises.reduce(
     (acc, exercise) => {
       const sets = setsByExercise.get(exercise.exercisePlanId) ?? 3;
-      const reps = exercise.actualReps > 0 ? exercise.actualReps : 8;
-      const weight = exercise.actualWeight > 0 ? exercise.actualWeight : bodyWeightKg * 0.35;
-      const rpe = exercise.actualRpe > 0 ? exercise.actualRpe : 7;
+      // Estimation-only assumptions for missing reports: 8 reps, 35% body weight,
+      // RPE 7. They are never returned as actuals or written to the workout log.
+      // A reported zero remains zero; it is not evidence of an unknown value.
+      const reps = exercise.actualReps == null ? 8 : exercise.actualReps;
+      const weight = exercise.actualWeight == null ? bodyWeightKg * 0.35 : exercise.actualWeight;
+      const rpe = exercise.actualRpe == null ? 7 : exercise.actualRpe;
 
       acc.sets += sets;
       acc.volume += sets * reps * weight;

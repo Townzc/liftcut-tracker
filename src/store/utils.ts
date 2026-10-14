@@ -9,6 +9,7 @@ import {
 import { createAuthRequiredError } from "@/lib/error-utils";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { normalizeExerciseActuals } from "@/lib/workout-values";
 import type {
   AppDataSnapshot,
   BodyMetricLog,
@@ -135,6 +136,7 @@ export function normalizeSnapshotForUser(snapshot: AppDataSnapshot, userId: stri
     workoutLogs: snapshot.workoutLogs.map((log) => ({
       ...log,
       userId,
+      exercises: log.exercises.map(normalizeExerciseActuals),
     })),
     foodLogs: snapshot.foodLogs.map((log) => ({
       ...log,

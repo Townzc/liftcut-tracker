@@ -1,0 +1,10 @@
+W1a: legacy constraints→migration twice→SQL null→application read; legacy facts and cross-owner RLS verified
+✔ nullable migration preserves legacy facts, supports null round trips and keeps owner RLS (174.636ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1294.7837

@@ -47,6 +47,7 @@ function collectCompletedExercises(workoutLogs: WorkoutLog[]): ExerciseEntry[] {
 
     for (const exercise of log.exercises) {
       if (!exercise.completed) continue;
+      if (exercise.actualWeight == null || exercise.actualReps == null) continue;
       if (exercise.actualWeight <= 0 || exercise.actualReps <= 0) continue;
 
       entries.push({

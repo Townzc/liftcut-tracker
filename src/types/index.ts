@@ -95,9 +95,9 @@ export interface ExerciseLog {
   workoutLogId: string;
   exercisePlanId: string;
   name: string;
-  actualWeight: number;
-  actualReps: number;
-  actualRpe: number;
+  actualWeight: number | null;
+  actualReps: number | null;
+  actualRpe: number | null;
   completed: boolean;
 }
 

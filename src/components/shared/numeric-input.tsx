@@ -5,15 +5,18 @@ import type { ComponentProps } from "react";
 
 import { Input } from "@/components/ui/input";
 
-interface NumericInputProps
+interface NumericInputBaseProps
   extends Omit<
     ComponentProps<typeof Input>,
     "type" | "value" | "onChange" | "inputMode"
   > {
-  value: number;
-  onValueChange: (value: number) => void;
   allowDecimal?: boolean;
 }
+
+type NumericInputProps = NumericInputBaseProps & (
+  | { nullable: true; value: number | null; onValueChange: (value: number | null) => void }
+  | { nullable?: false; value: number; onValueChange: (value: number) => void }
+);
 
 function isValidDraftValue(value: string, allowDecimal: boolean): boolean {
   if (value === "") {
@@ -26,6 +29,7 @@ function isValidDraftValue(value: string, allowDecimal: boolean): boolean {
 export function NumericInput({
   value,
   onValueChange,
+  nullable,
   allowDecimal = true,
   min,
   max,
@@ -36,7 +40,8 @@ export function NumericInput({
 }: NumericInputProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [draftValue, setDraftValue] = useState("");
-  const inputValue = isEditing ? draftValue : String(value);
+  const displayValue = value === null ? "" : String(value);
+  const inputValue = isEditing ? draftValue : displayValue;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = event.target.value;
@@ -47,6 +52,7 @@ export function NumericInput({
     setDraftValue(nextValue);
 
     if (nextValue === "") {
+      if (nullable) onValueChange(null);
       return;
     }
 
@@ -66,11 +72,12 @@ export function NumericInput({
       if (Number.isFinite(parsed)) {
         let normalized = parsed;
 
-        if (typeof min === "number" && normalized < min) {
+        // Optional reported values are validated when saved, not silently replaced.
+        if (!nullable && typeof min === "number" && normalized < min) {
           normalized = min;
         }
 
-        if (typeof max === "number" && normalized > max) {
+        if (!nullable && typeof max === "number" && normalized > max) {
           normalized = max;
         }
 
@@ -85,7 +92,7 @@ export function NumericInput({
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     setIsEditing(true);
-    setDraftValue(String(value));
+    setDraftValue(displayValue);
     event.currentTarget.select();
     onFocus?.(event);
   };
