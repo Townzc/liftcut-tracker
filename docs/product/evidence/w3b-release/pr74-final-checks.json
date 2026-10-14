@@ -1,0 +1,84 @@
+{
+  "headRefOid": "de3689afc7255682a52a67e483392a234f248013",
+  "isDraft": true,
+  "state": "OPEN",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:41:42Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718179192",
+      "name": "agent-research",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:52:17Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718179254",
+      "name": "tokenizer-audit",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:41:22Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718179322",
+      "name": "i2-evidence",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:41:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718179194",
+      "name": "p1-database",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:41:15Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718178993",
+      "name": "today-session",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:40:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/Townzc/liftcut-tracker/actions/runs/38523432851/job/115718179107",
+      "name": "quality",
+      "startedAt": "2026-10-14T06:38:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "StatusContext",
+      "context": "Vercel",
+      "startedAt": "2026-10-14T06:40:21Z",
+      "state": "SUCCESS",
+      "targetUrl": "https://vercel.com/townzcs-projects/liftcut-tracker/GNKLey1tUw4pvc2Bqnv3u1b13WQM"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-14T06:40:22Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://vercel.com/github",
+      "name": "Vercel Preview Comments",
+      "startedAt": "2026-10-14T06:40:22Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ]
+}

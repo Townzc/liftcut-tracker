@@ -1,0 +1,42 @@
+▶ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay
+  ✔ four concurrent duplicates write one receipt/event; exact retries survive compensation and ending (162.1793ms)
+  ✔ offline replacement -> undo -> replacement -> sentence -> end has matching server context and actuals (72.9911ms)
+  ✔ all existing set states block replacement; untouched exercise actuals remain exact (137.2998ms)
+  ✔ stale preview and old device's queued ID cannot write into replacement (96.1353ms)
+  ✔ replacement vs first set, compensation vs first set and end vs replacement serialize with one winner (357.9285ms)
+  ✔ injected receipt insert failure rolls back prescription and event; plan and other rows never updated (45.8186ms)
+  ✔ RLS and append-only receipt grants prevent cross-owner replay/read/write/delete (31.8312ms)
+(node:7900) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ✖ history preserves every session and receipt without overlapping queries on one real connection (58.0218ms)
+✖ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay (1010.4723ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 7
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3437.2012
+
+✖ failing tests:
+
+test at tests\product-db\exercise-replacement.test.ts:8:230
+✖ history preserves every session and receipt without overlapping queries on one real connection (58.0218ms)
+  AssertionError [ERR_ASSERTION]: a transaction client must have only one outstanding query
+  
+  20 !== 1
+  
+      at TestContext.<anonymous> (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\exercise-replacement.test.ts:123:37)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async TestContext.<anonymous> (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\exercise-replacement.test.ts:106:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 20,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

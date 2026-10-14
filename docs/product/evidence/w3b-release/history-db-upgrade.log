@@ -1,0 +1,20 @@
+✖ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (22.4582ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 516.916
+
+✖ failing tests:
+
+test at tests\product-db\today.test.ts:2:1115
+✖ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (22.4582ms)
+  Error: Use a fresh disposable database
+      at setup (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\today-setup.ts:12:97)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async TestContext.<anonymous> (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\today.test.ts:10:3)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)

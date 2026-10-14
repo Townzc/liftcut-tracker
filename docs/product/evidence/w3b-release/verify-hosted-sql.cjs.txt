@@ -1,0 +1,11 @@
+const fs=require('node:fs'),assert=require('node:assert/strict');const out='node_modules/.cache/w3b/';
+const before=JSON.parse(fs.readFileSync(out+'plan-before.json'))[0].jsonb_agg;
+const after=JSON.parse(fs.readFileSync(out+'production-postflight.json'))[0];
+assert.deepEqual(after.plan_snapshot,before);assert.equal(after.legacy_differences,0);assert.equal(after.preferred_language,'en');
+assert.equal(after.sessions.length,3);assert.ok(after.sessions.every(s=>s.status==='ended'));
+assert.equal(after.sets.length,3);assert.ok(after.sets.every(s=>s.weight===null&&s.rpe===null&&s.reps===8&&s.status==='done'));
+assert.equal(after.replacements.length,6);assert.equal(after.replacements.filter(r=>r.parent_id===null).length,4);assert.equal(after.replacements.filter(r=>r.parent_id!==null).length,2);
+assert.deepEqual(after.events,{started:3,ended:3,recorded:3,exercise_replaced:4,exercise_replacement_compensated:2});
+const ids=new Set();for(const r of after.replacements){assert.ok(!ids.has(r.new_exercise_id));ids.add(r.new_exercise_id);assert.notEqual(r.receipt.before.id,r.receipt.after.id);}
+for(const s of after.sets){const session=after.sessions.find(x=>x.id===s.session_id);assert.ok(session.prescription.exercises.some(e=>e.id===s.plan_exercise_id&&e.name===s.name));}
+console.log('PASS independent production SQL: 3 ended sessions, 6 append-only replacement receipts (4+2), 3 correctly-bound actual sets, 15 events; unknown weight/RPE NULL, stored English, full long-term plan unchanged, legacy backup diff 0.');

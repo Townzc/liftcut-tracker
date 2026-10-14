@@ -1,0 +1,4 @@
+PASS login: Real GoTrue login and explicit synthetic onboarding.
+PASS S1 preview and offline five-operation chain: Cancel wrote nothing; replace/compensate/replace/set/end replayed five exact bodies. New identity and unknown actuals preserved.
+PASS S2 lost response, retry, compensation and original-exercise conflict: Lost response retried one receipt across reload/tabs; original replay retained compensation; newer original actual paused replacement and dependent set, explicit discard preserved it.
+PASS S3 stale original ID, stale compensation and persisted English: Old ID never remapped; stale compensation preserved later actual; owner mismatch rejected; real English preference survives hard reload without changing stored identity.

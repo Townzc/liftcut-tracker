@@ -1,0 +1,23 @@
+[
+  {
+    "jsonb_agg": [
+      {
+        "id": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2",
+        "name": "杠铃卧推",
+        "sets": 3,
+        "notes": "",
+        "title": "仅本次替换验证",
+        "day_id": "6ba7aed5-0c01-414e-ad35-fa437a683b6e",
+        "user_id": "017053fa-5aa7-4803-b0b2-4b14c756a141",
+        "week_id": "1585e2c1-ed98-48df-8eac-f3eeeee4e9ce",
+        "is_active": true,
+        "plan_name": "W3b synthetic release",
+        "rep_range": "8-12",
+        "target_rpe": 7,
+        "week_number": 1,
+        "training_plan_id": "cd9f1c9e-cae6-489e-9616-da0e2d54edcd",
+        "alternative_exercises": []
+      }
+    ]
+  }
+]
