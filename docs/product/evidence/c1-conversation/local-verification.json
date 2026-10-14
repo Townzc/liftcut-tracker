@@ -1,16 +1,19 @@
 {
-  "observed_at_utc": "2026-10-14T07:51:06.178446+00:00",
+  "observed_at_utc": "2026-10-14T08:04:06.010575+00:00",
   "environment": "Local Chromium 390x844, real API/PostgreSQL, HTTP Auth fixture",
   "actual_results": {
     "unit": 78,
     "database": 26,
-    "browser": 30,
+    "browser": 31,
     "browser_first_passed": 2,
     "browser_first_failed": 3,
     "build": "PASS",
     "typescript": "PASS",
     "lint_errors": 0,
-    "lint_preexisting_warnings": 2
+    "lint_preexisting_warnings": 2,
+    "ci_first_browser_passed": 27,
+    "ci_first_browser_failed": 3,
+    "account_reproduction_passed": 5
   },
   "production": "NOT_YET_DEPLOYED",
   "files": [
@@ -78,6 +81,21 @@
       "local_ignored_output": "node_modules/.cache/coach-lint-final.log",
       "bytes": 374,
       "sha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-ci-first-today.log",
+      "bytes": 99726,
+      "sha256": "13277926120ccc9f409dd7fa86b2c0f2a237f9ceb2a54edbc9ba230d04615e93"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-account-reproduce.log",
+      "bytes": 3031,
+      "sha256": "e308a9e143368426836832b265303041addf2459d866fb021e0f151a7c4ccdbb"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-browser-ci-fix.log",
+      "bytes": 6212,
+      "sha256": "9ec039fa0c79fc3af289a078a8c3bb16957dfd7ef4c18099ebbf11383c31025a"
     }
   ]
 }

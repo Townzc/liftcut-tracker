@@ -952,7 +952,7 @@ jobs:
             node_modules/.cache/w1b/browser/
             node_modules/.cache/w3a/*.png
             node_modules/.cache/w3b/*.png
-              node_modules/.cache/coach/*.png
+            node_modules/.cache/coach/*.png
 
   quality:
     runs-on: ubuntu-latest

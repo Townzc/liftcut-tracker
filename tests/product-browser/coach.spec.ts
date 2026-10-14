@@ -41,11 +41,14 @@ test("chat reads, clarification, cancellation, batch confirmation and correction
   await send(page,"杠铃卧推 50 公斤 10、8，最后一组 RPE 9");
   expect((await db.query("select * from workout_commands where session_id=$1",[original.id])).rowCount).toBe(0);
   await page.screenshot({path:"node_modules/.cache/coach/chat-draft-mobile.png",fullPage:true});
-  await page.getByTestId("coach-draft").getByRole("button",{name:"确认保存这句话",exact:true}).dblclick();await synced(page);
+  await page.getByTestId("coach-draft").getByRole("button",{name:"确认保存这句话",exact:true}).dblclick();
+  // Hashing/enqueue is asynchronous; the previous operation's synced label is not completion.
+  await expect(page.getByTestId("coach-draft")).toHaveCount(0);await synced(page);
   expect((await read(page)).session!.sets.map(s=>s.rpe)).toEqual([null,9]);
   expect((await db.query("select * from workout_commands where session_id=$1",[original.id])).rowCount).toBe(1);
   await send(page,"更正 杠铃卧推 第 2 组 7 次");await expect(page.getByTestId("coach-draft")).toContainText("8 → 7");await confirm(page);await synced(page);
-  const r=(await read(page)).receipts![0];await page.getByTestId(`receipt-${r.id}`).getByRole("button",{name:"撤销这句话"}).click();await synced(page);
+  const r=(await read(page)).receipts![0];await page.getByTestId(`receipt-${r.id}`).getByRole("button",{name:"撤销这句话"}).click();
+  await expect(page.getByTestId(`receipt-${r.id}`)).toContainText("撤销回执");await synced(page);
   expect((await read(page)).session!.sets.map(s=>s.reps)).toEqual([10,8]);
   await expect(page.getByTestId(`receipt-${r.id}`)).toContainText("撤销回执");
   await send(page,"跳过 深蹲 第 1 组");await expect(page.getByTestId("coach-draft")).toBeVisible();await send(page,"今天练什么");
@@ -100,9 +103,11 @@ test("chat replacement preview and compensation leave the long-term plan and nex
   await expect(page.getByTestId("outbox-status")).toHaveText("待同步 2 条");await context.setOffline(false);await synced(page);
   const s=(await read(page)).session!;expect(s.prescription.exercises.find(e=>e.name==="杠铃卧推")!.id).not.toBe(bench);expect(s.sets).toEqual([]);
   expect((await db.query("select name,sets,rep_range,target_rpe::float8 as rpe from training_plan_exercises where id=$1",[bench])).rows[0]).toEqual({name:"杠铃卧推",sets:4,rep_range:"8-12",rpe:7});
-  await send(page,"练完了");await page.getByRole("button",{name:"确认结束训练",exact:true}).click();await synced(page);
+  await send(page,"练完了");await page.getByRole("button",{name:"确认结束训练",exact:true}).click();
+  await expect(page.getByTestId("coach-draft")).toHaveCount(0);await synced(page);
   await page.getByRole("button",{name:"开始另一次训练",exact:true}).click();
-  await page.getByLabel("选择今天的训练日").selectOption(day);await page.getByRole("button",{name:"开始训练",exact:true}).click();await synced(page);
+  await page.getByLabel("选择今天的训练日").selectOption(day);await page.getByRole("button",{name:"开始训练",exact:true}).click();
+  await expect(page.getByLabel("当前动作（可选）")).toBeVisible();await synced(page);
   expect((await read(page)).session!.prescription.exercises.some(e=>e.id===bench&&e.name==="杠铃卧推")).toBe(true);
 });
 

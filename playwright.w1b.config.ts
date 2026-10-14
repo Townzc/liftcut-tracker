@@ -5,7 +5,7 @@ export default defineConfig({
   testDir: "tests/product-browser", testMatch: ["today.spec.ts", "workout-null.spec.ts", "sentence.spec.ts", "outbox.spec.ts", "replacement.spec.ts", "coach.spec.ts"], workers: 1, retries: 0, timeout: 60000,
   outputDir: "node_modules/.cache/w1b/browser", reporter: [["list"]],
   use: { baseURL: "http://localhost:3103", headless: true, viewport: { width:390,height:844 },
-    timezoneId: "America/Los_Angeles", screenshot:"only-on-failure", launchOptions:{ executablePath:process.env.P1_BROWSER_EXECUTABLE } },
+    timezoneId: "America/Los_Angeles", screenshot:"only-on-failure", trace:"retain-on-failure", launchOptions:{ executablePath:process.env.P1_BROWSER_EXECUTABLE } },
   webServer:[
     { command:"node --import tsx tests/agent-db/auth-fixture.ts",url:"http://127.0.0.1:55440/auth/v1/user",reuseExistingServer:false,
       env:{ P1_TEST_DATABASE_URL:process.env.W1B_TEST_DATABASE_URL!,AUTH_FIXTURE_PORT:"55440" } },
