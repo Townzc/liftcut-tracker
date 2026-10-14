@@ -49,6 +49,10 @@ test("mobile: real API/PG save, lost response, refresh, correction, undo, histor
   await row(2).getByRole("button",{name:"更正",exact:true}).click();
   await expect(row(2).getByLabel("重量 (kg)")).toHaveValue(""); // Saved NULL cannot re-inherit the historical 50 kg.
   await row(2).getByRole("button",{name:"保存更正"}).click();await expect(row(2)).toContainText("— kg × 8");
+  // This correction keeps the same values. Its old display text is not proof
+  // that the new revision has settled before the following online undo.
+  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+  await expect.poll(async()=>(await read()).sets.find((s:{setIndex:number})=>s.setIndex===2).revision).toBe(2);
   await row(2).getByRole("button",{name:"撤销",exact:true}).click();await expect(row(2)).toContainText("已撤销");
   await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
   const stale={...before.sets.find((s:{setIndex:number})=>s.setIndex===2)};delete stale.exerciseName;delete stale.updatedAt;

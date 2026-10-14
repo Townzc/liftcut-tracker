@@ -26,7 +26,10 @@ const live=async(page:Page):Promise<Session>=>(await(await page.request.get("/ap
 async function preview(page:Page,id:string=exercise){const box=page.getByTestId(`replace-${id}`);await box.getByRole("button",{name:"仅本次替换动作",exact:true}).click();
   await box.getByLabel("哑铃",{exact:true}).check();await box.getByLabel("替换为",{exact:true}).selectOption("dumbbell-floor-press");
   await box.getByRole("button",{name:"查看替换预览"}).click();await expect(page.getByTestId("replacement-preview")).toBeVisible();}
-async function confirm(page:Page){await page.getByRole("button",{name:"确认仅本次替换",exact:true}).click();await expect(page.getByTestId("replacement-receipts")).toBeVisible();}
+async function confirm(page:Page){await page.getByRole("button",{name:"确认仅本次替换",exact:true}).click();
+  // An older receipt can already be visible. Wait for this preview to close only
+  // after its operation has been durably enqueued and its projection applied.
+  await expect(page.getByTestId("replacement-preview")).toBeHidden();await expect(page.getByTestId("replacement-receipts")).toBeVisible();}
 const replaceBody=async(s:Session)=>({id:randomUUID(),sessionId:s.id,version:1,revision:s.revision+1,exerciseId:exercise,newExerciseId:randomUUID(),
   contextHash:await localContextHash(s),catalogVersion:"session-v1",candidateId:"dumbbell-floor-press",equipment:["dumbbells"],authorization:"confirm_preview"});
 const tap=(s:Session,id:string=exercise)=>({id:randomUUID(),sessionId:s.id,planExerciseId:id,setIndex:1,revision:1,status:"done",weightKg:null,reps:8,rpe:null,
@@ -50,9 +53,11 @@ test("preview/cancel never writes; equipment is explicit, confirmation changes s
 test("offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities",async({page,context})=>{
   await start(page);const initial=await live(page);await context.setOffline(true);await preview(page);await confirm(page);
   await page.getByRole("button",{name:"撤销本次替换",exact:true}).click();await page.getByRole("button",{name:"确认撤销替换"}).click();
-  let snapshot=await state(page),restored=JSON.parse(snapshot.items[1].bodyJson).newExerciseId;expect(restored).not.toBe(exercise);
+  await expect.poll(async()=>(await state(page)).items.length).toBe(2);
+  let snapshot=await state(page);const restored=JSON.parse(snapshot.items[1].bodyJson).newExerciseId;expect(restored).not.toBe(exercise);
   await preview(page,restored);await confirm(page);snapshot=await state(page);const replacement=JSON.parse(snapshot.items[2].bodyJson);
   await record(page,replacement.newExerciseId);await page.getByRole("button",{name:"结束训练",exact:true}).click();
+  await expect.poll(async()=>(await state(page)).items.length).toBe(5);
   snapshot=await state(page);expect(snapshot.items.map(x=>x.action)).toEqual(["replace","undoReplacement","replace","set","end"]);
   expect((await db.query("select * from workout_exercise_changes where session_id=$1",[initial.id])).rowCount).toBe(0);
   await page.screenshot({path:"node_modules/.cache/w3b/offline-replacement-chain.png",fullPage:true});
