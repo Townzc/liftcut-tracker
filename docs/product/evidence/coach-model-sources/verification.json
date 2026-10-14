@@ -1,0 +1,84 @@
+{
+  "observedAt": "2026-10-14T19:49:03.152Z",
+  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; quote/source implementation has 89 unit and 43 full local browser tests. A final display-label correction distinguishes training load from body weight, verified by build and 2 targeted browser scenarios; screenshot reflects this correction. The earlier screenshot-check log and 2 real DeepSeek source queries preceded the quote guards. Browser model is a scripted double; final hosted resume pending.",
+  "files": [
+    {
+      "name": "unit.log",
+      "bytes": 7723,
+      "sha256": "1363602fb164094c36cd61f845ab73ee0838ab9fb4c52fcccf974ec6e5ecb2d2",
+      "originalSha256": "4f1ee4b35e54b6afd647ed336de6ddce6428dae2ca50bca16c4c8c5f0e80e736"
+    },
+    {
+      "name": "build.log",
+      "bytes": 1492,
+      "sha256": "68514baefed8dfa1645a446b2641635dded8d99b7c9aa09d69b47c4f2001f20b",
+      "originalSha256": "06e02a124da41630c382b6e6a3ec497cb588ddda823077b487e118ac8e7cf3bc"
+    },
+    {
+      "name": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "browser.log",
+      "bytes": 8593,
+      "sha256": "0cc8a1731576c981f4487046f74a240b471fc046f0f3d0c70f34a9b48a54718b",
+      "originalSha256": "790f75d6c6cb52f4d8b3df79c9f04ebdf8fbeaa1cb76d2300f69e841865fb8e6"
+    },
+    {
+      "name": "source-label-browser.log",
+      "bytes": 2299,
+      "sha256": "cdbce920da3a0eccbab23b3e15cf3edc99c06b2c67595bd8702a3311c4471f3a",
+      "originalSha256": "8b1c05f6e76e30e8aae73abb05252764fea9eb1ccd961ea0941fbe66505ccc92"
+    },
+    {
+      "name": "source-label-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "grounding.log",
+      "bytes": 904,
+      "sha256": "42c705d807244401f58d6313a5e928751cb0262d8a53cec74ddf5af926fd2a61",
+      "originalSha256": "c066b0ae6364bb61fa6104c92da99e0dbef431b3a8f669e82e9ff4666458f59e"
+    },
+    {
+      "name": "screenshot-check.log",
+      "bytes": 2131,
+      "sha256": "bb722d2f7d5066a76c2b82b52dcf8e7e67ccc92e19d86fa59938de114d3c819a",
+      "originalSha256": "ccb02c80162e427950cdb51ad33ba211816205614b34269b87273816fb8a5387"
+    },
+    {
+      "name": "live-source-check.json",
+      "bytes": 4459,
+      "sha256": "30e2eb468b434de8f9d4b8b2c38e5e3feabd9c2616307424461a7d39212006b0",
+      "originalSha256": "9f8b9d6cfe3497484196f23cea4a7d2d5afd81b1429946f81f78743cd68be438"
+    },
+    {
+      "name": "initial-hosted-failure.json",
+      "bytes": 15138,
+      "sha256": "54db9d7251d21ca38116daa62a4e592fdcc270397312e7109f33b1274579f486",
+      "originalSha256": "fe0c2ce2208931497cf71eabd7261669acf548f09e2aa49178a9db10cad5caa7"
+    },
+    {
+      "name": "initial-deployment.json",
+      "bytes": 797,
+      "sha256": "75fda4752ce9f12c7bd416111475a7819bb7710111a3aa13c7ea9fa5a23dadb1",
+      "originalSha256": "75fda4752ce9f12c7bd416111475a7819bb7710111a3aa13c7ea9fa5a23dadb1"
+    },
+    {
+      "name": "current-workout-source.png",
+      "bytes": 58534,
+      "sha256": "f3b38e744af645d2578578a448d86cd00371ba7f3034620c77b9d9263ba6686e",
+      "originalSha256": "f3b38e744af645d2578578a448d86cd00371ba7f3034620c77b9d9263ba6686e"
+    }
+  ]
+}

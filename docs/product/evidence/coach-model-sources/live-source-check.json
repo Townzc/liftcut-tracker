@@ -1,0 +1,124 @@
+{
+  "result": "PASS",
+  "observedAt": "2026-10-14T19:19:33.278Z",
+  "scope": "Real DeepSeek, synthetic local PostgreSQL, no hosted authentication claim",
+  "observations": [
+    {
+      "question": "今天实际做了哪些训练组？再查一下计划要求多少组和 RPE，把实际和计划分开列出来。",
+      "latencyMs": 3317,
+      "response": {
+        "message": "今天（10月14日）的当前训练里，实际完成的只有深蹲 1 组：50 公斤 × 8 次，RPE 未记录。\n\n计划要求（合成训练日，第 1 周）：深蹲 3 组，每组 8–12 次，目标 RPE 7。\n\n也就是说实际 1 组 vs 计划 3 组，还差 2 组；实际 RPE 没有记录，无法和计划目标对比。需要我把剩下的组数补记进去吗？",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "plan:2026-10-14:2026-10-14",
+            "topic": "plan",
+            "from": "2026-10-14",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T19:19:27.694Z",
+            "rows": [
+              {
+                "day": 1,
+                "plan": "Source evaluation",
+                "week": 1,
+                "title": "合成训练日",
+                "actual": false,
+                "exercise": "深蹲",
+                "targetRpe": 7,
+                "targetReps": "8-12",
+                "targetSets": 3
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true
+            },
+            "truncated": false
+          },
+          {
+            "id": "workout:current:fb5e7a96-e27c-4241-898c-0cc0d7f3b3c7",
+            "topic": "workout",
+            "from": "2026-10-14",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T19:19:27.690Z",
+            "rows": [
+              {
+                "id": "fb5e7a96-e27c-4241-898c-0cc0d7f3b3c7",
+                "date": "2026-10-14",
+                "status": "active",
+                "actualSets": [
+                  {
+                    "exercise": "深蹲",
+                    "setIndex": 1,
+                    "reps": 8,
+                    "weightKg": 50,
+                    "rpe": null
+                  }
+                ]
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true,
+              "completedSessions": 0,
+              "scope": "Current session only; not full date-range history"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "a4279097-6ffd-4830-8c30-b71ddb1ce6a5"
+      }
+    },
+    {
+      "question": "那昨天的实际训练呢？",
+      "response": {
+        "message": "昨天（10月13日）没有查到任何已保存的训练记录，所以实际组数无法列出——这不代表你没练，只是没有记录。\n\n计划方面，当前生效的计划里只有一条：深蹲 3 组，每组 8–12 次，目标 RPE 7（第 1 周）。如果你昨天确实练了，告诉我动作、重量、次数和 RPE，我可以帮你准备补记的草稿。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "workout:2026-10-13:2026-10-13",
+            "topic": "workout",
+            "from": "2026-10-13",
+            "to": "2026-10-13",
+            "readAt": "2026-10-14T19:19:30.398Z",
+            "rows": [],
+            "summary": {
+              "recordCount": 0,
+              "complete": true,
+              "completedSessions": 0
+            },
+            "truncated": false
+          },
+          {
+            "id": "plan:2026-10-13:2026-10-13",
+            "topic": "plan",
+            "from": "2026-10-13",
+            "to": "2026-10-13",
+            "readAt": "2026-10-14T19:19:31.599Z",
+            "rows": [
+              {
+                "day": 1,
+                "plan": "Source evaluation",
+                "week": 1,
+                "title": "合成训练日",
+                "actual": false,
+                "exercise": "深蹲",
+                "targetRpe": 7,
+                "targetReps": "8-12",
+                "targetSets": 3
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "bc55fadb-2c4b-4560-9cce-1cd03d6ca31b"
+      }
+    }
+  ]
+}

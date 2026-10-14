@@ -1,0 +1,435 @@
+{
+  "phase": "actual workout versus plan",
+  "stages": [
+    {
+      "phase": "real hosted login",
+      "at": "2026-10-14T19:09:59.269Z",
+      "message": "Real GoTrue, production Vercel and actual DeepSeek; no model POST before explicit consent, anonymous 401 and missing consent 400."
+    },
+    {
+      "phase": "natural body and signed confirmation",
+      "at": "2026-10-14T19:10:05.383Z",
+      "message": "Chinese-number body draft writes only on UI confirmation; waist remains NULL; tampering fails and exact retry creates no duplicate."
+    },
+    {
+      "phase": "fresh read and follow-up",
+      "at": "2026-10-14T19:10:11.197Z",
+      "message": "Queries re-read committed records; date follow-up narrows to yesterday, with visible source and no fabricated historical values."
+    },
+    {
+      "phase": "natural food offline and lost response",
+      "at": "2026-10-14T19:10:18.160Z",
+      "message": "Model food draft survives offline confirmation and a real committed-but-lost response; same signed command retries once, unknown nutrients stay NULL."
+    },
+    {
+      "phase": "natural workout",
+      "at": "2026-10-14T19:10:24.452Z",
+      "message": "Real model workout draft flows through the existing versioned queue; actual 50 kg × 8, missing RPE, original words and model provenance are preserved."
+    }
+  ],
+  "ids": {
+    "body": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+    "food": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+    "session": "315a1fab-917d-42b8-b6af-f09b84286f45",
+    "set": "2b92f672-00f4-48aa-abc2-2db8bdfa5a06"
+  },
+  "observations": [
+    {
+      "at": "2026-10-14T19:09:57.064Z",
+      "text": "你好，我想通过聊天了解自己的记录，你能怎样帮我？",
+      "latencyMs": 2204,
+      "response": {
+        "message": "你好！我可以帮你查看已保存的记录，比如体重、腰围、饮食、训练和当前计划目标，也能帮你准备新的记录草稿（草稿需要你在卡片上确认后才会保存）。另外还能回答一些健身和饮食方面的常识问题。你想先看哪一类，或者想记录点什么？",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [],
+        "requestId": "12aa4f92-ae2d-466f-b385-50f68ad8a77c"
+      }
+    },
+    {
+      "at": "2026-10-14T19:09:59.270Z",
+      "text": "今早上秤七十二点五公斤，腰围没量，给我记一下",
+      "latencyMs": 2602,
+      "response": {
+        "message": "已为你准备好今天的身体记录草稿：体重 72.5 公斤，腰围留空，日期为今天（10月14日）。请在卡片上核对并确认，确认后才会真正保存。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [],
+        "proposal": {
+          "kind": "personal",
+          "command": {
+            "action": "create",
+            "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+            "entry": {
+              "kind": "body",
+              "date": "2026-10-14",
+              "weightKg": 72.5,
+              "waistCm": null
+            },
+            "source": "conversation",
+            "text": "今早上秤七十二点五公斤，腰围没量，给我记一下",
+            "anchorDate": "2026-10-14",
+            "modelProof": "[removed signature]"
+          }
+        },
+        "requestId": "9c69c639-e109-489d-8f3d-9c4dad6d823d"
+      }
+    },
+    {
+      "at": "2026-10-14T19:10:05.384Z",
+      "text": "我刚才补的体重是多少？请读取已经保存的记录给我依据。",
+      "latencyMs": 2534,
+      "response": {
+        "message": "已保存的记录里，今天（10月14日）的体重是 72.5 公斤，腰围为空（当时没量）。这是近28天内唯一一条体重记录，所以暂时没有可对比的变化值。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "body:2026-09-16:2026-10-14",
+            "topic": "body",
+            "from": "2026-09-16",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T19:10:08.118Z",
+            "rows": [
+              {
+                "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+                "date": "2026-10-14",
+                "kind": "body",
+                "legacy": false,
+                "waistCm": null,
+                "weightKg": 72.5
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true,
+              "latestWeightKg": 72.5,
+              "weightChangeKg": null,
+              "changeScope": "Latest minus earliest reported weight in this date range"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "37ef543d-a416-4257-b056-8a454592faf5"
+      }
+    },
+    {
+      "at": "2026-10-14T19:10:07.919Z",
+      "text": "那昨天呢？",
+      "latencyMs": 3143,
+      "response": {
+        "message": "昨天（10月13日）没有查到任何体重或腰围记录，所以没有可对比的数据。目前近28天里只有今天这一条 72.5 公斤。如果你昨天其实称过，可以告诉我数值，我帮你补一条草稿。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "body:2026-10-13:2026-10-13",
+            "topic": "body",
+            "from": "2026-10-13",
+            "to": "2026-10-13",
+            "readAt": "2026-10-14T19:10:10.406Z",
+            "rows": [],
+            "summary": {
+              "recordCount": 0,
+              "complete": true,
+              "latestWeightKg": null,
+              "weightChangeKg": null,
+              "changeScope": "Latest minus earliest reported weight in this date range"
+            },
+            "truncated": false
+          },
+          {
+            "id": "body:2026-10-13:2026-10-13",
+            "topic": "body",
+            "from": "2026-10-13",
+            "to": "2026-10-13",
+            "readAt": "2026-10-14T19:10:11.166Z",
+            "rows": [],
+            "summary": {
+              "recordCount": 0,
+              "complete": true,
+              "latestWeightKg": null,
+              "weightChangeKg": null,
+              "changeScope": "Latest minus earliest reported weight in this date range"
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "6c243a4e-7d31-4956-9d75-516d3a3cd461"
+      }
+    },
+    {
+      "at": "2026-10-14T19:10:11.198Z",
+      "text": "中午吃了一碗牛肉面，热量和蛋白质都不清楚，先帮我记下吃的东西",
+      "latencyMs": 2623,
+      "response": {
+        "message": "已为你准备好一条午餐草稿：一碗牛肉面，日期为今天（10月14日），热量和蛋白质留空。请在卡片上核对并确认后才会保存。如果之后想起大概的热量或蛋白质，也可以再补。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [],
+        "proposal": {
+          "kind": "personal",
+          "command": {
+            "action": "create",
+            "id": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+            "entry": {
+              "kind": "food",
+              "date": "2026-10-14",
+              "foodName": "一碗牛肉面",
+              "mealType": "lunch",
+              "calories": null,
+              "protein": null
+            },
+            "source": "conversation",
+            "text": "中午吃了一碗牛肉面，热量和蛋白质都不清楚，先帮我记下吃的东西",
+            "anchorDate": "2026-10-14",
+            "modelProof": "[removed signature]"
+          }
+        },
+        "requestId": "ce07ec15-464e-4667-b195-46498a4e42f2"
+      }
+    },
+    {
+      "at": "2026-10-14T19:10:19.068Z",
+      "text": "刚才深蹲用的是五十公斤，实打实做了八次，帮我把这一组补上",
+      "latencyMs": 3207,
+      "response": {
+        "message": "已按你说的准备好草稿：深蹲 50 公斤 × 8 次，1 组，未填 RPE。请在卡片上核对并确认后才会保存。如果重量单位不是公斤，或者还有别的组要补，告诉我一声。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [],
+        "proposal": {
+          "kind": "workout",
+          "session": {
+            "id": "315a1fab-917d-42b8-b6af-f09b84286f45",
+            "userId": "20c84abb-528d-4d79-a19b-08eabbc065e0",
+            "localDate": "2026-10-14",
+            "timezone": "America/Los_Angeles",
+            "trainingPlanId": "533244de-22de-4e2e-8af9-489cc0b65075",
+            "weekNumber": 1,
+            "dayNumber": 1,
+            "status": "active",
+            "revision": 1,
+            "prescription": {
+              "title": "合成训练日",
+              "exercises": [
+                {
+                  "id": "949651b9-7f0a-4192-97bb-404ee2f10d36",
+                  "name": "深蹲",
+                  "sets": 3,
+                  "repRange": "8-12",
+                  "targetRpe": 7
+                }
+              ]
+            },
+            "startedAt": "2026-10-14T19:10:19.873Z",
+            "endedAt": null,
+            "replacements": [],
+            "sets": []
+          },
+          "hash": "dde08ec32a08e7271e7bda079513c8585caee74c63f95ecca0d44b934fc9bb7d",
+          "draft": {
+            "kind": "record",
+            "exerciseId": "949651b9-7f0a-4192-97bb-404ee2f10d36",
+            "explicit": true,
+            "sets": [
+              {
+                "setIndex": 1,
+                "weightKg": 50,
+                "reportedWeight": 50,
+                "inputUnit": "kg",
+                "reps": 8,
+                "rpe": null
+              }
+            ]
+          },
+          "operation": {
+            "action": "apply",
+            "body": {
+              "id": "552ef602-d972-4518-9474-f170320a6722",
+              "sessionId": "315a1fab-917d-42b8-b6af-f09b84286f45",
+              "text": "记录 深蹲 50 kg 8 次",
+              "originalText": "刚才深蹲用的是五十公斤，实打实做了八次，帮我把这一组补上",
+              "selectedExerciseId": "949651b9-7f0a-4192-97bb-404ee2f10d36",
+              "version": 1,
+              "contextHash": "dde08ec32a08e7271e7bda079513c8585caee74c63f95ecca0d44b934fc9bb7d",
+              "setIds": [
+                "2b92f672-00f4-48aa-abc2-2db8bdfa5a06"
+              ],
+              "authorization": "confirm_preview",
+              "modelProof": "[removed signature]"
+            }
+          }
+        },
+        "requestId": "63aedb89-6f8f-4e94-be81-f6d898a14130"
+      }
+    },
+    {
+      "at": "2026-10-14T19:10:58.075Z",
+      "text": "今天实际做了哪些训练组？再查一下计划要求多少组和 RPE，把实际和计划分开列出来。",
+      "latencyMs": 3171,
+      "response": {
+        "message": "实际完成（本次训练）：深蹲 1 组，50 公斤 × 8 次，RPE 未记录。计划要求（合成训练日）：深蹲 3 组，每组 8–12 次，目标 RPE 7。也就是说组数还差 2 组，次数 8 次在计划区间内，RPE 这次没有记录所以无法和计划对比。",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "sources": [
+          {
+            "id": "plan:2026-10-14:2026-10-14",
+            "topic": "plan",
+            "from": "2026-10-14",
+            "to": "2026-10-14",
+            "readAt": "2026-10-14T19:11:01.068Z",
+            "rows": [
+              {
+                "day": 1,
+                "plan": "Open model synthetic plan",
+                "week": 1,
+                "title": "合成训练日",
+                "actual": false,
+                "exercise": "深蹲",
+                "targetRpe": 7,
+                "targetReps": "8-12",
+                "targetSets": 3
+              }
+            ],
+            "summary": {
+              "recordCount": 1,
+              "complete": true
+            },
+            "truncated": false
+          }
+        ],
+        "requestId": "00fe58ab-b99f-471a-b68b-31e5f7319718"
+      }
+    }
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(workoutRead.sources.some(s=>s.topic==='workout'&&s.summary.completedSessions===0&&s.rows.some(r=>r.actualSets.some(x=>x.weightKg===50&&x.reps===8&&x.rpe===null))))\n",
+  "responses": [
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200,
+      "at": "2026-10-14T19:09:41.643Z"
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200,
+      "at": "2026-10-14T19:09:45.378Z"
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200,
+      "at": "2026-10-14T19:09:50.492Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:09:54.619Z"
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200,
+      "at": "2026-10-14T19:09:55.277Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:09:56.221Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:09:59.247Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:10:01.852Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:03.614Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:04.099Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:10:07.905Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:09.441Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:10:11.047Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:10:13.810Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:16.356Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:16.985Z"
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200,
+      "at": "2026-10-14T19:10:18.924Z"
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200,
+      "at": "2026-10-14T19:10:19.515Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:10:22.234Z"
+    },
+    {
+      "path": "/api/workout-commands",
+      "status": 200,
+      "at": "2026-10-14T19:10:23.573Z"
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200,
+      "at": "2026-10-14T19:10:24.189Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:24.450Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:39.741Z"
+    },
+    {
+      "path": "/api/personal-records",
+      "status": 200,
+      "at": "2026-10-14T19:10:54.313Z"
+    },
+    {
+      "path": "/api/ai/coach",
+      "status": 200,
+      "at": "2026-10-14T19:11:01.237Z"
+    }
+  ],
+  "errors": []
+}
