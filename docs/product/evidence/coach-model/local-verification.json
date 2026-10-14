@@ -1,0 +1,187 @@
+{
+  "observedAt": "2026-10-14T18:51:35.603Z",
+  "scope": "Synthetic local accounts; real Next/API/PostgreSQL; browser Auth and model are scripted HTTP doubles. Separate 8 real DeepSeek calls use local PG.",
+  "counts": {
+    "unit": 87,
+    "postgres": 37,
+    "browser": 43,
+    "realModel": 8
+  },
+  "formatting": "LF/trailing-space normalization for text. Synthetic modelProof tokens removed from JSON. Raw ignored originals retained.",
+  "files": [
+    {
+      "name": "unit.log",
+      "bytes": 7554,
+      "sha256": "5d8db75d7100ff0464ce33ee376a08010167cf8372bb23a65c44e769bf910ef7",
+      "originalSha256": "5d13913660db029ac9652fb212d6885a1977e7097183b67bf4e0220281d5dc29"
+    },
+    {
+      "name": "lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "build.log",
+      "bytes": 1492,
+      "sha256": "c9cb347ffabdf27c9129d80628196f75a8c652967a3d277c52d46d25485a153c",
+      "originalSha256": "4753fa2ab536bd3a9e134e02a5d6638ace47cbeaadf0b86a34e2b09add3d91a3"
+    },
+    {
+      "name": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "browser-final.log",
+      "bytes": 8595,
+      "sha256": "a6ab1abb85ce2d54163b19e7abbc3a756cd100f3978450bbe067f45a8349aa6e",
+      "originalSha256": "16bf3310c2ad8670944d209c91e80436a170db39567c57b106c470698454fbf8"
+    },
+    {
+      "name": "browser-first-failure.log",
+      "bytes": 13025,
+      "sha256": "b5b506b722d328f593fa7631579cb3b6d45dd428dce0ee5259546c1c77934cc0",
+      "originalSha256": "b65bec5f47033dfd0f6a8f92902c7a1de0413fa0cdee59867315e3cdccc1f36a"
+    },
+    {
+      "name": "postgres-today.log",
+      "bytes": 1056,
+      "sha256": "284f752f430ee269e1dc1764fc2852d62270f45adf926c7e5469d3a8012b24e5",
+      "originalSha256": "14f4b10f3aa3dbda053216fdb2905653e871ab5845d075923335313c2726be12"
+    },
+    {
+      "name": "postgres-model.log",
+      "bytes": 818,
+      "sha256": "c6b4be7236d108d32ac6e756d48c217e1fbf7c4ea816af44419b0a2d53243834",
+      "originalSha256": "cc366c3955e90e5fefeadba1e3c2522ce5420bba83c2ae3bfd05d38b02851544"
+    },
+    {
+      "name": "postgres-commands.log",
+      "bytes": 1066,
+      "sha256": "a0f3833b156bbc030a9728ee67786f72c6845e842a29aa12b2a5e6a5e903db2f",
+      "originalSha256": "e5d4468aa9038ab5a2a7953f0adcc29f1d9c220b2c097e330c8f68ed43982bfa"
+    },
+    {
+      "name": "postgres-outbox.log",
+      "bytes": 223,
+      "sha256": "57b5594805580cee321ec392e6bc4111016b5be175ec14822f7cc2e65fd89e9b",
+      "originalSha256": "abcc50853a4556f78e847a22a7f0ef1732e325b444fe5ac4f2b3f637d8f42bc8"
+    },
+    {
+      "name": "postgres-replacement.log",
+      "bytes": 1216,
+      "sha256": "93423b508badbc1cd4def3df0d315ecc1ef1147d345e6408d904eaeb1b8d49fe",
+      "originalSha256": "1d831c1b47974b8c098f085f296cbfc0ba7293c3cb10810ad21cdb3c43dba189"
+    },
+    {
+      "name": "postgres-personal.log",
+      "bytes": 585,
+      "sha256": "0d5db334d1d9fd6d9131c4bf1f544ed86a9861ce2e961eb7f33f1d7ebbfbe97c",
+      "originalSha256": "53145f888feb996a6089a759dbb24d64a131b7da5c5067505bccc13f072cf2ba"
+    },
+    {
+      "name": "live-model-final.log",
+      "bytes": 1478,
+      "sha256": "55a272ced60102c9fcaea60d85345483fe438d95afa7456e4cf15b9ac26eb13b",
+      "originalSha256": "69d72861bfa9e924a1867c5cb8340cc516cce240aaaf2ba7cb8ac5eec7a87ee8"
+    },
+    {
+      "name": "live-model-second.log",
+      "bytes": 559,
+      "sha256": "6fdcdf01469f050c0c52a6e87e3aa33b6c4746c26f6c0d866729bbbb0ef27631",
+      "originalSha256": "b4e89ce2f6cfdbd83e85b16e721ca6cf45838882e2d8ddecb84c361306ffa95e"
+    },
+    {
+      "name": "body-and-followup.png",
+      "bytes": 34640,
+      "sha256": "a057ca7f86f6418e2d19e74242453ded5756613dca75f058200b53f3b7c74c6c",
+      "originalSha256": "a057ca7f86f6418e2d19e74242453ded5756613dca75f058200b53f3b7c74c6c"
+    },
+    {
+      "name": "workout-model.png",
+      "bytes": 50114,
+      "sha256": "178d40b0439b8f6bd005daeaef116147ec6a60325603b2682964268180e6b304",
+      "originalSha256": "178d40b0439b8f6bd005daeaef116147ec6a60325603b2682964268180e6b304"
+    },
+    {
+      "name": "runtime-audit.json",
+      "bytes": 367,
+      "sha256": "e7f5c4ce336c3b9db7b469d2442f6b3d765821fc7a2cdd2f13ecdae192eb4e07",
+      "originalSha256": "5ac205436ad84e079141252f5fcfe400b6185a99491b976828f2f733a38e8b9e"
+    },
+    {
+      "name": "real-model-observations.json",
+      "bytes": 11530,
+      "sha256": "2f080ed58045102597ad46ce1e7114c6590b04870cf45f91b57044666b08be06",
+      "originalSha256": "7dc7103b9e37dd325c3a445b8cf35f520367c8278e2aa9ce10166afa5554a282"
+    },
+    {
+      "name": "real-model-result.json",
+      "bytes": 167,
+      "sha256": "8dc4e57b5c6539482f3ee1a3e63d58247a32ee329d2e6f576ea5bec8f8ac22c6",
+      "originalSha256": "38be2ae9f7749ef563a94408eb933f231200841b9840faef66531b32346d8936"
+    },
+    {
+      "name": "real-model-steps-1.json",
+      "bytes": 3257,
+      "sha256": "bdac4e1f5abc0586c703547b6bea420878bfa9e28bc18b806bbe3aad5dbb587d",
+      "originalSha256": "d47ab6efbf58f4dacdb61b2478b76008204c8c0a541cde88451ceb9138bbcc79"
+    },
+    {
+      "name": "real-model-steps-2.json",
+      "bytes": 2653,
+      "sha256": "dd7fa40a69c4917c2316554cfe5bd6ef7c53abb357f49fb44b5452d7c911f109",
+      "originalSha256": "a1e81a2032ca2240e0fe537e951ae19b3cbed6266cc39897da93d2ac1b6542c9"
+    },
+    {
+      "name": "real-model-steps-3.json",
+      "bytes": 2039,
+      "sha256": "a60cb8ab9ffeae121a7fd125dfdce5a3ae21e02945e7d839eca6224f37a31771",
+      "originalSha256": "8db38e6e2b3ae69e3809b7a3b181a47648191423b2200e41ae6511ea453d7d6c"
+    },
+    {
+      "name": "real-model-steps-4.json",
+      "bytes": 2175,
+      "sha256": "2a7e615a57b80e58d0ec069935e73fe4c3105410dd13504de25fe75126749047",
+      "originalSha256": "79db840f73792ea7fca2e30337db1ea8a79afdd122e07faf6f4aec6b5bfe6ba7"
+    },
+    {
+      "name": "real-model-steps-5.json",
+      "bytes": 4300,
+      "sha256": "328c18d05a5b522622094ad6025944764bcc1045edba18794f8c38aa50337515",
+      "originalSha256": "50860dd6e9982143be4baad409a10de2deb95fa2008fcb9e619bca24b03bc11d"
+    },
+    {
+      "name": "real-model-steps-6.json",
+      "bytes": 3118,
+      "sha256": "90250179ee8a33042131820aac26fcc4cbb0090636a6b36cb6f794299975ba80",
+      "originalSha256": "f216e0c27666025516dd027d9aa25e9666dedd191e90447c30625c47fbcace7f"
+    },
+    {
+      "name": "real-model-steps-7.json",
+      "bytes": 1465,
+      "sha256": "98743899717e4f360ded04518f502f19983b832df5c11b9594841d3ac61a705b",
+      "originalSha256": "b628b06c154b990030680f656b8640972a2558704d380b89a7bd339cb3f2e697"
+    },
+    {
+      "name": "real-model-steps-8.json",
+      "bytes": 1247,
+      "sha256": "564fcd22bb2aa3ce5cfa082760b647869cddae44d5bfdb8ee055df76643db183",
+      "originalSha256": "d9121be842911805167a27977e4e1551c3cee2dd48b3368cafa7855d39cc3e18"
+    },
+    {
+      "name": "real-model-first-failure.json",
+      "bytes": 217,
+      "sha256": "ecb607dd8452aaefd8cfb3966ab7431340d1a26e97386d989458f66614116458",
+      "originalSha256": "5a6df8425517441da0ae96242c5859687062beb6538c13b20a545600ffa8245a"
+    },
+    {
+      "name": "real-model-second-failure.json",
+      "bytes": 92,
+      "sha256": "08fc25ad239a27d0c68d709adac31d308962488ac5d1357377e5462ea951da03",
+      "originalSha256": "23071eb0f951f7ff85af18ab11aa417da09ca75796b3967f3769cd7a6b13e526"
+    }
+  ]
+}

@@ -939,6 +939,7 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/outbox.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/exercise-replacement.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/personal-records.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/coach-model.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
@@ -955,6 +956,7 @@ jobs:
             node_modules/.cache/w3b/*.png
             node_modules/.cache/coach/*.png
             node_modules/.cache/minimal/*.png
+            node_modules/.cache/coach-model/*.png
 
   quality:
     runs-on: ubuntu-latest

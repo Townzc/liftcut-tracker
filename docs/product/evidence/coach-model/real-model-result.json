@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-10-14T18:36:55.852Z",
+  "scope": "Real provider; synthetic local PostgreSQL, no hosted Auth/browser claim",
+  "calls": 8
+}

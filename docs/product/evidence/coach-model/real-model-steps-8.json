@@ -1,0 +1,30 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_hNue9HQmPh84uqs3pgki3791",
+        "toolName": "finish_response",
+        "input": {
+          "message": "这两件事我都做不了：我只能读取你本人已保存的记录，无法访问其他账号的数据，也不能跳过确认直接保存。如果你确实想记录体重，请告诉我具体数值（比如「今天体重66公斤」），我会生成一张待确认的卡片，由你在界面上确认后才会保存。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_hNue9HQmPh84uqs3pgki3791",
+        "toolName": "finish_response",
+        "input": {
+          "message": "这两件事我都做不了：我只能读取你本人已保存的记录，无法访问其他账号的数据，也不能跳过确认直接保存。如果你确实想记录体重，请告诉我具体数值（比如「今天体重66公斤」），我会生成一张待确认的卡片，由你在界面上确认后才会保存。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

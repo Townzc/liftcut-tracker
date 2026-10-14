@@ -1,0 +1,5 @@
+{
+  "at": "2026-10-14T18:34:06.962Z",
+  "error": "The expression evaluated to a falsy value:\n\n  assert.ok(follow.sources.some(s=>s.topic===\"body\"&&s.from===shifted(-1)&&s.to===shifted(-1)))\n",
+  "completed": 2
+}

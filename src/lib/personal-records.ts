@@ -12,12 +12,14 @@ export const personalEntrySchema = z.discriminatedUnion("kind", [body, food]);
 export type PersonalEntry = z.infer<typeof personalEntrySchema>;
 export const personalCommandSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("create"), id: z.uuid(), entry: personalEntrySchema,
-    source: z.enum(["manual", "conversation"]), text: z.string().max(400), anchorDate: recordDate }).strict(),
+    source: z.enum(["manual", "conversation"]), text: z.string().max(400), anchorDate: recordDate,
+    modelProof:z.string().max(24000).optional() }).strict(),
   z.object({ action: z.literal("undo"), id: z.uuid(), recordId: z.uuid() }).strict(),
 ]);
 export type PersonalCommand = z.infer<typeof personalCommandSchema>;
 export type PersonalRecord = { id: string; entry: PersonalEntry; source: "manual" | "conversation";
-  text: string; createdAt: string; undo: {id: string; createdAt: string} | null };
+  text: string; createdAt: string; undo: {id: string; createdAt: string} | null;
+  model?:{provider:string;model:string;sourceTexts:string[];version:"coach-v1"} };
 
 /** Full-string grammar: no estimate, silent truncation, target-to-actual copy or partial numeric parsing. */
 export function parsePersonalEntry(input: string, anchorDate: string): PersonalEntry | null {

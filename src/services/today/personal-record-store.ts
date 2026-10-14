@@ -5,6 +5,7 @@ import { z } from "zod";
 import { personalCommandSchema, parsePersonalEntry, type PersonalRecord } from "@/lib/personal-records";
 import { workoutCanonical } from "@/lib/workout-context";
 import { TodayConflict } from "./store";
+import { verifyCoachProposal } from "@/services/ai/coach-proof";
 
 export class PersonalRecordStore {
   constructor(private readonly pool: Pool) {}
@@ -26,27 +27,34 @@ export class PersonalRecordStore {
     } finally { db.release(broken); }
   }
   async list(user: string): Promise<PersonalRecord[]> {
-    return this.tx(user, async db => (await db.query(`select e.id,e.request,e.created_at,u.id as undo_id,u.created_at as undo_at
+    return this.tx(user, async db => (await db.query(`select e.id,e.request,e.receipt,e.created_at,u.id as undo_id,u.created_at as undo_at
       from public.personal_record_events e left join public.personal_record_events u on u.parent_id=e.id
       where e.user_id=$1 and e.parent_id is null order by e.created_at desc,e.id`,[user])).rows.map(r => ({
         id:r.id,entry:r.request.entry,source:r.request.source,text:r.request.text,createdAt:r.created_at.toISOString(),
         undo:r.undo_id ? {id:r.undo_id,createdAt:r.undo_at.toISOString()} : null,
+        ...(r.receipt.model?{model:r.receipt.model}:{}),
       })));
   }
   async command(user: string, input: unknown) {
     const req = personalCommandSchema.parse(input), canonical = workoutCanonical(req);
-    if (req.action === "create" && req.source === "conversation" &&
-      workoutCanonical(parsePersonalEntry(req.text,req.anchorDate)) !== workoutCanonical(req.entry)) throw new TodayConflict("DRAFT_MISMATCH");
     const digest = createHash("sha256").update(canonical).digest("hex");
     return this.tx(user, async db => {
       const old = (await db.query("select request_hash,receipt from public.personal_record_events where id=$1",[req.id])).rows[0];
       if (old) { if (old.request_hash !== digest) throw new TodayConflict("CONTENT_CONFLICT"); return old.receipt; }
+      let model;
+      if(req.action==="create"){
+        if(req.modelProof){
+          const {modelProof,...binding}=req;
+          if(req.source!=="conversation")throw new TodayConflict("DRAFT_MISMATCH");
+          try{model=verifyCoachProposal(user,binding,modelProof);}catch{throw new TodayConflict("MODEL_PROPOSAL_INVALID_OR_EXPIRED");}
+        }else if(req.source==="conversation"&&workoutCanonical(parsePersonalEntry(req.text,req.anchorDate))!==workoutCanonical(req.entry))throw new TodayConflict("DRAFT_MISMATCH");
+      }
       if (req.action === "undo") {
         const original = (await db.query("select id from public.personal_record_events where id=$1 and parent_id is null",[req.recordId])).rows[0];
         if (!original) throw new TodayConflict("NOT_FOUND");
         if ((await db.query("select id from public.personal_record_events where parent_id=$1",[req.recordId])).rowCount) throw new TodayConflict("ALREADY_VOIDED");
       }
-      const receipt = {id:req.id,action:req.action,recordId:req.action === "create" ? req.id : req.recordId,createdAt:new Date().toISOString()};
+      const receipt = {id:req.id,action:req.action,recordId:req.action === "create" ? req.id : req.recordId,createdAt:new Date().toISOString(),...(model?{model}:{})};
       await db.query(`insert into public.personal_record_events(id,user_id,parent_id,request_hash,request,receipt,created_at)
         values($1,$2,$3,$4,$5,$6,$7)`,[req.id,user,req.action === "undo" ? req.recordId : null,digest,req,receipt,receipt.createdAt]);
       return receipt;

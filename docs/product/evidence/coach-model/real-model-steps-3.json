@@ -1,0 +1,77 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_rJcp5OG7tdsOpbGR4LhU7560",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "body",
+          "dateQuote": "今早上",
+          "weightQuote": "七十二点五公斤",
+          "waistQuote": null,
+          "foodQuote": null,
+          "mealQuote": null,
+          "caloriesQuote": null,
+          "proteinQuote": null
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_rJcp5OG7tdsOpbGR4LhU7560",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "body",
+          "dateQuote": "今早上",
+          "weightQuote": "七十二点五公斤",
+          "waistQuote": null,
+          "foodQuote": null,
+          "mealQuote": null,
+          "caloriesQuote": null,
+          "proteinQuote": null
+        },
+        "output": {
+          "draft": {
+            "kind": "body",
+            "date": "2026-10-14",
+            "weightKg": 72.5,
+            "waistCm": null
+          },
+          "saved": false,
+          "requiresUserConfirmation": true
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_KRNiozAqqtE17BXADFN75419",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已生成一条体重草稿：今天 72.5 公斤，腰围留空。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_KRNiozAqqtE17BXADFN75419",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已生成一条体重草稿：今天 72.5 公斤，腰围留空。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

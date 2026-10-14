@@ -1,0 +1,119 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_EPnK7Pgyh6ShrZj780bT0385",
+        "toolName": "current_workout",
+        "input": {}
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_EPnK7Pgyh6ShrZj780bT0385",
+        "toolName": "current_workout",
+        "input": {},
+        "output": {
+          "id": "62ed61cf-399c-4970-92c6-9cc493d79f04",
+          "revision": 1,
+          "exercises": [
+            {
+              "id": "8550a85a-248a-4f75-a8fe-be393f9882c4",
+              "name": "深蹲"
+            }
+          ],
+          "actualSets": [],
+          "selectedExerciseId": null
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_8p8KrAYbnZIKHnpXXBLH4033",
+        "toolName": "prepare_workout",
+        "input": {
+          "exerciseId": "8550a85a-248a-4f75-a8fe-be393f9882c4",
+          "kind": "record",
+          "weightQuote": "五十公斤",
+          "repsQuotes": [
+            "八次"
+          ],
+          "rpeQuote": null,
+          "rpeScope": null,
+          "correctionSet": null
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_8p8KrAYbnZIKHnpXXBLH4033",
+        "toolName": "prepare_workout",
+        "input": {
+          "exerciseId": "8550a85a-248a-4f75-a8fe-be393f9882c4",
+          "kind": "record",
+          "weightQuote": "五十公斤",
+          "repsQuotes": [
+            "八次"
+          ],
+          "rpeQuote": null,
+          "rpeScope": null,
+          "correctionSet": null
+        },
+        "output": {
+          "draft": {
+            "kind": "record",
+            "exerciseId": "8550a85a-248a-4f75-a8fe-be393f9882c4",
+            "explicit": true,
+            "sets": [
+              {
+                "setIndex": 1,
+                "weightKg": 50,
+                "reportedWeight": 50,
+                "inputUnit": "kg",
+                "reps": 8,
+                "rpe": null
+              }
+            ]
+          },
+          "saved": false,
+          "requiresUserConfirmation": true
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_hVv1s2w0vDfuuN15V5Vd2012",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已按你说的整理好这一组草稿：深蹲 50 公斤 × 8 次，RPE 未填。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_hVv1s2w0vDfuuN15V5Vd2012",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已按你说的整理好这一组草稿：深蹲 50 公斤 × 8 次，RPE 未填。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]
