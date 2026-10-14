@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 import { connection } from "next/server";
 
@@ -9,16 +8,6 @@ import { AppShell } from "@/components/layout/app-shell";
 import { HydrationGate } from "@/components/shared/hydration-gate";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.liftcuttracker.com"),
@@ -61,7 +50,7 @@ export default async function RootLayout({
 }>) {
   await connection();
   return (
-    <html lang="en" className={`${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="zh-CN" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

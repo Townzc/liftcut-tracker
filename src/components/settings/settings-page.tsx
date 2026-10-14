@@ -42,7 +42,6 @@ type SettingsAction =
 
 export function SettingsPage() {
   const t = useTranslations("settings");
-  const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tGuest = useTranslations("guest");
 
@@ -409,13 +408,12 @@ export function SettingsPage() {
   const isBusy = loadingAction !== null || trackerLoading;
 
   return (
-    <div className="space-y-4">
+    <div className="mx-auto max-w-2xl space-y-5 pt-6">
       <div>
-        <p className="text-xs font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{tNav("settings")}</p>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
       </div>
 
-      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
+      <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("identityTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
         <CardHeader>
           <CardTitle className="text-base">{t("identityTitle")}</CardTitle>
           <CardDescription>{t("identityDesc")}</CardDescription>
@@ -496,7 +494,7 @@ export function SettingsPage() {
             {loadingAction === "save-profile" ? t("profileSaving") : t("profileSave")}
           </Button>
         </CardContent>
-      </Card>
+      </Card></details>
 
       {authMode === "guest" ? (
         <Card className="border-amber-200/80 bg-amber-50/80 dark:border-amber-800/50 dark:bg-amber-900/20">
@@ -512,12 +510,12 @@ export function SettingsPage() {
         </Card>
       ) : null}
 
-      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
+      <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("profileTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
         <CardHeader>
           <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
           <CardDescription>{t("profileDesc")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <CardContent className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2">
           <div className="space-y-1">
             <Label>{t("gender")}</Label>
             <Select
@@ -688,7 +686,7 @@ export function SettingsPage() {
               </SelectContent>
             </Select>
           </div>
-          <div className="space-y-1 lg:col-span-5">
+          <div className="space-y-1 lg:col-span-2">
             <Label>{t("foodRestrictions")}</Label>
             <Textarea
               rows={2}
@@ -697,7 +695,7 @@ export function SettingsPage() {
               placeholder={t("foodRestrictionsPlaceholder")}
             />
           </div>
-          <div className="space-y-1 lg:col-span-5">
+          <div className="space-y-1 lg:col-span-2">
             <Label>{t("injuryNotes")}</Label>
             <Textarea
               rows={2}
@@ -706,7 +704,7 @@ export function SettingsPage() {
               placeholder={t("injuryNotesPlaceholder")}
             />
           </div>
-          <div className="space-y-1 lg:col-span-5">
+          <div className="space-y-1 lg:col-span-2">
             <Label>{t("lifestyleNotes")}</Label>
             <Textarea
               rows={2}
@@ -715,28 +713,15 @@ export function SettingsPage() {
               placeholder={t("lifestyleNotesPlaceholder")}
             />
           </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
-          <CardHeader>
-            <CardTitle className="text-base">{t("planAndExportTitle")}</CardTitle>
-            <CardDescription>{t("planAndExportDesc")}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full" onClick={handleExportAllData} disabled={isBusy}>
-              {loadingAction === "export-data" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
-              {loadingAction === "export-data" ? t("exportingData") : t("exportAll")}
-            </Button>
-            <Button onClick={handleSaveSettings} className="w-full" disabled={isBusy}>
+        <div className="sm:col-span-2"><Button onClick={handleSaveSettings} className="w-full" disabled={isBusy}>
               {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {loadingAction === "save" ? t("savingSettings") : t("saveSettings")}
-            </Button>
-          </CardContent>
-        </Card>
+            </Button></div>
+        </CardContent>
+      </Card></details>
 
-        <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90">
+      <div className="flex flex-col gap-6">
+        <Card className="bg-transparent ring-0 shadow-none">
           <CardHeader>
             <CardTitle className="text-base">{t("accountTitle")}</CardTitle>
             <CardDescription>{t("email")}</CardDescription>
@@ -800,7 +785,21 @@ export function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-rose-200/80 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-900/20">
+        <Card className="bg-transparent ring-0 shadow-none">
+          <CardHeader>
+            <CardTitle className="text-base">{t("planAndExportTitle")}</CardTitle>
+            <CardDescription>{t("planAndExportDesc")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Button variant="outline" className="w-full" onClick={handleExportAllData} disabled={isBusy}>
+              {loadingAction === "export-data" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
+              {loadingAction === "export-data" ? t("exportingData") : t("exportAll")}
+            </Button>
+
+          </CardContent>
+        </Card>
+
+        {authMode === "guest" && <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("dangerTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base text-rose-800 dark:text-rose-300">
               <AlertTriangle className="h-4 w-4" />
@@ -822,7 +821,7 @@ export function SettingsPage() {
             ) : null}
             <p className="text-xs text-rose-700 dark:text-rose-400">{t("status", { value: weeklyLossHint })}</p>
           </CardContent>
-        </Card>
+        </Card></details>}
       </div>
 
       {message ? <p className="text-sm text-emerald-700 dark:text-emerald-400">{message}</p> : null}

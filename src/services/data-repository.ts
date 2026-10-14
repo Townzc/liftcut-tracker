@@ -1080,8 +1080,10 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
   };
 }
 
-export async function exportUserData(userId: string): Promise<AppDataSnapshot> {
+export async function exportUserData(userId: string): Promise<AppDataSnapshot & { personalRecords: import("@/lib/personal-records").PersonalRecord[] }> {
   const bundle = await fetchUserDataBundle(userId);
-  return bundle.snapshot;
+  const response = await fetch("/api/personal-records", {headers:{"X-Workout-Owner":userId},cache:"no-store"});
+  if (!response.ok) throw new Error("Could not export personal records");
+  return {...bundle.snapshot,personalRecords:await response.json()};
 }
 

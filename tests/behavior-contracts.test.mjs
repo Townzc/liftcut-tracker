@@ -23,13 +23,8 @@ test("guest AI requests receive profile defaults before validation", () => {
   assert.match(helper, /weeklyTrainingDays: base\.weeklyTrainingDays > 0 \? base\.weeklyTrainingDays : 3/);
 });
 
-test("dashboard exposes the primary daily actions", () => {
-  const dashboard = read("src/components/dashboard/dashboard-page.tsx");
-  assert.match(dashboard, /actionCenterTitle/);
-  assert.match(dashboard, /href=\/plan\/ai|href=\{todayPlan \? "\/workout" : "\/plan\/ai"\}/);
-  assert.match(dashboard, /href="\/nutrition"/);
-  assert.match(dashboard, /href="\/body"/);
-});
+// The former multi-module dashboard contract is superseded by the exercised
+// three-tab / manual-entry browser flow in minimal-agent.spec.ts.
 
 test("guest migration keeps the active user plan inactive when importing guest plans", () => {
   const migration = read("src/services/guest-migration.ts");

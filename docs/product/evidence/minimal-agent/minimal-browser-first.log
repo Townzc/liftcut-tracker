@@ -1,0 +1,73 @@
+[WebServer] (node:64040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:46664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:49964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 8 tests using 1 worker
+
+(node:27468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\product-browser\coach.spec.ts:33:5 › chat reads, clarification, cancellation, batch confirmation and correction compensation use real API/PG (3.9s)
+  ok 2 tests\product-browser\coach.spec.ts:62:5 › offline chat batch -> correction -> undo -> end persists exact order, NULLs and receipts after refresh (2.3s)
+  ok 3 tests\product-browser\coach.spec.ts:82:5 › a draft becomes stale after another page records; lost confirmation response survives page switching (3.6s)
+  ok 4 tests\product-browser\coach.spec.ts:99:5 › chat replacement preview and compensation leave the long-term plan and next session unchanged (2.2s)
+  x  5 tests\product-browser\coach.spec.ts:117:5 › IME and multiline input never auto-submit; flag, account isolation and English chat (7.2s)
+(node:29640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 6 tests\product-browser\minimal-agent.spec.ts:14:5 › three-tab monochrome home, optional manual entry, real save/refresh, Agent lookup and compensating undo (1.8s)
+  ok 7 tests\product-browser\minimal-agent.spec.ts:36:5 › Agent food drafts do not invent nutrients, response loss replays one request across pages, source survives reload (1.8s)
+  ok 8 tests\product-browser\minimal-agent.spec.ts:55:5 › phone, desktop and dark views stay monochrome; keyboard prompt and account isolation (2.5s)
+
+
+  1) tests\product-browser\coach.spec.ts:117:5 › IME and multiline input never auto-submit; flag, account isolation and English chat
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: '开始训练', exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: '开始训练', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '开始训练', exact: true })
+
+
+      123 |   await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);
+      124 |   await login(page,"offline-second@example.invalid");await page.goto("/coach");await synced(page);await expect(page.getByTestId("coach-turn")).toHaveCount(0);
+    > 125 |   await expect(page.getByLabel("发给训练助手",{exact:true})).toHaveValue("");await expect(page.getByRole("button",{name:"开始训练",exact:true})).toBeDisabled();
+          |                                                                                                                                        ^
+      126 |   await page.goto("/settings");await page.getByRole("combobox").filter({hasText:"中文"}).click();await page.getByRole("option",{name:"English",exact:true}).click();
+      127 |   // The local Auth HTTP fixture returns zh-CN on hard reload; use the real SPA preference switch.
+      128 |   await page.getByRole("link",{name:"Agent",exact:true}).click();
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\coach.spec.ts:125:136
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\coach-IME-and-multiline-in-9f099--isolation-and-English-chat\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\coach-IME-and-multiline-in-9f099--isolation-and-English-chat\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\coach-IME-and-multiline-in-9f099--isolation-and-English-chat\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\coach-IME-and-multiline-in-9f099--isolation-and-English-chat\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\coach-IME-and-multiline-in-9f099--isolation-and-English-chat\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\product-browser\coach.spec.ts:117:5 › IME and multiline input never auto-submit; flag, account isolation and English chat
+  7 passed (32.6s)

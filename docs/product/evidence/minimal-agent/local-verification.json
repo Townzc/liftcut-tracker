@@ -1,0 +1,174 @@
+{
+  "observedAt": "2026-10-14T09:49:47.505Z",
+  "scope": "Local synthetic accounts; real Next/API/PostgreSQL, HTTP auth double; desktop Chromium at phone/desktop widths",
+  "formatting": "Line endings normalized to LF and trailing whitespace removed from published logs; raw ignored originals retained, originalSha256 records their hashes.",
+  "counts": {
+    "unit": 80,
+    "postgres": 31,
+    "browser": 35
+  },
+  "files": [
+    {
+      "name": "agent-dark-desktop.png",
+      "bytes": 43376,
+      "sha256": "2e32ed3a99b365bf82baf1da18b6bc138db2ada2c6b0c439c59cf7b3f49f62c8",
+      "originalSha256": "2e32ed3a99b365bf82baf1da18b6bc138db2ada2c6b0c439c59cf7b3f49f62c8"
+    },
+    {
+      "name": "agent-data-mobile.png",
+      "bytes": 47033,
+      "sha256": "637b654ef05654e2741a5507976298543bf816f283a0c373e54cf8b86d55d016",
+      "originalSha256": "637b654ef05654e2741a5507976298543bf816f283a0c373e54cf8b86d55d016"
+    },
+    {
+      "name": "agent-desktop.png",
+      "bytes": 42903,
+      "sha256": "de632a2f7edd8b645c78ec63c146b2a9fe01d70d567b7b1aff8f00df40adcebe",
+      "originalSha256": "de632a2f7edd8b645c78ec63c146b2a9fe01d70d567b7b1aff8f00df40adcebe"
+    },
+    {
+      "name": "home-desktop.png",
+      "bytes": 35724,
+      "sha256": "4955260507d10c95f303ae2572d625512f4d56491b1df90b5226c941d884ffb2",
+      "originalSha256": "3cb4fa31f5873c0bfdae62ab962a8fb56371b99d5cc8cfa2bd9feab9e82611ec"
+    },
+    {
+      "name": "home-mobile.png",
+      "bytes": 26092,
+      "sha256": "47ec2d571e7c4aeae66c9967841143a9609dea2327cdc21b2931b4810cf7beba",
+      "originalSha256": "47ec2d571e7c4aeae66c9967841143a9609dea2327cdc21b2931b4810cf7beba"
+    },
+    {
+      "name": "login-mobile.png",
+      "bytes": 20629,
+      "sha256": "8180a2d976791998f8c820231c09acad374a5877a5baddcaf05dcc39ab6a796f",
+      "originalSha256": "8180a2d976791998f8c820231c09acad374a5877a5baddcaf05dcc39ab6a796f"
+    },
+    {
+      "name": "minimal-browser-all.log",
+      "bytes": 9964,
+      "sha256": "fb5e52887953667a27ed3d728a78773fb25dec69021a3e4b86300636d96b209b",
+      "originalSha256": "8f727fc1a350c8ca347955e316c761566d3a78618c20f5f02fc53bfb0cd1c222"
+    },
+    {
+      "name": "minimal-browser-dark.log",
+      "bytes": 1756,
+      "sha256": "6bfd27530403a20cd9db70eca61cb98e7ca806c7892ac68530a633d17067e5cf",
+      "originalSha256": "64bdbf542a427c206d8cd1cf6630a3c8e248aa91655f04470f322054d9921eae"
+    },
+    {
+      "name": "minimal-browser-final.log",
+      "bytes": 6824,
+      "sha256": "cf205304565454f617071cd77736cc8fd98e0f5b237f7d85bbf5c0e29ab32206",
+      "originalSha256": "7de2d3a7e70fd898663fc1240242cb567655eff808d3e798f22f64870fe502e9"
+    },
+    {
+      "name": "minimal-browser-first.log",
+      "bytes": 6484,
+      "sha256": "65af87628ee377bc2ee093e73e4b3f00606dd902c5b86f2f012f141676321915",
+      "originalSha256": "3428cf3b950d0a6b3bc66e1c94e1b41d9a32a79620094409d3aad479312110e1"
+    },
+    {
+      "name": "minimal-build-final.log",
+      "bytes": 1435,
+      "sha256": "b3d947497a29e5e10728d84bd2b151d8520f9be9872fd322779738a9d110e9c6",
+      "originalSha256": "87031369e91ecaf9c3e4ce2b0d2c3c38fae04061e1ae9ea1d3fbb8a21b78b7a6"
+    },
+    {
+      "name": "minimal-build.log",
+      "bytes": 1435,
+      "sha256": "25c9ef7962d6b3b1163580d0ef04bfa85922c648bcb3cc60b08d896ea70c6bbe",
+      "originalSha256": "859d249615568e88b3fd4008419960ca32018fc9d57201ca697511a458c14d03"
+    },
+    {
+      "name": "minimal-lint-final.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "minimal-lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "name": "minimal-pg-exercise-replacement.log",
+      "bytes": 1218,
+      "sha256": "7164516c3f7291d9b891c782abe1b5518df71524f2f43c0e9385bc66cbc1317b",
+      "originalSha256": "396f557fff4be8cc6e0e259e8dfc66fe7091de1ca49203159fe7c153f28c7441"
+    },
+    {
+      "name": "minimal-pg-final-exercise-replacement.log",
+      "bytes": 1217,
+      "sha256": "28f91976619c426debf687d017d95a01c219f3835fd988e2bdc3ac4c4abe9831",
+      "originalSha256": "1f6d2cd261799f910c7fb1aeddafa48434811cd821d06f329f006983272bef3f"
+    },
+    {
+      "name": "minimal-pg-final-outbox.log",
+      "bytes": 223,
+      "sha256": "537fb03a8122090a00ec46dd9cf7ec99b0225dd3206925f24e3c8f0a60b4331f",
+      "originalSha256": "182f9d9ca3b3090b8957423ccb07b9e822df5b7fb314e2faf00d45c8774e6f1b"
+    },
+    {
+      "name": "minimal-pg-final-personal-records.log",
+      "bytes": 584,
+      "sha256": "4de7c13360dce8b7c972eeca9f9ab90579bf3c2de78e776af7d2fb8b35de500a",
+      "originalSha256": "94e02e99ae6d981415114e25fa8d734f225affd870138ec9147691460e0932e5"
+    },
+    {
+      "name": "minimal-pg-final-today.log",
+      "bytes": 1056,
+      "sha256": "df626b0918b0b9cd37a05be0d679c954f7264acffdf707052eb8c79597e67cd5",
+      "originalSha256": "bc0eab91683b2ca0886f96fe9f38dc4a55ea16e91c9fc56ba26764c820fe0b33"
+    },
+    {
+      "name": "minimal-pg-final-workout-commands.log",
+      "bytes": 1069,
+      "sha256": "eaa3201c93777100f22261ffdfd6d5fceaf4b6c3ef5e3813baacc2f09d17fe51",
+      "originalSha256": "8b10c23610b57eada22508aa726384a9817d642f449d4abb3c3eaf5e040783ec"
+    },
+    {
+      "name": "minimal-pg-outbox.log",
+      "bytes": 223,
+      "sha256": "080e175381d5b81567e1577274775d4d5ee3a4d03adcd78a211a569514cb75ba",
+      "originalSha256": "f85c3948fc9b05c86ac1c3e41ff1f5224267437d520274f4df7aebf11b132951"
+    },
+    {
+      "name": "minimal-pg-personal-records.log",
+      "bytes": 583,
+      "sha256": "6ca2453e9bb5841c19b36329ea27462322b84bbe903c44c227cf1e759af23144",
+      "originalSha256": "704ab6d37de303df33905fb63cfc2945635360af3c55ebd15696205880e8aff6"
+    },
+    {
+      "name": "minimal-pg-workout-commands.log",
+      "bytes": 1073,
+      "sha256": "2287b4a6f8f788a7b9c18a3c1dab8043f63000b501c8290b97a34fa2b891c55c",
+      "originalSha256": "38dc8ae0103744d1263c6cc86c0b2bf0bba695938aab431c98a7974a56071345"
+    },
+    {
+      "name": "minimal-pg.log",
+      "bytes": 966,
+      "sha256": "bbcd3f3ec568d3d1f5293695d5392b3705ceedc198f73d1dc553795e61981037",
+      "originalSha256": "694720ebdd3d859c9cccdd45403076686c8a93db71fdfeff1f3e66df0d774a80"
+    },
+    {
+      "name": "minimal-unit-final.log",
+      "bytes": 6931,
+      "sha256": "842ff32cf1fb4490ac23845dc4f57eb18d93dfff69c9d9bff7534033ca8a60ed",
+      "originalSha256": "3c1002762f767297fac0cff72a44fdd4806128ec65f7e7eb24edd4f2bb6f9561"
+    },
+    {
+      "name": "minimal-unit.log",
+      "bytes": 6933,
+      "sha256": "d9938741702fe41f248af5831994a9b0bb7cffb05b896b3f9adafe3d5492ebdb",
+      "originalSha256": "364fc7f54fd1004e751c3bd0c8f8a6d038d9ca6171fbc8f5ac094b687baed4aa"
+    },
+    {
+      "name": "settings-dark-mobile.png",
+      "bytes": 30026,
+      "sha256": "3e65f731fb8f869119bb0d43033a4e7b513e57e4d61a124f644e1adc259e91e2",
+      "originalSha256": "3e65f731fb8f869119bb0d43033a4e7b513e57e4d61a124f644e1adc259e91e2"
+    }
+  ]
+}

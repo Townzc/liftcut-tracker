@@ -44,6 +44,13 @@ test("W1b real PostgreSQL upgrade, transactions, permissions and midnight recove
       await store.writeSet(user,voided);
       assert.equal((await admin.query("select count(*) from public.workout_session_events where set_log_id=$1",[req.id])).rows[0].count,"3");
     });
+    await t.test("trace preserves record, correction, compensation and rejects other owners",async()=>{
+      const trace=await store.trace(user,req.id);
+      assert.deepEqual(trace.events.map(e=>e.type),["recorded","corrected","voided"]);
+      assert.deepEqual(trace.events.map(e=>e.data.after.revision),[1,2,3]);
+      assert.ok(trace.events.every(e=>e.data.after.rpe===null));
+      await assert.rejects(store.trace(other,req.id),/NOT_FOUND/);
+    });
     await t.test("RLS denies cross-owner select/insert/update; browser cannot bypass transaction API",async()=>{
       assert.equal((await store.load(other)).session,null);
       assert.deepEqual(await store.history(other),[]);

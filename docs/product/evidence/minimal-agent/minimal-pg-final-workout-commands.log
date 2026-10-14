@@ -1,0 +1,18 @@
+▶ W2b real transactions: atomic commands, receipts, compensation and isolation
+  ✔ preview has no writes; strict authorization/field contract rejects forged drafts (4.8373ms)
+  ✔ four concurrent copies commit one batch; repeated lost-response request returns receipt (52.614ms)
+  ✔ failure at second set rolls back first set, events and receipt (14.5375ms)
+  ✔ stale context rejects entire command after another write (53.6577ms)
+  ✔ correction undo restores before values at a new revision; old correction cannot reapply (43.5821ms)
+  ✔ undo cannot overwrite a later tap; atomic undo rolls back any earlier compensation (54.8442ms)
+  ✔ unknown weight stays NULL; pounds retain reported unit; batch undo after end never resurrects (78.6631ms)
+  ✔ other users cannot preview, apply, undo or read receipts; runtime receipts immutable (20.4355ms)
+✔ W2b real transactions: atomic commands, receipts, compensation and isolation (414.8911ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 863.3119

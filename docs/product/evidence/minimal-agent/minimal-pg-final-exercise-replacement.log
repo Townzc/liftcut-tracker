@@ -1,0 +1,18 @@
+▶ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay
+  ✔ four concurrent duplicates write one receipt/event; exact retries survive compensation and ending (114.4256ms)
+  ✔ offline replacement -> undo -> replacement -> sentence -> end has matching server context and actuals (68.8443ms)
+  ✔ all existing set states block replacement; untouched exercise actuals remain exact (134.3093ms)
+  ✔ stale preview and old device's queued ID cannot write into replacement (54.6823ms)
+  ✔ replacement vs first set, compensation vs first set and end vs replacement serialize with one winner (360.2594ms)
+  ✔ injected receipt insert failure rolls back prescription and event; plan and other rows never updated (32.1467ms)
+  ✔ RLS and append-only receipt grants prevent cross-owner replay/read/write/delete (31.8203ms)
+  ✔ history preserves every session and receipt without overlapping queries on one real connection (57.9976ms)
+✔ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay (894.1959ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1327.0573
