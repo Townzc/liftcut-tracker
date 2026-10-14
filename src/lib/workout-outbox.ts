@@ -2,8 +2,9 @@ import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, t
 import { commandSchema, undoCommandSchema, type SetChange } from "@/lib/workout-commands";
 import { parseWorkoutLog } from "@/lib/workout-log-parser";
 import { storedSet, workoutCanonical, workoutContext } from "@/lib/workout-context";
+import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "@/lib/exercise-replacement";
 
-export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo"; body:unknown };
+export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo" | "replace" | "undoReplacement"; body:unknown };
 export type OutboxItem = { id:string; action:WorkoutOperation["action"]; bodyJson:string; createdAt:string;
   status:"pending" | "retry" | "auth" | "conflict"; attempts:number; nextAttempt:number; error?:string };
 export type OutboxState = { owner:string; version:1; revision:number; confirmed:TodayData | null; items:OutboxItem[];
@@ -12,7 +13,8 @@ export const emptyOutbox = (owner:string):OutboxState => ({owner,version:1,revis
 const conflict = ():never => { throw new Error("LOCAL_CONFLICT"); };
 export function operationBody(p:WorkoutOperation) {
   return (p.action === "start" ? startSessionSchema : p.action === "set" ? setRequestSchema
-    : p.action === "end" ? endSessionSchema : p.action === "apply" ? commandSchema : undoCommandSchema).parse(p.body);
+    : p.action === "end" ? endSessionSchema : p.action === "apply" ? commandSchema : p.action === "replace" ? replaceExerciseSchema
+    : p.action === "undoReplacement" ? undoReplacementSchema : undoCommandSchema).parse(p.body);
 }
 export function operationId(p:WorkoutOperation) {
   const body=operationBody(p);
@@ -40,6 +42,9 @@ export function projectOperation(base:TodayData, p:WorkoutOperation, at:string):
     receipt.undo={id:req.id,createdAt:at,changes};return data;
   }
   if (!session || session.status !== "active") return conflict();
+  if(p.action==="replace" || p.action==="undoReplacement") {
+    data.session=p.action==="replace"?projectReplacement(session,p.body,at):projectReplacementUndo(session,p.body,at);return data;
+  }
   if (p.action === "end") {
     const req=endSessionSchema.parse(p.body);
     if (req.id !== session.id || req.revision !== session.revision+1) conflict();

@@ -46,7 +46,7 @@ export class WorkoutOutboxClient {
   }
   async enqueue(p:WorkoutOperation,revision:number) {
     const body=operationBody(p), bodyJson=JSON.stringify(body), id=operationId(p), at=new Date().toISOString();
-    if(p.action==="apply" && "contextHash" in body) {
+    if("contextHash" in body) {
       const before=await this.storage.change(),view=projectOutbox(before);
       if(before.revision!==revision || !view.data?.session || view.error || await localContextHash(view.data.session)!==body.contextHash)throw new Error("LOCAL_CONFLICT");
     }
@@ -115,7 +115,8 @@ export class WorkoutOutboxClient {
         let value:Session | {session:Session;receipts:TodayData["receipts"]} | undefined;
         let status:OutboxItem["status"]="retry", code="NETWORK";
         try {
-          const endpoint=item.action==="apply" || item.action==="undo"?"/api/workout-commands":"/api/workout-sessions";
+          const endpoint=item.action==="replace" || item.action==="undoReplacement"?"/api/workout-replacements":
+            item.action==="apply" || item.action==="undo"?"/api/workout-commands":"/api/workout-sessions";
           const response=await fetch(`${endpoint}?action=${item.action}`,{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":this.owner},
             body:item.bodyJson,signal:this.request.signal});
           const result=await response.json();

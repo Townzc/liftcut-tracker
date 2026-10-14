@@ -1,0 +1,971 @@
+﻿2026-10-14T06:25:07.1080818Z Current runner version: '2.337.0'
+2026-10-14T06:25:07.1119490Z ##[group]Runner Image Provisioner
+2026-10-14T06:25:07.1120864Z Hosted Compute Agent
+2026-10-14T06:25:07.1121935Z Version: 20261002.596
+2026-10-14T06:25:07.1123405Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-14T06:25:07.1124596Z Build Date: 2026-10-02T22:28:27Z
+2026-10-14T06:25:07.1125828Z Worker ID: {81714c09-25f5-4694-8cec-47134332d601}
+2026-10-14T06:25:07.1127074Z Region: eastus
+2026-10-14T06:25:07.1128118Z Cloud: Azure
+2026-10-14T06:25:07.1129035Z ##[endgroup]
+2026-10-14T06:25:07.1132031Z ##[group]Operating System
+2026-10-14T06:25:07.1133820Z Ubuntu
+2026-10-14T06:25:07.1134750Z 24.04.5
+2026-10-14T06:25:07.1135730Z LTS
+2026-10-14T06:25:07.1136598Z ##[endgroup]
+2026-10-14T06:25:07.1137523Z ##[group]Runner Image
+2026-10-14T06:25:07.1138730Z Image: ubuntu-24.04
+2026-10-14T06:25:07.1139651Z Version: 20261004.327.1
+2026-10-14T06:25:07.1141741Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-14T06:25:07.1144954Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-14T06:25:07.1146643Z ##[endgroup]
+2026-10-14T06:25:07.1148568Z ##[group]GITHUB_TOKEN Permissions
+2026-10-14T06:25:07.1151610Z Contents: read
+2026-10-14T06:25:07.1153058Z Metadata: read
+2026-10-14T06:25:07.1154019Z ##[endgroup]
+2026-10-14T06:25:07.1157162Z Secret source: Actions
+2026-10-14T06:25:07.1158791Z Cache mode: write
+2026-10-14T06:25:07.1160504Z Prepare workflow directory
+2026-10-14T06:25:07.1821656Z Prepare all required actions
+2026-10-14T06:25:07.1896050Z Getting action download info
+2026-10-14T06:25:07.3815361Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-14T06:25:07.4874592Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-10-14T06:25:07.6814309Z Download action repository 'actions/upload-artifact@v6' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-14T06:25:07.9706022Z Complete job name: today-session
+2026-10-14T06:25:08.0339517Z ##[group]Checking docker version
+2026-10-14T06:25:08.0354181Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-10-14T06:25:08.1607851Z '1.48'
+2026-10-14T06:25:08.1618168Z Docker daemon API version: '1.48'
+2026-10-14T06:25:08.1619611Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-10-14T06:25:08.1811880Z '1.48'
+2026-10-14T06:25:08.1836152Z Docker client API version: '1.48'
+2026-10-14T06:25:08.1841178Z ##[endgroup]
+2026-10-14T06:25:08.1845030Z ##[group]Clean up resources from previous jobs
+2026-10-14T06:25:08.1851062Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=5f4b62"
+2026-10-14T06:25:08.2031331Z ##[command]/usr/bin/docker network prune --force --filter "label=5f4b62"
+2026-10-14T06:25:08.2195494Z ##[endgroup]
+2026-10-14T06:25:08.2196420Z ##[group]Create local container network
+2026-10-14T06:25:08.2208299Z ##[command]/usr/bin/docker network create --label 5f4b62 github_network_cae9f53c405f40f1977e2db2ed68f5c7
+2026-10-14T06:25:08.2790696Z d25b5177c4858c36fb4837790629e70ce4690cc223dcde096c3ace7e711bb603
+2026-10-14T06:25:08.2813565Z ##[endgroup]
+2026-10-14T06:25:08.2842047Z ##[group]Starting postgres service container
+2026-10-14T06:25:08.2865697Z ##[command]/usr/bin/docker pull postgres:16
+2026-10-14T06:25:08.5610105Z 16: Pulling from library/postgres
+2026-10-14T06:25:08.6400882Z ecc510c1e359: Pulling fs layer
+2026-10-14T06:25:08.6402108Z 79faf13a8736: Pulling fs layer
+2026-10-14T06:25:08.6403292Z 6456bfbf35e7: Pulling fs layer
+2026-10-14T06:25:08.6404486Z b353db459ed1: Pulling fs layer
+2026-10-14T06:25:08.6405985Z 99f49de4fe2b: Pulling fs layer
+2026-10-14T06:25:08.6407076Z 83d1a2a3917c: Pulling fs layer
+2026-10-14T06:25:08.6407887Z 715ea0948cb1: Pulling fs layer
+2026-10-14T06:25:08.6408400Z 486e8305f56f: Pulling fs layer
+2026-10-14T06:25:08.6408996Z e7d675f11ded: Pulling fs layer
+2026-10-14T06:25:08.6409496Z c49864c27f35: Pulling fs layer
+2026-10-14T06:25:08.6410492Z 770ef8b308ea: Pulling fs layer
+2026-10-14T06:25:08.6411026Z 50c25daa0302: Pulling fs layer
+2026-10-14T06:25:08.6411537Z 8309db3ae5b6: Pulling fs layer
+2026-10-14T06:25:08.6412068Z 9731e27f2541: Pulling fs layer
+2026-10-14T06:25:08.6412525Z 83d1a2a3917c: Waiting
+2026-10-14T06:25:08.6413540Z 715ea0948cb1: Waiting
+2026-10-14T06:25:08.6414405Z 486e8305f56f: Waiting
+2026-10-14T06:25:08.6415120Z e7d675f11ded: Waiting
+2026-10-14T06:25:08.6415947Z c49864c27f35: Waiting
+2026-10-14T06:25:08.6416756Z 770ef8b308ea: Waiting
+2026-10-14T06:25:08.6417386Z 50c25daa0302: Waiting
+2026-10-14T06:25:08.6418055Z 8309db3ae5b6: Waiting
+2026-10-14T06:25:08.6418624Z 9731e27f2541: Waiting
+2026-10-14T06:25:08.6419216Z b353db459ed1: Waiting
+2026-10-14T06:25:08.6419805Z 99f49de4fe2b: Waiting
+2026-10-14T06:25:08.6669162Z 79faf13a8736: Download complete
+2026-10-14T06:25:08.7020278Z 6456bfbf35e7: Download complete
+2026-10-14T06:25:08.7117802Z b353db459ed1: Verifying Checksum
+2026-10-14T06:25:08.7121176Z b353db459ed1: Download complete
+2026-10-14T06:25:08.7516215Z 83d1a2a3917c: Verifying Checksum
+2026-10-14T06:25:08.7517778Z 83d1a2a3917c: Download complete
+2026-10-14T06:25:08.7673424Z 99f49de4fe2b: Verifying Checksum
+2026-10-14T06:25:08.7674626Z 99f49de4fe2b: Download complete
+2026-10-14T06:25:08.7774210Z 715ea0948cb1: Verifying Checksum
+2026-10-14T06:25:08.7776515Z 715ea0948cb1: Download complete
+2026-10-14T06:25:08.7890197Z ecc510c1e359: Verifying Checksum
+2026-10-14T06:25:08.7895540Z ecc510c1e359: Download complete
+2026-10-14T06:25:08.7930146Z 486e8305f56f: Verifying Checksum
+2026-10-14T06:25:08.7931900Z 486e8305f56f: Download complete
+2026-10-14T06:25:08.8155206Z c49864c27f35: Download complete
+2026-10-14T06:25:08.8200085Z 770ef8b308ea: Download complete
+2026-10-14T06:25:08.8420482Z 50c25daa0302: Verifying Checksum
+2026-10-14T06:25:08.8424249Z 50c25daa0302: Download complete
+2026-10-14T06:25:08.8491255Z 8309db3ae5b6: Verifying Checksum
+2026-10-14T06:25:08.8496090Z 8309db3ae5b6: Download complete
+2026-10-14T06:25:08.8681810Z 9731e27f2541: Verifying Checksum
+2026-10-14T06:25:08.8687179Z 9731e27f2541: Download complete
+2026-10-14T06:25:09.2582652Z e7d675f11ded: Verifying Checksum
+2026-10-14T06:25:09.2585496Z e7d675f11ded: Download complete
+2026-10-14T06:25:09.9671011Z ecc510c1e359: Pull complete
+2026-10-14T06:25:10.2756695Z 79faf13a8736: Pull complete
+2026-10-14T06:25:10.4613241Z 6456bfbf35e7: Pull complete
+2026-10-14T06:25:10.4975630Z b353db459ed1: Pull complete
+2026-10-14T06:25:10.8035468Z 99f49de4fe2b: Pull complete
+2026-10-14T06:25:10.8749797Z 83d1a2a3917c: Pull complete
+2026-10-14T06:25:10.8818275Z 715ea0948cb1: Pull complete
+2026-10-14T06:25:10.8896240Z 486e8305f56f: Pull complete
+2026-10-14T06:25:13.9873786Z e7d675f11ded: Pull complete
+2026-10-14T06:25:14.0004313Z c49864c27f35: Pull complete
+2026-10-14T06:25:14.0118030Z 770ef8b308ea: Pull complete
+2026-10-14T06:25:14.0217248Z 50c25daa0302: Pull complete
+2026-10-14T06:25:14.0319607Z 8309db3ae5b6: Pull complete
+2026-10-14T06:25:14.0398401Z 9731e27f2541: Pull complete
+2026-10-14T06:25:14.0435342Z Digest: sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d
+2026-10-14T06:25:14.0451691Z Status: Downloaded newer image for postgres:16
+2026-10-14T06:25:14.0461469Z docker.io/library/postgres:16
+2026-10-14T06:25:14.0542272Z ##[command]/usr/bin/docker create --name 7fc58e0e030743d69a3fc076364cb02b_postgres16_918d9e --label 5f4b62 --network github_network_cae9f53c405f40f1977e2db2ed68f5c7 --network-alias postgres -p 5432:5432 --health-cmd "pg_isready -U postgres -d liftcut_p1_w1b_ci" --health-interval 5s --health-timeout 5s --health-retries 10 -e "POSTGRES_PASSWORD=w1b-admin-fixture-only" -e "POSTGRES_DB=liftcut_p1_w1b_ci" -e GITHUB_ACTIONS=true -e CI=true postgres:16
+2026-10-14T06:25:14.0837140Z 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:14.0864131Z ##[command]/usr/bin/docker start 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:14.3264214Z 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:14.3290978Z ##[command]/usr/bin/docker ps --all --filter id=101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-10-14T06:25:14.3438336Z 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0 Up Less than a second (health: starting)
+2026-10-14T06:25:14.3463446Z ##[command]/usr/bin/docker port 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:14.3626905Z 5432/tcp -> 0.0.0.0:5432
+2026-10-14T06:25:14.3628599Z 5432/tcp -> [::]:5432
+2026-10-14T06:25:14.3667512Z ##[endgroup]
+2026-10-14T06:25:14.3676730Z ##[group]Waiting for all services to be ready
+2026-10-14T06:25:14.3691577Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:14.3863815Z starting
+2026-10-14T06:25:14.3887977Z postgres service is starting, waiting 2 seconds before checking again.
+2026-10-14T06:25:16.3888090Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:16.4093305Z starting
+2026-10-14T06:25:16.4108421Z postgres service is starting, waiting 3 seconds before checking again.
+2026-10-14T06:25:20.1403813Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:25:20.1539899Z healthy
+2026-10-14T06:25:20.1559270Z postgres service is healthy.
+2026-10-14T06:25:20.1560192Z ##[endgroup]
+2026-10-14T06:25:20.1880080Z ##[group]Run actions/checkout@v7
+2026-10-14T06:25:20.1880687Z with:
+2026-10-14T06:25:20.1880905Z   fetch-depth: 0
+2026-10-14T06:25:20.1881155Z   repository: Townzc/liftcut-tracker
+2026-10-14T06:25:20.1883958Z   token: ***
+2026-10-14T06:25:20.1884176Z   ssh-strict: true
+2026-10-14T06:25:20.1884423Z   ssh-user: git
+2026-10-14T06:25:20.1884638Z   persist-credentials: true
+2026-10-14T06:25:20.1884883Z   clean: true
+2026-10-14T06:25:20.1885097Z   sparse-checkout-cone-mode: true
+2026-10-14T06:25:20.1885359Z   fetch-tags: false
+2026-10-14T06:25:20.1885570Z   show-progress: true
+2026-10-14T06:25:20.1885777Z   lfs: false
+2026-10-14T06:25:20.1886018Z   submodules: false
+2026-10-14T06:25:20.1886234Z   set-safe-directory: true
+2026-10-14T06:25:20.1886475Z   allow-unsafe-pr-checkout: false
+2026-10-14T06:25:20.1886969Z env:
+2026-10-14T06:25:20.1887512Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:20.1888167Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:20.1888547Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:25:20.1888895Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:25:20.1889198Z ##[endgroup]
+2026-10-14T06:25:20.3029272Z Syncing repository: Townzc/liftcut-tracker
+2026-10-14T06:25:20.3031321Z ##[group]Getting Git version info
+2026-10-14T06:25:20.3032022Z Working directory is '/home/runner/work/liftcut-tracker/liftcut-tracker'
+2026-10-14T06:25:20.3033291Z [command]/usr/bin/git version
+2026-10-14T06:25:20.3148413Z git version 2.55.0
+2026-10-14T06:25:20.3177725Z ##[endgroup]
+2026-10-14T06:25:20.3191227Z Temporarily overriding HOME='/home/runner/work/_temp/0a575ab9-9323-4e96-8db0-6af365c495f6' before making global git config changes
+2026-10-14T06:25:20.3192640Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-14T06:25:20.3199329Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:25:20.3266591Z Deleting the contents of '/home/runner/work/liftcut-tracker/liftcut-tracker'
+2026-10-14T06:25:20.3271438Z ##[group]Determining repository object format
+2026-10-14T06:25:20.3273707Z ##[endgroup]
+2026-10-14T06:25:20.3274472Z ##[group]Initializing the repository
+2026-10-14T06:25:20.3279593Z [command]/usr/bin/git init /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:25:20.3425383Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-14T06:25:20.3425972Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-14T06:25:20.3426493Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-14T06:25:20.3426891Z hint: call:
+2026-10-14T06:25:20.3427084Z hint:
+2026-10-14T06:25:20.3427366Z hint: 	git config --global init.defaultBranch <name>
+2026-10-14T06:25:20.3427701Z hint:
+2026-10-14T06:25:20.3428000Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-14T06:25:20.3428532Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-14T06:25:20.3428916Z hint:
+2026-10-14T06:25:20.3429120Z hint: 	git branch -m <name>
+2026-10-14T06:25:20.3429349Z hint:
+2026-10-14T06:25:20.3429898Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-14T06:25:20.3431238Z Initialized empty Git repository in /home/runner/work/liftcut-tracker/liftcut-tracker/.git/
+2026-10-14T06:25:20.3445604Z [command]/usr/bin/git remote add origin https://github.com/Townzc/liftcut-tracker
+2026-10-14T06:25:20.3518443Z ##[endgroup]
+2026-10-14T06:25:20.3518949Z ##[group]Disabling automatic garbage collection
+2026-10-14T06:25:20.3524500Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-14T06:25:20.3573334Z ##[endgroup]
+2026-10-14T06:25:20.3574047Z ##[group]Setting up auth
+2026-10-14T06:25:20.3574561Z Removing SSH command configuration
+2026-10-14T06:25:20.3581034Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-14T06:25:20.3629689Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-14T06:25:20.4064354Z Removing HTTP extra header
+2026-10-14T06:25:20.4070455Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-14T06:25:20.4113591Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-14T06:25:20.4355009Z Removing includeIf entries pointing to credentials config files
+2026-10-14T06:25:20.4361151Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-14T06:25:20.4402419Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-14T06:25:20.4662429Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-14T06:25:20.4706973Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path /home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:25:20.4750216Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:25:20.4798451Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:25:20.4844659Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:25:20.4884173Z ##[endgroup]
+2026-10-14T06:25:20.4884865Z ##[group]Fetching the repository
+2026-10-14T06:25:20.4893374Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +bbfe3ca2b1cd46990d71974a70657b8225e2d9c1:refs/remotes/pull/74/merge
+2026-10-14T06:25:21.9666805Z From https://github.com/Townzc/liftcut-tracker
+2026-10-14T06:25:21.9667780Z  * [new branch]      docs/agent-evidence-walkthrough          -> origin/docs/agent-evidence-walkthrough
+2026-10-14T06:25:21.9668995Z  * [new branch]      docs/i2-no-gpu-ready                     -> origin/docs/i2-no-gpu-ready
+2026-10-14T06:25:21.9670217Z  * [new branch]      docs/overnight-closure                   -> origin/docs/overnight-closure
+2026-10-14T06:25:21.9671523Z  * [new branch]      docs/overnight-closure-20261013          -> origin/docs/overnight-closure-20261013
+2026-10-14T06:25:21.9673447Z  * [new branch]      docs/overnight-power-confirmation-20261013 -> origin/docs/overnight-power-confirmation-20261013
+2026-10-14T06:25:21.9674944Z  * [new branch]      docs/post-seed43-experiment-plan         -> origin/docs/post-seed43-experiment-plan
+2026-10-14T06:25:21.9676357Z  * [new branch]      docs/product-showcase-priority           -> origin/docs/product-showcase-priority
+2026-10-14T06:25:21.9677560Z  * [new branch]      docs/w3a-release-verification            -> origin/docs/w3a-release-verification
+2026-10-14T06:25:21.9678682Z  * [new branch]      docs/workout-sentence-release            -> origin/docs/workout-sentence-release
+2026-10-14T06:25:21.9679799Z  * [new branch]      feat/agent-development-baseline          -> origin/feat/agent-development-baseline
+2026-10-14T06:25:21.9680950Z  * [new branch]      feat/agent-interactive-environment       -> origin/feat/agent-interactive-environment
+2026-10-14T06:25:21.9682434Z  * [new branch]      feat/agent-model-policy                  -> origin/feat/agent-model-policy
+2026-10-14T06:25:21.9683824Z  * [new branch]      feat/agent-protocol-comparison           -> origin/feat/agent-protocol-comparison
+2026-10-14T06:25:21.9684880Z  * [new branch]      feat/agent-research-foundation           -> origin/feat/agent-research-foundation
+2026-10-14T06:25:21.9685935Z  * [new branch]      feat/autodl-portable-workspace           -> origin/feat/autodl-portable-workspace
+2026-10-14T06:25:21.9686961Z  * [new branch]      feat/candidate-d-readiness               -> origin/feat/candidate-d-readiness
+2026-10-14T06:25:21.9687989Z  * [new branch]      feat/coverage-followup-design            -> origin/feat/coverage-followup-design
+2026-10-14T06:25:21.9689162Z  * [new branch]      feat/coverage-replication-seed43-results -> origin/feat/coverage-replication-seed43-results
+2026-10-14T06:25:21.9690503Z  * [new branch]      feat/coverage-replication-seed44-results -> origin/feat/coverage-replication-seed44-results
+2026-10-14T06:25:21.9691795Z  * [new branch]      feat/coverage-seed-replication           -> origin/feat/coverage-seed-replication
+2026-10-14T06:25:21.9693561Z  * [new branch]      feat/d2-diagnostics-readiness            -> origin/feat/d2-diagnostics-readiness
+2026-10-14T06:25:21.9694756Z  * [new branch]      feat/d2-execution-readiness              -> origin/feat/d2-execution-readiness
+2026-10-14T06:25:21.9695898Z  * [new branch]      feat/d2-fixed-seed42-results             -> origin/feat/d2-fixed-seed42-results
+2026-10-14T06:25:21.9697173Z  * [new branch]      feat/d2-v2-fixed-seed42-results          -> origin/feat/d2-v2-fixed-seed42-results
+2026-10-14T06:25:21.9698308Z  * [new branch]      feat/e1-day-preparation                  -> origin/feat/e1-day-preparation
+2026-10-14T06:25:21.9699417Z  * [new branch]      feat/e1-execution-preparation            -> origin/feat/e1-execution-preparation
+2026-10-14T06:25:21.9700439Z  * [new branch]      feat/e1-results                          -> origin/feat/e1-results
+2026-10-14T06:25:21.9701471Z  * [new branch]      feat/g1-paired-repair-pilot              -> origin/feat/g1-paired-repair-pilot
+2026-10-14T06:25:21.9702660Z  * [new branch]      feat/g1-seed42-results                   -> origin/feat/g1-seed42-results
+2026-10-14T06:25:21.9704217Z  * [new branch]      feat/g2-seed42-results                   -> origin/feat/g2-seed42-results
+2026-10-14T06:25:21.9705927Z  * [new branch]      feat/g2-state-coverage-pilot             -> origin/feat/g2-state-coverage-pilot
+2026-10-14T06:25:21.9707039Z  * [new branch]      feat/g3-seed42-results                   -> origin/feat/g3-seed42-results
+2026-10-14T06:25:21.9708090Z  * [new branch]      feat/g3-stop-boundary-prep               -> origin/feat/g3-stop-boundary-prep
+2026-10-14T06:25:21.9709137Z  * [new branch]      feat/g3-stop-results                     -> origin/feat/g3-stop-results
+2026-10-14T06:25:21.9710074Z  * [new branch]      feat/g4-memory-order                     -> origin/feat/g4-memory-order
+2026-10-14T06:25:21.9710985Z  * [new branch]      feat/g4-results                          -> origin/feat/g4-results
+2026-10-14T06:25:21.9711929Z  * [new branch]      feat/hosted-today-release                -> origin/feat/hosted-today-release
+2026-10-14T06:25:21.9713493Z  * [new branch]      feat/i1-memory-view                      -> origin/feat/i1-memory-view
+2026-10-14T06:25:21.9714489Z  * [new branch]      feat/i1-results                          -> origin/feat/i1-results
+2026-10-14T06:25:21.9715488Z  * [new branch]      feat/i2-overnight-lease                  -> origin/feat/i2-overnight-lease
+2026-10-14T06:25:21.9716486Z  * [new branch]      feat/i2-results-night                    -> origin/feat/i2-results-night
+2026-10-14T06:25:21.9717425Z  * [new branch]      feat/i2-source-id                        -> origin/feat/i2-source-id
+2026-10-14T06:25:21.9718406Z  * [new branch]      feat/i2-startup-recovery                 -> origin/feat/i2-startup-recovery
+2026-10-14T06:25:21.9719378Z  * [new branch]      feat/i3-id-robustness                    -> origin/feat/i3-id-robustness
+2026-10-14T06:25:21.9720533Z  * [new branch]      feat/i3-results                          -> origin/feat/i3-results
+2026-10-14T06:25:21.9721804Z  * [new branch]      feat/offline-workout-outbox              -> origin/feat/offline-workout-outbox
+2026-10-14T06:25:21.9723494Z  * [new branch]      feat/p1-application-transactions         -> origin/feat/p1-application-transactions
+2026-10-14T06:25:21.9724801Z  * [new branch]      feat/p1-model-readiness                  -> origin/feat/p1-model-readiness
+2026-10-14T06:25:21.9725933Z  * [new branch]      feat/recovery-experiment-prep            -> origin/feat/recovery-experiment-prep
+2026-10-14T06:25:21.9726967Z  * [new branch]      feat/recovery-forensics-plan             -> origin/feat/recovery-forensics-plan
+2026-10-14T06:25:21.9727595Z  * [new branch]      feat/recovery-pilot-results              -> origin/feat/recovery-pilot-results
+2026-10-14T06:25:21.9728311Z  * [new branch]      feat/recovery-v2                         -> origin/feat/recovery-v2
+2026-10-14T06:25:21.9729220Z  * [new branch]      feat/seed44-monitor-readiness            -> origin/feat/seed44-monitor-readiness
+2026-10-14T06:25:21.9730366Z  * [new branch]      feat/session-exercise-replacement        -> origin/feat/session-exercise-replacement
+2026-10-14T06:25:21.9731803Z  * [new branch]      feat/state-coverage-results              -> origin/feat/state-coverage-results
+2026-10-14T06:25:21.9733163Z  * [new branch]      feat/state-coverage-study                -> origin/feat/state-coverage-study
+2026-10-14T06:25:21.9734308Z  * [new branch]      feat/state-diagnostic-results            -> origin/feat/state-diagnostic-results
+2026-10-14T06:25:21.9735424Z  * [new branch]      feat/state-diagnostics                   -> origin/feat/state-diagnostics
+2026-10-14T06:25:21.9736631Z  * [new branch]      feat/today-session                       -> origin/feat/today-session
+2026-10-14T06:25:21.9737671Z  * [new branch]      feat/workout-log-parser                  -> origin/feat/workout-log-parser
+2026-10-14T06:25:21.9738819Z  * [new branch]      feat/workout-sentence-receipts           -> origin/feat/workout-sentence-receipts
+2026-10-14T06:25:21.9740279Z  * [new branch]      fix/d2-startup-transfer                  -> origin/fix/d2-startup-transfer
+2026-10-14T06:25:21.9741305Z  * [new branch]      fix/g4-posix-dispatch                    -> origin/fix/g4-posix-dispatch
+2026-10-14T06:25:21.9742600Z  * [new branch]      fix/i2-autodl-no-gpu                     -> origin/fix/i2-autodl-no-gpu
+2026-10-14T06:25:21.9744005Z  * [new branch]      fix/i2-transfer-event                    -> origin/fix/i2-transfer-event
+2026-10-14T06:25:21.9745038Z  * [new branch]      fix/i3-remote-lease-path                 -> origin/fix/i3-remote-lease-path
+2026-10-14T06:25:21.9746109Z  * [new branch]      fix/real-account-bootstrap               -> origin/fix/real-account-bootstrap
+2026-10-14T06:25:21.9747137Z  * [new branch]      fix/unknown-not-zero                     -> origin/fix/unknown-not-zero
+2026-10-14T06:25:21.9747982Z  * [new branch]      main                                     -> origin/main
+2026-10-14T06:25:21.9748726Z  * [new branch]      research                                 -> origin/research
+2026-10-14T06:25:21.9749867Z  * [new tag]         archive/agent-beginner-safety-demo-2026-08-12 -> archive/agent-beginner-safety-demo-2026-08-12
+2026-10-14T06:25:21.9751137Z  * [new tag]         archive/aliyun-2026-08-12                -> archive/aliyun-2026-08-12
+2026-10-14T06:25:21.9752350Z  * [new tag]         archive/research-dataset-generation-2026-08-12 -> archive/research-dataset-generation-2026-08-12
+2026-10-14T06:25:21.9754019Z  * [new tag]         archive/strict-ai-schema-normalize-2026-08-12 -> archive/strict-ai-schema-normalize-2026-08-12
+2026-10-14T06:25:21.9755535Z  * [new tag]         archive/system-architecture-diagram-2026-08-12 -> archive/system-architecture-diagram-2026-08-12
+2026-10-14T06:25:21.9756789Z  * [new ref]         bbfe3ca2b1cd46990d71974a70657b8225e2d9c1 -> pull/74/merge
+2026-10-14T06:25:21.9758637Z ##[endgroup]
+2026-10-14T06:25:21.9759566Z ##[group]Determining the checkout info
+2026-10-14T06:25:21.9760357Z ##[endgroup]
+2026-10-14T06:25:21.9760777Z [command]/usr/bin/git sparse-checkout disable
+2026-10-14T06:25:21.9761971Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-14T06:25:21.9796521Z ##[group]Checking out the ref
+2026-10-14T06:25:21.9801614Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/74/merge
+2026-10-14T06:25:22.5593446Z Note: switching to 'refs/remotes/pull/74/merge'.
+2026-10-14T06:25:22.5593922Z 
+2026-10-14T06:25:22.5594302Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-14T06:25:22.5595156Z changes and commit them, and you can discard any commits you make in this
+2026-10-14T06:25:22.5595976Z state without impacting any branches by switching back to a branch.
+2026-10-14T06:25:22.5596431Z 
+2026-10-14T06:25:22.5596740Z If you want to create a new branch to retain commits you create, you may
+2026-10-14T06:25:22.5597516Z do so (now or later) by using -c with the switch command. Example:
+2026-10-14T06:25:22.5597905Z 
+2026-10-14T06:25:22.5598068Z   git switch -c <new-branch-name>
+2026-10-14T06:25:22.5598338Z 
+2026-10-14T06:25:22.5598500Z Or undo this operation with:
+2026-10-14T06:25:22.5598755Z 
+2026-10-14T06:25:22.5598928Z   git switch -
+2026-10-14T06:25:22.5599147Z 
+2026-10-14T06:25:22.5599482Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-14T06:25:22.5599974Z 
+2026-10-14T06:25:22.5600517Z HEAD is now at bbfe3ca Merge 6a07dbc03c716eb90f4ebbf0547ccb3c31418d54 into 512ae8dedc22d00167f73979abb29df12a2de9e0
+2026-10-14T06:25:22.5667476Z ##[endgroup]
+2026-10-14T06:25:22.5723039Z [command]/usr/bin/git log -1 --format=%H
+2026-10-14T06:25:22.5755803Z bbfe3ca2b1cd46990d71974a70657b8225e2d9c1
+2026-10-14T06:25:22.6010396Z ##[group]Run actions/setup-node@v7
+2026-10-14T06:25:22.6010694Z with:
+2026-10-14T06:25:22.6010896Z   node-version: 24
+2026-10-14T06:25:22.6011100Z   cache: npm
+2026-10-14T06:25:22.6011296Z   check-latest: false
+2026-10-14T06:25:22.6013964Z   token: ***
+2026-10-14T06:25:22.6014189Z   package-manager-cache: true
+2026-10-14T06:25:22.6014429Z env:
+2026-10-14T06:25:22.6014914Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:22.6015534Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:22.6016112Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:25:22.6016470Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:25:22.6016784Z ##[endgroup]
+2026-10-14T06:25:22.7422015Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-14T06:25:22.8521822Z ##[group]Environment details
+2026-10-14T06:25:23.2506315Z node: v24.21.0
+2026-10-14T06:25:23.2506614Z npm: 11.19.0
+2026-10-14T06:25:23.2506926Z yarn: 1.22.22
+2026-10-14T06:25:23.2507498Z ##[endgroup]
+2026-10-14T06:25:23.2526506Z [command]/opt/hostedtoolcache/node/24.21.0/x64/bin/npm config get cache
+2026-10-14T06:25:23.3770979Z /home/runner/.npm
+2026-10-14T06:25:23.4817960Z Cache hit for: node-cache-Linux-x64-npm-a7ef89c1728c2e16506770479f7825d145d65d15cf4f379610b1bc03fc1dab16
+2026-10-14T06:25:24.5291313Z Received 234881024 of 239975398 (97.9%), 224.0 MBs/sec
+2026-10-14T06:25:24.5947959Z Received 239975398 of 239975398 (100.0%), 214.7 MBs/sec
+2026-10-14T06:25:24.5950292Z Cache Size: ~229 MB (239975398 B)
+2026-10-14T06:25:24.6070143Z [command]/usr/bin/tar -xf /home/runner/work/_temp/375fe5a4-4799-402d-8bb9-f9cc0dfffd1c/cache.tzst -P -C /home/runner/work/liftcut-tracker/liftcut-tracker --use-compress-program unzstd
+2026-10-14T06:25:25.1137989Z Cache restored successfully
+2026-10-14T06:25:25.1251165Z Cache restored from key: node-cache-Linux-x64-npm-a7ef89c1728c2e16506770479f7825d145d65d15cf4f379610b1bc03fc1dab16
+2026-10-14T06:25:25.1486543Z ##[group]Run npm ci
+2026-10-14T06:25:25.1486867Z [36;1mnpm ci[0m
+2026-10-14T06:25:25.1761483Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:25.1761829Z env:
+2026-10-14T06:25:25.1762573Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:25.1763604Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:25.1764112Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:25:25.1764595Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:25:25.1765005Z ##[endgroup]
+2026-10-14T06:25:31.9256996Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2026-10-14T06:25:48.9836906Z 
+2026-10-14T06:25:48.9837727Z added 689 packages, and audited 690 packages in 24s
+2026-10-14T06:25:48.9838406Z 
+2026-10-14T06:25:48.9838891Z 241 packages are looking for funding
+2026-10-14T06:25:48.9839817Z   run `npm fund` for details
+2026-10-14T06:25:49.1865103Z 
+2026-10-14T06:25:49.1866481Z 30 vulnerabilities (1 low, 9 moderate, 18 high, 2 critical)
+2026-10-14T06:25:49.1867125Z 
+2026-10-14T06:25:49.1867498Z To address issues that do not require attention, run:
+2026-10-14T06:25:49.1868315Z   npm audit fix
+2026-10-14T06:25:49.1868610Z 
+2026-10-14T06:25:49.1869121Z To address all issues (including breaking changes), run:
+2026-10-14T06:25:49.1869916Z   npm audit fix --force
+2026-10-14T06:25:49.1870237Z 
+2026-10-14T06:25:49.1870517Z Run `npm audit` for details.
+2026-10-14T06:25:49.1886515Z npm warn install-scripts 6 packages have install scripts not yet covered by allowScripts:
+2026-10-14T06:25:49.1887938Z npm warn install-scripts   @parcel/watcher@2.5.6 (install: node scripts/build-from-source.js)
+2026-10-14T06:25:49.1889555Z npm warn install-scripts   core-js@3.49.0 (postinstall: node -e "try{require('./postinstall')}catch(e){}")
+2026-10-14T06:25:49.1890877Z npm warn install-scripts   esbuild@0.28.1 (postinstall: node install.js)
+2026-10-14T06:25:49.1892216Z npm warn install-scripts   @swc/core@1.15.21 (postinstall: node postinstall.js)
+2026-10-14T06:25:49.1896982Z npm warn install-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)
+2026-10-14T06:25:49.1898414Z npm warn install-scripts   unrs-resolver@1.11.1 (postinstall: napi-postinstall unrs-resolver 1.11.1 check)
+2026-10-14T06:25:49.1899401Z npm warn install-scripts
+2026-10-14T06:25:49.1900533Z npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-14T06:25:49.3279290Z ##[group]Run node --conditions=react-server --import tsx --test tests/product-db/today.test.ts
+2026-10-14T06:25:49.3280251Z [36;1mnode --conditions=react-server --import tsx --test tests/product-db/today.test.ts[0m
+2026-10-14T06:25:49.3280921Z [36;1mnode --conditions=react-server --import tsx --test tests/product-db/workout-commands.test.ts[0m
+2026-10-14T06:25:49.3281562Z [36;1mnode --conditions=react-server --import tsx --test tests/product-db/outbox.test.ts[0m
+2026-10-14T06:25:49.3282222Z [36;1mnode --conditions=react-server --import tsx --test tests/product-db/exercise-replacement.test.ts[0m
+2026-10-14T06:25:49.3360032Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:49.3360302Z env:
+2026-10-14T06:25:49.3361114Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:49.3361763Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:49.3362163Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:25:49.3362577Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:25:49.3363117Z ##[endgroup]
+2026-10-14T06:25:49.9247769Z W1b upgrade: actual W1a schema + migration on local PostgreSQL; synthetic auth.uid, not hosted GoTrue
+2026-10-14T06:25:50.0095938Z ▶ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery
+2026-10-14T06:25:50.0099043Z   ✔ parallel start retries return one UUID; second active session denied (65.492157ms)
+2026-10-14T06:25:50.0362486Z   ✔ double-click / parallel replay keeps one set and one event; SQL NULL persists (28.644484ms)
+2026-10-14T06:25:50.0637660Z   ✔ correction and undo advance revision; old requests cannot resurrect or overwrite (27.427346ms)
+2026-10-14T06:25:50.0930546Z   ✔ RLS denies cross-owner select/insert/update; browser cannot bypass transaction API (29.086599ms)
+2026-10-14T06:25:50.1377355Z   ✔ three states reload, void excluded, snapshot survives plan changes; end leaves missing sets missing (44.284447ms)
+2026-10-14T06:25:50.1547212Z   ✔ Shanghai session retains start date across its midnight (13.866789ms)
+2026-10-14T06:25:50.1550723Z ✔ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (397.740493ms)
+2026-10-14T06:25:50.1749810Z ℹ tests 7
+2026-10-14T06:25:50.1750282Z ℹ suites 0
+2026-10-14T06:25:50.1750818Z ℹ pass 7
+2026-10-14T06:25:50.1751179Z ℹ fail 0
+2026-10-14T06:25:50.1751552Z ℹ cancelled 0
+2026-10-14T06:25:50.1751942Z ℹ skipped 0
+2026-10-14T06:25:50.1752305Z ℹ todo 0
+2026-10-14T06:25:50.1752966Z ℹ duration_ms 800.163191
+2026-10-14T06:25:50.6290330Z ▶ W2b real transactions: atomic commands, receipts, compensation and isolation
+2026-10-14T06:25:50.6292365Z   ✔ preview has no writes; strict authorization/field contract rejects forged drafts (7.642296ms)
+2026-10-14T06:25:50.6900605Z   ✔ four concurrent copies commit one batch; repeated lost-response request returns receipt (64.971396ms)
+2026-10-14T06:25:50.7056053Z   ✔ failure at second set rolls back first set, events and receipt (15.918856ms)
+2026-10-14T06:25:50.7521239Z   ✔ stale context rejects entire command after another write (46.256899ms)
+2026-10-14T06:25:50.7889629Z   ✔ correction undo restores before values at a new revision; old correction cannot reapply (36.478958ms)
+2026-10-14T06:25:50.8284369Z   ✔ undo cannot overwrite a later tap; atomic undo rolls back any earlier compensation (39.17404ms)
+2026-10-14T06:25:50.8734969Z   ✔ unknown weight stays NULL; pounds retain reported unit; batch undo after end never resurrects (44.890363ms)
+2026-10-14T06:25:50.8945721Z   ✔ other users cannot preview, apply, undo or read receipts; runtime receipts immutable (16.458092ms)
+2026-10-14T06:25:50.8947813Z ✔ W2b real transactions: atomic commands, receipts, compensation and isolation (360.2051ms)
+2026-10-14T06:25:50.9135952Z ℹ tests 9
+2026-10-14T06:25:50.9136752Z ℹ suites 0
+2026-10-14T06:25:50.9137536Z ℹ pass 9
+2026-10-14T06:25:50.9138126Z ℹ fail 0
+2026-10-14T06:25:50.9138651Z ℹ cancelled 0
+2026-10-14T06:25:50.9139164Z ℹ skipped 0
+2026-10-14T06:25:50.9152433Z ℹ todo 0
+2026-10-14T06:25:50.9153928Z ℹ duration_ms 700.016374
+2026-10-14T06:25:51.8069372Z ✔ entire offline chain has identical contexts and values when replayed against real PostgreSQL (521.188383ms)
+2026-10-14T06:25:51.8235530Z ℹ tests 1
+2026-10-14T06:25:51.8235990Z ℹ suites 0
+2026-10-14T06:25:51.8236387Z ℹ pass 1
+2026-10-14T06:25:51.8236736Z ℹ fail 0
+2026-10-14T06:25:51.8237094Z ℹ cancelled 0
+2026-10-14T06:25:51.8237477Z ℹ skipped 0
+2026-10-14T06:25:51.8237839Z ℹ todo 0
+2026-10-14T06:25:51.8238167Z ℹ duration_ms 873.208953
+2026-10-14T06:25:52.4571661Z ▶ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay
+2026-10-14T06:25:52.4573411Z   ✔ four concurrent duplicates write one receipt/event; exact retries survive compensation and ending (184.418586ms)
+2026-10-14T06:25:52.5654513Z   ✔ offline replacement -> undo -> replacement -> sentence -> end has matching server context and actuals (107.930651ms)
+2026-10-14T06:25:52.7193417Z   ✔ all existing set states block replacement; untouched exercise actuals remain exact (155.008073ms)
+2026-10-14T06:25:52.7979886Z   ✔ stale preview and old device's queued ID cannot write into replacement (78.506593ms)
+2026-10-14T06:25:53.2281237Z   ✔ replacement vs first set, compensation vs first set and end vs replacement serialize with one winner (429.956206ms)
+2026-10-14T06:25:53.2604362Z   ✔ injected receipt insert failure rolls back prescription and event; plan and other rows never updated (32.002329ms)
+2026-10-14T06:25:53.3009872Z   ✔ RLS and append-only receipt grants prevent cross-owner replay/read/write/delete (34.849123ms)
+2026-10-14T06:25:53.3011577Z ✔ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay (1070.115377ms)
+2026-10-14T06:25:53.3205177Z ℹ tests 8
+2026-10-14T06:25:53.3205687Z ℹ suites 0
+2026-10-14T06:25:53.3206142Z ℹ pass 8
+2026-10-14T06:25:53.3206553Z ℹ fail 0
+2026-10-14T06:25:53.3206836Z ℹ cancelled 0
+2026-10-14T06:25:53.3213888Z ℹ skipped 0
+2026-10-14T06:25:53.3214345Z ℹ todo 0
+2026-10-14T06:25:53.3214917Z ℹ duration_ms 1459.621959
+2026-10-14T06:25:53.3319660Z ##[group]Run npm run build
+2026-10-14T06:25:53.3320186Z [36;1mnpm run build[0m
+2026-10-14T06:25:53.3411446Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:53.3411899Z env:
+2026-10-14T06:25:53.3413192Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:53.3414316Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:25:53.3415027Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:25:53.3415671Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:25:53.3416234Z ##[endgroup]
+2026-10-14T06:25:53.4549229Z 
+2026-10-14T06:25:53.4550352Z > liftcut-tracker@0.1.0 build
+2026-10-14T06:25:53.4550965Z > next build
+2026-10-14T06:25:53.4551202Z 
+2026-10-14T06:25:53.8473969Z ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+2026-10-14T06:25:53.9691660Z Attention: Next.js now collects completely anonymous telemetry regarding usage.
+2026-10-14T06:25:53.9693718Z This information is used to shape Next.js' roadmap and prioritize features.
+2026-10-14T06:25:53.9695743Z You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+2026-10-14T06:25:53.9697059Z https://nextjs.org/telemetry
+2026-10-14T06:25:53.9697417Z 
+2026-10-14T06:25:53.9874584Z ▲ Next.js 16.2.9 (Turbopack)
+2026-10-14T06:25:53.9876397Z 
+2026-10-14T06:25:54.0201730Z   Creating an optimized production build ...
+2026-10-14T06:26:07.0043920Z ✓ Compiled successfully in 12.8s
+2026-10-14T06:26:07.0107397Z   Running TypeScript ...
+2026-10-14T06:26:14.7856588Z   Finished TypeScript in 7.8s ...
+2026-10-14T06:26:14.7882135Z   Collecting page data using 3 workers ...
+2026-10-14T06:26:15.4493455Z   Generating static pages using 3 workers (0/28) ...
+2026-10-14T06:26:15.5930846Z   Generating static pages using 3 workers (7/28) 
+2026-10-14T06:26:15.6324462Z   Generating static pages using 3 workers (14/28) 
+2026-10-14T06:26:15.6530492Z   Generating static pages using 3 workers (21/28) 
+2026-10-14T06:26:15.7397400Z ✓ Generating static pages using 3 workers (28/28) in 290ms
+2026-10-14T06:26:15.7447287Z   Finalizing page optimization ...
+2026-10-14T06:26:15.9984673Z 
+2026-10-14T06:26:16.0007232Z Route (app)
+2026-10-14T06:26:16.0008041Z ┌ ƒ /
+2026-10-14T06:26:16.0008586Z ├ ƒ /_not-found
+2026-10-14T06:26:16.0009096Z ├ ƒ /api/agent/runs
+2026-10-14T06:26:16.0009640Z ├ ƒ /api/agent/runs/[id]
+2026-10-14T06:26:16.0010244Z ├ ƒ /api/agent/runs/[id]/[action]
+2026-10-14T06:26:16.0010926Z ├ ƒ /api/ai/generate-nutrition-plan
+2026-10-14T06:26:16.0011650Z ├ ƒ /api/ai/generate-training-plan
+2026-10-14T06:26:16.0012251Z ├ ƒ /api/ai/history
+2026-10-14T06:26:16.0013029Z ├ ƒ /api/ai/parse-log
+2026-10-14T06:26:16.0013680Z ├ ƒ /api/ai/save-nutrition-plan
+2026-10-14T06:26:16.0014348Z ├ ƒ /api/ai/save-training-plan
+2026-10-14T06:26:16.0014908Z ├ ƒ /api/workout-commands
+2026-10-14T06:26:16.0015465Z ├ ƒ /api/workout-replacements
+2026-10-14T06:26:16.0016134Z ├ ƒ /api/workout-sessions
+2026-10-14T06:26:16.0016826Z ├ ƒ /api/workout-sessions/history
+2026-10-14T06:26:16.0017417Z ├ ƒ /auth/callback
+2026-10-14T06:26:16.0017983Z ├ ƒ /body
+2026-10-14T06:26:16.0018365Z ├ ƒ /demo
+2026-10-14T06:26:16.0018799Z ├ ƒ /forgot-password
+2026-10-14T06:26:16.0019217Z ├ ƒ /login
+2026-10-14T06:26:16.0019602Z ├ ƒ /nutrition
+2026-10-14T06:26:16.0020019Z ├ ƒ /onboarding
+2026-10-14T06:26:16.0020432Z ├ ƒ /plan
+2026-10-14T06:26:16.0020821Z ├ ƒ /plan/ai
+2026-10-14T06:26:16.0021218Z ├ ƒ /plan/review
+2026-10-14T06:26:16.0021615Z ├ ƒ /register
+2026-10-14T06:26:16.0021995Z ├ ƒ /settings
+2026-10-14T06:26:16.0022383Z ├ ƒ /today
+2026-10-14T06:26:16.0022995Z └ ƒ /workout
+2026-10-14T06:26:16.0023223Z 
+2026-10-14T06:26:16.0023232Z 
+2026-10-14T06:26:16.0023486Z ƒ Proxy (Middleware)
+2026-10-14T06:26:16.0023745Z 
+2026-10-14T06:26:16.0024119Z ƒ  (Dynamic)  server-rendered on demand
+2026-10-14T06:26:16.0024519Z 
+2026-10-14T06:26:16.2878808Z ##[group]Run npx playwright install --with-deps chromium
+2026-10-14T06:26:16.2879511Z [36;1mnpx playwright install --with-deps chromium[0m
+2026-10-14T06:26:16.2954896Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:26:16.2955177Z env:
+2026-10-14T06:26:16.2955792Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:26:16.2956602Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:26:16.2957022Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:26:16.2957397Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:26:16.2957717Z ##[endgroup]
+2026-10-14T06:26:17.0775491Z Installing dependencies...
+2026-10-14T06:26:17.0868844Z Switching to root user to install dependencies...
+2026-10-14T06:26:17.1944562Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-14T06:26:17.2223935Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-14T06:26:17.3030000Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-14T06:26:17.3038189Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-14T06:26:17.3112240Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-14T06:26:17.3113787Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [518 kB]
+2026-10-14T06:26:17.3122206Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-14T06:26:17.3271483Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [576 kB]
+2026-10-14T06:26:17.3464237Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
+2026-10-14T06:26:17.3493682Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main all Packages [640 B]
+2026-10-14T06:26:17.4235470Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1397 kB]
+2026-10-14T06:26:17.4314252Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [308 kB]
+2026-10-14T06:26:17.4343972Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1702 kB]
+2026-10-14T06:26:17.4426936Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-14T06:26:17.4452537Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1805 kB]
+2026-10-14T06:26:17.4557927Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+2026-10-14T06:26:17.4586336Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [50.7 kB]
+2026-10-14T06:26:17.4597496Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.0 kB]
+2026-10-14T06:26:17.4752361Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Packages [748 B]
+2026-10-14T06:26:17.5265178Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1145 kB]
+2026-10-14T06:26:17.5761335Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-14T06:26:17.5781983Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1221 kB]
+2026-10-14T06:26:17.5855707Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-14T06:26:17.5877512Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1713 kB]
+2026-10-14T06:26:17.5957321Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [392 kB]
+2026-10-14T06:26:17.5982950Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [45.4 kB]
+2026-10-14T06:26:17.5993330Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.1 kB]
+2026-10-14T06:26:20.7175941Z Fetched 12.5 MB in 1s (9653 kB/s)
+2026-10-14T06:26:21.6208701Z Reading package lists...
+2026-10-14T06:26:21.6458977Z Reading package lists...
+2026-10-14T06:26:21.8635720Z Building dependency tree...
+2026-10-14T06:26:21.8643149Z Reading state information...
+2026-10-14T06:26:22.0324054Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-10-14T06:26:22.0325081Z libasound2t64 set to manually installed.
+2026-10-14T06:26:22.0326080Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-14T06:26:22.0327275Z libatk-bridge2.0-0t64 set to manually installed.
+2026-10-14T06:26:22.0328316Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-14T06:26:22.0329141Z libatk1.0-0t64 set to manually installed.
+2026-10-14T06:26:22.0329958Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-14T06:26:22.0330583Z libatspi2.0-0t64 set to manually installed.
+2026-10-14T06:26:22.0331155Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-10-14T06:26:22.0331903Z libcairo2 set to manually installed.
+2026-10-14T06:26:22.0332508Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-10-14T06:26:22.0333965Z libcups2t64 set to manually installed.
+2026-10-14T06:26:22.0334818Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-10-14T06:26:22.0336193Z libdbus-1-3 set to manually installed.
+2026-10-14T06:26:22.0337440Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-10-14T06:26:22.0338114Z libdrm2 set to manually installed.
+2026-10-14T06:26:22.0338835Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-10-14T06:26:22.0339495Z libgbm1 set to manually installed.
+2026-10-14T06:26:22.0340374Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+2026-10-14T06:26:22.0341031Z libglib2.0-0t64 set to manually installed.
+2026-10-14T06:26:22.0341548Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-10-14T06:26:22.0342155Z libnspr4 set to manually installed.
+2026-10-14T06:26:22.0343023Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+2026-10-14T06:26:22.0344323Z libnss3 set to manually installed.
+2026-10-14T06:26:22.0344853Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-10-14T06:26:22.0345853Z libpango-1.0-0 set to manually installed.
+2026-10-14T06:26:22.0346251Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-10-14T06:26:22.0346939Z libxcb1 set to manually installed.
+2026-10-14T06:26:22.0347532Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-10-14T06:26:22.0348136Z libxcomposite1 set to manually installed.
+2026-10-14T06:26:22.0348785Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-10-14T06:26:22.0349179Z libxdamage1 set to manually installed.
+2026-10-14T06:26:22.0349900Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-10-14T06:26:22.0350727Z libxext6 set to manually installed.
+2026-10-14T06:26:22.0351124Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-10-14T06:26:22.0351651Z libxfixes3 set to manually installed.
+2026-10-14T06:26:22.0352074Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-10-14T06:26:22.0352472Z libxkbcommon0 set to manually installed.
+2026-10-14T06:26:22.0353410Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-10-14T06:26:22.0353931Z libxrandr2 set to manually installed.
+2026-10-14T06:26:22.0354438Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+2026-10-14T06:26:22.0355466Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-10-14T06:26:22.0356423Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-10-14T06:26:22.0357216Z libfontconfig1 set to manually installed.
+2026-10-14T06:26:22.0358174Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-10-14T06:26:22.0359145Z fonts-liberation set to manually installed.
+2026-10-14T06:26:22.0360285Z The following additional packages will be installed:
+2026-10-14T06:26:22.0360874Z   libx11-data libx11-xcb1 xfonts-encodings xfonts-utils
+2026-10-14T06:26:22.0361535Z Recommended packages:
+2026-10-14T06:26:22.0362193Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-10-14T06:26:22.0601717Z The following NEW packages will be installed:
+2026-10-14T06:26:22.0602920Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-10-14T06:26:22.0610150Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-10-14T06:26:22.0628082Z   xfonts-utils
+2026-10-14T06:26:22.0628625Z The following packages will be upgraded:
+2026-10-14T06:26:22.0630605Z   libfreetype6 libx11-6 libx11-data libx11-xcb1
+2026-10-14T06:26:22.0811804Z 4 upgraded, 9 newly installed, 0 to remove and 30 not upgraded.
+2026-10-14T06:26:22.0812631Z Need to get 22.3 MB of archives.
+2026-10-14T06:26:22.0813643Z After this operation, 79.6 MB of additional disk space will be used.
+2026-10-14T06:26:22.0814310Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-14T06:26:22.2009615Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-10-14T06:26:22.8127467Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 libx11-6 amd64 2:1.8.7-1ubuntu0.1 [653 kB]
+2026-10-14T06:26:22.9277654Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 libx11-xcb1 amd64 2:1.8.7-1ubuntu0.1 [7796 B]
+2026-10-14T06:26:23.0304267Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 libx11-data all 2:1.8.7-1ubuntu0.1 [116 kB]
+2026-10-14T06:26:23.1339115Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-10-14T06:26:23.3895140Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-10-14T06:26:23.4924124Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-10-14T06:26:23.6288831Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-10-14T06:26:23.9486041Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype6 amd64 2.13.2+dfsg-1ubuntu0.2 [403 kB]
+2026-10-14T06:26:24.0550223Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-10-14T06:26:24.1637713Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-10-14T06:26:24.2668853Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-10-14T06:26:24.3726867Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-10-14T06:26:24.6337386Z Fetched 22.3 MB in 2s (9658 kB/s)
+2026-10-14T06:26:24.6589234Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-10-14T06:26:24.6898296Z (Reading database ... 
+2026-10-14T06:26:24.6898774Z (Reading database ... 5%
+2026-10-14T06:26:24.6899097Z (Reading database ... 10%
+2026-10-14T06:26:24.6899573Z (Reading database ... 15%
+2026-10-14T06:26:24.6899913Z (Reading database ... 20%
+2026-10-14T06:26:24.6900235Z (Reading database ... 25%
+2026-10-14T06:26:24.6900567Z (Reading database ... 30%
+2026-10-14T06:26:24.6900901Z (Reading database ... 35%
+2026-10-14T06:26:24.6901227Z (Reading database ... 40%
+2026-10-14T06:26:24.6901549Z (Reading database ... 45%
+2026-10-14T06:26:24.6902003Z (Reading database ... 50%
+2026-10-14T06:26:24.6949736Z (Reading database ... 55%
+2026-10-14T06:26:24.7755581Z (Reading database ... 60%
+2026-10-14T06:26:24.9660276Z (Reading database ... 65%
+2026-10-14T06:26:25.1692303Z (Reading database ... 70%
+2026-10-14T06:26:25.3669296Z (Reading database ... 75%
+2026-10-14T06:26:25.4735407Z (Reading database ... 80%
+2026-10-14T06:26:25.6290097Z (Reading database ... 85%
+2026-10-14T06:26:25.7694173Z (Reading database ... 90%
+2026-10-14T06:26:25.9308379Z (Reading database ... 95%
+2026-10-14T06:26:25.9308899Z (Reading database ... 100%
+2026-10-14T06:26:25.9309783Z (Reading database ... 203191 files and directories currently installed.)
+2026-10-14T06:26:25.9354426Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-10-14T06:26:25.9448917Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-14T06:26:26.1930798Z Preparing to unpack .../01-libx11-6_2%3a1.8.7-1ubuntu0.1_amd64.deb ...
+2026-10-14T06:26:26.1961163Z Unpacking libx11-6:amd64 (2:1.8.7-1ubuntu0.1) over (2:1.8.7-1build1) ...
+2026-10-14T06:26:26.2380770Z Preparing to unpack .../02-libx11-xcb1_2%3a1.8.7-1ubuntu0.1_amd64.deb ...
+2026-10-14T06:26:26.2402203Z Unpacking libx11-xcb1:amd64 (2:1.8.7-1ubuntu0.1) over (2:1.8.7-1build1) ...
+2026-10-14T06:26:26.2745817Z Preparing to unpack .../03-libx11-data_2%3a1.8.7-1ubuntu0.1_all.deb ...
+2026-10-14T06:26:26.2763801Z Unpacking libx11-data (2:1.8.7-1ubuntu0.1) over (2:1.8.7-1build1) ...
+2026-10-14T06:26:26.3660312Z Selecting previously unselected package fonts-freefont-ttf.
+2026-10-14T06:26:26.3789921Z Preparing to unpack .../04-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-10-14T06:26:26.3796847Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-14T06:26:26.4562573Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-10-14T06:26:26.4690086Z Preparing to unpack .../05-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-10-14T06:26:26.4697749Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-14T06:26:26.4900993Z Selecting previously unselected package fonts-unifont.
+2026-10-14T06:26:26.5029184Z Preparing to unpack .../06-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-10-14T06:26:26.5037689Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-10-14T06:26:26.6079530Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-10-14T06:26:26.6206921Z Preparing to unpack .../07-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-10-14T06:26:26.6306499Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-14T06:26:27.1119956Z Preparing to unpack .../08-libfreetype6_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+2026-10-14T06:26:27.1141699Z Unpacking libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) over (2.13.2+dfsg-1ubuntu0.1) ...
+2026-10-14T06:26:27.1392477Z Selecting previously unselected package xfonts-encodings.
+2026-10-14T06:26:27.1522471Z Preparing to unpack .../09-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-10-14T06:26:27.1529544Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-14T06:26:27.1846049Z Selecting previously unselected package xfonts-utils.
+2026-10-14T06:26:27.1974149Z Preparing to unpack .../10-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-10-14T06:26:27.1981313Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-10-14T06:26:27.2346540Z Selecting previously unselected package xfonts-cyrillic.
+2026-10-14T06:26:27.2474010Z Preparing to unpack .../11-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-10-14T06:26:27.2481071Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-14T06:26:27.2820516Z Selecting previously unselected package xfonts-scalable.
+2026-10-14T06:26:27.2950781Z Preparing to unpack .../12-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-10-14T06:26:27.2958236Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-14T06:26:27.3402540Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-14T06:26:27.3517227Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-14T06:26:27.3533346Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-14T06:26:27.3550054Z Setting up libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+2026-10-14T06:26:27.3567973Z Setting up libx11-data (2:1.8.7-1ubuntu0.1) ...
+2026-10-14T06:26:27.3585949Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-14T06:26:27.3602034Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-14T06:26:27.3667602Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-10-14T06:26:27.3681899Z Setting up libx11-6:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-14T06:26:27.3699801Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-10-14T06:26:27.3718730Z Setting up libx11-xcb1:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-14T06:26:27.3736869Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-10-14T06:26:27.3777676Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-14T06:26:27.4061366Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-14T06:26:27.4327414Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-14T06:26:27.4675680Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-14T06:26:27.4698376Z Not building database; man-db/auto-update is not 'true'.
+2026-10-14T06:26:27.4709012Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-10-14T06:26:28.2276377Z 
+2026-10-14T06:26:28.2277239Z Running kernel seems to be up-to-date.
+2026-10-14T06:26:28.2277657Z 
+2026-10-14T06:26:28.2277858Z Restarting services...
+2026-10-14T06:26:28.2355252Z  systemctl restart php8.3-fpm.service
+2026-10-14T06:26:28.3439624Z 
+2026-10-14T06:26:28.3441263Z No containers need to be restarted.
+2026-10-14T06:26:28.3441656Z 
+2026-10-14T06:26:28.3441988Z No user sessions are running outdated binaries.
+2026-10-14T06:26:28.3442233Z 
+2026-10-14T06:26:28.3442545Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-14T06:26:29.4971068Z Downloading Chrome for Testing 156.0.8078.4 (playwright chromium v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-linux64.zip
+2026-10-14T06:26:29.8929573Z |                                                                                |   0% of 191.1 MiB
+2026-10-14T06:26:30.0890222Z |■■■■■■■■                                                                        |  10% of 191.1 MiB
+2026-10-14T06:26:30.1838712Z |■■■■■■■■■■■■■■■■                                                                |  20% of 191.1 MiB
+2026-10-14T06:26:30.2970033Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 191.1 MiB
+2026-10-14T06:26:30.3691542Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 191.1 MiB
+2026-10-14T06:26:30.4629874Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 191.1 MiB
+2026-10-14T06:26:30.5571020Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 191.1 MiB
+2026-10-14T06:26:30.6324987Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 191.1 MiB
+2026-10-14T06:26:30.7376407Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 191.1 MiB
+2026-10-14T06:26:30.8084843Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 191.1 MiB
+2026-10-14T06:26:30.9294620Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 191.1 MiB
+2026-10-14T06:26:34.3135158Z Chrome for Testing 156.0.8078.4 (playwright chromium v1248) downloaded to /home/runner/.cache/ms-playwright/chromium-1248
+2026-10-14T06:26:34.3140289Z Downloading FFmpeg (playwright ffmpeg v1013) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1013/ffmpeg-linux.zip
+2026-10-14T06:26:34.6984450Z |                                                                                |   0% of 2.2 MiB
+2026-10-14T06:26:34.7048067Z |■■■■■■■■                                                                        |  10% of 2.2 MiB
+2026-10-14T06:26:34.7064512Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.2 MiB
+2026-10-14T06:26:34.7090314Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.2 MiB
+2026-10-14T06:26:34.7110125Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.2 MiB
+2026-10-14T06:26:34.7125358Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.2 MiB
+2026-10-14T06:26:34.7146329Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.2 MiB
+2026-10-14T06:26:34.7164499Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.2 MiB
+2026-10-14T06:26:34.7186772Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.2 MiB
+2026-10-14T06:26:34.7199886Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.2 MiB
+2026-10-14T06:26:34.7213807Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.2 MiB
+2026-10-14T06:26:34.7884056Z FFmpeg (playwright ffmpeg v1013) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1013
+2026-10-14T06:26:34.7888276Z Downloading Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-headless-shell-linux64.zip
+2026-10-14T06:26:35.2036278Z |                                                                                |   0% of 120 MiB
+2026-10-14T06:26:35.3724205Z |■■■■■■■■                                                                        |  10% of 120 MiB
+2026-10-14T06:26:35.4613726Z |■■■■■■■■■■■■■■■■                                                                |  20% of 120 MiB
+2026-10-14T06:26:35.5193575Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 120 MiB
+2026-10-14T06:26:35.5984639Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 120 MiB
+2026-10-14T06:26:35.6441117Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 120 MiB
+2026-10-14T06:26:35.7002333Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 120 MiB
+2026-10-14T06:26:35.7693271Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 120 MiB
+2026-10-14T06:26:35.8105262Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 120 MiB
+2026-10-14T06:26:35.8538003Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 120 MiB
+2026-10-14T06:26:35.9151685Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 120 MiB
+2026-10-14T06:26:38.3156524Z Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1248
+2026-10-14T06:26:38.3516293Z ##[group]Run npx playwright test --config playwright.w1b.config.ts
+2026-10-14T06:26:38.3516819Z [36;1mnpx playwright test --config playwright.w1b.config.ts[0m
+2026-10-14T06:26:38.3581659Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:26:38.3581927Z env:
+2026-10-14T06:26:38.3582894Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:26:38.3583595Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:26:38.3583998Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:26:38.3584372Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:26:38.3584689Z ##[endgroup]
+2026-10-14T06:26:40.0963781Z [WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+2026-10-14T06:26:41.0088590Z [WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+2026-10-14T06:26:41.8264126Z 
+2026-10-14T06:26:41.8264848Z Running 25 tests using 1 worker
+2026-10-14T06:26:41.8265237Z 
+2026-10-14T06:26:43.6391833Z   ✓   1 tests/product-browser/outbox.spec.ts:41:5 › fresh real-account bootstrap never sends demo plans or observed health records (1.1s)
+2026-10-14T06:26:45.4975828Z   ✓   2 tests/product-browser/outbox.spec.ts:54:5 › offline three sets, correction, compensating void and end sync in exact persisted order (1.8s)
+2026-10-14T06:26:46.9882318Z   ✓   3 tests/product-browser/outbox.spec.ts:74:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.5s)
+2026-10-14T06:26:49.1794540Z   ✓   4 tests/product-browser/outbox.spec.ts:85:5 › lost response survives page close and two tabs claim just one immutable retry (2.2s)
+2026-10-14T06:26:51.0543692Z   ✓   5 tests/product-browser/outbox.spec.ts:99:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (1.9s)
+2026-10-14T06:26:52.1735749Z   ✓   6 tests/product-browser/outbox.spec.ts:114:5 › storage refusal blocks saving before any network write (1.1s)
+2026-10-14T06:26:55.2326845Z   ✓   7 tests/product-browser/outbox.spec.ts:123:5 › account-bound requests fail closed and old outbox stays isolated after account switch (3.0s)
+2026-10-14T06:26:56.2995990Z   ✓   8 tests/product-browser/outbox.spec.ts:138:5 › 401 retains the exact operation and pauses until explicit retry (1.1s)
+2026-10-14T06:26:56.9514872Z   ✓   9 tests/product-browser/outbox.spec.ts:146:5 › unavailable IndexedDB shows an explicit failure instead of silently using memory (636ms)
+2026-10-14T06:26:58.3516023Z   ✓  10 tests/product-browser/outbox.spec.ts:151:5 › a preview made before another local write cannot silently move to later set slots (1.4s)
+2026-10-14T06:26:59.6131688Z   ✓  11 tests/product-browser/outbox.spec.ts:158:5 › expired lease from a dead tab is recovered without Web Locks or BroadcastChannel (1.2s)
+2026-10-14T06:27:01.2637053Z   ✓  12 tests/product-browser/replacement.spec.ts:38:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only (1.6s)
+2026-10-14T06:27:03.4027415Z   ✘  13 tests/product-browser/replacement.spec.ts:50:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities (2.1s)
+2026-10-14T06:27:06.6736683Z   ✓  14 tests/product-browser/replacement.spec.ts:65:5 › committed response lost: same request survives refresh, multi-tab retry and later compensation (2.7s)
+2026-10-14T06:27:07.8684893Z   ✓  15 tests/product-browser/replacement.spec.ts:75:5 › old device queued set conflicts after another device replaces; no automatic remapping (1.2s)
+2026-10-14T06:27:09.5329390Z   ✓  16 tests/product-browser/replacement.spec.ts:83:5 › other device records original exercise: replacement and dependent new set pause together (1.7s)
+2026-10-14T06:27:11.5990915Z   ✓  17 tests/product-browser/replacement.spec.ts:94:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (2.1s)
+2026-10-14T06:27:12.4815846Z   ✓  18 tests/product-browser/replacement.spec.ts:104:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (872ms)
+2026-10-14T06:27:14.1809110Z   ✓  19 tests/product-browser/replacement.spec.ts:112:5 › language switch changes labels without altering stored action name or request identity (1.7s)
+2026-10-14T06:27:18.5245919Z   ✓  20 tests/product-browser/sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.3s)
+2026-10-14T06:27:18.6065983Z   ✓  21 tests/product-browser/sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (59ms)
+2026-10-14T06:27:21.3093429Z   ✓  22 tests/product-browser/today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.7s)
+2026-10-14T06:27:22.2899333Z   ✓  23 tests/product-browser/today.spec.ts:70:5 › server flag off hides navigation and blocks writes while preserving history (966ms)
+2026-10-14T06:27:22.3224182Z   ✓  24 tests/product-browser/today.spec.ts:78:5 › API rejects signed-out users and cross-origin writes (11ms)
+2026-10-14T06:27:23.4139303Z   ✓  25 tests/product-browser/workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (1.1s)
+2026-10-14T06:27:23.5285648Z 
+2026-10-14T06:27:23.5292542Z 
+2026-10-14T06:27:23.5304826Z   1) tests/product-browser/replacement.spec.ts:50:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities 
+2026-10-14T06:27:23.5305637Z 
+2026-10-14T06:27:23.5306123Z     TypeError: Cannot read properties of undefined (reading 'bodyJson')
+2026-10-14T06:27:23.5306640Z 
+2026-10-14T06:27:23.5307286Z       52 |   await page.getByRole("button",{name:"撤销本次替换",exact:true}).click();await page.getByRole("button",{name:"确认撤销替换"}).click();
+2026-10-14T06:27:23.5309213Z       53 |   let snapshot=await state(page),restored=JSON.parse(snapshot.items[1].bodyJson).newExerciseId;expect(restored).not.toBe(exercise);
+2026-10-14T06:27:23.5311068Z     > 54 |   await preview(page,restored);await confirm(page);snapshot=await state(page);const replacement=JSON.parse(snapshot.items[2].bodyJson);
+2026-10-14T06:27:23.5312358Z          |                                                                                                                              ^
+2026-10-14T06:27:23.5316682Z       55 |   await record(page,replacement.newExerciseId);await page.getByRole("button",{name:"结束训练",exact:true}).click();
+2026-10-14T06:27:23.5318354Z       56 |   snapshot=await state(page);expect(snapshot.items.map(x=>x.action)).toEqual(["replace","undoReplacement","replace","set","end"]);
+2026-10-14T06:27:23.5320019Z       57 |   expect((await db.query("select * from workout_exercise_changes where session_id=$1",[initial.id])).rowCount).toBe(0);
+2026-10-14T06:27:23.5321572Z         at /home/runner/work/liftcut-tracker/liftcut-tracker/tests/product-browser/replacement.spec.ts:54:126
+2026-10-14T06:27:23.5322460Z 
+2026-10-14T06:27:23.5323507Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+2026-10-14T06:27:23.5325059Z     node_modules/.cache/w1b/browser/replacement-offline-replac-1ad0f-iginal-bytes-and-identities/test-failed-1.png
+2026-10-14T06:27:23.5326885Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2026-10-14T06:27:23.5327238Z 
+2026-10-14T06:27:23.5327966Z     Error Context: node_modules/.cache/w1b/browser/replacement-offline-replac-1ad0f-iginal-bytes-and-identities/error-context.md
+2026-10-14T06:27:23.5328503Z 
+2026-10-14T06:27:23.5328999Z     Error Context: node_modules/.cache/w1b/browser/replacement-offline-replac-1ad0f-iginal-bytes-and-identities/error-context.md
+2026-10-14T06:27:23.5329518Z 
+2026-10-14T06:27:23.5329604Z   1 failed
+2026-10-14T06:27:23.5330448Z     tests/product-browser/replacement.spec.ts:50:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities 
+2026-10-14T06:27:23.5333271Z   24 passed (44.3s)
+2026-10-14T06:27:23.5638914Z ##[error]Process completed with exit code 1.
+2026-10-14T06:27:23.5710674Z ##[group]Run actions/upload-artifact@v6
+2026-10-14T06:27:23.5710989Z with:
+2026-10-14T06:27:23.5711253Z   name: today-browser-evidence
+2026-10-14T06:27:23.5711512Z   include-hidden-files: true
+2026-10-14T06:27:23.5712049Z   path: node_modules/.cache/w1b/*.png
+node_modules/.cache/w1b/browser/
+node_modules/.cache/w3a/*.png
+node_modules/.cache/w3b/*.png
+
+2026-10-14T06:27:23.5712611Z   if-no-files-found: warn
+2026-10-14T06:27:23.5713105Z   compression-level: 6
+2026-10-14T06:27:23.5713324Z   overwrite: false
+2026-10-14T06:27:23.5713521Z env:
+2026-10-14T06:27:23.5714035Z   W1B_TEST_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:27:23.5714647Z   W1B_RUNTIME_DATABASE_URL: ***127.0.0.1:5432/liftcut_p1_w1b_ci
+2026-10-14T06:27:23.5715234Z   NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+2026-10-14T06:27:23.5715601Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+2026-10-14T06:27:23.5715915Z ##[endgroup]
+2026-10-14T06:27:23.7447384Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-14T06:27:23.7450628Z The least common ancestor is /home/runner/work/liftcut-tracker/liftcut-tracker/node_modules/.cache. This will be the root directory of the artifact
+2026-10-14T06:27:23.7452075Z With the provided path, there will be 12 files uploaded
+2026-10-14T06:27:23.7457488Z Artifact name is valid!
+2026-10-14T06:27:23.7458309Z Root directory input is valid!
+2026-10-14T06:27:23.9559502Z Beginning upload of artifact content to blob storage
+2026-10-14T06:27:24.1511098Z Uploaded bytes 1434644
+2026-10-14T06:27:24.1680417Z Finished uploading artifact content to blob storage!
+2026-10-14T06:27:24.1681542Z SHA256 digest of uploaded artifact zip is d7d379a80278124484d8a4eb4b84c660e475e59ea2a1a97cc11877691108c216
+2026-10-14T06:27:24.1685513Z Finalizing artifact upload
+2026-10-14T06:27:24.4010132Z Artifact today-browser-evidence.zip successfully finalized. Artifact ID 11873924249
+2026-10-14T06:27:24.4011526Z Artifact today-browser-evidence has been successfully uploaded! Final size is 1434644 bytes. Artifact ID is 11873924249
+2026-10-14T06:27:24.4015271Z Artifact download URL: https://github.com/Townzc/liftcut-tracker/actions/runs/38522076607/artifacts/11873924249
+2026-10-14T06:27:24.4219146Z Post job cleanup.
+2026-10-14T06:27:24.5154757Z [command]/usr/bin/git version
+2026-10-14T06:27:24.5209440Z git version 2.55.0
+2026-10-14T06:27:24.5251593Z Temporarily overriding HOME='/home/runner/work/_temp/9e074b27-d3d2-4015-8c87-269cbcc18d76' before making global git config changes
+2026-10-14T06:27:24.5252964Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-14T06:27:24.5258230Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:27:24.5294553Z Removing SSH command configuration
+2026-10-14T06:27:24.5301815Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-14T06:27:24.5341468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-14T06:27:24.5619907Z Removing HTTP extra header
+2026-10-14T06:27:24.5627378Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-14T06:27:24.5673337Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-14T06:27:24.5944298Z Removing includeIf entries pointing to credentials config files
+2026-10-14T06:27:24.5953661Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-14T06:27:24.5988278Z includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path
+2026-10-14T06:27:24.5989642Z includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path
+2026-10-14T06:27:24.5990595Z includeif.gitdir:/github/workspace/.git.path
+2026-10-14T06:27:24.5991362Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-14T06:27:24.5998442Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path
+2026-10-14T06:27:24.6025779Z /home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:27:24.6038005Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-71fa131a\-f299\-4036\-a818\-b696deba01bd\.config
+2026-10-14T06:27:24.6086674Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path
+2026-10-14T06:27:24.6123365Z /home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:27:24.6144146Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-71fa131a\-f299\-4036\-a818\-b696deba01bd\.config
+2026-10-14T06:27:24.6191837Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-14T06:27:24.6223844Z /github/runner_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:27:24.6232020Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-71fa131a\-f299\-4036\-a818\-b696deba01bd\.config
+2026-10-14T06:27:24.6270005Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-14T06:27:24.6297875Z /github/runner_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config
+2026-10-14T06:27:24.6306492Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-71fa131a\-f299\-4036\-a818\-b696deba01bd\.config
+2026-10-14T06:27:24.6348181Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-14T06:27:24.6578466Z Removing credentials config '/home/runner/work/_temp/git-credentials-71fa131a-f299-4036-a818-b696deba01bd.config'
+2026-10-14T06:27:24.6715453Z Print service container logs: 7fc58e0e030743d69a3fc076364cb02b_postgres16_918d9e
+2026-10-14T06:27:24.6719863Z ##[command]/usr/bin/docker logs --details 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:27:24.7084378Z  The files belonging to this database system will be owned by user "postgres".
+2026-10-14T06:27:24.7085194Z  This user must also own the server process.
+2026-10-14T06:27:24.7085726Z  
+2026-10-14T06:27:24.7087808Z  initdb: warning: enabling "trust" authentication for local connections
+2026-10-14T06:27:24.7089032Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-14T06:27:24.7090108Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-10-14T06:27:24.7090577Z  The default database encoding has accordingly been set to "UTF8".
+2026-10-14T06:27:24.7091024Z  The default text search configuration will be set to "english".
+2026-10-14T06:27:24.7091427Z  
+2026-10-14T06:27:24.7091636Z  Data page checksums are disabled.
+2026-10-14T06:27:24.7091898Z  
+2026-10-14T06:27:24.7092205Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-14T06:27:24.7092608Z  creating subdirectories ... ok
+2026-10-14T06:27:24.7093220Z  selecting dynamic shared memory implementation ... posix
+2026-10-14T06:27:24.7093591Z  selecting default max_connections ... 100
+2026-10-14T06:27:24.7093898Z  selecting default shared_buffers ... 128MB
+2026-10-14T06:27:24.7094203Z  selecting default time zone ... Etc/UTC
+2026-10-14T06:27:24.7094497Z  creating configuration files ... ok
+2026-10-14T06:27:24.7094775Z  running bootstrap script ... ok
+2026-10-14T06:27:24.7095077Z  performing post-bootstrap initialization ... ok
+2026-10-14T06:27:24.7095387Z  syncing data to disk ... ok
+2026-10-14T06:27:24.7095619Z  
+2026-10-14T06:27:24.7095800Z  
+2026-10-14T06:27:24.7096036Z  Success. You can now start the database server using:
+2026-10-14T06:27:24.7096352Z  
+2026-10-14T06:27:24.7096594Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-14T06:27:24.7096905Z  
+2026-10-14T06:27:24.7097583Z  waiting for server to start....2026-10-14 06:25:14.980 UTC [49] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-14T06:27:24.7098521Z  2026-10-14 06:25:14.980 UTC [49] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-14T06:27:24.7099398Z  2026-10-14 06:25:14.983 UTC [52] LOG:  database system was shut down at 2026-10-14 06:25:14 UTC
+2026-10-14T06:27:24.7099962Z  2026-10-14 06:25:14.987 UTC [49] LOG:  database system is ready to accept connections
+2026-10-14T06:27:24.7100390Z   done
+2026-10-14T06:27:24.7100586Z  server started
+2026-10-14T06:27:24.7100797Z  CREATE DATABASE
+2026-10-14T06:27:24.7100993Z  
+2026-10-14T06:27:24.7101576Z  2026-10-14 06:25:15.289 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-14T06:27:24.7102303Z  2026-10-14 06:25:15.289 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-14T06:27:24.7103038Z  2026-10-14 06:25:15.289 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-14T06:27:24.7103572Z  2026-10-14 06:25:15.290 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-14T06:27:24.7104144Z  2026-10-14 06:25:15.293 UTC [65] LOG:  database system was shut down at 2026-10-14 06:25:15 UTC
+2026-10-14T06:27:24.7104658Z  2026-10-14 06:25:15.296 UTC [1] LOG:  database system is ready to accept connections
+2026-10-14T06:27:24.7106350Z  2026-10-14 06:25:50.087 UTC [129] ERROR:  new row violates row-level security policy for table "workout_sessions"
+2026-10-14T06:27:24.7108592Z  2026-10-14 06:25:50.087 UTC [129] STATEMENT:  insert into public.workout_sessions(id,user_id,local_date,timezone,training_plan_id,week_number,day_number,prescription,started_at,request_hash) values($1,$2,'2026-10-13','UTC','p',1,1,'{}',now(),'x')
+2026-10-14T06:27:24.7110273Z  2026-10-14 06:25:50.089 UTC [129] ERROR:  new row violates row-level security policy for table "set_logs"
+2026-10-14T06:27:24.7110876Z  2026-10-14 06:25:50.089 UTC [129] STATEMENT:  update public.set_logs set user_id=$1 where id=$2
+2026-10-14T06:27:24.7111415Z  2026-10-14 06:25:50.090 UTC [129] WARNING:  there is no transaction in progress
+2026-10-14T06:27:24.7111993Z  2026-10-14 06:25:50.887 UTC [134] ERROR:  new row violates row-level security policy for table "workout_commands"
+2026-10-14T06:27:24.7113043Z  2026-10-14 06:25:50.887 UTC [134] STATEMENT:  insert into public.workout_commands(id,user_id,session_id,version,request_hash,receipt)
+2026-10-14T06:27:24.7113649Z  	          values($1,$2,$3,1,repeat('a',64),'{}')
+2026-10-14T06:27:24.7114333Z  2026-10-14 06:25:53.250 UTC [142] ERROR:  new row for relation "workout_exercise_changes" violates check constraint "replacement_fault_fd795a84f6524d929a021f11c9f6ea4a"
+2026-10-14T06:27:24.7115386Z  2026-10-14 06:25:53.250 UTC [142] STATEMENT:  insert into public.workout_exercise_changes(id,user_id,session_id,version,request_hash,parent_id,new_exercise_id,receipt)
+2026-10-14T06:27:24.7116051Z  	        values($1,$2,$3,1,$4,$5,$6,$7)
+2026-10-14T06:27:24.7116548Z  2026-10-14 06:25:53.292 UTC [142] ERROR:  new row violates row-level security policy for table "workout_exercise_changes"
+2026-10-14T06:27:24.7117474Z  2026-10-14 06:25:53.292 UTC [142] STATEMENT:  insert into workout_exercise_changes(id,user_id,session_id,version,request_hash,new_exercise_id,receipt) values($1,$2,$3,1,$4,$5,'{}')
+2026-10-14T06:27:24.7118153Z  
+2026-10-14T06:27:24.7118486Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-14T06:27:24.7118880Z  
+2026-10-14T06:27:24.7119246Z  waiting for server to shut down...2026-10-14 06:25:15.169 UTC [49] LOG:  received fast shutdown request
+2026-10-14T06:27:24.7119774Z  .2026-10-14 06:25:15.169 UTC [49] LOG:  aborting any active transactions
+2026-10-14T06:27:24.7120364Z  2026-10-14 06:25:15.172 UTC [49] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+2026-10-14T06:27:24.7120898Z  2026-10-14 06:25:15.172 UTC [50] LOG:  shutting down
+2026-10-14T06:27:24.7121291Z  2026-10-14 06:25:15.172 UTC [50] LOG:  checkpoint starting: shutdown immediate
+2026-10-14T06:27:24.7122367Z  2026-10-14 06:25:15.188 UTC [50] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.003 s, total=0.017 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F8, redo lsn=0/191F0F8
+2026-10-14T06:27:24.7123870Z  2026-10-14 06:25:15.195 UTC [49] LOG:  database system is shut down
+2026-10-14T06:27:24.7124209Z   done
+2026-10-14T06:27:24.7124406Z  server stopped
+2026-10-14T06:27:24.7124604Z  
+2026-10-14T06:27:24.7124847Z  PostgreSQL init process complete; ready for start up.
+2026-10-14T06:27:24.7125158Z  
+2026-10-14T06:27:24.7130702Z Stop and remove container: 7fc58e0e030743d69a3fc076364cb02b_postgres16_918d9e
+2026-10-14T06:27:24.7135962Z ##[command]/usr/bin/docker rm --force 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:27:24.8975237Z 101c93124e8a361aa0bac81404ed35f8467a3a26be426fc4e141d48d553613b0
+2026-10-14T06:27:24.9001743Z Remove container network: github_network_cae9f53c405f40f1977e2db2ed68f5c7
+2026-10-14T06:27:24.9006507Z ##[command]/usr/bin/docker network rm github_network_cae9f53c405f40f1977e2db2ed68f5c7
+2026-10-14T06:27:24.9938146Z github_network_cae9f53c405f40f1977e2db2ed68f5c7
+2026-10-14T06:27:25.0021131Z Cleaning up orphan processes

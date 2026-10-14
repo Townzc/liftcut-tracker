@@ -70,3 +70,6 @@ docs/product/evidence/w3a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-
 docs/product/evidence/bootstrap-release/*.json -text whitespace=cr-at-eol
 docs/product/evidence/bootstrap-release/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 docs/product/evidence/bootstrap-release/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+# Captured W3b verification bytes; retain original logs and SHA inventory.
+docs/product/evidence/w3b/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/product/evidence/w3b/*.json -text whitespace=cr-at-eol

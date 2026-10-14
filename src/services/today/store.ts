@@ -7,6 +7,7 @@ import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, ty
 import { parseWorkoutLog } from "@/lib/workout-log-parser";
 import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
 import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
+import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";
 
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
 export class TodayConflict extends Error {}
@@ -39,9 +40,12 @@ export class TodayStore {
     const s = (await db.query("select *,local_date::text as day from public.workout_sessions where id=$1", [id])).rows[0];
     if (!s) return fail("NOT_FOUND");
     const sets = (await db.query("select payload,exercise_name,updated_at from public.set_logs where session_id=$1 order by plan_exercise_id,set_index", [id])).rows;
+    const replacements = (await db.query(`select c.receipt,u.receipt as undo from public.workout_exercise_changes c
+      left join public.workout_exercise_changes u on u.parent_id=c.id where c.session_id=$1 and c.parent_id is null
+      order by c.created_at,c.id`,[id])).rows.map(r=>({...r.receipt,undo:r.undo??null}));
     return { id: s.id, userId: s.user_id, localDate: s.day, timezone: s.timezone, trainingPlanId: s.training_plan_id,
       weekNumber: s.week_number, dayNumber: s.day_number, status: s.status, revision: s.revision, prescription: s.prescription,
-      startedAt: s.started_at.toISOString(), endedAt: s.ended_at?.toISOString() ?? null,
+      startedAt: s.started_at.toISOString(), endedAt: s.ended_at?.toISOString() ?? null, replacements,
       sets: sets.map(r => ({ ...r.payload, exerciseName: r.exercise_name, updatedAt: r.updated_at.toISOString() })) };
   }
   private async event(db: PoolClient, user: string, session: string, record: string | null, type: string, data: unknown) {
@@ -253,6 +257,30 @@ export class TodayStore {
         [req.id,this.now(),req.revision,digest]);
       await this.event(db,user,req.id,null,"ended",req);
       return this.read(db,req.id);
+    });
+  }
+  async replaceExercise(user:string,input:unknown,undo=false):Promise<Session> {
+    const req=(undo?undoReplacementSchema:replaceExerciseSchema).parse(input),digest=hash(req);
+    return this.tx(user,async db=>{
+      const old=(await db.query("select * from public.workout_exercise_changes where id=$1",[req.id])).rows[0];
+      const parent="replacementId" in req?req.replacementId:null;
+      if(old) {
+        if(old.request_hash!==digest || old.parent_id!==parent) return fail("CONTENT_CONFLICT");
+        return this.read(db,old.session_id); // Return current state and original receipt, including any later undo.
+      }
+      await db.query("select id from public.workout_sessions where id=$1 for update",[req.sessionId]);
+      const session=await this.read(db,req.sessionId);
+      if(this.contextHash(session)!==req.contextHash)return fail("STALE_CONTEXT");
+      let projected:Session;
+      try {projected=undo?projectReplacementUndo(session,req,this.now().toISOString()):projectReplacement(session,req,this.now().toISOString());}
+      catch(error) {if(error instanceof ReplacementConflict)return fail(error.message);throw error;}
+      const receipt=parent?projected.replacements!.find(r=>r.id===parent)!.undo!:projected.replacements!.find(r=>r.id===req.id)!;
+      await db.query("update public.workout_sessions set prescription=$2,revision=$3,request_hash=$4 where id=$1",
+        [session.id,JSON.stringify(projected.prescription),projected.revision,digest]);
+      await db.query(`insert into public.workout_exercise_changes(id,user_id,session_id,version,request_hash,parent_id,new_exercise_id,receipt)
+        values($1,$2,$3,1,$4,$5,$6,$7)`,[req.id,user,session.id,digest,parent,req.newExerciseId,JSON.stringify(receipt)]);
+      await this.event(db,user,session.id,null,undo?"exercise_replacement_compensated":"exercise_replaced",{receiptId:req.id,parentId:parent,before:receipt.before,after:receipt.after});
+      return this.read(db,session.id);
     });
   }
 }

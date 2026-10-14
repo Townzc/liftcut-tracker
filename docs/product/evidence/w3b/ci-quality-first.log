@@ -1,0 +1,407 @@
+﻿2026-10-14T06:25:07.4675278Z Current runner version: '2.337.0'
+2026-10-14T06:25:07.4700521Z ##[group]Runner Image Provisioner
+2026-10-14T06:25:07.4701471Z Hosted Compute Agent
+2026-10-14T06:25:07.4702062Z Version: 20261002.596
+2026-10-14T06:25:07.4702780Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-14T06:25:07.4703592Z Build Date: 2026-10-02T22:28:27Z
+2026-10-14T06:25:07.4704275Z Worker ID: {b6c5ffd8-d5c7-489a-ae67-b125a0138d5d}
+2026-10-14T06:25:07.4705164Z Region: canadaeast
+2026-10-14T06:25:07.4705948Z Cloud: Azure
+2026-10-14T06:25:07.4706579Z ##[endgroup]
+2026-10-14T06:25:07.4708125Z ##[group]Operating System
+2026-10-14T06:25:07.4708784Z Ubuntu
+2026-10-14T06:25:07.4709383Z 24.04.5
+2026-10-14T06:25:07.4709885Z LTS
+2026-10-14T06:25:07.4710384Z ##[endgroup]
+2026-10-14T06:25:07.4711045Z ##[group]Runner Image
+2026-10-14T06:25:07.4711660Z Image: ubuntu-24.04
+2026-10-14T06:25:07.4712301Z Version: 20261004.327.1
+2026-10-14T06:25:07.4713514Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-14T06:25:07.4715181Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-14T06:25:07.4716405Z ##[endgroup]
+2026-10-14T06:25:07.4717580Z ##[group]GITHUB_TOKEN Permissions
+2026-10-14T06:25:07.4719770Z Contents: read
+2026-10-14T06:25:07.4720465Z Metadata: read
+2026-10-14T06:25:07.4721061Z ##[endgroup]
+2026-10-14T06:25:07.4723590Z Secret source: Actions
+2026-10-14T06:25:07.4724596Z Cache mode: write
+2026-10-14T06:25:07.4726159Z Prepare workflow directory
+2026-10-14T06:25:07.5133628Z Prepare all required actions
+2026-10-14T06:25:07.5184605Z Getting action download info
+2026-10-14T06:25:07.7948321Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-14T06:25:07.9085874Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-10-14T06:25:08.3817444Z Download action repository 'actions/upload-artifact@v6' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-14T06:25:08.5884695Z Complete job name: quality
+2026-10-14T06:25:08.6727038Z ##[group]Run actions/checkout@v7
+2026-10-14T06:25:08.6728297Z with:
+2026-10-14T06:25:08.6728938Z   repository: Townzc/liftcut-tracker
+2026-10-14T06:25:08.6733544Z   token: ***
+2026-10-14T06:25:08.6734195Z   ssh-strict: true
+2026-10-14T06:25:08.6734797Z   ssh-user: git
+2026-10-14T06:25:08.6735563Z   persist-credentials: true
+2026-10-14T06:25:08.6736352Z   clean: true
+2026-10-14T06:25:08.6736969Z   sparse-checkout-cone-mode: true
+2026-10-14T06:25:08.6737683Z   fetch-depth: 1
+2026-10-14T06:25:08.6738265Z   fetch-tags: false
+2026-10-14T06:25:08.6738838Z   show-progress: true
+2026-10-14T06:25:08.6739501Z   lfs: false
+2026-10-14T06:25:08.6740111Z   submodules: false
+2026-10-14T06:25:08.6740737Z   set-safe-directory: true
+2026-10-14T06:25:08.6741415Z   allow-unsafe-pr-checkout: false
+2026-10-14T06:25:08.6742419Z env:
+2026-10-14T06:25:08.6743227Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:08.6744189Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:08.6745229Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:08.6746131Z ##[endgroup]
+2026-10-14T06:25:08.7820822Z Syncing repository: Townzc/liftcut-tracker
+2026-10-14T06:25:08.7823766Z ##[group]Getting Git version info
+2026-10-14T06:25:08.7824894Z Working directory is '/home/runner/work/liftcut-tracker/liftcut-tracker'
+2026-10-14T06:25:08.7827373Z [command]/usr/bin/git version
+2026-10-14T06:25:08.7890732Z git version 2.55.0
+2026-10-14T06:25:08.7918117Z ##[endgroup]
+2026-10-14T06:25:08.7938945Z Temporarily overriding HOME='/home/runner/work/_temp/d9130d99-49f4-4620-96af-930673eaed73' before making global git config changes
+2026-10-14T06:25:08.7941933Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-14T06:25:08.7951810Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:25:08.8005562Z Deleting the contents of '/home/runner/work/liftcut-tracker/liftcut-tracker'
+2026-10-14T06:25:08.8009877Z ##[group]Determining repository object format
+2026-10-14T06:25:08.8012370Z ##[endgroup]
+2026-10-14T06:25:08.8014878Z ##[group]Initializing the repository
+2026-10-14T06:25:08.8017685Z [command]/usr/bin/git init /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:25:08.8133296Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-14T06:25:08.8135830Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-14T06:25:08.8138537Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-14T06:25:08.8140387Z hint: call:
+2026-10-14T06:25:08.8141521Z hint:
+2026-10-14T06:25:08.8143039Z hint: 	git config --global init.defaultBranch <name>
+2026-10-14T06:25:08.8144500Z hint:
+2026-10-14T06:25:08.8146299Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-14T06:25:08.8148496Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-14T06:25:08.8149879Z hint:
+2026-10-14T06:25:08.8150658Z hint: 	git branch -m <name>
+2026-10-14T06:25:08.8151330Z hint:
+2026-10-14T06:25:08.8152230Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-14T06:25:08.8153532Z Initialized empty Git repository in /home/runner/work/liftcut-tracker/liftcut-tracker/.git/
+2026-10-14T06:25:08.8158500Z [command]/usr/bin/git remote add origin https://github.com/Townzc/liftcut-tracker
+2026-10-14T06:25:08.8214644Z ##[endgroup]
+2026-10-14T06:25:08.8217063Z ##[group]Disabling automatic garbage collection
+2026-10-14T06:25:08.8228556Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-14T06:25:08.8267199Z ##[endgroup]
+2026-10-14T06:25:08.8269151Z ##[group]Setting up auth
+2026-10-14T06:25:08.8270332Z Removing SSH command configuration
+2026-10-14T06:25:08.8274486Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-14T06:25:08.8319580Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-14T06:25:08.8708857Z Removing HTTP extra header
+2026-10-14T06:25:08.8717669Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-14T06:25:08.8761805Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-14T06:25:08.8991493Z Removing includeIf entries pointing to credentials config files
+2026-10-14T06:25:08.8998226Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-14T06:25:08.9038609Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-14T06:25:08.9355647Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-14T06:25:08.9362151Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path /home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:08.9368940Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:08.9408852Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:08.9446387Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:08.9477730Z ##[endgroup]
+2026-10-14T06:25:08.9478678Z ##[group]Fetching the repository
+2026-10-14T06:25:08.9484421Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bbfe3ca2b1cd46990d71974a70657b8225e2d9c1:refs/remotes/pull/74/merge
+2026-10-14T06:25:10.9383569Z From https://github.com/Townzc/liftcut-tracker
+2026-10-14T06:25:10.9384671Z  * [new ref]         bbfe3ca2b1cd46990d71974a70657b8225e2d9c1 -> pull/74/merge
+2026-10-14T06:25:10.9387837Z ##[endgroup]
+2026-10-14T06:25:10.9389219Z ##[group]Determining the checkout info
+2026-10-14T06:25:10.9390193Z ##[endgroup]
+2026-10-14T06:25:10.9395365Z [command]/usr/bin/git sparse-checkout disable
+2026-10-14T06:25:10.9451774Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-14T06:25:10.9484475Z ##[group]Checking out the ref
+2026-10-14T06:25:10.9488712Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/74/merge
+2026-10-14T06:25:11.5225806Z Note: switching to 'refs/remotes/pull/74/merge'.
+2026-10-14T06:25:11.5226386Z 
+2026-10-14T06:25:11.5226725Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-14T06:25:11.5228205Z changes and commit them, and you can discard any commits you make in this
+2026-10-14T06:25:11.5229181Z state without impacting any branches by switching back to a branch.
+2026-10-14T06:25:11.5229797Z 
+2026-10-14T06:25:11.5230194Z If you want to create a new branch to retain commits you create, you may
+2026-10-14T06:25:11.5231027Z do so (now or later) by using -c with the switch command. Example:
+2026-10-14T06:25:11.5231583Z 
+2026-10-14T06:25:11.5231783Z   git switch -c <new-branch-name>
+2026-10-14T06:25:11.5232100Z 
+2026-10-14T06:25:11.5232308Z Or undo this operation with:
+2026-10-14T06:25:11.5232599Z 
+2026-10-14T06:25:11.5232761Z   git switch -
+2026-10-14T06:25:11.5233018Z 
+2026-10-14T06:25:11.5233410Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-14T06:25:11.5233851Z 
+2026-10-14T06:25:11.5235241Z HEAD is now at bbfe3ca Merge 6a07dbc03c716eb90f4ebbf0547ccb3c31418d54 into 512ae8dedc22d00167f73979abb29df12a2de9e0
+2026-10-14T06:25:11.5309995Z ##[endgroup]
+2026-10-14T06:25:11.5360463Z [command]/usr/bin/git log -1 --format=%H
+2026-10-14T06:25:11.5390003Z bbfe3ca2b1cd46990d71974a70657b8225e2d9c1
+2026-10-14T06:25:11.5666026Z ##[group]Run actions/setup-node@v7
+2026-10-14T06:25:11.5666372Z with:
+2026-10-14T06:25:11.5666587Z   node-version: 24
+2026-10-14T06:25:11.5666804Z   cache: npm
+2026-10-14T06:25:11.5667009Z   check-latest: false
+2026-10-14T06:25:11.5669718Z   token: ***
+2026-10-14T06:25:11.5669950Z   package-manager-cache: true
+2026-10-14T06:25:11.5670219Z env:
+2026-10-14T06:25:11.5670481Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:11.5670910Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:11.5671247Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:11.5671527Z ##[endgroup]
+2026-10-14T06:25:11.7009399Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-14T06:25:11.7825751Z ##[group]Environment details
+2026-10-14T06:25:12.1126996Z node: v24.21.0
+2026-10-14T06:25:12.1127491Z npm: 11.19.0
+2026-10-14T06:25:12.1127835Z yarn: 1.22.22
+2026-10-14T06:25:12.1128587Z ##[endgroup]
+2026-10-14T06:25:12.1149948Z [command]/opt/hostedtoolcache/node/24.21.0/x64/bin/npm config get cache
+2026-10-14T06:25:12.2636888Z /home/runner/.npm
+2026-10-14T06:25:12.4097529Z Cache hit for: node-cache-Linux-x64-npm-a7ef89c1728c2e16506770479f7825d145d65d15cf4f379610b1bc03fc1dab16
+2026-10-14T06:25:13.5527143Z Received 130023424 of 239975398 (54.2%), 123.8 MBs/sec
+2026-10-14T06:25:14.1979880Z Received 239975398 of 239975398 (100.0%), 138.8 MBs/sec
+2026-10-14T06:25:14.1981149Z Cache Size: ~229 MB (239975398 B)
+2026-10-14T06:25:14.2039416Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ebbcf2e8-8e55-4bc3-8072-e4959769ab81/cache.tzst -P -C /home/runner/work/liftcut-tracker/liftcut-tracker --use-compress-program unzstd
+2026-10-14T06:25:14.6958632Z Cache restored successfully
+2026-10-14T06:25:14.7070476Z Cache restored from key: node-cache-Linux-x64-npm-a7ef89c1728c2e16506770479f7825d145d65d15cf4f379610b1bc03fc1dab16
+2026-10-14T06:25:14.7257796Z ##[group]Run npm ci
+2026-10-14T06:25:14.7258099Z [36;1mnpm ci[0m
+2026-10-14T06:25:14.7532975Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:14.7533333Z env:
+2026-10-14T06:25:14.7533721Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:14.7534283Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:14.7534767Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:14.7535159Z ##[endgroup]
+2026-10-14T06:25:21.7608070Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2026-10-14T06:25:39.0874753Z 
+2026-10-14T06:25:39.0876387Z added 689 packages, and audited 690 packages in 24s
+2026-10-14T06:25:39.0877209Z 
+2026-10-14T06:25:39.0878002Z 241 packages are looking for funding
+2026-10-14T06:25:39.0878600Z   run `npm fund` for details
+2026-10-14T06:25:39.2992741Z 
+2026-10-14T06:25:39.2994081Z 30 vulnerabilities (1 low, 9 moderate, 18 high, 2 critical)
+2026-10-14T06:25:39.2994752Z 
+2026-10-14T06:25:39.2995909Z To address issues that do not require attention, run:
+2026-10-14T06:25:39.2996697Z   npm audit fix
+2026-10-14T06:25:39.2997032Z 
+2026-10-14T06:25:39.2997623Z To address all issues (including breaking changes), run:
+2026-10-14T06:25:39.2998373Z   npm audit fix --force
+2026-10-14T06:25:39.2998673Z 
+2026-10-14T06:25:39.2998883Z Run `npm audit` for details.
+2026-10-14T06:25:39.3010978Z npm warn install-scripts 6 packages have install scripts not yet covered by allowScripts:
+2026-10-14T06:25:39.3013150Z npm warn install-scripts   @parcel/watcher@2.5.6 (install: node scripts/build-from-source.js)
+2026-10-14T06:25:39.3015587Z npm warn install-scripts   core-js@3.49.0 (postinstall: node -e "try{require('./postinstall')}catch(e){}")
+2026-10-14T06:25:39.3017443Z npm warn install-scripts   esbuild@0.28.1 (postinstall: node install.js)
+2026-10-14T06:25:39.3019148Z npm warn install-scripts   @swc/core@1.15.21 (postinstall: node postinstall.js)
+2026-10-14T06:25:39.3020995Z npm warn install-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)
+2026-10-14T06:25:39.3022768Z npm warn install-scripts   unrs-resolver@1.11.1 (postinstall: napi-postinstall unrs-resolver 1.11.1 check)
+2026-10-14T06:25:39.3023768Z npm warn install-scripts
+2026-10-14T06:25:39.3024994Z npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-14T06:25:39.4439990Z ##[group]Run npm test
+2026-10-14T06:25:39.4440527Z [36;1mnpm test[0m
+2026-10-14T06:25:39.4506370Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:39.4506735Z env:
+2026-10-14T06:25:39.4507083Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:39.4507611Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:39.4508061Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:39.4508442Z ##[endgroup]
+2026-10-14T06:25:39.5633614Z 
+2026-10-14T06:25:39.5634340Z > liftcut-tracker@0.1.0 test
+2026-10-14T06:25:39.5635569Z > node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts
+2026-10-14T06:25:39.5636182Z 
+2026-10-14T06:25:39.6557891Z ✔ intl provider configures a stable default time zone (1.33755ms)
+2026-10-14T06:25:39.6559635Z ✔ guest mode enters the app without forcing onboarding (0.347101ms)
+2026-10-14T06:25:39.6561537Z ✔ guest AI requests receive profile defaults before validation (1.161009ms)
+2026-10-14T06:25:39.6563234Z ✔ dashboard exposes the primary daily actions (0.404018ms)
+2026-10-14T06:25:39.6565041Z ✔ guest migration keeps the active user plan inactive when importing guest plans (0.236774ms)
+2026-10-14T06:25:39.6567129Z ✔ default demo and equipment support Chinese-first onboarding (0.319249ms)
+2026-10-14T06:25:39.6568733Z ✔ localized selects display labels instead of raw enum values (0.787948ms)
+2026-10-14T06:25:39.6570454Z ✔ workout page shows estimated calorie burn without changing the database schema (1.125641ms)
+2026-10-14T06:25:39.6689399Z ℹ tests 8
+2026-10-14T06:25:39.6690463Z ℹ suites 0
+2026-10-14T06:25:39.6691239Z ℹ pass 8
+2026-10-14T06:25:39.6691677Z ℹ fail 0
+2026-10-14T06:25:39.6692074Z ℹ cancelled 0
+2026-10-14T06:25:39.6692545Z ℹ skipped 0
+2026-10-14T06:25:39.6692959Z ℹ todo 0
+2026-10-14T06:25:39.6693434Z ℹ duration_ms 72.046922
+2026-10-14T06:25:40.2717810Z ✔ normalizeMealType maps Chinese meal types to English enums (16.163197ms)
+2026-10-14T06:25:40.2747068Z ✔ normalizeAiNutritionPlan handles wrapper output (0.625564ms)
+2026-10-14T06:25:40.2748484Z ✔ buildNutritionPlanPrompt includes strict schema instructions (0.913815ms)
+2026-10-14T06:25:40.2749687Z ✔ NUTRITION_PROMPT_VERSION is updated (0.197811ms)
+2026-10-14T06:25:40.2750796Z ✔ normalizeAiNutritionPlan rejects invalid plans (0.778872ms)
+2026-10-14T06:25:40.3277236Z ✔ beginner demo keeps source IDs unique (1.395819ms)
+2026-10-14T06:25:40.3306329Z ✔ filters by focus (0.418926ms)
+2026-10-14T06:25:40.3336345Z ✔ searches Chinese and English labels (1.344973ms)
+2026-10-14T06:25:40.3337400Z ✔ combines query and focus filters (0.237846ms)
+2026-10-14T06:25:40.3558300Z ✔ catalog: 60 unique entries, exact bilingual identity, all equipment required and deterministic compatible candidates (45.955526ms)
+2026-10-14T06:25:40.3565576Z ✔ fixed schema rejects stale catalog, guessed equipment, duplicates and missing confirmation (5.094297ms)
+2026-10-14T06:25:40.3597723Z ✔ replacement and compensation preserve prescription, unknown actuals and immutable identity lineage (19.983089ms)
+2026-10-14T06:25:40.3638017Z ✔ any set history, ended session, stale version and unavailable candidate fail without mutation (3.290375ms)
+2026-10-14T06:25:40.3640517Z ✔ offline replacement changes identity: old requests reject, dependent new sets are allowed and block undo (2.901633ms)
+2026-10-14T06:25:40.8257190Z ✔ getTodayNutritionSummary returns zeros for no logs (1.763578ms)
+2026-10-14T06:25:40.8282942Z ✔ getTodayNutritionSummary sums matching date logs (0.375325ms)
+2026-10-14T06:25:40.8284204Z ✔ getNutritionByDate returns zeros for no matching logs (0.2454ms)
+2026-10-14T06:25:40.8285181Z ✔ getNutritionByDate sums matching date (0.275597ms)
+2026-10-14T06:25:40.8286542Z ✔ getSuggestedTrainingDayNumber returns valid day number (0.449012ms)
+2026-10-14T06:25:40.8299395Z ✔ getSuggestedTrainingDayNumber handles 1 training day (0.189255ms)
+2026-10-14T06:25:40.8312133Z ✔ getAverageWeightByDays returns null for empty logs (0.441488ms)
+2026-10-14T06:25:40.8322458Z ✔ getAverageWeightByDays computes average correctly (2.269158ms)
+2026-10-14T06:25:40.8829749Z ✔ parsePlanText returns error for empty input (1.659693ms)
+2026-10-14T06:25:40.8849563Z ✔ parsePlanText returns error for whitespace-only input (1.499964ms)
+2026-10-14T06:25:40.8876664Z ✔ parsePlanText parses English template successfully (1.208407ms)
+2026-10-14T06:25:40.8887078Z ✔ parsePlanText parses Chinese template successfully (0.534152ms)
+2026-10-14T06:25:40.8888711Z ✔ parsePlanText extracts exercise fields correctly (0.262323ms)
+2026-10-14T06:25:40.8890233Z ✔ parsePlanText handles rep ranges (0.208582ms)
+2026-10-14T06:25:40.8891518Z ✔ parsePlanText defaults RPE to 7 when missing (0.235341ms)
+2026-10-14T06:25:40.8893283Z ✔ parsePlanText handles multiple weeks and days (0.401193ms)
+2026-10-14T06:25:40.8894582Z ✔ parsePlanText uses custom plan name (1.269722ms)
+2026-10-14T06:25:40.8896084Z ✔ parsePlanText handles notes after exercise (0.873058ms)
+2026-10-14T06:25:40.9203534Z ✔ userSettingsSchema accepts valid settings (4.315546ms)
+2026-10-14T06:25:40.9232917Z ✔ userSettingsSchema rejects negative age (1.021827ms)
+2026-10-14T06:25:40.9249668Z ✔ userSettingsSchema accepts boundary values (4.917356ms)
+2026-10-14T06:25:40.9252049Z ✔ quickFoodItemSchema accepts valid item (1.266315ms)
+2026-10-14T06:25:40.9281553Z ✔ quickFoodItemSchema rejects missing required fields (0.876114ms)
+2026-10-14T06:25:41.4953464Z ✔ today dates follow IANA timezone around midnight and DST, not UTC (27.196055ms)
+2026-10-14T06:25:41.5000466Z ✔ actuals require reported reps, bounded numbers and matching provenance (5.914766ms)
+2026-10-14T06:25:41.5012147Z ✔ adapter excludes voided/skipped sets from history, PR, charts and calorie set totals (1.678057ms)
+2026-10-14T06:25:41.5393430Z ✔ returns 0 for empty exercises (1.633001ms)
+2026-10-14T06:25:41.5426909Z ✔ uses defaults when body weight and duration are zero (0.275757ms)
+2026-10-14T06:25:41.5427979Z ✔ returns higher calories for higher RPE (0.166011ms)
+2026-10-14T06:25:41.5428926Z ✔ returns higher calories for heavier body weight (0.219191ms)
+2026-10-14T06:25:41.5429842Z ✔ uses plan exercise sets when provided (0.235001ms)
+2026-10-14T06:25:41.5479882Z ✔ prefers completed exercises over incomplete (0.20805ms)
+2026-10-14T06:25:41.5537010Z ✔ falls back to all exercises when none completed (2.692862ms)
+2026-10-14T06:25:41.5538724Z ✔ untouched blank rows do not claim a workout calorie estimate (0.923836ms)
+2026-10-14T06:25:41.5540622Z ✔ null uses documented estimation assumptions without changing the reported measurements (1.32705ms)
+2026-10-14T06:25:41.5542499Z ✔ hosted workout connection verifies TLS even without URL sslmode (2.62279ms)
+2026-10-14T06:25:41.5544125Z ✔ URL SSL overrides cannot weaken verification or discard the configured CA (1.523648ms)
+2026-10-14T06:25:41.5545910Z ✔ only loopback test databases can use plaintext by default (0.396895ms)
+2026-10-14T06:25:41.5847823Z ✔ 150 authored rule cases match exact drafts or request clarification; no invented nulls (27.761152ms)
+2026-10-14T06:25:41.5864547Z ✔ evaluation detects always-refuse, fabricated RPE and wrong correction target (18.011568ms)
+2026-10-14T06:25:41.5877269Z ✔ no mutation or inherited defaults; historical changes do not change new actuals (0.617368ms)
+2026-10-14T06:25:41.5882166Z ✔ invalid or conflicting context cannot choose a target silently (0.449583ms)
+2026-10-14T06:25:41.5898804Z ✔ existing skipped or voided slots stay occupied; ending synthesizes no actuals (0.537599ms)
+2026-10-14T06:25:41.5914499Z ✔ all drafts satisfy bounds, explicit report sources and require downstream authorization (3.80558ms)
+2026-10-14T06:25:41.7247746Z ✔ offline projection preserves nulls, correction order, compensating void and omitted slots on end (5.111359ms)
+2026-10-14T06:25:41.7824753Z ✔ offline sentence → correction → compensation uses exact stable context and original provenance (30.390464ms)
+2026-10-14T06:25:41.7831234Z ✔ old-session compensation response cannot replace current workout; owner header cannot authorize another account (38.616758ms)
+2026-10-14T06:25:41.7928304Z ✔ auth pauses, server errors retain unknown request, conflict never silently retries at a new revision (0.747843ms)
+2026-10-14T06:25:42.2760925Z [zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+2026-10-14T06:25:42.2791224Z [zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+2026-10-14T06:25:42.2794754Z [zustand persist middleware] Unable to update item 'liftcut-tracker-ui-state', the given storage is currently unavailable.
+2026-10-14T06:25:42.2846906Z ✔ unreported values normalize to null without coercing booleans or inventing zero (3.663012ms)
+2026-10-14T06:25:42.2852144Z ✔ database reads preserve SQL null and reported zero, including numeric strings (0.5652ms)
+2026-10-14T06:25:42.2859546Z ✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (11.444902ms)
+2026-10-14T06:25:42.2863743Z ✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (13.118581ms)
+2026-10-14T06:25:42.2868348Z ✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.905916ms)
+2026-10-14T06:25:42.3104594Z ℹ tests 67
+2026-10-14T06:25:42.3104985Z ℹ suites 0
+2026-10-14T06:25:42.3105264Z ℹ pass 67
+2026-10-14T06:25:42.3106342Z ℹ fail 0
+2026-10-14T06:25:42.3106921Z ℹ cancelled 0
+2026-10-14T06:25:42.3107543Z ℹ skipped 0
+2026-10-14T06:25:42.3108127Z ℹ todo 0
+2026-10-14T06:25:42.3109231Z ℹ duration_ms 2605.595613
+2026-10-14T06:25:42.3369657Z ##[group]Run node --import tsx scripts/eval-workout-parser.ts > workout-parser-report.json
+2026-10-14T06:25:42.3370395Z [36;1mnode --import tsx scripts/eval-workout-parser.ts > workout-parser-report.json[0m
+2026-10-14T06:25:42.3447336Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:42.3447628Z env:
+2026-10-14T06:25:42.3447932Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:42.3448353Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:42.3448701Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:42.3448982Z ##[endgroup]
+2026-10-14T06:25:42.5572261Z ##[group]Run actions/upload-artifact@v6
+2026-10-14T06:25:42.5572829Z with:
+2026-10-14T06:25:42.5573230Z   name: workout-parser-evaluation
+2026-10-14T06:25:42.5573759Z   path: workout-parser-report.json
+2026-10-14T06:25:42.5574254Z   if-no-files-found: warn
+2026-10-14T06:25:42.5574782Z   compression-level: 6
+2026-10-14T06:25:42.5575204Z   overwrite: false
+2026-10-14T06:25:42.5575981Z   include-hidden-files: false
+2026-10-14T06:25:42.5576407Z env:
+2026-10-14T06:25:42.5576868Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:42.5577568Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:42.5578193Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:42.5578685Z ##[endgroup]
+2026-10-14T06:25:42.7377252Z With the provided path, there will be 1 file uploaded
+2026-10-14T06:25:42.7390232Z Artifact name is valid!
+2026-10-14T06:25:42.7390995Z Root directory input is valid!
+2026-10-14T06:25:42.9926592Z Beginning upload of artifact content to blob storage
+2026-10-14T06:25:43.1579151Z Uploaded bytes 422
+2026-10-14T06:25:43.1962453Z Finished uploading artifact content to blob storage!
+2026-10-14T06:25:43.1964265Z SHA256 digest of uploaded artifact zip is c08235c525b0c8e596cc146eb87a16064f35161708c954b312c08c6fd0fa49d4
+2026-10-14T06:25:43.1965939Z Finalizing artifact upload
+2026-10-14T06:25:43.5139558Z Artifact workout-parser-evaluation.zip successfully finalized. Artifact ID 11874465061
+2026-10-14T06:25:43.5141085Z Artifact workout-parser-evaluation has been successfully uploaded! Final size is 422 bytes. Artifact ID is 11874465061
+2026-10-14T06:25:43.5144793Z Artifact download URL: https://github.com/Townzc/liftcut-tracker/actions/runs/38522076607/artifacts/11874465061
+2026-10-14T06:25:43.5271859Z ##[group]Run npm run lint
+2026-10-14T06:25:43.5272163Z [36;1mnpm run lint[0m
+2026-10-14T06:25:43.5336309Z shell: /usr/bin/bash -e {0}
+2026-10-14T06:25:43.5336633Z env:
+2026-10-14T06:25:43.5336982Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:43.5337547Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:43.5338002Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:43.5338367Z ##[endgroup]
+2026-10-14T06:25:43.6368215Z 
+2026-10-14T06:25:43.6368957Z > liftcut-tracker@0.1.0 lint
+2026-10-14T06:25:43.6369560Z > eslint
+2026-10-14T06:25:43.6369788Z 
+2026-10-14T06:25:52.3342239Z 
+2026-10-14T06:25:52.3343959Z /home/runner/work/liftcut-tracker/liftcut-tracker/research/liftcut-coach/scripts/generate_seed_cases.ts
+2026-10-14T06:25:52.3376748Z ##[warning]  275:48  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars
+2026-10-14T06:25:52.3385925Z ##[warning]  358:49  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars
+2026-10-14T06:25:52.3387079Z 
+2026-10-14T06:25:52.3387587Z /home/runner/work/liftcut-tracker/liftcut-tracker/tests/product-browser/replacement.spec.ts
+2026-10-14T06:25:52.3389685Z ##[error]  53:34  error  'restored' is never reassigned. Use 'const' instead  prefer-const
+2026-10-14T06:25:52.3390627Z 
+2026-10-14T06:25:52.3391072Z ✖ 3 problems (1 error, 2 warnings)
+2026-10-14T06:25:52.3391304Z 
+2026-10-14T06:25:52.6011864Z ##[error]Process completed with exit code 1.
+2026-10-14T06:25:52.6090011Z ##[group]Run actions/upload-artifact@v6
+2026-10-14T06:25:52.6090361Z with:
+2026-10-14T06:25:52.6090590Z   name: w1a-browser-evidence
+2026-10-14T06:25:52.6091059Z   include-hidden-files: true
+2026-10-14T06:25:52.6091434Z   path: node_modules/.cache/w1a/*.png
+node_modules/.cache/w1a/browser/
+
+2026-10-14T06:25:52.6091845Z   if-no-files-found: warn
+2026-10-14T06:25:52.6092116Z   compression-level: 6
+2026-10-14T06:25:52.6092359Z   overwrite: false
+2026-10-14T06:25:52.6092579Z env:
+2026-10-14T06:25:52.6092868Z   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+2026-10-14T06:25:52.6093283Z   NEXT_PUBLIC_SUPABASE_ANON_KEY: public-ci-placeholder
+2026-10-14T06:25:52.6093643Z   NEXT_PUBLIC_WECHAT_LOGIN_ENABLED: false
+2026-10-14T06:25:52.6093935Z ##[endgroup]
+2026-10-14T06:25:52.7753809Z ##[warning]No files were found with the provided path: node_modules/.cache/w1a/*.png
+node_modules/.cache/w1a/browser/. No artifacts will be uploaded.
+2026-10-14T06:25:52.8008960Z Post job cleanup.
+2026-10-14T06:25:52.8929650Z [command]/usr/bin/git version
+2026-10-14T06:25:52.8985069Z git version 2.55.0
+2026-10-14T06:25:52.9051251Z Temporarily overriding HOME='/home/runner/work/_temp/4faaf108-f606-4002-a7c3-6e4034e4ca7b' before making global git config changes
+2026-10-14T06:25:52.9053453Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-14T06:25:52.9055213Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/liftcut-tracker/liftcut-tracker
+2026-10-14T06:25:52.9094509Z Removing SSH command configuration
+2026-10-14T06:25:52.9101396Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-14T06:25:52.9145013Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-14T06:25:52.9403128Z Removing HTTP extra header
+2026-10-14T06:25:52.9416479Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-14T06:25:52.9468748Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-14T06:25:52.9737161Z Removing includeIf entries pointing to credentials config files
+2026-10-14T06:25:52.9744991Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-14T06:25:52.9780372Z includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path
+2026-10-14T06:25:52.9782065Z includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path
+2026-10-14T06:25:52.9783192Z includeif.gitdir:/github/workspace/.git.path
+2026-10-14T06:25:52.9784056Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-14T06:25:52.9792190Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path
+2026-10-14T06:25:52.9824283Z /home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:52.9851560Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-9249647c\-b53f\-4907\-9b49\-7f1576f861ef\.config
+2026-10-14T06:25:52.9893489Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path
+2026-10-14T06:25:52.9924559Z /home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:52.9950684Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/liftcut-tracker/liftcut-tracker/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-9249647c\-b53f\-4907\-9b49\-7f1576f861ef\.config
+2026-10-14T06:25:52.9998572Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-14T06:25:53.0027671Z /github/runner_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:53.0035486Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-9249647c\-b53f\-4907\-9b49\-7f1576f861ef\.config
+2026-10-14T06:25:53.0072989Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-14T06:25:53.0099576Z /github/runner_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config
+2026-10-14T06:25:53.0110340Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-9249647c\-b53f\-4907\-9b49\-7f1576f861ef\.config
+2026-10-14T06:25:53.0150436Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-14T06:25:53.0390129Z Removing credentials config '/home/runner/work/_temp/git-credentials-9249647c-b53f-4907-9b49-7f1576f861ef.config'
+2026-10-14T06:25:53.0556833Z Cleaning up orphan processes

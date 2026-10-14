@@ -1,0 +1,59 @@
+[WebServer] (node:16368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:17620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 8 tests using 1 worker
+
+(node:41540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\product-browser\replacement.spec.ts:38:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only (2.6s)
+Testing stopped early after 1 maximum allowed failures.
+
+
+  1) tests\product-browser\replacement.spec.ts:38:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "name": "杠铃卧推",
+        "rep_range": "8-12",
+        "sets": 3,
+    -   "target_rpe": 7,
+    +   "target_rpe": "7",
+      }
+
+      45 |   expect(id).not.toBe(exercise);expect(after.replacements).toHaveLength(1);expect(after.sets).toEqual([]);
+      46 |   for(const name of ["重量 (kg)","次数","RPE"])await expect(page.getByTestId(`set-${id}-1`).getByLabel(name,{exact:true})).toHaveValue("");
+    > 47 |   expect((await db.query("select name,sets,rep_range,target_rpe from training_plan_exercises where id=$1",[exercise])).rows[0]).toEqual({name:"杠铃卧推",sets:3,rep_range:"8-12",target_rpe:7});
+         |                                                                                                                                 ^
+      48 |   await page.reload();await synced(page);await expect(page.getByTestId("replacement-receipts")).toContainText("云端回执已保存");expect(errors).toEqual([]);
+      49 | });
+      50 | test("offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities",async({page,context})=>{
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\replacement.spec.ts:47:129
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\replacement-preview-cancel-c172b-mation-changes-session-only\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\replacement-preview-cancel-c172b-mation-changes-session-only\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\replacement-preview-cancel-c172b-mation-changes-session-only\error-context.md
+
+  1 failed
+    tests\product-browser\replacement.spec.ts:38:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only 
+  7 did not run
+  1 error was not a part of any test, see above for details
