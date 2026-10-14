@@ -1,0 +1,56 @@
+{
+  "files": [
+    {
+      "path": "unit.log",
+      "sha256": "8eea832f4c4f8df44135e7e54411187103fdf784c5d81fe93a3d7d5a663c4292"
+    },
+    {
+      "path": "db-upgrade.log",
+      "sha256": "c950e9e0c0695cda6d09c89fadb5017c294b3d41dc204b7c076ca83e0bede39d"
+    },
+    {
+      "path": "db-regression.log",
+      "sha256": "9779003d6d98f7e3fbba593e55aa7790045a1049f929c0fc38ad8a57364a3ff9"
+    },
+    {
+      "path": "db-replacement.log",
+      "sha256": "d87e0e12432912c7a01d18a48b7860f2127f0e31c5565fa582a69006e13dd750"
+    },
+    {
+      "path": "browser-first.log",
+      "sha256": "955ed8d446d888c4a8d5437577c7349102fbf3fe79a0d1770ea579dfbf2219b5"
+    },
+    {
+      "path": "browser-second.log",
+      "sha256": "f69426f7ed8881dc0fc955ebf72544e21cdc65301cccabc0917d4fb38d5bf398"
+    },
+    {
+      "path": "browser-full.log",
+      "sha256": "c073da5295b6efbc4077013cd681d8f27dcf2327187bbb3bccd16647926ad8dd"
+    },
+    {
+      "path": "build.log",
+      "sha256": "c0b8a0a7ed316bb07f20a93513637bdbb371d6ca06c4c62986fe69e0c2744d03"
+    },
+    {
+      "path": "lint.log",
+      "sha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    },
+    {
+      "path": "typecheck-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "replacement-preview.png",
+      "sha256": "f71f42796a3b87eb684cef5f5e4bdcf2d25eae7b9c6ee5508bc8209dca55bccd"
+    },
+    {
+      "path": "replacement-conflict.png",
+      "sha256": "f9d4f1a0e31d2ed78d04384e8354dd6a22974b849357867d5b95545bb9f41af4"
+    },
+    {
+      "path": "offline-replacement-chain.png",
+      "sha256": "c8f5622107a894791b7f7f8021b777aedd6eb92222453b2827b42847562282bb"
+    }
+  ]
+}

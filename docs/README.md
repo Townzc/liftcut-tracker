@@ -10,7 +10,8 @@
 | [Week 3 Codex Brief](./product/WEEK3_CODEX_BRIEF.md) | Offline outbox first, then session-only exercise replacement; no GPU work |
 | [W3a Offline Outbox](./product/W3A_VERIFICATION.md) | Account-bound IndexedDB queue, ordered retries, conflict review, actual database and browser verification |
 | [Real Account Bootstrap](./product/ACCOUNT_BOOTSTRAP_VERIFICATION.md) | Stop implicit demo histories in real accounts; discovery, regression and release boundaries |
-| [W3b Implementation Design](./product/W3B_IMPLEMENTATION_DESIGN.md) | Planned session-only exercise replacement, fresh slot identities, compensation and offline conflict gates; not implemented |
+| [W3b Implementation Design](./product/W3B_IMPLEMENTATION_DESIGN.md) | Preregistered session-only exercise replacement boundaries and implementation sequence |
+| [W3b Verification](./product/W3B_VERIFICATION.md) | Session replacement, fresh identities, compensation, offline conflict tests and actual release status |
 | [Product Log](./product/PRODUCT_LOG.md) | One short entry per product PR |
 | [W1b Verification](./product/W1B_VERIFICATION.md) | Today-session transactions, real PostgreSQL/RLS, browser recovery, evidence and rollout boundaries |
 | [W1 Hosted Release](./product/W1_DEPLOYMENT.md) | Applied migrations, protected backup, real Auth/database verification, TLS, deployment and rollback |

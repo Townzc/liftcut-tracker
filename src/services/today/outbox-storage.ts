@@ -31,7 +31,7 @@ export class OutboxStorage {
           result=get.result??emptyOutbox(this.owner);
           if (result.version!==1 || result.owner!==this.owner || !Array.isArray(result.items)) throw new Error("STORAGE_VERSION");
           for(const item of result.items) {
-            if(!["start","set","end","apply","undo"].includes(item.action) || !["pending","retry","auth","conflict"].includes(item.status))throw new Error("STORAGE_VERSION");
+            if(!["start","set","end","apply","undo","replace","undoReplacement"].includes(item.action) || !["pending","retry","auth","conflict"].includes(item.status))throw new Error("STORAGE_VERSION");
             const p=operationOf(item);
             if(operationId(p)!==item.id || JSON.stringify(operationBody(p))!==item.bodyJson)throw new Error("STORAGE_VERSION");
           }

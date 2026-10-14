@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { WorkoutLog } from "@/types";
 import type { CommandReceipt } from "@/lib/workout-commands";
+import type { ReplacementReceipt } from "@/lib/exercise-replacement";
 
 export function localDateAt(at: Date, timezone: string): string {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(at);
@@ -29,11 +30,12 @@ export type StoredSet = Omit<SetRequest, "weightSource" | "repsSource" | "inputU
   inputUnit: "kg" | "lb"; sourceRef: string;
 };
 export type SetLog = StoredSet & { exerciseName: string; updatedAt: string };
-export type PrescriptionExercise = { id: string; name: string; sets: number; repRange: string; targetRpe: number };
+export type PrescriptionExercise = { id: string; name: string; sets: number; repRange: string; targetRpe: number;
+  originalPlanExerciseId?:string; catalogId?:string };
 export type Prescription = { title: string; exercises: PrescriptionExercise[] };
 export type Session = { id: string; userId: string; localDate: string; timezone: string; trainingPlanId: string;
   weekNumber: number; dayNumber: number; status: "active" | "ended" | "cancelled"; revision: number;
-  prescription: Prescription; startedAt: string; endedAt: string | null; sets: SetLog[] };
+  prescription: Prescription; startedAt: string; endedAt: string | null; sets: SetLog[]; replacements?:ReplacementReceipt[] };
 export type TodayData = { session: Session | null; days: { id: string; weekNumber: number; dayNumber: number; title: string }[];
   previous: Record<string, { weightKg: number | null; reps: number | null }>; receipts?: CommandReceipt[] };
 

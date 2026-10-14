@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,11 +10,15 @@ import { setRequestSchema, type Session, type SetLog, type SetRequest, type Pres
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { projectOutbox, type OutboxState, type OutboxItem } from "@/lib/workout-outbox";
 import { WorkoutOutboxClient } from "@/services/today/outbox-client";
+import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
+import { exerciseCatalog, exerciseLabel } from "@/lib/exercise-catalog";
 
 import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
 function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
-  const t=useTranslations("today");
+  const t=useTranslations("today"),locale=useLocale();
   const body=JSON.parse(item.bodyJson);
+  if(item.action==="replace")return <li>{t("replacement.open")} · {exerciseLabel(exerciseCatalog.find(e=>e.id===body.candidateId)?.zh??"—",locale)}</li>;
+  if(item.action==="undoReplacement")return <li>{t("replacement.undo")}</li>;
   if(item.action==="apply")return <li>“{body.text}”</li>;
   if(item.action==="undo")return <li>{t("sentence.undo")} · “{data?.receipts?.find(r=>r.id===body.commandId)?.text??"—"}”</li>;
   if(item.action==="start" || item.action==="end")return <li>{t(item.action)}</li>;
@@ -87,7 +91,7 @@ export function TodayPage({ enabled }: { enabled: boolean }) {
   return <TodayWorkspace key={user.id} owner={user.id} />;
 }
 function TodayWorkspace({owner}:{owner:string}) {
-  const t=useTranslations("today");
+  const t=useTranslations("today"),locale=useLocale();
   const [state,setState]=useState<OutboxState | null>(null);
   const client=useRef<WorkoutOutboxClient | null>(null);
   const [remote,setRemote]=useState<{data:TodayData;revision:number} | null>(null);
@@ -146,6 +150,7 @@ function TodayWorkspace({owner}:{owner:string}) {
       <p>{t("outbox.conflictHint",{count})}</p>
       <details open><summary>{t("outbox.local")}</summary><ol className="ml-5 list-decimal space-y-2">{state?.items.map(item=><PendingOperation key={item.id} item={item} data={data} />)}</ol></details>
       <details open><summary>{t("outbox.remote")}</summary><p>{remote.data.session ? t(remote.data.session.status==="active"?"active":"ended") : t("outbox.noActive")}</p>
+        {remote.data.session?.prescription.exercises.map(e=><p key={e.id}>{exerciseLabel(e.name,locale)} · {t("target",{sets:e.sets,reps:e.repRange,rpe:e.targetRpe})}</p>)}
         {remote.data.session?.sets.map(s=><p key={s.id}>{s.exerciseName} · {t("set",{number:s.setIndex})}: {s.weightKg??"—"} kg × {s.reps??"—"} · RPE {s.rpe??"—"} · {t(s.status)} · v{s.revision}</p>)}</details>
       <Button variant="outline" disabled={busy} onClick={async()=>{
         try {await client.current!.discardConflict(remote);setRemote(null);setError("");}catch{setError("LOCAL_CONFLICT");}
@@ -165,13 +170,15 @@ function TodayWorkspace({owner}:{owner:string}) {
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
       </CardContent></Card>
       {session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
-      {session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exercise.name}</CardTitle>
+      {session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exerciseLabel(exercise.name,locale)}</CardTitle>
         <p className="text-sm text-muted-foreground">{t("target", { sets:exercise.sets,reps:exercise.repRange,rpe:exercise.targetRpe })}</p></CardHeader>
-        <CardContent className="space-y-3">{Array.from({ length:exercise.sets },(_,i)=> {
+        <CardContent className="space-y-3"><ExerciseReplacement session={session} exercise={exercise} busy={locked} submit={submit} />{Array.from({ length:exercise.sets },(_,i)=> {
           const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1);
           return <SetRow key={`${session.id}-${i}-${saved?.revision ?? 0}`} session={session} exercise={exercise} index={i+1} saved={saved}
-            previous={data.previous[exercise.name]} busy={locked} submit={submit} />;
+            previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} busy={locked} submit={submit} />;
         })}</CardContent></Card>)}
+      <ReplacementReceipts session={session} busy={locked} submit={submit}
+        pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />
       {session.status === "active" ? <div className="space-y-2"><p className="text-sm text-muted-foreground">{t("endHint")}</p>
         <Button disabled={locked} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
         : !count && <Link href="/workout" className="underline">{t("history")}</Link>}
