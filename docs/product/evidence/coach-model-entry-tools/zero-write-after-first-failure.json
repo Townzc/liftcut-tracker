@@ -1,0 +1,93 @@
+{
+  "observed_at": "2026-10-14 20:03:40.280604+00",
+  "personal_events": [
+    {
+      "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+      "receipt": {
+        "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+        "model": {
+          "model": "deepseek-flash",
+          "version": "coach-v1",
+          "provider": "deepseek",
+          "sourceTexts": [
+            "今早",
+            "七十二点五公斤"
+          ]
+        },
+        "action": "create",
+        "recordId": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+        "createdAt": "2026-10-14T19:10:04.603Z"
+      },
+      "request": {
+        "id": "b97e14e8-88b9-40e1-941c-2aec67cc05e3",
+        "text": "今早上秤七十二点五公斤，腰围没量，给我记一下",
+        "entry": {
+          "date": "2026-10-14",
+          "kind": "body",
+          "waistCm": null,
+          "weightKg": 72.5
+        },
+        "action": "create",
+        "source": "conversation",
+        "anchorDate": "2026-10-14"
+      },
+      "parent_id": null
+    },
+    {
+      "id": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+      "receipt": {
+        "id": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+        "model": {
+          "model": "deepseek-flash",
+          "version": "coach-v1",
+          "provider": "deepseek",
+          "sourceTexts": [
+            "一碗牛肉面",
+            "中午"
+          ]
+        },
+        "action": "create",
+        "recordId": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+        "createdAt": "2026-10-14T19:10:15.975Z"
+      },
+      "request": {
+        "id": "84e4a5f6-01b8-4881-8ad7-580dfdd393ef",
+        "text": "中午吃了一碗牛肉面，热量和蛋白质都不清楚，先帮我记下吃的东西",
+        "entry": {
+          "date": "2026-10-14",
+          "kind": "food",
+          "protein": null,
+          "calories": null,
+          "foodName": "一碗牛肉面",
+          "mealType": "lunch"
+        },
+        "action": "create",
+        "source": "conversation",
+        "anchorDate": "2026-10-14"
+      },
+      "parent_id": null
+    }
+  ],
+  "second_account_records": 0,
+  "sets": [
+    {
+      "id": "2b92f672-00f4-48aa-abc2-2db8bdfa5a06",
+      "rpe": null,
+      "reps": 8,
+      "status": "done",
+      "weight": 50,
+      "revision": 1
+    }
+  ],
+  "set_events": 2,
+  "plan": [
+    {
+      "id": "949651b9-7f0a-4192-97bb-404ee2f10d36",
+      "name": "深蹲",
+      "sets": 3,
+      "rep_range": "8-12",
+      "target_rpe": 7
+    }
+  ],
+  "legacy_differences": 0
+}

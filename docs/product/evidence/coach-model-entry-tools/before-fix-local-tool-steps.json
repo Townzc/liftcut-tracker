@@ -1,0 +1,100 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_yKqPpjszkA8tID0io29N2411",
+        "toolName": "prepare_personal",
+        "input": "{\"kind\": \"body\", \"dateQuote\": \"今天\", \"weightQuote\": \"七十三点一公斤\", \"waistQuote\": 腰围仍没量, \"foodQuote\": null, \"mealQuote\": null, \"caloriesQuote\": \"null\", \"proteinQuote\": \"null\"}",
+        "dynamic": true,
+        "invalid": true,
+        "error": {
+          "name": "AI_InvalidToolInputError",
+          "cause": {
+            "name": "AI_JSONParseError",
+            "cause": {},
+            "text": "{\"kind\": \"body\", \"dateQuote\": \"今天\", \"weightQuote\": \"七十三点一公斤\", \"waistQuote\": 腰围仍没量, \"foodQuote\": null, \"mealQuote\": null, \"caloriesQuote\": \"null\", \"proteinQuote\": \"null\"}"
+          },
+          "toolInput": "{\"kind\": \"body\", \"dateQuote\": \"今天\", \"weightQuote\": \"七十三点一公斤\", \"waistQuote\": 腰围仍没量, \"foodQuote\": null, \"mealQuote\": null, \"caloriesQuote\": \"null\", \"proteinQuote\": \"null\"}",
+          "toolName": "prepare_personal"
+        }
+      }
+    ],
+    "toolResults": []
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_P8h9xU2r34NF8QG1kt8I0324",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "body",
+          "dateQuote": "今天",
+          "weightQuote": "七十三点一公斤",
+          "waistQuote": null,
+          "foodQuote": null,
+          "mealQuote": null,
+          "caloriesQuote": null,
+          "proteinQuote": null
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_P8h9xU2r34NF8QG1kt8I0324",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "body",
+          "dateQuote": "今天",
+          "weightQuote": "七十三点一公斤",
+          "waistQuote": null,
+          "foodQuote": null,
+          "mealQuote": null,
+          "caloriesQuote": null,
+          "proteinQuote": null
+        },
+        "output": {
+          "draft": {
+            "kind": "body",
+            "date": "2026-10-14",
+            "weightKg": 73.1,
+            "waistCm": null
+          },
+          "saved": false,
+          "requiresUserConfirmation": true
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_axxNZlh17I8TZM5wUHGO3916",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已生成今天的体重草稿：73.1 公斤，腰围留空（未测量）。请在卡片上确认后才会保存，目前还没有写入记录。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_axxNZlh17I8TZM5wUHGO3916",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已生成今天的体重草稿：73.1 公斤，腰围留空（未测量）。请在卡片上确认后才会保存，目前还没有写入记录。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

@@ -1,10 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { groundPersonal, groundWorkout, reportedNumber, requestedReadRange } from "../src/lib/coach-grounding";
+import { bodyExtractionSchema, foodExtractionSchema, groundPersonal, groundWorkout, reportedNumber, requestedReadRange } from "../src/lib/coach-grounding";
 import { conversationHistory, coachRequestSchema } from "../src/lib/coach-model";
 import type { Session } from "../src/lib/today";
 const empty={dateQuote:null,weightQuote:null,waistQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
 const day="2026-10-14";
+test("entry tools reject cross-topic fields and ground an explicit current measurement",()=>{
+  const body={dateQuote:"现在",weightQuote:"七十三点一公斤",waistQuote:null};
+  assert.equal(bodyExtractionSchema.safeParse({...body,foodQuote:"牛肉面"}).success,false);
+  assert.equal(foodExtractionSchema.safeParse({dateQuote:null,foodQuote:"牛肉面",mealQuote:"午餐",caloriesQuote:null,proteinQuote:null,weightQuote:"73kg"}).success,false);
+  assert.deepEqual(groundPersonal({...empty,...body,kind:"body"},["现在称到七十三点一公斤，腰围仍没量，帮我追加一条今天的数据"],day),{kind:"body",date:day,weightKg:73.1,waistCm:null});
+});
 test("a date follow-up narrows the fresh read without narrowing comparisons",()=>{
   assert.deepEqual(requestedReadRange("那昨天呢？",day),{from:"2026-10-13",to:"2026-10-13"});
   assert.deepEqual(requestedReadRange("what about today?",day),{from:day,to:day});

@@ -1,0 +1,39 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_BH7kvWHszcmYNPRVDd1u3779",
+        "toolName": "prepare_body",
+        "input": {
+          "dateQuote": null,
+          "weightQuote": "七十三点一公斤",
+          "waistQuote": null
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_BH7kvWHszcmYNPRVDd1u3779",
+        "toolName": "prepare_body",
+        "input": {
+          "dateQuote": null,
+          "weightQuote": "七十三点一公斤",
+          "waistQuote": null
+        },
+        "output": {
+          "draft": {
+            "kind": "body",
+            "date": "2026-10-14",
+            "weightKg": 73.1,
+            "waistCm": null
+          },
+          "saved": false,
+          "requiresUserConfirmation": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]
