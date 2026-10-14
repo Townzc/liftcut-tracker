@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { WorkoutLog } from "@/types";
+import type { CommandReceipt } from "@/lib/workout-commands";
 
 export function localDateAt(at: Date, timezone: string): string {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(at);
@@ -22,14 +23,19 @@ export const setRequestSchema = z.object({
   .refine(r => (r.weightKg === null) === (r.weightSource === null) && (r.reps === null) === (r.repsSource === null), "Value/source mismatch")
   .refine(r => r.status !== "skipped" || [r.weightKg, r.reps, r.rpe].every(v => v === null), "Skip cannot report actuals");
 export type SetRequest = z.infer<typeof setRequestSchema>;
-export type SetLog = SetRequest & { exerciseName: string; updatedAt: string };
+// Internal records can carry speech provenance. The public tap schema stays narrower.
+export type StoredSet = Omit<SetRequest, "weightSource" | "repsSource" | "inputUnit" | "sourceRef"> & {
+  weightSource: SetRequest["weightSource"] | "user_said"; repsSource: SetRequest["repsSource"] | "user_said";
+  inputUnit: "kg" | "lb"; sourceRef: string;
+};
+export type SetLog = StoredSet & { exerciseName: string; updatedAt: string };
 export type PrescriptionExercise = { id: string; name: string; sets: number; repRange: string; targetRpe: number };
 export type Prescription = { title: string; exercises: PrescriptionExercise[] };
 export type Session = { id: string; userId: string; localDate: string; timezone: string; trainingPlanId: string;
   weekNumber: number; dayNumber: number; status: "active" | "ended" | "cancelled"; revision: number;
   prescription: Prescription; startedAt: string; endedAt: string | null; sets: SetLog[] };
 export type TodayData = { session: Session | null; days: { id: string; weekNumber: number; dayNumber: number; title: string }[];
-  previous: Record<string, { weightKg: number | null; reps: number | null }> };
+  previous: Record<string, { weightKg: number | null; reps: number | null }>; receipts?: CommandReceipt[] };
 
 // One completed set is one actual row. Skipped, voided and unreported sets never
 // enter legacy statistics; prescription totals are not multiplied into actuals.

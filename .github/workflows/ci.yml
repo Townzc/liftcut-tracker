@@ -933,7 +933,9 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Upgrade actual W1a schema and verify PostgreSQL transactions and RLS
-        run: node --conditions=react-server --import tsx --test tests/product-db/today.test.ts
+        run: |
+          node --conditions=react-server --import tsx --test tests/product-db/today.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/workout-commands.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag

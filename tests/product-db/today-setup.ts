@@ -14,6 +14,7 @@ export async function setup() {
     // Upgrade from the actual reviewed W1a schema, not a mock of our new schema.
     await db.query(execFileSync("git",["show","5ed487de7f05c5c87523abe75ff0419bcf0324c2:supabase/schema.sql"],{encoding:"utf8"}).replace(/^\uFEFF/,""));
     await db.query(await readFile("supabase/migrations/20261014002316_today_session.sql","utf8"));
+    await db.query(await readFile("supabase/migrations/20261014025246_workout_command_receipts.sql","utf8"));
     await db.query("alter role liftcut_workout login password 'w1b-local-fixture-only'");
     console.log("W1b upgrade: actual W1a schema + migration on local PostgreSQL; synthetic auth.uid, not hosted GoTrue");
   } finally { await db.end(); }

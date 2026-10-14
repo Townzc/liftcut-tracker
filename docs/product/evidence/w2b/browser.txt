@@ -1,0 +1,27 @@
+[WebServer] (node:44740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:61452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:52376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:65216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 6 tests using 1 worker
+
+(node:45440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\product-browser\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.5s)
+  ok 2 tests\product-browser\sentence.spec.ts:71:5 › new routes reject anonymous and cross-origin requests (72ms)
+  ok 3 tests\product-browser\today.spec.ts:21:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.3s)
+  ok 4 tests\product-browser\today.spec.ts:63:5 › server flag off hides navigation and blocks writes while preserving history (1.1s)
+  ok 5 tests\product-browser\today.spec.ts:71:5 › API rejects signed-out users and cross-origin writes (18ms)
+  ok 6 tests\product-browser\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (1.2s)
+
+  6 passed (14.9s)
