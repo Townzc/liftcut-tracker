@@ -57,3 +57,6 @@ research/liftcut-agent/reports/p1-application-2026-10-13/*.log -text whitespace=
 research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.json -text whitespace=cr-at-eol
 research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 research/liftcut-agent/reports/p1m-readiness-2026-10-13/*.tar.gz -text
+# Keep captured hosted-release logs byte-for-byte, including terminal whitespace.
+docs/product/evidence/w1-release/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/product/evidence/w1-release/*.json -text whitespace=cr-at-eol

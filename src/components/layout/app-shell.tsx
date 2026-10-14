@@ -130,7 +130,7 @@ export function AppShell({ children, todayEnabled = false }: { children: ReactNo
 
       <div className="pb-20 md:ml-64 md:pb-0">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 pt-4 md:hidden">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
             <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="h-8 w-8" textClassName="text-xs" />
             <div className="min-w-0">
               <p className="truncate text-sm font-medium text-slate-900 dark:text-slate-100">{displayName}</p>
