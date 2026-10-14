@@ -1,0 +1,25 @@
+{
+  "kind": "synthetic_rules_development_evaluation",
+  "modelCalls": 0,
+  "total": 150,
+  "exact": 150,
+  "expectedDrafts": 79,
+  "draftMatches": 79,
+  "expectedClarifications": 71,
+  "falseDrafts": 0,
+  "fieldCount": 755,
+  "matchedFields": 755,
+  "nullFields": 153,
+  "inventedNulls": 0,
+  "reportedFields": 207,
+  "omittedFields": 0,
+  "correctionCount": 7,
+  "correctionMatches": 7,
+  "families": 10,
+  "languages": {
+    "zh": 74,
+    "en": 40,
+    "mixed": 36
+  },
+  "failures": []
+}

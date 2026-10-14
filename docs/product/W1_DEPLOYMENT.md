@@ -19,7 +19,7 @@
 | `20261014012451` | 受影响表私有快照 | 100 行、摘要相同、普通账号无 schema 权限 |
 | `20261014012511` | [W1a SQL](../../supabase/migrations/20261013234503_unknown_workout_actuals.sql) | 三列 `is_nullable=YES`；原行逐条相同 |
 | `20261014012537` | [W1b SQL](../../supabase/migrations/20261014002316_today_session.sql) | 三表 ENABLE/FORCE RLS，浏览器仅本人读取 |
-| 后续角色配置 | 新建的 `liftcut_workout` 启用 LOGIN | 非 superuser、无 BYPASSRLS、连接上限 12；无删除组/改写事件权限 |
+| `20261014012654` | 新建的 `liftcut_workout` 启用 LOGIN | 非 superuser、无 BYPASSRLS、连接上限 12；无删除组/改写事件权限 |
 
 平台工具生成的应用时间版本与源 SQL 文件时间不同，上表记录对应关系。旧项目此前没有迁移历史；不要不经核对运行 `db push`、重放 `schema.sql` 或把所有研究迁移补跑到此项目。
 
@@ -40,9 +40,16 @@
 - 本机 Next → 托管 GoTrue → 同一托管 PostgreSQL 的完整浏览器验收于 01:37:39 通过：双击、服务端提交后丢弃响应、同请求重试、刷新三组、更正/撤销、旧请求 409、第二个真实认证账号读写隔离、结束后历史过滤。数据库复核为三条组记录、第二组 revision=3/voided、全部 RPE=NULL、7 条事件；原 100 行摘要不变。浏览器无 JS 错误。
 - 第一次脚本默认 5 秒断言早于 5.1 秒 start 响应，服务器已创建一个空会话；先核实该会话为空，再调整验收超时并恢复它，没有重复创建。此为验收脚本超时，不冒充产品保存失败。
 - 实际查看手机截图时发现长邮箱把页头横向撑开，给其 flex 容器加收缩约束；生产浏览器验收同时检查页面宽度。
-- 本次最终生产部署及生产域名验收结果待发布后记录；以上本机应用联通托管服务的测试不冒充线上部署测试。
+- #67 精确 `4bfdd2dcd395f1789fcc35f4b2edf4498e7e1bb7` 全部 8 项检查成功，于 01:58:04 合并为 `2bbd0176d4d7b862203536c166439f38071bd013`；受检/合并树均 `7b365a40076fdd9d06810316f149da1b886657f5`。
+- 自动生产部署 `dpl_GMKH2ko2VUn9QT8mgDrbd3oge2LZ` 于 01:59:06.444 READY，绑定 `www.liftcuttracker.com`，commit 为上述 main 合并提交，运行区 `icn1`。数据库 URL/CA 与 `FEATURE_TODAY_SESSION=true` 仅设在 production，未把生产连接凭据发给 preview。
+- **正式域名验收于 02:04:44 通过**：真实 GoTrue 登录 → Vercel → 托管 PostgreSQL，重跑三组/双击/提交后丢响应/同请求重试/刷新/更正/撤销/旧请求 409/跨账号 404/结束过滤；无浏览器 JS 错误，390px 视口无横向溢出。实际查看两张手机截图，目标 RPE 与空实际 RPE 分开显示。
+- 线上第一次卡在“开始训练”：只读页面检查发现合成账号缺 `user_settings`，被正确重定向到 onboarding。首次补夹具又因旧表 `calorie_target` 等没有默认值失败；读取实际列定义后补齐**两个合成账号**，未关闭访问检查、未改真实资料。提前发出的第二次测试已中断；第三次完整通过。失败不冒充成功，也不重复盲跑。
+- 02:05:49 数据库独立复核为 3 组、7 事件、第二组 revision=3/voided、全部 RPE=NULL；原 100 行与私有快照双向差异 0。02:06:18 撤销测试刷新令牌/会话并删除仅本次创建的两账号及级联合成计划/组/事件，恢复 6 个原账号，原 100 行仍逐条相同；本地两份临时密码文件已删除。运行账户保留在生产服务端配置中。
+- 本次浏览器捕获的 5 条成功 `set` HTTP 请求为 620–845ms，初次会话 GET 为 6832ms、后续为 496ms，start 1613ms。仅一次合成验收的观察，含网络与服务开销，未记录全部底层请求，不能据此声称稳定 p95 或受控提升倍数；后续再独立测冷启动与历史刷新开销。
 
 证据：[托管服务浏览器结果](evidence/w1-release/local-hosted-result.json)、[手机截图（合成账号，包含随后修复的页头溢出）](evidence/w1-release/local-hosted-three-sets.png)、[60 项单元测试](evidence/w1-release/unit.txt)、[lint](evidence/w1-release/lint.txt)、[最终构建](evidence/w1-release/build.txt)。
+
+正式上线证据：[生产浏览器结果与实测 HTTP 时长](evidence/w1-release/production-browser-result.json)、[三组手机截图](evidence/w1-release/production-three-sets.png)、[结束截图](evidence/w1-release/production-ended.png)、[部署、独立数据库复核与合成数据清理](evidence/w1-release/production-database-verification.json)。测试数据已清理，截图/JSON 留存的是合成验收，不是真实用户训练。
 
 ## 回滚与后续
 
