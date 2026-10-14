@@ -859,15 +859,15 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: 1c7e25bdcde8eb0acdd4f171e8b8e23475ec9d06
-          path: node_modules/p1m-frozen
+          path: research/liftcut-agent/outputs/p1m-frozen-w1a
       - name: Prepare isolated frozen P1-M database and dependencies
-        working-directory: node_modules/p1m-frozen
+        working-directory: research/liftcut-agent/outputs/p1m-frozen-w1a
         run: |
           npm ci
           psql "$P1_TEST_DATABASE_URL" --set=ON_ERROR_STOP=1 --command='CREATE DATABASE liftcut_p1_model_ci;'
           P1_TEST_DATABASE_URL=postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_model_ci npm run test:p1:setup
       - name: Check P1-M immutable sources, negative gates and actual database/native recovery
-        working-directory: node_modules/p1m-frozen
+        working-directory: research/liftcut-agent/outputs/p1m-frozen-w1a
         env:
           P1M_TOKENIZER: ${{ github.workspace }}/research/liftcut-agent/outputs/ci-p1m-tokenizer
           P1_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_model_ci
@@ -901,9 +901,9 @@ jobs:
           name: p1-browser-evidence
           path: |
             research/liftcut-agent/outputs/p1-browser*
-            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m/
-            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m-restored/
-            node_modules/p1m-frozen/research/liftcut-agent/outputs/ci-p1m-published-restored/
+            research/liftcut-agent/outputs/p1m-frozen-w1a/research/liftcut-agent/outputs/ci-p1m/
+            research/liftcut-agent/outputs/p1m-frozen-w1a/research/liftcut-agent/outputs/ci-p1m-restored/
+            research/liftcut-agent/outputs/p1m-frozen-w1a/research/liftcut-agent/outputs/ci-p1m-published-restored/
 
   quality:
     runs-on: ubuntu-latest

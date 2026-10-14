@@ -39,6 +39,7 @@
 - 数据库夹具最初因 schema 的 UTF-8 BOM、随后因缺必填父记录字段失败；修正夹具后在新的空测试库执行，再补本人角色实际提交验证。没有清理生产数据。
 - 浏览器最初因“查看详情”按钮包含额外可访问文字而定位失败；修正选择器后暴露访客详情拒绝问题，修复应用后通过。最后只调整截图取景为手机视口并复跑。
 - 首次远端 CI 的当前产品与 W1a PostgreSQL/浏览器校验通过，随后原冻结 P1-M 安装器拒绝了隔离库名 `liftcut_p1m_ci`（不满足它的 `liftcut_p1_` 安全前缀）。只将 CI 夹具库名改为 `liftcut_p1_model_ci`，不放宽冻结安装器；[原失败日志](https://github.com/Townzc/liftcut-tracker/actions/runs/38487312917/job/115603968177) 保留，新提交重新接受全部检查。
+- 第二次 CI 在原协议的失联故障测试中暴露子进程加载失败。本机用同一冻结版本复现：`node_modules` 内的副本无法解析 `@/lib/agent/contracts`。改将副本放到现有 TypeScript 排除的 `research/liftcut-agent/outputs/p1m-frozen-w1a`，不改冻结文件；真实新测试库安装后 8 项协议测试通过，3 项 native 测试因本次本地未设 tokenizer 而明确跳过，完整 native 校验仍由 CI 执行。[第二次失败](https://github.com/Townzc/liftcut-tracker/actions/runs/38487590998/job/115604870923) 保留。
 - PostgreSQL 使用合成 `auth.uid()` 身份契约测试真实 RLS；没有调用托管 Supabase Auth/GoTrue。浏览器验证访客持久化，数据库验证实际 SQL 与应用读取；二者不能合称托管登录全链路验收。
 - 未执行生产迁移、生产部署或真机微信测试；未实现 W1b 的会话、逐组记录、版本冲突、双击去重或撤销。旧记录 repository 的多请求保存事务问题留在后续产品写入链路处理，不宣称此次已解决。
 - 旧重量/次数 0 及目标误填的非零 RPE 没有可靠来源信息，不能自动区分。保留数值并提示历史零值边界，不推断或回填。
