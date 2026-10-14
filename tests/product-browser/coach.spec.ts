@@ -81,6 +81,25 @@ test("offline chat batch -> correction -> undo -> end persists exact order, NULL
   expect((await db.query("select status from workout_sessions where id=$1",[initial.id])).rows[0].status).toBe("ended");
 });
 
+test("query after ending reads committed history while the background cache refresh is still blocked",async({page})=>{
+  await start(page);await send(page,"杠铃卧推 8 次");await confirm(page);await synced(page);await page.waitForLoadState("networkidle");
+  const session=(await read(page)).session!;
+  let release!:()=>void,observed!:()=>void;
+  const gate=new Promise<void>(resolve=>{release=resolve;});
+  const blocked=new Promise<void>(resolve=>{observed=resolve;});
+  await page.route("**/api/workout-sessions/history",async route=>{
+    const response=await route.fetch();observed();await gate;await route.fulfill({response});
+  },{times:1});
+  try {
+    await send(page,"练完了");await page.getByRole("button",{name:"确认结束训练",exact:true}).click();
+    await expect(page.getByTestId("coach-draft")).toHaveCount(0);await synced(page);await blocked;
+    expect((await db.query("select status from workout_sessions where id=$1",[session.id])).rows[0].status).toBe("ended");
+    expect((await (await page.request.get("/api/workout-sessions/history")).json()).find((log:{id:string})=>log.id===session.id).completed).toBe(true);
+    await send(page,"本周训练");
+    await expect(page.getByTestId("coach-turn").last()).toContainText("本周已保存 1 次",{timeout:8000});
+  } finally {release();await page.unrouteAll({behavior:"wait"});}
+});
+
 test("a draft becomes stale after another page records; lost confirmation response survives page switching",async({page,context})=>{
   await start(page);await send(page,"杠铃卧推 8 次");const second=await context.newPage();await second.goto("/today");await synced(second);
   const row=second.getByTestId(`set-${bench}-1`);await row.getByLabel("次数",{exact:true}).fill("10");await row.getByRole("button",{name:"完成",exact:true}).click();await synced(second);
@@ -128,7 +147,11 @@ test("IME and multiline input never auto-submit; flag, account isolation and Eng
   await page.goto("/settings");await page.getByRole("combobox").filter({hasText:"中文"}).click();await page.getByRole("option",{name:"English",exact:true}).click();
   // The local Auth HTTP fixture returns zh-CN on hard reload; use the real SPA preference switch.
   await page.getByRole("link",{name:"Agent",exact:true}).click();
-  await expect(page.getByRole("heading",{name:"Agent",exact:true})).toBeVisible();await page.getByText("Training tools & examples",{exact:true}).click();await page.getByRole("button",{name:"show plan",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Agent",exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Send",exact:true})).toBeVisible();
+  const sendButton=await page.getByRole("button",{name:"Send",exact:true}).boundingBox(),navigation=await page.getByRole("navigation",{name:"Main navigation"}).boundingBox();
+  expect(sendButton!.y+sendButton!.height).toBeLessThanOrEqual(navigation!.y);
+  await page.getByText("Training tools & examples",{exact:true}).click();await page.getByRole("button",{name:"show plan",exact:true}).click();
   await expect(page.getByRole("log")).toContainText("No active plan yet");await page.screenshot({path:"node_modules/.cache/coach/chat-english.png",fullPage:true});
   const disabled=await context.newPage();await disabled.goto("http://localhost:3104/coach");await expect(disabled.getByTestId("coach-conversation")).toHaveCount(0);await disabled.close();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);

@@ -1,0 +1,11 @@
+{
+  "environment": "Real GoTrue / Vercel / Supabase with two synthetic accounts only",
+  "deployment": "3027d573db761dd2ec292de25af96874122d484b",
+  "observedAt": "2026-10-14T10:12:13Z",
+  "phase": "training trace",
+  "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByTestId('coach-turn').last()\nExpected substring: \"本周已保存 1 次\"\nReceived string:    \"本周训练Agent 03:12本周已保存 0 次结束的训练。依据已保存的记录；未填写的数值显示为 —。\"\nTimeout: 60000ms\n\nCall log:\n  - Expect \"toContainText\" getByTestId('coach-turn').last() with timeout 60000ms\n  - waiting for getByTestId('coach-turn').last()\n    122 × locator resolved to <div class=\"space-y-2\" data-testid=\"coach-turn\">…</div>\n        - unexpected value \"本周训练Agent 03:12本周已保存 0 次结束的训练。依据已保存的记录；未填写的数值显示为 —。\"\n",
+  "sessionId": "d6789771-5afe-497a-b567-b4449bb390d2",
+  "setId": "12fc069d-7119-4231-9ea9-4a3982830b3e",
+  "jsErrors": [],
+  "modelCalls": []
+}

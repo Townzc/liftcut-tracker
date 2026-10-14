@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-10-14T10:45:39.265Z",
+  "baseCommit": "3027d573db761dd2ec292de25af96874122d484b",
+  "results": {
+    "unit": 80,
+    "browser": 38,
+    "browserMinutes": 1.5,
+    "build": "PASS",
+    "types": "PASS",
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 2
+    },
+    "changedFileLint": "PASS"
+  },
+  "files": [
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-before.log",
+      "bytes": 12816,
+      "sha256": "72766b1651980dbd12c085aa4c894b6dbb1ddb63eec2e4093a5e91ab56d99b99",
+      "originalSha256": "30b1d59f0cf51b4ec7d3a25bcc865a1738d6dc7e01c7a6296abc72fbfe8767cf",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-browser.log",
+      "bytes": 14344,
+      "sha256": "d614c74bb0345bd4a2c6a7ecb10351c9aa8e3902c5ff5f65cd2b024de25a7f43",
+      "originalSha256": "e5744fa55b99d10f13c0ffe8843de564c67bd7371bd8c4dfed782cb790b92fb5",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-browser-final.log",
+      "bytes": 7310,
+      "sha256": "734e8f454ec1db193eec6afe25ff72e2816cdda9770b771486827d77088248ef",
+      "originalSha256": "973a852dbfbdad802c437d6145f3e206e7350d5bd9e4f3eeefb8b9bef1092df3",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-build-final.log",
+      "bytes": 1435,
+      "sha256": "3274332d6eff2fd15b0bade4256c2b64f3e68796b0c6b4b84a070a6466b49603",
+      "originalSha256": "07fef35c7d852397c1e288cac0526162b79cb8c49bdc74c201f95aa144fdeae1",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-unit.log",
+      "bytes": 6931,
+      "sha256": "e5e21a55cf55c97055382445e446aa4a59030f3ea2e4841f351f28b7b3f58fb5",
+      "originalSha256": "2e349ff8ff2b3b4639761891dfbf0ddcdf317b9c4c21411012b6ab2d1d4862bd",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-lint.log",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
+      "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-lint-changed.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/freshness-types-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "LF, trim line trailing whitespace"
+    },
+    {
+      "path": "docs/product/evidence/agent-freshness/hosted-failure.json",
+      "bytes": 1087,
+      "sha256": "45c86ea3e7c76d98aef3718724ff3be94b487e3abe88dd84c6d66f7ed2915a7d"
+    },
+    {
+      "path": "docs/product/evidence/minimal-agent/minimal-agent-demo.webm",
+      "bytes": 3740476,
+      "sha256": "b74d9130a06c24564ef8f0b2d8c993b0ddce2018f9b3ca390f40e10fe26c1831",
+      "durationSeconds": 90.2,
+      "dimensions": "1100x900",
+      "codec": "VP9",
+      "recordedBeforeFreshnessFix": true,
+      "auth": "local HTTP contract fixture",
+      "data": "synthetic; real Next/API/PostgreSQL"
+    }
+  ]
+}
