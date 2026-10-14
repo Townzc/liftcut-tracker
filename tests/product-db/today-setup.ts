@@ -18,6 +18,9 @@ export async function setup() {
     await db.query(await readFile("supabase/migrations/20261014060607_session_exercise_replacements.sql","utf8"));
     await db.query(await readFile("supabase/migrations/20261014090536_personal_record_events.sql","utf8"));
     await db.query(await readFile("supabase/migrations/20261014181717_coach_model_access.sql","utf8"));
+    await db.query(await readFile("supabase/migrations/20261013203030_p1_application_transactions.sql","utf8"));
+    await db.query(await readFile("supabase/migrations/20261014210256_conversational_plan_approval.sql","utf8"));
+    await db.query("alter role liftcut_agent login password 'p1-local-fixture-only'");
     await db.query("alter role liftcut_workout login password 'w1b-local-fixture-only'");
     console.log("W1b upgrade: actual W1a schema + migration on local PostgreSQL; synthetic auth.uid, not hosted GoTrue");
   } finally { await db.end(); }

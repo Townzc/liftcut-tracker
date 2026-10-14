@@ -1,0 +1,366 @@
+[
+  {
+    "round": "2026-10-14T21-17-42-747Z",
+    "result": {
+      "status": "PASS",
+      "calls": 8,
+      "at": "2026-10-14T21:18:07.066Z",
+      "scope": "Real model with synthetic local PostgreSQL; not hosted/browser evidence"
+    },
+    "cases": [
+      {
+        "text": "根据我的设置生成一周可重复的训练计划，每周两天、每次不超过45分钟，每天只安排两个动作，用哑铃和自重。先给预览。",
+        "elapsedMs": 4870,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_training_plan"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "只把刚才草稿第1周第1天的第1个动作「哑铃高脚杯深蹲」改成2组，其他内容全部保留。",
+        "elapsedMs": 2285,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "现在把已应用的计划第1周第1天第1个动作「哑铃高脚杯深蹲」的休息时间改成120秒，其他不动。",
+        "elapsedMs": 2237,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "按我设置的2000千卡、120克蛋白质目标，生成一天的早午晚三餐参考饮食计划，食材常见，不吃花生，先给预览。",
+        "elapsedMs": 5206,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_nutrition_plan"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "仅把刚才饮食草稿的每日饮水目标改成2800毫升，食物和其他营养目标都保持原样。",
+        "elapsedMs": 2318,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "把当前饮食计划的每日饮水目标改为3000毫升，其他完全不变。",
+        "elapsedMs": 2247,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "请同时查一下我最近的体重和实际饮食记录，没记录就说明没记录。不要把计划当成吃过了。",
+        "elapsedMs": 2736,
+        "message": "我查了近 28 天（2026-09-16 至 2026-10-14）：体重记录 0 条，实际饮食（进食）记录也是 0 条，所以这段时间没有可用的体重或实际摄入数据。计划里的目标不算实际记录，我也没有把它当作你吃过的东西。如果你想补记，告诉我具体日期、数值或吃了什么，我可以帮你准备一条待确认的记录。",
+        "model": "deepseek-flash",
+        "proposalKind": null,
+        "planKind": null,
+        "sourceTopics": [
+          "body",
+          "food"
+        ],
+        "steps": [
+          {
+            "tools": [
+              "read_records"
+            ]
+          },
+          {
+            "tools": [
+              "finish_response"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "帮我安排一个合适的训练计划吧",
+        "elapsedMs": 2309,
+        "message": "好的，我来帮你排一个训练计划。你的资料里目前是「维持体型、初级、场地混合」，但还缺两个关键信息：\\n\\n1. 你每周能练几天？\\n2. 每次大概能练多久（比如 45 分钟、60 分钟）？\\n\\n另外顺便说一下你手边有什么器械（比如只有哑铃、有健身房全套、还是徒手为主），我按这个来安排动作。",
+        "model": "deepseek-flash",
+        "proposalKind": null,
+        "planKind": null,
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "finish_response"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "round": "2026-10-14T21-24-25-701Z",
+    "result": {
+      "status": "PASS",
+      "calls": 8,
+      "at": "2026-10-14T21:24:50.425Z",
+      "scope": "Real model with synthetic local PostgreSQL; not hosted/browser evidence"
+    },
+    "cases": [
+      {
+        "text": "根据我的设置生成一周可重复的训练计划，每周两天、每次不超过45分钟，每天只安排两个动作，用哑铃和自重。先给预览。",
+        "elapsedMs": 4926,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_training_plan"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "只把刚才草稿第1周第1天的第1个动作「哑铃高脚杯深蹲」改成2组，其他内容全部保留。",
+        "elapsedMs": 2563,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "现在把已应用的计划第1周第1天第1个动作「哑铃高脚杯深蹲」的休息时间改成120秒，其他不动。",
+        "elapsedMs": 2236,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "training",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "按我设置的2000千卡、120克蛋白质目标，生成一天的早午晚三餐参考饮食计划，食材常见，不吃花生，先给预览。",
+        "elapsedMs": 5069,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_nutrition_plan"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "仅把刚才饮食草稿的每日饮水目标改成2800毫升，食物和其他营养目标都保持原样。",
+        "elapsedMs": 2958,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "把当前饮食计划的每日饮水目标改为3000毫升，其他完全不变。",
+        "elapsedMs": 1979,
+        "message": "计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。",
+        "model": "deepseek-flash",
+        "proposalKind": "plan",
+        "planKind": "nutrition",
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "prepare_plan_adjustment"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "请同时查一下我最近的体重和实际饮食记录，没记录就说明没记录。不要把计划当成吃过了。",
+        "elapsedMs": 2402,
+        "message": "我查了最近 28 天（9月16日–10月14日）：体重记录和实际饮食记录都是空的，也就是这段时间没有保存过任何体重或进食记录。计划里的内容不算实际摄入，所以这里不做任何推算。如果你想补记，直接告诉我具体数字和吃了什么就行。",
+        "model": "deepseek-flash",
+        "proposalKind": null,
+        "planKind": null,
+        "sourceTopics": [
+          "body",
+          "food"
+        ],
+        "steps": [
+          {
+            "tools": [
+              "read_records"
+            ]
+          },
+          {
+            "tools": [
+              "finish_response"
+            ]
+          }
+        ]
+      },
+      {
+        "text": "帮我安排一个合适的训练计划吧",
+        "elapsedMs": 2471,
+        "message": "好的，我来帮你排。你的资料里目前是「维持体型 / 新手 / 场地混合」，但每周练几天、每次多长时间、有哪些器械都还没填，我需要确认一下再出方案。\n\n请告诉我：1）每周能练几天？2）每次大概多少分钟？3）能用什么器械（比如只有哑铃、有健身房全套、或只有自重）？",
+        "model": "deepseek-flash",
+        "proposalKind": null,
+        "planKind": null,
+        "sourceTopics": [],
+        "steps": [
+          {
+            "tools": [
+              "plan_context"
+            ]
+          },
+          {
+            "tools": [
+              "finish_response"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
