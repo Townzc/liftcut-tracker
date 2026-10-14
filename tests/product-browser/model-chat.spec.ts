@@ -28,7 +28,7 @@ test("model consent, oral body draft, no write until confirmation, signed replay
   await send(page,"那昨天呢");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
   await expect(page.getByTestId("coach-sources").last().locator("summary")).toHaveText("查看依据 · 1");
   await page.screenshot({path:"node_modules/.cache/coach-model/body-and-followup.png",fullPage:true});
-  await page.getByTestId("coach-consent").locator("summary").click();await page.getByRole("button",{name:"关闭并清空对话"}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(0);
+  await page.getByRole("button",{name:"对话选项"}).click();await page.getByRole("button",{name:"关闭并清空对话"}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(0);
   expect(errors).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 
@@ -42,7 +42,7 @@ test("natural food draft keeps nulls; tampering, cross-user reuse, response loss
   const command=JSON.parse(original);expect((await page.request.post("/api/personal-records",{headers:{Origin:"http://localhost:3103"},data:{...command,id:randomUUID(),entry:{...command.entry,calories:600}}})).status()).toBe(409);
   await page.unroute("**/api/personal-records");await page.getByRole("button",{name:"重试补录同步"}).click();await expect(page.getByTestId("personal-sync")).toHaveCount(0);
   expect((await entries(page))[0].entry).toMatchObject({calories:null,protein:null});expect((await entries(page)).length).toBe(1);
-  await page.goto("/settings");await page.getByRole("button",{name:"退出登录",exact:true}).click();await login(page,"offline-second@example.invalid");
+  await page.goto("/settings/account");await page.getByRole("button",{name:"退出登录",exact:true}).click();await login(page,"offline-second@example.invalid");
   await expect(page.getByRole("button",{name:"同意并开启"})).toBeVisible();expect(await entries(page)).toEqual([]);
   expect((await page.request.post("/api/personal-records",{headers:{Origin:"http://localhost:3103"},data:{...command,id:randomUUID()}})).status()).toBe(409);
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103","X-Workout-Owner":owner},data:{}})).status()).toBe(409);
@@ -82,9 +82,9 @@ test("natural workout report uses the existing versioned queue and preserves sou
   await db.query("insert into training_plan_weeks values($1,$2,1)",[plan+'w',plan]);await db.query("insert into training_plan_days(id,week_id,day_number,title) values($1,$2,1,'模型训练')",[day,plan+'w']);
   await db.query("insert into training_plan_exercises(id,day_id,name,sets,rep_range,target_rpe) values($1,$2,'深蹲',3,'8-12',7)",[e,day]);
   try{
-    await login(page);await page.getByTestId("start-session-panel").locator("summary").click();
+    await login(page);await send(page,"开始训练");
     await page.getByTestId("start-session-panel").locator("select").selectOption(day);
-    await page.getByRole("button",{name:"开始训练",exact:true}).click();await expect(page.getByTestId("start-session-panel")).toHaveCount(0);await expect(page.getByTestId("outbox-status")).toHaveText("已同步");await enable(page);
+    await page.getByRole("button",{name:"开始训练",exact:true}).click();await expect(page.getByLabel("当前动作（可选）")).toBeVisible();await expect(page.getByTestId("outbox-status")).toHaveText("已同步");await enable(page);
     await send(page,"刚才那组深蹲我实打实做了八次，用的是五十公斤，帮我记上");await expect(page.getByTestId("coach-draft")).toContainText("50 kg × 8 · RPE —");
     expect((await db.query("select * from set_logs where user_id=$1",[owner])).rowCount).toBe(0);
     await page.getByTestId("coach-draft").getByRole("button",{name:"确认保存这句话"}).click();await expect(page.getByTestId("coach-draft")).toHaveCount(0);

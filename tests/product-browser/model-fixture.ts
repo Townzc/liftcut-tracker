@@ -2,6 +2,7 @@
 // All UI/API/auth-boundary and PostgreSQL writes still execute application code.
 import {createServer} from "node:http";
 import {randomUUID} from "node:crypto";
+import {trainingFixture,nutritionFixture,planContextFixture} from "../fixtures/coach-plans";
 function call(name:string,args:unknown){return {id:"call_"+randomUUID(),type:"function",function:{name,arguments:JSON.stringify(args)}};}
 const bodyEmpty={dateQuote:null,weightQuote:null,waistQuote:null};
 const foodEmpty={dateQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
@@ -19,7 +20,20 @@ createServer(async(req,res)=>{
   if(text.includes("[provider-down]")){res.statusCode=503;res.end('{"error":{"message":"synthetic provider unavailable"}}');return;}
   if(text.includes("[slow]")){await new Promise(r=>setTimeout(r,15000));}
   let chosen;
-  if(priorCall?.function.name==="read_records"){
+  if(priorCall?.function.name==="plan_context"){
+    if(result.error)chosen=call("finish_response",{message:"暂时无法读取计划资料，请稍后重试。",sourceIds:[]});
+    else if(result.editablePlan&&text.includes("调整"))chosen=call("prepare_plan_adjustment",{summary:"按要求调整，其他保持不变。",changes:text.includes("[nutrition-plan]")?
+      [{path:"/daily_targets/calories",value:2200},{path:"/days/0/meals/2/foods/0/estimated_calories",value:900}]:[{path:"/weeks/0/days/0/exercises/0/sets",value:2}]});
+    else if(text.includes("[nutrition-plan]")){
+      const plan=structuredClone(result.editablePlan??nutritionFixture);if(text.includes("调整")){plan.daily_targets.calories=2200;plan.days[0].meals[2].foods[0].estimated_calories=900;plan.plan_name="调整后的饮食计划";}
+      chosen=call("prepare_nutrition_plan",{plan});
+    }else{
+      const plan=structuredClone(result.editablePlan??trainingFixture);if(text.includes("调整")){plan.weeks[0].days[0].exercises[0].sets=2;plan.plan_name="调整后的训练计划";}
+      chosen=call("prepare_training_plan",{context:planContextFixture,plan});
+    }
+  }else if(priorCall?.function.name==="read_records"&&result.sources){
+    chosen=call("finish_response",{message:"已同时核对体重和饮食记录。",sourceIds:result.sources.map((s:{id:string})=>s.id)});
+  }else if(priorCall?.function.name==="read_records"){
     const food=text.includes("午餐")||text.includes("吃了")||text.includes("food");
     chosen=text.includes("昨天呢")&&since.filter(x=>x.role==="tool").length===1?
       call("read_records",{topic:"body",from:shifted(-1),to:shifted(-1)}):call("finish_response",{message:result.error?"暂时无法读取记录。":food?`已查到 ${result.summary.recordCount} 条饮食记录。未填写的热量和蛋白质保持未知。`:
@@ -32,6 +46,10 @@ createServer(async(req,res)=>{
     chosen=call("prepare_body",{...bodyEmpty,dateQuote:"现在",weightQuote:"七十三点一公斤"});
   }else if(priorCall?.function.name?.startsWith("prepare_")){
     chosen=call("finish_response",{message:result.ok===false?"请补充明确的数值和单位，我没有保存数据。":"整理好了，请核对下方草稿并确认。尚未保存。",sourceIds:[]});
+  }else if(text.includes("[training-plan]")||text.includes("[nutrition-plan]")){
+    chosen=call("plan_context",{kind:text.includes("[nutrition-plan]")?"nutrition":"training"});
+  }else if(text.includes("[mixed-read]")){
+    chosen=call("read_records",{topic:"body",alsoTopics:["food"],from:shifted(-27),to:today});
   }else if(text.includes("[invent]")){
     chosen=call("prepare_body",{...bodyEmpty,weightQuote:"82公斤"});
   }else if(text.includes("[oral-append]")){

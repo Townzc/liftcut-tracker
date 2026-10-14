@@ -869,8 +869,8 @@
     "you": "You",
     "assistant": "Agent",
     "replies": {
-      "help": "I can look up your weight, meals and training history, and turn explicit numbers into entries for you to confirm. Try “my recent weight” or “log weight 72.5 kg”. Training actions use the current workout. I use rules and saved data, not free-form AI answers.",
-      "noSession": "To log sets, expand “This workout” above and choose a day. You can already ask about weight, meals or training history, without starting a workout.",
+      "help": "Ask about your weight, meals and training, or add an entry. Enable natural conversation to create or adjust plans too. Say “start workout” to choose a day or “show receipts” to review saved changes.",
+      "noSession": "Say “start workout” to choose a day in this conversation before logging sets. You can query or add body and meal records without starting a workout.",
       "invalid": "Use 1–400 characters to ask a question or describe an entry.",
       "plan": "These are the plan targets saved when this session started, not actual results:",
       "progress": "These are the current records, including locally queued operations:",

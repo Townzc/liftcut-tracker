@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import type { CoachSource } from "@/lib/coach-model";
 
-const labels:Record<string,string>={body:"身体记录",food:"饮食记录",workout:"训练记录",plan:"当前计划（目标）",profile:"个人设置（目标）"};
+const labels:Record<string,string>={body:"身体记录",food:"饮食记录",workout:"训练记录",plan:"当前计划（目标）",nutrition:"饮食计划（目标）",profile:"个人设置（目标）"};
 const keys:Record<string,string>={date:"日期",weightKg:"体重 kg",waistCm:"腰围 cm",foodName:"食物",mealType:"餐次",calories:"热量 kcal",protein:"蛋白质 g",exercise:"动作",reps:"次数",rpe:"RPE",setIndex:"组",targetSets:"目标组数",targetReps:"目标次数",targetRpe:"目标 RPE",targetWeightKg:"目标体重 kg",calorieTarget:"热量目标",proteinTarget:"蛋白质目标",weeklyTrainingDays:"每周训练日",plan:"计划",week:"周",day:"训练日",title:"名称",fitnessGoal:"目标",experience:"经验",equipment:"器械",sessionMinutes:"训练时长"};
 function fields(row:Record<string,unknown>,en:boolean,workout=false){return Object.entries(row).filter(([k])=>k in keys).map(([k,v])=>`${k==="weightKg"&&workout?(en?"Load kg":"负重 kg"):en?k:keys[k]}: ${v===null?"—":Array.isArray(v)?v.join(", "):String(v)}`).join(" · ");}
 export function CoachSources({sources}:{sources:CoachSource[]}){

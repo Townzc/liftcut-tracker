@@ -3,7 +3,8 @@ import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
 import type { CoachSource } from "@/lib/coach-model";
 
-export const readRecordsSchema=z.object({topic:z.enum(["body","food","workout","plan","profile"]),from:z.iso.date(),to:z.iso.date()}).strict();
+export const recordTopicSchema=z.enum(["body","food","workout","plan","nutrition","profile"]);
+export const readRecordsSchema=z.object({topic:recordTopicSchema,from:z.iso.date(),to:z.iso.date()}).strict();
 export class CoachReadError extends Error {}
 export class CoachStore {
   constructor(private readonly pool:Pool){}
@@ -66,6 +67,11 @@ export class CoachStore {
           from public.training_plans p join public.training_plan_weeks w on w.training_plan_id=p.id
           join public.training_plan_days d on d.week_id=w.id join public.training_plan_exercises e on e.day_id=d.id
           where p.user_id=$1 and p.is_active order by w.week_number,d.day_number,e.id limit 201`,[owner])).rows.map(x=>x.data);
+      }else if(r.topic==="nutrition"){
+        rows=(await db.query(`select jsonb_build_object('plan',p.name,'calorieTarget',p.daily_calorie_target,
+          'proteinTarget',p.protein_target,'day',d.day_number,'mealType',m.meal_type,'title',m.title,'foods',m.foods_json,'actual',false) as data
+          from public.nutrition_plans p left join public.nutrition_plan_days d on d.nutrition_plan_id=p.id
+          left join public.nutrition_plan_meals m on m.day_id=d.id where p.user_id=$1 and p.is_active order by p.id,d.day_number,m.id limit 201`,[owner])).rows.map(x=>x.data);
       }else{
         rows=(await db.query(`select jsonb_build_object('fitnessGoal',fitness_goal,'experience',training_experience,
           'equipment',available_equipment,'sessionMinutes',nullif(session_duration_minutes,0),'weeklyTrainingDays',nullif(weekly_training_days,0),

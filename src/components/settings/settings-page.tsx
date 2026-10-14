@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle, Download, LoaderCircle, Trash2, Upload } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Download, LoaderCircle, Trash2, Upload } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { NumericInput } from "@/components/shared/numeric-input";
@@ -40,7 +40,7 @@ type SettingsAction =
   | "logout"
   | "reset";
 
-export function SettingsPage() {
+export function SettingsPage({section}:{section:"account"|"profile"|"preferences"|"data"}) {
   const t = useTranslations("settings");
   const tCommon = useTranslations("common");
   const tGuest = useTranslations("guest");
@@ -409,11 +409,10 @@ export function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-5 pt-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("title")}</h1>
-      </div>
+      <Link href="/settings" prefetch className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="size-4"/>{t("title")}</Link>
+      <h1 className="text-2xl font-medium">{t(section==="account"?"identityTitle":section==="profile"?"profileTitle":section==="data"?"planAndExportTitle":"theme")}</h1>
 
-      <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("identityTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
+      {section==="account"&&<Card className="bg-transparent ring-0 shadow-none">
         <CardHeader>
           <CardTitle className="text-base">{t("identityTitle")}</CardTitle>
           <CardDescription>{t("identityDesc")}</CardDescription>
@@ -494,9 +493,9 @@ export function SettingsPage() {
             {loadingAction === "save-profile" ? t("profileSaving") : t("profileSave")}
           </Button>
         </CardContent>
-      </Card></details>
+      </Card>}
 
-      {authMode === "guest" ? (
+      {section==="account"&&authMode === "guest" ? (
         <Card className="border-amber-200/80 bg-amber-50/80 dark:border-amber-800/50 dark:bg-amber-900/20">
           <CardHeader>
             <CardTitle className="text-base text-amber-900 dark:text-amber-100">{tGuest("badge")}</CardTitle>
@@ -510,7 +509,7 @@ export function SettingsPage() {
         </Card>
       ) : null}
 
-      <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("profileTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
+      {section==="profile"&&<Card className="bg-transparent ring-0 shadow-none">
         <CardHeader>
           <CardTitle className="text-base">{t("profileTitle")}</CardTitle>
           <CardDescription>{t("profileDesc")}</CardDescription>
@@ -718,18 +717,18 @@ export function SettingsPage() {
               {loadingAction === "save" ? t("savingSettings") : t("saveSettings")}
             </Button></div>
         </CardContent>
-      </Card></details>
+      </Card>}
 
       <div className="flex flex-col gap-6">
-        <Card className="bg-transparent ring-0 shadow-none">
+        {(section==="preferences"||section==="account")&&<Card className="bg-transparent ring-0 shadow-none">
           <CardHeader>
-            <CardTitle className="text-base">{t("accountTitle")}</CardTitle>
-            <CardDescription>{t("email")}</CardDescription>
+            <CardTitle className="text-base">{t(section==="account"?"accountTitle":"language")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300">
+            {section==="account"&&<p className="rounded-md border border-slate-200 bg-slate-50 p-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300">
               {email}
-            </p>
+            </p>}
+            {section==="preferences"&&<>
             <div className="space-y-1">
               <Label>{t("language")}</Label>
               <Select
@@ -772,7 +771,8 @@ export function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
+            </>}
+            {section==="account"&&<><Button variant="outline" className="w-full" onClick={handleSignOut} disabled={isBusy}>
               {loadingAction === "logout" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
               {loadingAction === "logout" ? t("loggingOut") : authMode === "guest" ? tGuest("exitGuestMode") : t("logout")}
             </Button>
@@ -781,11 +781,11 @@ export function SettingsPage() {
                 {loadingAction === "save" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
                 {loadingAction === "save" ? tGuest("migrating") : tGuest("migrationConfirm")}
               </Button>
-            ) : null}
+            ) : null}</>}
           </CardContent>
-        </Card>
+        </Card>}
 
-        <Card className="bg-transparent ring-0 shadow-none">
+        {section==="data"&&<Card className="bg-transparent ring-0 shadow-none">
           <CardHeader>
             <CardTitle className="text-base">{t("planAndExportTitle")}</CardTitle>
             <CardDescription>{t("planAndExportDesc")}</CardDescription>
@@ -797,9 +797,9 @@ export function SettingsPage() {
             </Button>
 
           </CardContent>
-        </Card>
+        </Card>}
 
-        {authMode === "guest" && <details className="border-b py-2"><summary className="min-h-12 py-4 text-sm font-medium">{t("dangerTitle")}</summary><Card className="bg-transparent ring-0 shadow-none">
+        {section==="data"&&authMode === "guest" && <Card className="bg-transparent ring-0 shadow-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base text-rose-800 dark:text-rose-300">
               <AlertTriangle className="h-4 w-4" />
@@ -821,7 +821,7 @@ export function SettingsPage() {
             ) : null}
             <p className="text-xs text-rose-700 dark:text-rose-400">{t("status", { value: weeklyLossHint })}</p>
           </CardContent>
-        </Card></details>}
+        </Card>}
       </div>
 
       {message ? <p className="text-sm text-emerald-700 dark:text-emerald-400">{message}</p> : null}

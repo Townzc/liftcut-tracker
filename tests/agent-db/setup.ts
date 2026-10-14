@@ -13,7 +13,8 @@ try {
   if (exists.rows[0].table_name) throw new Error("Database already initialized; use a fresh disposable database");
   await db.query("begin");
   for (const path of ["tests/agent-db/bootstrap.sql", "supabase/schema.sql",
-    "supabase/migrations/20261013203030_p1_application_transactions.sql"])
+    "supabase/migrations/20261013203030_p1_application_transactions.sql",
+    "supabase/migrations/20261014210256_conversational_plan_approval.sql"])
     await db.query((await readFile(path, "utf8")).replace(/^\uFEFF/, ""));
   // Test-only logins. These known passwords have no privileges outside the local fixture DB.
   await db.query("alter role liftcut_agent login password 'p1-local-fixture-only'");

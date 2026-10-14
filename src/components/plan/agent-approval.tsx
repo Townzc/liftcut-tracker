@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import { contextSchema, planSchema, type Binding, type Context, type Execution, type RunView } from "@/lib/agent/contracts";
+import { contextSchema, planSchema, isNutritionPlan, type Binding, type Context, type Execution, type RunView } from "@/lib/agent/contracts";
 
 const labels: Record<RunView["status"], string> = {
   planning: "请生成新的预览", awaiting_approval: "等待你批准当前预览", approved: "已批准，尚未写入",
@@ -101,7 +101,7 @@ function AgentApprovalPanel({ userId }: { userId: string }) {
     {run && <Card><CardHeader><CardTitle>{labels[run.status]}</CardTitle></CardHeader><CardContent className="space-y-4">
       <p>运行 {run.id} · 约束版本 {run.contextRevision} · 执行尝试 {run.attempts}</p>
       <p>本次已保存约束：每周 {run.context.weeklyDays} 天，每次 {run.context.sessionMinutes} 分钟；器械 {run.context.equipment.join("、") || "未填写"}；{run.context.notes || "无补充"}</p>
-      {run.proposal && <><h3 className="font-semibold">预览版本 {run.proposal.version}：{run.proposal.plan.plan_name}</h3>
+      {run.proposal && !isNutritionPlan(run.proposal.plan) && <><h3 className="font-semibold">预览版本 {run.proposal.version}：{run.proposal.plan.plan_name}</h3>
         {run.proposal.contextRevision !== run.contextRevision && <p>此预览对应旧约束，已失效。请重新生成。</p>}
         <p>{run.proposal.plan.summary}</p>
         {run.proposal.plan.reasoning_summary && <p>{run.proposal.plan.reasoning_summary}</p>}

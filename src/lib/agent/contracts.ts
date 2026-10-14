@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { aiTrainingPlanSchema } from "@/lib/ai/schemas";
+import { aiTrainingPlanSchema, aiNutritionPlanSchema } from "@/lib/ai/schemas";
 
 // P1 is an application transaction adapter. It does not claim to be candidate D.
 export const P1_VERSION = "p1-app-v1";
@@ -18,6 +18,19 @@ export const planSchema = aiTrainingPlanSchema.superRefine((plan, ctx) => {
       ctx.addIssue({ code: "custom", message: "Duplicate day number" });
   }
 });
+export const nutritionPlanSchema = aiNutritionPlanSchema.superRefine((plan, ctx) => {
+  if (new Set(plan.days.map(d => d.day_number)).size !== plan.days.length)
+    ctx.addIssue({ code: "custom", message: "Duplicate day number" });
+  for (const day of plan.days) {
+    if (new Set(day.meals.map(m => m.meal_type)).size !== day.meals.length)
+      ctx.addIssue({ code: "custom", message: "Duplicate meal type" });
+  }
+});
+export const planKindSchema = z.enum(["training", "nutrition"]);
+export type PlanKind = z.infer<typeof planKindSchema>;
+export type NutritionPlan = z.infer<typeof nutritionPlanSchema>;
+export type AnyPlan = Plan | NutritionPlan;
+export const isNutritionPlan = (plan: AnyPlan): plan is NutritionPlan => "daily_targets" in plan;
 
 export const createRunSchema = z.object({
   requestKey: z.uuid(), context: contextSchema,
@@ -28,7 +41,7 @@ export const bindingSchema = z.object({
   contextRevision: revisionSchema,
 }).strict();
 export const proposalRequestSchema = z.object({
-  expectedRevision: revisionSchema, plan: planSchema,
+  expectedRevision: revisionSchema, plan: z.union([planSchema, nutritionPlanSchema]),
 }).strict();
 export const userEventSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("context"), expectedRevision: revisionSchema, context: contextSchema }).strict(),
@@ -44,11 +57,12 @@ export type Binding = z.infer<typeof bindingSchema>;
 export type Execution = z.infer<typeof executeSchema>;
 export type UserEvent = z.infer<typeof userEventSchema>;
 export type RunStatus = "planning" | "awaiting_approval" | "approved" | "revoked" | "declined" | "applied" | "stale" | "budget_exhausted";
-export type Receipt = { id: string; runId: string; proposalId: string; contentHash: string; approvalId: string; contextRevision: number; planId: string; committedAt: string };
+export type Receipt = { id: string; runId: string; proposalId: string; contentHash: string; approvalId: string; contextRevision: number; planId: string; committedAt: string; kind?: PlanKind; appliedStateHash?: string };
 export type RunView = {
   id: string; version: string; status: RunStatus; revision: number; contextRevision: number;
+  kind: PlanKind; baseline: Record<string, unknown>[];
   context: Context; attempts: number; approvalId: string | null;
-  proposal: (Binding & { version: number; plan: Plan }) | null;
+  proposal: (Binding & { version: number; plan: AnyPlan }) | null;
   receipt: Receipt | null;
   events: { sequence: string; type: string; actor: string; data: unknown; at: string }[];
 };

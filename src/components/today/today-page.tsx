@@ -103,7 +103,6 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
   const [dayId, setDayId] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [receiptsOpen,setReceiptsOpen] = useState(false);
   const personal = usePersonalRecords();
   const inFlight = useRef(false);
   const selectedWeek = useTrackerStore(s => s.selectedWeek), selectedDay = useTrackerStore(s => s.selectedDay);
@@ -136,17 +135,30 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
     inFlight.current = true; setBusy(true); setError("");
     try {
       await client.current!.enqueue(p,state.revision);
-      if (p.action !== "start" && p.action !== "end") setReceiptsOpen(true);
       return true; // Means durably queued; the UI labels it pending until acknowledged.
     } catch(e) {setError(e instanceof Error && e.message==="LOCAL_CONFLICT"?"LOCAL_CONFLICT":"STORAGE");return false;}
     finally { setBusy(false); inFlight.current = false; }
   }
   const session = data?.session;
   const chosen = dayId || data?.days.find(d => d.weekNumber === selectedWeek && d.dayNumber === selectedDay)?.id || data?.days[0]?.id || "";
+  const receiptContent=<div className="space-y-4">
+    {!data?.receipts?.length&&!session?.replacements?.length&&!personal.records.length&&<p className="text-sm text-muted-foreground">{tc("emptyReceipts")}</p>}
+    {session&&<ReplacementReceipts session={session} busy={locked} submit={submit} pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)}/>}
+    <SentenceReceipts receipts={data?.receipts??[]} busy={locked} submit={submit} pendingIds={state?.items.filter(i=>i.action==="apply"||i.action==="undo").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)}/>
+    {personal.records.length>0&&<PersonalReceipts/>}
+  </div>;
+  const workoutContent=<div className="space-y-4" data-testid="start-session-panel">
+    {!data?<p>{t("loading")}</p>:session?<><p>{session.prescription.title}</p><p className="text-sm text-muted-foreground">{t("progress",{done:session.sets.filter(s=>s.status==="done").length,total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0)})}</p>
+      {session.status==="ended"&&<Button variant="outline" disabled={locked||!!count} onClick={()=>void recover()}>{tc("anotherSession")}</Button>}
+    </>:<><label className="block text-sm">{t("selectDay")}<select aria-label={t("selectDay")} className="mt-2 w-full rounded-xl border bg-background p-3" value={chosen} onChange={e=>setDayId(e.target.value)} disabled={busy}>{data.days.map(d=><option key={d.id} value={d.id}>{t("day",{week:d.weekNumber,day:d.dayNumber})} · {d.title}</option>)}</select></label>
+      {!data.days.length&&<p className="text-sm">{locale==="en"?"Ask me to create a training plan first.":"还没有训练计划，可以直接告诉我你的目标，一起制定."}</p>}
+      <Button disabled={!chosen||locked||!!count} onClick={()=>void submit({action:"start",body:{id:crypto.randomUUID(),dayId:chosen,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}})}>{t("start")}</Button>
+    </>}
+  </div>;
   return <div className="mx-auto max-w-2xl space-y-4">
-    <div className="flex items-center justify-between gap-4 pt-4"><div><h1 className="text-xl font-medium">{conversation?"Agent":t("title")}</h1>{!conversation && <p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p>}</div>
-      <Link className="inline-block py-3 text-xs text-muted-foreground underline underline-offset-4" href={conversation?"/today":"/coach"}>{tc(conversation?"goToday":"goCoach")}</Link></div>
-    <div className={conversation?"flex items-center justify-between gap-2 text-xs text-muted-foreground":"space-y-2 rounded-xl border p-3 text-sm"}>
+    {!conversation&&<div className="flex items-center justify-between gap-4 pt-4"><div><h1 className="text-xl font-medium">{t("title")}</h1><p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p></div>
+      <Link className="inline-block py-3 text-xs text-muted-foreground underline underline-offset-4" href="/agent">{tc("goCoach")}</Link></div>}
+    <div className={conversation?(issue||count?"flex items-center justify-between gap-2 text-xs text-muted-foreground":"sr-only"):"space-y-2 rounded-xl border p-3 text-sm"}>
       <p role="status" data-testid="outbox-status">{t(issue?"outbox.failed":count?"outbox.pending":data?"outbox.synced":"loading",{count})}</p>
       {!conversation && <p className="text-xs text-muted-foreground">{t("outbox.hint")}</p>}
       {!!count && <Button variant="outline" disabled={busy || head?.status==="conflict"} onClick={()=>void retry()}>{t("retry")}</Button>}
@@ -166,9 +178,8 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
         try {await client.current!.discardConflict(remote);setRemote(null);setError("");}catch{setError("LOCAL_CONFLICT");}
       }}>{t("outbox.discard",{count})}</Button>
     </CardContent></Card>}
-    {!data && !issue && <p>{t("loading")}</p>}
-    {data && !session && <details open={!conversation} className={conversation?"border-b pb-2 text-sm":""} data-testid="start-session-panel">
-      {conversation && <summary className="min-h-11 py-3 text-muted-foreground">{locale==="en"?"This workout":"本次训练"}</summary>}
+    {!conversation&&!data && !issue && <p>{t("loading")}</p>}
+    {!conversation&&data && !session && <details open data-testid="start-session-panel">
       <Card><CardContent className="space-y-4 pt-6">
       <label className="block text-sm">{t("selectDay")}<select aria-label={t("selectDay")} className="mt-2 w-full rounded border bg-background p-3" value={chosen} onChange={e => setDayId(e.target.value)} disabled={busy}>
         {data.days.map(d => <option key={d.id} value={d.id}>{t("day", { week: d.weekNumber, day: d.dayNumber })} · {d.title}</option>)}</select></label>
@@ -176,7 +187,7 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
       <p className="text-xs text-muted-foreground">{t("outbox.startHint")}</p>
       <Button disabled={!chosen || locked || !!count} onClick={() => void submit({ action:"start", body:{ id:crypto.randomUUID(), dayId:chosen, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone } })}>{t("start")}</Button>
     </CardContent></Card></details>}
-    {session && <>
+    {!conversation&&session && <>
       {conversation ? <p className="border-b py-3 text-xs text-muted-foreground">{session.prescription.title} · {t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p> : <Card><CardHeader><CardTitle>{session.prescription.title}</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
         <p>{session.localDate} · {session.timezone}</p><p>{t(session.status === "active" ? "active" : "ended")}</p>
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
@@ -199,17 +210,12 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
           <Button variant="outline" disabled={locked} onClick={()=>void recover()}>{tc("anotherSession")}</Button>
         </div>}
     </>}
-    {conversation && data && <CoachConversation data={data} busy={locked} pendingCount={count} submit={submit} />}
+    {conversation && <CoachConversation data={data??{session:null,days:[],previous:{}}} busy={!!(busy||error==="STORAGE"||error==="AUTH"||projection.error||head?.status==="conflict"||head?.status==="auth")} pendingCount={count} submit={submit} workoutPanel={workoutContent} receiptsPanel={receiptContent} onPlanApplied={()=>{void client.current?.refresh().catch(()=>setError("LOAD_FAILED"));}}/>}
     {conversation && <RecordSyncStatus />}
-    <details open={!conversation || receiptsOpen} onToggle={e=>{if(conversation)setReceiptsOpen(e.currentTarget.open);}} id={conversation?"coach-receipts":undefined} className="space-y-4 scroll-mt-4">
-    <summary className="min-h-11 py-3 text-sm text-muted-foreground">{conversation?(locale==="en"?"Receipts & sources":"回执与来源"):t("sentence.viewReceipts")}</summary>
-    {conversation && <><p className="text-xs text-muted-foreground">{tc("receiptHint")}</p>
-      {!data?.receipts?.length && !session?.replacements?.length && !personal.records.length && <p className="text-sm text-muted-foreground">{tc("emptyReceipts")}</p>}
-      {session && <ReplacementReceipts session={session} busy={locked} submit={submit}
-        pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />}</>}
+    {!conversation&&<details open className="space-y-4 scroll-mt-4">
+    <summary className="min-h-11 py-3 text-sm text-muted-foreground">{t("sentence.viewReceipts")}</summary>
     <SentenceReceipts receipts={data?.receipts ?? []} busy={locked} submit={submit}
       pendingIds={state?.items.filter(i=>i.action==="apply" || i.action==="undo").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />
-    {conversation && personal.records.length>0 && <PersonalReceipts />}
-    </details>
+    </details>}
   </div>;
 }

@@ -2,8 +2,10 @@ import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
-import { P1_VERSION, createRunSchema, proposalRequestSchema, userEventSchema, executeSchema,
-  validatePlanConstraints, type Binding, type Context, type Outcome, type Plan, type Receipt, type RunView } from "@/lib/agent/contracts";
+import { P1_VERSION, createRunSchema, proposalRequestSchema, userEventSchema, executeSchema, contextSchema, planSchema, nutritionPlanSchema, isNutritionPlan,
+  validatePlanConstraints, type Binding, type Context, type Outcome, type AnyPlan, type PlanKind, type Receipt, type RunView } from "@/lib/agent/contracts";
+import { readPlanRows, type PlanSnapshot } from "./plan-state";
+import { persistNutritionPlan } from "./persist-nutrition";
 
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -13,7 +15,8 @@ function canonical(value: unknown): string {
 }
 export const contentHash = (value: unknown) => createHash("sha256").update(canonical(value)).digest("hex");
 type Row = { id: string; user_id: string; status: RunView["status"]; revision: number; context_revision: number;
-  context: Context; profile_hash: string; current_proposal: string | null; approval_id: string | null; attempts: number };
+  context: Context; profile_hash: string; current_proposal: string | null; approval_id: string | null; attempts: number;
+  kind: PlanKind; base_state_hash: string | null; baseline: Record<string, unknown>[] };
 const fail = (error: string, retryable = false): Outcome<never> => ({ ok: false, error, retryable });
 
 export class AgentStore {
@@ -56,14 +59,16 @@ export class AgentStore {
     return row ? contentHash(row.profile) : null;
   }
   private async fresh(db: PoolClient, run: Row): Promise<boolean> {
-    if (await this.profile(db, run.user_id) === run.profile_hash) return true;
+    const profileFresh = await this.profile(db, run.user_id) === run.profile_hash;
+    const planFresh = !run.base_state_hash || contentHash(await readPlanRows(db, run.user_id, run.kind)) === run.base_state_hash;
+    if (profileFresh && planFresh) return true;
     await db.query("update agent_private.runs set status='stale',approval_id=null,revision=revision+1 where id=$1", [run.id]);
-    await this.event(db, run, "profile_changed", "system");
+    await this.event(db, run, profileFresh ? "plan_changed" : "profile_changed", "system");
     return false;
   }
   private async proposal(db: PoolClient, run: Row) {
     return (await db.query("select * from agent_private.proposals where id=$1 and run_id=$2 and user_id=$3",
-      [run.current_proposal, run.id, run.user_id])).rows[0] as { id: string; version: number; content_hash: string; context_revision: number; plan: Plan } | undefined;
+      [run.current_proposal, run.id, run.user_id])).rows[0] as { id: string; version: number; content_hash: string; context_revision: number; plan: AnyPlan } | undefined;
   }
   private async bound(db: PoolClient, run: Row, binding: Binding) {
     const p = await this.proposal(db, run);
@@ -76,6 +81,7 @@ export class AgentStore {
     const receipt = (await db.query("select receipt from agent_private.receipts where run_id=$1", [run.id])).rows[0]?.receipt ?? null;
     const events = (await db.query('select sequence::text, type, actor, data, created_at as at from agent_private.events where run_id=$1 order by sequence', [run.id])).rows;
     return { id: run.id, version: P1_VERSION, status: current.status, revision: current.revision,
+      kind: current.kind ?? "training", baseline: current.baseline ?? [],
       contextRevision: current.context_revision, context: current.context, attempts: current.attempts,
       approvalId: current.approval_id, proposal: p ? { proposalId: p.id, contentHash: p.content_hash,
         contextRevision: p.context_revision, version: p.version, plan: p.plan } : null, receipt, events };
@@ -91,6 +97,69 @@ export class AgentStore {
         values($1,$2,$3,$4,$5,$6) returning *`, [userId, req.requestKey, contentHash(req.context), JSON.stringify(req.context), profileHash, P1_VERSION])).rows[0];
       await this.event(db, run, "run_created", "user", { context: req.context, version: P1_VERSION });
       return { ok: true, value: await this.view(db, run) };
+    });
+  }
+
+  async planContext(userId: string, kind: PlanKind, draftId?: string): Promise<PlanSnapshot> {
+    return this.tx(userId, async db => {
+      const profile = (await db.query("select to_jsonb(s) as data from public.user_settings s where user_id=$1 for share", [userId])).rows[0]?.data;
+      if (!profile) throw new Error("PROFILE_REQUIRED");
+      const currentPlans = await readPlanRows(db, userId, kind);
+      if (JSON.stringify(currentPlans).length > 100000) throw new Error("PLAN_TOO_LARGE");
+      const snapshot: PlanSnapshot = { kind, profile, currentPlans, profileHash: contentHash(profile), stateHash: contentHash(currentPlans) };
+      const saved=(await db.query(`select p.plan,r.context from agent_private.receipts receipt
+        join agent_private.runs r on r.id=receipt.run_id join agent_private.proposals p on p.id=receipt.proposal_id
+        where receipt.user_id=$1 and r.kind=$2 and receipt.receipt->>'appliedStateHash'=$3 limit 1`,[userId,kind,snapshot.stateHash])).rows[0];
+      if(saved)snapshot.editable={plan:saved.plan,context:saved.context};
+      if (draftId) {
+        const run = await this.run(db, userId, draftId);
+        if (run && run.kind === kind && ["awaiting_approval", "approved", "revoked"].includes(run.status) && await this.fresh(db, run)) {
+          const p = await this.proposal(db, run);
+          if (p) {snapshot.draft = { runId: run.id, revision: run.revision, plan: p.plan };snapshot.editable={plan:p.plan,context:run.context};}
+        }
+      }
+      return snapshot;
+    });
+  }
+
+  // A model may publish a checked immutable preview, never approve or execute.
+  async prepare(userId: string, requestKey: string, snapshot: PlanSnapshot, context: Context, input: unknown): Promise<Outcome<RunView>> {
+    z.uuid().parse(requestKey); contextSchema.parse(context);
+    const plan = (snapshot.kind === "training" ? planSchema : nutritionPlanSchema).parse(input);
+    const requestHash = contentHash({ kind: snapshot.kind, plan, context, stateHash: snapshot.stateHash, profileHash: snapshot.profileHash });
+    return this.tx(userId, async db => {
+      const old = (await db.query<Row & {request_hash: string}>("select * from agent_private.runs where user_id=$1 and request_key=$2", [userId, requestKey])).rows[0];
+      if (old) return old.request_hash === requestHash ? {ok: true, value: await this.view(db, old)} : fail("KEY_CONFLICT");
+      if (await this.profile(db, userId) !== snapshot.profileHash || contentHash(await readPlanRows(db, userId, snapshot.kind)) !== snapshot.stateHash) return fail("CONTEXT_STALE");
+      if (!isNutritionPlan(plan) && validatePlanConstraints(plan, context).length) return fail("CONSTRAINT_VIOLATION");
+      if (snapshot.draft) {
+        const previous = await this.run(db, userId, snapshot.draft.runId);
+        if (!previous || previous.kind !== snapshot.kind || previous.revision !== snapshot.draft.revision || !["awaiting_approval", "approved", "revoked"].includes(previous.status)) return fail("VERSION_CONFLICT");
+        await db.query("update agent_private.runs set status='declined',approval_id=null,revision=revision+1 where id=$1", [previous.id]);
+        await this.event(db, previous, "draft_superseded", "user_request");
+      }
+      const run = (await db.query<Row>(`insert into agent_private.runs(user_id,request_key,request_hash,context,profile_hash,version,kind,base_state_hash,baseline)
+        values($1,$2,$3,$4,$5,$6,$7,$8,$9) returning *`, [userId,requestKey,requestHash,JSON.stringify(context),snapshot.profileHash,P1_VERSION,snapshot.kind,snapshot.stateHash,JSON.stringify(snapshot.currentPlans)])).rows[0];
+      await this.event(db, run, "run_created", "user_request", {kind:snapshot.kind,context});
+      const hash = contentHash(plan);
+      const p = (await db.query(`insert into agent_private.proposals(user_id,run_id,version,context_revision,content_hash,plan)
+        values($1,$2,1,0,$3,$4) returning id`, [userId,run.id,hash,JSON.stringify(plan)])).rows[0];
+      await db.query("update agent_private.runs set current_proposal=$2,status='awaiting_approval',revision=1 where id=$1", [run.id,p.id]);
+      await this.event(db, run, "proposal_published", "coach_model", {proposalId:p.id,contentHash:hash});
+      return {ok:true,value:await this.view(db,run)};
+    });
+  }
+
+  async recent(userId: string): Promise<Outcome<RunView[]>> {
+    return this.tx(userId, async db => {
+      const runs = (await db.query<Row>(`select * from agent_private.runs where user_id=$1 and base_state_hash is not null
+        and status in ('awaiting_approval','approved','revoked','applied','stale') order by created_at desc limit 5`, [userId])).rows;
+      const views:RunView[] = [];
+      for (const run of runs) {
+        if (["awaiting_approval","approved","revoked"].includes(run.status)) await this.fresh(db,run);
+        views.push(await this.view(db,run));
+      }
+      return {ok:true,value:views};
     });
   }
   async get(userId: string, id: string): Promise<Outcome<RunView>> {
@@ -109,7 +178,8 @@ export class AgentStore {
       if (run.revision !== req.expectedRevision) return fail("VERSION_CONFLICT");
       if (["applied", "declined", "budget_exhausted", "stale"].includes(run.status)) return fail("RUN_CLOSED");
       if (!(await this.fresh(db, run))) return fail("CONTEXT_STALE");
-      const violations = validatePlanConstraints(req.plan, run.context);
+      if (isNutritionPlan(req.plan) !== (run.kind === "nutrition")) return fail("PLAN_KIND_MISMATCH");
+      const violations = isNutritionPlan(req.plan) ? [] : validatePlanConstraints(req.plan, run.context);
       if (violations.length) {
         await this.event(db, run, "proposal_rejected", "validator", { violations });
         return fail("CONSTRAINT_VIOLATION");
@@ -132,6 +202,7 @@ export class AgentStore {
       if (run.revision !== req.expectedRevision) return fail("VERSION_CONFLICT");
       if (["applied", "declined", "budget_exhausted"].includes(run.status)) return fail("RUN_CLOSED");
       if (req.action === "context") {
+        if (run.base_state_hash) return fail("NEW_PREVIEW_REQUIRED");
         const profileHash = await this.profile(db, userId);
         if (!profileHash) return fail("PROFILE_REQUIRED");
         await db.query(`update agent_private.runs set context=$2,context_revision=context_revision+1,
@@ -182,10 +253,14 @@ export class AgentStore {
       if (!p) return reject("PROPOSAL_MISMATCH");
       if (run.status !== "approved" || run.approval_id !== req.approvalId) return reject("NOT_APPROVED");
       if (!(await this.fresh(db, run))) return reject("CONTEXT_STALE");
-      if (contentHash(p.plan) !== p.content_hash || validatePlanConstraints(p.plan, run.context).length) return reject("PROPOSAL_INVALID");
+      if (contentHash(p.plan) !== p.content_hash || isNutritionPlan(p.plan) !== (run.kind === "nutrition") ||
+        (!isNutritionPlan(p.plan) && validatePlanConstraints(p.plan, run.context).length)) return reject("PROPOSAL_INVALID");
       await db.query("savepoint business_write");
       try {
         const planId = `agent-${randomUUID()}`;
+        if (isNutritionPlan(p.plan)) {
+          await persistNutritionPlan(db, userId, planId, p.plan);
+        } else {
         await db.query("update public.training_plans set is_active=false,updated_at=now() where user_id=$1 and is_active", [userId]);
         await db.query(`insert into public.training_plans(id,user_id,name,notes,is_active) values($1,$2,$3,$4,true)`,
           [planId, userId, p.plan.plan_name, [p.plan.summary, p.plan.reasoning_summary,
@@ -212,9 +287,11 @@ export class AgentStore {
           as x(id text,week_id text,day_number integer,title text,notes text)`, [JSON.stringify(days)]);
         await db.query(`insert into public.training_plan_exercises(id,day_id,name,sets,rep_range,target_rpe,notes,alternative_exercises) select * from jsonb_to_recordset($1::jsonb)
           as x(id text,day_id text,name text,sets integer,rep_range text,target_rpe numeric,notes text,alternative_exercises text[])`, [JSON.stringify(exercises)]);
+        }
         const timestamp = (await db.query("select clock_timestamp() as at")).rows[0].at.toISOString();
         const result: Receipt = { id: randomUUID(), runId: id, proposalId: p.id, contentHash: p.content_hash,
-          approvalId: req.approvalId, contextRevision: p.context_revision, planId, committedAt: timestamp };
+          approvalId: req.approvalId, contextRevision: p.context_revision, planId, committedAt: timestamp, kind: run.kind ?? "training",
+          appliedStateHash:contentHash(await readPlanRows(db,userId,run.kind??"training")) };
         await db.query("insert into agent_private.receipts(id,user_id,run_id,proposal_id,receipt) values($1,$2,$3,$4,$5)", [result.id, userId, id, p.id, JSON.stringify(result)]);
         await db.query("update agent_private.runs set status='applied',revision=revision+1 where id=$1", [id]);
         await this.event(db, run, "plan_committed", "database", result);
