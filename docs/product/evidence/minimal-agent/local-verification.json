@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-10-14T09:36:34.869Z",
+  "observedAt": "2026-10-14T09:37:11.657Z",
   "scope": "Local synthetic accounts; real Next/API/PostgreSQL, HTTP auth double; desktop Chromium at phone/desktop widths",
-  "formatting": "Trailing whitespace removed from published logs; raw ignored originals retained, originalSha256 records their hashes.",
+  "formatting": "Line endings normalized to LF and trailing whitespace removed from published logs; raw ignored originals retained, originalSha256 records their hashes.",
   "counts": {
     "unit": 80,
     "postgres": 31,
@@ -46,116 +46,116 @@
     },
     {
       "name": "minimal-browser-all.log",
-      "bytes": 10058,
-      "sha256": "2ccc1294802c206a6d19b7ed873ed88a3be765842c53037d6191c015d0a87ac6",
+      "bytes": 9964,
+      "sha256": "fb5e52887953667a27ed3d728a78773fb25dec69021a3e4b86300636d96b209b",
       "originalSha256": "8f727fc1a350c8ca347955e316c761566d3a78618c20f5f02fc53bfb0cd1c222"
     },
     {
       "name": "minimal-browser-final.log",
-      "bytes": 6879,
-      "sha256": "1662e69b7198a4642942e5123db346c34cdd3a2f0a65e9a9f3f5a1a8bfcea758",
+      "bytes": 6824,
+      "sha256": "cf205304565454f617071cd77736cc8fd98e0f5b237f7d85bbf5c0e29ab32206",
       "originalSha256": "7de2d3a7e70fd898663fc1240242cb567655eff808d3e798f22f64870fe502e9"
     },
     {
       "name": "minimal-browser-first.log",
-      "bytes": 6556,
-      "sha256": "e0c92a1dddc8898086815a2744f642177a228bfd496e899b3e022c693924c76a",
+      "bytes": 6484,
+      "sha256": "65af87628ee377bc2ee093e73e4b3f00606dd902c5b86f2f012f141676321915",
       "originalSha256": "3428cf3b950d0a6b3bc66e1c94e1b41d9a32a79620094409d3aad479312110e1"
     },
     {
       "name": "minimal-build-final.log",
-      "bytes": 1492,
-      "sha256": "f123d8f6bdeb9333a11e119d69082c89994918aee91c0ba15996ea55bd24b103",
+      "bytes": 1435,
+      "sha256": "b3d947497a29e5e10728d84bd2b151d8520f9be9872fd322779738a9d110e9c6",
       "originalSha256": "87031369e91ecaf9c3e4ce2b0d2c3c38fae04061e1ae9ea1d3fbb8a21b78b7a6"
     },
     {
       "name": "minimal-build.log",
-      "bytes": 1492,
-      "sha256": "3630a53a9dc2f404bf6538a2ecdd9b6073344a733bc939029be007ce2961c1e4",
+      "bytes": 1435,
+      "sha256": "25c9ef7962d6b3b1163580d0ef04bfa85922c648bcb3cc60b08d896ea70c6bbe",
       "originalSha256": "859d249615568e88b3fd4008419960ca32018fc9d57201ca697511a458c14d03"
     },
     {
       "name": "minimal-lint-final.log",
-      "bytes": 371,
-      "sha256": "07ec57db1f38d49e8b158da9432c05c229e791c6df5041099d7558fd3c983c73",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
       "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
     },
     {
       "name": "minimal-lint.log",
-      "bytes": 371,
-      "sha256": "07ec57db1f38d49e8b158da9432c05c229e791c6df5041099d7558fd3c983c73",
+      "bytes": 362,
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
       "originalSha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
     },
     {
       "name": "minimal-pg-exercise-replacement.log",
-      "bytes": 1235,
-      "sha256": "9ffc1749af6fe1cb198b6c5c83d74efd647f9bbfcd5bc0d87e07376bffc3d3ab",
+      "bytes": 1218,
+      "sha256": "7164516c3f7291d9b891c782abe1b5518df71524f2f43c0e9385bc66cbc1317b",
       "originalSha256": "396f557fff4be8cc6e0e259e8dfc66fe7091de1ca49203159fe7c153f28c7441"
     },
     {
       "name": "minimal-pg-final-exercise-replacement.log",
-      "bytes": 1234,
-      "sha256": "83f7c26d4b75aaa2b6e227945ae67bae89f8f016ee8d89e52bdfb1eb9eaad77a",
+      "bytes": 1217,
+      "sha256": "28f91976619c426debf687d017d95a01c219f3835fd988e2bdc3ac4c4abe9831",
       "originalSha256": "1f6d2cd261799f910c7fb1aeddafa48434811cd821d06f329f006983272bef3f"
     },
     {
       "name": "minimal-pg-final-outbox.log",
-      "bytes": 231,
-      "sha256": "8176bbef96c84f6ed780aa90cab695cf5cca4a1632a69b9d56dcb5ee88dc05b7",
+      "bytes": 223,
+      "sha256": "537fb03a8122090a00ec46dd9cf7ec99b0225dd3206925f24e3c8f0a60b4331f",
       "originalSha256": "182f9d9ca3b3090b8957423ccb07b9e822df5b7fb314e2faf00d45c8774e6f1b"
     },
     {
       "name": "minimal-pg-final-personal-records.log",
-      "bytes": 596,
-      "sha256": "33d3590cba833ed1723960a8d3e1fdae5df5ac93f88116959957245ef83964fa",
+      "bytes": 584,
+      "sha256": "4de7c13360dce8b7c972eeca9f9ab90579bf3c2de78e776af7d2fb8b35de500a",
       "originalSha256": "94e02e99ae6d981415114e25fa8d734f225affd870138ec9147691460e0932e5"
     },
     {
       "name": "minimal-pg-final-today.log",
-      "bytes": 1073,
-      "sha256": "45e119dd92c9e35a32178addd7854e6da93783f381196c1926cddd587aea817f",
+      "bytes": 1056,
+      "sha256": "df626b0918b0b9cd37a05be0d679c954f7264acffdf707052eb8c79597e67cd5",
       "originalSha256": "bc0eab91683b2ca0886f96fe9f38dc4a55ea16e91c9fc56ba26764c820fe0b33"
     },
     {
       "name": "minimal-pg-final-workout-commands.log",
-      "bytes": 1086,
-      "sha256": "8f41e20fceae2abed6f93cc2fb7a6a48d8f0fa38ec86393c1e8270aaea5be539",
+      "bytes": 1069,
+      "sha256": "eaa3201c93777100f22261ffdfd6d5fceaf4b6c3ef5e3813baacc2f09d17fe51",
       "originalSha256": "8b10c23610b57eada22508aa726384a9817d642f449d4abb3c3eaf5e040783ec"
     },
     {
       "name": "minimal-pg-outbox.log",
-      "bytes": 231,
-      "sha256": "817c6e5be57cc04f0c9b091149642995630a5b1e535502fe7fe3e69507738f70",
+      "bytes": 223,
+      "sha256": "080e175381d5b81567e1577274775d4d5ee3a4d03adcd78a211a569514cb75ba",
       "originalSha256": "f85c3948fc9b05c86ac1c3e41ff1f5224267437d520274f4df7aebf11b132951"
     },
     {
       "name": "minimal-pg-personal-records.log",
-      "bytes": 595,
-      "sha256": "91367e5b860ffb7f6890d7f3bbc4ba9264254f802cfafd6fa45c19c6fe755a7f",
+      "bytes": 583,
+      "sha256": "6ca2453e9bb5841c19b36329ea27462322b84bbe903c44c227cf1e759af23144",
       "originalSha256": "704ab6d37de303df33905fb63cfc2945635360af3c55ebd15696205880e8aff6"
     },
     {
       "name": "minimal-pg-workout-commands.log",
-      "bytes": 1090,
-      "sha256": "a00389fb6d9c3793f7f0f4cffb51c76366f76d829d932f62036aa6253a1e6dcb",
+      "bytes": 1073,
+      "sha256": "2287b4a6f8f788a7b9c18a3c1dab8043f63000b501c8290b97a34fa2b891c55c",
       "originalSha256": "38dc8ae0103744d1263c6cc86c0b2bf0bba695938aab431c98a7974a56071345"
     },
     {
       "name": "minimal-pg.log",
-      "bytes": 982,
-      "sha256": "42ea654955b4078ae01c381321ca14aa590052b01922febfe7e60e43076ac407",
+      "bytes": 966,
+      "sha256": "bbcd3f3ec568d3d1f5293695d5392b3705ceedc198f73d1dc553795e61981037",
       "originalSha256": "694720ebdd3d859c9cccdd45403076686c8a93db71fdfeff1f3e66df0d774a80"
     },
     {
       "name": "minimal-unit-final.log",
-      "bytes": 7033,
-      "sha256": "011ca5f54ea51e3a5a39e7ba9a2b03959d1482fe9b08f1b88a0cca845db3546a",
+      "bytes": 6931,
+      "sha256": "842ff32cf1fb4490ac23845dc4f57eb18d93dfff69c9d9bff7534033ca8a60ed",
       "originalSha256": "3c1002762f767297fac0cff72a44fdd4806128ec65f7e7eb24edd4f2bb6f9561"
     },
     {
       "name": "minimal-unit.log",
-      "bytes": 7035,
-      "sha256": "4dd7f37741e88c9bb2a57ed3e170307d686fc875678220532380ace6e40c5828",
+      "bytes": 6933,
+      "sha256": "d9938741702fe41f248af5831994a9b0bb7cffb05b896b3f9adafe3d5492ebdb",
       "originalSha256": "364fc7f54fd1004e751c3bd0c8f8a6d038d9ca6171fbc8f5ac094b687baed4aa"
     },
     {
