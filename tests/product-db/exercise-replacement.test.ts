@@ -103,5 +103,24 @@ test("session replacement on real PostgreSQL: atomicity, isolation, concurrent h
         has_table_privilege('liftcut_workout','workout_exercise_changes','DELETE') as delete`)).rows[0],{browser:false,anon:false,update:false,delete:false});
       assert.equal(await planSnapshot(),beforePlan);
     });
+    await t.test("history preserves every session and receipt without overlapping queries on one real connection",async()=>{
+      const expected=await store.history(user);assert.ok(expected.length>2);
+      let active=0,peak=0;
+      const observedPool={async connect(){
+        const real=await pool.connect();
+        return new Proxy(real,{get(target,key){
+          if(key==="query")return(...args:unknown[])=>{
+            active++;peak=Math.max(peak,active);
+            return Promise.resolve(Reflect.apply(target.query,target,args)).finally(()=>{active--;});
+          };
+          if(key==="release")return target.release.bind(target);
+          return Reflect.get(target,key);
+        }});
+      }} as unknown as Pool;
+      const checked=new TodayStore(observedPool);
+      assert.deepEqual(await checked.history(user),expected);
+      assert.deepEqual(await checked.history(other),[]);
+      assert.equal(active,0);assert.equal(peak,1,"a transaction client must have only one outstanding query");
+    });
   }finally{await pool.end();await admin.end();}
 });

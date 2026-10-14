@@ -1,0 +1,40 @@
+{
+  "id": "dpl_DjKcVJwsGEyqHXrNLaRivhKnRTok",
+  "name": "liftcut-tracker",
+  "url": "liftcut-tracker-p71vfw7xb-townzcs-projects.vercel.app",
+  "type": "LAMBDAS",
+  "state": "READY",
+  "createdAt": 1791960877449,
+  "creator": {
+    "uid": "S40pD5STzCM92iiNERkUpsTk",
+    "username": "townzc"
+  },
+  "project": {
+    "id": "prj_kQOi1DuGMWI5Xp98TJZ5wfPP1JxA",
+    "name": "liftcut-tracker",
+    "framework": "nextjs"
+  },
+  "meta": {
+    "githubCommitRef": "main",
+    "githubCommitSha": "d329751c993bb3e50952261658b09dc8e5146e01",
+    "githubCommitMessage": "Merge pull request #74 from Townzc/feat/session-exercise-replacement\n\nfeat: session-only exercise replacement with offline undo",
+    "githubRepo": "liftcut-tracker",
+    "githubOrg": "Townzc"
+  },
+  "alias": [
+    "www.liftcuttracker.com",
+    "liftcut-tracker.vercel.app",
+    "liftcuttracker.com",
+    "liftcut-tracker-townzcs-projects.vercel.app",
+    "liftcut-tracker-git-main-townzcs-projects.vercel.app"
+  ],
+  "target": "production",
+  "regions": [
+    "icn1"
+  ],
+  "buildingAt": 1791960878911,
+  "ready": 1791960952610,
+  "readyState": "READY",
+  "source": "git",
+  "aliasError": null
+}

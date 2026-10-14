@@ -1,0 +1,18 @@
+{
+  "project": "ksyopvedhzpxirfyfkhw",
+  "result": [
+    {
+      "observed_at": "2026-10-14 06:39:30.10234+00",
+      "database": "postgres",
+      "users": 6,
+      "legacy_rows": 100,
+      "sessions": 0,
+      "replacement_table_exists": false,
+      "legacy_differences": 0,
+      "runtime_role": {
+        "bypassrls": false,
+        "superuser": false
+      }
+    }
+  ]
+}

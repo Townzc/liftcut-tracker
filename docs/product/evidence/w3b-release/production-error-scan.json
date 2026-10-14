@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-14T06:59:52.298Z",
+  "deploymentId": "dpl_DjKcVJwsGEyqHXrNLaRivhKnRTok",
+  "since": "2026-10-14T06:55:52Z",
+  "levels": [
+    "error",
+    "fatal"
+  ],
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "## Runtime Log Counts\n\n**Project:** prj_kQOi1DuGMWI5Xp98TJZ5wfPP1JxA\n**Grouped by:** requestPath\n**Showing:** Top 25 groups by log count; this may omit other groups.\n\n| requestPath | count |\n|---|---|\n| /api/workout-sessions/history | 2 |"
+      }
+    ],
+    "isError": false
+  }
+}

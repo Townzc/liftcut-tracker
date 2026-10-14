@@ -1,0 +1,307 @@
+[
+  {
+    "observed_at": "2026-10-14 06:58:56.672739+00",
+    "sessions": [
+      {
+        "id": "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404",
+        "status": "ended",
+        "revision": 5,
+        "prescription": {
+          "title": "仅本次替换验证",
+          "exercises": [
+            {
+              "id": "568eb158-a687-499e-a311-a328ff9d3b7c",
+              "name": "哑铃地板卧推",
+              "sets": 3,
+              "repRange": "8-12",
+              "catalogId": "dumbbell-floor-press",
+              "targetRpe": 7,
+              "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+            }
+          ]
+        }
+      },
+      {
+        "id": "0676b6e8-3560-403c-a948-eeca9fa3865e",
+        "status": "ended",
+        "revision": 4,
+        "prescription": {
+          "title": "仅本次替换验证",
+          "exercises": [
+            {
+              "id": "6976c10b-11c5-4f5d-88a1-66e1e082b297",
+              "name": "杠铃卧推",
+              "sets": 3,
+              "repRange": "8-12",
+              "targetRpe": 7,
+              "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+            }
+          ]
+        }
+      },
+      {
+        "id": "6eb3ef2d-f9d3-4c34-9c4b-92a32d9452f8",
+        "status": "ended",
+        "revision": 3,
+        "prescription": {
+          "title": "仅本次替换验证",
+          "exercises": [
+            {
+              "id": "9f90600f-51e4-4fde-9140-6897a7f3ba51",
+              "name": "哑铃地板卧推",
+              "sets": 3,
+              "repRange": "8-12",
+              "catalogId": "dumbbell-floor-press",
+              "targetRpe": 7,
+              "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+            }
+          ]
+        }
+      }
+    ],
+    "sets": [
+      {
+        "rpe": null,
+        "name": "哑铃地板卧推",
+        "reps": 8,
+        "status": "done",
+        "weight": null,
+        "session_id": "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404",
+        "plan_exercise_id": "568eb158-a687-499e-a311-a328ff9d3b7c"
+      },
+      {
+        "rpe": null,
+        "name": "杠铃卧推",
+        "reps": 8,
+        "status": "done",
+        "weight": null,
+        "session_id": "0676b6e8-3560-403c-a948-eeca9fa3865e",
+        "plan_exercise_id": "6976c10b-11c5-4f5d-88a1-66e1e082b297"
+      },
+      {
+        "rpe": null,
+        "name": "哑铃地板卧推",
+        "reps": 8,
+        "status": "done",
+        "weight": null,
+        "session_id": "6eb3ef2d-f9d3-4c34-9c4b-92a32d9452f8",
+        "plan_exercise_id": "9f90600f-51e4-4fde-9140-6897a7f3ba51"
+      }
+    ],
+    "replacements": [
+      {
+        "id": "fe6a3a5b-4292-415d-9b63-12a8619bbaae",
+        "receipt": {
+          "id": "fe6a3a5b-4292-415d-9b63-12a8619bbaae",
+          "undo": null,
+          "after": {
+            "id": "219050ed-00e9-4f36-8852-57be92d937ed",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7
+          },
+          "revision": 2,
+          "createdAt": "2026-10-14T06:57:00.555Z",
+          "equipment": [
+            "dumbbells"
+          ],
+          "sessionId": "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404",
+          "catalogVersion": "session-v1"
+        },
+        "parent_id": null,
+        "new_exercise_id": "219050ed-00e9-4f36-8852-57be92d937ed"
+      },
+      {
+        "id": "5725cf05-8134-43aa-803b-20af11bf23c0",
+        "receipt": {
+          "id": "5725cf05-8134-43aa-803b-20af11bf23c0",
+          "after": {
+            "id": "366c257f-7d4f-4952-a921-19f5eab9ee5b",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "219050ed-00e9-4f36-8852-57be92d937ed",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "revision": 3,
+          "createdAt": "2026-10-14T06:57:01.184Z",
+          "sessionId": "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404"
+        },
+        "parent_id": "fe6a3a5b-4292-415d-9b63-12a8619bbaae",
+        "new_exercise_id": "366c257f-7d4f-4952-a921-19f5eab9ee5b"
+      },
+      {
+        "id": "8ae38e65-698d-4c72-9bdb-10c8e507504e",
+        "receipt": {
+          "id": "8ae38e65-698d-4c72-9bdb-10c8e507504e",
+          "undo": null,
+          "after": {
+            "id": "568eb158-a687-499e-a311-a328ff9d3b7c",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "366c257f-7d4f-4952-a921-19f5eab9ee5b",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "revision": 4,
+          "createdAt": "2026-10-14T06:57:01.811Z",
+          "equipment": [
+            "dumbbells"
+          ],
+          "sessionId": "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404",
+          "catalogVersion": "session-v1"
+        },
+        "parent_id": null,
+        "new_exercise_id": "568eb158-a687-499e-a311-a328ff9d3b7c"
+      },
+      {
+        "id": "1e84a90c-01bd-4553-a5ca-5717d9d9dd30",
+        "receipt": {
+          "id": "1e84a90c-01bd-4553-a5ca-5717d9d9dd30",
+          "undo": null,
+          "after": {
+            "id": "408ccc36-28ec-4efb-b090-8b4495d87979",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7
+          },
+          "revision": 2,
+          "createdAt": "2026-10-14T06:57:12.850Z",
+          "equipment": [
+            "dumbbells"
+          ],
+          "sessionId": "0676b6e8-3560-403c-a948-eeca9fa3865e",
+          "catalogVersion": "session-v1"
+        },
+        "parent_id": null,
+        "new_exercise_id": "408ccc36-28ec-4efb-b090-8b4495d87979"
+      },
+      {
+        "id": "56a65a18-67b1-4e97-9287-a44e3f880dec",
+        "receipt": {
+          "id": "56a65a18-67b1-4e97-9287-a44e3f880dec",
+          "after": {
+            "id": "6976c10b-11c5-4f5d-88a1-66e1e082b297",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "408ccc36-28ec-4efb-b090-8b4495d87979",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "revision": 3,
+          "createdAt": "2026-10-14T06:57:26.674Z",
+          "sessionId": "0676b6e8-3560-403c-a948-eeca9fa3865e"
+        },
+        "parent_id": "1e84a90c-01bd-4553-a5ca-5717d9d9dd30",
+        "new_exercise_id": "6976c10b-11c5-4f5d-88a1-66e1e082b297"
+      },
+      {
+        "id": "b6d41ab9-5e2b-43aa-b583-67af9aaf4a37",
+        "receipt": {
+          "id": "b6d41ab9-5e2b-43aa-b583-67af9aaf4a37",
+          "undo": null,
+          "after": {
+            "id": "9f90600f-51e4-4fde-9140-6897a7f3ba51",
+            "name": "哑铃地板卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "catalogId": "dumbbell-floor-press",
+            "targetRpe": 7,
+            "originalPlanExerciseId": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2"
+          },
+          "before": {
+            "id": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2",
+            "name": "杠铃卧推",
+            "sets": 3,
+            "repRange": "8-12",
+            "targetRpe": 7
+          },
+          "revision": 2,
+          "createdAt": "2026-10-14T06:57:48.501Z",
+          "equipment": [
+            "dumbbells"
+          ],
+          "sessionId": "6eb3ef2d-f9d3-4c34-9c4b-92a32d9452f8",
+          "catalogVersion": "session-v1"
+        },
+        "parent_id": null,
+        "new_exercise_id": "9f90600f-51e4-4fde-9140-6897a7f3ba51"
+      }
+    ],
+    "events": {
+      "ended": 3,
+      "started": 3,
+      "recorded": 3,
+      "exercise_replaced": 4,
+      "exercise_replacement_compensated": 2
+    },
+    "preferred_language": "en",
+    "plan_snapshot": [
+      {
+        "id": "399afe34-9a3c-4ec6-80dd-c8643ddd43b2",
+        "name": "杠铃卧推",
+        "sets": 3,
+        "notes": "",
+        "title": "仅本次替换验证",
+        "day_id": "6ba7aed5-0c01-414e-ad35-fa437a683b6e",
+        "user_id": "017053fa-5aa7-4803-b0b2-4b14c756a141",
+        "week_id": "1585e2c1-ed98-48df-8eac-f3eeeee4e9ce",
+        "is_active": true,
+        "plan_name": "W3b synthetic release",
+        "rep_range": "8-12",
+        "target_rpe": 7,
+        "week_number": 1,
+        "training_plan_id": "cd9f1c9e-cae6-489e-9616-da0e2d54edcd",
+        "alternative_exercises": []
+      }
+    ],
+    "legacy_differences": 0
+  }
+]

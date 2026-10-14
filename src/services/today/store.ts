@@ -55,7 +55,11 @@ export class TodayStore {
   async history(user: string): Promise<Session[]> {
     return this.tx(user, async db => {
       const rows = (await db.query("select id from public.workout_sessions order by started_at desc")).rows;
-      return Promise.all(rows.map(r => this.read(db, r.id)));
+      // This transaction owns one pg client. Pipelining separate session reads
+      // on that client is deprecated; keep its queries ordered and awaited.
+      const sessions: Session[] = [];
+      for (const row of rows) sessions.push(await this.read(db, row.id));
+      return sessions;
     });
   }
   async load(user: string): Promise<TodayData> {

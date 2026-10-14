@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "## Runtime Logs\n\n**Project:** prj_kQOi1DuGMWI5Xp98TJZ5wfPP1JxA\n**Deployment:** dpl_DjKcVJwsGEyqHXrNLaRivhKnRTok\n**Time range:** 2026-10-14T06:55:52.000Z → 2026-10-14T07:00:19.188Z\n\n### 2026-10-14T06:58:13.068Z GET /api/workout-sessions/history [error/function]\ndep=dpl_DjKcVJwsGEyqHXrNLaRivhKnRTok branch=main request=snlbt-1791961092724-5b6773d0c16e domain=www.liftcuttracker.com environment=production region=iad1 runtime=nodejs24.x stream=stderr\n    (node:6) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.\n\n### 2026-10-14T06:57:47.627Z GET /api/workout-sessions/history [error/function]\ndep=dpl_DjKcVJwsGEyqHXrNLaRivhKnRTok branch=main request=n968g-1791961067275-f0164c8cfc65 domain=www.liftcuttracker.com environment=production region=iad1 runtime=nodejs24.x stream=stderr\n    (node:6) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.\n"
+    }
+  ],
+  "isError": false
+}

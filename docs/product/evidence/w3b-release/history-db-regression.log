@@ -1,0 +1,29 @@
+▶ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay
+  ✔ four concurrent duplicates write one receipt/event; exact retries survive compensation and ending (123.5452ms)
+  ✔ offline replacement -> undo -> replacement -> sentence -> end has matching server context and actuals (77.7151ms)
+  ✔ all existing set states block replacement; untouched exercise actuals remain exact (136.3106ms)
+  ✔ stale preview and old device's queued ID cannot write into replacement (57.1046ms)
+  ✔ replacement vs first set, compensation vs first set and end vs replacement serialize with one winner (387.3696ms)
+  ✔ injected receipt insert failure rolls back prescription and event; plan and other rows never updated (37.9652ms)
+  ✔ RLS and append-only receipt grants prevent cross-owner replay/read/write/delete (33.5389ms)
+  ✔ history preserves every session and receipt without overlapping queries on one real connection (61.4754ms)
+✔ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay (947.3568ms)
+✔ entire offline chain has identical contexts and values when replayed against real PostgreSQL (176.6498ms)
+▶ W2b real transactions: atomic commands, receipts, compensation and isolation
+  ✔ preview has no writes; strict authorization/field contract rejects forged drafts (4.986ms)
+  ✔ four concurrent copies commit one batch; repeated lost-response request returns receipt (51.3693ms)
+  ✔ failure at second set rolls back first set, events and receipt (16.3373ms)
+  ✔ stale context rejects entire command after another write (51.7771ms)
+  ✔ correction undo restores before values at a new revision; old correction cannot reapply (39.8297ms)
+  ✔ undo cannot overwrite a later tap; atomic undo rolls back any earlier compensation (40.7278ms)
+  ✔ unknown weight stays NULL; pounds retain reported unit; batch undo after end never resurrects (45.8834ms)
+  ✔ other users cannot preview, apply, undo or read receipts; runtime receipts immutable (17.0757ms)
+✔ W2b real transactions: atomic commands, receipts, compensation and isolation (335.1497ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2719.3097

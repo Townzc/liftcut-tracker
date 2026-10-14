@@ -1,0 +1,93 @@
+const fs=require('node:fs'),assert=require('node:assert/strict'),{randomUUID}=require('node:crypto');
+const {chromium,expect:rawExpect}=require('@playwright/test');
+const {localContextHash}=require(process.cwd()+'/src/lib/workout-context.ts');
+const expect=rawExpect.configure({timeout:60000});
+const out='node_modules/.cache/w3b/',base='https://www.liftcuttracker.com';
+const f=JSON.parse(fs.readFileSync(out+'auth-private.json','utf8'));
+assert.equal(f.tag,'w3b-release-20261014');assert.ok(f.user.email.endsWith('@example.invalid'));
+const stages=[],errors=[],modelCalls=[],sessions=[],responses=[];
+let phase='login';
+const synced=(p,lang='zh')=>expect(p.getByTestId('outbox-status')).toHaveText(lang==='en'?'Synced':'已同步');
+const live=async p=>{const r=await p.request.get(base+'/api/workout-sessions');assert.equal(r.status(),200);return (await r.json()).session;};
+const history=async p=>{const r=await p.request.get(base+'/api/workout-sessions/history');assert.equal(r.status(),200);return r.json();};
+const state=p=>p.evaluate(owner=>new Promise((resolve,reject)=>{const o=indexedDB.open('liftcut-workout-outbox-v1',1);o.onerror=()=>reject(o.error);
+ o.onsuccess=()=>{const d=o.result,t=d.transaction('accounts'),r=t.objectStore('accounts').get(owner);r.onsuccess=()=>resolve(r.result);t.oncomplete=()=>d.close();};}),f.user.id);
+const post=(p,path,data,owner=f.user.id)=>p.request.post(base+path,{headers:{Origin:base,'X-Workout-Owner':owner},data});
+const tap=(s,id)=>({id:randomUUID(),sessionId:s.id,planExerciseId:id,setIndex:1,revision:1,status:'done',weightKg:null,reps:8,rpe:null,
+ weightSource:null,repsSource:'user_entered',inputUnit:'kg',sourceRef:'today-tap'});
+const replaceBody=async s=>({id:randomUUID(),sessionId:s.id,version:1,revision:s.revision+1,exerciseId:s.prescription.exercises[0].id,newExerciseId:randomUUID(),
+ contextHash:await localContextHash(s),catalogVersion:'session-v1',candidateId:'dumbbell-floor-press',equipment:['dumbbells'],authorization:'confirm_preview'});
+async function start(p){await p.goto(base+'/today');await synced(p);assert.equal(await live(p),null);
+ await p.getByLabel('选择今天的训练日').selectOption(f.day);await p.getByRole('button',{name:'开始训练',exact:true}).click();
+ await expect(p.getByTestId(`set-${f.exercise}-1`)).toBeVisible();await synced(p);const s=await live(p);assert.ok(s);sessions.push(s.id);return s;}
+async function preview(p,id){const box=p.getByTestId(`replace-${id}`);await box.getByRole('button',{name:'仅本次替换动作',exact:true}).click();
+ await box.getByLabel('哑铃',{exact:true}).check();await box.getByLabel('替换为',{exact:true}).selectOption('dumbbell-floor-press');
+ await box.getByRole('button',{name:'查看替换预览'}).click();await expect(p.getByTestId('replacement-preview')).toBeVisible();}
+async function confirm(p){await p.getByRole('button',{name:'确认仅本次替换',exact:true}).click();await expect(p.getByTestId('replacement-preview')).toBeHidden();}
+async function undo(p,receipt){const box=p.getByTestId(`replacement-receipt-${receipt}`);await box.getByRole('button',{name:'撤销本次替换',exact:true}).click();
+ await box.getByRole('button',{name:'确认撤销替换'}).click();await expect(box.getByTestId('replacement-undo-preview')).toBeHidden();}
+async function record(p,id){const row=p.getByTestId(`set-${id}-1`);await expect(row.getByLabel('重量 (kg)')).toHaveValue('');await expect(row.getByLabel('RPE',{exact:true})).toHaveValue('');
+ await row.getByLabel('次数',{exact:true}).fill('8');await row.getByRole('button',{name:'完成',exact:true}).click();await expect(row).toContainText('已完成');}
+async function end(p,lang='zh'){await p.getByRole('button',{name:lang==='en'?'End training':'结束训练',exact:true}).click();
+ await expect.poll(async()=>(await live(p))===null).toBe(true);await synced(p,lang);}
+async function discard(p,n){await p.getByRole('button',{name:'查询 / 恢复',exact:true}).click();await expect(p.getByTestId('outbox-conflict')).toBeVisible();
+ await p.getByRole('button',{name:`放弃这 ${n} 条操作，使用云端记录`,exact:true}).click();await synced(p);}
+const conflict=p=>expect(p.getByRole('alert').filter({hasText:'记录已发生变化'})).toBeVisible();
+function stage(text){stages.push({at:new Date().toISOString(),phase,result:text});console.log('PASS '+phase+': '+text);}
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:'C:/Users/tangzhice/AppData/Local/ms-playwright/chromium-1217/chrome-win64/chrome.exe'});
+ const ctx=await browser.newContext({viewport:{width:390,height:844},timezoneId:'America/Los_Angeles'});const p=await ctx.newPage();p.setDefaultTimeout(60000);
+ p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{const u=new URL(r.url());if(u.pathname.startsWith('/api/workout-'))responses.push({path:u.pathname+u.search,status:r.status()});});
+ await ctx.route('**/api/ai/**',r=>{modelCalls.push(new URL(r.request().url()).pathname);return r.abort();});
+ await ctx.route('**/api/agent/**',r=>{modelCalls.push(new URL(r.request().url()).pathname);return r.abort();});
+ try{
+  await p.goto(base+'/login');await p.locator('#email').fill(f.user.email);await p.locator('#password').fill(f.user.password);await p.locator('button[type="submit"]').click();
+  await p.waitForURL(u=>!u.pathname.startsWith('/login'));await p.goto(base+'/onboarding');await expect(p.getByRole('button',{name:'保存并进入应用'})).toBeEnabled();
+  await p.getByRole('combobox').click();await p.getByRole('option',{name:'男',exact:true}).click();
+  for(const [n,v] of ['30','175','70','70','3'].entries())await p.getByRole('textbox').nth(n).fill(v);
+  await p.getByRole('button',{name:'保存并进入应用'}).click();await p.waitForURL(u=>u.pathname==='/');stage('Real GoTrue login and explicit synthetic onboarding.');
+
+  phase='S1 preview and offline five-operation chain';const s1=await start(p);await preview(p,f.exercise);assert.equal((await live(p)).revision,1);
+  await p.screenshot({path:out+'production-preview.png',fullPage:true});await p.getByRole('button',{name:'取消预览',exact:true}).click();
+  assert.deepEqual((await live(p)).replacements,[]);await p.getByTestId(`replace-${f.exercise}`).getByRole('button',{name:'查看替换预览'}).click();
+  await ctx.setOffline(true);await confirm(p);let q=await state(p);assert.equal(q.items.length,1);const first=JSON.parse(q.items[0].bodyJson);
+  await undo(p,first.id);await expect.poll(async()=>(await state(p)).items.length).toBe(2);q=await state(p);const restored=JSON.parse(q.items[1].bodyJson).newExerciseId;
+  assert.notEqual(restored,f.exercise);await preview(p,restored);await confirm(p);q=await state(p);const last=JSON.parse(q.items[2].bodyJson);
+  await record(p,last.newExerciseId);await p.getByRole('button',{name:'结束训练',exact:true}).click();await expect.poll(async()=>(await state(p)).items.length).toBe(5);q=await state(p);
+  assert.deepEqual(q.items.map(x=>x.action),['replace','undoReplacement','replace','set','end']);assert.deepEqual((await live(p)).replacements,[]);
+  await p.screenshot({path:out+'production-offline-chain.png',fullPage:true});const sent=[];const capture=r=>{if(r.method()==='POST'&&new URL(r.url()).pathname.startsWith('/api/workout-'))sent.push(r.postData());};p.on('request',capture);
+  await ctx.setOffline(false);await synced(p);p.off('request',capture);assert.deepEqual(sent,q.items.map(x=>x.bodyJson));assert.equal(await live(p),null);
+  stage('Cancel wrote nothing; replace/compensate/replace/set/end replayed five exact bodies. New identity and unknown actuals preserved.');
+
+  phase='S2 lost response, retry, compensation and original-exercise conflict';const s2=await start(p);await preview(p,f.exercise);
+  await p.route('**/api/workout-replacements?action=replace',async r=>{assert.equal((await r.fetch()).status(),200);await r.abort('connectionreset');},{times:1});await confirm(p);
+  await expect(p.getByRole('alert').filter({hasText:'本次保存结果尚未确认'})).toBeVisible();const original=(await state(p)).items[0];assert.ok(original);
+  await p.reload();const second=await ctx.newPage();second.setDefaultTimeout(60000);await second.goto(base+'/today');
+  if(await p.getByRole('button',{name:'重试同一操作'}).isVisible())await p.getByRole('button',{name:'重试同一操作'}).click();await synced(p);await synced(second);
+  let current=await live(p);assert.equal(current.replacements.length,1);await undo(second,current.replacements[0].id);await synced(second);await second.close();
+  assert.equal((await post(p,'/api/workout-replacements?action=replace',JSON.parse(original.bodyJson))).status(),200);await p.reload();await synced(p);current=await live(p);assert.ok(current.replacements[0].undo);
+  const originalId=current.prescription.exercises[0].id;await ctx.setOffline(true);await preview(p,originalId);await confirm(p);q=await state(p);
+  await record(p,JSON.parse(q.items[0].bodyJson).newExerciseId);assert.equal((await post(p,'/api/workout-sessions?action=set',tap(current,originalId))).status(),200);
+  await ctx.setOffline(false);await conflict(p);assert.equal((await state(p)).items.length,2);await p.getByRole('button',{name:'查询 / 恢复',exact:true}).click();
+  await p.screenshot({path:out+'production-conflict.png',fullPage:true});await p.getByRole('button',{name:'放弃这 2 条操作，使用云端记录',exact:true}).click();await synced(p);
+  current=await live(p);assert.equal(current.sets.length,1);assert.equal(current.replacements.length,1);await end(p);
+  stage('Lost response retried one receipt across reload/tabs; original replay retained compensation; newer original actual paused replacement and dependent set, explicit discard preserved it.');
+
+  phase='S3 stale original ID, stale compensation and persisted English';const s3=await start(p);await ctx.setOffline(true);await record(p,f.exercise);
+  const replacement=await replaceBody(s3);assert.equal((await post(p,'/api/workout-replacements?action=replace',replacement)).status(),200);
+  await ctx.setOffline(false);await conflict(p);assert.equal((await live(p)).sets.length,0);await discard(p,1);current=await live(p);
+  await p.getByRole('button',{name:'撤销本次替换',exact:true}).click();assert.equal((await post(p,'/api/workout-sessions?action=set',tap(current,replacement.newExerciseId))).status(),200);
+  await p.getByRole('button',{name:'确认撤销替换',exact:true}).click();await conflict(p);assert.equal((await live(p)).replacements[0].undo,null);await discard(p,1);
+  current=await live(p);assert.equal(current.sets.length,1);assert.equal((await post(p,'/api/workout-replacements?action=replace',replacement,randomUUID())).status(),409);
+  const beforeLanguage=await live(p);await p.goto(base+'/settings');await p.getByRole('combobox').filter({hasText:'中文'}).click();await p.getByRole('option',{name:'English',exact:true}).click();
+  await p.getByRole('link',{name:'Today',exact:true}).click();await synced(p,'en');await p.reload();await synced(p,'en');
+  await expect(p.getByText('Dumbbell floor press',{exact:true}).first()).toBeVisible();const afterLanguage=await live(p);
+  assert.deepEqual(afterLanguage.prescription,beforeLanguage.prescription);assert.deepEqual(afterLanguage.replacements,beforeLanguage.replacements);
+  assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await p.screenshot({path:out+'production-english.png',fullPage:true});await end(p,'en');
+  stage('Old ID never remapped; stale compensation preserved later actual; owner mismatch rejected; real English preference survives hard reload without changing stored identity.');
+  assert.equal((await history(p)).length,3);assert.deepEqual(errors,[]);assert.deepEqual(modelCalls,[]);
+  fs.writeFileSync(out+'production-result.json',JSON.stringify({at:new Date().toISOString(),result:'PASS',stages,sessions,responses,errors,modelCalls,limitation:'Mobile-width Chromium, not iOS/Android/WeChat; independent SQL verification and cleanup recorded separately.'},null,2)+'\n');
+ }catch(e){await ctx.setOffline(false).catch(()=>{});await p.screenshot({path:out+'production-failure.png',fullPage:true}).catch(()=>{});
+  fs.writeFileSync(out+'production-failure.json',JSON.stringify({at:new Date().toISOString(),phase,stages,sessions,responses,errors,modelCalls,error:String(e)},null,2)+'\n');throw e;
+ }finally{await ctx.close();await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

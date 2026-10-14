@@ -1,0 +1,192 @@
+{
+  "at": "2026-10-14T06:58:13.132Z",
+  "result": "PASS",
+  "stages": [
+    {
+      "at": "2026-10-14T06:56:47.062Z",
+      "phase": "login",
+      "result": "Real GoTrue login and explicit synthetic onboarding."
+    },
+    {
+      "at": "2026-10-14T06:57:03.719Z",
+      "phase": "S1 preview and offline five-operation chain",
+      "result": "Cancel wrote nothing; replace/compensate/replace/set/end replayed five exact bodies. New identity and unknown actuals preserved."
+    },
+    {
+      "at": "2026-10-14T06:57:37.709Z",
+      "phase": "S2 lost response, retry, compensation and original-exercise conflict",
+      "result": "Lost response retried one receipt across reload/tabs; original replay retained compensation; newer original actual paused replacement and dependent set, explicit discard preserved it."
+    },
+    {
+      "at": "2026-10-14T06:58:12.551Z",
+      "phase": "S3 stale original ID, stale compensation and persisted English",
+      "result": "Old ID never remapped; stale compensation preserved later actual; owner mismatch rejected; real English preference survives hard reload without changing stored identity."
+    }
+  ],
+  "sessions": [
+    "ebff52fe-b7fe-4bb2-91bc-7af0acf4a404",
+    "0676b6e8-3560-403c-a948-eeca9fa3865e",
+    "6eb3ef2d-f9d3-4c34-9c4b-92a32d9452f8"
+  ],
+  "responses": [
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=replace",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=undoReplacement",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=replace",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=replace",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=replace",
+      "status": 409
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "status": 409
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-replacements?action=undoReplacement",
+      "status": 409
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "status": 200
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "modelCalls": [],
+  "limitation": "Mobile-width Chromium, not iOS/Android/WeChat; independent SQL verification and cleanup recorded separately."
+}

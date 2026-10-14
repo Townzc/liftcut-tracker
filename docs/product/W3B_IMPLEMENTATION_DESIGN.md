@@ -1,6 +1,6 @@
 # W3b 实施设计：只替换本次尚未开始的动作
 
-状态：以下为事前设计，现已按此实施并完成本地验证，迁移/上线状态见 [实施验证记录](W3B_VERIFICATION.md)。依据 [第 3 周任务](WEEK3_CODEX_BRIEF.md) 和 `TodayStore` / IndexedDB 队列；新账号真实性修正已先独立交付。
+状态：以下为事前设计，现已按此实施并完成正式迁移、上线和真实认证验证，原因、失败与结果见 [实施验证记录](W3B_VERIFICATION.md)。依据 [第 3 周任务](WEEK3_CODEX_BRIEF.md) 和 `TodayStore` / IndexedDB 队列；新账号真实性修正已先独立交付。
 
 ## 为什么先缩小到尚未开始的动作
 
