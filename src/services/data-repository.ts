@@ -1,4 +1,4 @@
-﻿import { createDefaultSettings, createDemoSnapshot, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
+﻿import { createDefaultSettings, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { normalizeExerciseActuals } from "@/lib/workout-values";
 import type { GuestAiHistoryItem } from "@/lib/guest-mode";
@@ -965,33 +965,8 @@ export async function ensureUserBootstrap(userId: string, email: string): Promis
     await upsertUserSettings(userId, createDefaultSettings(userId));
   }
 
-  const { data: firstPlan, error: planError } = await supabase
-    .from("training_plans")
-    .select("id")
-    .eq("user_id", userId)
-    .limit(1)
-    .maybeSingle();
-
-  if (planError) {
-    throw planError;
-  }
-
-  if (!firstPlan) {
-    const demo = createDemoSnapshot(userId);
-    await saveTrainingPlan(userId, demo.trainingPlan);
-
-    for (const log of demo.workoutLogs) {
-      await upsertWorkoutLog(userId, log);
-    }
-
-    for (const food of demo.foodLogs) {
-      await upsertFoodLog(userId, food);
-    }
-
-    for (const body of demo.bodyMetricLogs) {
-      await upsertBodyMetricLog(userId, body);
-    }
-  }
+  // A real sign-in must never invent a plan or observed health records. The
+  // reader already provides an empty-plan view; demo data stays in demo mode.
 
   return profile;
 }

@@ -1,0 +1,18 @@
+{
+  "id": "dpl_FGdENR1qPm8trG8FfWhKpABEFGa8",
+  "state": "READY",
+  "readyState": "READY",
+  "readyAt": "2026-10-14T04:59:33.924Z",
+  "alias": [
+    "www.liftcuttracker.com",
+    "liftcut-tracker.vercel.app",
+    "liftcuttracker.com",
+    "liftcut-tracker-townzcs-projects.vercel.app",
+    "liftcut-tracker-git-main-townzcs-projects.vercel.app"
+  ],
+  "sha": "8d2223ebd9cb643aa51a4b7d3e33b28c75ec109f",
+  "regions": [
+    "icn1"
+  ],
+  "source": "git"
+}

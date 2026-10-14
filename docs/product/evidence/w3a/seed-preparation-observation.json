@@ -1,0 +1,13 @@
+{
+  "first_attempt": "transaction failed before commit",
+  "error_code": "42883",
+  "reason": "pgcrypto functions are in extensions, not public",
+  "verified_after_failure": {
+    "synthetic_users": 0
+  },
+  "repair": "resolve installed function namespace, no DDL or extension change",
+  "second_attempt": {
+    "synthetic_users": 2
+  },
+  "credentials": "omitted; ephemeral synthetic accounts only"
+}

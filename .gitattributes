@@ -64,3 +64,5 @@ docs/product/evidence/w1-release/*.json -text whitespace=cr-at-eol
 docs/product/evidence/w2a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 # Original offline-outbox test output; keep Windows capture bytes and hashes intact.
 docs/product/evidence/w3a/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/product/evidence/w3a/*.json -text whitespace=cr-at-eol
+docs/product/evidence/w3a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

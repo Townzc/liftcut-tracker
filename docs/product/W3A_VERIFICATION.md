@@ -54,6 +54,26 @@ W2b 的事务、UUID 幂等与补偿解决了服务端一致性，但浏览器�
 - 最低支持范围是**已加载并打开的今日训练页**；新训练先取得服务端快照。没有 Service Worker，不承诺断网冷启动/断网刷新页面加载。页面关闭后不后台发送，重新进入才恢复。
 - IndexedDB 属同源本机存储；不承诺加密、永不被系统清理、隐私模式关闭后持久化或跨设备迁移。存储不可用会明确阻止保存；本地放弃记录保留最近五次，待同步队列上限 100。
 - iOS/Android/微信真机未测试；桌面 Chromium 的手机宽度和故障注入不等价。稳定性能 p95、长期断网与系统杀进程仍无证据。
-- 本 PR 最终精确提交通过全部 8 项检查再合并；生产域名将按合并 SHA 检查 READY，然后用新的合成账号验证真实 Auth/离线/补发/冲突/隔离并清理。此处尚未声称该线上流程通过。
+- PR #71 的最终精确提交已经通过全部 8 项检查，真实生产域名验收与清理见下节；不把本地认证替身当作托管认证证据。
 - 回滚为回退应用部署；无 DDL 回滚。已落盘的未确认操作不能自动删掉，旧版本不能消费新发件箱时应保留直到恢复支持版本。
 - **W3b 本次动作替换仍未实现**；先交付 W3a，随后固定动作资料、当前会话版本与补偿/离线冲突规则，再单独实现。无需开 GPU 服务器。
+
+## 7. 正式网站的真实验证与清理
+
+PR [#71](https://github.com/Townzc/liftcut-tracker/pull/71) 精确 `ed8529c1609a8462c1ed8e61055652f2bbe93f23` 全部八项检查成功（含完整研究兼容检查），2026-10-14 **04:58:26 UTC** 合入 main `8d2223ebd9cb643aa51a4b7d3e33b28c75ec109f`。受检/合并树同为 `6cf2d73bf13621ac26152dc0f62caadcd8c27a35`。Git 自动生产部署 `dpl_FGdENR1qPm8trG8FfWhKpABEFGa8` 在 **04:59:33.924 UTC** READY，区域 `icn1`，已绑定 [正式域名](https://www.liftcuttracker.com)。没有重复手动部署或数据库迁移。
+
+**05:05:14 UTC 实际完成七段线上流程**：真实 GoTrue 登录；离线三组加更正/撤销/结束六条原字节顺序补发；本机整句/lb 与补偿；实际已提交响应丢失后关页及双标签单次领取；另一设备新版本与明确放弃冲突队尾；两个真实账号退出/切换/原账号恢复；结束后历史及回执刷新。API 的账号标识不匹配请求均被拒绝，未启动任何模型调用，未发生浏览器 JS 异常。见 [结果](evidence/w3a/production-result.json)、[测试脚本](evidence/w3a/hosted-outbox-test.cjs.txt)、[部署](evidence/w3a/production-deployment.json)。37 次完成请求的时长记录仅为本轮观察，包含不同接口，不能当作稳定性能 p95 或提速结论。
+
+**独立数据库核对**（[原始结果](evidence/w3a/production-db.json)）：2 个 ended 会话、7 条组记录、1 份原句回执与 1 份补偿回执、17 条事件（started 2 / recorded 7 / corrected 2 / voided 3 / command_compensated 1 / ended 2）。未报告 RPE 保持 NULL，两个 lb 组撤销后原单位/来源仍保留。12 个计划组没有被扩写成 12 条实际组。
+
+**真实失败与纠正**：测试账号创建第一次把 pgcrypto 误定位到 public，事务回滚，查询确认夹具用户 0；按实际 extensions 命名空间纠正，未改扩展或 DDL。首次浏览器流程被新账号基础资料页挡住，尚无训练写入；随后用真实 UI 填入明确合成资料，再运行完整七段流程。保留 [首次失败](evidence/w3a/production-initial-onboarding.log)、[无写入核对](evidence/w3a/onboarding-failure-db.json) 与 [修正](evidence/w3a/onboarding-fixture.json)，不抹去失败。
+
+**额外发现**：第二个账号没有计划，触发原有 `ensureUserBootstrap` 自动生成演示训练、饮食、身体记录。数据库总旧明细一度为 105；[逐条归属核验](evidence/w3a/legacy-extra-attribution.json) 证明新增 5 条全属于临时账号，原有 100 条缺失/变化均为 0。这是既有账号初始化问题，单独修正见 [新账号真实性记录](ACCOUNT_BOOTSTRAP_VERIFICATION.md)，不能把它归咎于离线补发，也不能当作真实运动。
+
+**清理**：关闭测试浏览器后，按两个精确合成账号 ID 与标签防护，先撤销其 refresh tokens/auth sessions，再删除这两个账号及级联数据。**05:06:12 UTC** 查询确认夹具用户/认证会话/刷新令牌/训练/组/命令/事件/计划全部 0，剩余 **6 原账号、100 原明细、与备份双向差异 0**；私有口令和种子 SQL 已删除。[清理证据](evidence/w3a/production-cleanup.json)。
+
+两张正式网站实渲截图均已打开检查，不含真实用户数据。它们仍只是桌面 Chromium 手机宽度，不代表微信或 iOS 真机通过。
+
+![正式网站六条离线暂存](evidence/w3a/production-offline-six.png)
+
+![正式网站新版本冲突与明确取舍](evidence/w3a/production-conflict.png)
