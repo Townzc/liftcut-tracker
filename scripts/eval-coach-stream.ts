@@ -24,9 +24,10 @@ async function main(){
       ["body","刚才称到了七十二点五公斤，腰围没量，帮我记一下。"],
       ["plan","每周两天，每次45分钟，用哑铃和自重，每天只要两个动作。生成一周可重复的训练计划，先给我确认预览。"],
     ]){
-      const started=Date.now(),chunks:{ms:number;length:number}[]=[];
+      const started=Date.now(),chunks:{ms:number;length:number}[]=[];let length=0;
       const result=await runCoach(owner,{id:randomUUID(),text,history:[],locale:"zh",timezone:"America/Los_Angeles",consent:COACH_CONSENT_VERSION},AbortSignal.timeout(50000),undefined,event=>{
-        if(event.type==="text"&&event.text)chunks.push({ms:Date.now()-started,length:event.text.length});
+        if(event.type==="reset")length=0;
+        if(event.type==="text"&&event.text){length+=event.text.length;chunks.push({ms:Date.now()-started,length});}
         assert.notEqual(event.type,"result"); // Only the route can publish a validated terminal result.
       });
       const totalMs=Date.now()-started;

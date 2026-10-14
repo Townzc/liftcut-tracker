@@ -1,9 +1,9 @@
 {
   "date": "2026-10-14",
   "scope": "Local pre-release validation. Hosted validation and exact-head CI are separate release steps.",
-  "unit": {"passed": 97, "command": "npm test"},
+  "unit": {"passed": 98, "command": "npm test"},
   "postgres": {"productPassed": 48, "approvalPassed": 32, "database": "Disposable local PostgreSQL 16, synthetic identities; hosted auth schema permissions mirrored"},
-  "browser": {"passed": 55, "command": "npx playwright test --config playwright.w1b.config.ts", "real": ["Next.js", "HTTP streaming", "application API", "PostgreSQL transactions"], "doubled": ["Supabase Auth", "model provider"]},
+  "browser": {"passed": 56, "command": "npx playwright test --config playwright.w1b.config.ts", "longReply":{"characters":1800,"totalResponseBytesLessThan":25000}, "real": ["Next.js", "HTTP streaming", "application API", "PostgreSQL transactions"], "doubled": ["Supabase Auth", "model provider"]},
   "build": "passed",
   "typecheck": "passed",
   "lint": {"errors": 0, "preExistingResearchWarnings": 2},
@@ -11,13 +11,13 @@
     "command": "COACH_LIVE_EVAL=true node --conditions=react-server --import tsx scripts/eval-coach-stream.ts",
     "provider": "DeepSeek Flash",
     "data": "Local synthetic database; users removed after each run",
-    "runs": 2,
+    "runs": 3,
     "scenariosPerRun": 4,
     "finalRun": [
-      {"kind":"chat","firstTextMs":2031,"totalMs":2875,"chunks":122},
-      {"kind":"body-and-food-read","firstTextMs":2916,"totalMs":3691,"chunks":107},
-      {"kind":"body-preview","firstTextMs":null,"totalMs":1496,"chunks":0},
-      {"kind":"training-preview","firstTextMs":null,"totalMs":6240,"chunks":0}
+      {"kind":"chat","firstTextMs":2445,"totalMs":3663,"chunks":143},
+      {"kind":"body-and-food-read","firstTextMs":3788,"totalMs":4506,"chunks":104},
+      {"kind":"body-preview","firstTextMs":null,"totalMs":1854,"chunks":0},
+      {"kind":"training-preview","firstTextMs":null,"totalMs":7045,"chunks":0}
     ],
     "businessWritesBeforeApproval": 0
   },

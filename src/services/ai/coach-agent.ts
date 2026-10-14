@@ -52,7 +52,12 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   let final:{message:string;sourceIds:string[]}|null=null,readFailed=false;
   const streamedInputs=new Map<string,string>();let firstTextMs:number|undefined,lastText="";
   const validSources=(ids:string[])=>!ids.some(id=>!sources.some(s=>s.id===id)&&currentSource?.id!==id)&&(!sources.length||readFailed||ids.length>0);
-  const publishText=(text:string)=>{if(text!==lastText){lastText=text;if(text)firstTextMs??=Date.now()-began;emit?.({type:"text",text});}};
+  const publishText=(text:string)=>{
+    if(text===lastText)return;
+    if(!text.startsWith(lastText)){emit?.({type:"reset"});lastText="";}
+    const delta=text.slice(lastText.length);lastText=text;
+    if(delta){firstTextMs??=Date.now()-began;emit?.({type:"text",text:delta});}
+  };
   const hash=(v:unknown)=>createHash("sha256").update(workoutCanonical(v)).digest("hex");
   const provider=createOpenAICompatible({name:"liftcut",apiKey:config.apiKey,baseURL:config.baseURL,
     transformRequestBody:body=>config.provider==="deepseek"?{...body,thinking:{type:"disabled"}}:body});

@@ -1,5 +1,6 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
+import {randomUUID} from "node:crypto";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 async function login(page:Page){
   await page.goto("/login");await page.locator("#email").fill("p1-fixture@example.invalid");await page.locator("#password").fill("p1-fixture-password");
@@ -18,6 +19,17 @@ test("a real HTTP stream renders incremental prose before completion, with no ra
   await expect(turn).not.toContainText("sourceIds");await expect(turn).not.toContainText("finish_response");
   await expect(turn).toHaveAttribute("aria-busy","false");await expect(turn).toContainText("今天的变化");
   await page.screenshot({path:"node_modules/.cache/coach-stream-release/stream-complete-mobile.png",fullPage:true});
+});
+
+test("long replies complete in the browser and transmit each character once instead of repeating prefixes",async({page})=>{
+  await login(page);await start(page,"你好 [stream-long]");
+  await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false",{timeout:15000});
+  await expect(page.getByTestId("coach-turn").last().locator("p.mt-1")).toHaveText("这里是连续生成的长回答。".repeat(150));
+  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103",Accept:"application/x-ndjson"},data:{id:randomUUID(),text:"你好 [stream-long]",history:[],locale:"zh",timezone:"UTC",consent:"coach-model-v1"}});
+  expect(response.status()).toBe(200);const raw=await response.text(),events=raw.trim().split("\n").map(s=>JSON.parse(s));
+  const result=events.find(e=>e.type==="result").result;
+  expect(events.filter(e=>e.type==="text").map(e=>e.text).join("")).toBe(result.message);
+  expect(Buffer.byteLength(raw)).toBeLessThan(25000);
 });
 
 test("stopped and broken replies are discarded and never sent as later conversation memory",async({page})=>{

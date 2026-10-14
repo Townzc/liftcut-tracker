@@ -4,6 +4,7 @@ export const COACH_STREAM_TYPE = "application/x-ndjson";
 export type CoachStreamEvent =
   | {type:"status";stage:"connecting"|"reading"|"drafting"}
   | {type:"text";text:string}
+  | {type:"reset"}
   | {type:"result";result:CoachResponse}
   | {type:"error";error:string};
 
@@ -35,11 +36,12 @@ export function streamingReply(input:string):{text:string;sourceIds:string[]}|nu
 }
 
 /** A terminal result is mandatory. Truncation/cancellation must never become a
- * completed reply or an actionable proposal. The caller owns the abort signal. */
+ * completed reply or an actionable proposal. Wire text is incremental; callbacks
+ * receive the accumulated display text. The caller owns the abort signal. */
 export async function consumeCoachStream(response:Response,requestId:string,onEvent:(event:CoachStreamEvent)=>void,signal:AbortSignal):Promise<CoachResponse>{
   if(!response.body)throw new Error("STREAM_INCOMPLETE");
   const reader=response.body.getReader(),decoder=new TextDecoder("utf-8",{fatal:true});
-  let buffer="",bytes=0,result:CoachResponse|undefined;
+  let buffer="",bytes=0,text="",result:CoachResponse|undefined;
   const abort=()=>{void reader.cancel().catch(()=>{});};
   signal.addEventListener("abort",abort,{once:true});
   try{
@@ -61,7 +63,10 @@ export async function consumeCoachStream(response:Response,requestId:string,onEv
           if(event.result?.requestId!==requestId||typeof event.result.message!=="string"||!Array.isArray(event.result.sources))throw new Error("STREAM_INVALID");
           result=event.result;continue;
         }
-        if(event.type==="text"&&typeof event.text==="string"&&event.text.length<=2400)onEvent(event);
+        if(event.type==="text"&&typeof event.text==="string"&&text.length+event.text.length<=2400){
+          text+=event.text;onEvent({type:"text",text});
+        }
+        else if(event.type==="reset"){text="";onEvent({type:"text",text});}
         else if(event.type==="status"&&["connecting","reading","drafting"].includes(event.stage))onEvent(event);
         else throw new Error("STREAM_INVALID");
       }

@@ -65,6 +65,7 @@ createServer(async(req,res)=>{
     chosen=call("read_records",{topic:text.includes("午餐")||text.includes("吃了")?"food":"body",from:text.includes("昨天")?shifted(-1):shifted(-27),to:text.includes("昨天")?shifted(-1):today});
   }else chosen=call("finish_response",{message:"你好，可以自然地问我记录，也可以告诉我今天的变化。",sourceIds:[]});
   if(text.includes("[stream-unverified]"))chosen=call("finish_response",{sourceIds:["another-user-private-source"],message:"UNVERIFIED_TEXT_MUST_NOT_RENDER"});
+  if(text.includes("[stream-long]"))chosen=call("finish_response",{sourceIds:[],message:"这里是连续生成的长回答。".repeat(150)});
   if(body.stream){
     res.setHeader("Content-Type","text/event-stream");res.setHeader("Cache-Control","no-cache");
     const args=JSON.parse(chosen.function.arguments);

@@ -39,6 +39,16 @@ test("truncated, failed, oversized and mismatched streams never return a proposa
   }
 });
 
+test("long answers use linear-size deltas, resets discard old text, and the cumulative limit is enforced",async()=>{
+  const message="这是一个长回答。".repeat(250),events:string[]=[];
+  const wire=[{type:"text",text:"discard"},{type:"reset"},...Array.from(message,text=>({type:"text",text})),{type:"result",result:{...result,message}}].map(e=>JSON.stringify(e)+"\n").join("");
+  assert.ok(Buffer.byteLength(wire)<100000);
+  assert.equal((await consumeCoachStream(new Response(wire),"request",e=>{if(e.type==="text")events.push(e.text);},new AbortController().signal)).message,message);
+  assert.equal(events[1],"");assert.equal(events.at(-1),message);
+  const tooLong=[{type:"text",text:"a".repeat(2400)},{type:"text",text:"b"}].map(e=>JSON.stringify(e)+"\n").join("");
+  await assert.rejects(consumeCoachStream(new Response(tooLong),"request",()=>{},new AbortController().signal),/STREAM_INVALID/);
+});
+
 test("stop cancels the reader and incomplete replies stay out of conversation memory",async()=>{
   let cancelled=false;
   const controller=new AbortController();
