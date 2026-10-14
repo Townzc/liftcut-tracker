@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-14",
+  "scope": "Local pre-release validation. Hosted validation and exact-head CI are separate release steps.",
+  "unit": {"passed": 97, "command": "npm test"},
+  "postgres": {"productPassed": 48, "approvalPassed": 32, "database": "Disposable local PostgreSQL 16, synthetic identities; hosted auth schema permissions mirrored"},
+  "browser": {"passed": 55, "command": "npx playwright test --config playwright.w1b.config.ts", "real": ["Next.js", "HTTP streaming", "application API", "PostgreSQL transactions"], "doubled": ["Supabase Auth", "model provider"]},
+  "build": "passed",
+  "typecheck": "passed",
+  "lint": {"errors": 0, "preExistingResearchWarnings": 2},
+  "liveProvider": {
+    "command": "COACH_LIVE_EVAL=true node --conditions=react-server --import tsx scripts/eval-coach-stream.ts",
+    "provider": "DeepSeek Flash",
+    "data": "Local synthetic database; users removed after each run",
+    "runs": 2,
+    "scenariosPerRun": 4,
+    "finalRun": [
+      {"kind":"chat","firstTextMs":2031,"totalMs":2875,"chunks":122},
+      {"kind":"body-and-food-read","firstTextMs":2916,"totalMs":3691,"chunks":107},
+      {"kind":"body-preview","firstTextMs":null,"totalMs":1496,"chunks":0},
+      {"kind":"training-preview","firstTextMs":null,"totalMs":6240,"chunks":0}
+    ],
+    "businessWritesBeforeApproval": 0
+  },
+  "regressions": ["Stop and provider interruption discard partial replies and exclude them from memory", "No raw tool arguments or unverified source text rendered", "Navigation aborts old stream", "Composer works while profile/history is blocked", "Partial plan generation has no apply button", "Plan preview, edit, double click, lost-response recovery, stale context and owner isolation"],
+  "knownLimits": ["Small samples, not P95 or concurrency capacity", "No physical-phone or mainland-network measurement", "Providers that reorder reply arguments may deliver only a complete answer", "Plan previews remain atomic and require confirmation"]
+}

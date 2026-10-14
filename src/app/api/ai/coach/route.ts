@@ -5,6 +5,7 @@ import { coachRequestSchema } from "@/lib/coach-model";
 import { coachStatus, runCoach } from "@/services/ai/coach-agent";
 import { CoachReadError } from "@/services/ai/coach-store";
 import { ZodError } from "zod";
+import { COACH_STREAM_TYPE, type CoachStreamEvent } from "@/lib/coach-stream";
 
 export const runtime="nodejs";
 export const maxDuration=60;
@@ -17,6 +18,23 @@ export async function POST(request:Request){
     const mismatch=workoutOwnerMismatch(request,auth.user.id);if(mismatch)return mismatch;
     const input=coachRequestSchema.parse(await boundedJson(request));
     if(!coachStatus().available)return Response.json({error:"MODEL_UNAVAILABLE"},{status:503,headers});
+    if(request.headers.get("Accept")?.includes(COACH_STREAM_TYPE)){
+      const controller=new AbortController(),encoder=new TextEncoder();
+      const signal=AbortSignal.any([request.signal,controller.signal,AbortSignal.timeout(50000)]);
+      let closed=false;
+      const body=new ReadableStream<Uint8Array>({
+        start(stream){
+          const emit=(event:CoachStreamEvent)=>{if(!closed&&!signal.aborted)stream.enqueue(encoder.encode(JSON.stringify(event)+"\n"));};
+          emit({type:"status",stage:"connecting"});
+          void runCoach(auth.user.id,input,signal,undefined,emit).then(result=>emit({type:"result",result})).catch(error=>{
+            console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown"}));
+            emit({type:"error",error:error instanceof CoachReadError?error.message:"MODEL_UNAVAILABLE"});
+          }).finally(()=>{if(!closed){closed=true;stream.close();}});
+        },
+        cancel(){closed=true;controller.abort();},
+      });
+      return new Response(body,{headers:{"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no"}});
+    }
     const signal=AbortSignal.any([request.signal,AbortSignal.timeout(50000)]);
     return Response.json(await runCoach(auth.user.id,input,signal),{headers});
   }catch(e){

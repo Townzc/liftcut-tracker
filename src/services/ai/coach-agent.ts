@@ -3,7 +3,7 @@ import { randomUUID, createHash } from "node:crypto";
 import { ToolLoopAgent, isStepCount, tool } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { z } from "zod";
-import { COACH_CONSENT_VERSION, type CoachRequest, type CoachResponse, type CoachProposal, type CoachSource } from "@/lib/coach-model";
+import { COACH_CONSENT_VERSION, type CoachRequest, type CoachResponse, type CoachProposal, type CoachSource, type CoachStatus } from "@/lib/coach-model";
 import { bodyExtractionSchema, foodExtractionSchema, personalExtractionSchema, workoutExtractionSchema, groundPersonal, groundWorkout, GroundingError, requestedReadRange } from "@/lib/coach-grounding";
 import { localDateAt, type Session } from "@/lib/today";
 import { workoutCanonical, workoutContextInput } from "@/lib/workout-context";
@@ -17,9 +17,10 @@ import { agentPool } from "@/services/agent/database";
 import { contextSchema, planSchema, nutritionPlanSchema, planKindSchema, type Context } from "@/lib/agent/contracts";
 import { modelPlanData, type PlanSnapshot } from "@/services/agent/plan-state";
 import { adjustPlan, planAdjustmentSchema } from "@/lib/agent/plan-adjustment";
+import { streamingReply, type CoachStreamEvent } from "@/lib/coach-stream";
 
 const modelName=(provider:string,model:string)=>provider==="deepseek"&&model==="deepseek-v4-flash"?"deepseek-flash":model;
-export function coachStatus(){
+export function coachStatus():CoachStatus{
   const c=getAiProviderConfig();return {available:!!c&&todayEnabled()&&!!process.env.WORKOUT_DATABASE_URL&&(process.env.COACH_SIGNING_SECRET?.length??0)>=32,
     provider:c?.provider??null,model:c?modelName(c.provider,c.model):null,consentVersion:COACH_CONSENT_VERSION};
 }
@@ -35,9 +36,9 @@ For training or nutrition plan generation/adjustment, first call plan_context(ki
 When plan_context returns editablePlan, PREFER prepare_plan_adjustment for small changes. Send only explicitly changed leaf fields using zero-based JSON paths; code preserves all other content exactly. For example /weeks/0/days/0/exercises/0/sets or /daily_targets/calories. Food replacement may also change that food's amount and estimated nutrients. Do not change unrelated fields or regenerate the full plan for a small edit. Ask if a named target is ambiguous. Full prepare tools are for new plans or structural changes (adding/removing days/exercises/meals).
 Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Do not imply memory beyond this bounded conversation.
 General advice: be modest and practical; no diagnosis, prescriptions, extreme calorie restriction, or aggressive exercise through pain. For acute chest pain, fainting or severe symptoms advise stopping exercise and seeking urgent local medical help. Avoid claiming clinical expertise.
-For queries and clarification, end by calling finish_response with a concise helpful message and sourceIds from THIS request's read_records or current_workout calls (empty for general chat/clarification). A successfully prepared draft ends the request automatically with its confirmation card; no further text generation is needed. current_workout is evidence about that session only, not complete historical statistics. Answer only the requested period; do not repeat statistics from previous replies without a fresh read covering that period. Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
+For queries and clarification, end by calling finish_response with sourceIds from THIS request's read_records or current_workout calls (empty for general chat/clarification), followed by a concise helpful message. Always serialize sourceIds FIRST and message SECOND so the verified answer can stream to the user. A successfully prepared draft ends the request automatically with its confirmation card; no further text generation is needed. current_workout is evidence about that session only, not complete historical statistics. Answer only the requested period; do not repeat statistics from previous replies without a fresh read covering that period. Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
 
-export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>):Promise<CoachResponse>{
+export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>,emit?:(event:CoachStreamEvent)=>void):Promise<CoachResponse>{
   const config=requireAiProviderConfig(),name=modelName(config.provider,config.model),pool=todayPool();
   const store=new CoachStore(pool),anchor=localDateAt(new Date(),input.timezone);
   await store.reserve(owner,input.id);
@@ -49,6 +50,9 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const planStore=()=>new AgentStore(agentPool());
   const readCache=new Map<string,Promise<CoachSource>>();
   let final:{message:string;sourceIds:string[]}|null=null,readFailed=false;
+  const streamedInputs=new Map<string,string>();let firstTextMs:number|undefined,lastText="";
+  const validSources=(ids:string[])=>!ids.some(id=>!sources.some(s=>s.id===id)&&currentSource?.id!==id)&&(!sources.length||readFailed||ids.length>0);
+  const publishText=(text:string)=>{if(text!==lastText){lastText=text;if(text)firstTextMs??=Date.now()-began;emit?.({type:"text",text});}};
   const hash=(v:unknown)=>createHash("sha256").update(workoutCanonical(v)).digest("hex");
   const provider=createOpenAICompatible({name:"liftcut",apiKey:config.apiKey,baseURL:config.baseURL,
     transformRequestBody:body=>config.provider==="deepseek"?{...body,thinking:{type:"disabled"}}:body});
@@ -73,6 +77,9 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const agent=new ToolLoopAgent({
     model:provider(name),instructions:instructions(input.locale,anchor),
     temperature:0.2,maxOutputTokens:1800,maxRetries:0,
+    // v7's prepareCall forwards these options to streamText. Override its default
+    // console.error(error), which includes request bodies; the route logs only kind.
+    prepareCall:settings=>({...settings,onError:()=>{}}),
     timeout:{totalMs:45000,stepMs:22000,toolMs:12000},
     toolChoice:"required",toolCallConcurrency:1,
     // Large plan schemas/output are available only after the relevant snapshot.
@@ -154,20 +161,37 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
           }catch(e){return proposalError(e);}
         }}),
       finish_response:tool({description:"Finish the response with natural language. Cite only source IDs read in this request. A draft is unsaved until the UI confirms.",
-        inputSchema:z.object({message:z.string().min(1).max(2400),sourceIds:z.array(z.string().max(100)).max(4)}).strict(),
+        inputSchema:z.object({sourceIds:z.array(z.string().max(100)).max(4),message:z.string().min(1).max(2400)}).strict(),
+        onInputStart:({toolCallId})=>{streamedInputs.set(toolCallId,"");publishText("");},
+        onInputDelta:({toolCallId,inputTextDelta})=>{
+          const raw=(streamedInputs.get(toolCallId)??"")+inputTextDelta;
+          if(raw.length>20000){streamedInputs.delete(toolCallId);return;}
+          streamedInputs.set(toolCallId,raw);
+          const partial=streamingReply(raw);
+          if(partial&&!readFailed&&!proposal&&validSources(partial.sourceIds))publishText(partial.text);
+        },
         execute:async args=>{
-          if(args.sourceIds.some(id=>!sources.some(s=>s.id===id)&&currentSource?.id!==id))return {error:"UNVERIFIED_SOURCE"};
-          if(sources.length&&!readFailed&&!args.sourceIds.length)return {error:"CITE_THE_READ_SOURCES"};
+          if(!validSources(args.sourceIds)){publishText("");return {error:"UNVERIFIED_SOURCE",instruction:"Cite the sources read in this request."};}
           final=args;return {complete:true};
         }}),
     },
   });
   const began=Date.now();
-  const result=await agent.generate({messages:[...input.history,{role:"user",content:input.text}],abortSignal:signal});
+  const messages=[...input.history,{role:"user" as const,content:input.text}];
+  // SDK owns the tool loop in both transports. Consume all events so tool results,
+  // timeouts and final validation finish; never forward reasoning or raw tool JSON.
+  const result=emit?await (async()=>{
+    const stream=await agent.stream({messages,abortSignal:signal});
+    for await(const part of stream.fullStream){
+      if(part.type==="error")throw part.error;
+      if(part.type==="tool-input-start"&&part.toolName!=="finish_response")emit?.({type:"status",stage:part.toolName.startsWith("prepare_")?"drafting":"reading"});
+    }
+    return {steps:await stream.steps,totalUsage:await stream.totalUsage};
+  })():await agent.generate({messages,abortSignal:signal});
   await trace?.(result.steps.map(s=>({toolCalls:s.toolCalls,toolResults:s.toolResults})));
   ensureTime();
   // Do not log prompts, tool payloads, raw provider errors, keys or health records.
-  console.info("coach_model",JSON.stringify({requestId:input.id,model:name,steps:result.steps.length,durationMs:Date.now()-began,inputTokens:result.totalUsage.inputTokens,outputTokens:result.totalUsage.outputTokens,reads:sources.length,draft:proposal?.kind??null}));
+  console.info("coach_model",JSON.stringify({requestId:input.id,model:name,steps:result.steps.length,durationMs:Date.now()-began,firstTextMs:firstTextMs??null,streaming:!!emit,inputTokens:result.totalUsage.inputTokens,outputTokens:result.totalUsage.outputTokens,reads:sources.length,draft:proposal?.kind??null}));
   // Grounded entries already contain everything the confirmation card needs.
   // Do not let another model turn lose or misdescribe a validated draft.
   const completed=proposal?{

@@ -7,7 +7,7 @@ async function login(page:Page,email="p1-fixture@example.invalid"){
   await page.getByRole("button",{name:"登录",exact:true}).click();await page.waitForURL(/\/(?:onboarding)?$/);await page.goto("/agent");
   await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();await page.getByRole("button",{name:"同意并开启",exact:true}).click();
 }
-async function send(page:Page,text:string){const n=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(n+1,{timeout:30000});}
+async function send(page:Page,text:string){const n=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(n+1);await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false",{timeout:30000});}
 const recent=async(page:Page)=>(await (await page.request.get("/api/agent/runs")).json()).value;
 const count=async(table:string)=>Number((await db.query(`select count(*) n from ${table} where user_id=$1 and id like 'agent-%'`,[owner])).rows[0].n);
 test.beforeEach(async()=>{await db.query("delete from coach_request_usage where user_id=$1",[owner]);});

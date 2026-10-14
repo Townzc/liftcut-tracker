@@ -30,9 +30,12 @@ export const createInitSlice: StateCreator<TrackerState, [], [], InitSlice> = (s
       return;
     }
 
-    set({ loading: true, error: null, userId, authMode: "authenticated" });
+    // The Agent shell can now appear while this bundle is loading. Never relabel
+    // a previous owner's data or let their late response overwrite a new session.
+    set({...(get().userId!==userId?{...createEmptySnapshot(userId),trainingPlanList:[]}:{}), loading: true, error: null, userId, authMode: "authenticated" });
     try {
       const bundle = await fetchUserDataBundle(userId);
+      if(get().userId!==userId||get().authMode!=="authenticated")return;
       const previousWeek = get().selectedWeek;
       const previousDay = get().selectedDay;
       const matchedWeek = bundle.snapshot.trainingPlan.weeks.find((week) => week.weekNumber === previousWeek) ?? bundle.snapshot.trainingPlan.weeks[0];
@@ -51,6 +54,7 @@ export const createInitSlice: StateCreator<TrackerState, [], [], InitSlice> = (s
         guestSnapshot: state.guestSnapshot,
       }));
     } catch (error) {
+      if(get().userId!==userId||get().authMode!=="authenticated")return;
       console.error(error);
       set((state) => ({
         userId,

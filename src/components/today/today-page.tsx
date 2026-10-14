@@ -88,14 +88,14 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
   </div>;
 }
 
-export function TodayPage({ enabled, conversation = false }: { enabled: boolean; conversation?: boolean }) {
+export function TodayPage({ enabled, conversation = false, initialStatus }: { enabled: boolean; conversation?: boolean; initialStatus?:import("@/lib/coach-model").CoachStatus }) {
   const t = useTranslations("today"), { user, authMode } = useAuth();
   if (!enabled) return <Card><CardHeader><CardTitle>{t("notOpen")}</CardTitle></CardHeader></Card>;
   if (authMode !== "authenticated" || !user) return conversation ? <CoachConversation data={{session:null,days:[],previous:{}}} busy={false} pendingCount={0} submit={async()=>false} /> : <Card><CardContent className="space-y-3 pt-6"><p>{t("loginRequired")}</p><Link href="/workout">{t("legacy")}</Link></CardContent></Card>;
   // Remount synchronously on account changes: never render the previous owner's data.
-  return <TodayWorkspace key={user.id} owner={user.id} conversation={conversation} />;
+  return <TodayWorkspace key={user.id} owner={user.id} conversation={conversation} initialStatus={initialStatus}/>;
 }
-function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}) {
+function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;conversation:boolean;initialStatus?:import("@/lib/coach-model").CoachStatus}) {
   const t=useTranslations("today"),tc=useTranslations("coach"),locale=useLocale();
   const [state,setState]=useState<OutboxState | null>(null);
   const client=useRef<WorkoutOutboxClient | null>(null);
@@ -210,7 +210,7 @@ function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}
           <Button variant="outline" disabled={locked} onClick={()=>void recover()}>{tc("anotherSession")}</Button>
         </div>}
     </>}
-    {conversation && <CoachConversation data={data??{session:null,days:[],previous:{}}} busy={!!(busy||error==="STORAGE"||error==="AUTH"||projection.error||head?.status==="conflict"||head?.status==="auth")} pendingCount={count} submit={submit} workoutPanel={workoutContent} receiptsPanel={receiptContent} onPlanApplied={()=>{void client.current?.refresh().catch(()=>setError("LOAD_FAILED"));}}/>}
+    {conversation && <CoachConversation initialStatus={initialStatus} data={data??{session:null,days:[],previous:{}}} busy={!!(busy||error==="STORAGE"||error==="AUTH"||projection.error||head?.status==="conflict"||head?.status==="auth")} pendingCount={count} submit={submit} workoutPanel={workoutContent} receiptsPanel={receiptContent} onPlanApplied={()=>{void client.current?.refresh().catch(()=>setError("LOAD_FAILED"));}}/>}
     {conversation && <RecordSyncStatus />}
     {!conversation&&<details open className="space-y-4 scroll-mt-4">
     <summary className="min-h-11 py-3 text-sm text-muted-foreground">{t("sentence.viewReceipts")}</summary>
