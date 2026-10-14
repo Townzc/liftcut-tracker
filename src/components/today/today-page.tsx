@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,20 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@/lib/today";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { projectOutbox, type OutboxState, type OutboxItem } from "@/lib/workout-outbox";
+import { WorkoutOutboxClient } from "@/services/today/outbox-client";
 
 import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
+function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
+  const t=useTranslations("today");
+  const body=JSON.parse(item.bodyJson);
+  if(item.action==="apply")return <li>“{body.text}”</li>;
+  if(item.action==="undo")return <li>{t("sentence.undo")} · “{data?.receipts?.find(r=>r.id===body.commandId)?.text??"—"}”</li>;
+  if(item.action==="start" || item.action==="end")return <li>{t(item.action)}</li>;
+  const exercise=data?.session?.prescription.exercises.find(e=>e.id===body.planExerciseId);
+  return <li>{exercise?.name??"—"} · {t("set",{number:body.setIndex})} · {t(body.status)}:
+    {" "}{body.weightKg??"—"} kg × {body.reps??"—"} · RPE {body.rpe??"—"}</li>;
+}
 function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
   session: Session; exercise: PrescriptionExercise; index: number; saved?: SetLog;
   previous?: { weightKg: number | null; reps: number | null }; busy: boolean; submit: (p: Pending) => Promise<boolean>;
@@ -69,86 +81,102 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
 
 export function TodayPage({ enabled }: { enabled: boolean }) {
   const t = useTranslations("today"), { user, authMode } = useAuth();
-  const [data, setData] = useState<TodayData | null>(null);
+  if (!enabled) return <Card><CardHeader><CardTitle>{t("notOpen")}</CardTitle></CardHeader></Card>;
+  if (authMode !== "authenticated" || !user) return <Card><CardContent className="space-y-3 pt-6"><p>{t("loginRequired")}</p><Link href="/workout">{t("legacy")}</Link></CardContent></Card>;
+  // Remount synchronously on account changes: never render the previous owner's data.
+  return <TodayWorkspace key={user.id} owner={user.id} />;
+}
+function TodayWorkspace({owner}:{owner:string}) {
+  const t=useTranslations("today");
+  const [state,setState]=useState<OutboxState | null>(null);
+  const client=useRef<WorkoutOutboxClient | null>(null);
+  const [remote,setRemote]=useState<{data:TodayData;revision:number} | null>(null);
   const [dayId, setDayId] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [pending, setPending] = useState<Pending | null>(null);
   const inFlight = useRef(false);
   const selectedWeek = useTrackerStore(s => s.selectedWeek), selectedDay = useTrackerStore(s => s.selectedDay);
   const refreshHistory = useTrackerStore(s => s.refreshUserData);
-  const load = useCallback(async () => {
-    const response = await fetch("/api/workout-sessions", { cache: "no-store" });
-    if (!response.ok) throw new Error("LOAD_FAILED");
-    return await response.json() as TodayData;
-  }, []);
   useEffect(() => {
-    if (!enabled || !user || authMode !== "authenticated") return;
-    let cancelled = false;
-    load().then(next => { if (!cancelled) setData(next); }).catch(() => { if (!cancelled) setError("LOAD_FAILED"); });
-    return () => { cancelled = true; };
-  }, [enabled,user,authMode,load]);
+    const outbox=new WorkoutOutboxClient(owner,next=>setState(old=>old && old.revision>=next.revision?old:next),setError,
+      ()=>{void refreshHistory().catch(()=>{});});
+    client.current=outbox;void outbox.start();
+    return ()=>{outbox.dispose();client.current=null;};
+  },[owner,refreshHistory]);
+  const projection=state?projectOutbox(state):{data:null,error:false}, data=projection.data;
+  const head=state?.items[0], count=state?.items.length??0;
+  const issue=error || (head?.status==="conflict"?"CONFLICT":head?.status==="auth"?"AUTH":head?.status==="retry"?"UNKNOWN":projection.error?"LOCAL_CONFLICT":"");
+  const locked=busy || !state || error==="STORAGE" || error==="AUTH" || projection.error || head?.status==="conflict" || head?.status==="auth";
   async function recover() {
     if (inFlight.current) return;
     inFlight.current = true; setBusy(true);
-    try { setData(await load()); setError(""); setPending(null); await refreshHistory(); }
+    try {
+      if(head?.status==="conflict")setRemote(await client.current!.remoteForConflict());
+      else {setError("");await client.current!.refresh();}
+    }
     catch { setError("LOAD_FAILED"); }
     finally { setBusy(false); inFlight.current = false; }
   }
+  async function retry() {
+    try {setError("");await client.current!.retry();} catch {setError("STORAGE");}
+  }
   async function submit(p: Pending) {
-    if (inFlight.current) return false; // Close the double-click gap before React re-renders.
-    inFlight.current = true; setBusy(true); setError(""); setPending(p);
+    if (inFlight.current || !state || locked) return false;
+    inFlight.current = true; setBusy(true); setError("");
     try {
-      const endpoint = p.action === "apply" || p.action === "undo" ? "/api/workout-commands" : "/api/workout-sessions";
-      const response = await fetch(`${endpoint}?action=${p.action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p.body) });
-      const value = await response.json();
-      if (!response.ok) {
-        setError(response.status === 409 ? "CONFLICT" : "UNKNOWN");
-        if (response.status < 500) setPending(null);
-        return false;
-      }
-      setData(old => ({ ...old!, session: p.action === "undo" && old?.session?.id !== value.session.id ? old!.session : value.session ?? value,
-        receipts:value.receipts ?? old?.receipts })); setPending(null);
-      // Saving succeeded even if legacy history refresh fails. Do not retry the write for a read error.
-      try { await refreshHistory(); } catch { setError("HISTORY_FAILED"); }
-      return true;
-    } catch { setError("UNKNOWN"); return false; }
+      await client.current!.enqueue(p,state.revision);return true; // Means durably queued; the UI labels it pending until acknowledged.
+    } catch(e) {setError(e instanceof Error && e.message==="LOCAL_CONFLICT"?"LOCAL_CONFLICT":"STORAGE");return false;}
     finally { setBusy(false); inFlight.current = false; }
   }
-  if (!enabled) return <Card><CardHeader><CardTitle>{t("notOpen")}</CardTitle></CardHeader></Card>;
-  if (authMode !== "authenticated" || !user) return <Card><CardContent className="space-y-3 pt-6"><p>{t("loginRequired")}</p><Link href="/workout">{t("legacy")}</Link></CardContent></Card>;
   const session = data?.session;
   const chosen = dayId || data?.days.find(d => d.weekNumber === selectedWeek && d.dayNumber === selectedDay)?.id || data?.days[0]?.id || "";
   return <div className="mx-auto max-w-2xl space-y-4">
     <div><h1 className="text-2xl font-semibold">{t("title")}</h1><p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p></div>
+    <div className="space-y-2 rounded-xl border p-3 text-sm">
+      <p role="status" data-testid="outbox-status">{t(issue?"outbox.failed":count?"outbox.pending":data?"outbox.synced":"loading",{count})}</p>
+      <p className="text-xs text-muted-foreground">{t("outbox.hint")}</p>
+      {!!count && <Button variant="outline" disabled={busy || head?.status==="conflict"} onClick={()=>void retry()}>{t("retry")}</Button>}
+    </div>
     {!!data?.receipts?.length && <p role="status" className="text-sm"><a className="underline" href="#sentence-receipts">{t("sentence.viewReceipts")}</a></p>}
-    {error && <div role="alert" className="space-y-2 rounded-xl border p-3 text-sm"><p>{t(`errors.${error}`)}</p>
+    {issue && <div role="alert" className="space-y-2 rounded-xl border p-3 text-sm"><p>{t(`errors.${issue}`)}</p>
       <Button variant="outline" disabled={busy} onClick={() => void recover()}>{t("recover")}</Button>
-      {pending && <Button className="ml-2" disabled={busy} onClick={() => void submit(pending)}>{t("retry")}</Button>}</div>}
-    {!data && !error && <p>{t("loading")}</p>}
+      {head?.status==="auth" && <Link className="ml-2 underline" href="/login">{t("outbox.login")}</Link>}
+    </div>}
+    {remote && <Card><CardContent className="space-y-3 pt-4 text-sm" data-testid="outbox-conflict">
+      <p>{t("outbox.conflictHint",{count})}</p>
+      <details open><summary>{t("outbox.local")}</summary><ol className="ml-5 list-decimal space-y-2">{state?.items.map(item=><PendingOperation key={item.id} item={item} data={data} />)}</ol></details>
+      <details open><summary>{t("outbox.remote")}</summary><p>{remote.data.session ? t(remote.data.session.status==="active"?"active":"ended") : t("outbox.noActive")}</p>
+        {remote.data.session?.sets.map(s=><p key={s.id}>{s.exerciseName} · {t("set",{number:s.setIndex})}: {s.weightKg??"—"} kg × {s.reps??"—"} · RPE {s.rpe??"—"} · {t(s.status)} · v{s.revision}</p>)}</details>
+      <Button variant="outline" disabled={busy} onClick={async()=>{
+        try {await client.current!.discardConflict(remote);setRemote(null);setError("");}catch{setError("LOCAL_CONFLICT");}
+      }}>{t("outbox.discard",{count})}</Button>
+    </CardContent></Card>}
+    {!data && !issue && <p>{t("loading")}</p>}
     {data && !session && <Card><CardContent className="space-y-4 pt-6">
       <label className="block text-sm">{t("selectDay")}<select aria-label={t("selectDay")} className="mt-2 w-full rounded border bg-background p-3" value={chosen} onChange={e => setDayId(e.target.value)} disabled={busy}>
         {data.days.map(d => <option key={d.id} value={d.id}>{t("day", { week: d.weekNumber, day: d.dayNumber })} · {d.title}</option>)}</select></label>
       {!data.days.length && <p>{t("noPlan")} <Link href="/plan">{t("plan")}</Link></p>}
-      <Button disabled={!chosen || busy || !!pending} onClick={() => void submit({ action:"start", body:{ id:crypto.randomUUID(), dayId:chosen, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone } })}>{t("start")}</Button>
+      <p className="text-xs text-muted-foreground">{t("outbox.startHint")}</p>
+      <Button disabled={!chosen || locked || !!count} onClick={() => void submit({ action:"start", body:{ id:crypto.randomUUID(), dayId:chosen, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone } })}>{t("start")}</Button>
     </CardContent></Card>}
     {session && <>
       <Card><CardHeader><CardTitle>{session.prescription.title}</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
         <p>{session.localDate} · {session.timezone}</p><p>{t(session.status === "active" ? "active" : "ended")}</p>
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
       </CardContent></Card>
-      {session.status === "active" && <SentenceEntry key={session.id} session={session} busy={busy || !!pending || error === "CONFLICT"} submit={submit} />}
+      {session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
       {session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exercise.name}</CardTitle>
         <p className="text-sm text-muted-foreground">{t("target", { sets:exercise.sets,reps:exercise.repRange,rpe:exercise.targetRpe })}</p></CardHeader>
         <CardContent className="space-y-3">{Array.from({ length:exercise.sets },(_,i)=> {
           const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1);
           return <SetRow key={`${session.id}-${i}-${saved?.revision ?? 0}`} session={session} exercise={exercise} index={i+1} saved={saved}
-            previous={data.previous[exercise.name]} busy={busy || !!pending || error === "CONFLICT"} submit={submit} />;
+            previous={data.previous[exercise.name]} busy={locked} submit={submit} />;
         })}</CardContent></Card>)}
       {session.status === "active" ? <div className="space-y-2"><p className="text-sm text-muted-foreground">{t("endHint")}</p>
-        <Button disabled={busy || !!pending} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
-        : <Link href="/workout" className="underline">{t("history")}</Link>}
+        <Button disabled={locked} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
+        : !count && <Link href="/workout" className="underline">{t("history")}</Link>}
     </>}
-    <SentenceReceipts receipts={data?.receipts ?? []} busy={busy || !!pending || error === "CONFLICT"} submit={submit} />
+    <SentenceReceipts receipts={data?.receipts ?? []} busy={locked} submit={submit}
+      pendingIds={state?.items.filter(i=>i.action==="apply" || i.action==="undo").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />
   </div>;
 }

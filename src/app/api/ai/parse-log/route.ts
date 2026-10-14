@@ -1,4 +1,5 @@
 import { requireApiUser } from "@/app/api/ai/_lib";
+import { workoutOwnerMismatch } from "@/lib/workout-owner";
 import { todayEnabled, todayPool } from "@/services/today/database";
 import { TodayConflict, TodayStore } from "@/services/today/store";
 import { boundedJson, errorResponse, sameOrigin } from "@/services/agent/http";
@@ -11,6 +12,8 @@ export async function POST(request: Request) {
   try {
     const auth = await requireApiUser();
     if (auth.errorResponse) return auth.errorResponse;
+    const mismatch = workoutOwnerMismatch(request,auth.user.id);
+    if (mismatch) return mismatch;
     const result = await new TodayStore(todayPool()).preview(auth.user.id,await boundedJson(request));
     return Response.json(result,{headers:{"Cache-Control":"no-store"}});
   } catch (error) {

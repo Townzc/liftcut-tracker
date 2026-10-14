@@ -23,12 +23,14 @@ test("mobile sentence preview, atomic save, response loss, correction compensati
   const input=page.getByLabel("训练原话"),row=(n:number)=>page.getByTestId(`set-${exercise}-${n}`);
   const parse=async(text:string)=>{await input.fill(text);await page.getByRole("button",{name:"解析并预览"}).click();};
   const confirm=()=>page.getByRole("button",{name:"确认保存这句话"});
-  const read=async()=>await (await page.request.get("/api/workout-sessions")).json();
-  await parse("深蹲 50 公斤 10、10、8 RPE 9");await expect(page.getByRole("status")).toContainText("RPE 属于哪组");
+  const synced=async()=>await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+  const read=async()=>{await expect(page.getByRole("button",{name:"重试同一操作"})).toHaveCount(0);return await (await page.request.get("/api/workout-sessions")).json();};
+  await parse("深蹲 50 公斤 10、10、8 RPE 9");await expect(page.getByRole("status").filter({hasText:"RPE 属于哪组"})).toBeVisible();
   expect((await read()).session.sets).toHaveLength(0);
   await parse("深蹲 50 公斤 10、10、8，最后一组 RPE 9");await expect(page.getByTestId("sentence-preview")).toContainText("RPE —");
   expect((await read()).session.sets).toHaveLength(0);
   await confirm().dblclick();await expect(page.getByText("已完成 3 / 6 组",{exact:true})).toBeVisible();
+  await synced();
   await page.reload();await expect(page.getByRole("region",{name:"一句话回执"})).toContainText("深蹲 50 公斤 10、10、8");
   const first=await read(),batch=first.receipts[0];expect(first.session.sets.map((s:{rpe:number|null})=>s.rpe)).toEqual([null,null,9]);
   expect((await db.query("select count(*) from public.workout_commands where session_id=$1",[first.session.id])).rows[0].count).toBe("1");
@@ -64,6 +66,7 @@ test("mobile sentence preview, atomic save, response loss, correction compensati
   await row(3).getByRole("button",{name:"撤销",exact:true}).click();await expect(row(3)).toContainText("已撤销");
   await parse("练完了");await expect(page.getByTestId("sentence-preview")).toContainText("未记录的组仍保持未记录");
   await page.getByRole("button",{name:"确认结束训练",exact:true}).click();await expect(page.getByText("训练已结束",{exact:true})).toBeVisible();
+  await synced();
   await page.reload();await expect(page.getByTestId(`receipt-${second.id}`)).toContainText("撤销回执");
   expect((await db.query("select count(*) from public.set_logs where session_id=$1",[first.session.id])).rows[0].count).toBe("5");
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);

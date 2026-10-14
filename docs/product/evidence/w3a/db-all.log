@@ -1,0 +1,41 @@
+✔ entire offline chain has identical contexts and values when replayed against real PostgreSQL (197.2287ms)
+✖ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (16.2226ms)
+▶ W2b real transactions: atomic commands, receipts, compensation and isolation
+  ✔ preview has no writes; strict authorization/field contract rejects forged drafts (4.7919ms)
+  ✔ four concurrent copies commit one batch; repeated lost-response request returns receipt (49.9032ms)
+  ✔ failure at second set rolls back first set, events and receipt (15.49ms)
+  ✔ stale context rejects entire command after another write (48.8789ms)
+  ✔ correction undo restores before values at a new revision; old correction cannot reapply (39.2355ms)
+  ✔ undo cannot overwrite a later tap; atomic undo rolls back any earlier compensation (49.8977ms)
+  ✔ unknown weight stays NULL; pounds retain reported unit; batch undo after end never resurrects (45.2143ms)
+  ✔ other users cannot preview, apply, undo or read receipts; runtime receipts immutable (17.777ms)
+✔ W2b real transactions: atomic commands, receipts, compensation and isolation (338.1313ms)
+✖ nullable migration preserves legacy facts, supports null round trips and keeps owner RLS (0.6497ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 10
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2935.5464
+
+✖ failing tests:
+
+test at tests\product-db\today.test.ts:2:1115
+✖ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (16.2226ms)
+  Error: Use a fresh disposable database
+      at setup (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\today-setup.ts:12:97)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async TestContext.<anonymous> (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\today.test.ts:10:3)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+
+test at tests\product-db\workout-values.test.ts:2:1035
+✖ nullable migration preserves legacy facts, supports null round trips and keeps owner RLS (0.6497ms)
+  Error: W1A_TEST_DATABASE_URL must name a fresh disposable local database
+      at TestContext.<anonymous> (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-db\workout-values.test.ts:10:19)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)

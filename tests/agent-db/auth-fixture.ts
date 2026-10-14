@@ -12,11 +12,15 @@ const profile = { id: user.id, email: user.email, display_name: "P1 synthetic us
 const part = (v: unknown) => Buffer.from(JSON.stringify(v)).toString("base64url");
 const jwt = `${part({ alg: "HS256", typ: "JWT" })}.${part({ sub: user.id, exp: Math.floor(Date.now()/1000)+7200, aud: "authenticated", role: "authenticated" })}`;
 const token = `${jwt}.${createHmac("sha256", "p1-local-fixture-not-a-production-key").update(jwt).digest("base64url")}`;
+const second={...user,id:"22222222-2222-4222-8222-222222222222",email:"offline-second@example.invalid"};
+const secondJwt=`${part({alg:"HS256",typ:"JWT"})}.${part({sub:second.id,exp:Math.floor(Date.now()/1000)+7200,aud:"authenticated",role:"authenticated"})}`;
+const secondToken=`${secondJwt}.${createHmac("sha256","p1-local-fixture-not-a-production-key").update(secondJwt).digest("base64url")}`;
 async function main() {
   const url = process.env.P1_TEST_DATABASE_URL;
   if (!url || !["localhost", "127.0.0.1"].includes(new URL(url).hostname) || !new URL(url).pathname.startsWith("/liftcut_p1_")) throw new Error("Local test database required");
   const db = new Pool({ connectionString: url });
   await db.query("insert into auth.users values($1) on conflict do nothing", [user.id]);
+  await db.query("insert into auth.users values($1) on conflict do nothing", [second.id]);
   await db.query("insert into public.user_settings(user_id) values($1) on conflict do nothing", [user.id]);
   createServer(async (req, res) => {
     const allowed = ["http://localhost:3101", "http://localhost:3103", "http://localhost:3104"];
@@ -29,11 +33,14 @@ async function main() {
     if (path === "/auth/v1/token") {
       let body = ""; for await (const chunk of req) body += chunk;
       const login = JSON.parse(body);
-      if (login.email !== user.email || login.password !== "p1-fixture-password") { res.statusCode=401; res.end('{}'); return; }
-      res.end(JSON.stringify({ access_token: token, token_type: "bearer", refresh_token: "local-fixture", expires_in: 7200, user })); return;
+      const account=login.email===second.email?second:user;
+      if (login.email !== account.email || login.password !== "p1-fixture-password") { res.statusCode=401; res.end('{}'); return; }
+      res.end(JSON.stringify({ access_token: account.id===second.id?secondToken:token, token_type: "bearer", refresh_token: "local-fixture", expires_in: 7200, user:account })); return;
     }
-    if (req.headers.authorization !== `Bearer ${token}`) { res.statusCode=401; res.end(JSON.stringify({ message: "Invalid fixture token" })); return; }
-    if (path === "/auth/v1/user") { res.end(JSON.stringify(user)); return; }
+    const current=req.headers.authorization===`Bearer ${secondToken}`?second:user;
+    if (![token,secondToken].some(t=>req.headers.authorization===`Bearer ${t}`)) { res.statusCode=401; res.end(JSON.stringify({ message: "Invalid fixture token" })); return; }
+    if (path === "/auth/v1/user") { res.end(JSON.stringify(current)); return; }
+    if (path === "/auth/v1/logout") {res.end('{}');return;}
     // Existing app bootstrap/profile reads only. Never substitute P1 transaction endpoints.
     if (path.startsWith("/rest/v1/")) {
       const table = path.slice("/rest/v1/".length);
@@ -46,7 +53,7 @@ async function main() {
         training_plan_exercises: "select e.* from public.training_plan_exercises e join public.training_plan_days d on d.id=e.day_id join public.training_plan_weeks w on w.id=d.week_id join public.training_plans p on p.id=w.training_plan_id where p.user_id=$1 order by e.id",
       };
       if (req.method === "GET" && Object.hasOwn(reads, table)) {
-        let rows = (await db.query(reads[table], [user.id])).rows;
+        let rows = (await db.query(reads[table], [current.id])).rows;
         for (const [field, filter] of parsed.searchParams) {
           if (filter.startsWith("eq.")) rows = rows.filter(row => String(row[field]) === filter.slice(3));
           if (filter.startsWith("in.(")) {
@@ -58,7 +65,7 @@ async function main() {
         if (limit) rows = rows.slice(0, Number(limit));
         res.end(JSON.stringify(req.headers.accept?.includes("vnd.pgrst.object") ? rows[0] ?? null : rows)); return;
       }
-      const row = path.endsWith("/profiles") ? profile : path.endsWith("/user_settings") ? settings : null;
+      const row = path.endsWith("/profiles") ? {...profile,id:current.id,email:current.email} : path.endsWith("/user_settings") ? {...settings,user_id:current.id} : null;
       const single = req.headers.accept?.includes("vnd.pgrst.object");
       res.end(JSON.stringify(single ? row : row ? [row] : [])); return;
     }

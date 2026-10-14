@@ -12,7 +12,11 @@ test.beforeAll(async()=>{
   await db.query("insert into public.workout_logs(id,user_id,date,training_plan_id,week_number,day_number,duration_minutes,completed) values($1,$2,'2026-10-12',$1,1,1,30,true)",[plan,user]);
   await db.query("insert into public.workout_log_exercises(id,workout_log_id,exercise_plan_id,name,actual_weight,actual_reps,actual_rpe,completed) values($1,$2,$3,'深蹲',50,10,9,true)",[randomUUID(),plan,exercise]);
 });
-test.afterAll(async()=>{await db.end();});
+test.afterAll(async()=>{
+  await db.query("delete from workout_sessions where user_id=$1 and training_plan_id=$2",[user,plan]);
+  await db.query("delete from workout_logs where user_id=$1 and id=$2",[user,plan]);
+  await db.query("delete from training_plans where user_id=$1 and id=$2",[user,plan]);await db.end();
+});
 async function login(page:Page,port=3103){
   await page.goto(`http://localhost:${port}/login`);
   await page.locator("#email").fill("p1-fixture@example.invalid"); await page.locator("#password").fill("p1-fixture-password");
@@ -32,6 +36,7 @@ test("mobile: real API/PG save, lost response, refresh, correction, undo, histor
   await row(3).getByRole("button",{name:"完成",exact:true}).click();
   await expect(page.getByRole("alert").filter({hasText:"本次保存结果尚未确认"})).toBeVisible();
   await page.getByRole("button",{name:"重试同一操作"}).click(); await expect(row(3).getByText("已完成",{exact:true})).toBeVisible();
+  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
   await page.reload(); await expect(page.getByText("已完成 3 / 5 组",{exact:true})).toBeVisible();
   const read=async()=> (await (await page.request.get("/api/workout-sessions")).json()).session;
   const before=await read(); expect(before.sets).toHaveLength(3);
@@ -45,12 +50,14 @@ test("mobile: real API/PG save, lost response, refresh, correction, undo, histor
   await expect(row(2).getByLabel("重量 (kg)")).toHaveValue(""); // Saved NULL cannot re-inherit the historical 50 kg.
   await row(2).getByRole("button",{name:"保存更正"}).click();await expect(row(2)).toContainText("— kg × 8");
   await row(2).getByRole("button",{name:"撤销",exact:true}).click();await expect(row(2)).toContainText("已撤销");
+  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
   const stale={...before.sets.find((s:{setIndex:number})=>s.setIndex===2)};delete stale.exerciseName;delete stale.updatedAt;
   const resend=await page.request.post("/api/workout-sessions?action=set",{headers:{Origin:"http://localhost:3103"},data:stale});expect(resend.status()).toBe(409);
   await row(4).getByRole("button",{name:"跳过",exact:true}).click();await expect(row(4)).toContainText("已跳过");
   const bodyRow=page.getByTestId(`set-${bodyweight}-1`);await expect(bodyRow.getByRole("button",{name:"完成",exact:true})).toBeDisabled();
   // Leave bodyweight unreported: ending must never fill its targets.
   await page.getByRole("button",{name:"结束训练",exact:true}).click();await expect(page.getByText("训练已结束",{exact:true})).toBeVisible();
+  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
   const history=await (await page.request.get("/api/workout-sessions/history")).json();expect(history).toHaveLength(1);
   expect(history[0].exercises).toHaveLength(2);expect(history[0].exercises.every((s:{actualRpe:number|null})=>s.actualRpe===null)).toBe(true);
   const rows=(await db.query("select * from public.set_logs where session_id=$1",[before.id])).rows;

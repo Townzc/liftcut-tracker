@@ -705,15 +705,31 @@
     "endHint": "Ending closes this session. Unrecorded sets remain unrecorded.",
     "end": "End training",
     "history": "View training history",
+    "outbox": {
+      "synced": "Synced",
+      "pending": "{count} operations pending",
+      "failed": "Sync failed · {count} pending",
+      "hint": "Offline operations stay in this browser and sync in order. Return to the original account to continue; do not clear browser data. Keep this page open offline; reopening offline is not supported yet.",
+      "startHint": "Go online to start and load the plan; then you can record offline.",
+      "login": "Sign in to the original account",
+      "conflictHint": "Cloud records changed. These {count} local operations are paused. Review them before discarding and recording again; cloud data will not be overwritten automatically.",
+      "local": "Pending operations (in order)",
+      "remote": "Latest cloud records",
+      "noActive": "No active workout. See workout history for ended sessions.",
+      "discard": "Discard these {count} operations and use cloud records"
+    },
     "errors": {
       "LOAD_FAILED": "Could not load records. Query/recover before continuing.",
-      "CONFLICT": "Records changed, or an active session already exists. Query/recover to continue it.",
-      "UNKNOWN": "Save outcome unknown. Query records or retry the same operation; do not create another.",
+      "CONFLICT": "Records changed or this operation is no longer valid. Later operations are paused. Query/recover to review differences.",
+      "UNKNOWN": "Save outcome unknown; the operation is retained. We will retry the same request online before sending later operations.",
+      "AUTH": "Sign-in expired or the account changed. Sign in to the original account and retry; pending operations are retained.",
+      "LOCAL_CONFLICT": "Records changed. This operation was not queued. Query/recover and review before trying again.",
+      "STORAGE": "Browser storage failed; the operation was not queued. Keep this page open and check storage permissions or space before reopening today’s card.",
       "HISTORY_FAILED": "Saved, but history could not refresh. Please query/recover."
     },
     "sentence": {
       "title": "Log in one sentence",
-      "hint": "Review a rules draft, then save all sets together. Unreported actuals stay unknown.",
+      "hint": "Preview local rules offline, then confirm to queue. The server validates again when syncing. Unreported actuals stay unknown.",
       "exercise": "Selected exercise (optional)",
       "fromText": "Identify from the sentence",
       "input": "Your workout report",
@@ -732,6 +748,7 @@
       "receipts": "Sentence receipts",
       "receiptHint": "Latest 20. Undo adds a compensation record and never overwrites later edits.",
       "saved": "Saved",
+      "pending": "Pending sync · Stored locally",
       "undone": "Undone",
       "undo": "Undo sentence",
       "skipped": "Skipped",
@@ -751,7 +768,7 @@
         "unsupported_or_missing_unit": "Specify kg/lb, or just “8 reps”. Use the set form for unsupported sentences.",
         "rpe_scope_ambiguous": "Which sets does RPE describe? Say “last set RPE 9” or “each set RPE 8”."
       },
-      "viewReceipts": "View saved / undone receipts"
+      "viewReceipts": "View records and sync receipts"
     }
   }
 }

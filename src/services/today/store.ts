@@ -2,20 +2,13 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
-import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet, type SetLog } from "@/lib/today";
+import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet } from "@/lib/today";
 
 import { parseWorkoutLog } from "@/lib/workout-log-parser";
 import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
+import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
 
-function canonical(v: unknown): string {
-  if (Array.isArray(v)) return `[${v.map(canonical).join(",")}]`;
-  if (v !== null && typeof v === "object") return `{${Object.entries(v).sort(([a], [b]) => a.localeCompare(b)).map(([k, x]) => `${JSON.stringify(k)}:${canonical(x)}`).join(",")}}`;
-  return JSON.stringify(v);
-}
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
-function stored(s: SetLog): StoredSet {
-  const result = {...s} as Partial<SetLog>;delete result.exerciseName;delete result.updatedAt;return result as StoredSet;
-}
 export class TodayConflict extends Error {}
 const fail = (reason: string): never => { throw new TodayConflict(reason); };
 
@@ -155,13 +148,10 @@ export class TodayStore {
     return;
   }
   private context(session: Session, selectedExerciseId?: string) {
-    return { exercises: session.prescription.exercises.map(e => ({ id: e.id, name: e.name, setCount: e.sets })),
-      actuals: session.sets.map(s => ({ id:s.id, exerciseId:s.planExerciseId, setIndex:s.setIndex, revision:s.revision,
-        status:s.status, weightKg:s.weightKg, reps:s.reps, rpe:s.rpe })), selectedExerciseId };
+    return workoutContext(session,selectedExerciseId);
   }
   private contextHash(session: Session) {
-    return hash({ id:session.id, status:session.status, revision:session.revision, prescription:session.prescription,
-      sets:session.sets.map(stored) });
+    return hash(workoutContextInput(session));
   }
   private async receipts(db: PoolClient): Promise<CommandReceipt[]> {
     const rows = (await db.query(`select c.receipt,u.receipt as undo from public.workout_commands c
