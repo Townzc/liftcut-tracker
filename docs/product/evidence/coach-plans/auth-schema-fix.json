@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-14",
+  "initialProductionFailure": {
+    "httpStatus": 409,
+    "sqlState": "42501",
+    "trigger": "agent_private.serialize_plan_write",
+    "reason": "Runtime PL/pgSQL resolution required USAGE on the managed auth schema; postgres could not grant it to the custom role.",
+    "businessRowsCommitted": 0,
+    "receiptsCommitted": 0
+  },
+  "fix": {
+    "migration": "20261014222000_plan_lock_jwt_subject.sql",
+    "securityInvoker": true,
+    "newRolePrivileges": false,
+    "unchanged": ["owner RLS", "explicit approval", "idempotency keys", "per-owner advisory lock"],
+    "identityFormats": ["request.jwt.claim.sub", "request.jwt.claims.sub"]
+  },
+  "verification": {
+    "productDatabaseTests": 48,
+    "approvalDatabaseTests": 32,
+    "changedFileLint": "PASS",
+    "diffCheck": "PASS",
+    "hostedRollbackDiagnostic": "PASS",
+    "originalApprovedIntentRetry": "HTTP 200, one committed plan",
+    "fullHostedAcceptance": "Recorded separately in release handoff"
+  },
+  "references": [
+    "https://supabase.com/docs/guides/database/postgres/roles-superuser",
+    "https://supabase.com/docs/guides/database/postgres/row-level-security"
+  ]
+}
