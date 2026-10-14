@@ -1,0 +1,83 @@
+{
+  "observed_at_utc": "2026-10-14T07:51:06.178446+00:00",
+  "environment": "Local Chromium 390x844, real API/PostgreSQL, HTTP Auth fixture",
+  "actual_results": {
+    "unit": 78,
+    "database": 26,
+    "browser": 30,
+    "browser_first_passed": 2,
+    "browser_first_failed": 3,
+    "build": "PASS",
+    "typescript": "PASS",
+    "lint_errors": 0,
+    "lint_preexisting_warnings": 2
+  },
+  "production": "NOT_YET_DEPLOYED",
+  "files": [
+    {
+      "path": "docs/product/evidence/c1-conversation/chat-draft-mobile.png",
+      "bytes": 159063,
+      "sha256": "87a61940a74bd4b2d60bb028ea7983e976a56e45a82c65c83e8ec145077a664c"
+    },
+    {
+      "path": "docs/product/evidence/c1-conversation/chat-offline.png",
+      "bytes": 186582,
+      "sha256": "1c4c0919e800acd95619ab4c151b334a9cc1ea21bfeb8fc677582504ea58cde2"
+    },
+    {
+      "path": "docs/product/evidence/c1-conversation/chat-english.png",
+      "bytes": 118865,
+      "sha256": "c4bb639108f89d0ca27e012149be1d67b97820e1b45aa4c57c318bb80e86a904"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-unit.log",
+      "bytes": 8142,
+      "sha256": "3073b0755298b929726fd6c5744c069e7b80b77931c3a0caed6c7e38e3af35d9"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-unit-final.log",
+      "bytes": 6771,
+      "sha256": "380990433aef0365fa3e32f0b0f2afa1eacf23a165213801c9fc4335313e7703"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-browser-first.log",
+      "bytes": 10511,
+      "sha256": "5220bedff9f0fd75f861d5d0a842f1b692d3c33c967900fed9d697e09eb45938"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-browser-final.log",
+      "bytes": 6066,
+      "sha256": "a9c09c4052c122d79414f2a11c7906e72321385de2415d8de264aa9e526dbd46"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-pg.log",
+      "bytes": 982,
+      "sha256": "457961051bb7e83b7a05f40084a3f696fc1a85ab63371c70566d1cc361c1d65b"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-pg-workout-commands.log",
+      "bytes": 1088,
+      "sha256": "9ced4ccfe651bd9bf7652b0abb4a2108feab83a220ac45e91866ba76d23d8f42"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-pg-outbox.log",
+      "bytes": 232,
+      "sha256": "47fea3d1c1654f60d6a1c15225ae5f59251f2f646d4baa7c087fbeff16d8277f"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-pg-exercise-replacement.log",
+      "bytes": 1233,
+      "sha256": "4718176cf9a6e810d945fca2b96185f4c72173f51cbf008638a70d21d105eac5"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-build-final.log",
+      "bytes": 1417,
+      "sha256": "9e7b948b6d47be801af73e60012d16f56a47cc0922185545db808901311e4583"
+    },
+    {
+      "local_ignored_output": "node_modules/.cache/coach-lint-final.log",
+      "bytes": 374,
+      "sha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa"
+    }
+  ]
+}

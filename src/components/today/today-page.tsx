@@ -11,6 +11,7 @@ import { useTrackerStore } from "@/store/use-tracker-store";
 import { projectOutbox, type OutboxState, type OutboxItem } from "@/lib/workout-outbox";
 import { WorkoutOutboxClient } from "@/services/today/outbox-client";
 import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
+import { CoachConversation } from "./coach-conversation";
 import { exerciseCatalog, exerciseLabel } from "@/lib/exercise-catalog";
 
 import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
@@ -83,15 +84,15 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
   </div>;
 }
 
-export function TodayPage({ enabled }: { enabled: boolean }) {
+export function TodayPage({ enabled, conversation = false }: { enabled: boolean; conversation?: boolean }) {
   const t = useTranslations("today"), { user, authMode } = useAuth();
   if (!enabled) return <Card><CardHeader><CardTitle>{t("notOpen")}</CardTitle></CardHeader></Card>;
   if (authMode !== "authenticated" || !user) return <Card><CardContent className="space-y-3 pt-6"><p>{t("loginRequired")}</p><Link href="/workout">{t("legacy")}</Link></CardContent></Card>;
   // Remount synchronously on account changes: never render the previous owner's data.
-  return <TodayWorkspace key={user.id} owner={user.id} />;
+  return <TodayWorkspace key={user.id} owner={user.id} conversation={conversation} />;
 }
-function TodayWorkspace({owner}:{owner:string}) {
-  const t=useTranslations("today"),locale=useLocale();
+function TodayWorkspace({owner,conversation}:{owner:string;conversation:boolean}) {
+  const t=useTranslations("today"),tc=useTranslations("coach"),locale=useLocale();
   const [state,setState]=useState<OutboxState | null>(null);
   const client=useRef<WorkoutOutboxClient | null>(null);
   const [remote,setRemote]=useState<{data:TodayData;revision:number} | null>(null);
@@ -135,13 +136,14 @@ function TodayWorkspace({owner}:{owner:string}) {
   const session = data?.session;
   const chosen = dayId || data?.days.find(d => d.weekNumber === selectedWeek && d.dayNumber === selectedDay)?.id || data?.days[0]?.id || "";
   return <div className="mx-auto max-w-2xl space-y-4">
-    <div><h1 className="text-2xl font-semibold">{t("title")}</h1><p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p></div>
+    <div><h1 className="text-2xl font-semibold">{conversation?tc("title"):t("title")}</h1><p className="mt-1 text-sm text-muted-foreground">{conversation?tc("intro"):t("intro")}</p>
+      <Link className="mt-2 inline-block text-sm underline" href={conversation?"/today":"/coach"}>{tc(conversation?"goToday":"goCoach")}</Link></div>
     <div className="space-y-2 rounded-xl border p-3 text-sm">
       <p role="status" data-testid="outbox-status">{t(issue?"outbox.failed":count?"outbox.pending":data?"outbox.synced":"loading",{count})}</p>
       <p className="text-xs text-muted-foreground">{t("outbox.hint")}</p>
       {!!count && <Button variant="outline" disabled={busy || head?.status==="conflict"} onClick={()=>void retry()}>{t("retry")}</Button>}
     </div>
-    {!!data?.receipts?.length && <p role="status" className="text-sm"><a className="underline" href="#sentence-receipts">{t("sentence.viewReceipts")}</a></p>}
+    {!!data?.receipts?.length && <p role="status" className="text-sm"><a className="underline" href={conversation?"#coach-receipts":"#sentence-receipts"}>{t("sentence.viewReceipts")}</a></p>}
     {issue && <div role="alert" className="space-y-2 rounded-xl border p-3 text-sm"><p>{t(`errors.${issue}`)}</p>
       <Button variant="outline" disabled={busy} onClick={() => void recover()}>{t("recover")}</Button>
       {head?.status==="auth" && <Link className="ml-2 underline" href="/login">{t("outbox.login")}</Link>}
@@ -169,21 +171,32 @@ function TodayWorkspace({owner}:{owner:string}) {
         <p>{session.localDate} · {session.timezone}</p><p>{t(session.status === "active" ? "active" : "ended")}</p>
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
       </CardContent></Card>
-      {session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
-      {session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exerciseLabel(exercise.name,locale)}</CardTitle>
+      {!conversation && session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
+      {!conversation && session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exerciseLabel(exercise.name,locale)}</CardTitle>
         <p className="text-sm text-muted-foreground">{t("target", { sets:exercise.sets,reps:exercise.repRange,rpe:exercise.targetRpe })}</p></CardHeader>
         <CardContent className="space-y-3"><ExerciseReplacement session={session} exercise={exercise} busy={locked} submit={submit} />{Array.from({ length:exercise.sets },(_,i)=> {
           const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1);
           return <SetRow key={`${session.id}-${i}-${saved?.revision ?? 0}`} session={session} exercise={exercise} index={i+1} saved={saved}
             previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} busy={locked} submit={submit} />;
         })}</CardContent></Card>)}
-      <ReplacementReceipts session={session} busy={locked} submit={submit}
+      {!conversation && <ReplacementReceipts session={session} busy={locked} submit={submit}
         pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />
-      {session.status === "active" ? <div className="space-y-2"><p className="text-sm text-muted-foreground">{t("endHint")}</p>
+      }
+      {!conversation && session.status === "active" ? <div className="space-y-2"><p className="text-sm text-muted-foreground">{t("endHint")}</p>
         <Button disabled={locked} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
-        : !count && <Link href="/workout" className="underline">{t("history")}</Link>}
+        : session.status === "ended" && !count && <div className="flex flex-wrap items-center gap-3">
+          <Link href="/workout" className="underline">{t("history")}</Link>
+          <Button variant="outline" disabled={locked} onClick={()=>void recover()}>{tc("anotherSession")}</Button>
+        </div>}
     </>}
+    {conversation && data && <CoachConversation data={data} busy={locked} pendingCount={count} submit={submit} />}
+    <div id={conversation?"coach-receipts":undefined} className="space-y-4 scroll-mt-4">
+    {conversation && <><h2 className="text-lg font-semibold">{tc("receiptTitle")}</h2><p className="text-xs text-muted-foreground">{tc("receiptHint")}</p>
+      {!data?.receipts?.length && !session?.replacements?.length && <p className="text-sm text-muted-foreground">{tc("emptyReceipts")}</p>}
+      {session && <ReplacementReceipts session={session} busy={locked} submit={submit}
+        pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />}</>}
     <SentenceReceipts receipts={data?.receipts ?? []} busy={locked} submit={submit}
       pendingIds={state?.items.filter(i=>i.action==="apply" || i.action==="undo").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />
+    </div>
   </div>;
 }

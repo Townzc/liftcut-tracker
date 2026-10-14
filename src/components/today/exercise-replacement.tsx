@@ -9,9 +9,9 @@ import { localContextHash } from "@/lib/workout-context";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
 
 type Props={session:Session;busy:boolean;submit:(p:WorkoutOperation)=>Promise<boolean>};
-export function ExerciseReplacement({session,exercise,busy,submit}:Props & {exercise:PrescriptionExercise}) {
+export function ExerciseReplacement({session,exercise,busy,submit,initiallyOpen=false}:Props & {exercise:PrescriptionExercise;initiallyOpen?:boolean}) {
   const t=useTranslations("today.replacement"),locale=useLocale();
-  const [open,setOpen]=useState(false),[equipment,setEquipment]=useState<Equipment[]>([]),[selected,setSelected]=useState("");
+  const [open,setOpen]=useState(initiallyOpen),[equipment,setEquipment]=useState<Equipment[]>([]),[selected,setSelected]=useState("");
   const [preview,setPreview]=useState<ReplaceExerciseRequest|null>(null),[working,setWorking]=useState(false),[error,setError]=useState(false);
   const flight=useRef(false),reason=replacementBlocked(session,exercise.id),source=identifyExercise(exercise.name);
   const candidates=replacementCandidates(exercise.name,equipment),target=candidates.find(e=>e.id===selected);

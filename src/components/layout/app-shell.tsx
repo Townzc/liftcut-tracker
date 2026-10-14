@@ -9,6 +9,7 @@ import {
   CalendarCheck,
   Dumbbell,
   Home,
+  MessageCircle,
   Settings,
   Sparkles,
   Weight,
@@ -74,13 +75,15 @@ export function AppShell({ children, todayEnabled = false }: { children: ReactNo
   const navItems: NavItem[] = [
     { href: "/", label: tNav("dashboard"), shortLabel: tNav("dashboardShort"), icon: Home },
     { href: "/plan", label: tNav("plan"), shortLabel: tNav("planShort"), icon: CalendarCheck },
-    { href: "/plan/ai", label: tNav("aiPlanner"), shortLabel: tNav("aiPlannerShort"), icon: Sparkles },
+    { href: "/plan/ai", label: tNav("aiPlanner"), shortLabel: tNav("aiPlannerShort"), icon: Sparkles, showInMobile: !(todayEnabled && authMode === "authenticated") },
     { href: "/workout", label: tNav("workout"), shortLabel: tNav("workoutShort"), icon: Dumbbell },
     { href: "/nutrition", label: tNav("nutrition"), shortLabel: tNav("nutritionShort"), icon: Apple },
     { href: "/body", label: tNav("body"), shortLabel: tNav("bodyShort"), icon: Weight },
     { href: "/settings", label: tNav("settings"), shortLabel: tNav("settingsShort"), icon: Settings },
   ];
-  if (todayEnabled && authMode === "authenticated") navItems.splice(3, 0, { href: "/today", label: tNav("today"), shortLabel: tNav("today"), icon: Dumbbell });
+  if (todayEnabled && authMode === "authenticated") navItems.splice(3, 0,
+    { href: "/coach", label: tNav("coach"), shortLabel: tNav("coachShort"), icon: MessageCircle },
+    { href: "/today", label: tNav("today"), shortLabel: tNav("today"), icon: Dumbbell });
 
   if (shellFreeRoutes.some((route) => pathname.startsWith(route))) {
     return (
