@@ -1,0 +1,116 @@
+[
+  {
+    "observed_at": "2026-10-14 05:05:42.367783+00",
+    "fixture_users": 2,
+    "sessions": [
+      {
+        "status": "ended",
+        "revision": 2,
+        "prescribed_sets": 6
+      },
+      {
+        "status": "ended",
+        "revision": 2,
+        "prescribed_sets": 6
+      }
+    ],
+    "sets": [
+      {
+        "rpe": null,
+        "reps": 10,
+        "status": "voided",
+        "revision": 2,
+        "set_index": 1,
+        "weight_kg": 45.359237,
+        "input_unit": "lb",
+        "session_id": "6639c29c-545b-4253-9333-c1809962bab3",
+        "reps_source": "user_said",
+        "weight_source": "user_said"
+      },
+      {
+        "rpe": null,
+        "reps": 7,
+        "status": "done",
+        "revision": 2,
+        "set_index": 1,
+        "weight_kg": null,
+        "input_unit": "kg",
+        "session_id": "658380ac-9f62-46c8-9259-b8e9d2b1b638",
+        "reps_source": "user_entered",
+        "weight_source": null
+      },
+      {
+        "rpe": 9,
+        "reps": 8,
+        "status": "voided",
+        "revision": 2,
+        "set_index": 2,
+        "weight_kg": 45.359237,
+        "input_unit": "lb",
+        "session_id": "6639c29c-545b-4253-9333-c1809962bab3",
+        "reps_source": "user_said",
+        "weight_source": "user_said"
+      },
+      {
+        "rpe": null,
+        "reps": 8,
+        "status": "voided",
+        "revision": 2,
+        "set_index": 2,
+        "weight_kg": null,
+        "input_unit": "kg",
+        "session_id": "658380ac-9f62-46c8-9259-b8e9d2b1b638",
+        "reps_source": "user_entered",
+        "weight_source": null
+      },
+      {
+        "rpe": null,
+        "reps": 8,
+        "status": "done",
+        "revision": 1,
+        "set_index": 3,
+        "weight_kg": null,
+        "input_unit": "kg",
+        "session_id": "658380ac-9f62-46c8-9259-b8e9d2b1b638",
+        "reps_source": "user_entered",
+        "weight_source": null
+      },
+      {
+        "rpe": null,
+        "reps": 12,
+        "status": "done",
+        "revision": 2,
+        "set_index": 3,
+        "weight_kg": null,
+        "input_unit": "kg",
+        "session_id": "6639c29c-545b-4253-9333-c1809962bab3",
+        "reps_source": "user_entered",
+        "weight_source": null
+      },
+      {
+        "rpe": null,
+        "reps": 8,
+        "status": "done",
+        "revision": 1,
+        "set_index": 4,
+        "weight_kg": null,
+        "input_unit": "kg",
+        "session_id": "6639c29c-545b-4253-9333-c1809962bab3",
+        "reps_source": "user_entered",
+        "weight_source": null
+      }
+    ],
+    "original_receipts": 1,
+    "compensation_receipts": 1,
+    "events": {
+      "ended": 2,
+      "voided": 3,
+      "started": 2,
+      "recorded": 7,
+      "corrected": 2,
+      "command_compensated": 1
+    },
+    "legacy_rows": 105,
+    "legacy_differences": 5
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "observed_at": "2026-10-14 05:01:25.941551+00",
+    "fixture_users": 2,
+    "sessions": null,
+    "sets": null,
+    "original_receipts": 0,
+    "compensation_receipts": 0,
+    "events": null,
+    "legacy_rows": 100,
+    "legacy_differences": 0
+  }
+]

@@ -38,6 +38,19 @@ async function tap(page:Page,n:number,reps="8") {
   const row=page.getByTestId(`set-${exercise}-${n}`);await row.getByLabel("次数",{exact:true}).fill(reps);
   await row.getByRole("button",{name:"完成",exact:true}).click();await expect(row.getByText("已完成",{exact:true})).toBeVisible();
 }
+test("fresh real-account bootstrap never sends demo plans or observed health records",async({page})=>{
+  const writes:string[]=[];
+  page.on("request",r=>{
+    const url=new URL(r.url());
+    if(url.pathname.startsWith("/rest/v1/") && !["GET","HEAD","OPTIONS"].includes(r.method()))writes.push(url.pathname);
+  });
+  await login(page,"offline-second@example.invalid");await page.goto("/today");await synced(page);
+  await expect(page.getByRole("button",{name:"开始训练",exact:true})).toBeDisabled();
+  expect(writes.filter(path=>!path.endsWith("/profiles") && !path.endsWith("/user_settings"))).toEqual([]);
+  const data=await (await page.request.get("/api/workout-sessions")).json();
+  expect(data.days).toEqual([]);expect(data.session).toBeNull();expect(data.receipts).toEqual([]);
+});
+
 test("offline three sets, correction, compensating void and end sync in exact persisted order",async({page,context})=>{
   const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));await start(page);
   const session=(await snapshot(page)).confirmed!.session!.id;await context.setOffline(true);

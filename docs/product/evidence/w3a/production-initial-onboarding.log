@@ -1,0 +1,56 @@
+ExpectError: expect(locator).toHaveText(expected) failed
+
+Locator: getByTestId('outbox-status')
+Expected: "已同步"
+Timeout: 60000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toHaveText" getByTestId('outbox-status') with timeout 60000ms
+  - waiting for getByTestId('outbox-status')
+
+    at captureRawStack (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\playwright-core\lib\coreBundle.js:9282:17)
+    at callMatcherAsStep (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\playwright\lib\matchers\expect.js:13316:57)
+    at Object.toHaveText (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\playwright\lib\matchers\expect.js:13308:23)
+    at synced (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\.cache\w3a\hosted-outbox-test.cjs:8:68)
+    at start (C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\.cache\w3a\hosted-outbox-test.cjs:15:57)
+    at async C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\node_modules\.cache\w3a\hosted-outbox-test.cjs:25:52 {
+  matcherResult: {
+    name: 'toHaveText',
+    expected: '已同步',
+    message: 'expect(locator).toHaveText(expected) failed\n' +
+      '\n' +
+      "Locator: getByTestId('outbox-status')\n" +
+      'Expected: "已同步"\n' +
+      'Timeout: 60000ms\n' +
+      'Error: element(s) not found\n' +
+      '\n' +
+      'Call log:\n' +
+      `  - Expect "toHaveText" getByTestId('outbox-status') with timeout 60000ms\n` +
+      "  - waiting for getByTestId('outbox-status')\n",
+    pass: false,
+    actual: undefined,
+    log: [
+      `  - Expect "toHaveText" getByTestId('outbox-status') with timeout 60000ms`,
+      "  - waiting for getByTestId('outbox-status')"
+    ],
+    timeout: 60000,
+    ariaSnapshot: '- alert\n' +
+      '- main:\n' +
+      '  - text: 完善基础信息 先完成这一步，后续训练与饮食记录会更准确。\n' +
+      '  - paragraph: 请先填写性别、年龄、身高、当前体重、目标体重和每周训练天数。\n' +
+      '  - text: 性别\n' +
+      '  - combobox: unknown\n' +
+      '  - text: 年龄\n' +
+      '  - textbox: "0"\n' +
+      '  - text: 身高（cm）\n' +
+      '  - textbox: "0"\n' +
+      '  - text: 当前体重（kg）\n' +
+      '  - textbox: "0"\n' +
+      '  - text: 目标体重（kg）\n' +
+      '  - textbox: "0"\n' +
+      '  - text: 每周训练天数\n' +
+      '  - textbox: "0"\n' +
+      '  - button "保存并进入应用"'
+  }
+}

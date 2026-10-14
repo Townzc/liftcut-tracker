@@ -1,0 +1,16 @@
+[
+  {
+    "observed_at": "2026-10-14 05:06:12.819692+00",
+    "fixture_users": 0,
+    "fixture_auth_sessions": 0,
+    "fixture_refresh_tokens": 0,
+    "fixture_sessions": 0,
+    "fixture_sets": 0,
+    "fixture_commands": 0,
+    "fixture_events": 0,
+    "fixture_plans": 0,
+    "remaining_users": 6,
+    "legacy_rows": 100,
+    "legacy_differences": 0
+  }
+]

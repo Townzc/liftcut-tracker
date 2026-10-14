@@ -1,0 +1,7 @@
+{
+  "observed_at": "2026-10-14 05:05:56.897121+00",
+  "synthetic_legacy_rows": 5,
+  "original_rows_missing_or_changed": 0,
+  "non_fixture_new_rows": 0,
+  "source": "independent database query scoped by release_fixture tag and exact original backup rows"
+}

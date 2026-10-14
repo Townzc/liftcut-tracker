@@ -1,0 +1,230 @@
+{
+  "at": "2026-10-14T05:05:14.151Z",
+  "url": "https://www.liftcuttracker.com",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "auth": "real hosted GoTrue",
+  "status": "PASS",
+  "steps": [
+    "Real hosted GoTrue sign-in and production session snapshot",
+    "Offline six operations: zero cloud writes before reconnect; exact persisted request order; 3 sets, NULL actuals, one void and ended",
+    "Local rules sentence and compensation while offline; no preview/API/model call; restored lb provenance and NULL/9",
+    "A real committed response was dropped; close/reopen + two tabs retry one immutable body, same three cloud sets",
+    "Another authenticated write advanced version; local 7 and dependent fourth set paused, explicit discard kept cloud 12",
+    "Two actual GoTrue accounts: queued data hidden and unsent after logout/switch; mismatched owner rejected; original account recovered exact queue",
+    "Both sessions ended; history excludes voided/unreported sets; compensation survives reload; no model calls or JS errors"
+  ],
+  "summary": {
+    "sessions": 2,
+    "sets": 7,
+    "originalReceipts": 1,
+    "compensationReceipts": 1,
+    "firstSessionRpe": [
+      null,
+      null,
+      null
+    ],
+    "secondSessionRpe": [
+      null,
+      9,
+      null,
+      null
+    ]
+  },
+  "timings": [
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 427.122
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 450.522
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 466.123
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "method": "POST",
+      "ms": 764.639
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 403.893
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 603.195
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 635.968
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 627.421
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 745.23
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 613.462
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "method": "POST",
+      "ms": 606.341
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 600.128
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 507.25
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 636.845
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "method": "POST",
+      "ms": 651.432
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 460.197
+    },
+    {
+      "path": "/api/workout-commands?action=apply",
+      "method": "POST",
+      "ms": 672.05
+    },
+    {
+      "path": "/api/workout-commands?action=undo",
+      "method": "POST",
+      "ms": 704.654
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 439.312
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 1526.924
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 2079.971
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 2800.178
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 421.616
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 834.763
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 654.959
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 969.962
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 623.413
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 607.623
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 1538.204
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 626.612
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 598.425
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 627.555
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 619.442
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 404.937
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "method": "POST",
+      "ms": 655.121
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 744.126
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 455.138
+    }
+  ],
+  "errors": [],
+  "modelCalls": [],
+  "boundaries": [
+    "Desktop Chromium mobile viewport, not physical iOS/Android/WeChat",
+    "Explicit offline and response-loss injection; no OS crash",
+    "No offline cold-start claim"
+  ]
+}

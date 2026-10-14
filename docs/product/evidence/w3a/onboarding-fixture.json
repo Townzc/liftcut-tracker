@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-14T05:03:16.714Z",
+  "passed": [
+    {
+      "account": 1,
+      "syntheticOnboarding": "completed via actual UI",
+      "noWorkoutWrites": true
+    },
+    {
+      "account": 2,
+      "syntheticOnboarding": "completed via actual UI",
+      "noWorkoutWrites": true
+    }
+  ]
+}

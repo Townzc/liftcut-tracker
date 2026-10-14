@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-14T05:01:13.167Z",
+  "steps": [],
+  "error": "Error: expect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('outbox-status')\nExpected: \"已同步\"\nTimeout: 60000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveText\" getByTestId('outbox-status') with timeout 60000ms\n  - waiting for getByTestId('outbox-status')\n",
+  "errors": [],
+  "modelCalls": []
+}
