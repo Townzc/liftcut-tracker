@@ -1,6 +1,6 @@
 {
-  "observedAt": "2026-10-14T19:37:53.438Z",
-  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; final fix has 89 unit and 43 full local browser tests. The source screenshot check and 2 real DeepSeek source queries preceded the additional quote guards. Browser model is a scripted double; final hosted resume pending.",
+  "observedAt": "2026-10-14T19:49:03.152Z",
+  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; quote/source implementation has 89 unit and 43 full local browser tests. A final display-label correction distinguishes training load from body weight, verified by build and 2 targeted browser scenarios; screenshot reflects this correction. The earlier screenshot-check log and 2 real DeepSeek source queries preceded the quote guards. Browser model is a scripted double; final hosted resume pending.",
   "files": [
     {
       "name": "unit.log",
@@ -11,8 +11,8 @@
     {
       "name": "build.log",
       "bytes": 1492,
-      "sha256": "437746fef22344d71f66d7ca53933f07a6d15775d734dac778aee2d0936f476c",
-      "originalSha256": "e655d53fc18b5b0effbad47a95ae194623149422e2d84514447ce00ea7af0632"
+      "sha256": "68514baefed8dfa1645a446b2641635dded8d99b7c9aa09d69b47c4f2001f20b",
+      "originalSha256": "06e02a124da41630c382b6e6a3ec497cb588ddda823077b487e118ac8e7cf3bc"
     },
     {
       "name": "typecheck.log",
@@ -31,6 +31,18 @@
       "bytes": 8593,
       "sha256": "0cc8a1731576c981f4487046f74a240b471fc046f0f3d0c70f34a9b48a54718b",
       "originalSha256": "790f75d6c6cb52f4d8b3df79c9f04ebdf8fbeaa1cb76d2300f69e841865fb8e6"
+    },
+    {
+      "name": "source-label-browser.log",
+      "bytes": 2299,
+      "sha256": "cdbce920da3a0eccbab23b3e15cf3edc99c06b2c67595bd8702a3311c4471f3a",
+      "originalSha256": "8b1c05f6e76e30e8aae73abb05252764fea9eb1ccd961ea0941fbe66505ccc92"
+    },
+    {
+      "name": "source-label-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "grounding.log",
@@ -64,9 +76,9 @@
     },
     {
       "name": "current-workout-source.png",
-      "bytes": 58641,
-      "sha256": "94f099f35987fb56ff319953d38d3a34f1b141a3f622c3da80153c0cb973cf14",
-      "originalSha256": "94f099f35987fb56ff319953d38d3a34f1b141a3f622c3da80153c0cb973cf14"
+      "bytes": 58534,
+      "sha256": "f3b38e744af645d2578578a448d86cd00371ba7f3034620c77b9d9263ba6686e",
+      "originalSha256": "f3b38e744af645d2578578a448d86cd00371ba7f3034620c77b9d9263ba6686e"
     }
   ]
 }
