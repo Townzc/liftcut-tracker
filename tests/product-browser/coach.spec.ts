@@ -147,7 +147,11 @@ test("IME and multiline input never auto-submit; flag, account isolation and Eng
   await page.goto("/settings");await page.getByRole("combobox").filter({hasText:"中文"}).click();await page.getByRole("option",{name:"English",exact:true}).click();
   // The local Auth HTTP fixture returns zh-CN on hard reload; use the real SPA preference switch.
   await page.getByRole("link",{name:"Agent",exact:true}).click();
-  await expect(page.getByRole("heading",{name:"Agent",exact:true})).toBeVisible();await page.getByText("Training tools & examples",{exact:true}).click();await page.getByRole("button",{name:"show plan",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Agent",exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Send",exact:true})).toBeVisible();
+  const sendButton=await page.getByRole("button",{name:"Send",exact:true}).boundingBox(),navigation=await page.getByRole("navigation",{name:"Main navigation"}).boundingBox();
+  expect(sendButton!.y+sendButton!.height).toBeLessThanOrEqual(navigation!.y);
+  await page.getByText("Training tools & examples",{exact:true}).click();await page.getByRole("button",{name:"show plan",exact:true}).click();
   await expect(page.getByRole("log")).toContainText("No active plan yet");await page.screenshot({path:"node_modules/.cache/coach/chat-english.png",fullPage:true});
   const disabled=await context.newPage();await disabled.goto("http://localhost:3104/coach");await expect(disabled.getByTestId("coach-conversation")).toHaveCount(0);await disabled.close();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);

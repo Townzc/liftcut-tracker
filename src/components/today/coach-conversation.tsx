@@ -152,7 +152,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
     </div>;
   }
   return <section className="space-y-5" aria-label={t("conversation")} data-testid="coach-conversation">
-    {!turns.length && <div className="py-12 text-center sm:py-16">
+    {!turns.length && <div className="py-6 text-center sm:py-16">
       <MessageCircle className="mx-auto mb-6 size-7" strokeWidth={1.4} />
       <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">{en?"What would you like to know?":"今天，有什么想告诉我？"}</h2>
       <p className="mt-4 text-sm text-muted-foreground">{en?"Ask about your progress, or tell me what to record.":"查查自己的进展，或者记下今天的一点变化。"}</p>
