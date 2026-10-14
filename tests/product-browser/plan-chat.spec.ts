@@ -33,6 +33,7 @@ test("training preview and revision stay in chat; confirmation response loss rec
   await expect(page.getByTestId("plan-receipt")).toContainText("保存一次");expect(await count("training_plans")).toBe(1);
   const run=(await recent(page))[0];const binding={proposalId:run.proposal.proposalId,contentHash:run.proposal.contentHash,contextRevision:run.proposal.contextRevision};
   const replay=await page.request.post(`/api/agent/runs/${run.id}/execute`,{headers:origin,data:{binding,approvalId:run.approvalId,idempotencyKey:binding.proposalId}});expect(replay.status()).toBe(200);expect(await count("training_plans")).toBe(1);
+  await send(page,"开始训练");await expect(page.getByTestId("conversation-workout").locator("option")).toHaveCount(2);await expect(page.getByRole("button",{name:"开始训练",exact:true})).toBeEnabled();
   expect(page.url()).toContain("/agent");expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);
   await page.screenshot({path:"node_modules/.cache/coach-plans/training-confirmed.png",fullPage:true});
 });

@@ -24,7 +24,7 @@ async function login(page:Page,email="p1-fixture@example.invalid") {
   await page.locator('button[type="submit"]').click();await page.waitForURL(/\/(?:onboarding)?$/);
 }
 async function logout(page:Page) {
-  await page.goto("/settings");
+  await page.goto("/settings/account");
   await page.getByRole("button",{name:"退出登录",exact:true}).click();
   await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);
 }

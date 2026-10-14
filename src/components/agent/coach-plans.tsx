@@ -11,7 +11,7 @@ async function api<T>(path:string,body?:unknown):Promise<T>{
   const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.error||"OUTCOME_UNKNOWN");return result.value;
 }
 const bind=(r:RunView):Binding=>({proposalId:r.proposal!.proposalId,contentHash:r.proposal!.contentHash,contextRevision:r.proposal!.contextRevision});
-export function CoachPlans({owner,fresh,en,locked,onSelect,onBusy}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void}){
+export function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void}){
   const [runs,setRuns]=useState<RunView[]>([]),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");
   const [busy,setBusy]=useState(false),flight=useRef(false),mounted=useRef(true),listRequest=useRef(0);
   const refreshUserData=useTrackerStore(s=>s.refreshUserData);
@@ -30,7 +30,8 @@ export function CoachPlans({owner,fresh,en,locked,onSelect,onBusy}:{owner:string
     if(!run||flight.current||locked)return;flight.current=true;setBusy(true);onBusy(true);setError("");
     try{
       let current=await api<RunView>(`/${run.id}`);received(current);
-      if(action==="refresh"||current.status==="applied")return;
+      if(current.status==="applied"){onApplied?.();void refreshUserData().catch(()=>{});return;}
+      if(action==="refresh")return;
       if(!current.proposal||!run.proposal||current.proposal.contentHash!==run.proposal.contentHash||current.proposal.proposalId!==run.proposal.proposalId)throw new Error("VERSION_CONFLICT");
       if(action==="decline"){
         current=await api<RunView>(`/${current.id}/user-events`,{action:"decline",expectedRevision:current.revision,binding:bind(current)});received(current);return;
@@ -41,6 +42,7 @@ export function CoachPlans({owner,fresh,en,locked,onSelect,onBusy}:{owner:string
       if(current.status!=="approved")throw new Error("NEW_PREVIEW_REQUIRED");
       await api(`/${current.id}/execute`,{binding:bind(current),approvalId:current.approvalId,idempotencyKey:current.proposal!.proposalId});
       received(await api<RunView>(`/${current.id}`));
+      onApplied?.();
       // Receipt is the authoritative success; refreshing the optional client cache
       // is independent and cannot turn a committed plan into a failed write.
       void refreshUserData().catch(()=>{});
@@ -48,9 +50,9 @@ export function CoachPlans({owner,fresh,en,locked,onSelect,onBusy}:{owner:string
       `结果尚未确认（${e instanceof Error?e.message:"unknown"}）。请先刷新状态，再决定是否重试；不会自动重复应用。`);
     }finally{flight.current=false;if(mounted.current){setBusy(false);onBusy(false);}}
   }
-  if(!runs.length&&!error)return null;
+  if((!runs.length||(!run&&!showHistory))&&!error)return null;
   return <section className="space-y-3" aria-label={en?"Plans in this conversation":"对话中的计划"}>
-    {runs.length>0&&<details className="text-xs text-muted-foreground"><summary className="cursor-pointer py-2">{en?"Recent plan previews & receipts":"最近的计划预览与回执"} · {runs.length}</summary><div className="flex flex-wrap gap-2 py-2">{runs.map(r=><Button key={r.id} size="sm" variant="outline" disabled={busy||locked} onClick={()=>setSelected(r.id)}>{r.proposal?.plan.plan_name??(en?"Plan":"计划")}</Button>)}</div></details>}
+    {showHistory&&runs.length>0&&<div className="text-xs text-muted-foreground"><p className="py-2">{en?"Recent plan previews & receipts":"最近的计划预览与回执"} · {runs.length}</p><div className="flex flex-wrap gap-2 py-2">{runs.map(r=><Button key={r.id} size="sm" variant="outline" disabled={busy||locked} onClick={()=>setSelected(r.id)}>{r.proposal?.plan.plan_name??(en?"Plan":"计划")}</Button>)}</div></div>}
     {run?.proposal&&<div className="space-y-4 rounded-2xl border bg-background p-4 sm:p-5" data-testid="coach-plan">
       <p className="text-xs text-muted-foreground">{en?"AI generated · ":"AI 生成 · "}{run.kind==="training"?(en?"Training plan":"训练计划"):(en?"Nutrition plan":"饮食计划")}</p>
       <p>{run.baseline.length?(en?`Will replace: ${run.baseline.map(p=>p.name).join(", ")}`:`确认后替换：${run.baseline.map(p=>p.name).join("、")}`):(en?"Creates a new active plan after confirmation.":"确认后将成为新的当前计划。")}</p>

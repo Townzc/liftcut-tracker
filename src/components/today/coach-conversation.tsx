@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowUp, MessageCircle, Plus, Square } from "lucide-react";
+import { ArrowUp, Ellipsis, MessageCircle, Plus, Square, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Session, TodayData } from "@/lib/today";
 import type { LogDraft } from "@/lib/workout-log-parser";
@@ -27,9 +27,9 @@ import type { RunView } from "@/lib/agent/contracts";
 type Reply = "help" | "noSession" | "invalid" | "plan" | "progress" | "receipts" | "longTerm" | "replace" | "clarify" | "draft" | "closed" | "queued" | "failed" | "data" | "personal" | "personalQueued";
 type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string; model?:string;sources?:CoachSource[]};
 type Proposal = {turnId: string; session: Session; hash: string; draft: LogDraft; operation: WorkoutOperation};
-type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>};
+type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void};
 
-export function CoachConversation({data, busy, pendingCount, submit}: Props) {
+export function CoachConversation({data, busy, pendingCount, submit,workoutPanel,receiptsPanel,onPlanApplied}: Props) {
   const t = useTranslations("coach"), ts = useTranslations("today.sentence"), tt = useTranslations("today"), locale = useLocale();
   const [text, setText] = useState(""), [selected, setSelected] = useState("");
   const [turns, setTurns] = useState<Turn[]>([]), [proposal, setProposal] = useState<Proposal | null>(null);
@@ -38,6 +38,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
   const personal = usePersonalRecords(), en = locale === "en";
   const [modelStatus,setModelStatus]=useState<CoachStatus|null>(null),[modelEnabled,setModelEnabled]=useState(false);
   const [consentError,setConsentError]=useState(false);
+  const [optionsOpen,setOptionsOpen]=useState(false),[panel,setPanel]=useState<"workout"|"receipts"|null>(null);
   const modelRequest=useRef<AbortController|null>(null);
   const consentKey=personal.owner?`liftcut-coach-consent:${personal.owner}`:null;
   const [personalProposal,setPersonalProposal] = useState<{turnId:string;command:Extract<PersonalCommand,{action:"create"}>}|null>(null);
@@ -47,7 +48,6 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
   const chosen = active?.prescription.exercises.some(e => e.id === selected) ? selected : "";
   const locked = busy || working || planWorking;
   const stale = !!proposal && (!active || workoutCanonical(workoutContextInput(proposal.session)) !== workoutCanonical(workoutContextInput(active)));
-  const exampleExercise = active?.prescription.exercises.find(e => e.id === chosen)?.name ?? active?.prescription.exercises[0]?.name ?? (locale === "en" ? "Squat" : "深蹲");
   useEffect(() => {
     // Scroll only the transcript after a reply, never the whole page/composer.
     const element = transcript.current;
@@ -82,7 +82,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
   }
   async function send(input = text, exerciseId = chosen) {
     if (flight.current || busy || planWorking || !input.trim()) return;
-    flight.current = true; setWorking(true); closeDraft(); setText("");
+    flight.current = true; setWorking(true); closeDraft(); setPanel(null); setText("");
     const id = crypto.randomUUID(), at = new Date().toISOString();
     let reply: Reply = "failed", lines: string[] | undefined, reason: string | undefined, model:string|undefined,sources:CoachSource[]|undefined;
     try {
@@ -91,7 +91,11 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
       const localIntent=coachIntent(input,active,exerciseId||undefined);
       const localAction=["receipts","replace"].includes(localIntent.kind)||(localIntent.kind==="parse"&&localIntent.result.status==="draft");
       const answer=answerDataQuestion(input,useTrackerStore.getState(),personal.records,active,en,new Date(),personal.owner??undefined);
-      if (entry) {
+      if(/^(?:开始(?:今天的|本次)?训练|我要开始训练|开始练|start (?:a |my )?workout)[。.!?？]*$/i.test(input.trim())){
+        reply="data";setPanel("workout");lines=[workoutPanel?(active?(en?"Your current workout is ready below.":"这是你的本次训练."):(en?"Choose a day and confirm to start.":"选择这次要练的安排，确认后开始.")):(en?"Sign in to start a workout.":"登录后就可以开始训练.")];
+      }else if(localIntent.kind==="receipts"){
+        reply="data";setPanel("receipts");lines=[en?"Here are your saved changes and receipts.":"这是已保存的修改和回执."];
+      }else if (entry) {
         reply="personal";
         setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
       } else if(modelEnabled&&modelStatus?.available&&personal.owner&&!localAction){
@@ -202,12 +206,11 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
     </div>;
   }
   return <section className="space-y-5" aria-label={t("conversation")} data-testid="coach-conversation">
-    {!turns.length && <div className="py-6 text-center sm:py-16">
+    <div className="flex items-center justify-between pt-4"><h1 className="text-lg font-medium">Agent</h1><Button variant="ghost" size="icon" aria-label={en?"Conversation options":"对话选项"} aria-expanded={optionsOpen} onClick={()=>setOptionsOpen(!optionsOpen)}><Ellipsis className="size-5"/></Button></div>
+    {!turns.length && <div className="py-8 text-center sm:py-16">
       <MessageCircle className="mx-auto mb-6 size-7" strokeWidth={1.4} />
-      <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">{en?"What would you like to know?":"今天，有什么想告诉我？"}</h2>
-      <p className="mt-4 text-sm text-muted-foreground">{en?"Check your progress, record something, or work on a plan.":"查数据、记变化，也可以一起安排训练和饮食。"}</p>
-      <div className="mx-auto mt-7 flex max-w-lg flex-wrap justify-center gap-2">{(en?["My recent weight","What did I eat today?","Training this week"]:["最近体重","今天吃了什么","本周训练"]).map(prompt=>
-        <Button key={prompt} variant="outline" className="h-10 rounded-full px-4 font-normal" disabled={locked} onClick={()=>void send(prompt)}>{prompt}</Button>)}</div>
+      <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">{en?"What's on your mind?":"今天，想聊点什么."}</h2>
+      <p className="mt-4 text-sm text-muted-foreground">{en?"Your records, workouts and meals. All here.":"查记录、记变化、安排训练和饮食."}</p>
     </div>}
     <div ref={transcript} className="max-h-[54dvh] space-y-8 overflow-y-auto overscroll-contain px-1 py-2" role="log" aria-label={t("messages")} aria-live="polite" aria-relevant="additions text">
       {turns.map(turn => <div key={turn.id} className="space-y-2" data-testid="coach-turn">
@@ -221,7 +224,6 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
           {!!turn.sources?.length&&<CoachSources sources={turn.sources} />}
           {(turn.reply === "plan" || turn.reply === "progress") && <p className="mt-2 text-xs text-muted-foreground">{t("snapshot")}</p>}
           {turn.reply === "longTerm" && <Link className="underline" href="/plan">{tt("plan")}</Link>}
-          {turn.reply === "receipts" && <a className="underline" href="#coach-receipts">{t("goReceipts")}</a>}
           {proposal?.turnId === turn.id && draftView(proposal)}
           {personalProposal?.turnId === turn.id && <div className="mt-3 space-y-4 rounded-2xl border p-4" data-testid="personal-draft">
             <EntryPreview entry={personalProposal.command.entry} /><p className="text-xs text-muted-foreground">{en?"Unreported values stay blank. No nutritional estimates.":"未提供的数值保持空白，不估算营养数据。"}</p>
@@ -234,7 +236,8 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
         </div>
       </div>)}
     </div>
-    {personal.owner&&<CoachPlans key={personal.owner} owner={personal.owner} fresh={planRun} en={en} locked={locked} onSelect={setPlanRunId} onBusy={setPlanWorking}/>}
+    {panel&&<div className="space-y-3 rounded-2xl border p-4" data-testid={`conversation-${panel}`}><div className="flex justify-end"><Button variant="ghost" size="icon" aria-label={en?"Close":"收起"} onClick={()=>setPanel(null)}><X className="size-4"/></Button></div>{panel==="workout"?workoutPanel:receiptsPanel}</div>}
+    {personal.owner&&<CoachPlans key={personal.owner} owner={personal.owner} fresh={planRun} en={en} locked={locked} showHistory={panel==="receipts"} onApplied={onPlanApplied} onSelect={setPlanRunId} onBusy={setPlanWorking}/>}
     {working && <div className="flex items-center gap-3 py-3 text-sm text-muted-foreground"><p role="status">{modelRequest.current?(en?"Thinking and checking your records…":"正在理解并核对记录…"):t("working")}</p>
       {modelRequest.current&&<Button variant="ghost" size="sm" onClick={()=>modelRequest.current?.abort()}><Square className="size-3" />{en?"Stop":"停止"}</Button>}</div>}
     {resolveText && active && <div className="space-y-2 rounded-xl border bg-card p-3" data-testid="coach-clarify">
@@ -262,21 +265,15 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
     <p className="text-center text-[11px] leading-5 text-muted-foreground">{pendingCount ? tt("outbox.pending",{count:pendingCount}) : modelEnabled&&modelStatus?.available?
       en?"AI can make mistakes. Check sources and confirm entries. Chat is temporary.":"AI 可能出错，请核对来源和补录内容。聊天文字暂存本页。":
       en?"Data mode · uses saved records and explicit numbers. Chat is temporary.":"数据模式 · 按已存记录和明确数值处理，聊天文字暂存本页。"}</p>
-    {modelStatus?.available&&personal.owner&&<details className="text-xs text-muted-foreground" open={!modelEnabled||undefined} data-testid="coach-consent">
-      <summary className="w-fit cursor-pointer py-2">{modelEnabled?(en?"AI conversation settings":"AI 对话设置"):(en?"Enable natural conversation":"开启自然对话")}</summary>
+    {modelStatus?.available&&personal.owner&&(!modelEnabled||optionsOpen)&&<section className="text-xs text-muted-foreground" data-testid="coach-consent">
+      <p className="py-2">{modelEnabled?(en?"AI conversation settings":"AI 对话设置"):(en?"Enable natural conversation":"开启自然对话")}</p>
       <div className="mt-2 space-y-3 rounded-2xl border p-4 leading-6">
         <p>{en?`To understand your requests, LiftCut sends your messages, up to six recent turns and relevant saved records to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}). This can include body measurements, meals, training data and settings needed for plans. Entries are saved only after confirmation, together with the original request and quoted values used. Plan previews and approval receipts are saved to your account; clearing chat does not delete them.`:
           `开启后，LiftCut 会将你的消息、最近六轮对话及本次需要的记录发送给 ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider}（${modelStatus.model}），其中可能包含身体、饮食和训练数据，以及生成计划所需的个人设置。补录仍需你确认后才会保存，并保留该次原话和采用的数值片段。计划预览和批准回执保存在账户中，清空聊天不会删除它们。`}</p>
-        <div className="flex flex-wrap gap-2"><Button size="sm" variant={modelEnabled?"outline":"default"} disabled={locked} onClick={()=>toggleModel(!modelEnabled)}>{modelEnabled?(en?"Turn off & clear chat":"关闭并清空对话"):(en?"Agree & enable":"同意并开启")}</Button>
+        <div className="flex flex-wrap gap-2"><Button size="sm" variant={modelEnabled?"outline":"default"} disabled={locked} onClick={()=>{toggleModel(!modelEnabled);setOptionsOpen(false);}}>{modelEnabled?(en?"Turn off & clear chat":"关闭并清空对话"):(en?"Agree & enable":"同意并开启")}</Button>
           <Button size="sm" variant="ghost" disabled={locked||!turns.length} onClick={()=>{closeDraft();setTurns([]);}}>{en?"Clear chat":"清空对话"}</Button></div>
         {consentError&&<p role="status">{en?"Your choice could not be saved in this browser.":"无法在此浏览器保存你的选择，请检查存储权限。"}</p>}
       </div>
-    </details>}
-    <details className="text-sm text-muted-foreground"><summary className="min-h-11 py-3">{en?"Training tools & examples":"训练工具与使用示例"}</summary>
-      <p className="my-3 text-xs leading-6">{t("welcome",{exercise:exampleExercise})}</p>
-      <div className="flex flex-wrap gap-2">{["plan","progress","replace","receipts"].map(key=><Button key={key} variant="outline" disabled={locked} onClick={()=>void send(t(`prompts.${key}`))}>{t(`prompts.${key}`)}</Button>)}</div>
-      <div className="mt-3 flex flex-wrap gap-2"><Button variant="outline" disabled={locked} onClick={()=>void send(en?"Help me make a training plan":"帮我制定训练计划")}>{en?"Training plan":"制定训练计划"}</Button><Button variant="outline" disabled={locked} onClick={()=>void send(en?"Help me make a nutrition plan":"帮我制定饮食计划")}>{en?"Nutrition plan":"制定饮食计划"}</Button></div>
-      <div className="mt-3 flex flex-wrap gap-4"><Link className="py-2 underline" href="/plan">{en?"Manual plan editor":"手动编辑计划"}</Link><Link className="py-2 underline" href="/workout">{en?"Training history":"训练历史明细"}</Link></div>
-    </details>
+    </section>}
   </section>;
 }

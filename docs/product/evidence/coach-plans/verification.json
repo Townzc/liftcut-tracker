@@ -5,23 +5,27 @@
     "unit": 93,
     "productDatabase": 47,
     "approvalDatabase": 32,
-    "browser": 47,
+    "browser": 49,
     "liveModel": 16
   },
   "lint": {
     "errors": 0,
     "existingResearchWarnings": 2
   },
-  "knownFirstRunFailure": "One browser locator matched both the error and Next.js route announcer. Locator was narrowed; the full suite passed afterwards.",
+  "priorFailures": [
+    "Initial plan-error locator also matched the Next.js route announcer. Narrowed before the first 47-scenario pass.",
+    "UI iteration first run: 41 passed, 8 failed. Tests still used removed shortcuts/disclosures; a workout-load failure also incorrectly disabled independent chat entry. Fixed the gating and used conversation-driven actions.",
+    "Second UI run: 46 passed, 3 failed. Updated the remaining receipt action, awaited sign-out completion and used the combobox accessible name. Final complete suite: 49 passed."
+  ],
   "logs": {
     "unit": {
-      "file": "coach-plans-unit-final.log",
-      "sha256": "ffd2b8a4a49d249e7bc2bbcf24f8e68a364a1fb904ebd5e5251abc7a1b6aeb4f",
+      "file": "coach-ui-unit.log",
+      "sha256": "867ac287bf131765acadf4c0247e825c736dbe27fd4aaa61bf463b1e116f4f13",
       "tail": [
-        "✔ database reads preserve SQL null and reported zero, including numeric strings (0.3243ms)",
-        "✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (6.5223ms)",
-        "✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (11.1383ms)",
-        "✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.2886ms)",
+        "✔ database reads preserve SQL null and reported zero, including numeric strings (0.415ms)",
+        "✔ JSON export/import and guest account normalization retain null, only legacy RPE zero is cleared (7.4543ms)",
+        "✔ guest store save, JSON reload and edit do not fill in an empty actual RPE (11.4772ms)",
+        "✔ PR cards and progression skip incomplete measurements but do not require reported RPE (1.4321ms)",
         "ℹ tests 86",
         "ℹ suites 0",
         "ℹ pass 86",
@@ -29,18 +33,18 @@
         "ℹ cancelled 0",
         "ℹ skipped 0",
         "ℹ todo 0",
-        "ℹ duration_ms 1533.2183"
+        "ℹ duration_ms 2019.8597"
       ]
     },
     "lint": {
-      "file": "coach-plans-lint-final.log",
+      "file": "coach-ui-lint.log",
       "sha256": "63547a40fcc18464f9ed33460149350ac7fc70a4cd491160cf441027ae0a6ffa",
       "tail": [
         "> liftcut-tracker@0.1.0 lint",
         "> eslint",
         "",
         "",
-        "C:\\Users\\tangzhice\\Desktop\\exercise\\liftcut-tracker\\research\\liftcut-coach\\scripts\\generate_seed_cases.ts",
+        "<workspace>\\research\\liftcut-coach\\scripts\\generate_seed_cases.ts",
         "  275:48  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars",
         "  358:49  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars",
         "",
@@ -48,14 +52,14 @@
       ]
     },
     "build": {
-      "file": "coach-plans-build-final.log",
-      "sha256": "deae186a9c6220cf4c8be78474b6e7755701e77f671fe8a065a93cd7a5bcc403",
+      "file": "coach-ui-build-final.log",
+      "sha256": "77333e93d0144d737dca10d4d216b203858ee0a52bee5d44b3a8defa71580768",
       "tail": [
-        "├ ƒ /plan",
-        "├ ƒ /plan/ai",
-        "├ ƒ /plan/review",
-        "├ ƒ /register",
-        "├ ƒ /settings",
+        "├ ƒ /settings/about",
+        "├ ƒ /settings/account",
+        "├ ƒ /settings/data",
+        "├ ƒ /settings/preferences",
+        "├ ƒ /settings/profile",
         "├ ƒ /today",
         "└ ƒ /workout",
         "",
@@ -102,21 +106,21 @@
       ]
     },
     "browser": {
-      "file": "coach-plans-browser-final.log",
-      "sha256": "671fe391ef3ee028419337c93d0683ba75edc1eee09accac428030f4e3975490",
+      "file": "coach-ui-browser-verified.log",
+      "sha256": "3bd8b9f314aca5874a497ccc531e7e52efab6a75bd41e218582724aed904c9c9",
       "tail": [
-        "  ok 38 tests\\product-browser\\replacement.spec.ts:91:5 › other device records original exercise: replacement and dependent new set pause together (1.6s)",
-        "  ok 39 tests\\product-browser\\replacement.spec.ts:102:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (1.7s)",
-        "  ok 40 tests\\product-browser\\replacement.spec.ts:112:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (719ms)",
-        "  ok 41 tests\\product-browser\\replacement.spec.ts:120:5 › language switch changes labels without altering stored action name or request identity (1.6s)",
-        "  ok 42 tests\\product-browser\\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.7s)",
-        "  ok 43 tests\\product-browser\\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (54ms)",
-        "  ok 44 tests\\product-browser\\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (2.9s)",
-        "  ok 45 tests\\product-browser\\today.spec.ts:74:5 › server flag off hides navigation and blocks writes while preserving history (641ms)",
-        "  ok 46 tests\\product-browser\\today.spec.ts:82:5 › API rejects signed-out users and cross-origin writes (46ms)",
-        "  ok 47 tests\\product-browser\\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (893ms)",
+        "  ok 40 tests\\product-browser\\replacement.spec.ts:91:5 › other device records original exercise: replacement and dependent new set pause together (1.6s)",
+        "  ok 41 tests\\product-browser\\replacement.spec.ts:102:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (1.8s)",
+        "  ok 42 tests\\product-browser\\replacement.spec.ts:112:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (760ms)",
+        "  ok 43 tests\\product-browser\\replacement.spec.ts:120:5 › language switch changes labels without altering stored action name or request identity (1.6s)",
+        "  ok 44 tests\\product-browser\\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.7s)",
+        "  ok 45 tests\\product-browser\\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (47ms)",
+        "  ok 46 tests\\product-browser\\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (3.3s)",
+        "  ok 47 tests\\product-browser\\today.spec.ts:74:5 › server flag off hides navigation and blocks writes while preserving history (683ms)",
+        "  ok 48 tests\\product-browser\\today.spec.ts:82:5 › API rejects signed-out users and cross-origin writes (14ms)",
+        "  ok 49 tests\\product-browser\\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (962ms)",
         "",
-        "  47 passed (1.6m)"
+        "  49 passed (2.0m)"
       ]
     }
   },

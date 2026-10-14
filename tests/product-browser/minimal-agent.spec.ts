@@ -9,9 +9,33 @@ async function login(page:Page,email="p1-fixture@example.invalid") {
 }
 async function send(page:Page,text:string){const count=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(Math.min(count+1,40),{timeout:20000});}
 async function entries(page:Page){return (await page.request.get("/api/personal-records")).json();}
-async function receipts(page:Page){const detail=page.locator("#coach-receipts");if(await detail.getAttribute("open")===null)await detail.locator("summary").first().click();}
+async function receipts(page:Page){await send(page,"查看回执");}
 test.afterEach(async()=>{await db.query("delete from personal_record_events where user_id=$1",[owner]);});
 test.afterAll(async()=>{await db.end();});
+
+test("Agent composer appears while workout data is still loading; tools stay inside the conversation",async({page})=>{
+  await login(page);let release!:()=>void,observed!:()=>void;
+  const gate=new Promise<void>(resolve=>{release=resolve;}),blocked=new Promise<void>(resolve=>{observed=resolve;});
+  await page.route("**/api/workout-sessions",async route=>{if(route.request().method()!=="GET")return route.continue();observed();await gate;await route.continue();},{times:1});
+  try{
+    await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await blocked;
+    await expect(page.getByLabel("发给训练助手",{exact:true})).toBeVisible();await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();
+    await expect(page.getByTestId("start-session-panel")).toHaveCount(0);await expect(page.getByText("训练工具与使用示例",{exact:true})).toHaveCount(0);await expect(page.getByText("回执与来源",{exact:true})).toHaveCount(0);
+    await send(page,"开始训练");await expect(page.getByTestId("conversation-workout")).toBeVisible();await expect(page.getByTestId("conversation-workout")).toContainText("正在读取训练记录");
+  }finally{release();await page.unrouteAll({behavior:"wait"});}
+});
+
+test("settings opens real subpages with the Settings tab selected and no disclosure menus",async({page})=>{
+  await login(page);await expect(page.getByRole("heading",{name:"把注意力留给自己."})).toBeVisible();
+  await expect(page.getByText("今天想聊点什么？",{exact:true})).toHaveCount(0);
+  const nav=page.getByRole("navigation");await nav.getByRole("link",{name:"设置",exact:true}).click();
+  await expect(page.getByTestId("settings-index")).toBeVisible();await expect(page.locator("main details")).toHaveCount(0);await page.screenshot({path:"node_modules/.cache/coach-plans/settings-light-mobile.png",fullPage:true});
+  await page.getByRole("link",{name:/训练与饮食偏好/}).click();await expect(page).toHaveURL(/\/settings\/profile$/);
+  await expect(nav.getByRole("link",{name:"设置",exact:true})).toHaveAttribute("aria-current","page");await expect(page.getByRole("button",{name:"保存设置",exact:true})).toBeVisible();
+  await page.locator('main a[href="/settings"]').click();await page.getByRole("link",{name:/外观与语言/}).click();await expect(page).toHaveURL(/\/settings\/preferences$/);
+  await expect(page.getByRole("combobox")).toHaveCount(2);await expect(page.getByRole("button",{name:"退出登录",exact:true})).toHaveCount(0);
+  await nav.getByRole("link",{name:"首页",exact:true}).click();await expect(page.getByTestId("minimal-home")).toBeVisible();
+});
 
 test("three-tab monochrome home, optional manual entry, real save/refresh, Agent lookup and compensating undo",async({page})=>{
   const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));await login(page);
@@ -25,7 +49,7 @@ test("three-tab monochrome home, optional manual entry, real save/refresh, Agent
   expect((await db.query("select request->'entry'->'waistCm' as waist from personal_record_events where id=$1",[record.id])).rows[0].waist).toBe(null);
   await page.reload();await expect(page.getByTestId(`personal-receipt-${record.id}`)).toContainText("72.5");
   await nav.getByRole("link",{name:"Agent",exact:true}).click();await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();
-  await page.getByRole("button",{name:"最近体重",exact:true}).click();await expect(page.getByRole("log")).toContainText("72.5 kg");
+  await send(page,"最近体重");await expect(page.getByRole("log")).toContainText("72.5 kg");
   expect((await page.request.get("/api/workout-sessions")).status()).toBe(200);
   await receipts(page);const card=page.getByTestId(`personal-receipt-${record.id}`);
   await card.getByText("来源与历史",{exact:true}).click();await expect(card).toContainText("首页手动填写");
@@ -33,6 +57,7 @@ test("three-tab monochrome home, optional manual entry, real save/refresh, Agent
   await send(page,"最近体重");await expect(page.getByTestId("coach-turn").last()).toContainText("还没有身体记录");
   expect((await db.query("select count(*)::int as n from personal_record_events where user_id=$1",[owner])).rows[0].n).toBe(2);
   await page.getByRole("navigation").getByRole("link",{name:"设置",exact:true}).click();
+  await page.getByRole("link",{name:/数据管理/}).click();
   const download=page.waitForEvent("download");await page.getByRole("button",{name:"导出全部数据 JSON",exact:true}).click();
   const exported=JSON.parse(await readFile((await (await download).path())!,"utf8"));
   expect(exported.personalRecords).toHaveLength(1);expect(exported.personalRecords[0].entry.waistCm).toBe(null);expect(exported.personalRecords[0].undo).not.toBe(null);
@@ -60,7 +85,7 @@ test("Agent food drafts do not invent nutrients, response loss replays one reque
 
 test("phone, desktop and dark views stay monochrome; keyboard prompt and account isolation",async({page,context})=>{
   await page.goto("/login");await expect(page.getByLabel("邮箱",{exact:true})).toBeVisible();await page.screenshot({path:"node_modules/.cache/minimal/login-mobile.png",fullPage:true});
-  await login(page);await page.getByRole("link",{name:"最近体重",exact:true}).click();await expect(page.getByLabel("发给训练助手",{exact:true})).toHaveValue("最近体重");
+  await login(page);await page.goto(`/agent?prompt=${encodeURIComponent("最近体重")}`);await expect(page.getByLabel("发给训练助手",{exact:true})).toHaveValue("最近体重");
   await expect(page.getByTestId("coach-turn")).toHaveCount(0);await page.getByLabel("发给训练助手",{exact:true}).press("Enter");await expect(page.getByRole("log")).toContainText("还没有身体记录");
   await send(page,"记下体重 73 公斤");await page.getByRole("button",{name:"确认补录",exact:true}).click();await expect.poll(async()=>(await entries(page)).length).toBe(1);
   await page.goto("/");await page.setViewportSize({width:1440,height:1000});await expect(page.getByTestId("minimal-home")).toBeVisible();await page.screenshot({path:"node_modules/.cache/minimal/home-desktop.png",fullPage:true});
@@ -68,8 +93,8 @@ test("phone, desktop and dark views stay monochrome; keyboard prompt and account
   await page.emulateMedia({colorScheme:"dark"});await expect(page.locator("html")).toHaveClass(/dark/);
   expect(await page.locator("body").evaluate(el=>getComputedStyle(el).backgroundColor)).toBe("rgb(33, 33, 33)");
   await page.screenshot({path:"node_modules/.cache/minimal/agent-dark-desktop.png",fullPage:true,animations:"disabled"});
-  await page.setViewportSize({width:390,height:844});await page.goto("/settings");await expect(page.getByRole("button",{name:"退出登录",exact:true})).toBeVisible();await page.screenshot({path:"node_modules/.cache/minimal/settings-dark-mobile.png",fullPage:true});
-  await page.getByRole("button",{name:"退出登录",exact:true}).click();await login(page,"offline-second@example.invalid");await page.goto("/agent");
+  await page.setViewportSize({width:390,height:844});await page.goto("/settings");await expect(page.getByTestId("settings-index")).toBeVisible();await expect(page.locator("main details")).toHaveCount(0);await page.screenshot({path:"node_modules/.cache/minimal/settings-dark-mobile.png",fullPage:true});
+  await page.getByRole("link",{name:/账号与个人资料/}).click();await page.getByRole("button",{name:"退出登录",exact:true}).click();await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);await login(page,"offline-second@example.invalid");await page.goto("/agent");
   await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();await send(page,"最近体重");await expect(page.getByRole("log")).not.toContainText("73 kg");expect(await entries(page)).toEqual([]);
   const forbidden=await page.request.post("/api/personal-records",{headers:{Origin:"https://untrusted.example","Content-Type":"application/json"},data:{}});expect(forbidden.status()).toBe(403);
   expect((await page.request.get("/api/personal-records",{headers:{"X-Workout-Owner":owner}})).status()).toBe(409);
