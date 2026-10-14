@@ -1,0 +1,13 @@
+▶ personal records: real transactions, immutable retries, compensation, NULLs and owner isolation
+  ✔ parallel creates return one identical receipt and preserve null (52.9115ms)
+  ✔ compensation is append-only; late create retry cannot resurrect the record (25.2611ms)
+  ✔ RLS and API role prohibit cross-account access and browser writes (16.7228ms)
+✔ personal records: real transactions, immutable retries, compensation, NULLs and owner isolation (126.9479ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 602.4406

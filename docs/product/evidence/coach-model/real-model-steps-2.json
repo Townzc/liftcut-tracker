@@ -1,0 +1,87 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_VCiTOPoW4Oi8RcViWAir5961",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_VCiTOPoW4Oi8RcViWAir5961",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        },
+        "output": {
+          "id": "body:2026-10-13:2026-10-13",
+          "topic": "body",
+          "from": "2026-10-13",
+          "to": "2026-10-13",
+          "readAt": "2026-10-14T18:36:39.544Z",
+          "rows": [
+            {
+              "id": "63da35cf-672f-40a6-b3e8-3b06087a8f77",
+              "date": "2026-10-13",
+              "kind": "body",
+              "legacy": false,
+              "waistCm": null,
+              "weightKg": 73
+            }
+          ],
+          "summary": {
+            "recordCount": 1,
+            "complete": true,
+            "latestWeightKg": 73,
+            "weightChangeKg": null,
+            "changeScope": "Latest minus earliest reported weight in this date range"
+          },
+          "truncated": false,
+          "detailsOmitted": 0
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_tJtKmViu2szp2BDNytcS2325",
+        "toolName": "finish_response",
+        "input": {
+          "message": "昨天（10月13日）有一条体重记录：73公斤，没有腰围数据。这也是目前最新的一次体重，所以和10月11日的74公斤相比，昨天比前天轻了1公斤。单看一天的变化容易受水分、进食和称重时间影响，不必太当真。",
+          "sourceIds": [
+            "body:2026-10-13:2026-10-13"
+          ]
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_tJtKmViu2szp2BDNytcS2325",
+        "toolName": "finish_response",
+        "input": {
+          "message": "昨天（10月13日）有一条体重记录：73公斤，没有腰围数据。这也是目前最新的一次体重，所以和10月11日的74公斤相比，昨天比前天轻了1公斤。单看一天的变化容易受水分、进食和称重时间影响，不必太当真。",
+          "sourceIds": [
+            "body:2026-10-13:2026-10-13"
+          ]
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

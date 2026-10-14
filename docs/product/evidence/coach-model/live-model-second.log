@@ -1,0 +1,4 @@
+coach_model {"requestId":"6da5abf8-ed43-456b-a2d9-b15157a00aa9","model":"deepseek-flash","steps":2,"durationMs":3020,"inputTokens":5156,"outputTokens":242,"reads":1,"draft":null}
+coach_model {"requestId":"a02bf574-2f20-4c41-942c-6f5484e57553","model":"deepseek-flash","steps":2,"durationMs":2944,"inputTokens":5325,"outputTokens":192,"reads":1,"draft":null}
+coach_model {"requestId":"14fcbcd2-a94e-48f2-a8b1-aa7de41cfdf9","model":"deepseek-flash","steps":5,"durationMs":6844,"inputTokens":14046,"outputTokens":791,"reads":0,"draft":null}
+MODEL_DID_NOT_FINISH

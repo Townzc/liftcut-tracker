@@ -1,0 +1,95 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_r3RQTnnprGwIDnJX89UO3538",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_r3RQTnnprGwIDnJX89UO3538",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        },
+        "output": {
+          "id": "body:2026-09-16:2026-10-14",
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14",
+          "readAt": "2026-10-14T18:36:36.806Z",
+          "rows": [
+            {
+              "id": "63da35cf-672f-40a6-b3e8-3b06087a8f77",
+              "date": "2026-10-13",
+              "kind": "body",
+              "legacy": false,
+              "waistCm": null,
+              "weightKg": 73
+            },
+            {
+              "id": "286f76b2-38bb-4910-abeb-7134225fe0dc",
+              "date": "2026-10-11",
+              "kind": "body",
+              "legacy": false,
+              "waistCm": null,
+              "weightKg": 74
+            }
+          ],
+          "summary": {
+            "recordCount": 2,
+            "complete": true,
+            "latestWeightKg": 73,
+            "weightChangeKg": -1,
+            "changeScope": "Latest minus earliest reported weight in this date range"
+          },
+          "truncated": false,
+          "detailsOmitted": 0
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_lBam1pgT1RZY7anV7wZg5121",
+        "toolName": "finish_response",
+        "input": {
+          "message": "从最近28天的记录看，确实有下降，但幅度不大、样本也少。依据是：10月11日体重74公斤，10月13日73公斤，最新一次比区间内最早一次少了1公斤（服务器按“最新减最早”计算）。只有这两条体重记录，没有腰围数据，所以只能说明这两次之间轻了1公斤，还不能断定是持续趋势。想更可靠的话，建议固定时间（比如早晨空腹）多称几次再看。",
+          "sourceIds": [
+            "body:2026-09-16:2026-10-14"
+          ]
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_lBam1pgT1RZY7anV7wZg5121",
+        "toolName": "finish_response",
+        "input": {
+          "message": "从最近28天的记录看，确实有下降，但幅度不大、样本也少。依据是：10月11日体重74公斤，10月13日73公斤，最新一次比区间内最早一次少了1公斤（服务器按“最新减最早”计算）。只有这两条体重记录，没有腰围数据，所以只能说明这两次之间轻了1公斤，还不能断定是持续趋势。想更可靠的话，建议固定时间（比如早晨空腹）多称几次再看。",
+          "sourceIds": [
+            "body:2026-09-16:2026-10-14"
+          ]
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

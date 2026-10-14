@@ -1,0 +1,79 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_aDAKzselRkE7RzfyWgRl1214",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "food",
+          "dateQuote": null,
+          "weightQuote": null,
+          "waistQuote": null,
+          "foodQuote": "一碗牛肉面",
+          "mealQuote": "中午",
+          "caloriesQuote": null,
+          "proteinQuote": null
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_aDAKzselRkE7RzfyWgRl1214",
+        "toolName": "prepare_personal",
+        "input": {
+          "kind": "food",
+          "dateQuote": null,
+          "weightQuote": null,
+          "waistQuote": null,
+          "foodQuote": "一碗牛肉面",
+          "mealQuote": "中午",
+          "caloriesQuote": null,
+          "proteinQuote": null
+        },
+        "output": {
+          "draft": {
+            "kind": "food",
+            "date": "2026-10-14",
+            "foodName": "一碗牛肉面",
+            "mealType": "lunch",
+            "calories": null,
+            "protein": null
+          },
+          "saved": false,
+          "requiresUserConfirmation": true
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_kqtBEsssbigTOUNuM3Oa8883",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已按今天中午「一碗牛肉面」生成一条待确认的饮食草稿，热量和蛋白质留空。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_kqtBEsssbigTOUNuM3Oa8883",
+        "toolName": "finish_response",
+        "input": {
+          "message": "已按今天中午「一碗牛肉面」生成一条待确认的饮食草稿，热量和蛋白质留空。请在卡片上核对并确认后才会保存。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

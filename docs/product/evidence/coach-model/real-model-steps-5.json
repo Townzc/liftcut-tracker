@@ -1,0 +1,140 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_tqS7RjnZshVhLVann54u7824",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        }
+      },
+      {
+        "type": "tool-call",
+        "toolCallId": "call_01_Z5381Jh4oA0qo699o3hd0488",
+        "toolName": "read_records",
+        "input": {
+          "topic": "food",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_tqS7RjnZshVhLVann54u7824",
+        "toolName": "read_records",
+        "input": {
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        },
+        "output": {
+          "id": "body:2026-09-16:2026-10-14",
+          "topic": "body",
+          "from": "2026-09-16",
+          "to": "2026-10-14",
+          "readAt": "2026-10-14T18:36:47.742Z",
+          "rows": [
+            {
+              "id": "d25a97ce-a41a-4cee-af0f-96d6bbd929c0",
+              "date": "2026-10-14",
+              "kind": "body",
+              "legacy": false,
+              "waistCm": null,
+              "weightKg": 72.5
+            }
+          ],
+          "summary": {
+            "recordCount": 1,
+            "complete": true,
+            "latestWeightKg": 72.5,
+            "weightChangeKg": null,
+            "changeScope": "Latest minus earliest reported weight in this date range"
+          },
+          "truncated": false,
+          "detailsOmitted": 0
+        },
+        "dynamic": false
+      },
+      {
+        "type": "tool-result",
+        "toolCallId": "call_01_Z5381Jh4oA0qo699o3hd0488",
+        "toolName": "read_records",
+        "input": {
+          "topic": "food",
+          "from": "2026-09-16",
+          "to": "2026-10-14"
+        },
+        "output": {
+          "id": "food:2026-09-16:2026-10-14",
+          "topic": "food",
+          "from": "2026-09-16",
+          "to": "2026-10-14",
+          "readAt": "2026-10-14T18:36:47.745Z",
+          "rows": [
+            {
+              "id": "3d702481-ce52-44bf-937f-e2265631e992",
+              "date": "2026-10-14",
+              "kind": "food",
+              "legacy": false,
+              "protein": null,
+              "calories": null,
+              "foodName": "一碗牛肉面",
+              "mealType": "lunch"
+            }
+          ],
+          "summary": {
+            "recordCount": 1,
+            "complete": true,
+            "calories": null,
+            "caloriesMissing": 1,
+            "protein": null,
+            "proteinMissing": 1,
+            "scope": "Recorded subtotal only; not full intake"
+          },
+          "truncated": false,
+          "detailsOmitted": 0
+        },
+        "dynamic": false
+      }
+    ]
+  },
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_Ea1pYpSgTC9Wi7YYUm2y8564",
+        "toolName": "finish_response",
+        "input": {
+          "message": "帮你核对了一下，今天（10月14日）确实有两条记录：体重 72.5 公斤；午餐是「一碗牛肉面」，没有填热量和蛋白质。近 28 天里这两项各只有这一条，所以看不到趋势变化。如果热量或蛋白质有具体数值，可以告诉我，我帮你补成待确认的草稿。",
+          "sourceIds": [
+            "body:2026-09-16:2026-10-14",
+            "food:2026-09-16:2026-10-14"
+          ]
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_Ea1pYpSgTC9Wi7YYUm2y8564",
+        "toolName": "finish_response",
+        "input": {
+          "message": "帮你核对了一下，今天（10月14日）确实有两条记录：体重 72.5 公斤；午餐是「一碗牛肉面」，没有填热量和蛋白质。近 28 天里这两项各只有这一条，所以看不到趋势变化。如果热量或蛋白质有具体数值，可以告诉我，我帮你补成待确认的草稿。",
+          "sourceIds": [
+            "body:2026-09-16:2026-10-14",
+            "food:2026-09-16:2026-10-14"
+          ]
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

@@ -74,6 +74,7 @@ export function PersonalReceipts({limit=5}: {limit?:number}) {
     <details className="mt-3 text-xs text-muted-foreground"><summary className="w-fit py-1">{en?"Source & history":"来源与历史"}</summary>
       <div className="mt-2 space-y-2 break-words"><p>{r.source === "manual" ? en?"Entered on Home":"首页手动填写" : en?"Confirmed in Agent":"Agent 对话确认"}</p>
         {r.text && <p className="whitespace-pre-wrap">“{r.text}”</p>}<p>{new Date(r.createdAt).toLocaleString(en?"en":"zh-CN")}</p>
+        {r.model&&<><p>{en?"AI interpreted, user confirmed":"AI 理解，用户确认"} · {r.model.model}</p>{r.model.sourceTexts.filter(x=>x!==r.text).map((x,i)=><p key={i} className="whitespace-pre-wrap">“{x}”</p>)}</>}
         {r.undo && <p>{en?"Compensating undo":"补偿撤销"} · {new Date(r.undo.createdAt).toLocaleString(en?"en":"zh-CN")}</p>}</div>
     </details>
   </div>)}</div>;

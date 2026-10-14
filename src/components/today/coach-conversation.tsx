@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowUp, MessageCircle, Plus } from "lucide-react";
+import { ArrowUp, MessageCircle, Plus, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Session, TodayData } from "@/lib/today";
 import type { LogDraft } from "@/lib/workout-log-parser";
@@ -19,9 +19,11 @@ import { toDateString } from "@/lib/date";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
 import { EntryPreview } from "@/components/agent/personal-entry";
 import { fetchUserDataBundle } from "@/services/data-repository";
+import { COACH_CONSENT_VERSION, conversationHistory, type CoachStatus, type CoachResponse, type CoachSource } from "@/lib/coach-model";
+import { CoachSources } from "@/components/agent/coach-sources";
 
 type Reply = "help" | "noSession" | "invalid" | "plan" | "progress" | "receipts" | "longTerm" | "replace" | "clarify" | "draft" | "closed" | "queued" | "failed" | "data" | "personal" | "personalQueued";
-type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string};
+type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string; model?:string;sources?:CoachSource[]};
 type Proposal = {turnId: string; session: Session; hash: string; draft: LogDraft; operation: WorkoutOperation};
 type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>};
 
@@ -31,6 +33,10 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
   const [turns, setTurns] = useState<Turn[]>([]), [proposal, setProposal] = useState<Proposal | null>(null);
   const [working, setWorking] = useState(false), flight = useRef(false);
   const personal = usePersonalRecords(), en = locale === "en";
+  const [modelStatus,setModelStatus]=useState<CoachStatus|null>(null),[modelEnabled,setModelEnabled]=useState(false);
+  const [consentError,setConsentError]=useState(false);
+  const modelRequest=useRef<AbortController|null>(null);
+  const consentKey=personal.owner?`liftcut-coach-consent:${personal.owner}`:null;
   const [personalProposal,setPersonalProposal] = useState<{turnId:string;command:Extract<PersonalCommand,{action:"create"}>}|null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const [resolveText, setResolveText] = useState<string | null>(null), [replace, setReplace] = useState<{session: string; exerciseId?: string} | null>(null);
@@ -46,9 +52,25 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
   }, [turns]);
   useEffect(() => {
     const prompt = new URLSearchParams(window.location.search).get("prompt");
-    if (prompt) setText(prompt.slice(0,400)); // URL text is only a draft, never an instruction to write.
+    const timer=window.setTimeout(()=>{if(prompt)setText(prompt.slice(0,400));},0); // URL text is only a draft.
+    return()=>window.clearTimeout(timer);
   }, []);
-  const update = (id: string, reply: Reply) => setTurns(xs => xs.map(x => x.id === id ? {...x, reply} : x));
+  useEffect(()=>{
+    let alive=true;
+    void fetch("/api/ai/coach",{cache:"no-store"}).then(r=>r.ok?r.json():null).then((status:CoachStatus|null)=>{
+      if(!alive)return;setModelStatus(status);
+      try{setModelEnabled(!!consentKey&&localStorage.getItem(consentKey)===COACH_CONSENT_VERSION);}catch{setModelEnabled(false);}
+    }).catch(()=>{});
+    return()=>{alive=false;modelRequest.current?.abort();};
+  },[consentKey]);
+  function toggleModel(enabled:boolean){
+    if(!consentKey)return;
+    try{if(enabled)localStorage.setItem(consentKey,COACH_CONSENT_VERSION);else localStorage.removeItem(consentKey);
+      setModelEnabled(enabled);setConsentError(false);if(!enabled){modelRequest.current?.abort();closeDraft();setTurns([]);}
+    }catch{setConsentError(true);}
+  }
+  const update = (id: string, reply: Reply) => setTurns(xs => xs.map(x => x.id === id ? {...x, reply,
+    lines:reply==="queued"||reply==="personalQueued"?undefined:x.lines} : x));
   function closeDraft() {
     if (proposal) update(proposal.turnId, "closed");
     if (personalProposal) update(personalProposal.turnId,"closed");
@@ -59,14 +81,38 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
     if (flight.current || busy || !input.trim()) return;
     flight.current = true; setWorking(true); closeDraft(); setText("");
     const id = crypto.randomUUID(), at = new Date().toISOString();
-    let reply: Reply = "failed", lines: string[] | undefined, reason: string | undefined;
+    let reply: Reply = "failed", lines: string[] | undefined, reason: string | undefined, model:string|undefined,sources:CoachSource[]|undefined;
     try {
       const anchorDate=toDateString(new Date());
       const entry=parsePersonalEntry(input,anchorDate);
+      const localIntent=coachIntent(input,active,exerciseId||undefined);
+      const localAction=["receipts","longTerm","replace"].includes(localIntent.kind)||(localIntent.kind==="parse"&&localIntent.result.status==="draft");
       const answer=answerDataQuestion(input,useTrackerStore.getState(),personal.records,active,en,new Date(),personal.owner??undefined);
       if (entry) {
         reply="personal";
         setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
+      } else if(modelEnabled&&modelStatus?.available&&personal.owner&&!localAction){
+        reply="data";
+        if(!navigator.onLine){lines=[en?"Model chat needs a connection. You can still use explicit entry phrases or manual entry offline.":"模型对话需要联网。离线时仍可使用明确的记录句式或手动补录。"];}else{
+          const controller=new AbortController();modelRequest.current=controller;
+          try{
+            const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":personal.owner},
+              body:JSON.stringify({id,text:input,history:conversationHistory(turns),locale:en?"en":"zh",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+                consent:COACH_CONSENT_VERSION,...(exerciseId?{selectedExerciseId:exerciseId}:{})}),signal:AbortSignal.any([controller.signal,AbortSignal.timeout(55000)])});
+            if(!response.ok){
+              lines=[response.status===429?(en?"You've reached the conversation limit. Please try again later; manual entry is still available.":"本轮对话次数已达上限，请稍后再试。手动补录仍可使用。"):
+                response.status===401?(en?"Please sign in again to continue.":"登录已过期，请重新登录后继续。"):
+                en?"Model chat is temporarily unavailable. Nothing was saved. Please retry or use manual entry.":"模型对话暂时不可用，没有保存任何数据。可以重试或使用手动补录。"];
+            }else{
+              const result:CoachResponse=await response.json();model=result.model;sources=result.sources;lines=[result.message];
+              if(pendingCount||personal.pending.length)lines.unshift(en?"Some entries are still waiting to sync and may not appear in these results.":"部分记录尚待同步，可能还未计入这次查询。" );
+              if(result.proposal?.kind==="personal"){reply="personal";setPersonalProposal({turnId:id,command:result.proposal.command});}
+              if(result.proposal?.kind==="workout"){reply="draft";setProposal({turnId:id,...result.proposal});}
+            }
+          }catch{lines=[controller.signal.aborted?(en?"Stopped. Nothing was saved.":"已停止，没有保存任何数据。"):
+            en?"The model did not respond in time. Nothing was saved; please try again.":"模型未能及时回复，没有保存任何数据，请重试。"];
+          }finally{modelRequest.current=null;}
+        }
       } else if (answer) {
         reply="data";lines=answer.lines;
         if (personal.owner && !answer.guidance) {
@@ -121,7 +167,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
       }
     } catch {reply = "failed";}
     finally {
-      setTurns(xs => [...xs, {id, text: input, reply, lines, reason, at}].slice(-40));
+      setTurns(xs => [...xs, {id, text: input, reply, lines, reason, at, model, sources}].slice(-40));
       setWorking(false); flight.current = false;
     }
   }
@@ -138,7 +184,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
     const d = p.draft;
     const name = d.kind === "end" ? "" : p.session.prescription.exercises.find(e => e.id === d.exerciseId)?.name ?? "";
     return <div className="mt-3 space-y-2 rounded-xl border bg-background p-3" data-testid="coach-draft">
-      <strong>{ts("rulesDraft")}{name && ` · ${exerciseLabel(name, locale)}`}</strong>
+      <strong>{(p.operation.body as {modelProof?:string}).modelProof?(en?"Review entry · AI interpreted":"确认记录 · AI 理解"):ts("rulesDraft")}{name && ` · ${exerciseLabel(name, locale)}`}</strong>
       {d.kind === "record" && d.sets.map(s => <p key={s.setIndex}>{ts("set", {n: s.setIndex})}: {s.reportedWeight ?? "—"} {s.inputUnit ?? "kg"} × {s.reps} · RPE {s.rpe ?? "—"}</p>)}
       {d.kind === "correct" && <p>{ts("correction", {n: d.setIndex, before: p.session.sets.find(s => s.id === d.recordId)?.reps ?? "—", after: d.changes.reps})}</p>}
       {d.kind === "skip" && <p>{ts("skip", {n: d.setIndex})}</p>}
@@ -163,11 +209,12 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
       {turns.map(turn => <div key={turn.id} className="space-y-2" data-testid="coach-turn">
         <div className="ml-auto w-fit max-w-[85%] rounded-3xl bg-muted px-5 py-3 text-sm"><p className="whitespace-pre-wrap break-words">{turn.text}</p></div>
         <div className="mr-3 py-4 text-sm leading-7">
-          <p className="mb-3 text-xs font-medium">Agent <span className="ml-2 font-normal text-muted-foreground">{new Date(turn.at).toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"})}</span></p>
+          <p className="mb-3 text-xs font-medium">Agent <span className="ml-2 font-normal text-muted-foreground">{turn.model?`${en?"AI generated":"AI 生成"} · ${turn.model}`:new Date(turn.at).toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"})}</span></p>
           {turn.reply === "data" ? null : turn.reply === "personal" ? <p>{en?"Here's your entry. Confirm to save it.":"整理好了，确认一下就能记入你的数据。"}</p>
             : turn.reply === "personalQueued" ? <p>{en?"Queued. Check sync status and the receipt below.":"已加入补录队列，保存状态和回执会显示在下方。"}</p>
             : <p>{turn.reply === "clarify" ? ts(`clarify.${turn.reason}`) : t(`replies.${turn.reply}`)}</p>}
-          {turn.lines?.map((line, i) => <p className="mt-1 break-words" key={i}>{line}</p>)}
+          {turn.lines?.map((line, i) => <p className="mt-1 whitespace-pre-wrap break-words" key={i}>{line}</p>)}
+          {!!turn.sources?.length&&<CoachSources sources={turn.sources} />}
           {(turn.reply === "plan" || turn.reply === "progress") && <p className="mt-2 text-xs text-muted-foreground">{t("snapshot")}</p>}
           {turn.reply === "longTerm" && <Link className="underline" href="/plan">{tt("plan")}</Link>}
           {turn.reply === "receipts" && <a className="underline" href="#coach-receipts">{t("goReceipts")}</a>}
@@ -183,7 +230,8 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
         </div>
       </div>)}
     </div>
-    {working && <p role="status" className="py-3 text-sm text-muted-foreground">{t("working")}</p>}
+    {working && <div className="flex items-center gap-3 py-3 text-sm text-muted-foreground"><p role="status">{modelRequest.current?(en?"Thinking and checking your records…":"正在理解并核对记录…"):t("working")}</p>
+      {modelRequest.current&&<Button variant="ghost" size="sm" onClick={()=>modelRequest.current?.abort()}><Square className="size-3" />{en?"Stop":"停止"}</Button>}</div>}
     {resolveText && active && <div className="space-y-2 rounded-xl border bg-card p-3" data-testid="coach-clarify">
       <p className="text-sm">{t("chooseToContinue")}</p><div className="flex flex-wrap gap-2">{active.prescription.exercises.map(e =>
         <Button key={e.id} variant="outline" disabled={locked} onClick={() => {setSelected(e.id); void send(resolveText, e.id);}}>{exerciseLabel(e.name, locale)}</Button>)}</div>
@@ -206,7 +254,19 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
       <div className="flex items-center justify-between gap-3"><Link href="/" className="flex min-h-10 items-center gap-1.5 px-2 text-xs text-muted-foreground"><Plus className="size-4" />{en?"Manual entry":"手动补录"}</Link>
         <Button type="submit" className="size-10 rounded-full" aria-label={t(working ? "working" : "send")} disabled={locked || !text.trim()}><ArrowUp className="size-5" /></Button></div>
     </form>
-    <p className="text-center text-[11px] leading-5 text-muted-foreground">{pendingCount ? tt("outbox.pending",{count:pendingCount}) : en?"Data mode · uses saved records and explicit numbers. Chat is temporary.":"数据模式 · 按已存记录和明确数值处理，聊天文字暂存本页。"}</p>
+    <p className="text-center text-[11px] leading-5 text-muted-foreground">{pendingCount ? tt("outbox.pending",{count:pendingCount}) : modelEnabled&&modelStatus?.available?
+      en?"AI can make mistakes. Check sources and confirm entries. Chat is temporary.":"AI 可能出错，请核对来源和补录内容。聊天文字暂存本页。":
+      en?"Data mode · uses saved records and explicit numbers. Chat is temporary.":"数据模式 · 按已存记录和明确数值处理，聊天文字暂存本页。"}</p>
+    {modelStatus?.available&&personal.owner&&<details className="text-xs text-muted-foreground" open={!modelEnabled||undefined} data-testid="coach-consent">
+      <summary className="w-fit cursor-pointer py-2">{modelEnabled?(en?"AI conversation settings":"AI 对话设置"):(en?"Enable natural conversation":"开启自然对话")}</summary>
+      <div className="mt-2 space-y-3 rounded-2xl border p-4 leading-6">
+        <p>{en?`To understand your requests, LiftCut sends your messages, up to six recent turns and only relevant saved records to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}). This can include body measurements, meals and training data. Entries are saved only after confirmation, together with the original request and quoted values used.`:
+          `开启后，LiftCut 会将你的消息、最近六轮对话及本次需要的记录发送给 ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider}（${modelStatus.model}），其中可能包含身体、饮食和训练数据。补录仍需你确认后才会保存，并保留该次原话和采用的数值片段。`}</p>
+        <div className="flex flex-wrap gap-2"><Button size="sm" variant={modelEnabled?"outline":"default"} disabled={locked} onClick={()=>toggleModel(!modelEnabled)}>{modelEnabled?(en?"Turn off & clear chat":"关闭并清空对话"):(en?"Agree & enable":"同意并开启")}</Button>
+          <Button size="sm" variant="ghost" disabled={locked||!turns.length} onClick={()=>{closeDraft();setTurns([]);}}>{en?"Clear chat":"清空对话"}</Button></div>
+        {consentError&&<p role="status">{en?"Your choice could not be saved in this browser.":"无法在此浏览器保存你的选择，请检查存储权限。"}</p>}
+      </div>
+    </details>}
     <details className="text-sm text-muted-foreground"><summary className="min-h-11 py-3">{en?"Training tools & examples":"训练工具与使用示例"}</summary>
       <p className="my-3 text-xs leading-6">{t("welcome",{exercise:exampleExercise})}</p>
       <div className="flex flex-wrap gap-2">{["plan","progress","replace","receipts"].map(key=><Button key={key} variant="outline" disabled={locked} onClick={()=>void send(t(`prompts.${key}`))}>{t(`prompts.${key}`)}</Button>)}</div>

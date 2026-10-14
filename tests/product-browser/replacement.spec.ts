@@ -72,7 +72,10 @@ test("committed response lost: same request survives refresh, multi-tab retry an
   await confirm(page);await expect(page.getByRole("alert").filter({hasText:"本次保存结果尚未确认"})).toBeVisible();const original=(await state(page)).items[0];
   await page.reload();const second=await context.newPage();await second.goto("/today");await page.getByRole("button",{name:"重试同一操作"}).click();await synced(page);await synced(second);
   const s=await live(page);expect(s.replacements).toHaveLength(1);expect(s.replacements![0].id).toBe(JSON.parse(original.bodyJson).id);
-  await second.getByRole("button",{name:"撤销本次替换",exact:true}).click();await second.getByRole("button",{name:"确认撤销替换"}).click();await synced(second);
+  await second.getByRole("button",{name:"撤销本次替换",exact:true}).click();await second.getByRole("button",{name:"确认撤销替换"}).click();
+  // The previous operation's "synced" badge can still be visible while the
+  // confirmation hashes and durably enqueues. Do not reload a tab mid-request.
+  await expect(second.getByTestId("replacement-undo-preview")).toBeHidden();await synced(second);
   await page.reload();await synced(page);await expect(page.getByTestId("replacement-receipts")).toContainText("已补偿");
   expect((await post(page,"/api/workout-replacements?action=replace",JSON.parse(original.bodyJson))).status()).toBe(200);
   expect((await live(page)).replacements![0].undo).not.toBeNull();await second.close();

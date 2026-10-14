@@ -1,0 +1,30 @@
+[
+  {
+    "toolCalls": [
+      {
+        "type": "tool-call",
+        "toolCallId": "call_00_yJkqGc9EiN7Ar3BNXZHv2761",
+        "toolName": "finish_response",
+        "input": {
+          "message": "这个不行哦——65公斤是你下个月的目标，不是今天的实际体重，目标值不能当作测量记录保存。如果你今天真的称了体重，告诉我具体数字（比如\"今天早上六十七点二公斤\"），我可以帮你准备一条待确认的记录卡片。另外，长期目标（比如下个月瘦到65公斤）需要在计划提案/审批页面里调整，我这边只能帮你准备单条记录。",
+          "sourceIds": []
+        }
+      }
+    ],
+    "toolResults": [
+      {
+        "type": "tool-result",
+        "toolCallId": "call_00_yJkqGc9EiN7Ar3BNXZHv2761",
+        "toolName": "finish_response",
+        "input": {
+          "message": "这个不行哦——65公斤是你下个月的目标，不是今天的实际体重，目标值不能当作测量记录保存。如果你今天真的称了体重，告诉我具体数字（比如\"今天早上六十七点二公斤\"），我可以帮你准备一条待确认的记录卡片。另外，长期目标（比如下个月瘦到65公斤）需要在计划提案/审批页面里调整，我这边只能帮你准备单条记录。",
+          "sourceIds": []
+        },
+        "output": {
+          "complete": true
+        },
+        "dynamic": false
+      }
+    ]
+  }
+]

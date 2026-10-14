@@ -32,7 +32,7 @@ async function state(page:Page):Promise<OutboxState>{return page.evaluate(id=>ne
 
 test("chat reads, clarification, cancellation, batch confirmation and correction compensation use real API/PG",async({page})=>{
   const errors:string[]=[],modelRequests:string[]=[];page.on("pageerror",e=>errors.push(e.message));
-  page.on("request",r=>{if(/\/api\/(ai|agent)/.test(new URL(r.url()).pathname))modelRequests.push(r.url());});
+  page.on("request",r=>{if(r.method()==="POST"&&/\/api\/(ai|agent)/.test(new URL(r.url()).pathname))modelRequests.push(r.url());});
   await start(page);const original=(await read(page)).session!;
   await page.getByText("训练工具与使用示例",{exact:true}).click();
   await page.getByRole("button",{name:"今天练什么",exact:true}).click();await expect(page.getByRole("log")).toContainText("计划目标，不代表实际完成");

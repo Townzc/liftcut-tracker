@@ -8,6 +8,7 @@ import { parseWorkoutLog } from "@/lib/workout-log-parser";
 import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
 import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";
+import { verifyCoachProposal } from "@/services/ai/coach-proof";
 
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
 export class TodayConflict extends Error {}
@@ -198,6 +199,8 @@ export class TodayStore {
         if (old.request_hash !== digest || old.parent_id) return fail("CONTENT_CONFLICT");
         return this.commandResult(db,old.session_id); // Includes any compensation; never reapply.
       }
+      let model;
+      if(req.modelProof){const {modelProof,...binding}=req;try{model=verifyCoachProposal(user,binding,modelProof);}catch{return fail("MODEL_PROPOSAL_INVALID_OR_EXPIRED");}}
       await db.query("select id from public.workout_sessions where id=$1 for update",[req.sessionId]);
       const session = await this.read(db,req.sessionId);
       if (session.status !== "active") return fail("SESSION_ENDED");
@@ -224,7 +227,7 @@ export class TodayStore {
       }
       // Deliberately one PoolClient/transaction, including all events and the receipt.
       for (const change of changes) await this.writeSetInTransaction(db,user,change.after);
-      const receipt: CommandReceipt = {id:req.id,sessionId:session.id,text:req.text,draft,changes,
+      const receipt: CommandReceipt = {id:req.id,sessionId:session.id,text:req.originalText??req.text,draft,changes,...(model?{model}:{}),
         createdAt:this.now().toISOString(),undo:null};
       await db.query(`insert into public.workout_commands(id,user_id,session_id,version,request_hash,receipt)
         values($1,$2,$3,1,$4,$5)`,[req.id,user,session.id,digest,JSON.stringify(receipt)]);

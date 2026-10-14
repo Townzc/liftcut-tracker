@@ -81,7 +81,7 @@ export function projectOperation(base:TodayData, p:WorkoutOperation, at:string):
       repsSource:s.reps===null?null:"user_said",sourceRef:req.id}}));
   }
   replaceSets(session,changes,at);
-  data.receipts=[{id:req.id,sessionId:session.id,text:req.text,draft,changes,createdAt:at,undo:null},...(data.receipts??[])];
+  data.receipts=[{id:req.id,sessionId:session.id,text:req.originalText??req.text,draft,changes,createdAt:at,undo:null},...(data.receipts??[])];
   return data;
 }
 function replaceSets(session:Session,changes:SetChange[],at:string) {
