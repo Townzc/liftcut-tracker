@@ -1,0 +1,132 @@
+{
+  "featureGit": {
+    "pullRequest": "https://github.com/Townzc/liftcut-tracker/pull/69",
+    "checkedHead": "35996acf5d81ee39458e49a548333424d6dd40b3",
+    "checks": 8,
+    "checksResult": "ALL_SUCCESS",
+    "mergedAt": "2026-10-14T03:26:34Z",
+    "mergeCommit": "e46c6a75d080b743fe97942a9999a5239cfc6342",
+    "checkedTree": "1a802b4a0c751d11ced3703f787a21b6e3ed0e1a",
+    "mergedTree": "1a802b4a0c751d11ced3703f787a21b6e3ed0e1a",
+    "localMainFastForwarded": true,
+    "productionDeployment": "dpl_Bxo4q3S7iUsTcSo8Zp6yyNJRAue3"
+  },
+  "deployment": {
+    "observedAt": "2026-10-14T03:28:00.635Z",
+    "id": "dpl_Bxo4q3S7iUsTcSo8Zp6yyNJRAue3",
+    "readyState": "READY",
+    "ready": 1791948466001,
+    "alias": [
+      "www.liftcuttracker.com",
+      "liftcut-tracker.vercel.app",
+      "liftcuttracker.com",
+      "liftcut-tracker-townzcs-projects.vercel.app",
+      "liftcut-tracker-git-main-townzcs-projects.vercel.app"
+    ],
+    "regions": [
+      "icn1"
+    ],
+    "meta": {
+      "githubCommitRef": "main",
+      "githubCommitSha": "e46c6a75d080b743fe97942a9999a5239cfc6342",
+      "githubCommitMessage": "Merge pull request #69 from Townzc/feat/workout-sentence-receipts\n\nfeat(today): 一句话批量保存与补偿回执",
+      "githubRepo": "liftcut-tracker",
+      "githubOrg": "Townzc"
+    }
+  },
+  "independentDatabasePostflight": {
+    "observed_at": "2026-10-14 03:30:43.400939+00",
+    "fixture_users": 2,
+    "sessions": [
+      {
+        "status": "ended",
+        "revision": 2,
+        "prescribed_sets": 6
+      }
+    ],
+    "sets": [
+      {
+        "rpe": 7,
+        "reps": 10,
+        "status": "done",
+        "revision": 2,
+        "set_index": 1,
+        "weight_kg": 50,
+        "input_unit": "kg",
+        "reps_source": "user_entered",
+        "weight_source": "user_entered"
+      },
+      {
+        "rpe": 8,
+        "reps": 10,
+        "status": "done",
+        "revision": 2,
+        "set_index": 2,
+        "weight_kg": 50,
+        "input_unit": "kg",
+        "reps_source": "user_entered",
+        "weight_source": "user_entered"
+      },
+      {
+        "rpe": 9,
+        "reps": 8,
+        "status": "voided",
+        "revision": 4,
+        "set_index": 3,
+        "weight_kg": 50,
+        "input_unit": "kg",
+        "reps_source": "user_said",
+        "weight_source": "user_said"
+      },
+      {
+        "rpe": null,
+        "reps": 8,
+        "status": "voided",
+        "revision": 2,
+        "set_index": 4,
+        "weight_kg": 45.359237,
+        "input_unit": "lb",
+        "reps_source": "user_said",
+        "weight_source": "user_said"
+      },
+      {
+        "rpe": null,
+        "reps": 7,
+        "status": "voided",
+        "revision": 2,
+        "set_index": 5,
+        "weight_kg": 45.359237,
+        "input_unit": "lb",
+        "reps_source": "user_said",
+        "weight_source": "user_said"
+      }
+    ],
+    "original_receipts": 3,
+    "compensation_receipts": 2,
+    "events": {
+      "ended": 1,
+      "voided": 3,
+      "started": 1,
+      "recorded": 5,
+      "corrected": 4,
+      "command_compensated": 2
+    },
+    "legacy_rows": 100,
+    "legacy_differences": 0
+  },
+  "fixtureCleanup": {
+    "observed_at": "2026-10-14 03:31:10.507659+00",
+    "fixture_users": 0,
+    "fixture_auth_sessions": 0,
+    "fixture_refresh_tokens": 0,
+    "fixture_sessions": 0,
+    "fixture_sets": 0,
+    "fixture_commands": 0,
+    "fixture_events": 0,
+    "fixture_plans": 0,
+    "remaining_users": 6,
+    "legacy_rows": 100,
+    "legacy_differences": 0
+  },
+  "cleanupScope": "Only the two new synthetic example.invalid users with exact UUIDs and release_fixture=w2b-release-20261014; refresh tokens and auth sessions revoked before users and their cascading app data were removed."
+}

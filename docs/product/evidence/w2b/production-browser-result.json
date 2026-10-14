@@ -1,0 +1,195 @@
+{
+  "at": "2026-10-14T03:29:35.056Z",
+  "base": "https://www.liftcuttracker.com",
+  "sessionId": "32448b7c-2081-4f1c-8002-c5e3e49caa2b",
+  "status": "PASS",
+  "steps": [
+    "Real GoTrue login; synthetic account only",
+    "Rules preview and ambiguity clarification create no set or receipt",
+    "Atomic 3-set UI batch; double-click + 3 concurrent same-UUID requests retain one receipt; reload preserves NULL/NULL/9",
+    "Second-group UUID collision rejected 409; no first-group partial commit or receipt",
+    "Correction 8→7 and compensation 7→8/v3; original replay harmless; stale batch undo rolls back completely",
+    "Committed apply and undo responses deliberately lost; retry same requests, old apply cannot resurrect voided batch",
+    "Second real Auth account cannot read receipts, preview another session, apply or undo",
+    "Tap correction interoperates with sentence provenance; ending keeps set 6 missing; history excludes 3 voided sets, receipts reload"
+  ],
+  "errors": [],
+  "modelCalls": [],
+  "timings": [
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 1311.096
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 583.059
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 1161.224
+    },
+    {
+      "path": "/api/workout-sessions?action=start",
+      "method": "POST",
+      "ms": 920.966
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 729.676
+    },
+    {
+      "path": "/api/ai/parse-log",
+      "method": "POST",
+      "ms": 614.026
+    },
+    {
+      "path": "/api/ai/parse-log",
+      "method": "POST",
+      "ms": 594.733
+    },
+    {
+      "path": "/api/workout-commands?action=apply",
+      "method": "POST",
+      "ms": 498.29
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 406.782
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 476.143
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 432.776
+    },
+    {
+      "path": "/api/ai/parse-log",
+      "method": "POST",
+      "ms": 1449.889
+    },
+    {
+      "path": "/api/workout-commands?action=apply",
+      "method": "POST",
+      "ms": 895.755
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 634.848
+    },
+    {
+      "path": "/api/workout-commands?action=undo",
+      "method": "POST",
+      "ms": 722.906
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 422.974
+    },
+    {
+      "path": "/api/workout-commands?action=undo",
+      "method": "POST",
+      "ms": 704.669
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 524.917
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 564.097
+    },
+    {
+      "path": "/api/ai/parse-log",
+      "method": "POST",
+      "ms": 571.842
+    },
+    {
+      "path": "/api/workout-commands?action=apply",
+      "method": "POST",
+      "ms": 667.758
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 403.73
+    },
+    {
+      "path": "/api/workout-commands?action=undo",
+      "method": "POST",
+      "ms": 622.873
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 595.846
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 649.396
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 585.071
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 685.574
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 640.442
+    },
+    {
+      "path": "/api/workout-sessions?action=set",
+      "method": "POST",
+      "ms": 610.843
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 592.584
+    },
+    {
+      "path": "/api/ai/parse-log",
+      "method": "POST",
+      "ms": 912.629
+    },
+    {
+      "path": "/api/workout-sessions?action=end",
+      "method": "POST",
+      "ms": 624.323
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 614.015
+    },
+    {
+      "path": "/api/workout-sessions/history",
+      "method": "GET",
+      "ms": 566.253
+    },
+    {
+      "path": "/api/workout-sessions",
+      "method": "GET",
+      "ms": 546.419
+    }
+  ]
+}

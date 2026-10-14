@@ -5,8 +5,8 @@
 | [Showcase Product Plan](./product/2026-10-13-showcase-plan.md) | Current priority since 2026-10-13: scope, rules, milestones, highlights and China compliance; start here for product work |
 | [Week 1 Codex Brief](./product/WEEK1_CODEX_BRIEF.md) | Unknown values stay null and the feature-flagged today-session card; see hosted release for actual rollout |
 | [Week 2 Codex Brief](./product/WEEK2_CODEX_BRIEF.md) | Next product increment: rules-only drafts, atomic sentence writes, receipts and compensating undo |
-| [W2a Parser Verification](./product/W2A_VERIFICATION.md) | Authored 150-case rules evaluation, null and correction checks; no natural-language UI or model evaluation yet |
-| [W2b Sentence Receipts](./product/W2B_VERIFICATION.md) | Sentence preview, atomic batch saves, compensating undo, actual DB/browser checks and rollout evidence |
+| [W2a Parser Verification](./product/W2A_VERIFICATION.md) | Authored 150-case rules evaluation, null and correction checks; parser-only increment before W2b, no model evaluation |
+| [W2b Sentence Receipts](./product/W2B_VERIFICATION.md) | Live sentence preview, atomic batch saves, compensating undo, real Auth/production verification and synthetic fixture cleanup |
 | [Product Log](./product/PRODUCT_LOG.md) | One short entry per product PR |
 | [W1b Verification](./product/W1B_VERIFICATION.md) | Today-session transactions, real PostgreSQL/RLS, browser recovery, evidence and rollout boundaries |
 | [W1 Hosted Release](./product/W1_DEPLOYMENT.md) | Applied migrations, protected backup, real Auth/database verification, TLS, deployment and rollback |
