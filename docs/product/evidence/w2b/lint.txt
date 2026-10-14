@@ -8,4 +8,3 @@
   358:49  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars
 
 ✖ 2 problems (0 errors, 2 warnings)
-
