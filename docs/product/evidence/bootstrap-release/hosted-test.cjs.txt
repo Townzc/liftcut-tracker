@@ -1,0 +1,55 @@
+const fs=require('node:fs'), assert=require('node:assert/strict');
+const {chromium,expect:rawExpect}=require('@playwright/test');
+const expect=rawExpect.configure({timeout:60000});
+const out='node_modules/.cache/bootstrap-release/',base='https://www.liftcuttracker.com';
+const fixture=JSON.parse(fs.readFileSync(out+'auth-private.json','utf8'));
+assert.equal(fixture.tag,'bootstrap-release-20261014');
+assert.ok(fixture.user.email.endsWith('@example.invalid'));
+const writes=[],errors=[],modelCalls=[],stages=[];
+const login=async p=>{
+ await p.goto(base+'/login');await p.locator('#email').fill(fixture.user.email);
+ await p.locator('#password').fill(fixture.user.password);await p.locator('button[type="submit"]').click();
+ await p.waitForURL(u=>!u.pathname.startsWith('/login'));
+};
+const emptyToday=async p=>{
+ await p.goto(base+'/today');await expect(p.getByTestId('outbox-status')).toHaveText('已同步');
+ await expect(p.getByRole('button',{name:'开始训练',exact:true})).toBeDisabled();
+ const r=await p.request.get(base+'/api/workout-sessions');assert.equal(r.status(),200);
+ const d=await r.json();assert.deepEqual(d.days,[]);assert.equal(d.session,null);assert.deepEqual(d.receipts,[]);
+ const history=await p.request.get(base+'/api/workout-sessions/history');assert.equal(history.status(),200);assert.deepEqual(await history.json(),[]);
+ assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+};
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:'C:/Users/tangzhice/AppData/Local/ms-playwright/chromium-1217/chrome-win64/chrome.exe'});
+ const ctx=await browser.newContext({viewport:{width:390,height:844},timezoneId:'America/Los_Angeles'});
+ const page=await ctx.newPage();page.setDefaultTimeout(60000);
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('request',r=>{
+  const path=new URL(r.url()).pathname;
+  if(path.startsWith('/rest/v1/') && !['GET','HEAD','OPTIONS'].includes(r.method()))writes.push({path,method:r.method()});
+ });
+ await ctx.route('**/api/ai/**',r=>{modelCalls.push(new URL(r.request().url()).pathname);return r.abort();});
+ await ctx.route('**/api/agent/**',r=>{modelCalls.push(new URL(r.request().url()).pathname);return r.abort();});
+ try {
+  await login(page);await page.goto(base+'/onboarding');
+  await expect(page.getByRole('button',{name:'保存并进入应用'})).toBeEnabled();
+  await page.getByRole('combobox').click();await page.getByRole('option',{name:'男',exact:true}).click();
+  for(const [n,v] of ['30','175','70','70','3'].entries())await page.getByRole('textbox').nth(n).fill(v);
+  await page.getByRole('button',{name:'保存并进入应用'}).click();await page.waitForURL(u=>u.pathname==='/');
+  stages.push('Fresh GoTrue identity completed onboarding via production UI with explicitly entered synthetic values.');
+  await emptyToday(page);await page.screenshot({path:out+'production-empty-today.png',fullPage:true});
+  stages.push('No plan, no active session, no receipts and empty session history; Start disabled.');
+  await page.reload();await expect(page.getByTestId('outbox-status')).toHaveText('已同步');await emptyToday(page);
+  await page.goto(base+'/settings');await page.getByRole('button',{name:'退出登录',exact:true}).click();
+  await expect.poll(async()=>(await page.request.get(base+'/api/workout-sessions')).status()).toBe(401);
+  await login(page);await emptyToday(page);
+  stages.push('Refresh and actual logout/re-login preserve the empty account; logged-out API returns 401.');
+  assert.deepEqual(writes.filter(w=>!['/rest/v1/profiles','/rest/v1/user_settings'].includes(w.path)),[]);
+  assert.ok(writes.some(w=>w.path==='/rest/v1/user_settings'));assert.deepEqual(errors,[]);assert.deepEqual(modelCalls,[]);
+  fs.writeFileSync(out+'production-result.json',JSON.stringify({at:new Date().toISOString(),result:'PASS',stages,writes,errors,modelCalls,limitation:'Chromium mobile viewport; not an iOS, Android or WeChat device test; SQL verification recorded separately.'},null,2));
+  console.log('PASS: fresh real Auth onboarding, empty Today/history, refresh and re-login; only profile/settings writes; no model calls.');
+ } catch(e) {
+  await page.screenshot({path:out+'production-failure.png',fullPage:true}).catch(()=>{});
+  fs.writeFileSync(out+'production-failure.json',JSON.stringify({at:new Date().toISOString(),stages,writes,errors,modelCalls,error:String(e)},null,2));throw e;
+ } finally {await ctx.close();await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

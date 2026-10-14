@@ -1,0 +1,21 @@
+[
+  {
+    "observed_at": "2026-10-14 05:29:02.551917+00",
+    "fixture_users": 1,
+    "fixture_profiles": 1,
+    "fixture_settings": 1,
+    "fixture_auth_sessions": 1,
+    "fixture_refresh_tokens": 1,
+    "fixture_training_plans": 0,
+    "fixture_workout_logs": 0,
+    "fixture_food_logs": 0,
+    "fixture_body_metric_logs": 0,
+    "fixture_workout_sessions": 0,
+    "fixture_set_logs": 0,
+    "fixture_workout_commands": 0,
+    "fixture_workout_session_events": 0,
+    "total_users": 7,
+    "legacy_rows": 100,
+    "legacy_differences": 0
+  }
+]

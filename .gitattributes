@@ -66,3 +66,7 @@ docs/product/evidence/w2a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-
 docs/product/evidence/w3a/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 docs/product/evidence/w3a/*.json -text whitespace=cr-at-eol
 docs/product/evidence/w3a/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+# Exact captured bootstrap production verification, including Windows log bytes.
+docs/product/evidence/bootstrap-release/*.json -text whitespace=cr-at-eol
+docs/product/evidence/bootstrap-release/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/product/evidence/bootstrap-release/*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

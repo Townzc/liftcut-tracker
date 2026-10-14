@@ -1,0 +1,1 @@
+PASS: fresh real Auth onboarding, empty Today/history, refresh and re-login; only profile/settings writes; no model calls.
