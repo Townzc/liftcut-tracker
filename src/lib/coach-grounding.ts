@@ -46,8 +46,22 @@ export function reportedNumber(text:string):number|null {
   return Number.isFinite(n)?n:null;
 }
 function literal(span:string,texts:string[]) {
-  if(!texts.some(t=>normalize(t).includes(normalize(span))))fail("QUOTE_NOT_IN_USER_TEXT");
-  return normalize(span);
+  // A follow-up such as "save that" cannot turn an earlier goal/hypothesis into
+  // an actual measurement. Validate the message supplying each quoted value too.
+  const value=normalize(span),numberChar=/[0-9零〇一二两三四五六七八九十百千点.]/;
+  if(!value)fail("QUOTE_NOT_IN_USER_TEXT");
+  if(!texts.some(t=>{
+    try{assertReport(t);}catch{return false;}
+    const text=normalize(t);let at=-1;
+    while((at=text.indexOf(value,at+1))>=0){
+      // "0 kg" inside "80 kg" and "八" inside "十八" are not reports of 0 or 8.
+      if(numberChar.test(value[0])&&(numberChar.test(text[at-1]??"")||/[-−]/.test(text[at-1]??"")))continue;
+      if(numberChar.test(value.at(-1)!)&&numberChar.test(text[at+value.length]??""))continue;
+      return true;
+    }
+    return false;
+  }))fail("QUOTE_NOT_IN_USER_TEXT");
+  return value;
 }
 const num="[0-9零〇一二两三四五六七八九十百千点.]+";
 export function measurement(span:string|null,texts:string[],type:"weight"|"waist"|"calories"|"protein"|"reps"|"rpe"):{value:number;unit:string}|null {

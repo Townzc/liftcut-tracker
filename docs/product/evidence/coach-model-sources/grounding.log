@@ -1,0 +1,17 @@
+✔ a date follow-up narrows the fresh read without narrowing comparisons (3.9708ms)
+✔ model selects literal Chinese/Arabic spans; units and nulls are deterministic (3.161ms)
+✔ meal prose preserves unknown nutrients and explicit zero (0.7216ms)
+✔ goals, negatives, hypothetical reports and future dates do not create drafts (0.3297ms)
+✔ follow-up quotes can only come from user text; they cannot be model guesses (0.2936ms)
+✔ a later confirmation cannot turn earlier targets into reported actuals (0.8009ms)
+✔ a quoted numeric fragment cannot change the value actually reported (0.3672ms)
+✔ workout oral numbers normalize through the same parser without plan targets (1.3074ms)
+✔ conversation context is bounded; server rejects injected roles and missing consent (50.5637ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1016.622

@@ -1,18 +1,18 @@
 {
-  "observedAt": "2026-10-14T19:17:43.693Z",
-  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; fix has 87 unit and 43 full local browser tests plus one screenshot check. Local model is a scripted double; final hosted resume pending.",
+  "observedAt": "2026-10-14T19:37:53.438Z",
+  "scope": "Only synthetic records. Initial real hosted flow stopped at missing-workout-source assertion; final fix has 89 unit and 43 full local browser tests. The source screenshot check and 2 real DeepSeek source queries preceded the additional quote guards. Browser model is a scripted double; final hosted resume pending.",
   "files": [
     {
       "name": "unit.log",
-      "bytes": 7556,
-      "sha256": "1acae19d24788671446f991051e0cdba814c0a40c5cf9ba543103f43991f1936",
-      "originalSha256": "2d727d16acd66d346f95302987e4248f069f9b4a83d20a0d0ec249364f9d8303"
+      "bytes": 7723,
+      "sha256": "1363602fb164094c36cd61f845ab73ee0838ab9fb4c52fcccf974ec6e5ecb2d2",
+      "originalSha256": "4f1ee4b35e54b6afd647ed336de6ddce6428dae2ca50bca16c4c8c5f0e80e736"
     },
     {
       "name": "build.log",
-      "bytes": 1494,
-      "sha256": "3bbb632fda27269ba87f1aafc413f5027ed970189d5b66df5df0a4a02d4b4700",
-      "originalSha256": "549ab3888926fc9844ce6c6429a81f3e91edb98c9bb3ecfdcd900251b1f3766b"
+      "bytes": 1492,
+      "sha256": "437746fef22344d71f66d7ca53933f07a6d15775d734dac778aee2d0936f476c",
+      "originalSha256": "e655d53fc18b5b0effbad47a95ae194623149422e2d84514447ce00ea7af0632"
     },
     {
       "name": "typecheck.log",
@@ -28,15 +28,27 @@
     },
     {
       "name": "browser.log",
-      "bytes": 8594,
-      "sha256": "75ef1dd4f7b8d490e98ff0a1ca72047848ee1f468d8f8489a7a4649e8bd4d210",
-      "originalSha256": "34a2b1bf9516c8ba4e6af4b981494c56bc34b94d1817839a2fd74cf51135f890"
+      "bytes": 8593,
+      "sha256": "0cc8a1731576c981f4487046f74a240b471fc046f0f3d0c70f34a9b48a54718b",
+      "originalSha256": "790f75d6c6cb52f4d8b3df79c9f04ebdf8fbeaa1cb76d2300f69e841865fb8e6"
+    },
+    {
+      "name": "grounding.log",
+      "bytes": 904,
+      "sha256": "42c705d807244401f58d6313a5e928751cb0262d8a53cec74ddf5af926fd2a61",
+      "originalSha256": "c066b0ae6364bb61fa6104c92da99e0dbef431b3a8f669e82e9ff4666458f59e"
     },
     {
       "name": "screenshot-check.log",
       "bytes": 2131,
       "sha256": "bb722d2f7d5066a76c2b82b52dcf8e7e67ccc92e19d86fa59938de114d3c819a",
       "originalSha256": "ccb02c80162e427950cdb51ad33ba211816205614b34269b87273816fb8a5387"
+    },
+    {
+      "name": "live-source-check.json",
+      "bytes": 4459,
+      "sha256": "30e2eb468b434de8f9d4b8b2c38e5e3feabd9c2616307424461a7d39212006b0",
+      "originalSha256": "9f8b9d6cfe3497484196f23cea4a7d2d5afd81b1429946f81f78743cd68be438"
     },
     {
       "name": "initial-hosted-failure.json",
@@ -52,9 +64,9 @@
     },
     {
       "name": "current-workout-source.png",
-      "bytes": 58605,
-      "sha256": "f4c8673ecbcccf794f8acacbe92963eeefc173c2962b04583d3df050b1a77481",
-      "originalSha256": "f4c8673ecbcccf794f8acacbe92963eeefc173c2962b04583d3df050b1a77481"
+      "bytes": 58641,
+      "sha256": "94f099f35987fb56ff319953d38d3a34f1b141a3f622c3da80153c0cb973cf14",
+      "originalSha256": "94f099f35987fb56ff319953d38d3a34f1b141a3f622c3da80153c0cb973cf14"
     }
   ]
 }

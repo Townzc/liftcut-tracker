@@ -34,6 +34,24 @@ test("follow-up quotes can only come from user text; they cannot be model guesse
   assert.equal(entry.kind==="body"&&entry.weightKg,72);assert.equal(entry.kind==="body"&&entry.waistCm,80);
   assert.throws(()=>groundPersonal({...empty,kind:"body",weightQuote:"65kg"},["我现在多少斤"],day),/QUOTE_NOT/);
 });
+
+test("a later confirmation cannot turn earlier targets into reported actuals",()=>{
+  const p={...empty,kind:"body",weightQuote:"六十五公斤"};
+  assert.throws(()=>groundPersonal(p,["我的目标是六十五公斤","把刚才的数记下来"],day),/QUOTE_NOT/);
+  const actual=groundPersonal(p,["我的目标是六十五公斤","今天实际称了六十五公斤"],day);
+  assert.equal(actual.kind==="body"&&actual.weightKg,65);
+  const s={status:"active",prescription:{exercises:[{id:"e",name:"深蹲",sets:3,repRange:"8-12",targetRpe:7}]},sets:[]} as unknown as Session;
+  assert.throws(()=>groundWorkout({exerciseId:"e",kind:"record",weightQuote:null,repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null},["计划深蹲八次","把刚才的次数记上"],s),/QUOTE_NOT/);
+});
+
+test("a quoted numeric fragment cannot change the value actually reported",()=>{
+  assert.throws(()=>groundPersonal({...empty,kind:"body",weightQuote:"70公斤"},["实际体重170公斤"],day),/QUOTE_NOT/);
+  assert.throws(()=>groundPersonal({...empty,kind:"body",weightQuote:"七十公斤"},["一百七十公斤"],day),/QUOTE_NOT/);
+  const s={status:"active",prescription:{exercises:[{id:"e",name:"深蹲",sets:3,repRange:"8-12",targetRpe:7}]},sets:[]} as unknown as Session;
+  const p={exerciseId:"e",kind:"record",weightQuote:null,repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null};
+  assert.throws(()=>groundWorkout(p,["做了十八次"],s),/QUOTE_NOT/);
+  assert.throws(()=>groundWorkout({...p,weightQuote:"0 kg",repsQuotes:["8次"]},["80 kg 做了8次"],s),/QUOTE_NOT/);
+});
 test("workout oral numbers normalize through the same parser without plan targets",()=>{
   const s={id:"s",userId:"u",status:"active",prescription:{title:"t",exercises:[{id:"e",name:"深蹲",sets:3,repRange:"8-12",targetRpe:7}]},sets:[]} as unknown as Session;
   const p={exerciseId:"e",kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null};
