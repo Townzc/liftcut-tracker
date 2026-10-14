@@ -12,6 +12,8 @@
 | [Real Account Bootstrap](./product/ACCOUNT_BOOTSTRAP_VERIFICATION.md) | Stop implicit demo histories in real accounts; discovery, regression and release boundaries |
 | [W3b Implementation Design](./product/W3B_IMPLEMENTATION_DESIGN.md) | Preregistered session-only exercise replacement boundaries and implementation sequence |
 | [W3b Verification](./product/W3B_VERIFICATION.md) | Session replacement, fresh identities, compensation, offline conflict tests and actual release status |
+| [C1 Conversation Brief](./product/COACH_CONVERSATION_BRIEF.md) | Interactive training assistant over the existing draft, receipt and offline queue; bounded local rules, no GPU |
+| [C1 Conversation Verification](./product/COACH_CONVERSATION_VERIFICATION.md) | Chat-to-API-to-database checks, actual failures and fixes, visual evidence and release boundaries |
 | [Product Log](./product/PRODUCT_LOG.md) | One short entry per product PR |
 | [W1b Verification](./product/W1B_VERIFICATION.md) | Today-session transactions, real PostgreSQL/RLS, browser recovery, evidence and rollout boundaries |
 | [W1 Hosted Release](./product/W1_DEPLOYMENT.md) | Applied migrations, protected backup, real Auth/database verification, TLS, deployment and rollback |

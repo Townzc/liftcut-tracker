@@ -12,7 +12,12 @@ test.beforeAll(async()=>{
   await db.query("insert into public.training_plan_days(id,week_id,day_number,title) values($1,$2,1,'离线训练')",[day,plan+'w']);
   await db.query("insert into public.training_plan_exercises(id,day_id,name,sets,rep_range,target_rpe) values($1,$2,'深蹲',6,'8-12',7)",[exercise,day]);
 });
-test.afterEach(async()=>{await db.query("delete from workout_sessions where user_id=$1 and training_plan_id=$2",[user,plan]);});
+test.afterEach(async({context},info)=>{
+  if(info.status!==info.expectedStatus)for(const page of context.pages()) {
+    await info.attach("outbox-at-failure",{body:JSON.stringify({url:page.url(),at:Date.now(),state:await snapshot(page).catch(()=>null)}),contentType:"application/json"});
+  }
+  await db.query("delete from workout_sessions where user_id=$1 and training_plan_id=$2",[user,plan]);
+});
 test.afterAll(async()=>{await db.query("delete from training_plans where id=$1",[plan]);await db.end();});
 async function login(page:Page,email="p1-fixture@example.invalid") {
   await page.goto("/login");await page.locator("#email").fill(email);await page.locator("#password").fill("p1-fixture-password");
@@ -132,7 +137,11 @@ test("account-bound requests fail closed and old outbox stays isolated after acc
   expect((await second.request.get("/api/workout-sessions",{headers:{"X-Workout-Owner":user}})).status()).toBe(409);
   expect((await snapshot(second)).items).toHaveLength(1);expect((await db.query("select * from set_logs where session_id=$1",[body.sessionId])).rowCount).toBe(0);
   expect((await db.query("select * from workout_sessions where user_id=$1",[other])).rowCount).toBe(0);
-  await logout(second);await login(second);await second.goto("/today");await synced(second);await expect(second.getByTestId(`set-${exercise}-1`)).toContainText("× 8");
+  await logout(second);await login(second);await second.goto("/today");
+  // Navigation can abandon a claimed request. Recovery must respect the 40s lease,
+  // then the 5s wake interval; this test checks account isolation, not immediate delivery.
+  await expect(second.getByTestId("outbox-status")).toHaveText("已同步",{timeout:50000});
+  await expect(second.getByTestId(`set-${exercise}-1`)).toContainText("× 8");
   expect((await snapshot(second)).items).toHaveLength(0);
 });
 test("401 retains the exact operation and pauses until explicit retry",async({page})=>{
@@ -168,4 +177,23 @@ test("expired lease from a dead tab is recovered without Web Locks or BroadcastC
   await context.addInitScript(()=>{Object.defineProperty(window,"BroadcastChannel",{value:undefined});Object.defineProperty(navigator,"locks",{value:undefined});});
   const next=await context.newPage();await next.goto("/today");await expect(next.getByTestId(`set-${exercise}-1`)).toContainText("× 8");await synced(next);
   const state=await snapshot(next);expect(state.items).toHaveLength(0);expect(state.lease).toBeUndefined();expect(state.confirmed!.session!.sets).toHaveLength(1);
+});
+
+test("an abandoned but live lease is respected before the same immutable operation recovers",async({page,context})=>{
+  await start(page);await context.setOffline(true);await tap(page,1);const queued=await snapshot(page),until=Date.now()+10000;
+  await page.evaluate(({owner,until})=>new Promise<void>((resolve,reject)=>{
+    const open=indexedDB.open("liftcut-workout-outbox-v1",1);open.onsuccess=()=>{
+      const db=open.result,tx=db.transaction("accounts","readwrite"),store=tx.objectStore("accounts"),r=store.get(owner);
+      r.onsuccess=()=>{const state=r.result;state.lease={itemId:state.items[0].id,token:"synthetic-abandoned-live-tab",until};store.put(state);};
+      tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>reject(tx.error);
+    };
+  }),{owner:user,until});
+  await page.close();await context.setOffline(false);const next=await context.newPage(),sent:{at:number;body:string|null}[]=[];
+  next.on("request",r=>{if(r.method()==="POST"&&r.url().includes("/api/workout-sessions?action=set"))sent.push({at:Date.now(),body:r.postData()});});
+  await next.goto("/today");await expect(next.getByTestId("outbox-status")).toHaveText("待同步 1 条");
+  expect(Date.now()).toBeLessThan(until);expect(sent).toEqual([]);
+  await expect(next.getByTestId("outbox-status")).toHaveText("已同步",{timeout:20000});
+  expect(sent).toHaveLength(1);expect(sent[0].at).toBeGreaterThanOrEqual(until);expect(sent[0].body).toBe(queued.items[0].bodyJson);
+  expect((await db.query("select count(*)::int as n from workout_session_events where session_id=$1 and type='recorded'",[queued.confirmed!.session!.id])).rows[0].n).toBe(1);
+  expect((await snapshot(next)).items).toHaveLength(0);
 });
