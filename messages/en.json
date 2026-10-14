@@ -710,6 +710,48 @@
       "CONFLICT": "Records changed, or an active session already exists. Query/recover to continue it.",
       "UNKNOWN": "Save outcome unknown. Query records or retry the same operation; do not create another.",
       "HISTORY_FAILED": "Saved, but history could not refresh. Please query/recover."
+    },
+    "sentence": {
+      "title": "Log in one sentence",
+      "hint": "Review a rules draft, then save all sets together. Unreported actuals stay unknown.",
+      "exercise": "Selected exercise (optional)",
+      "fromText": "Identify from the sentence",
+      "input": "Your workout report",
+      "example": "Squat 50 kg 10,10,8, last set RPE 9",
+      "preview": "Parse and preview",
+      "parsing": "Parsing…",
+      "previewFailed": "Could not load a draft. Please parse again.",
+      "rulesDraft": "Rules draft · Not saved",
+      "set": "Set {n}",
+      "correction": "Set {n} reps: {before} → {after} (other values unchanged)",
+      "skip": "Skip set {n}; no actual values",
+      "endHint": "End this workout? Unreported sets will remain unreported.",
+      "confirmEnd": "Confirm end workout",
+      "confirm": "Confirm and save sentence",
+      "unknown": "— means unreported; RPE never defaults to the target.",
+      "receipts": "Sentence receipts",
+      "receiptHint": "Latest 20. Undo adds a compensation record and never overwrites later edits.",
+      "saved": "Saved",
+      "undone": "Undone",
+      "undo": "Undo sentence",
+      "skipped": "Skipped",
+      "voided": "Voided; excluded from statistics",
+      "compensation": "Undo receipt (original preserved)",
+      "clarify": {
+        "invalid_context": "Context changed. Query/recover and parse again.",
+        "input_length": "Report actual training in up to 400 characters.",
+        "not_unambiguous_actuals": "This contains planned, negative or uncertain information. Report only what you did.",
+        "repeat_needs_explicit_fields": "State the reps and any known weight; “same again” is not enough.",
+        "exercise_not_unique": "Use the exact exercise name or select an exercise.",
+        "correction_unsupported": "Use “correct Squat set 2 to 7 reps”. Edit other fields in the set form.",
+        "correction_target_not_unique": "No unique completed set found. Specify the exercise and set number.",
+        "skip_target_not_unique": "Specify the exercise and set to skip.",
+        "set_unavailable": "These slots are occupied, voided or exceed this session. Correct an existing set or choose available slots.",
+        "out_of_range": "Check the values and number of sets; they exceed the supported range.",
+        "unsupported_or_missing_unit": "Specify kg/lb, or just “8 reps”. Use the set form for unsupported sentences.",
+        "rpe_scope_ambiguous": "Which sets does RPE describe? Say “last set RPE 9” or “each set RPE 8”."
+      },
+      "viewReceipts": "View saved / undone receipts"
     }
   }
 }

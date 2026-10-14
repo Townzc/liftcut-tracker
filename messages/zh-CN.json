@@ -710,6 +710,48 @@
       "CONFLICT": "记录已发生变化，或已有进行中的训练。请查询 / 恢复，继续现有会话。",
       "UNKNOWN": "本次保存结果尚未确认。请查询记录或重试同一操作，不要重复新建。",
       "HISTORY_FAILED": "本组已保存，历史暂时未刷新，请查询恢复。"
+    },
+    "sentence": {
+      "title": "一句话记录",
+      "hint": "先核对规则解析草稿，再一次保存。不会补填你没说的实际值。",
+      "exercise": "当前动作（可选）",
+      "fromText": "从原话识别动作",
+      "input": "训练原话",
+      "example": "深蹲 50 公斤 10、10、8，最后一组 RPE 9",
+      "preview": "解析并预览",
+      "parsing": "正在解析…",
+      "previewFailed": "暂时无法读取草稿，请重试解析。",
+      "rulesDraft": "规则草稿 · 尚未保存",
+      "set": "第 {n} 组",
+      "correction": "第 {n} 组次数：{before} → {after}（其余值保持）",
+      "skip": "跳过第 {n} 组，不填写实际值",
+      "endHint": "确认结束当前训练？未记录的组仍保持未记录。",
+      "confirmEnd": "确认结束训练",
+      "confirm": "确认保存这句话",
+      "unknown": "— 表示未报告；未报告的 RPE 不会取计划值。",
+      "receipts": "一句话回执",
+      "receiptHint": "最近 20 条。撤销会留下补偿记录；后来已更改的组不会被覆盖。",
+      "saved": "已保存",
+      "undone": "已撤销",
+      "undo": "撤销这句话",
+      "skipped": "已跳过",
+      "voided": "已作废，不计入统计",
+      "compensation": "撤销回执（保留原记录）",
+      "clarify": {
+        "invalid_context": "当前记录已变化，请查询 / 恢复后重新解析。",
+        "input_length": "请输入不超过 400 字的实际训练情况。",
+        "not_unambiguous_actuals": "这句话包含计划、否定或不确定信息，请只说实际做了什么。",
+        "repeat_needs_explicit_fields": "请明确写出本组次数和已知重量，不能把“同上”当实际值。",
+        "exercise_not_unique": "请写出准确动作名，或先选择当前动作。",
+        "correction_unsupported": "当前支持次数更正，例如“更正 深蹲 第 2 组 7 次”；其他字段请点按更正。",
+        "correction_target_not_unique": "找不到唯一的已完成组，请指定动作和组号。",
+        "skip_target_not_unique": "请明确要跳过的动作和组号。",
+        "set_unavailable": "这些组已记录、已撤销或超出本次组数。请指定可用组或更正已有组。",
+        "out_of_range": "数值或组数超出支持范围，请检查。",
+        "unsupported_or_missing_unit": "请明确重量单位 kg / 公斤 / lb，或只说“8 次”；暂不支持的句子可用点按记录。",
+        "rpe_scope_ambiguous": "多个组的 RPE 属于哪组？请说“最后一组 RPE 9”或“每组 RPE 8”。"
+      },
+      "viewReceipts": "查看已保存 / 已撤销的回执"
     }
   }
 }

@@ -9,10 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@/lib/today";
 import { useTrackerStore } from "@/store/use-tracker-store";
 
-type Pending = { action: "start" | "set" | "end"; body: unknown };
+import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
 function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
   session: Session; exercise: PrescriptionExercise; index: number; saved?: SetLog;
-  previous?: { weightKg: number | null; reps: number | null }; busy: boolean; submit: (p: Pending) => Promise<void>;
+  previous?: { weightKg: number | null; reps: number | null }; busy: boolean; submit: (p: Pending) => Promise<boolean>;
 }) {
   const t = useTranslations("today");
   const [id] = useState(() => saved?.id ?? crypto.randomUUID());
@@ -27,7 +27,7 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
   async function send(status: SetRequest["status"]) {
     const weightKg = status === "skipped" ? null : number(weight), count = status === "skipped" ? null : number(reps);
     const source = (key: "weight" | "reps", value: number | null) => value === null ? null
-      : saved && !changed[key] ? (key === "weight" ? saved.weightSource : saved.repsSource)
+      : saved && !changed[key] ? "user_entered" as const
       : previous && !changed[key] ? "user_confirmed_prefill" as const : "user_entered" as const;
     const body = { id, sessionId: session.id, planExerciseId: exercise.id, setIndex: index,
       revision: (saved?.revision ?? 0) + 1, status, weightKg, reps: count, rpe: status === "skipped" ? null : number(rpe),
@@ -45,7 +45,8 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
       {!locked && <div className="flex gap-2">
         <Button variant="outline" disabled={busy} onClick={() => setEditing(true)}>{t("correct")}</Button>
         {saved.status === "done" && <Button variant="outline" disabled={busy} onClick={() => {
-          const original = setRequestSchema.strip().parse(saved);
+          const original = setRequestSchema.strip().parse({ ...saved, inputUnit:"kg", sourceRef:"today-tap",
+            weightSource:saved.weightKg===null?null:"user_entered",repsSource:saved.reps===null?null:"user_entered" });
           void submit({ action: "set", body: { ...original, status: "voided", revision: saved.revision+1 } });
         }}>{t("undo")}</Button>}
       </div>}
@@ -95,20 +96,23 @@ export function TodayPage({ enabled }: { enabled: boolean }) {
     finally { setBusy(false); inFlight.current = false; }
   }
   async function submit(p: Pending) {
-    if (inFlight.current) return; // Close the double-click gap before React re-renders.
+    if (inFlight.current) return false; // Close the double-click gap before React re-renders.
     inFlight.current = true; setBusy(true); setError(""); setPending(p);
     try {
-      const response = await fetch(`/api/workout-sessions?action=${p.action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p.body) });
+      const endpoint = p.action === "apply" || p.action === "undo" ? "/api/workout-commands" : "/api/workout-sessions";
+      const response = await fetch(`${endpoint}?action=${p.action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p.body) });
       const value = await response.json();
       if (!response.ok) {
         setError(response.status === 409 ? "CONFLICT" : "UNKNOWN");
         if (response.status < 500) setPending(null);
-        return;
+        return false;
       }
-      setData(old => ({ ...old!, session: value })); setPending(null);
+      setData(old => ({ ...old!, session: p.action === "undo" && old?.session?.id !== value.session.id ? old!.session : value.session ?? value,
+        receipts:value.receipts ?? old?.receipts })); setPending(null);
       // Saving succeeded even if legacy history refresh fails. Do not retry the write for a read error.
       try { await refreshHistory(); } catch { setError("HISTORY_FAILED"); }
-    } catch { setError("UNKNOWN"); }
+      return true;
+    } catch { setError("UNKNOWN"); return false; }
     finally { setBusy(false); inFlight.current = false; }
   }
   if (!enabled) return <Card><CardHeader><CardTitle>{t("notOpen")}</CardTitle></CardHeader></Card>;
@@ -117,6 +121,7 @@ export function TodayPage({ enabled }: { enabled: boolean }) {
   const chosen = dayId || data?.days.find(d => d.weekNumber === selectedWeek && d.dayNumber === selectedDay)?.id || data?.days[0]?.id || "";
   return <div className="mx-auto max-w-2xl space-y-4">
     <div><h1 className="text-2xl font-semibold">{t("title")}</h1><p className="mt-1 text-sm text-muted-foreground">{t("intro")}</p></div>
+    {!!data?.receipts?.length && <p role="status" className="text-sm"><a className="underline" href="#sentence-receipts">{t("sentence.viewReceipts")}</a></p>}
     {error && <div role="alert" className="space-y-2 rounded-xl border p-3 text-sm"><p>{t(`errors.${error}`)}</p>
       <Button variant="outline" disabled={busy} onClick={() => void recover()}>{t("recover")}</Button>
       {pending && <Button className="ml-2" disabled={busy} onClick={() => void submit(pending)}>{t("retry")}</Button>}</div>}
@@ -132,6 +137,7 @@ export function TodayPage({ enabled }: { enabled: boolean }) {
         <p>{session.localDate} · {session.timezone}</p><p>{t(session.status === "active" ? "active" : "ended")}</p>
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
       </CardContent></Card>
+      {session.status === "active" && <SentenceEntry key={session.id} session={session} busy={busy || !!pending || error === "CONFLICT"} submit={submit} />}
       {session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exercise.name}</CardTitle>
         <p className="text-sm text-muted-foreground">{t("target", { sets:exercise.sets,reps:exercise.repRange,rpe:exercise.targetRpe })}</p></CardHeader>
         <CardContent className="space-y-3">{Array.from({ length:exercise.sets },(_,i)=> {
@@ -143,5 +149,6 @@ export function TodayPage({ enabled }: { enabled: boolean }) {
         <Button disabled={busy || !!pending} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
         : <Link href="/workout" className="underline">{t("history")}</Link>}
     </>}
+    <SentenceReceipts receipts={data?.receipts ?? []} busy={busy || !!pending || error === "CONFLICT"} submit={submit} />
   </div>;
 }

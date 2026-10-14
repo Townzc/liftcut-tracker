@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-10-14T03:04:57Z",
+  "project": "ksyopvedhzpxirfyfkhw",
+  "sourceMigration": "20261014025246_workout_command_receipts.sql",
+  "applied": true,
+  "postflight": [
+    {
+      "legacy_rows": 100,
+      "users": 6,
+      "commands": 0,
+      "protection": {
+        "rls": true,
+        "force_rls": true
+      },
+      "browser_insert": false,
+      "runtime_update": false,
+      "runtime_delete": false,
+      "legacy_differences": 0,
+      "migration_version": "20261014030441"
+    }
+  ],
+  "preflight": {
+    "legacy_rows": 100,
+    "users": 6,
+    "sessions": 0,
+    "sets": 0,
+    "commands": null,
+    "legacy_differences": 0
+  },
+  "securityAdvisors": {
+    "newTableFindings": 0,
+    "unchanged": [
+      "two admin-only backup tables intentionally deny all via RLS without policies",
+      "Auth leaked-password protection disabled"
+    ]
+  }
+}

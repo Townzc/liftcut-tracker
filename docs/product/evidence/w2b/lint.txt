@@ -1,0 +1,11 @@
+
+> liftcut-tracker@0.1.0 lint
+> eslint
+
+
+<repo>\research\liftcut-coach\scripts\generate_seed_cases.ts
+  275:48  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars
+  358:49  warning  '_rand' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 2 problems (0 errors, 2 warnings)
+

@@ -2,7 +2,10 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
-import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription } from "@/lib/today";
+import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet, type SetLog } from "@/lib/today";
+
+import { parseWorkoutLog } from "@/lib/workout-log-parser";
+import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
 
 function canonical(v: unknown): string {
   if (Array.isArray(v)) return `[${v.map(canonical).join(",")}]`;
@@ -10,6 +13,9 @@ function canonical(v: unknown): string {
   return JSON.stringify(v);
 }
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
+function stored(s: SetLog): StoredSet {
+  const result = {...s} as Partial<SetLog>;delete result.exerciseName;delete result.updatedAt;return result as StoredSet;
+}
 export class TodayConflict extends Error {}
 const fail = (reason: string): never => { throw new TodayConflict(reason); };
 
@@ -68,7 +74,7 @@ export class TodayStore {
         union all select e.name,e.actual_weight,e.actual_reps,w.created_at,e.id
         from public.workout_log_exercises e join public.workout_logs w on w.id=e.workout_log_id where e.completed
       ) history order by name,at desc,id desc`)).rows;
-      return { session: active ? await this.read(db, active.id) : null, days,
+      return { session: active ? await this.read(db, active.id) : null, days, receipts: await this.receipts(db),
         previous: Object.fromEntries(rows.map(r => [r.name, { weightKg: r.weight === null ? null : Number(r.weight), reps: r.reps }])) };
     });
   }
@@ -99,36 +105,150 @@ export class TodayStore {
     });
   }
   async writeSet(user: string, input: unknown): Promise<Session> {
-    const req = setRequestSchema.parse(input), digest = hash(req);
+    const tap = setRequestSchema.parse(input);
     return this.tx(user, async db => {
-      const session = (await db.query("select status,prescription from public.workout_sessions where id=$1 for update", [req.sessionId])).rows[0];
-      if (!session) return fail("NOT_FOUND");
-      const old = (await db.query("select * from public.set_logs where id=$1", [req.id])).rows[0];
-      if (old) {
-        if (old.session_id !== req.sessionId || old.plan_exercise_id !== req.planExerciseId || old.set_index !== req.setIndex) return fail("CONTENT_CONFLICT");
-        if (req.revision === old.revision) {
-          if (old.request_hash !== digest) return fail("CONTENT_CONFLICT");
-          return this.read(db,req.sessionId);
+      let req: StoredSet = tap;
+      if (tap.status === "voided") {
+        const old = (await db.query("select payload from public.set_logs where id=$1 and session_id=$2", [tap.id,tap.sessionId])).rows[0]?.payload;
+        if (old && (old.planExerciseId !== tap.planExerciseId || old.setIndex !== tap.setIndex)) return fail("CONTENT_CONFLICT");
+        if (old && ["weightKg","reps","rpe"].every(k => old[k] === tap[k as keyof typeof tap])) {
+          req = { ...old, revision: tap.revision, status: "voided" };
         }
-        if (req.revision !== old.revision + 1) return fail("STALE_REVISION");
-        if (old.status === "voided") return fail("SET_VOIDED");
-      } else if (req.revision !== 1 || req.status === "voided") return fail("STALE_REVISION");
-      if (session.status !== "active") return fail("SESSION_ENDED");
-      const exercise = (session.prescription as Prescription).exercises.find(e => e.id === req.planExerciseId);
-      if (!exercise || req.setIndex > exercise.sets) return fail("SET_NOT_IN_PRESCRIPTION");
-      if (req.status === "voided" && old.status !== "done") return fail("NOT_COMPLETED");
-      // Undo preserves the original actuals/source as evidence; it only excludes them from statistics.
-      if (req.status === "voided" && hash({ ...old.payload, revision: req.revision, status: "voided" }) !== digest) return fail("CONTENT_CONFLICT");
-      const values = [req.id,user,req.sessionId,req.planExerciseId,exercise.name,req.setIndex,req.weightKg,req.reps,req.rpe,
-        req.inputUnit,req.weightSource,req.repsSource,req.status,req.revision,req.sourceRef,JSON.stringify(req),digest];
-      if (old) await db.query(`update public.set_logs set weight_kg=$7,reps=$8,rpe=$9,input_unit=$10,weight_source=$11,
-        reps_source=$12,status=$13,revision=$14,source_ref=$15,payload=$16,request_hash=$17,updated_at=now()
-        where id=$1 and user_id=$2 and session_id=$3 and plan_exercise_id=$4 and exercise_name=$5 and set_index=$6`, values);
-      else await db.query(`insert into public.set_logs(id,user_id,session_id,plan_exercise_id,exercise_name,set_index,weight_kg,reps,rpe,input_unit,
-        weight_source,reps_source,status,revision,source_ref,payload,request_hash) values(${values.map((_,i) => `$${i+1}`).join(",")})`, values);
-      await this.event(db,user,req.sessionId,req.id,req.status === "voided" ? "voided" : old ? "corrected" : "recorded",
-        { before: old?.payload ?? null, after: req });
+      }
+      await this.writeSetInTransaction(db,user,req);
       return this.read(db,req.sessionId);
+    });
+  }
+  private async writeSetInTransaction(db: PoolClient, user: string, req: StoredSet, compensating = false) {
+    // Same numeric/business contract for every entry point. Speech provenance is server-derived.
+    setRequestSchema.parse({ ...req, inputUnit: "kg", sourceRef: "today-tap",
+      weightSource: req.weightSource === "user_said" ? "user_entered" : req.weightSource,
+      repsSource: req.repsSource === "user_said" ? "user_entered" : req.repsSource });
+    const digest = hash(req);
+    const session = (await db.query("select status,prescription from public.workout_sessions where id=$1 for update", [req.sessionId])).rows[0];
+    if (!session) return fail("NOT_FOUND");
+    const old = (await db.query("select * from public.set_logs where id=$1", [req.id])).rows[0];
+    if (old) {
+      if (old.session_id !== req.sessionId || old.plan_exercise_id !== req.planExerciseId || old.set_index !== req.setIndex) return fail("CONTENT_CONFLICT");
+      if (req.revision === old.revision) {
+        if (old.request_hash !== digest) return fail("CONTENT_CONFLICT");
+        return;
+      }
+      if (req.revision !== old.revision + 1) return fail("STALE_REVISION");
+      if (old.status === "voided") return fail("SET_VOIDED");
+    } else if (req.revision !== 1 || req.status === "voided") return fail("STALE_REVISION");
+    if (session.status !== "active" && !compensating) return fail("SESSION_ENDED");
+    const exercise = (session.prescription as Prescription).exercises.find(e => e.id === req.planExerciseId);
+    if (!exercise || req.setIndex > exercise.sets) return fail("SET_NOT_IN_PRESCRIPTION");
+    if (req.status === "voided" && !["done", "skipped"].includes(old.status)) return fail("NOT_COMPLETED");
+    // Undo preserves the original actuals/source as evidence; it only excludes them from statistics.
+    if (req.status === "voided" && hash({ ...old.payload, revision: req.revision, status: "voided" }) !== digest) return fail("CONTENT_CONFLICT");
+    const values = [req.id,user,req.sessionId,req.planExerciseId,exercise.name,req.setIndex,req.weightKg,req.reps,req.rpe,
+      req.inputUnit,req.weightSource,req.repsSource,req.status,req.revision,req.sourceRef,JSON.stringify(req),digest];
+    if (old) await db.query(`update public.set_logs set weight_kg=$7,reps=$8,rpe=$9,input_unit=$10,weight_source=$11,
+      reps_source=$12,status=$13,revision=$14,source_ref=$15,payload=$16,request_hash=$17,updated_at=now()
+      where id=$1 and user_id=$2 and session_id=$3 and plan_exercise_id=$4 and exercise_name=$5 and set_index=$6`, values);
+    else await db.query(`insert into public.set_logs(id,user_id,session_id,plan_exercise_id,exercise_name,set_index,weight_kg,reps,rpe,input_unit,
+      weight_source,reps_source,status,revision,source_ref,payload,request_hash) values(${values.map((_,i) => `$${i+1}`).join(",")})`, values);
+    await this.event(db,user,req.sessionId,req.id,req.status === "voided" ? "voided" : old ? "corrected" : "recorded",
+      { before: old?.payload ?? null, after: req });
+    return;
+  }
+  private context(session: Session, selectedExerciseId?: string) {
+    return { exercises: session.prescription.exercises.map(e => ({ id: e.id, name: e.name, setCount: e.sets })),
+      actuals: session.sets.map(s => ({ id:s.id, exerciseId:s.planExerciseId, setIndex:s.setIndex, revision:s.revision,
+        status:s.status, weightKg:s.weightKg, reps:s.reps, rpe:s.rpe })), selectedExerciseId };
+  }
+  private contextHash(session: Session) {
+    return hash({ id:session.id, status:session.status, revision:session.revision, prescription:session.prescription,
+      sets:session.sets.map(stored) });
+  }
+  private async receipts(db: PoolClient): Promise<CommandReceipt[]> {
+    const rows = (await db.query(`select c.receipt,u.receipt as undo from public.workout_commands c
+      left join public.workout_commands u on u.parent_id=c.id where c.parent_id is null
+      order by c.created_at desc,c.id desc limit 20`)).rows;
+    return rows.map(r => ({...r.receipt, undo:r.undo ?? null}));
+  }
+  private async commandResult(db: PoolClient, sessionId: string) {
+    return { session:await this.read(db,sessionId), receipts:await this.receipts(db) };
+  }
+  async preview(user: string, input: unknown): Promise<ParsePreview> {
+    const req = parseLogSchema.parse(input);
+    return this.tx(user, async db => {
+      const session = await this.read(db,req.sessionId);
+      if (session.status !== "active") return fail("SESSION_ENDED");
+      return { result:parseWorkoutLog(req.text,this.context(session,req.selectedExerciseId)),
+        contextHash:this.contextHash(session), parser:"rules-v1" };
+    });
+  }
+  async command(user: string, input: unknown) {
+    const req = commandSchema.parse(input), digest = hash(req);
+    return this.tx(user, async db => {
+      const old = (await db.query("select * from public.workout_commands where id=$1",[req.id])).rows[0];
+      if (old) {
+        if (old.request_hash !== digest || old.parent_id) return fail("CONTENT_CONFLICT");
+        return this.commandResult(db,old.session_id); // Includes any compensation; never reapply.
+      }
+      await db.query("select id from public.workout_sessions where id=$1 for update",[req.sessionId]);
+      const session = await this.read(db,req.sessionId);
+      if (session.status !== "active") return fail("SESSION_ENDED");
+      if (this.contextHash(session) !== req.contextHash) return fail("STALE_CONTEXT");
+      const parsed = parseWorkoutLog(req.text,this.context(session,req.selectedExerciseId));
+      if (parsed.status !== "draft") return fail("NEEDS_CLARIFICATION");
+      const draft = parsed.draft;
+      if (draft.kind === "end") return fail("END_REQUIRES_CONFIRMATION");
+      const count = draft.kind === "correct" ? 0 : draft.kind === "record" ? draft.sets.length : 1;
+      if (req.setIds.length !== count) return fail("CONTENT_CONFLICT");
+      const changes: SetChange[] = [];
+      const exercise = session.prescription.exercises.find(e => e.id === draft.exerciseId)!;
+      if (draft.kind === "correct") {
+        const before = stored(session.sets.find(s => s.id === draft.recordId)!);
+        changes.push({before,after:{...before,revision:before.revision+1,reps:draft.changes.reps,
+          repsSource:"user_said",sourceRef:req.id},exerciseName:exercise.name});
+      } else {
+        const sets = draft.kind === "record" ? draft.sets : [{setIndex:draft.setIndex,weightKg:null,reps:null,rpe:null,inputUnit:null}];
+        sets.forEach((s,i) => changes.push({before:null,exerciseName:exercise.name,after:{
+          id:req.setIds[i],sessionId:session.id,planExerciseId:exercise.id,setIndex:s.setIndex,revision:1,
+          status:draft.kind === "skip" ? "skipped" : "done",weightKg:s.weightKg,reps:s.reps,rpe:s.rpe,
+          weightSource:s.weightKg===null?null:"user_said",repsSource:s.reps===null?null:"user_said",
+          inputUnit:s.inputUnit ?? "kg",sourceRef:req.id }}));
+      }
+      // Deliberately one PoolClient/transaction, including all events and the receipt.
+      for (const change of changes) await this.writeSetInTransaction(db,user,change.after);
+      const receipt: CommandReceipt = {id:req.id,sessionId:session.id,text:req.text,draft,changes,
+        createdAt:this.now().toISOString(),undo:null};
+      await db.query(`insert into public.workout_commands(id,user_id,session_id,version,request_hash,receipt)
+        values($1,$2,$3,1,$4,$5)`,[req.id,user,session.id,digest,JSON.stringify(receipt)]);
+      return this.commandResult(db,session.id);
+    });
+  }
+  async undoCommand(user: string, input: unknown) {
+    const req = undoCommandSchema.parse(input), digest = hash(req);
+    return this.tx(user, async db => {
+      const old = (await db.query("select * from public.workout_commands where id=$1",[req.id])).rows[0];
+      if (old) {
+        if (old.request_hash !== digest || old.parent_id !== req.commandId) return fail("CONTENT_CONFLICT");
+        return this.commandResult(db,old.session_id);
+      }
+      const row = (await db.query("select * from public.workout_commands where id=$1 and parent_id is null",[req.commandId])).rows[0];
+      if (!row) return fail("NOT_FOUND");
+      if ((await db.query("select id from public.workout_commands where parent_id=$1",[req.commandId])).rowCount) return fail("ALREADY_UNDONE");
+      const receipt = row.receipt as CommandReceipt;
+      await db.query("select id from public.workout_sessions where id=$1 for update",[row.session_id]);
+      const changes: SetChange[] = [];
+      for (const original of receipt.changes) {
+        const current = (await db.query("select payload from public.set_logs where id=$1",[original.after.id])).rows[0]?.payload;
+        if (hash(current ?? null) !== hash(original.after)) return fail("STALE_REVISION");
+        const after: StoredSet = original.before ? {...original.before,revision:current.revision+1}
+          : {...current,revision:current.revision+1,status:"voided"};
+        await this.writeSetInTransaction(db,user,after,true);
+        changes.push({before:current,after,exerciseName:original.exerciseName});
+      }
+      const undo = {id:req.id,createdAt:this.now().toISOString(),changes};
+      await db.query(`insert into public.workout_commands(id,user_id,session_id,version,request_hash,parent_id,receipt)
+        values($1,$2,$3,1,$4,$5,$6)`,[req.id,user,row.session_id,digest,req.commandId,JSON.stringify(undo)]);
+      await this.event(db,user,row.session_id,null,"command_compensated",{commandId:req.commandId,undoId:req.id});
+      return this.commandResult(db,row.session_id);
     });
   }
   async end(user: string, input: unknown): Promise<Session> {
