@@ -1,12 +1,13 @@
 import { test, expect, type Page } from "@playwright/test";
 import { Pool } from "pg";
 import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 async function login(page:Page,email="p1-fixture@example.invalid") {
   await page.goto("/login");await page.locator("#email").fill(email);await page.locator("#password").fill("p1-fixture-password");
   await page.getByRole("button",{name:"登录",exact:true}).click();await page.waitForURL(/\/(?:onboarding)?$/);
 }
-async function send(page:Page,text:string){await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();}
+async function send(page:Page,text:string){const count=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(Math.min(count+1,40),{timeout:20000});}
 async function entries(page:Page){return (await page.request.get("/api/personal-records")).json();}
 async function receipts(page:Page){const detail=page.locator("#coach-receipts");if(await detail.getAttribute("open")===null)await detail.locator("summary").first().click();}
 test.afterEach(async()=>{await db.query("delete from personal_record_events where user_id=$1",[owner]);});
@@ -89,4 +90,36 @@ test("offline body entry persists then syncs once; unavailable local storage sen
   await page.evaluate(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith("liftcut-personal-v1:"))throw new DOMException("fixture full","QuotaExceededError");return original.call(this,k,v);};});
   await send(page,"记下体重 69 公斤");await page.getByRole("button",{name:"确认补录",exact:true}).click();
   await expect(page.getByTestId("personal-sync")).toContainText("无法在本机保存，未发送数据");expect(sent).toEqual([]);expect((await entries(page)).length).toBe(1);
+});
+
+test("data query reads saved measurements even while the initial personal history load is blocked",async({page})=>{
+  await login(page);
+  const date=await page.evaluate(()=>new Date().toLocaleDateString("en-CA"));
+  const response=await page.request.post("/api/personal-records",{headers:{Origin:"http://localhost:3103","X-Workout-Owner":owner},
+    data:{action:"create",id:randomUUID(),entry:{kind:"body",date,weightKg:74,waistCm:null},source:"manual",text:"",anchorDate:date}});
+  expect(response.status()).toBe(200);
+  let release!:()=>void,observed!:()=>void;
+  const gate=new Promise<void>(resolve=>{release=resolve;}),blocked=new Promise<void>(resolve=>{observed=resolve;});
+  await page.route("**/api/personal-records",async route=>{
+    const result=await route.fetch();observed();await gate;await route.fulfill({response:result});
+  },{times:1});
+  try {
+    await page.goto("/agent");await blocked;await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();
+    await send(page,"最近体重");await expect(page.getByTestId("coach-turn").last()).toContainText("74 kg",{timeout:8000});
+  } finally {release();await page.unrouteAll({behavior:"wait"});}
+});
+
+test("failed legacy reads, failed new-history reads and offline queries never become empty-history claims",async({page,context})=>{
+  await login(page);await page.goto("/agent");await page.waitForLoadState("networkidle");
+  await page.route("**/rest/v1/body_metric_logs*",async route=>route.fulfill({response:await route.fetch(),status:503,body:JSON.stringify({message:"synthetic unavailable"})}));
+  // PostgREST retries idempotent 503 reads with 1/2/4 second backoff.
+  await send(page,"最近体重");await expect(page.getByTestId("coach-turn").last()).toContainText("读取失败不代表没有记录",{timeout:15000});
+  await expect(page.getByTestId("coach-turn").last()).not.toContainText("还没有身体记录");await page.unroute("**/rest/v1/body_metric_logs*");
+  await page.route("**/api/personal-records",route=>route.fulfill({status:503,contentType:"application/json",body:"{}"}));
+  await send(page,"今天吃了什么");await expect(page.getByTestId("coach-turn").last()).toContainText("读取失败不代表没有记录");
+  await expect(page.getByTestId("coach-turn").last()).not.toContainText("暂无饮食记录");await page.unroute("**/api/personal-records");
+  await context.setOffline(true);await send(page,"本周训练");await expect(page.getByTestId("coach-turn").last()).toContainText("读取失败不代表没有记录");
+  await expect(page.getByTestId("coach-turn").last()).not.toContainText("已保存 0 次");
+  await context.setOffline(false);
+  expect((await page.request.get("/api/workout-sessions/history",{headers:{"X-Workout-Owner":"22222222-2222-4222-8222-222222222222"}})).status()).toBe(409);
 });

@@ -864,7 +864,7 @@ export async function removeBodyMetricLog(userId: string, id: string): Promise<v
   }
 }
 
-async function fetchPlanBundle(userId: string): Promise<{
+async function fetchPlanBundle(userId: string, signal = new AbortController().signal): Promise<{
   activePlan: TrainingPlan;
   planList: TrainingPlanSummary[];
 }> {
@@ -874,7 +874,7 @@ async function fetchPlanBundle(userId: string): Promise<{
     .from("training_plans")
     .select("id, user_id, name, notes, is_active, created_at, updated_at")
     .eq("user_id", userId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false }).abortSignal(signal);
 
   if (planError) {
     throw planError;
@@ -902,7 +902,7 @@ async function fetchPlanBundle(userId: string): Promise<{
     .from("training_plan_weeks")
     .select("id, training_plan_id, week_number")
     .eq("training_plan_id", activeRow.id)
-    .order("week_number", { ascending: true });
+    .order("week_number", { ascending: true }).abortSignal(signal);
 
   if (weekError) {
     throw weekError;
@@ -913,7 +913,7 @@ async function fetchPlanBundle(userId: string): Promise<{
     ? await supabase
         .from("training_plan_days")
         .select("id, week_id, day_number, title, notes")
-        .in("week_id", weekIds)
+        .in("week_id", weekIds).abortSignal(signal)
     : { data: [], error: null };
 
   if (dayError) {
@@ -925,7 +925,7 @@ async function fetchPlanBundle(userId: string): Promise<{
     ? await supabase
         .from("training_plan_exercises")
         .select("id, day_id, name, sets, rep_range, target_rpe, notes, alternative_exercises")
-        .in("day_id", dayIds)
+        .in("day_id", dayIds).abortSignal(signal)
     : { data: [], error: null };
 
   if (exerciseError) {
@@ -971,9 +971,10 @@ export async function ensureUserBootstrap(userId: string, email: string): Promis
   return profile;
 }
 
-export async function fetchUserDataBundle(userId: string): Promise<UserDataBundle> {
+export async function fetchUserDataBundle(userId: string, options: {strict?: boolean} = {}): Promise<UserDataBundle> {
   const supabase = getSupabaseBrowserClient();
-  const sessionResponse = await fetch("/api/workout-sessions/history", { cache: "no-store" });
+  const signal = options.strict ? AbortSignal.timeout(15000) : new AbortController().signal;
+  const sessionResponse = await fetch("/api/workout-sessions/history", { cache: "no-store", headers: {"X-Workout-Owner":userId}, signal });
   if (!sessionResponse.ok) throw new Error("Unable to load session history");
   const sessionLogs = await sessionResponse.json() as WorkoutLog[];
 
@@ -981,7 +982,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
     .from("user_settings")
     .select("*")
     .eq("user_id", userId)
-    .maybeSingle();
+    .abortSignal(signal).maybeSingle();
 
   if (settingsError) {
     throw settingsError;
@@ -990,10 +991,11 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
   let activePlan = createEmptyTrainingPlan(userId);
   let planList: TrainingPlanSummary[] = [];
   try {
-    const bundle = await fetchPlanBundle(userId);
+    const bundle = await fetchPlanBundle(userId,signal);
     activePlan = bundle.activePlan;
     planList = bundle.planList;
   } catch (planError) {
+    if (options.strict) throw planError;
     console.error("[data-repository] fetchPlanBundle failed, fallback to empty plan", planError);
   }
 
@@ -1004,7 +1006,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
       .from("workout_logs")
       .select("*")
       .eq("user_id", userId)
-      .order("date", { ascending: false });
+      .order("date", { ascending: false }).abortSignal(signal);
 
     if (workoutError) {
       throw workoutError;
@@ -1017,7 +1019,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
       const { data: rawWorkoutExerciseRows, error: workoutExerciseError } = await supabase
         .from("workout_log_exercises")
         .select("*")
-        .in("workout_log_id", workoutIds);
+        .in("workout_log_id", workoutIds).abortSignal(signal);
 
       if (workoutExerciseError) {
         throw workoutExerciseError;
@@ -1026,6 +1028,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
       workoutExerciseRows = (rawWorkoutExerciseRows ?? []) as Record<string, unknown>[];
     }
   } catch (workoutQueryError) {
+    if (options.strict) throw workoutQueryError;
     console.error("[data-repository] workout query failed, fallback to empty workout logs", workoutQueryError);
     workoutRows = [];
     workoutExerciseRows = [];
@@ -1037,7 +1040,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
       .from("food_logs")
       .select("*")
       .eq("user_id", userId)
-      .order("date", { ascending: false });
+      .order("date", { ascending: false }).abortSignal(signal);
 
     if (foodError) {
       throw foodError;
@@ -1045,6 +1048,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
 
     foodRows = (rawFoodRows ?? []) as Record<string, unknown>[];
   } catch (foodQueryError) {
+    if (options.strict) throw foodQueryError;
     console.error("[data-repository] food query failed, fallback to empty nutrition logs", foodQueryError);
     foodRows = [];
   }
@@ -1055,7 +1059,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
       .from("body_metric_logs")
       .select("*")
       .eq("user_id", userId)
-      .order("date", { ascending: false });
+      .order("date", { ascending: false }).abortSignal(signal);
 
     if (bodyError) {
       throw bodyError;
@@ -1063,6 +1067,7 @@ export async function fetchUserDataBundle(userId: string): Promise<UserDataBundl
 
     bodyRows = (rawBodyRows ?? []) as Record<string, unknown>[];
   } catch (bodyQueryError) {
+    if (options.strict) throw bodyQueryError;
     console.error("[data-repository] body query failed, fallback to empty body logs", bodyQueryError);
     bodyRows = [];
   }

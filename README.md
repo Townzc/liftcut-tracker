@@ -39,7 +39,7 @@ Try `最近体重`, `今天吃了什么`, `本周训练`, `记下体重 72.5 公
 
 This conversational surface currently uses **deterministic rules and saved data**, not open-ended model answers. Writes require confirmation and authenticated API validation. Workout requests use the existing IndexedDB outbox; independent body/food entries use account-scoped immutable localStorage requests and the new PostgreSQL receipt ledger. Offline support requires an already loaded page; there is no offline cold-start or background-delivery guarantee.
 
-See the [current verification report](docs/product/MINIMAL_AGENT_VERIFICATION.md), [product engineering Q&A](docs/product/PRODUCT_ENGINEERING_QA.md), and [90-second walkthrough script](docs/product/MINIMAL_AGENT_WALKTHROUGH.md). Screenshots use synthetic data. The research sections below retain their original historical context; the [current product plan](docs/product/2026-10-13-showcase-plan.md) defines the delivery priority.
+See the [UI verification report](docs/product/MINIMAL_AGENT_VERIFICATION.md), [saved-history freshness fix and verification](docs/product/AGENT_QUERY_FRESHNESS.md), [product engineering Q&A](docs/product/PRODUCT_ENGINEERING_QA.md), and [recorded 90-second walkthrough](docs/product/evidence/minimal-agent/minimal-agent-demo.webm). Screenshots and video use synthetic data; the video uses local Auth fixtures and real API/PostgreSQL. The research sections below retain their original historical context; the [current product plan](docs/product/2026-10-13-showcase-plan.md) defines the delivery priority.
 
 ## Project at a glance
 

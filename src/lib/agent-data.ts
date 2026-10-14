@@ -3,18 +3,18 @@ import type { PersonalRecord } from "./personal-records";
 import type { Session } from "./today";
 import { getCurrentWeekRange, toDateString } from "./date";
 
-export type DataAnswer = {lines: string[]; topic: "body" | "food" | "workout" | "plan"};
+export type DataAnswer = {lines: string[]; topic: "body" | "food" | "workout" | "plan"; guidance?: true};
 export function answerDataQuestion(input: string, snapshot: Pick<AppDataSnapshot,"bodyMetricLogs"|"foodLogs"|"workoutLogs"|"trainingPlan">,
   records: PersonalRecord[], session: Session | null, en: boolean, now = new Date(), owner?:string): DataAnswer | null {
   const text = input.normalize("NFKC").trim().toLowerCase();
   if (/^(?:帮我)?(?:记录|记下|记一下|record\b|log\b)/i.test(text) || /不要|don't|do not/.test(text)) return null;
   const query = /多少|趋势|最近|查看|我的|查一下|什么|如何|怎么样|变化|\?|？|\bwhat\b|\bshow\b|\bhow\b|\bhistory\b|\brecent\b|\bthis week\b/.test(text);
   if (/目标|建议|应该|target|goal|should|recommend/.test(text) && /体重|身体|腰围|热量|蛋白|卡路里|weight|body|waist|calori|protein/.test(text)) {
-    return {topic: /体重|身体|腰围|weight|body|waist/.test(text) ? "body" : "food", lines: [en
+    return {guidance:true,topic: /体重|身体|腰围|weight|body|waist/.test(text) ? "body" : "food", lines: [en
       ? "You can view your configured targets in Settings → Profile & goals. Targets are separate from recorded measurements and meals. Ask ‘recent weight’ or ‘what did I eat today’ to see actual entries."
       : "已设置的目标可在「设置 → 基础信息与目标」查看。目标与实际记录分开保存；要查已记录的数据，可以问「最近体重」或「今天吃了什么」。"]};
   }
-  if (/上周|上个月|本月|这月|last week|last month|this month/.test(text)) return {topic:"body",lines:[en?"I can currently look up recent body measurements, this week's workouts, or meals on a YYYY-MM-DD date.":"目前支持最近身体记录、本周训练，以及指定日期（YYYY-MM-DD）的饮食。请明确想查的范围。"]};
+  if (/上周|上个月|本月|这月|last week|last month|this month/.test(text)) return {guidance:true,topic:"body",lines:[en?"I can currently look up recent body measurements, this week's workouts, or meals on a YYYY-MM-DD date.":"目前支持最近身体记录、本周训练，以及指定日期（YYYY-MM-DD）的饮食。请明确想查的范围。"]};
   const active = records.filter(r=>!r.undo), today=toDateString(now);
   const stamp = en ? "Source: your saved entries. Missing values are shown as —." : "依据已保存的记录；未填写的数值显示为 —。";
   if ((query || /^(体重|身体数据|腰围|body|weight|waist)$/.test(text)) && /体重|身体|腰围|weight|body|waist/.test(text)) {

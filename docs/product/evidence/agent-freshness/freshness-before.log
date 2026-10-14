@@ -1,0 +1,155 @@
+[WebServer] (node:47168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:12700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 3 tests using 1 worker
+
+(node:60240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\product-browser\coach.spec.ts:84:5 › query after ending reads committed history while the background cache refresh is still blocked (10.1s)
+(node:25760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\product-browser\minimal-agent.spec.ts:95:5 › data query reads saved measurements even while the initial personal history load is blocked (9.3s)
+(node:34176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\product-browser\minimal-agent.spec.ts:112:5 › failed legacy reads, failed new-history reads and offline queries never become empty-history claims (6.5s)
+
+
+  1) tests\product-browser\coach.spec.ts:84:5 › query after ending reads committed history while the background cache refresh is still blocked
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('coach-turn').last()
+    Expected substring: "本周已保存 1 次"
+    Received string:    "本周训练Agent 03:20本周已保存 0 次结束的训练。依据已保存的记录；未填写的数值显示为 —。"
+    Timeout: 8000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('coach-turn').last() with timeout 8000ms
+      - waiting for getByTestId('coach-turn').last()
+        20 × locator resolved to <div class="space-y-2" data-testid="coach-turn">…</div>
+           - unexpected value "本周训练Agent 03:20本周已保存 0 次结束的训练。依据已保存的记录；未填写的数值显示为 —。"
+
+
+       96 |     expect((await db.query("select status from workout_sessions where id=$1",[session.id])).rows[0].status).toBe("ended");
+       97 |     await send(page,"本周训练");
+    >  98 |     await expect(page.getByTestId("coach-turn").last()).toContainText("本周已保存 1 次",{timeout:8000});
+          |                                                         ^
+       99 |   } finally {release();await page.unrouteAll({behavior:"wait"});}
+      100 | });
+      101 |
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\coach.spec.ts:98:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\coach-query-after-ending-r-e1973-he-refresh-is-still-blocked\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\coach-query-after-ending-r-e1973-he-refresh-is-still-blocked\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\coach-query-after-ending-r-e1973-he-refresh-is-still-blocked\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\coach-query-after-ending-r-e1973-he-refresh-is-still-blocked\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\coach-query-after-ending-r-e1973-he-refresh-is-still-blocked\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\product-browser\minimal-agent.spec.ts:95:5 › data query reads saved measurements even while the initial personal history load is blocked
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('coach-turn').last()
+    Expected substring: "74 kg"
+    Received string:    "最近体重Agent 03:20暂时无法读取完整记录，请联网并同步后再问一次。读取失败不代表没有记录。"
+    Timeout: 8000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('coach-turn').last() with timeout 8000ms
+      - waiting for getByTestId('coach-turn').last()
+        20 × locator resolved to <div class="space-y-2" data-testid="coach-turn">…</div>
+           - unexpected value "最近体重Agent 03:20暂时无法读取完整记录，请联网并同步后再问一次。读取失败不代表没有记录。"
+
+
+      106 |   try {
+      107 |     await page.goto("/agent");await blocked;await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();
+    > 108 |     await send(page,"最近体重");await expect(page.getByTestId("coach-turn").last()).toContainText("74 kg",{timeout:8000});
+          |                                                                                 ^
+      109 |   } finally {release();await page.unrouteAll({behavior:"wait"});}
+      110 | });
+      111 |
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\minimal-agent.spec.ts:108:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\minimal-agent-data-query-r-97a63-nal-history-load-is-blocked\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\minimal-agent-data-query-r-97a63-nal-history-load-is-blocked\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\minimal-agent-data-query-r-97a63-nal-history-load-is-blocked\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\minimal-agent-data-query-r-97a63-nal-history-load-is-blocked\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\minimal-agent-data-query-r-97a63-nal-history-load-is-blocked\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\product-browser\minimal-agent.spec.ts:112:5 › failed legacy reads, failed new-history reads and offline queries never become empty-history claims
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('coach-turn').last()
+    Expected substring: "读取失败不代表没有记录"
+    Received string:    "最近体重Agent 03:20还没有身体记录。可以告诉我「记下体重 72.5 公斤」。依据已保存的记录；未填写的数值显示为 —。"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('coach-turn').last() with timeout 5000ms
+      - waiting for getByTestId('coach-turn').last()
+        14 × locator resolved to <div class="space-y-2" data-testid="coach-turn">…</div>
+           - unexpected value "最近体重Agent 03:20还没有身体记录。可以告诉我「记下体重 72.5 公斤」。依据已保存的记录；未填写的数值显示为 —。"
+
+
+      113 |   await login(page);await page.goto("/agent");await page.waitForLoadState("networkidle");
+      114 |   await page.route("**/rest/v1/body_metric_logs*",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({message:"synthetic unavailable"})}));
+    > 115 |   await send(page,"最近体重");await expect(page.getByTestId("coach-turn").last()).toContainText("读取失败不代表没有记录");
+          |                                                                               ^
+      116 |   await expect(page.getByTestId("coach-turn").last()).not.toContainText("还没有身体记录");await page.unroute("**/rest/v1/body_metric_logs*");
+      117 |   await page.route("**/api/personal-records",route=>route.fulfill({status:503,contentType:"application/json",body:"{}"}));
+      118 |   await send(page,"今天吃了什么");await expect(page.getByTestId("coach-turn").last()).toContainText("读取失败不代表没有记录");
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\minimal-agent.spec.ts:115:79
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\minimal-agent-failed-legac-84184-become-empty-history-claims\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\minimal-agent-failed-legac-84184-become-empty-history-claims\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\minimal-agent-failed-legac-84184-become-empty-history-claims\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\minimal-agent-failed-legac-84184-become-empty-history-claims\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\minimal-agent-failed-legac-84184-become-empty-history-claims\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\product-browser\coach.spec.ts:84:5 › query after ending reads committed history while the background cache refresh is still blocked
+    tests\product-browser\minimal-agent.spec.ts:95:5 › data query reads saved measurements even while the initial personal history load is blocked
+    tests\product-browser\minimal-agent.spec.ts:112:5 › failed legacy reads, failed new-history reads and offline queries never become empty-history claims

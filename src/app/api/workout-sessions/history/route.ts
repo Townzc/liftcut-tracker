@@ -3,11 +3,14 @@ import { todayPool } from "@/services/today/database";
 import { TodayStore } from "@/services/today/store";
 import { errorResponse } from "@/services/agent/http";
 import { sessionsToWorkoutLogs } from "@/lib/today";
+import { workoutOwnerMismatch } from "@/lib/workout-owner";
 export const runtime = "nodejs";
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const auth = await requireApiUser();
     if (auth.errorResponse) return auth.errorResponse;
+    const mismatch = workoutOwnerMismatch(request, auth.user.id);
+    if (mismatch) return mismatch;
     // Existing installations remain usable before migration/configuration. Once
     // configured, historical data stays visible even when new sessions are disabled.
     const logs = process.env.WORKOUT_DATABASE_URL ? sessionsToWorkoutLogs(await new TodayStore(todayPool()).history(auth.user.id)) : [];

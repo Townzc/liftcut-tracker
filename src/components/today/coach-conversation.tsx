@@ -14,10 +14,11 @@ import type { WorkoutOperation } from "@/lib/workout-outbox";
 import { ExerciseReplacement } from "./exercise-replacement";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { answerDataQuestion } from "@/lib/agent-data";
-import { parsePersonalEntry, type PersonalCommand } from "@/lib/personal-records";
+import { parsePersonalEntry, type PersonalCommand, type PersonalRecord } from "@/lib/personal-records";
 import { toDateString } from "@/lib/date";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
 import { EntryPreview } from "@/components/agent/personal-entry";
+import { fetchUserDataBundle } from "@/services/data-repository";
 
 type Reply = "help" | "noSession" | "invalid" | "plan" | "progress" | "receipts" | "longTerm" | "replace" | "clarify" | "draft" | "closed" | "queued" | "failed" | "data" | "personal" | "personalQueued";
 type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string};
@@ -68,11 +69,27 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
         setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
       } else if (answer) {
         reply="data";lines=answer.lines;
-        if ((answer.topic === "body" || answer.topic === "food") && personal.owner) {
-          if (!personal.records.length && (personal.loading || personal.error || !navigator.onLine))
-            lines=[en?"Your full history is not available yet. Connect and retry after syncing; an unavailable history does not mean you have no records.":"暂时无法读取完整记录，请联网并同步后再问一次。读取失败不代表没有记录。"];
-          else if (personal.loading || personal.error || personal.pending.length || !navigator.onLine)
-            lines=[en?"Some entries are loading or waiting to sync; the saved history below may be incomplete.":"部分补录正在加载或等待同步，以下已保存历史可能不完整。",...lines];
+        if (personal.owner && !answer.guidance) {
+          try {
+            if (!navigator.onLine) throw new Error("offline");
+            // A saved receipt can precede the background store refresh. Read for
+            // this question; never pass a stale cache or an error fallback off as history.
+            const owner = personal.owner;
+            const [bundle, records] = await Promise.all([
+              fetchUserDataBundle(owner,{strict:true}),
+              (async():Promise<PersonalRecord[]> => {
+                if (answer.topic !== "body" && answer.topic !== "food") return [];
+                const response=await fetch("/api/personal-records",{headers:{"X-Workout-Owner":owner},cache:"no-store",signal:AbortSignal.timeout(15000)});
+                if (!response.ok) throw new Error("history_unavailable");
+                return response.json();
+              })(),
+            ]);
+            lines=answerDataQuestion(input,bundle.snapshot,records,active,en,new Date(),owner)!.lines;
+            if ((answer.topic === "workout" && pendingCount) || ((answer.topic === "body" || answer.topic === "food") && personal.pending.length))
+              lines=[en?"Some entries are waiting to sync; they may not be included in this saved history.":"部分记录正在等待同步，可能尚未计入以下已保存历史。",...lines];
+          } catch {
+            lines=[en?"Your full history could not be read. Connect and try again; a failed read does not mean you have no records.":"暂时无法读取完整记录，请联网后重试。读取失败不代表没有记录。"];
+          }
         }
       } else if (/体重|腰围|午餐|早餐|晚餐|饮食|蛋白质|weight|waist|breakfast|lunch|dinner|protein/i.test(input)) {
         reply="data";lines=[en?"Please include explicit numbers and units, e.g. ‘log weight 72.5 kg’ or ‘log lunch rice 600 kcal protein 25 g’. I won't estimate missing values.":"请写出明确的数值和单位，例如「记下体重 72.5 公斤」，或「记录午餐 鸡肉饭 600 千卡 蛋白质 25 克」。不知道的数值可以不写。"];
@@ -166,6 +183,7 @@ export function CoachConversation({data, busy, pendingCount, submit}: Props) {
         </div>
       </div>)}
     </div>
+    {working && <p role="status" className="py-3 text-sm text-muted-foreground">{t("working")}</p>}
     {resolveText && active && <div className="space-y-2 rounded-xl border bg-card p-3" data-testid="coach-clarify">
       <p className="text-sm">{t("chooseToContinue")}</p><div className="flex flex-wrap gap-2">{active.prescription.exercises.map(e =>
         <Button key={e.id} variant="outline" disabled={locked} onClick={() => {setSelected(e.id); void send(resolveText, e.id);}}>{exerciseLabel(e.name, locale)}</Button>)}</div>
