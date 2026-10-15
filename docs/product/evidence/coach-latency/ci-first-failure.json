@@ -1,0 +1,12 @@
+{
+  "run": 38680232830,
+  "head": "9a0974a908f8802c79ba94b913a64b17427edbe3",
+  "job": "today-session",
+  "passed": 56,
+  "failed": 1,
+  "test": "natural food draft keeps nulls; tampering, cross-user reuse, response loss and offline confirmation",
+  "failure": "locator(#email) timed out at second login after immediately navigating during pending sign-out; screenshot shows authenticated homepage.",
+  "fix": "Wait for API 401 after UI sign-out before new login. Inject 350 ms logout delay; all original assertions retained.",
+  "targetedRepeats": 3,
+  "allPassed": true
+}

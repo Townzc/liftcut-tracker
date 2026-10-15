@@ -16,12 +16,20 @@
       "sha256": "c5ace1a4689a9d42b60cb728af402ff18986f977c83f97d61c79de64a6a76f7d"
     },
     {
+      "name": "browser-logout-fixed.log",
+      "sha256": "57c281209fa3157270b870094da8cbbd0b865d8fec91d788f80a3c5c90f112b2"
+    },
+    {
       "name": "browser.log",
       "sha256": "326081166b4e3afb27e648145677003f900510153339229c69d67a9adc98e4e3"
     },
     {
       "name": "build.log",
       "sha256": "b2f95fff337e48acd9ef7099e6b2db6fff4ad21134804d05ae5985ae52ea675f"
+    },
+    {
+      "name": "ci-first-failure.json",
+      "sha256": "2c3ae63133186fd5618223f28a39e4d8ff5f0de18555863a876e53eaa59138e9"
     },
     {
       "name": "concurrency.log",
