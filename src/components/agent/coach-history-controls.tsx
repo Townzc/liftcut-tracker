@@ -17,7 +17,7 @@ export function CoachHistoryControls({en,locked,beforeChange}:{en:boolean;locked
         <button className="min-h-12 min-w-0 flex-1 truncate px-3 py-3 text-left" disabled={locked} onClick={async()=>{beforeChange();await history.select(chat.id);setOpen(false);}}>{chat.title}</button>
         <Button variant="ghost" size="icon" disabled={locked} aria-label={en?`Delete conversation ${chat.title}`:`删除对话 ${chat.title}`} onClick={()=>setDeleteId(chat.id)}><Trash2 className="size-4"/></Button>
       </div>)}</div>
-      {!snapshot.threads.length&&<p className="text-sm text-muted-foreground">{en?"No saved conversations yet.":"还没有已保存的对话."}</p>}
+      {!snapshot.threads.length&&!snapshot.error&&<p className="text-sm text-muted-foreground">{en?"No saved conversations yet.":"还没有已保存的对话."}</p>}
       {snapshot.next&&<Button variant="ghost" disabled={snapshot.loading} onClick={()=>void history.refreshList(true)}>{en?"Load more":"加载更多"}</Button>}
       {snapshot.error&&<p role="status" className="text-xs">{en?"History could not sync. Reconnect and retry.":"历史暂未同步成功，请联网后重试."}<Button size="sm" variant="ghost" onClick={()=>{void history.refreshList();void history.flush();}}>{en?"Retry":"重试"}</Button></p>}
       <Dialog open={!!deleteId} onOpenChange={value=>{if(!value)setDeleteId(null);}}><DialogContent><DialogTitle>{en?"Delete this conversation?":"删除这段对话？"}</DialogTitle>

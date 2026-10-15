@@ -108,7 +108,13 @@ export class CoachHistoryClient {
     const id=this.state.id,ticket=this.selection,c=this.chats.get(id)!;
     try{const page:ConversationPage=await this.request(`?id=${encodeURIComponent(id)}`);
       if(this.alive&&this.state.id===id&&ticket===this.selection&&!c.dirty.size&&!c.live.some(t=>t.pending)){this.mergePage(c,page);this.publish();this.cache();}
-    }catch{/* local cache stays visible; list/retry exposes availability */}
+    }catch(e){
+      // A confirmed deletion on another device invalidates this cached copy.
+      // Transport failures keep it visible; unsent messages remain retryable.
+      if(e instanceof Error&&e.message==="NOT_FOUND"&&this.alive&&this.state.id===id&&ticket===this.selection&&!c.dirty.size){
+        this.chats.delete(id);this.publish({threads:this.state.threads.filter(t=>t.id!==id)});this.newConversation();
+      }
+    }
   }
   async older(){
     const c=this.chats.get(this.state.id);if(!c?.older)return;const id=c.id,ticket=this.selection;

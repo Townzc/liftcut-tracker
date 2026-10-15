@@ -65,3 +65,14 @@ test("failed upload remains retryable; late history response never replaces a ne
   const selecting=a.select(randomUUID());a.newConversation();const id=a.snapshot().id;release();await selecting;
   assert.equal(a.snapshot().id,id);assert.deepEqual(a.snapshot().turns,[]);a.dispose();
 });
+test("a confirmed remote deletion clears a synced cached conversation after reload",async t=>{
+  browser();let deleted=false;
+  t.mock.method(globalThis,"fetch",async(url:RequestInfo|URL,options?:RequestInit)=>{
+    if(options?.method==="POST")return Response.json({saved:true});
+    if(String(url).includes("?id="))return Response.json({}, {status:deleted?404:503});
+    return Response.json({items:[],next:null});
+  });
+  const owner=randomUUID(),a=new CoachHistoryClient(owner);a.activate();a.setTurns([turn()]);await settle();await a.flush();const id=a.snapshot().id;
+  deleted=true;const reloaded=new CoachHistoryClient(owner);reloaded.activate();await settle();
+  assert.notEqual(reloaded.snapshot().id,id);assert.deepEqual(reloaded.snapshot().turns,[]);reloaded.dispose();a.dispose();
+});
