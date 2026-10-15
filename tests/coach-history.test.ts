@@ -25,6 +25,15 @@ test("small chat shortcut only accepts complete isolated greetings and capabilit
   for(const text of ["你好，看看我的体重","谢谢，保存吧","那昨天呢","我该怎么练","介绍一下我上周训练"])assert.equal(simpleCoachChat(text,[]),false);
   assert.equal(simpleCoachChat("你好",[{role:"user",content:"我想补录"}]),false);
 });
+test("long rule-mode progress remains usable and only oversized stored copies are explicitly shortened",()=>{
+  const lines=Array.from({length:20},(_,i)=>`深蹲 · 第 ${i+1} 组: 50 kg × 8 · RPE —`),full={...turn(),lines};
+  assert.deepEqual(savedCoachTurn(full).lines,lines);
+  const large={...turn(),lines:Array.from({length:600},()=>"深蹲训练实际记录 ".repeat(100))},saved=savedCoachTurn(large);
+  assert.ok(new TextEncoder().encode(JSON.stringify(saved)).length<20000);assert.match(saved.lines!.at(-1)!,/历史内容已缩略/);
+  assert.equal(large.lines.length,600);
+  const escaped=savedCoachTurn({...turn("\u0000".repeat(400)),lines:Array.from({length:600},()=>"\u0000".repeat(100))});
+  assert.ok(new TextEncoder().encode(JSON.stringify(escaped)).length<20000);
+});
 test("offline queue restores messages and draft across reload, isolates accounts and clears on logout",async t=>{
   const cache=browser(),owner=randomUUID();Object.defineProperty(navigator,"onLine",{value:false});
   t.mock.method(globalThis,"fetch",async()=>{throw Error("offline");});

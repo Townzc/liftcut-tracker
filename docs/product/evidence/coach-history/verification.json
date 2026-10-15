@@ -1,130 +1,130 @@
 {
   "files": [
     {
+      "sha256": "7433e5a12ee1b73a4b550a0340a91e27e2f584c48aa2e1109c6689cc9b6ca8a7",
       "bytes": 3690,
-      "path": "browser-final-focused.log",
-      "sha256": "7433e5a12ee1b73a4b550a0340a91e27e2f584c48aa2e1109c6689cc9b6ca8a7"
+      "path": "browser-final-focused.log"
     },
     {
+      "sha256": "48dd4d9eeb385a05c811c5db2e4af621c512a2d0d09f688ac876583f98678ff4",
       "bytes": 33592,
-      "path": "browser-initial.log",
-      "sha256": "48dd4d9eeb385a05c811c5db2e4af621c512a2d0d09f688ac876583f98678ff4"
+      "path": "browser-initial.log"
     },
     {
+      "sha256": "b321400cdd59b44cb1f894169cca08172f47e9b540d3c7522af05381668d093f",
       "bytes": 8392,
-      "path": "browser-plan-sync-initial.log",
-      "sha256": "b321400cdd59b44cb1f894169cca08172f47e9b540d3c7522af05381668d093f"
+      "path": "browser-plan-sync-initial.log"
     },
     {
+      "sha256": "efa5957df52cb90a72de7d17b7c9593bd4576e39c1629b8bdea0e98c5ed8457d",
       "bytes": 16405,
-      "path": "browser.log",
-      "sha256": "efa5957df52cb90a72de7d17b7c9593bd4576e39c1629b8bdea0e98c5ed8457d"
+      "path": "browser.log"
     },
     {
+      "sha256": "9ceb4ebba6476ce5002e6bad6973cb2d065d4a03c2a85920779d6bca81a3b54c",
       "bytes": 1643,
-      "path": "build-final.log",
-      "sha256": "9ceb4ebba6476ce5002e6bad6973cb2d065d4a03c2a85920779d6bca81a3b54c"
+      "path": "build-final.log"
     },
     {
+      "sha256": "a012f36a66e710d3ce59b1b85e91e132be7d9f3a48ecb7b4c562752d2e286f1d",
       "bytes": 1645,
-      "path": "build.log",
-      "sha256": "a012f36a66e710d3ce59b1b85e91e132be7d9f3a48ecb7b4c562752d2e286f1d"
+      "path": "build.log"
     },
     {
+      "sha256": "9984e8eebb032f99125e8e90124838c72ac224c352c6ff20edb92b0024c05775",
       "bytes": 2561,
-      "path": "china-public-baseline.json",
-      "sha256": "9984e8eebb032f99125e8e90124838c72ac224c352c6ff20edb92b0024c05775"
+      "path": "china-public-baseline.json"
     },
     {
+      "sha256": "47b24e0fe0bee3e79d2baa389b690deb67977c7f0d0c45ebfb1a6c036cd09eb1",
       "bytes": 1057,
-      "path": "database-setup.log",
-      "sha256": "47b24e0fe0bee3e79d2baa389b690deb67977c7f0d0c45ebfb1a6c036cd09eb1"
+      "path": "database-setup.log"
     },
     {
+      "sha256": "627afa13ddc0124719a7eee4922e1075832768a3c3b594fa9aaa9596b34df4c1",
       "bytes": 2378,
-      "path": "db-coach-execution.log",
-      "sha256": "627afa13ddc0124719a7eee4922e1075832768a3c3b594fa9aaa9596b34df4c1"
+      "path": "db-coach-execution.log"
     },
     {
+      "sha256": "55deefa6a06e14960f497f9bd3d94f0263b40ad54574bd7b16e592f6d01b6204",
       "bytes": 868,
-      "path": "db-coach-history.log",
-      "sha256": "55deefa6a06e14960f497f9bd3d94f0263b40ad54574bd7b16e592f6d01b6204"
+      "path": "db-coach-history.log"
     },
     {
+      "sha256": "8b91b14834b5a7d1fe1d7d22729ef032ae9690782c67f7342842d177dc665551",
       "bytes": 818,
-      "path": "db-coach-model.log",
-      "sha256": "8b91b14834b5a7d1fe1d7d22729ef032ae9690782c67f7342842d177dc665551"
+      "path": "db-coach-model.log"
     },
     {
+      "sha256": "44441d7fac0c61bff5e52e8bfc17f90523ad9eb1ea508d43418bab5683bbc124",
       "bytes": 1217,
-      "path": "db-exercise-replacement.log",
-      "sha256": "44441d7fac0c61bff5e52e8bfc17f90523ad9eb1ea508d43418bab5683bbc124"
+      "path": "db-exercise-replacement.log"
     },
     {
+      "sha256": "23ce515df4ca36e310a82618078eaba6e6353a72285094aa2c84fd0dc1c495fb",
       "bytes": 223,
-      "path": "db-outbox.log",
-      "sha256": "23ce515df4ca36e310a82618078eaba6e6353a72285094aa2c84fd0dc1c495fb"
+      "path": "db-outbox.log"
     },
     {
+      "sha256": "0a39a3fa95a3ce12ac4c4615ed89cba5af99bd110acf6c9803f7c9eac73991b7",
       "bytes": 579,
-      "path": "db-personal-records.log",
-      "sha256": "0a39a3fa95a3ce12ac4c4615ed89cba5af99bd110acf6c9803f7c9eac73991b7"
+      "path": "db-personal-records.log"
     },
     {
+      "sha256": "ffc0f660b2cccdc1b6306bcee50be49238d83bb89242c30d9ddb94710f946167",
       "bytes": 1195,
-      "path": "db-plan-conversation.log",
-      "sha256": "ffc0f660b2cccdc1b6306bcee50be49238d83bb89242c30d9ddb94710f946167"
+      "path": "db-plan-conversation.log"
     },
     {
+      "sha256": "e0b7c72991340709772a9c4e2aa205a2b1627101af299d439968483dbd88f1e2",
       "bytes": 1070,
-      "path": "db-workout-commands.log",
-      "sha256": "e0b7c72991340709772a9c4e2aa205a2b1627101af299d439968483dbd88f1e2"
+      "path": "db-workout-commands.log"
     },
     {
+      "sha256": "18e18cb0983a0d2c8b3a964dbfa473fdfa0578bfc86f8a4103032497f3995e6f",
       "bytes": 79294,
-      "path": "iphone-webkit.png",
-      "sha256": "18e18cb0983a0d2c8b3a964dbfa473fdfa0578bfc86f8a4103032497f3995e6f"
+      "path": "iphone-webkit.png"
     },
     {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
       "bytes": 1,
-      "path": "lint-final.log",
-      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      "path": "lint-final.log"
     },
     {
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887",
       "bytes": 362,
-      "path": "lint.log",
-      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887"
+      "path": "lint.log"
     },
     {
+      "sha256": "bd03f89490da0e897f0da14b211f9aac9758cc2d82f471e855a609af42ac60e9",
       "bytes": 12480,
-      "path": "measure-before.json",
-      "sha256": "bd03f89490da0e897f0da14b211f9aac9758cc2d82f471e855a609af42ac60e9"
+      "path": "measure-before.json"
     },
     {
+      "sha256": "d00982f4ceba65f5d40db2985374800e876c82097435dc2367b8d5a2b3a82775",
       "bytes": 23214,
-      "path": "new-chat-mobile.png",
-      "sha256": "d00982f4ceba65f5d40db2985374800e876c82097435dc2367b8d5a2b3a82775"
+      "path": "new-chat-mobile.png"
     },
     {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
       "bytes": 1,
-      "path": "typecheck.log",
-      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      "path": "typecheck.log"
     },
     {
-      "bytes": 9897,
-      "path": "unit.log",
-      "sha256": "6e9035bed6ef1b3ab86e7295d92c2a9e474a7a1ca3b14b2e7624e814bea4b8ae"
+      "sha256": "39cc112287b621a54989360cfad2928f9a05106090d02c8ccf9a77a7b3ea9b7b",
+      "bytes": 10013,
+      "path": "unit.log"
     },
     {
+      "sha256": "1778d7048c062d4b7b6fa7502ba0ef2d7ec65fea198ed016c30e75a81b2cd7f2",
       "bytes": 23343,
-      "path": "wechat-slow4g-mobile.png",
-      "sha256": "1778d7048c062d4b7b6fa7502ba0ef2d7ec65fea198ed016c30e75a81b2cd7f2"
+      "path": "wechat-slow4g-mobile.png"
     }
   ],
   "initialDatabase": "Concurrent first insert deadlock fixed with shared per-conversation transaction lock",
   "local": {
     "build": "passed",
-    "unit": 110,
+    "unit": 111,
     "typecheck": "passed",
     "lint": "0 errors, 2 existing frozen-research warnings",
     "productDatabase": 57,

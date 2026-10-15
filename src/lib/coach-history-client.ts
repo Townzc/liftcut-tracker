@@ -4,7 +4,7 @@ import { historyItemSchema,savedCoachTurn,restoredCoachTurn,mergeHistory,type Co
 type LocalChat={id:string;text:string;items:HistoryItem[];live:CoachTurn[];dirty:Set<string>;signatures:Map<string,string>;older:HistoryCursor|null};
 export type HistoryState={id:string;text:string;turns:CoachTurn[];threads:ConversationSummary[];next:HistoryCursor|null;older:HistoryCursor|null;ready:boolean;loading:boolean;sync:"idle"|"saving"|"saved"|"offline"|"error";error:string|null};
 const empty:HistoryState={id:"",text:"",turns:[],threads:[],next:null,older:null,ready:false,loading:false,sync:"idle",error:null};
-const cacheSchema=z.object({version:z.literal(1),active:z.uuid(),chats:z.array(z.object({id:z.uuid(),text:z.string().max(400),items:z.array(historyItemSchema).max(500),dirty:z.array(z.uuid()).max(500)})).max(50)});
+const cacheSchema=z.object({version:z.literal(1),active:z.uuid(),chats:z.array(z.object({id:z.uuid(),text:z.string().max(400),items:z.array(historyItemSchema),dirty:z.array(z.uuid())}))});
 const key=(owner:string)=>`liftcut-chat-history:${owner}`;
 
 /** Account-scoped prose cache + durable upload queue. Never stores actionable proposals. */
@@ -60,8 +60,8 @@ export class CoachHistoryClient {
   dispose(){this.alive=false;this.controller.abort();if(this.owner)try{localStorage.removeItem(key(this.owner));}catch{/* account boundary still clears memory */}}
   setText=(text:string)=>{const c=this.chats.get(this.state.id);if(!c)return;c.text=text;this.publish();this.cache();};
   setTurns=(next:CoachTurn[]|((xs:CoachTurn[])=>CoachTurn[]))=>{
-    const c=this.chats.get(this.state.id);if(!c||!this.alive)return;c.live=typeof next==="function"?next(c.live):next;let changed=false;
-    for(const turn of c.live){const saved=savedCoachTurn(turn),signature=JSON.stringify(saved);if(c.signatures.get(turn.id)===signature)continue;
+    const c=this.chats.get(this.state.id);if(!c||!this.alive)return;const previous=new Map(c.live.map(t=>[t.id,t]));c.live=typeof next==="function"?next(c.live):next;let changed=false;
+    for(const turn of c.live){if(previous.get(turn.id)===turn)continue;const saved=savedCoachTurn(turn),signature=JSON.stringify(saved);if(c.signatures.get(turn.id)===signature)continue;
       c.signatures.set(turn.id,signature);const old=c.items.find(i=>i.turn.id===turn.id),item={turn:saved,revision:(old?.revision??0)+1};
       c.items=mergeHistory(c.items.filter(i=>i.turn.id!==turn.id),[item]);c.dirty.add(turn.id);changed=true;
     }
