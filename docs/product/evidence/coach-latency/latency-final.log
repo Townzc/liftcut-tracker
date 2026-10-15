@@ -1,8 +1,8 @@
-✔ read groups overlap; a failed read still releases exclusive draft and later reads in order (1.6952ms)
-✔ competing draft calls cannot both observe an empty proposal; abort remains effective after waiting (0.4298ms)
-✔ explicit fresh read-ahead honors timezone anchor, Monday weeks and independent topics (2.5748ms)
-✔ ambiguous ranges, write intent, quoted prompts and follow-ups stay with the model (0.4183ms)
-✔ timing uses one request clock, exposes no payloads and accounts for overlapping tools once (0.6127ms)
+✔ read groups overlap; a failed read still releases exclusive draft and later reads in order (1.3788ms)
+✔ competing draft calls cannot both observe an empty proposal; abort remains effective after waiting (0.3852ms)
+✔ explicit fresh read-ahead honors timezone anchor, Monday weeks and independent topics (2.5324ms)
+✔ ambiguous ranges, write intent, quoted prompts and follow-ups stay with the model (0.2246ms)
+✔ timing uses one request clock, exposes no payloads and accounts for overlapping tools once (0.3923ms)
 ℹ tests 5
 ℹ suites 0
 ℹ pass 5
@@ -10,4 +10,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 278.8879
+ℹ duration_ms 263.2188

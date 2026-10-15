@@ -34,13 +34,16 @@ test("explicit fresh read-ahead honors timezone anchor, Monday weeks and indepen
   assert.equal(initialRecordQuery("查看本周训练记录","2026-10-18")?.from,"2026-10-12");
   assert.equal(initialRecordQuery("查看本周训练记录","2026-10-19")?.from,"2026-10-19");
   assert.equal(initialRecordQuery("check body records for day before yesterday","2026-01-01")?.to,"2025-12-30");
+  assert.deepEqual(initialRecordQuery("请核对我最近一周的身体和饮食记录，概括有哪些已保存的数据，哪些数值还未知。","2026-10-14"),
+    {topic:"body",alsoTopics:["food"],from:"2026-10-08",to:"2026-10-14"});
 });
 
 test("ambiguous ranges, write intent, quoted prompts and follow-ups stay with the model",()=>{
   for(const text of ["今天称了72.5公斤，帮我记一下","查今天的身体记录，再保存72公斤","查今天和昨天身体记录","查最近7天与上周的身体记录",
     "查去年今天身体记录","查最近7天超过80公斤的身体记录","比较最近一周身体记录","不要查今天体重记录","怎么记录今天体重？",
     "查今天饮食计划","查最近一个月身体记录","昨天呢？","查全部身体记录","Show weight records before yesterday",
-    "Check last week's food records",'解释“查看今天身体记录”的意思',"制定训练计划，参考今天训练记录","怎么查今天身体记录？","show tomorrow weight records and today weight records"]){
+    "Check last week's food records",'解释“查看今天身体记录”的意思',"制定训练计划，参考今天训练记录","怎么查今天身体记录？","show tomorrow weight records and today weight records",
+    "查今天已保存的数据和身体记录，再帮我保存72公斤"]){
     assert.equal(initialRecordQuery(text,"2026-10-14"),null,text);
   }
 });

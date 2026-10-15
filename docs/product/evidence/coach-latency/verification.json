@@ -16,12 +16,20 @@
       "sha256": "c5ace1a4689a9d42b60cb728af402ff18986f977c83f97d61c79de64a6a76f7d"
     },
     {
+      "name": "browser-final-focused.log",
+      "sha256": "1a884cb7ff478d332002ac7b3bf777e1f20c151c25a90f8c9fe88e2885e6a939"
+    },
+    {
       "name": "browser-logout-fixed.log",
       "sha256": "57c281209fa3157270b870094da8cbbd0b865d8fec91d788f80a3c5c90f112b2"
     },
     {
       "name": "browser.log",
       "sha256": "326081166b4e3afb27e648145677003f900510153339229c69d67a9adc98e4e3"
+    },
+    {
+      "name": "build-final.log",
+      "sha256": "979e8c129b998d6721601aaba4c9d2f9c77174242476606e4f139e0233e83f32"
     },
     {
       "name": "build.log",
@@ -45,7 +53,7 @@
     },
     {
       "name": "latency-final.log",
-      "sha256": "4877e4dcce179229e3e0041d0cae1fa8eb7499e8355bfb65ae99a8bd492a7ec3"
+      "sha256": "b3fcba8f9ae23711abd5fd9a726ce392a0e7cd27c5f53645eff5e565344b880c"
     },
     {
       "name": "lint.log",

@@ -1,0 +1,65 @@
+
+> liftcut-tracker@0.1.0 build
+> next build
+
+▲ Next.js 16.4.1 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 98ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 14.3s
+  Running TypeScript ...
+  Finished TypeScript in 4.5s ...
+  Collecting page data using 19 workers ...
+  Generating static pages using 19 workers (0/36) ...
+  Generating static pages using 19 workers (9/36)
+  Generating static pages using 19 workers (18/36)
+  Generating static pages using 19 workers (27/36)
+✓ Generating static pages using 19 workers (36/36) in 400ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /agent
+├ ƒ /api/agent/runs
+├ ƒ /api/agent/runs/[id]
+├ ƒ /api/agent/runs/[id]/[action]
+├ ƒ /api/ai/coach
+├ ƒ /api/ai/generate-nutrition-plan
+├ ƒ /api/ai/generate-training-plan
+├ ƒ /api/ai/history
+├ ƒ /api/ai/parse-log
+├ ƒ /api/ai/save-nutrition-plan
+├ ƒ /api/ai/save-training-plan
+├ ƒ /api/personal-records
+├ ƒ /api/workout-commands
+├ ƒ /api/workout-replacements
+├ ƒ /api/workout-sessions
+├ ƒ /api/workout-sessions/history
+├ ƒ /api/workout-sessions/trace
+├ ƒ /auth/callback
+├ ƒ /body
+├ ƒ /coach
+├ ƒ /demo
+├ ƒ /forgot-password
+├ ƒ /login
+├ ƒ /nutrition
+├ ƒ /onboarding
+├ ƒ /plan
+├ ƒ /plan/ai
+├ ƒ /plan/review
+├ ƒ /register
+├ ƒ /settings
+├ ƒ /settings/about
+├ ƒ /settings/account
+├ ƒ /settings/data
+├ ƒ /settings/preferences
+├ ƒ /settings/profile
+├ ƒ /today
+└ ƒ /workout
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand

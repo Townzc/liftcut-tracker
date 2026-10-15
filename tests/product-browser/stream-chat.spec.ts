@@ -12,10 +12,10 @@ test.afterEach(async()=>{await db.query("delete from coach_request_usage where u
 test.afterAll(async()=>{await db.end();});
 
 test("explicit record queries read fresh sources before one model call, with private numeric timings",async({page})=>{
-  await login(page);await start(page,"查看今天身体和饮食记录");
+  await login(page);await start(page,"查看今天身体和饮食记录，核对已保存的数据");
   const turn=page.getByTestId("coach-turn").last();await expect(turn).toHaveAttribute("aria-busy","false");
   await expect(turn).toContainText("已同时核对");await expect(turn).not.toContainText("toolWallMs");
-  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"查看今天身体和饮食记录",history:[],locale:"zh",timezone:"America/Los_Angeles",consent:"coach-model-v1"}});
+  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"查看今天身体和饮食记录，核对已保存的数据",history:[],locale:"zh",timezone:"America/Los_Angeles",consent:"coach-model-v1"}});
   expect(response.status()).toBe(200);const result=await response.json();
   expect(result.sources.map((s:{topic:string})=>s.topic)).toEqual(["body","food"]);
   expect(result.timing.model).toHaveLength(1);expect(result.timing.tools.some((s:{name:string})=>s.name==="read_records.prefetch")).toBe(true);
