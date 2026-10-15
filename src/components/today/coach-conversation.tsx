@@ -23,26 +23,29 @@ import { COACH_CONSENT_VERSION, conversationHistory, type CoachStatus, type Coac
 import { CoachSources } from "@/components/agent/coach-sources";
 import { CoachPlans } from "@/components/agent/coach-plans";
 import type { RunView } from "@/lib/agent/contracts";
+import { COACH_STREAM_TYPE, consumeCoachStream } from "@/lib/coach-stream";
 
 type Reply = "help" | "noSession" | "invalid" | "plan" | "progress" | "receipts" | "longTerm" | "replace" | "clarify" | "draft" | "closed" | "queued" | "failed" | "data" | "personal" | "personalQueued";
-type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string; model?:string;sources?:CoachSource[]};
+type Turn = {id: string; text: string; reply: Reply; lines?: string[]; reason?: string; at: string; model?:string;sources?:CoachSource[];pending?:boolean;interrupted?:boolean};
 type Proposal = {turnId: string; session: Session; hash: string; draft: LogDraft; operation: WorkoutOperation};
-type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void};
+type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void;initialStatus?:CoachStatus};
 
-export function CoachConversation({data, busy, pendingCount, submit,workoutPanel,receiptsPanel,onPlanApplied}: Props) {
+export function CoachConversation({data, busy, pendingCount, submit,workoutPanel,receiptsPanel,onPlanApplied,initialStatus}: Props) {
   const t = useTranslations("coach"), ts = useTranslations("today.sentence"), tt = useTranslations("today"), locale = useLocale();
   const [text, setText] = useState(""), [selected, setSelected] = useState("");
   const [turns, setTurns] = useState<Turn[]>([]), [proposal, setProposal] = useState<Proposal | null>(null);
   const [working, setWorking] = useState(false), flight = useRef(false);
   const [planRun,setPlanRun]=useState<RunView|null>(null),[planRunId,setPlanRunId]=useState<string|undefined>(),[planWorking,setPlanWorking]=useState(false);
   const personal = usePersonalRecords(), en = locale === "en";
-  const [modelStatus,setModelStatus]=useState<CoachStatus|null>(null),[modelEnabled,setModelEnabled]=useState(false);
+  const [modelStatus,setModelStatus]=useState<CoachStatus|null>(initialStatus??null),[modelEnabled,setModelEnabled]=useState(false);
+  const [streamStage,setStreamStage]=useState<"connecting"|"reading"|"drafting"|"answering">("connecting");
   const [consentError,setConsentError]=useState(false);
   const [optionsOpen,setOptionsOpen]=useState(false),[panel,setPanel]=useState<"workout"|"receipts"|null>(null);
   const modelRequest=useRef<AbortController|null>(null);
   const consentKey=personal.owner?`liftcut-coach-consent:${personal.owner}`:null;
   const [personalProposal,setPersonalProposal] = useState<{turnId:string;command:Extract<PersonalCommand,{action:"create"}>}|null>(null);
   const transcript = useRef<HTMLDivElement>(null);
+  const followStream=useRef(true);
   const [resolveText, setResolveText] = useState<string | null>(null), [replace, setReplace] = useState<{session: string; exerciseId?: string} | null>(null);
   const session = data.session, active = session?.status === "active" ? session : null;
   const chosen = active?.prescription.exercises.some(e => e.id === selected) ? selected : "";
@@ -51,7 +54,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
   useEffect(() => {
     // Scroll only the transcript after a reply, never the whole page/composer.
     const element = transcript.current;
-    if (element) element.scrollTop = element.scrollHeight;
+    if (element&&followStream.current) element.scrollTop = element.scrollHeight;
   }, [turns]);
   useEffect(() => {
     const prompt = new URLSearchParams(window.location.search).get("prompt");
@@ -60,12 +63,12 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
   }, []);
   useEffect(()=>{
     let alive=true;
-    void fetch("/api/ai/coach",{cache:"no-store"}).then(r=>r.ok?r.json():null).then((status:CoachStatus|null)=>{
+    try{setModelEnabled(!!consentKey&&localStorage.getItem(consentKey)===COACH_CONSENT_VERSION);}catch{setModelEnabled(false);}
+    if(!initialStatus)void fetch("/api/ai/coach",{cache:"no-store"}).then(r=>r.ok?r.json():null).then((status:CoachStatus|null)=>{
       if(!alive)return;setModelStatus(status);
-      try{setModelEnabled(!!consentKey&&localStorage.getItem(consentKey)===COACH_CONSENT_VERSION);}catch{setModelEnabled(false);}
     }).catch(()=>{});
     return()=>{alive=false;modelRequest.current?.abort();};
-  },[consentKey]);
+  },[consentKey,initialStatus]);
   function toggleModel(enabled:boolean){
     if(!consentKey)return;
     try{if(enabled)localStorage.setItem(consentKey,COACH_CONSENT_VERSION);else localStorage.removeItem(consentKey);
@@ -84,6 +87,10 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     if (flight.current || busy || planWorking || !input.trim()) return;
     flight.current = true; setWorking(true); closeDraft(); setPanel(null); setText("");
     const id = crypto.randomUUID(), at = new Date().toISOString();
+    followStream.current=true;
+    setStreamStage("connecting");
+    setTurns(xs=>[...xs,{id,text:input,reply:"data" as const,at,pending:true}].slice(-40));
+    let interrupted=false;
     let reply: Reply = "failed", lines: string[] | undefined, reason: string | undefined, model:string|undefined,sources:CoachSource[]|undefined;
     try {
       const anchorDate=toDateString(new Date());
@@ -103,22 +110,33 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
         if(!navigator.onLine){lines=[en?"Model chat needs a connection. You can still use explicit entry phrases or manual entry offline.":"模型对话需要联网。离线时仍可使用明确的记录句式或手动补录。"];}else{
           const controller=new AbortController();modelRequest.current=controller;
           try{
-            const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":personal.owner},
+            const signal=AbortSignal.any([controller.signal,AbortSignal.timeout(55000)]);
+            const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","Accept":COACH_STREAM_TYPE,"X-Workout-Owner":personal.owner},
               body:JSON.stringify({id,text:input,history:conversationHistory(turns),locale:en?"en":"zh",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
-                consent:COACH_CONSENT_VERSION,...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal:AbortSignal.any([controller.signal,AbortSignal.timeout(55000)])});
+                consent:COACH_CONSENT_VERSION,...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal});
             if(!response.ok){
+              interrupted=true;
               lines=[response.status===429?(en?"You've reached the conversation limit. Please try again later; manual entry is still available.":"本轮对话次数已达上限，请稍后再试。手动补录仍可使用。"):
                 response.status===401?(en?"Please sign in again to continue.":"登录已过期，请重新登录后继续。"):
                 en?"Model chat is temporarily unavailable. No records or active plans were changed. Refresh to recover any plan preview.":"模型对话暂时不可用，记录和当前计划未修改。计划预览可刷新恢复，也可以重试或手动补录。"];
             }else{
-              const result:CoachResponse=await response.json();model=result.model;sources=result.sources;lines=[result.message];
+              const result:CoachResponse=response.headers.get("Content-Type")?.includes(COACH_STREAM_TYPE)?await consumeCoachStream(response,id,event=>{
+                if(controller.signal.aborted||modelRequest.current!==controller)return;
+                if(event.type==="status")setStreamStage(event.stage);
+                if(event.type==="text"){
+                  if(event.text)setStreamStage("answering");
+                  setTurns(xs=>xs.map(x=>x.id===id?{...x,lines:event.text?[event.text]:undefined,model:modelStatus.model??undefined}:x));
+                }
+              },signal):await response.json();
+              signal.throwIfAborted();model=result.model;sources=result.sources;lines=[result.message];
               if(pendingCount||personal.pending.length)lines.unshift(en?"Some entries are still waiting to sync and may not appear in these results.":"部分记录尚待同步，可能还未计入这次查询。" );
               if(result.proposal?.kind==="personal"){reply="personal";setPersonalProposal({turnId:id,command:result.proposal.command});}
               if(result.proposal?.kind==="workout"){reply="draft";setProposal({turnId:id,...result.proposal});}
               if(result.proposal?.kind==="plan"){setPlanRun(result.proposal.run);}
             }
-          }catch{lines=[controller.signal.aborted?(en?"Stopped. Records and active plans were not changed. Refresh to recover a plan preview.":"已停止，记录和当前计划未修改。如已生成计划预览，可以刷新恢复。"):
-            en?"The model did not respond in time. Records and active plans were not changed. Refresh or retry.":"模型未能及时回复，记录和当前计划未修改。可以刷新恢复预览或重试。"];
+          }catch(error){interrupted=true;lines=[controller.signal.aborted?(en?"Stopped. The incomplete answer was discarded. Records and active plans were not changed. Refresh to recover a plan preview.":"已停止，未完成的回答已丢弃，记录和当前计划未修改。如已生成计划预览，可以刷新恢复。"):
+            error instanceof Error&&error.message==="RATE_LIMITED"?(en?"Conversation limit reached. Please try again later.":"本轮对话次数已达上限，请稍后再试。"):
+            en?"The response was interrupted or temporarily unavailable. The incomplete answer was discarded. Records and active plans were not changed. Refresh or retry.":"回复中断或模型暂时不可用，未完成的回答已丢弃，记录和当前计划未修改。可以刷新恢复预览或重试。"];
           }finally{modelRequest.current=null;}
         }
       } else if (answer) {
@@ -175,7 +193,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       }
     } catch {reply = "failed";}
     finally {
-      setTurns(xs => [...xs, {id, text: input, reply, lines, reason, at, model, sources}].slice(-40));
+      setTurns(xs => xs.map(x=>x.id===id?{id,text:input,reply,lines,reason,at,model,sources,interrupted}:x));
       setWorking(false); flight.current = false;
     }
   }
@@ -212,8 +230,8 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">{en?"What's on your mind?":"今天，想聊点什么."}</h2>
       <p className="mt-4 text-sm text-muted-foreground">{en?"Your records, workouts and meals. All here.":"查记录、记变化、安排训练和饮食."}</p>
     </div>}
-    <div ref={transcript} className="max-h-[54dvh] space-y-8 overflow-y-auto overscroll-contain px-1 py-2" role="log" aria-label={t("messages")} aria-live="polite" aria-relevant="additions text">
-      {turns.map(turn => <div key={turn.id} className="space-y-2" data-testid="coach-turn">
+    <div ref={transcript} onScroll={e=>{const el=e.currentTarget;followStream.current=el.scrollHeight-el.scrollTop-el.clientHeight<64;}} className="max-h-[54dvh] space-y-8 overflow-y-auto overscroll-contain px-1 py-2" role="log" aria-label={t("messages")} aria-live="polite" aria-relevant="additions text">
+      {turns.map(turn => <div key={turn.id} className="space-y-2" data-testid="coach-turn" aria-busy={!!turn.pending}>
         <div className="ml-auto w-fit max-w-[85%] rounded-3xl bg-muted px-5 py-3 text-sm"><p className="whitespace-pre-wrap break-words">{turn.text}</p></div>
         <div className="mr-3 py-4 text-sm leading-7">
           <p className="mb-3 text-xs font-medium">Agent <span className="ml-2 font-normal text-muted-foreground">{turn.model?`${en?"AI generated":"AI 生成"} · ${turn.model}`:new Date(turn.at).toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"})}</span></p>
@@ -221,6 +239,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
             : turn.reply === "personalQueued" ? <p>{en?"Queued. Check sync status and the receipt below.":"已加入补录队列，保存状态和回执会显示在下方。"}</p>
             : <p>{turn.reply === "clarify" ? ts(`clarify.${turn.reason}`) : t(`replies.${turn.reply}`)}</p>}
           {turn.lines?.map((line, i) => <p className="mt-1 whitespace-pre-wrap break-words" key={i}>{line}</p>)}
+          {turn.pending&&<span className="inline-block size-1.5 animate-pulse rounded-full bg-foreground motion-reduce:animate-none" aria-hidden="true"/>}
           {!!turn.sources?.length&&<CoachSources sources={turn.sources} />}
           {(turn.reply === "plan" || turn.reply === "progress") && <p className="mt-2 text-xs text-muted-foreground">{t("snapshot")}</p>}
           {turn.reply === "longTerm" && <Link className="underline" href="/plan">{tt("plan")}</Link>}
@@ -238,7 +257,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     </div>
     {panel&&<div className="space-y-3 rounded-2xl border p-4" data-testid={`conversation-${panel}`}><div className="flex justify-end"><Button variant="ghost" size="icon" aria-label={en?"Close":"收起"} onClick={()=>setPanel(null)}><X className="size-4"/></Button></div>{panel==="workout"?workoutPanel:receiptsPanel}</div>}
     {personal.owner&&<CoachPlans key={personal.owner} owner={personal.owner} fresh={planRun} en={en} locked={locked} showHistory={panel==="receipts"} onApplied={onPlanApplied} onSelect={setPlanRunId} onBusy={setPlanWorking}/>}
-    {working && <div className="flex items-center gap-3 py-3 text-sm text-muted-foreground"><p role="status">{modelRequest.current?(en?"Thinking and checking your records…":"正在理解并核对记录…"):t("working")}</p>
+    {working && <div className="flex items-center gap-3 py-3 text-sm text-muted-foreground"><p role="status">{modelRequest.current?({connecting:en?"Connecting…":"正在连接…",reading:en?"Checking your records…":"正在核对记录…",drafting:en?"Preparing your preview…":"正在准备方案预览…",answering:en?"Writing…":"正在回复…"})[streamStage]:t("working")}</p>
       {modelRequest.current&&<Button variant="ghost" size="sm" onClick={()=>modelRequest.current?.abort()}><Square className="size-3" />{en?"Stop":"停止"}</Button>}</div>}
     {resolveText && active && <div className="space-y-2 rounded-xl border bg-card p-3" data-testid="coach-clarify">
       <p className="text-sm">{t("chooseToContinue")}</p><div className="flex flex-wrap gap-2">{active.prescription.exercises.map(e =>

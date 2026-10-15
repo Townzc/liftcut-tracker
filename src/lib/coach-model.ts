@@ -24,8 +24,8 @@ export type CoachResponse = {message:string;model:string;provider:string;sources
 export type CoachStatus = {available:boolean;provider:string|null;model:string|null;consentVersion:typeof COACH_CONSENT_VERSION};
 
 /** Session-only context, bounded and partitioned by owner. Never a durable memory. */
-export function conversationHistory(turns:{text:string;lines?:string[];reply:string}[]):CoachMessage[] {
-  return turns.slice(-6).flatMap(t=>[
+export function conversationHistory(turns:{text:string;lines?:string[];reply:string;pending?:boolean;interrupted?:boolean}[]):CoachMessage[] {
+  return turns.filter(t=>!t.pending&&!t.interrupted).slice(-6).flatMap(t=>[
     {role:"user" as const,content:t.text.slice(0,400)},
     {role:"assistant" as const,content:(t.lines?.join("\n") || (t.reply === "personalQueued" || t.reply === "queued" ? "User confirmed a draft; its queue may still be pending. Read fresh records before asserting it is saved." : "No confirmed write. Prior draft may be closed.")).slice(0,2400)},
   ]);

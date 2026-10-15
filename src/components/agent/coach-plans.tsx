@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { RunView, Binding } from "@/lib/agent/contracts";
 import { PlanPreview } from "./plan-preview";
@@ -11,7 +11,7 @@ async function api<T>(path:string,body?:unknown):Promise<T>{
   const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.error||"OUTCOME_UNKNOWN");return result.value;
 }
 const bind=(r:RunView):Binding=>({proposalId:r.proposal!.proposalId,contentHash:r.proposal!.contentHash,contextRevision:r.proposal!.contextRevision});
-export function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void}){
+export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void}){
   const [runs,setRuns]=useState<RunView[]>([]),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");
   const [busy,setBusy]=useState(false),flight=useRef(false),mounted=useRef(true),listRequest=useRef(0);
   const refreshUserData=useTrackerStore(s=>s.refreshUserData);
@@ -71,4 +71,4 @@ export function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect
     </div>}
     {error&&<p role="alert" className="text-sm">{error}</p>}
   </section>;
-}
+});

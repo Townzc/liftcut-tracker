@@ -64,5 +64,22 @@ createServer(async(req,res)=>{
   else if(text.includes("体重")||text.includes("昨天呢")||text.includes("午餐")||text.includes("吃了")){
     chosen=call("read_records",{topic:text.includes("午餐")||text.includes("吃了")?"food":"body",from:text.includes("昨天")?shifted(-1):shifted(-27),to:text.includes("昨天")?shifted(-1):today});
   }else chosen=call("finish_response",{message:"你好，可以自然地问我记录，也可以告诉我今天的变化。",sourceIds:[]});
+  if(text.includes("[stream-unverified]"))chosen=call("finish_response",{sourceIds:["another-user-private-source"],message:"UNVERIFIED_TEXT_MUST_NOT_RENDER"});
+  if(text.includes("[stream-long]"))chosen=call("finish_response",{sourceIds:[],message:"这里是连续生成的长回答。".repeat(150)});
+  if(body.stream){
+    res.setHeader("Content-Type","text/event-stream");res.setHeader("Cache-Control","no-cache");
+    const args=JSON.parse(chosen.function.arguments);
+    // Match the schema's source-first framing, including actual network chunks.
+    if(chosen.function.name==="finish_response")chosen.function.arguments=JSON.stringify({sourceIds:args.sourceIds,message:args.message});
+    const event=(delta:unknown,finish:string|null=null)=>res.write("data: "+JSON.stringify({id:"fixture",object:"chat.completion.chunk",created:1,model:"scripted-coach-fixture",choices:[{index:0,delta,finish_reason:finish}]})+"\n\n");
+    event({role:"assistant",tool_calls:[{index:0,id:chosen.id,type:"function",function:{name:chosen.function.name,arguments:""}}]});
+    for(let i=0;i<chosen.function.arguments.length;i+=8){
+      if(res.destroyed)return;
+      event({tool_calls:[{index:0,function:{arguments:chosen.function.arguments.slice(i,i+8)}}]});
+      if(text.includes("[stream-break]")&&i>=40){res.destroy();return;}
+      await new Promise(r=>setTimeout(r,text.includes("[stream-slow]")?150:2));
+    }
+    event({},"tool_calls");res.end("data: [DONE]\n\n");return;
+  }
   res.end(JSON.stringify({id:"fixture_"+randomUUID(),object:"chat.completion",created:Math.floor(Date.now()/1000),model:"scripted-coach-fixture",choices:[{index:0,finish_reason:"tool_calls",message:{role:"assistant",content:null,tool_calls:[chosen]}}],usage:{prompt_tokens:100,completion_tokens:50,total_tokens:150}}));
 }).listen(59999,"127.0.0.1",()=>console.log("Scripted model fixture on loopback:59999; no external model calls"));

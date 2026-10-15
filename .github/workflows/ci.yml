@@ -958,6 +958,7 @@ jobs:
             node_modules/.cache/coach/*.png
             node_modules/.cache/minimal/*.png
             node_modules/.cache/coach-model/*.png
+            node_modules/.cache/coach-stream-release/*.png
 
   quality:
     runs-on: ubuntu-latest

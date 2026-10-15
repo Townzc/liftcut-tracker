@@ -8,7 +8,7 @@ async function login(page:Page,email="p1-fixture@example.invalid"){
   await expect(page.getByLabel("发给训练助手",{exact:true})).toBeEnabled();
 }
 async function enable(page:Page){await page.getByRole("button",{name:"同意并开启",exact:true}).click();}
-async function send(page:Page,text:string){const n=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(n+1,{timeout:25000});}
+async function send(page:Page,text:string){const n=await page.getByTestId("coach-turn").count();await page.getByLabel("发给训练助手",{exact:true}).fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(n+1);await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false",{timeout:25000});}
 const entries=async(page:Page)=>(await page.request.get("/api/personal-records")).json();
 test.afterEach(async()=>{await db.query("delete from personal_record_events where user_id=$1",[owner]);await db.query("delete from coach_request_usage where user_id=$1",[owner]);});
 test.afterAll(async()=>{await db.end();});
@@ -91,8 +91,11 @@ test("natural workout report uses the existing versioned queue and preserves sou
     await expect.poll(async()=>(await db.query("select reps from set_logs where user_id=$1",[owner])).rows.map(r=>r.reps)).toEqual([8]);
     const row=(await db.query("select receipt from workout_commands where user_id=$1 order by created_at desc limit 1",[owner])).rows[0].receipt;
     expect(row.text).toContain("实打实");expect(row.model).toBeTruthy();expect(row.changes[0].after.rpe).toBe(null);
-    const reply=page.waitForResponse(r=>r.url().includes("/api/ai/coach")&&r.request().method()==="POST");
-    await send(page,"看看本次实际训练 [current-read]");const response=await(await reply).json();
+    const reply=page.waitForRequest(r=>r.url().includes("/api/ai/coach")&&r.method()==="POST");
+    await send(page,"看看本次实际训练 [current-read]");
+    // Chromium does not retain no-store streaming bodies for CDP inspection.
+    // Check the same read through JSON compatibility, plus its streamed UI below.
+    const response=await(await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{...(await reply).postDataJSON(),id:randomUUID()}})).json();
     expect(response.sources).toHaveLength(1);expect(response.sources[0].summary.completedSessions).toBe(0);
     expect(response.sources[0].rows[0].actualSets).toEqual([{exercise:"深蹲",setIndex:1,reps:8,weightKg:50,rpe:null}]);
     await page.getByTestId("coach-sources").last().locator("summary").click();

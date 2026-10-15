@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Home, MessageCircle, Settings } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
 import { UserAvatar } from "@/components/shared/user-avatar";
@@ -17,23 +17,32 @@ const primaryRoutes = ["/", "/agent", "/coach", "/settings"];
 export function AppShell({ children }: { children: ReactNode; todayEnabled?: boolean }) {
   const pathname = usePathname(), locale = useLocale(), t = useTranslations("common");
   const { loading, profile, user, authMode } = useAuth();
+  const router=useRouter();
+  useEffect(()=>{
+    // Start while the dashboard is still bootstrapping, before its nav is visible.
+    // The route shell contains public capability flags, never user records.
+    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent")router.prefetch("/agent");
+  },[user?.id,authMode,pathname,router]);
   const en = locale === "en";
-  const email = profile?.email || user?.email || "";
-  const displayName = authMode === "guest" ? (en ? "Guest" : "访客") : profile?.displayName || email.split("@")[0] || "LiftCut";
+  const currentProfile=profile?.id===user?.id?profile:null;
+  const email = currentProfile?.email || user?.email || "";
+  const displayName = authMode === "guest" ? (en ? "Guest" : "访客") : currentProfile?.displayName || email.split("@")[0] || "LiftCut";
   const nav = [
     { href: "/", label: en ? "Home" : "首页", icon: Home, active: pathname === "/" },
     { href: "/agent", label: "Agent", icon: MessageCircle, active: pathname !== "/" && !pathname.startsWith("/settings") },
     { href: "/settings", label: en ? "Settings" : "设置", icon: Settings, active: pathname.startsWith("/settings") },
   ];
   if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
-  if (loading) return <div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>;
+  // Agent reads through authenticated APIs; its composer need not wait for the
+  // profile and the legacy dashboard's complete historical bundle.
+  if (loading && !(pathname==="/agent"&&user&&authMode==="authenticated")) return <div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>;
   return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null}>
     <div className="min-h-dvh bg-background">
       <header className="mx-auto flex h-20 max-w-5xl items-center justify-between px-6 sm:px-10">
         <Link href="/" className="text-lg font-semibold tracking-[-0.06em]" aria-label="LiftCut">liftcut<span className="text-muted-foreground">.</span></Link>
         <Link href="/settings" className="flex min-h-11 items-center gap-2.5 rounded-full text-sm text-muted-foreground transition-colors hover:text-foreground" aria-label={en ? "Account settings" : "账号设置"}>
           <span className="max-w-32 truncate">{displayName}</span>
-          <UserAvatar displayName={displayName} email={email} avatarUrl={profile?.avatarUrl} className="size-8 bg-muted text-foreground" textClassName="text-xs" />
+          <UserAvatar displayName={displayName} email={email} avatarUrl={currentProfile?.avatarUrl} className="size-8 bg-muted text-foreground" textClassName="text-xs" />
         </Link>
       </header>
       <main id="main-content" className="mx-auto w-full max-w-4xl px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-10">
