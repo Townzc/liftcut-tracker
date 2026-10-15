@@ -1,0 +1,75 @@
+W1b upgrade: actual W1a schema + migration on local PostgreSQL; synthetic auth.uid, not hosted GoTrue
+▶ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery
+  ✔ parallel start retries return one UUID; second active session denied (109.1963ms)
+  ✔ double-click / parallel replay keeps one set and one event; SQL NULL persists (24.692ms)
+  ✔ correction and undo advance revision; old requests cannot resurrect or overwrite (24.3176ms)
+  ✔ trace preserves record, correction, compensation and rejects other owners (7.7636ms)
+  ✔ RLS denies cross-owner select/insert/update; browser cannot bypass transaction API (23.6932ms)
+  ✔ three states reload, void excluded, snapshot survives plan changes; end leaves missing sets missing (37.4609ms)
+  ✔ Shanghai session retains start date across its midnight (13.8534ms)
+✔ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (627.7109ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1160.5358
+coach_model {"requestId":"521e8b7f-f7e5-49d5-a861-b05d4271c3f7","model":"liftcut-coach","steps":1,"streaming":true,"reads":2,"draft":null,"timing":{"version":1,"serverMs":146,"firstTextMs":143,"authMs":null,"quotaMs":15,"model":[{"name":"model","startMs":72,"durationMs":42,"firstOutputMs":29,"httpHeadersMs":22,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"read_records","startMs":115,"durationMs":14},{"name":"read_records","startMs":115,"durationMs":28},{"name":"finish_response","startMs":115,"durationMs":28}],"database":[{"name":"quota.connect","startMs":15,"durationMs":7},{"name":"quota.setup","startMs":22,"durationMs":3},{"name":"quota.query","startMs":25,"durationMs":3},{"name":"quota.commit","startMs":28,"durationMs":1},{"name":"body.connect","startMs":117,"durationMs":2},{"name":"body.setup","startMs":119,"durationMs":1},{"name":"food.connect","startMs":117,"durationMs":7},{"name":"food.setup","startMs":124,"durationMs":2},{"name":"food.query","startMs":126,"durationMs":3},{"name":"food.commit","startMs":129,"durationMs":0},{"name":"body.query","startMs":120,"durationMs":22},{"name":"body.commit","startMs":142,"durationMs":1}],"toolWallMs":28}}
+coach_model {"requestId":"4fb36151-bdab-42bd-8a6f-804c9bfb6ad6","model":"liftcut-coach","steps":1,"streaming":true,"reads":0,"draft":"personal","timing":{"version":1,"serverMs":21,"firstTextMs":null,"authMs":null,"quotaMs":6,"model":[{"name":"model","startMs":9,"durationMs":7,"firstOutputMs":5,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"prepare_body","startMs":17,"durationMs":2},{"name":"prepare_body","startMs":17,"durationMs":2}],"database":[{"name":"quota.connect","startMs":0,"durationMs":2},{"name":"quota.setup","startMs":2,"durationMs":1},{"name":"quota.query","startMs":3,"durationMs":2},{"name":"quota.commit","startMs":5,"durationMs":1}],"toolWallMs":2}}
+✔ SDK executes separate reads concurrently, holds unverified prose, and keeps one unsaved draft (220.9956ms)
+✔ batched setup fails closed for privileged roles and returns a pooled connection without an owner (35.0929ms)
+▶ model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics
+  ✔ signed draft commits once; changed fields, owner and missing proof are rejected (86.0568ms)
+  ✔ fresh reads merge legacy/new records, exclude compensations and isolate users (32.297ms)
+  ✔ expired unsent proposal rejected; committed exact retry remains valid after expiry (16.5231ms)
+  ✔ model workout confirmation reparses, checks context and keeps original words (89.5076ms)
+  ✔ quota reservation is atomic, per account, and private to the restricted runtime (42.7976ms)
+✔ model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics (306.5076ms)
+▶ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay
+  ✔ four concurrent duplicates write one receipt/event; exact retries survive compensation and ending (171.7265ms)
+  ✔ offline replacement -> undo -> replacement -> sentence -> end has matching server context and actuals (93.4218ms)
+  ✔ all existing set states block replacement; untouched exercise actuals remain exact (150.4407ms)
+  ✔ stale preview and old device's queued ID cannot write into replacement (58.9471ms)
+  ✔ replacement vs first set, compensation vs first set and end vs replacement serialize with one winner (369.4944ms)
+  ✔ injected receipt insert failure rolls back prescription and event; plan and other rows never updated (34.5471ms)
+  ✔ RLS and append-only receipt grants prevent cross-owner replay/read/write/delete (32.3917ms)
+  ✔ history preserves every session and receipt without overlapping queries on one real connection (61.3169ms)
+✔ session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay (1033.2965ms)
+✔ entire offline chain has identical contexts and values when replayed against real PostgreSQL (292.4947ms)
+▶ personal records: real transactions, immutable retries, compensation, NULLs and owner isolation
+  ✔ parallel creates return one identical receipt and preserve null (81.715ms)
+  ✔ compensation is append-only; late create retry cannot resurrect the record (32.6967ms)
+  ✔ RLS and API role prohibit cross-account access and browser writes (18.6422ms)
+✔ personal records: real transactions, immutable retries, compensation, NULLs and owner isolation (163.7271ms)
+▶ conversational plans use the approval ledger for both kinds
+  ✔ plan writes retain owner locks with hosted auth schema restrictions and both JWT formats (37.3902ms)
+  ✔ generation, idempotent publication, constraint rejection and zero business writes (77.3852ms)
+  ✔ owner isolation and proposal kind validation (29.3167ms)
+  ✔ double execution and replay produce one plan and the same receipt (61.0068ms)
+  ✔ editing an unapproved preview supersedes and invalidates its old approval (96.5999ms)
+  ✔ a legacy descendant edit invalidates the old snapshot and pending preview (36.3147ms)
+  ✔ nutrition approval is atomic and leaves training and actual intake unchanged (56.5857ms)
+  ✔ failed nutrition replacement rolls back activation and can retry the same intent (60.7751ms)
+  ✔ new current-plan activation makes competing previews stale; receipt replay remains historical (76.1788ms)
+  ✔ changed settings invalidate pending plans; browser roles cannot access ledger (30.9066ms)
+✔ conversational plans use the approval ledger for both kinds (608.3302ms)
+▶ W2b real transactions: atomic commands, receipts, compensation and isolation
+  ✔ preview has no writes; strict authorization/field contract rejects forged drafts (6.1402ms)
+  ✔ four concurrent copies commit one batch; repeated lost-response request returns receipt (63.2541ms)
+  ✔ failure at second set rolls back first set, events and receipt (18.9477ms)
+  ✔ stale context rejects entire command after another write (58.9795ms)
+  ✔ correction undo restores before values at a new revision; old correction cannot reapply (42.4853ms)
+  ✔ undo cannot overwrite a later tap; atomic undo rolls back any earlier compensation (40.6305ms)
+  ✔ unknown weight stays NULL; pounds retain reported unit; batch undo after end never resurrects (45.6485ms)
+  ✔ other users cannot preview, apply, undo or read receipts; runtime receipts immutable (16.978ms)
+✔ W2b real transactions: atomic commands, receipts, compensation and isolation (429.4394ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1654.4298

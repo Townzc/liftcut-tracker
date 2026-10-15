@@ -1,0 +1,47 @@
+[WebServer] (node:984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:49680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:53956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:42908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:25692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 14 tests using 1 worker
+
+(node:51820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\model-chat.spec.ts:16:5 › model consent, oral body draft, no write until confirmation, signed replay, fresh query and follow-up (4.2s)
+  ok  2 tests\product-browser\model-chat.spec.ts:35:5 › natural food draft keeps nulls; tampering, cross-user reuse, response loss and offline confirmation (2.6s)
+  ok  3 tests\product-browser\model-chat.spec.ts:56:5 › a same-day body append after food history survives invalid tool fields and needs no model turn after validation (2.2s)
+[WebServer] coach_stream_failed {"kind":"AI_APICallError","timing":{"version":1,"serverMs":15,"firstTextMs":null,"authMs":2,"quotaMs":5,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":0},{"name":"quota.setup","startMs":3,"durationMs":2},{"name":"quota.query","startMs":5,"durationMs":1},{"name":"quota.commit","startMs":6,"durationMs":2}],"toolWallMs":0}}
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":60,"firstTextMs":null,"authMs":2,"quotaMs":5,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":0},{"name":"quota.setup","startMs":3,"durationMs":2},{"name":"quota.query","startMs":5,"durationMs":2},{"name":"quota.commit","startMs":7,"durationMs":1}],"toolWallMs":0}}
+  ok  4 tests\product-browser\model-chat.spec.ts:71:5 › untrusted model numbers, provider failure, cancellation and missing consent never write (1.5s)
+  ok  5 tests\product-browser\model-chat.spec.ts:84:5 › natural workout report uses the existing versioned queue and preserves source and nulls (2.4s)
+[WebServer] coach_stream_failed {"kind":"Error","timing":{"version":1,"serverMs":7,"firstTextMs":null,"authMs":2,"quotaMs":5,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":0},{"name":"quota.setup","startMs":3,"durationMs":2},{"name":"quota.query","startMs":5,"durationMs":1}],"toolWallMs":0}}
+  ok  6 tests\product-browser\model-chat.spec.ts:113:5 › a failed source read is not empty history; persistent quota returns an explicit limit (1.1s)
+  ok  7 tests\product-browser\stream-chat.spec.ts:14:5 › explicit record queries read fresh sources before one model call, with private numeric timings (1.2s)
+  ok  8 tests\product-browser\stream-chat.spec.ts:26:5 › a real HTTP stream renders incremental prose before completion, with no raw tool arguments (2.6s)
+  ok  9 tests\product-browser\stream-chat.spec.ts:36:5 › long replies complete in the browser and transmit each character once instead of repeating prefixes (8.3s)
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":859,"firstTextMs":479,"authMs":1,"quotaMs":6,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":2,"durationMs":1},{"name":"quota.setup","startMs":3,"durationMs":1},{"name":"quota.query","startMs":4,"durationMs":2},{"name":"quota.commit","startMs":6,"durationMs":2}],"toolWallMs":0}}
+[WebServer] coach_stream_failed {"kind":"AI_APICallError","timing":{"version":1,"serverMs":92,"firstTextMs":59,"authMs":2,"quotaMs":6,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":0},{"name":"quota.setup","startMs":3,"durationMs":2},{"name":"quota.query","startMs":5,"durationMs":2},{"name":"quota.commit","startMs":7,"durationMs":1}],"toolWallMs":0}}
+  ok 10 tests\product-browser\stream-chat.spec.ts:47:5 › stopped and broken replies are discarded and never sent as later conversation memory (2.2s)
+[WebServer] coach_stream_failed {"kind":"Error","timing":{"version":1,"serverMs":947,"firstTextMs":null,"authMs":2,"quotaMs":6,"model":[{"name":"model","startMs":11,"durationMs":190,"firstOutputMs":3,"httpHeadersMs":1,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":203,"durationMs":186,"firstOutputMs":3,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":391,"durationMs":183,"firstOutputMs":2,"httpHeadersMs":1,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":577,"durationMs":182,"firstOutputMs":3,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":763,"durationMs":184,"firstOutputMs":2,"httpHeadersMs":1,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"finish_response","startMs":201,"durationMs":1},{"name":"finish_response","startMs":389,"durationMs":0},{"name":"finish_response","startMs":574,"durationMs":0},{"name":"finish_response","startMs":760,"durationMs":0},{"name":"finish_response","startMs":946,"durationMs":1}],"database":[{"name":"quota.connect","startMs":2,"durationMs":1},{"name":"quota.setup","startMs":3,"durationMs":1},{"name":"quota.query","startMs":4,"durationMs":2},{"name":"quota.commit","startMs":6,"durationMs":2}],"toolWallMs":2}}
+  ok 11 tests\product-browser\stream-chat.spec.ts:58:5 › unverified sources suppress provisional text and errors never produce a confirmation (2.1s)
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":902,"firstTextMs":486,"authMs":4,"quotaMs":5,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":5,"durationMs":0},{"name":"quota.setup","startMs":5,"durationMs":1},{"name":"quota.query","startMs":6,"durationMs":2},{"name":"quota.commit","startMs":8,"durationMs":2}],"toolWallMs":0}}
+  ok 12 tests\product-browser\stream-chat.spec.ts:66:5 › navigation aborts a reply and a new Agent visit cannot receive the old chunks (2.1s)
+  ok 13 tests\product-browser\stream-chat.spec.ts:73:5 › Agent is usable before profile/history bootstrap completes, with no status request waterfall (1.0s)
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":889,"firstTextMs":null,"authMs":1,"quotaMs":6,"model":[{"name":"model","startMs":11,"durationMs":463,"firstOutputMs":3,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"plan_context","startMs":474,"durationMs":13}],"database":[{"name":"quota.connect","startMs":2,"durationMs":1},{"name":"quota.setup","startMs":3,"durationMs":1},{"name":"quota.query","startMs":4,"durationMs":3},{"name":"quota.commit","startMs":7,"durationMs":1}],"toolWallMs":13}}
+  ok 14 tests\product-browser\stream-chat.spec.ts:84:5 › partial plan arguments expose no apply button; only a validated preview can be confirmed (1.7s)
+
+  14 passed (41.2s)

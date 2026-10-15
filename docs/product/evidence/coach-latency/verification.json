@@ -1,0 +1,84 @@
+{
+  "observedAt": "2026-10-15T04:10:52.050Z",
+  "baseCommit": "7f6205c3773b97b4f3da800144da844c9d2c816f",
+  "scope": "Local synthetic databases. Browser Auth/model are doubles; live samples separately use real DeepSeek. Exact-head CI and production verification recorded in release handoff.",
+  "unit": 103,
+  "productDatabase": 50,
+  "approvalDatabase": 32,
+  "browser": 57,
+  "files": [
+    {
+      "name": ".gitattributes",
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "name": "approval.log",
+      "sha256": "c5ace1a4689a9d42b60cb728af402ff18986f977c83f97d61c79de64a6a76f7d"
+    },
+    {
+      "name": "browser-final-focused.log",
+      "sha256": "1a884cb7ff478d332002ac7b3bf777e1f20c151c25a90f8c9fe88e2885e6a939"
+    },
+    {
+      "name": "browser-logout-fixed.log",
+      "sha256": "57c281209fa3157270b870094da8cbbd0b865d8fec91d788f80a3c5c90f112b2"
+    },
+    {
+      "name": "browser.log",
+      "sha256": "326081166b4e3afb27e648145677003f900510153339229c69d67a9adc98e4e3"
+    },
+    {
+      "name": "build-final.log",
+      "sha256": "979e8c129b998d6721601aaba4c9d2f9c77174242476606e4f139e0233e83f32"
+    },
+    {
+      "name": "build.log",
+      "sha256": "b2f95fff337e48acd9ef7099e6b2db6fff4ad21134804d05ae5985ae52ea675f"
+    },
+    {
+      "name": "ci-first-failure.json",
+      "sha256": "2c3ae63133186fd5618223f28a39e4d8ff5f0de18555863a876e53eaa59138e9"
+    },
+    {
+      "name": "concurrency.log",
+      "sha256": "6b88e24761eaed376d3fc769dd7a01a13f6218bfdbfd2e2e6ad379d14998f464"
+    },
+    {
+      "name": "database-current-final.log",
+      "sha256": "361ff1e8dd6168b9eeb18452517f5db9ec06261cb2af34d40cf8913b14facecd"
+    },
+    {
+      "name": "database.log",
+      "sha256": "30b2058e6d13e1f64a6b75ccf223699608b726f5d0943feda86b814f2dbbe9fc"
+    },
+    {
+      "name": "latency-final.log",
+      "sha256": "b3fcba8f9ae23711abd5fd9a726ce392a0e7cd27c5f53645eff5e565344b880c"
+    },
+    {
+      "name": "lint.log",
+      "sha256": "473ad21d54c81912d06a21a28b32e04ba3d2b4da42803abee477dd0b165db887"
+    },
+    {
+      "name": "live-after-2.log",
+      "sha256": "ff1a1fdffb216cd76d94ceab55c9421e5168f7984a419d32fdea039690533928"
+    },
+    {
+      "name": "live-after.log",
+      "sha256": "d5bd4978822c4f17ed4a1d479eb113ae42c4d441238a4e98e060533d985240a8"
+    },
+    {
+      "name": "live-before.log",
+      "sha256": "db90537a80b2bfc449b8af931faf529a04253e6448e08a9eea1993d8e62d7919"
+    },
+    {
+      "name": "local-samples.json",
+      "sha256": "1b472546de2bf87f887e3493b26ec2e6ca908a99e1d94a064a294bb726f48530"
+    },
+    {
+      "name": "unit.log",
+      "sha256": "0bb6230cd569f89350a25f1de28a476357f340604ba2aa98b86aa626e15a8fe7"
+    }
+  ],
+  "logNormalization": "Public log copies normalize line endings and trailing whitespace; raw captures retained in local release evidence."
+}

@@ -1,0 +1,906 @@
+{
+  "before": [
+    {
+      "requestId": "230935e2-4442-430e-8866-5552aca08643",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3363,
+      "outputTokens": 198,
+      "reads": 0,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 4867,
+        "firstTextMs": 3701,
+        "authMs": null,
+        "quotaMs": 16,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 50,
+            "durationMs": 4811,
+            "firstOutputMs": 3598,
+            "httpHeadersMs": 931,
+            "inputTokens": 3363,
+            "cacheReadTokens": 3200,
+            "outputTokens": 198
+          }
+        ],
+        "tools": [
+          {
+            "name": "finish_response",
+            "startMs": 4862,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 13,
+            "durationMs": 7
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 20,
+            "durationMs": 4
+          },
+          {
+            "name": "quota.query",
+            "startMs": 24,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 27,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 0
+      }
+    },
+    {
+      "requestId": "25b45033-47b8-43c0-b025-646b999f0605",
+      "model": "deepseek-flash",
+      "steps": 2,
+      "streaming": true,
+      "inputTokens": 7053,
+      "outputTokens": 258,
+      "reads": 2,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 6180,
+        "firstTextMs": 5659,
+        "authMs": null,
+        "quotaMs": 7,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 3042,
+            "firstOutputMs": 2848,
+            "httpHeadersMs": 535,
+            "inputTokens": 3353,
+            "cacheReadTokens": 3200,
+            "outputTokens": 94
+          },
+          {
+            "name": "model",
+            "startMs": 3084,
+            "durationMs": 3094,
+            "firstOutputMs": 2433,
+            "httpHeadersMs": 552,
+            "inputTokens": 3700,
+            "cacheReadTokens": 3328,
+            "outputTokens": 164
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records",
+            "startMs": 3053,
+            "durationMs": 21
+          },
+          {
+            "name": "finish_response",
+            "startMs": 6179,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 3,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 6,
+            "durationMs": 1
+          },
+          {
+            "name": "body.connect",
+            "startMs": 3056,
+            "durationMs": 2
+          },
+          {
+            "name": "body.setup",
+            "startMs": 3058,
+            "durationMs": 3
+          },
+          {
+            "name": "body.query",
+            "startMs": 3061,
+            "durationMs": 3
+          },
+          {
+            "name": "body.commit",
+            "startMs": 3064,
+            "durationMs": 1
+          },
+          {
+            "name": "food.connect",
+            "startMs": 3056,
+            "durationMs": 11
+          },
+          {
+            "name": "food.setup",
+            "startMs": 3067,
+            "durationMs": 3
+          },
+          {
+            "name": "food.query",
+            "startMs": 3070,
+            "durationMs": 3
+          },
+          {
+            "name": "food.commit",
+            "startMs": 3073,
+            "durationMs": 0
+          }
+        ],
+        "toolWallMs": 21
+      }
+    },
+    {
+      "requestId": "b4188e22-6b1d-43f1-9f27-c32143abfcd1",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3353,
+      "outputTokens": 71,
+      "reads": 0,
+      "draft": "personal",
+      "timing": {
+        "version": 1,
+        "serverMs": 3120,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 8,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 10,
+            "durationMs": 3106,
+            "firstOutputMs": 2970,
+            "httpHeadersMs": 500,
+            "inputTokens": 3353,
+            "cacheReadTokens": 3200,
+            "outputTokens": 71
+          }
+        ],
+        "tools": [
+          {
+            "name": "prepare_body",
+            "startMs": 3116,
+            "durationMs": 3
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.query",
+            "startMs": 4,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 6,
+            "durationMs": 2
+          }
+        ],
+        "toolWallMs": 3
+      }
+    },
+    {
+      "requestId": "f24f8d3e-c256-4c5f-8912-a67021073ff8",
+      "model": "deepseek-flash",
+      "steps": 2,
+      "streaming": true,
+      "inputTokens": 6696,
+      "outputTokens": 780,
+      "reads": 0,
+      "draft": "plan",
+      "timing": {
+        "version": 1,
+        "serverMs": 9477,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 3442,
+            "firstOutputMs": 3437,
+            "httpHeadersMs": 451,
+            "inputTokens": 3366,
+            "cacheReadTokens": 3200,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 3487,
+            "durationMs": 5960,
+            "firstOutputMs": 2849,
+            "httpHeadersMs": 553,
+            "inputTokens": 3330,
+            "cacheReadTokens": 3196,
+            "outputTokens": 748
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 3453,
+            "durationMs": 28
+          },
+          {
+            "name": "prepare_training_plan",
+            "startMs": 9448,
+            "durationMs": 28
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 0,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 3,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 56
+      }
+    }
+  ],
+  "after": [
+    {
+      "requestId": "e56fcd1d-5467-46ac-a7a7-781965750756",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3427,
+      "outputTokens": 191,
+      "reads": 0,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 4504,
+        "firstTextMs": 3402,
+        "authMs": null,
+        "quotaMs": 17,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 53,
+            "durationMs": 4443,
+            "firstOutputMs": 3292,
+            "httpHeadersMs": 900,
+            "inputTokens": 3427,
+            "cacheReadTokens": 0,
+            "outputTokens": 191
+          }
+        ],
+        "tools": [
+          {
+            "name": "finish_response",
+            "startMs": 4497,
+            "durationMs": 1
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 14,
+            "durationMs": 9
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 23,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.query",
+            "startMs": 26,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 29,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 1
+      }
+    },
+    {
+      "requestId": "d5644b58-f463-40b1-859d-e3991ac67728",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3764,
+      "outputTokens": 166,
+      "reads": 2,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 3284,
+        "firstTextMs": 2848,
+        "authMs": null,
+        "quotaMs": 7,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 31,
+            "durationMs": 3252,
+            "firstOutputMs": 2669,
+            "httpHeadersMs": 565,
+            "inputTokens": 3764,
+            "cacheReadTokens": 3328,
+            "outputTokens": 166
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 9,
+            "durationMs": 15
+          },
+          {
+            "name": "finish_response",
+            "startMs": 3283,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 3,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 2
+          },
+          {
+            "name": "body.connect",
+            "startMs": 10,
+            "durationMs": 2
+          },
+          {
+            "name": "body.setup",
+            "startMs": 12,
+            "durationMs": 2
+          },
+          {
+            "name": "body.query",
+            "startMs": 14,
+            "durationMs": 2
+          },
+          {
+            "name": "body.commit",
+            "startMs": 16,
+            "durationMs": 0
+          },
+          {
+            "name": "food.connect",
+            "startMs": 11,
+            "durationMs": 8
+          },
+          {
+            "name": "food.setup",
+            "startMs": 19,
+            "durationMs": 2
+          },
+          {
+            "name": "food.query",
+            "startMs": 21,
+            "durationMs": 2
+          },
+          {
+            "name": "food.commit",
+            "startMs": 23,
+            "durationMs": 0
+          }
+        ],
+        "toolWallMs": 15
+      }
+    },
+    {
+      "requestId": "702f62e9-d111-4905-a387-7cdac82066cc",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3417,
+      "outputTokens": 71,
+      "reads": 0,
+      "draft": "personal",
+      "timing": {
+        "version": 1,
+        "serverMs": 3194,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 9,
+            "durationMs": 3180,
+            "firstOutputMs": 2940,
+            "httpHeadersMs": 469,
+            "inputTokens": 3417,
+            "cacheReadTokens": 3200,
+            "outputTokens": 71
+          }
+        ],
+        "tools": [
+          {
+            "name": "prepare_body",
+            "startMs": 3190,
+            "durationMs": 3
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 3
+      }
+    },
+    {
+      "requestId": "22e6bdf0-f9c7-4b78-b012-65a96dd2fbd0",
+      "model": "deepseek-flash",
+      "steps": 2,
+      "streaming": true,
+      "inputTokens": 6824,
+      "outputTokens": 812,
+      "reads": 0,
+      "draft": "plan",
+      "timing": {
+        "version": 1,
+        "serverMs": 8389,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 2420,
+            "firstOutputMs": 2362,
+            "httpHeadersMs": 535,
+            "inputTokens": 3430,
+            "cacheReadTokens": 3200,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 2463,
+            "durationMs": 5903,
+            "firstOutputMs": 2726,
+            "httpHeadersMs": 455,
+            "inputTokens": 3394,
+            "cacheReadTokens": 1920,
+            "outputTokens": 780
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 2431,
+            "durationMs": 27
+          },
+          {
+            "name": "prepare_training_plan",
+            "startMs": 8366,
+            "durationMs": 21
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 48
+      }
+    }
+  ],
+  "after-2": [
+    {
+      "requestId": "58f3ba1b-fa24-4838-afd7-99221bbb563a",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3427,
+      "outputTokens": 200,
+      "reads": 0,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 4726,
+        "firstTextMs": 3678,
+        "authMs": null,
+        "quotaMs": 61,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 232,
+            "durationMs": 4488,
+            "firstOutputMs": 3382,
+            "httpHeadersMs": 948,
+            "inputTokens": 3427,
+            "cacheReadTokens": 3200,
+            "outputTokens": 200
+          }
+        ],
+        "tools": [
+          {
+            "name": "finish_response",
+            "startMs": 4721,
+            "durationMs": 1
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 102,
+            "durationMs": 41
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 143,
+            "durationMs": 4
+          },
+          {
+            "name": "quota.query",
+            "startMs": 147,
+            "durationMs": 6
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 153,
+            "durationMs": 9
+          }
+        ],
+        "toolWallMs": 1
+      }
+    },
+    {
+      "requestId": "03ece3ac-340c-413b-8bfa-3a4676e052df",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3764,
+      "outputTokens": 159,
+      "reads": 2,
+      "draft": null,
+      "timing": {
+        "version": 1,
+        "serverMs": 3046,
+        "firstTextMs": 2584,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 33,
+            "durationMs": 3011,
+            "firstOutputMs": 2408,
+            "httpHeadersMs": 533,
+            "inputTokens": 3764,
+            "cacheReadTokens": 3328,
+            "outputTokens": 159
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 8,
+            "durationMs": 16
+          },
+          {
+            "name": "finish_response",
+            "startMs": 3045,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 3,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 1
+          },
+          {
+            "name": "body.connect",
+            "startMs": 10,
+            "durationMs": 2
+          },
+          {
+            "name": "body.setup",
+            "startMs": 12,
+            "durationMs": 1
+          },
+          {
+            "name": "body.query",
+            "startMs": 13,
+            "durationMs": 3
+          },
+          {
+            "name": "body.commit",
+            "startMs": 16,
+            "durationMs": 0
+          },
+          {
+            "name": "food.connect",
+            "startMs": 10,
+            "durationMs": 9
+          },
+          {
+            "name": "food.setup",
+            "startMs": 19,
+            "durationMs": 2
+          },
+          {
+            "name": "food.query",
+            "startMs": 21,
+            "durationMs": 2
+          },
+          {
+            "name": "food.commit",
+            "startMs": 23,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 16
+      }
+    },
+    {
+      "requestId": "c1a0dbb6-1448-454e-85d7-a4969e3ff3c3",
+      "model": "deepseek-flash",
+      "steps": 1,
+      "streaming": true,
+      "inputTokens": 3417,
+      "outputTokens": 71,
+      "reads": 0,
+      "draft": "personal",
+      "timing": {
+        "version": 1,
+        "serverMs": 3011,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 7,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 2995,
+            "firstOutputMs": 2986,
+            "httpHeadersMs": 520,
+            "inputTokens": 3417,
+            "cacheReadTokens": 3200,
+            "outputTokens": 71
+          }
+        ],
+        "tools": [
+          {
+            "name": "prepare_body",
+            "startMs": 3006,
+            "durationMs": 4
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 3
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 5,
+            "durationMs": 2
+          }
+        ],
+        "toolWallMs": 4
+      }
+    },
+    {
+      "requestId": "ba87e6a7-894c-469c-8a26-e79bd0c75fc6",
+      "model": "deepseek-flash",
+      "steps": 2,
+      "streaming": true,
+      "inputTokens": 6824,
+      "outputTokens": 904,
+      "reads": 0,
+      "draft": "plan",
+      "timing": {
+        "version": 1,
+        "serverMs": 9855,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 3344,
+            "firstOutputMs": 3278,
+            "httpHeadersMs": 466,
+            "inputTokens": 3430,
+            "cacheReadTokens": 3200,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 3417,
+            "durationMs": 6414,
+            "firstOutputMs": 2510,
+            "httpHeadersMs": 489,
+            "inputTokens": 3394,
+            "cacheReadTokens": 3200,
+            "outputTokens": 872
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 3356,
+            "durationMs": 51
+          },
+          {
+            "name": "prepare_training_plan",
+            "startMs": 9832,
+            "durationMs": 21
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 4,
+            "durationMs": 2
+          }
+        ],
+        "toolWallMs": 72
+      }
+    }
+  ]
+}

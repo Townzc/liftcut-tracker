@@ -42,7 +42,12 @@ test("natural food draft keeps nulls; tampering, cross-user reuse, response loss
   const command=JSON.parse(original);expect((await page.request.post("/api/personal-records",{headers:{Origin:"http://localhost:3103"},data:{...command,id:randomUUID(),entry:{...command.entry,calories:600}}})).status()).toBe(409);
   await page.unroute("**/api/personal-records");await page.getByRole("button",{name:"重试补录同步"}).click();await expect(page.getByTestId("personal-sync")).toHaveCount(0);
   expect((await entries(page))[0].entry).toMatchObject({calories:null,protein:null});expect((await entries(page)).length).toBe(1);
-  await page.goto("/settings/account");await page.getByRole("button",{name:"退出登录",exact:true}).click();await login(page,"offline-second@example.invalid");
+  // Reproduce a slow sign-out: navigation must not cancel its HTTP request and
+  // then mistake the still-authenticated redirect for a missing login form.
+  await page.route("**/auth/v1/logout*",async route=>{await new Promise(r=>setTimeout(r,350));await route.continue();});
+  await page.goto("/settings/account");await page.getByRole("button",{name:"退出登录",exact:true}).click();
+  await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);
+  await login(page,"offline-second@example.invalid");
   await expect(page.getByRole("button",{name:"同意并开启"})).toBeVisible();expect(await entries(page)).toEqual([]);
   expect((await page.request.post("/api/personal-records",{headers:{Origin:"http://localhost:3103"},data:{...command,id:randomUUID()}})).status()).toBe(409);
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103","X-Workout-Owner":owner},data:{}})).status()).toBe(409);

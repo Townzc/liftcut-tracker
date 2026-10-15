@@ -4,6 +4,7 @@ import type { LogDraft } from "./workout-log-parser";
 import type { WorkoutOperation } from "./workout-outbox";
 import type { Session } from "./today";
 import type { RunView } from "./agent/contracts";
+import type { CoachTiming } from "./coach-timing";
 
 export const COACH_CONSENT_VERSION = "coach-model-v1";
 export const coachMessageSchema = z.object({role:z.enum(["user","assistant"]),content:z.string().min(1).max(2400)}).strict();
@@ -20,7 +21,7 @@ export type CoachProposal =
   | {kind:"personal";command:Extract<PersonalCommand,{action:"create"}>}
   | {kind:"workout";session:Session;hash:string;draft:LogDraft;operation:WorkoutOperation}
   | {kind:"plan";run:RunView};
-export type CoachResponse = {message:string;model:string;provider:string;sources:CoachSource[];proposal?:CoachProposal;requestId:string};
+export type CoachResponse = {message:string;model:string;provider:string;sources:CoachSource[];proposal?:CoachProposal;requestId:string;timing?:CoachTiming};
 export type CoachStatus = {available:boolean;provider:string|null;model:string|null;consentVersion:typeof COACH_CONSENT_VERSION};
 
 /** Session-only context, bounded and partitioned by owner. Never a durable memory. */
