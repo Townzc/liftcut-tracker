@@ -940,6 +940,7 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/exercise-replacement.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/personal-records.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/coach-model.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/coach-execution.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/plan-conversation.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium

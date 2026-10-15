@@ -6,6 +6,7 @@ import { P1_VERSION, createRunSchema, proposalRequestSchema, userEventSchema, ex
   validatePlanConstraints, type Binding, type Context, type Outcome, type AnyPlan, type PlanKind, type Receipt, type RunView } from "@/lib/agent/contracts";
 import { readPlanRows, type PlanSnapshot } from "./plan-state";
 import { persistNutritionPlan } from "./persist-nutrition";
+import { beginOwnerTransaction } from "@/services/owner-transaction";
 
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -28,12 +29,7 @@ export class AgentStore {
     const db = await this.pool.connect();
     let broken = false;
     try {
-      const role = (await db.query("select rolname,rolsuper,rolbypassrls from pg_roles where rolname=current_user")).rows[0];
-      if (role.rolname !== "liftcut_agent" || role.rolsuper || role.rolbypassrls) throw new Error("UNSAFE_DATABASE_ROLE");
-      await db.query("begin");
-      await db.query("set local statement_timeout = '10s'");
-      await db.query("set local lock_timeout = '5s'");
-      await db.query("select set_config('request.jwt.claim.sub', $1, true)", [userId]);
+      await beginOwnerTransaction(db,userId,"liftcut_agent");
       // Serialize all P1 runs for one user, including receipt keys across runs.
       await db.query("select pg_advisory_xact_lock(hashtextextended($1, 713))", [userId]);
       const result = await work(db);

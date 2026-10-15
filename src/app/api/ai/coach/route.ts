@@ -6,15 +6,17 @@ import { coachStatus, runCoach } from "@/services/ai/coach-agent";
 import { CoachReadError } from "@/services/ai/coach-store";
 import { ZodError } from "zod";
 import { COACH_STREAM_TYPE, type CoachStreamEvent } from "@/lib/coach-stream";
+import { CoachTimer } from "@/lib/coach-timing";
 
 export const runtime="nodejs";
 export const maxDuration=60;
 const headers={"Cache-Control":"no-store"};
 export async function GET(){return Response.json(coachStatus(),{headers});}
 export async function POST(request:Request){
+  const timer=new CoachTimer();
   if(!sameOrigin(request))return Response.json({error:"ORIGIN_REJECTED"},{status:403,headers});
   try{
-    const auth=await requireApiUser();if(auth.errorResponse)return auth.errorResponse;
+    const auth=await timer.measure("auth",requireApiUser);if(auth.errorResponse)return auth.errorResponse;
     const mismatch=workoutOwnerMismatch(request,auth.user.id);if(mismatch)return mismatch;
     const input=coachRequestSchema.parse(await boundedJson(request));
     if(!coachStatus().available)return Response.json({error:"MODEL_UNAVAILABLE"},{status:503,headers});
@@ -26,22 +28,22 @@ export async function POST(request:Request){
         start(stream){
           const emit=(event:CoachStreamEvent)=>{if(!closed&&!signal.aborted)stream.enqueue(encoder.encode(JSON.stringify(event)+"\n"));};
           emit({type:"status",stage:"connecting"});
-          void runCoach(auth.user.id,input,signal,undefined,emit).then(result=>emit({type:"result",result})).catch(error=>{
-            console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown"}));
+          void runCoach(auth.user.id,input,signal,undefined,emit,timer).then(result=>emit({type:"result",result})).catch(error=>{
+            console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown",timing:timer.snapshot()}));
             emit({type:"error",error:error instanceof CoachReadError?error.message:"MODEL_UNAVAILABLE"});
           }).finally(()=>{if(!closed){closed=true;stream.close();}});
         },
         cancel(){closed=true;controller.abort();},
       });
-      return new Response(body,{headers:{"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no"}});
+      return new Response(body,{headers:{"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no","Server-Timing":`auth;dur=${timer.snapshot().authMs??0}, ready;dur=${timer.elapsed()}`}});
     }
     const signal=AbortSignal.any([request.signal,AbortSignal.timeout(50000)]);
-    return Response.json(await runCoach(auth.user.id,input,signal),{headers});
+    return Response.json(await runCoach(auth.user.id,input,signal,undefined,undefined,timer),{headers});
   }catch(e){
     if(e instanceof ZodError||e instanceof SyntaxError)return Response.json({error:"INVALID_REQUEST"},{status:400,headers});
     if(e instanceof CoachReadError)return Response.json({error:e.message},{status:e.message==="RATE_LIMITED"?429:409,headers:{...headers,"Retry-After":"60"}});
     if(e instanceof Error&&["REQUEST_TOO_LARGE","INVALID_JSON"].includes(e.message))return Response.json({error:e.message},{status:400,headers});
-    console.warn("coach_model_failed",JSON.stringify({kind:e instanceof Error?e.name:"unknown"}));
+    console.warn("coach_model_failed",JSON.stringify({kind:e instanceof Error?e.name:"unknown",timing:timer.snapshot()}));
     return Response.json({error:request.signal.aborted?"CANCELLED":"MODEL_UNAVAILABLE"},{status:503,headers});
   }
 }

@@ -2,29 +2,29 @@ import "server-only";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
 import type { CoachSource } from "@/lib/coach-model";
+import { CoachTimer } from "@/lib/coach-timing";
+import { beginOwnerTransaction } from "@/services/owner-transaction";
 
 export const recordTopicSchema=z.enum(["body","food","workout","plan","nutrition","profile"]);
 export const readRecordsSchema=z.object({topic:recordTopicSchema,from:z.iso.date(),to:z.iso.date()}).strict();
 export class CoachReadError extends Error {}
 export class CoachStore {
-  constructor(private readonly pool:Pool){}
-  private async tx<T>(owner:string,work:(db:PoolClient)=>Promise<T>):Promise<T>{
-    z.uuid().parse(owner);const db=await this.pool.connect();let broken=false;
+  constructor(private readonly pool:Pool,private readonly timer=new CoachTimer()){}
+  private async tx<T>(owner:string,operation:string,work:(db:PoolClient)=>Promise<T>):Promise<T>{
+    z.uuid().parse(owner);const db=await this.timer.db(`${operation}.connect`,()=>this.pool.connect());let broken=false;
     try{
-      const role=(await db.query("select rolname,rolsuper,rolbypassrls from pg_roles where rolname=current_user")).rows[0];
-      if(role.rolname!=="liftcut_workout"||role.rolsuper||role.rolbypassrls)throw new Error("UNSAFE_DATABASE_ROLE");
-      await db.query("begin");await db.query("set local statement_timeout='10s'");await db.query("set local lock_timeout='5s'");
-      await db.query("select set_config('request.jwt.claim.sub',$1,true)",[owner]);
-      const result=await work(db);await db.query("commit");return result;
+      await this.timer.db(`${operation}.setup`,()=>beginOwnerTransaction(db,owner,"liftcut_workout"));
+      const result=await this.timer.db(`${operation}.query`,()=>work(db));await this.timer.db(`${operation}.commit`,()=>db.query("commit"));return result;
     }catch(e){await db.query("rollback").catch(()=>{broken=true;});throw e;}finally{db.release(broken);}
   }
   async reserve(owner:string,id:string){
     z.uuid().parse(id);
-    return this.tx(owner,async db=>{
+    return this.tx(owner,"quota",async db=>{
       await db.query("select pg_advisory_xact_lock(hashtextextended($1,716))",[owner]);
-      if((await db.query("select id from public.coach_request_usage where id=$1",[id])).rowCount)throw new CoachReadError("REQUEST_ALREADY_USED");
       const counts=(await db.query(`select count(*) filter(where created_at>now()-interval '60 seconds')::int as minute,
-        count(*)::int as day from public.coach_request_usage where user_id=$1 and created_at>now()-interval '24 hours'`,[owner])).rows[0];
+        count(*)::int as day,exists(select 1 from public.coach_request_usage where id=$2) as used
+        from public.coach_request_usage where user_id=$1 and created_at>now()-interval '24 hours'`,[owner,id])).rows[0];
+      if(counts.used)throw new CoachReadError("REQUEST_ALREADY_USED");
       if(counts.minute>=6||counts.day>=60)throw new CoachReadError("RATE_LIMITED");
       await db.query("insert into public.coach_request_usage(id,user_id) values($1,$2)",[id,owner]);
     });
@@ -32,7 +32,7 @@ export class CoachStore {
   async read(owner:string,input:unknown,anchor:string):Promise<CoachSource>{
     const r=readRecordsSchema.parse(input),span=(Date.parse(r.to)-Date.parse(r.from))/86400000;
     if(span<0||span>92||r.to>anchor)throw new CoachReadError("DATE_RANGE_INVALID");
-    return this.tx(owner,async db=>{
+    return this.tx(owner,r.topic,async db=>{
       let rows:Record<string,unknown>[]=[];
       if(r.topic==="body"||r.topic==="food"){
         const kind=r.topic;

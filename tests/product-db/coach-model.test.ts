@@ -55,6 +55,8 @@ test("model proposals and reads preserve transactional ownership, provenance, nu
       const stale={...binding,id:randomUUID(),setIds:[randomUUID()]};await assert.rejects(workout.command(owner,{...stale,modelProof:signCoachProposal(owner,stale,provenance)}),/STALE_CONTEXT/);
       await workout.undoCommand(owner,{id:randomUUID(),commandId:binding.id,version:1});await workout.command(owner,signed);
       assert.equal((await workout.load(owner)).session?.sets[0].status,"voided");
+      assert.deepEqual(await workout.current(owner),(await workout.load(owner)).session);
+      assert.equal(await workout.current(other),null);
     });
     await t.test("quota reservation is atomic, per account, and private to the restricted runtime",async()=>{
       const attempts=await Promise.allSettled(Array.from({length:10},()=>coach.reserve(owner,randomUUID())));

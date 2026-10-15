@@ -9,6 +9,7 @@ import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, ty
 import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";
 import { verifyCoachProposal } from "@/services/ai/coach-proof";
+import { beginOwnerTransaction } from "@/services/owner-transaction";
 
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
 export class TodayConflict extends Error {}
@@ -21,12 +22,7 @@ export class TodayStore {
     const db = await this.pool.connect();
     let broken = false;
     try {
-      const role = (await db.query("select rolname,rolsuper,rolbypassrls from pg_roles where rolname=current_user")).rows[0];
-      if (role.rolname !== "liftcut_workout" || role.rolsuper || role.rolbypassrls) throw new Error("UNSAFE_DATABASE_ROLE");
-      await db.query("begin");
-      await db.query("set local statement_timeout='10s'");
-      await db.query("set local lock_timeout='5s'");
-      await db.query("select set_config('request.jwt.claim.sub',$1,true)", [user]);
+      await beginOwnerTransaction(db,user,"liftcut_workout");
       await db.query("select pg_advisory_xact_lock(hashtextextended($1,714))", [user]);
       const value = await work(db);
       await db.query("commit");
@@ -72,6 +68,12 @@ export class TodayStore {
       const sources = [...new Set(events.flatMap(e=>[e.data.before?.sourceRef,e.data.after?.sourceRef]).filter(Boolean))];
       const commands = (await db.query("select receipt from public.workout_commands where id::text=any($1::text[])",[sources])).rows.map(r=>r.receipt);
       return {setId,events:events.map(e=>({...e,created_at:e.created_at.toISOString()})),commands};
+    });
+  }
+  async current(user:string):Promise<Session|null>{
+    return this.tx(user,async db=>{
+      const active=(await db.query("select id from public.workout_sessions where status='active'")).rows[0];
+      return active?this.read(db,active.id):null;
     });
   }
   async load(user: string): Promise<TodayData> {

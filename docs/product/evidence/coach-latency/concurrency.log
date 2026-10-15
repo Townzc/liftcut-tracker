@@ -1,0 +1,12 @@
+coach_model {"requestId":"ab584c14-da6f-4ffe-91bf-f19a7d8f3da3","model":"liftcut-coach","steps":1,"streaming":true,"reads":2,"draft":null,"timing":{"version":1,"serverMs":117,"firstTextMs":115,"authMs":null,"quotaMs":14,"model":[{"name":"model","startMs":48,"durationMs":29,"firstOutputMs":19,"httpHeadersMs":13,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"read_records","startMs":78,"durationMs":15},{"name":"read_records","startMs":78,"durationMs":37},{"name":"finish_response","startMs":78,"durationMs":37}],"database":[{"name":"quota.connect","startMs":13,"durationMs":7},{"name":"quota.setup","startMs":20,"durationMs":3},{"name":"quota.query","startMs":23,"durationMs":3},{"name":"quota.commit","startMs":26,"durationMs":1},{"name":"body.connect","startMs":80,"durationMs":2},{"name":"body.setup","startMs":82,"durationMs":2},{"name":"food.connect","startMs":80,"durationMs":8},{"name":"food.setup","startMs":88,"durationMs":2},{"name":"food.query","startMs":90,"durationMs":2},{"name":"food.commit","startMs":92,"durationMs":1},{"name":"body.query","startMs":84,"durationMs":30},{"name":"body.commit","startMs":114,"durationMs":0}],"toolWallMs":37}}
+coach_model {"requestId":"06d3bac8-023a-4397-a2d5-bc4e54692d7e","model":"liftcut-coach","steps":1,"streaming":true,"reads":0,"draft":"personal","timing":{"version":1,"serverMs":21,"firstTextMs":null,"authMs":null,"quotaMs":8,"model":[{"name":"model","startMs":11,"durationMs":6,"firstOutputMs":4,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"prepare_body","startMs":17,"durationMs":2},{"name":"prepare_body","startMs":17,"durationMs":2}],"database":[{"name":"quota.connect","startMs":0,"durationMs":2},{"name":"quota.setup","startMs":2,"durationMs":1},{"name":"quota.query","startMs":3,"durationMs":2},{"name":"quota.commit","startMs":5,"durationMs":3}],"toolWallMs":2}}
+✔ SDK executes separate reads concurrently, holds unverified prose, and keeps one unsaved draft (185.9544ms)
+✔ batched setup fails closed for privileged roles and returns a pooled connection without an owner (30.4963ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1021.7537

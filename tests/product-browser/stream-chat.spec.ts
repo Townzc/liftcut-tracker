@@ -11,6 +11,18 @@ async function start(page:Page,text:string){await page.locator("#coach-input").f
 test.afterEach(async()=>{await db.query("delete from coach_request_usage where user_id=$1",[owner]);});
 test.afterAll(async()=>{await db.end();});
 
+test("explicit record queries read fresh sources before one model call, with private numeric timings",async({page})=>{
+  await login(page);await start(page,"查看今天身体和饮食记录");
+  const turn=page.getByTestId("coach-turn").last();await expect(turn).toHaveAttribute("aria-busy","false");
+  await expect(turn).toContainText("已同时核对");await expect(turn).not.toContainText("toolWallMs");
+  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"查看今天身体和饮食记录",history:[],locale:"zh",timezone:"America/Los_Angeles",consent:"coach-model-v1"}});
+  expect(response.status()).toBe(200);const result=await response.json();
+  expect(result.sources.map((s:{topic:string})=>s.topic)).toEqual(["body","food"]);
+  expect(result.timing.model).toHaveLength(1);expect(result.timing.tools.some((s:{name:string})=>s.name==="read_records.prefetch")).toBe(true);
+  expect(result.timing.authMs).toBeGreaterThanOrEqual(0);expect(result.timing.quotaMs).toBeGreaterThanOrEqual(0);
+  expect(result.proposal).toBeUndefined();
+});
+
 test("a real HTTP stream renders incremental prose before completion, with no raw tool arguments",async({page})=>{
   await login(page);let completed=false;
   page.on("response",r=>{if(r.url().endsWith("/api/ai/coach")&&r.request().method()==="POST")void r.finished().then(()=>{completed=true;}).catch(()=>{});});
