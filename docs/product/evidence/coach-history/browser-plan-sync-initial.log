@@ -1,0 +1,82 @@
+[WebServer] (node:19176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:42680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:42252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 11 tests using 1 worker
+
+(node:35292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\history-chat.spec.ts:20:5 › reload and another browser recover cloud history; new conversation isolates model context (4.0s)
+  ok  2 tests\product-browser\history-chat.spec.ts:38:5 › failed save stays visible and retries after reload; history loading never blocks the composer (1.7s)
+  ok  3 tests\product-browser\history-chat.spec.ts:49:5 › reloading an unconfirmed draft restores prose without a confirmation token or a health write (1.4s)
+  ok  4 tests\product-browser\history-chat.spec.ts:58:5 › history deletion requires confirmation, defeats late uploads and preserves health data (2.1s)
+  ok  5 tests\product-browser\history-chat.spec.ts:74:5 › another account cannot read or mutate history and API still rejects unauthenticated requests (2.2s)
+  ok  6 tests\product-browser\history-chat.spec.ts:87:5 › Android WeChat user agent under slow 4G keeps streaming, composition and tab continuity (3.0s)
+  ok  7 tests\product-browser\history-webkit.spec.ts:3:5 › iPhone-sized WebKit retains streaming reply, input and cloud history through tabs and reload (5.2s)
+  ok  8 tests\product-browser\plan-chat.spec.ts:23:5 › switching pages during a confirmed plan write preserves the receipt and releases the composer (3.2s)
+  ok  9 tests\product-browser\plan-chat.spec.ts:35:5 › training preview and revision stay in chat; confirmation response loss recovers exactly once (4.9s)
+  x  10 tests\product-browser\plan-chat.spec.ts:53:5 › nutrition discard, confirm, adjust, refreshed recovery and owner isolation (8.1s)
+(node:34804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 tests\product-browser\plan-chat.spec.ts:67:5 › changed settings block a pending plan and independent reads return both sources (4.4s)
+
+
+  1) tests\product-browser\plan-chat.spec.ts:53:5 › nutrition discard, confirm, adjust, refreshed recovery and owner isolation
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('coach-plan')
+    Expected substring: "此预览已关闭"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByTestId('coach-plan') with timeout 5000ms
+      - waiting for getByTestId('coach-plan')
+        3 × locator resolved to <div data-testid="coach-plan" class="space-y-4 rounded-2xl border bg-background p-4 sm:p-5">…</div>
+          - unexpected value "AI 生成 · 饮食计划确认后将成为新的当前计划。合成饮食计划一日参考菜单，可轮换食材。营养是估算值。每日建议目标 · 2000 kcal · 蛋白质 120 g · 碳水 245 g · 脂肪 60 g · 饮水 2500 ml菜单营养为估算值，计划不会记成实际饮食。第 1 天按实际饥饿感调整早餐 · 早餐鸡蛋燕麦 · 一份 · ≈ 500 kcal / 蛋白质 30 g午餐 · 午餐鸡肉米饭蔬菜 · 一份 · ≈ 800 kcal / 蛋白质 50 g晚餐 · 晚餐鱼肉米饭蔬菜 · 一份 · ≈ 700 kcal / 蛋白质 40 g尚未应用，请展开各天安排核对后确认。确认并应用放弃此方案刷新状态"
+
+
+      53 | test("nutrition discard, confirm, adjust, refreshed recovery and owner isolation",async({page,browser})=>{
+      54 |   await login(page);await send(page,"帮我制定饮食计划 [nutrition-plan]");await expect(page.getByTestId("coach-plan")).toContainText("2000 kcal");
+    > 55 |   await page.getByRole("button",{name:"放弃此方案",exact:true}).click();await expect(page.getByTestId("coach-plan")).toContainText("此预览已关闭");expect(await count("nutrition_plans")).toBe(0);
+         |                                                                                                                 ^
+      56 |   await send(page,"重新制定饮食计划 [nutrition-plan]");await page.getByRole("button",{name:"确认并应用",exact:true}).click();await expect(page.getByTestId("plan-receipt")).toBeVisible();expect(await count("nutrition_plans")).toBe(1);
+      57 |   await send(page,"调整饮食计划到2200千卡 [nutrition-plan]");await expect(page.getByTestId("coach-plan")).toContainText("2200 kcal");expect(await count("nutrition_plans")).toBe(1);
+      58 |   const run=(await recent(page))[0],turnCount=await page.getByTestId("coach-turn").count();await page.reload();await expect(page.getByTestId("coach-plan")).toContainText("2200 kcal");await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount);
+        at C:\Users\tangzhice\Desktop\exercise\liftcut-tracker\tests\product-browser\plan-chat.spec.ts:55:113
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\plan-chat-nutrition-discar-d1b6c-ecovery-and-owner-isolation\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: node_modules\.cache\w1b\browser\plan-chat-nutrition-discar-d1b6c-ecovery-and-owner-isolation\error-context.md
+
+    Error Context: node_modules\.cache\w1b\browser\plan-chat-nutrition-discar-d1b6c-ecovery-and-owner-isolation\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    node_modules\.cache\w1b\browser\plan-chat-nutrition-discar-d1b6c-ecovery-and-owner-isolation\trace.zip
+    Usage:
+
+        npx playwright show-trace node_modules\.cache\w1b\browser\plan-chat-nutrition-discar-d1b6c-ecovery-and-owner-isolation\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\product-browser\plan-chat.spec.ts:53:5 › nutrition discard, confirm, adjust, refreshed recovery and owner isolation
+  10 passed (48.4s)

@@ -20,6 +20,18 @@ test.afterEach(async()=>{
 });
 test.afterAll(async()=>{await db.end();});
 
+test("switching pages during a confirmed plan write preserves the receipt and releases the composer",async({page})=>{
+  await login(page);await send(page,"生成每周两天、每次45分钟的训练计划 [training-plan]");
+  let release!:()=>void,observed!:()=>void;const gate=new Promise<void>(r=>{release=r;}),blocked=new Promise<void>(r=>{observed=r;});
+  await page.route("**/api/agent/runs/*/execute",async route=>{const response=await route.fetch();expect(response.status()).toBe(200);observed();await gate;await route.fulfill({response});});
+  try{
+    await page.getByRole("button",{name:"确认并应用",exact:true}).click();await blocked;
+    await page.getByRole("navigation").getByRole("link",{name:"设置",exact:true}).click();await expect(page.getByTestId("settings-index")).toBeVisible();
+    await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();release();
+    await expect(page.locator("#coach-input")).toBeEnabled();await expect(page.getByTestId("plan-receipt")).toBeVisible();expect(await count("training_plans")).toBe(1);
+  }finally{release();await page.unrouteAll({behavior:"wait"});}
+});
+
 test("training preview and revision stay in chat; confirmation response loss recovers exactly once",async({page})=>{
   const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));await login(page);
   await send(page,"生成每周两天、每次45分钟的训练计划 [training-plan]");
