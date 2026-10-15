@@ -1,0 +1,103 @@
+{
+  "scope": "Public endpoints only. China cloud networks, not carrier networks or real phones.",
+  "measurements": [
+    {
+      "results": [
+        {
+          "network": "Shenzhen Tencent Computer Systems Company",
+          "timings": {
+            "total": 2332,
+            "dns": 242,
+            "tcp": 90,
+            "tls": 99,
+            "firstByte": 1900,
+            "download": 1
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Beijing"
+        },
+        {
+          "network": "Hangzhou Alibaba Advertising",
+          "timings": {
+            "total": 2065,
+            "dns": 206,
+            "tcp": 51,
+            "tls": 61,
+            "firstByte": 1746,
+            "download": 1
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Shenzhen"
+        },
+        {
+          "network": "Shenzhen Tencent Computer Systems Company",
+          "timings": {
+            "total": 2177,
+            "dns": 109,
+            "tcp": 47,
+            "tls": 56,
+            "firstByte": 1956,
+            "download": 9
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Guangzhou"
+        }
+      ],
+      "createdAt": "2026-10-15T18:16:52.943Z",
+      "target": "site",
+      "id": "2dvr9zbH9SWk8RXGC00021K48"
+    },
+    {
+      "results": [
+        {
+          "network": "Shenzhen Tencent Computer Systems Company",
+          "timings": {
+            "total": 691,
+            "dns": 91,
+            "tcp": 91,
+            "tls": 97,
+            "firstByte": 411,
+            "download": 1
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Beijing"
+        },
+        {
+          "network": "Hangzhou Alibaba Advertising",
+          "timings": {
+            "total": 733,
+            "dns": 62,
+            "tcp": 49,
+            "tls": 61,
+            "firstByte": 560,
+            "download": 1
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Shenzhen"
+        },
+        {
+          "network": "Shenzhen Tencent Computer Systems Company",
+          "timings": {
+            "total": 809,
+            "dns": 78,
+            "tcp": 65,
+            "tls": 73,
+            "firstByte": 592,
+            "download": 1
+          },
+          "country": "CN",
+          "statusCode": 200,
+          "city": "Shanghai"
+        }
+      ],
+      "createdAt": "2026-10-15T18:16:53.554Z",
+      "target": "auth",
+      "id": "2vJJZgz73UxxraR1Y00021K48"
+    }
+  ]
+}

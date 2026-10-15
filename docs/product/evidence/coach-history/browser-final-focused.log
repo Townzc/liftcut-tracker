@@ -1,0 +1,36 @@
+[WebServer] (node:41192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:41192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:49056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:43616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:46236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 11 tests using 1 worker
+
+(node:3776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\history-chat.spec.ts:20:5 › reload and another browser recover cloud history; new conversation isolates model context (3.6s)
+  ok  2 tests\product-browser\history-chat.spec.ts:38:5 › failed save stays visible and retries after reload; history loading never blocks the composer (1.5s)
+  ok  3 tests\product-browser\history-chat.spec.ts:49:5 › reloading an unconfirmed draft restores prose without a confirmation token or a health write (1.3s)
+  ok  4 tests\product-browser\history-chat.spec.ts:58:5 › history deletion requires confirmation, defeats late uploads and preserves health data (1.8s)
+  ok  5 tests\product-browser\history-chat.spec.ts:74:5 › another account cannot read or mutate history and API still rejects unauthenticated requests (1.9s)
+  ok  6 tests\product-browser\history-chat.spec.ts:87:5 › Android WeChat user agent under slow 4G keeps streaming, composition and tab continuity (2.9s)
+  ok  7 tests\product-browser\history-webkit.spec.ts:3:5 › iPhone-sized WebKit retains streaming reply, input and cloud history through tabs and reload (4.6s)
+  ok  8 tests\product-browser\plan-chat.spec.ts:23:5 › switching pages during a confirmed plan write preserves the receipt and releases the composer (3.0s)
+  ok  9 tests\product-browser\plan-chat.spec.ts:35:5 › training preview and revision stay in chat; confirmation response loss recovers exactly once (4.2s)
+  ok 10 tests\product-browser\plan-chat.spec.ts:53:5 › nutrition discard, confirm, adjust, refreshed recovery and owner isolation (7.0s)
+  ok 11 tests\product-browser\plan-chat.spec.ts:67:5 › changed settings block a pending plan and independent reads return both sources (3.7s)
+
+  11 passed (41.2s)

@@ -11,7 +11,7 @@ async function api<T>(path:string,body?:unknown):Promise<T>{
   const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.error||"OUTCOME_UNKNOWN");return result.value;
 }
 const bind=(r:RunView):Binding=>({proposalId:r.proposal!.proposalId,contentHash:r.proposal!.contentHash,contextRevision:r.proposal!.contextRevision});
-export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void}){
+export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy,onUpdate}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void;onUpdate:(value:RunView)=>void}){
   const [runs,setRuns]=useState<RunView[]>([]),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");
   const [busy,setBusy]=useState(false),flight=useRef(false),mounted=useRef(true),listRequest=useRef(0);
   const refreshUserData=useTrackerStore(s=>s.refreshUserData);
@@ -20,12 +20,12 @@ export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHist
     return()=>{alive=false;mounted.current=false;};
   },[owner,en]);
   useEffect(()=>{if(fresh){const request=++listRequest.current;setRuns(previous=>[fresh,...previous.filter(r=>r.id!==fresh.id)].slice(0,5));setSelected(fresh.id);setError("");
-    void api<RunView[]>("").then(values=>{if(mounted.current&&request===listRequest.current)setRuns(values);}).catch(()=>{});
+    void api<RunView[]>("").then(values=>{if(mounted.current&&request===listRequest.current)setRuns(values.some(r=>r.id===fresh.id)?values:[fresh,...values].slice(0,5));}).catch(()=>{});
   }},[fresh]);
   useEffect(()=>{onSelect(selected??undefined);},[selected,onSelect]);
   const run=runs.find(r=>r.id===selected);
   const changes=run?.proposal?planChanges(run.baseline,run.proposal.plan,en):[];
-  const received=(value:RunView)=>{if(mounted.current)setRuns(previous=>previous.map(r=>r.id===value.id?value:r));};
+  const received=(value:RunView)=>{onUpdate(value);if(mounted.current)setRuns(previous=>previous.map(r=>r.id===value.id?value:r));};
   async function act(action:"apply"|"decline"|"refresh"){
     if(!run||flight.current||locked)return;flight.current=true;setBusy(true);onBusy(true);setError("");
     try{
@@ -48,7 +48,7 @@ export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHist
       void refreshUserData().catch(()=>{});
     }catch(e){if(mounted.current)setError(en?`Result not confirmed (${e instanceof Error?e.message:"unknown"}). Refresh status before retrying.`:
       `结果尚未确认（${e instanceof Error?e.message:"unknown"}）。请先刷新状态，再决定是否重试；不会自动重复应用。`);
-    }finally{flight.current=false;if(mounted.current){setBusy(false);onBusy(false);}}
+    }finally{flight.current=false;onBusy(false);if(mounted.current)setBusy(false);}
   }
   if((!runs.length||(!run&&!showHistory))&&!error)return null;
   return <section className="space-y-3" aria-label={en?"Plans in this conversation":"对话中的计划"}>

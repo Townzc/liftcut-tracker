@@ -1,0 +1,96 @@
+[WebServer] (node:32872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+[WebServer] (node:42096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 64 tests using 1 worker
+
+(node:40504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\product-browser\coach.spec.ts:33:5 › chat reads, clarification, cancellation, batch confirmation and correction compensation use real API/PG (3.7s)
+  ok  2 tests\product-browser\coach.spec.ts:63:5 › offline chat batch -> correction -> undo -> end persists exact order, NULLs and receipts after refresh (3.4s)
+  ok  3 tests\product-browser\coach.spec.ts:83:5 › query after ending reads committed history while the background cache refresh is still blocked (2.3s)
+  ok  4 tests\product-browser\coach.spec.ts:102:5 › a draft becomes stale after another page records; lost confirmation response survives page switching (2.9s)
+  ok  5 tests\product-browser\coach.spec.ts:119:5 › chat replacement preview and compensation leave the long-term plan and next session unchanged (2.5s)
+  ok  6 tests\product-browser\coach.spec.ts:136:5 › IME and multiline input never auto-submit; flag, account isolation and English chat (3.5s)
+  ok  7 tests\product-browser\history-chat.spec.ts:20:5 › reload and another browser recover cloud history; new conversation isolates model context (3.9s)
+  ok  8 tests\product-browser\history-chat.spec.ts:38:5 › failed save stays visible and retries after reload; history loading never blocks the composer (1.7s)
+  ok  9 tests\product-browser\history-chat.spec.ts:49:5 › reloading an unconfirmed draft restores prose without a confirmation token or a health write (1.4s)
+  ok 10 tests\product-browser\history-chat.spec.ts:58:5 › history deletion requires confirmation, defeats late uploads and preserves health data (1.9s)
+  ok 11 tests\product-browser\history-chat.spec.ts:74:5 › another account cannot read or mutate history and API still rejects unauthenticated requests (2.1s)
+  ok 12 tests\product-browser\history-chat.spec.ts:87:5 › Android WeChat user agent under slow 4G keeps streaming, composition and tab continuity (3.0s)
+  ok 13 tests\product-browser\history-webkit.spec.ts:3:5 › iPhone-sized WebKit retains streaming reply, input and cloud history through tabs and reload (5.4s)
+  ok 14 tests\product-browser\minimal-agent.spec.ts:16:5 › Agent composer appears while workout data is still loading; tools stay inside the conversation (801ms)
+  ok 15 tests\product-browser\minimal-agent.spec.ts:28:5 › settings opens real subpages with the Settings tab selected and no disclosure menus (1.3s)
+  ok 16 tests\product-browser\minimal-agent.spec.ts:40:5 › three-tab monochrome home, optional manual entry, real save/refresh, Agent lookup and compensating undo (2.3s)
+  ok 17 tests\product-browser\minimal-agent.spec.ts:67:5 › Agent food drafts do not invent nutrients, response loss replays one request across pages, source survives reload (1.5s)
+  ok 18 tests\product-browser\minimal-agent.spec.ts:86:5 › phone, desktop and dark views stay monochrome; keyboard prompt and account isolation (3.1s)
+  ok 19 tests\product-browser\minimal-agent.spec.ts:106:5 › offline body entry persists then syncs once; unavailable local storage sends nothing (1.4s)
+  ok 20 tests\product-browser\minimal-agent.spec.ts:120:5 › data query reads saved measurements even while the initial personal history load is blocked (920ms)
+  ok 21 tests\product-browser\minimal-agent.spec.ts:137:5 › failed legacy reads, failed new-history reads and offline queries never become empty-history claims (9.0s)
+  ok 22 tests\product-browser\model-chat.spec.ts:16:5 › model consent, oral body draft, no write until confirmation, signed replay, fresh query and follow-up (3.4s)
+  ok 23 tests\product-browser\model-chat.spec.ts:35:5 › natural food draft keeps nulls; tampering, cross-user reuse, response loss and offline confirmation (2.6s)
+  ok 24 tests\product-browser\model-chat.spec.ts:56:5 › a same-day body append after food history survives invalid tool fields and needs no model turn after validation (1.7s)
+[WebServer] coach_stream_failed {"kind":"AI_APICallError","timing":{"version":1,"serverMs":21,"firstTextMs":null,"authMs":2,"quotaMs":11,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":1},{"name":"quota.setup","startMs":4,"durationMs":1},{"name":"quota.query","startMs":5,"durationMs":2},{"name":"quota.commit","startMs":7,"durationMs":7}],"toolWallMs":0,"authDetail":{"clientMs":0,"requestMs":2},"bootstrapMs":0,"quotaDetail":{"lockMs":0.04,"checkMs":0.15,"insertMs":0.16}}}
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":58,"firstTextMs":null,"authMs":6,"quotaMs":9,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":7,"durationMs":0},{"name":"quota.setup","startMs":7,"durationMs":1},{"name":"quota.query","startMs":8,"durationMs":1},{"name":"quota.commit","startMs":9,"durationMs":7}],"toolWallMs":0,"authDetail":{"clientMs":0,"requestMs":5},"bootstrapMs":0,"quotaDetail":{"lockMs":0.02,"checkMs":0.14,"insertMs":0.1}}}
+  ok 25 tests\product-browser\model-chat.spec.ts:71:5 › untrusted model numbers, provider failure, cancellation and missing consent never write (1.5s)
+  ok 26 tests\product-browser\model-chat.spec.ts:84:5 › natural workout report uses the existing versioned queue and preserves source and nulls (2.4s)
+[WebServer] coach_stream_failed {"kind":"Error","timing":{"version":1,"serverMs":7,"firstTextMs":null,"authMs":3,"quotaMs":3,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":4,"durationMs":0},{"name":"quota.setup","startMs":4,"durationMs":2},{"name":"quota.query","startMs":6,"durationMs":1}],"toolWallMs":0,"authDetail":{"clientMs":0,"requestMs":3},"bootstrapMs":0}}
+  ok 27 tests\product-browser\model-chat.spec.ts:113:5 › a failed source read is not empty history; persistent quota returns an explicit limit (1.2s)
+  ok 28 tests\product-browser\outbox.spec.ts:46:5 › fresh real-account bootstrap never sends demo plans or observed health records (685ms)
+  ok 29 tests\product-browser\outbox.spec.ts:59:5 › offline three sets, correction, compensating void and end sync in exact persisted order (2.4s)
+  ok 30 tests\product-browser\outbox.spec.ts:79:5 › sentence preview and compensation work offline without API preview or fabricated actuals (1.3s)
+  ok 31 tests\product-browser\outbox.spec.ts:90:5 › lost response survives page close and two tabs claim just one immutable retry (2.1s)
+  ok 32 tests\product-browser\outbox.spec.ts:104:5 › newer cloud revision pauses the whole tail until explicit reviewed discard (1.9s)
+  ok 33 tests\product-browser\outbox.spec.ts:119:5 › storage refusal blocks saving before any network write (1.4s)
+  ok 34 tests\product-browser\outbox.spec.ts:128:5 › account-bound requests fail closed and old outbox stays isolated after account switch (3.1s)
+  ok 35 tests\product-browser\outbox.spec.ts:147:5 › 401 retains the exact operation and pauses until explicit retry (1.5s)
+  ok 36 tests\product-browser\outbox.spec.ts:155:5 › unavailable IndexedDB shows an explicit failure instead of silently using memory (692ms)
+  ok 37 tests\product-browser\outbox.spec.ts:160:5 › a preview made before another local write cannot silently move to later set slots (1.6s)
+  ok 38 tests\product-browser\outbox.spec.ts:167:5 › expired lease from a dead tab is recovered without Web Locks or BroadcastChannel (1.7s)
+  ok 39 tests\product-browser\outbox.spec.ts:182:5 › an abandoned but live lease is respected before the same immutable operation recovers (11.7s)
+  ok 40 tests\product-browser\plan-chat.spec.ts:23:5 › training preview and revision stay in chat; confirmation response loss recovers exactly once (4.2s)
+  ok 41 tests\product-browser\plan-chat.spec.ts:41:5 › nutrition discard, confirm, adjust, refreshed recovery and owner isolation (7.3s)
+  ok 42 tests\product-browser\plan-chat.spec.ts:55:5 › changed settings block a pending plan and independent reads return both sources (3.7s)
+  ok 43 tests\product-browser\replacement.spec.ts:41:5 › preview/cancel never writes; equipment is explicit, confirmation changes session only (1.7s)
+  ok 44 tests\product-browser\replacement.spec.ts:53:5 › offline replacement -> compensation -> replacement -> actual -> end syncs original bytes and identities (2.9s)
+  ok 45 tests\product-browser\replacement.spec.ts:70:5 › committed response lost: same request survives refresh, multi-tab retry and later compensation (2.5s)
+  ok 46 tests\product-browser\replacement.spec.ts:83:5 › old device queued set conflicts after another device replaces; no automatic remapping (1.5s)
+  ok 47 tests\product-browser\replacement.spec.ts:91:5 › other device records original exercise: replacement and dependent new set pause together (1.9s)
+  ok 48 tests\product-browser\replacement.spec.ts:102:5 › stale undo preview after other device records never removes that actual; ended session cannot replace (1.9s)
+  ok 49 tests\product-browser\replacement.spec.ts:112:5 › owner/origin/flag authorization and invalid catalog are enforced at HTTP boundary (972ms)
+  ok 50 tests\product-browser\replacement.spec.ts:120:5 › language switch changes labels without altering stored action name or request identity (1.7s)
+  ok 51 tests\product-browser\sentence.spec.ts:17:5 › mobile sentence preview, atomic save, response loss, correction compensation and durable receipts (4.7s)
+  ok 52 tests\product-browser\sentence.spec.ts:74:5 › new routes reject anonymous and cross-origin requests (74ms)
+  ok 53 tests\product-browser\stream-chat.spec.ts:14:5 › explicit record queries read fresh sources before one model call, with private numeric timings (1.2s)
+  ok 54 tests\product-browser\stream-chat.spec.ts:26:5 › a real HTTP stream renders incremental prose before completion, with no raw tool arguments (2.0s)
+  ok 55 tests\product-browser\stream-chat.spec.ts:36:5 › long replies complete in the browser and transmit each character once instead of repeating prefixes (8.3s)
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":873,"firstTextMs":487,"authMs":3,"quotaMs":4,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":4,"durationMs":0},{"name":"quota.setup","startMs":4,"durationMs":1},{"name":"quota.query","startMs":5,"durationMs":2},{"name":"quota.commit","startMs":7,"durationMs":1}],"toolWallMs":0,"authDetail":{"clientMs":0,"requestMs":2},"bootstrapMs":0,"quotaDetail":{"lockMs":0.02,"checkMs":0.14,"insertMs":0.11}}}
+[WebServer] coach_stream_failed {"kind":"AI_APICallError","timing":{"version":1,"serverMs":93,"firstTextMs":59,"authMs":3,"quotaMs":5,"model":[],"tools":[],"database":[{"name":"quota.connect","startMs":3,"durationMs":0},{"name":"quota.setup","startMs":3,"durationMs":2},{"name":"quota.query","startMs":5,"durationMs":1},{"name":"quota.commit","startMs":6,"durationMs":2}],"toolWallMs":0,"authDetail":{"clientMs":0,"requestMs":2},"bootstrapMs":0,"quotaDetail":{"lockMs":0.01,"checkMs":0.16,"insertMs":0.09}}}
+  ok 56 tests\product-browser\stream-chat.spec.ts:47:5 › stopped and broken replies are discarded and never sent as later conversation memory (2.2s)
+[WebServer] coach_stream_failed {"kind":"Error","timing":{"version":1,"serverMs":929,"firstTextMs":null,"authMs":3,"quotaMs":4,"model":[{"name":"model","startMs":11,"durationMs":176,"firstOutputMs":3,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":189,"durationMs":182,"firstOutputMs":4,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":375,"durationMs":182,"firstOutputMs":2,"httpHeadersMs":1,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":559,"durationMs":183,"firstOutputMs":2,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null},{"name":"model","startMs":745,"durationMs":183,"firstOutputMs":2,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"finish_response","startMs":187,"durationMs":0},{"name":"finish_response","startMs":372,"durationMs":0},{"name":"finish_response","startMs":556,"durationMs":1},{"name":"finish_response","startMs":742,"durationMs":0},{"name":"finish_response","startMs":929,"durationMs":0}],"database":[{"name":"quota.connect","startMs":4,"durationMs":0},{"name":"quota.setup","startMs":4,"durationMs":2},{"name":"quota.query","startMs":6,"durationMs":1},{"name":"quota.commit","startMs":7,"durationMs":1}],"toolWallMs":1,"authDetail":{"clientMs":0,"requestMs":3},"bootstrapMs":0,"quotaDetail":{"lockMs":0.01,"checkMs":0.04,"insertMs":0.07}}}
+  ok 57 tests\product-browser\stream-chat.spec.ts:58:5 › unverified sources suppress provisional text and errors never produce a confirmation (2.1s)
+  ok 58 tests\product-browser\stream-chat.spec.ts:66:5 › navigation keeps a live reply running and returning to Agent retains both turns (2.3s)
+  ok 59 tests\product-browser\stream-chat.spec.ts:74:5 › Agent is usable before profile/history bootstrap completes, with no status request waterfall (1.1s)
+[WebServer] coach_stream_failed {"kind":"ResponseAborted","timing":{"version":1,"serverMs":884,"firstTextMs":null,"authMs":3,"quotaMs":5,"model":[{"name":"model","startMs":13,"durationMs":471,"firstOutputMs":3,"httpHeadersMs":1,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"plan_context","startMs":483,"durationMs":9}],"database":[{"name":"quota.connect","startMs":4,"durationMs":1},{"name":"quota.setup","startMs":5,"durationMs":1},{"name":"quota.query","startMs":6,"durationMs":1},{"name":"quota.commit","startMs":7,"durationMs":2}],"toolWallMs":9,"authDetail":{"clientMs":0,"requestMs":3},"bootstrapMs":0,"quotaDetail":{"lockMs":0.01,"checkMs":0.05,"insertMs":0.08}}}
+  ok 60 tests\product-browser\stream-chat.spec.ts:85:5 › partial plan arguments expose no apply button; only a validated preview can be confirmed (1.7s)
+  ok 61 tests\product-browser\today.spec.ts:25:5 › mobile: real API/PG save, lost response, refresh, correction, undo, history and nulls (3.3s)
+  ok 62 tests\product-browser\today.spec.ts:74:5 › server flag off hides navigation and blocks writes while preserving history (787ms)
+  ok 63 tests\product-browser\today.spec.ts:82:5 › API rejects signed-out users and cross-origin writes (22ms)
+  ok 64 tests\product-browser\workout-null.spec.ts:3:5 › mobile guest form saves blanks, clearing a measurement survives blur and reload (1.0s)
+
+  64 passed (2.8m)

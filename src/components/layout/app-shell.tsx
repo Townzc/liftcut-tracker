@@ -9,6 +9,7 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { PersonalRecordsProvider } from "@/components/agent/personal-records-provider";
+import { CoachMemoryProvider } from "@/components/agent/coach-memory-provider";
 import { cn } from "@/lib/utils";
 
 const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding", "/demo"];
@@ -35,9 +36,9 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
   // Agent reads through authenticated APIs; its composer need not wait for the
   // profile and the legacy dashboard's complete historical bundle.
-  if (loading && !(pathname==="/agent"&&user&&authMode==="authenticated")) return <div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>;
   return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null}>
-    <div className="min-h-dvh bg-background">
+    <CoachMemoryProvider owner={user?.id??null}>
+    {loading && !(pathname==="/agent"&&user&&authMode==="authenticated")?<div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>:<div className="min-h-dvh bg-background">
       <header className="mx-auto flex h-20 max-w-5xl items-center justify-between px-6 sm:px-10">
         <Link href="/" className="text-lg font-semibold tracking-[-0.06em]" aria-label="LiftCut">liftcut<span className="text-muted-foreground">.</span></Link>
         <Link href="/settings" className="flex min-h-11 items-center gap-2.5 rounded-full text-sm text-muted-foreground transition-colors hover:text-foreground" aria-label={en ? "Account settings" : "账号设置"}>
@@ -59,6 +60,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
           </Link>)}
         </div>
       </nav>
-    </div>
+    </div>}
+    </CoachMemoryProvider>
   </PersonalRecordsProvider>;
 }

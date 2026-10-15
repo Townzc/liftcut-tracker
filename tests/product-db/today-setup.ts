@@ -21,6 +21,7 @@ export async function setup() {
     await db.query(await readFile("supabase/migrations/20261013203030_p1_application_transactions.sql","utf8"));
     await db.query(await readFile("supabase/migrations/20261014210256_conversational_plan_approval.sql","utf8"));
     await db.query(await readFile("supabase/migrations/20261014222000_plan_lock_jwt_subject.sql","utf8"));
+    await db.query(await readFile("supabase/migrations/20261015175339_coach_history_and_atomic_quota.sql","utf8"));
     // Mirror hosted managed-schema permissions, not a local administrator's grants.
     await db.query("revoke usage on schema auth from liftcut_agent, liftcut_workout");
     await db.query("alter role liftcut_agent login password 'p1-local-fixture-only'");

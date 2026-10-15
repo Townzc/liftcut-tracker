@@ -1,0 +1,16 @@
+▶ durable conversations keep RLS ownership, replay safety, deletion tombstones and stable pages
+  ✔ repeat upload is idempotent; owner isolation is enforced in service and direct SQL (34.3885ms)
+  ✔ a complete revision wins; stale or conflicting data cannot overwrite it (13.8979ms)
+  ✔ message pages do not skip or repeat boundaries (62.1716ms)
+  ✔ conversation cursor keeps rows with the same millisecond across pages (170.5343ms)
+  ✔ deletion races with delayed uploads cannot resurrect prose or delete business records (16.502ms)
+  ✔ concurrent quota reservations enforce the limit and report real lock/query time (36.9689ms)
+✔ durable conversations keep RLS ownership, replay safety, deletion tombstones and stable pages (359.3048ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 839.6106

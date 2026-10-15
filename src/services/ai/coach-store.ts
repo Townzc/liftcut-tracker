@@ -20,13 +20,9 @@ export class CoachStore {
   async reserve(owner:string,id:string){
     z.uuid().parse(id);
     return this.tx(owner,"quota",async db=>{
-      await db.query("select pg_advisory_xact_lock(hashtextextended($1,716))",[owner]);
-      const counts=(await db.query(`select count(*) filter(where created_at>now()-interval '60 seconds')::int as minute,
-        count(*)::int as day,exists(select 1 from public.coach_request_usage where id=$2) as used
-        from public.coach_request_usage where user_id=$1 and created_at>now()-interval '24 hours'`,[owner,id])).rows[0];
-      if(counts.used)throw new CoachReadError("REQUEST_ALREADY_USED");
-      if(counts.minute>=6||counts.day>=60)throw new CoachReadError("RATE_LIMITED");
-      await db.query("insert into public.coach_request_usage(id,user_id) values($1,$2)",[id,owner]);
+      const value=(await db.query("select public.reserve_coach_request($1) as value",[id])).rows[0].value;
+      if(value.error)throw new CoachReadError(z.enum(["RATE_LIMITED","REQUEST_ALREADY_USED"]).parse(value.error));
+      this.timer.quota(z.object({lockMs:z.number().nonnegative(),checkMs:z.number().nonnegative(),insertMs:z.number().nonnegative()}).parse(value));
     });
   }
   async read(owner:string,input:unknown,anchor:string):Promise<CoachSource>{

@@ -77,3 +77,8 @@ docs/product/evidence/w3b/*.json -text whitespace=cr-at-eol
 docs/product/evidence/w3b-release/*.json -text whitespace=cr-at-eol
 docs/product/evidence/w3b-release/*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 docs/product/evidence/w3b-release/*.txt -text whitespace=cr-at-eol
+
+# Keep new product verification hashes stable across checkouts.
+docs/product/evidence/coach-history/*.json text eol=lf
+docs/product/evidence/coach-history/*.log text eol=lf
+docs/product/evidence/coach-history/*.png -text

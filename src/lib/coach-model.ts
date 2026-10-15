@@ -24,7 +24,7 @@ export type CoachProposal =
 export type CoachResponse = {message:string;model:string;provider:string;sources:CoachSource[];proposal?:CoachProposal;requestId:string;timing?:CoachTiming};
 export type CoachStatus = {available:boolean;provider:string|null;model:string|null;consentVersion:typeof COACH_CONSENT_VERSION};
 
-/** Session-only context, bounded and partitioned by owner. Never a durable memory. */
+/** Current conversation only, bounded to six complete turns. Saved chat is not a facts cache. */
 export function conversationHistory(turns:{text:string;lines?:string[];reply:string;pending?:boolean;interrupted?:boolean}[]):CoachMessage[] {
   return turns.filter(t=>!t.pending&&!t.interrupted).slice(-6).flatMap(t=>[
     {role:"user" as const,content:t.text.slice(0,400)},

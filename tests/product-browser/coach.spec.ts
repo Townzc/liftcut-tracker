@@ -73,7 +73,7 @@ test("offline chat batch -> correction -> undo -> end persists exact order, NULL
   await page.screenshot({path:"node_modules/.cache/coach/chat-offline.png",fullPage:true});
   const sent:string[]=[];page.on("request",r=>{if(r.method()==="POST"&&r.url().includes("/api/workout-"))sent.push(r.postData()!);});
   await context.setOffline(false);await synced(page);expect(sent).toEqual(snapshot.items.map(x=>x.bodyJson));
-  await page.reload();await synced(page);await expect(page.getByTestId("coach-turn")).toHaveCount(0);
+  const turnCount=await page.getByTestId("coach-turn").count();await page.reload();await synced(page);await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount);
   await send(page,"查看回执");await expect(page.getByTestId(`receipt-${correction}`)).toContainText("撤销回执");
   expect((await db.query("select reps,weight_kg,rpe,revision from set_logs where session_id=$1 order by set_index",[initial.id])).rows)
     .toEqual([{reps:8,weight_kg:null,rpe:null,revision:1},{reps:7,weight_kg:null,rpe:null,revision:3}]);
@@ -108,12 +108,12 @@ test("a draft becomes stale after another page records; lost confirmation respon
   await page.route("**/api/workout-commands?action=apply",async route=>{expect((await route.fetch()).status()).toBe(200);await route.abort("connectionreset");},{times:1});
   // Close the second page so only this tab owns this particular retry attempt.
   await second.close();await confirm(page);await expect(page.getByRole("alert").filter({hasText:"本次保存结果尚未确认"})).toBeVisible();
-  const item=(await state(page)).items[0];await page.goto("/today");
+  const item=(await state(page)).items[0],turnCount=await page.getByTestId("coach-turn").count();await page.goto("/today");
   await page.getByRole("button",{name:"重试同一操作"}).click();await synced(page);
   expect((await read(page)).session!.sets.map(s=>s.reps)).toEqual([10,7]);
   expect((await db.query("select * from workout_commands where id=$1",[JSON.parse(item.bodyJson).id])).rowCount).toBe(1);
   await page.getByRole("link",{name:"和训练助手聊聊"}).click();await synced(page);
-  await expect(page.getByTestId("coach-turn")).toHaveCount(0);await send(page,"查看回执");await expect(page.getByTestId(`receipt-${JSON.parse(item.bodyJson).id}`)).toContainText("已保存");
+  await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount);await send(page,"查看回执");await expect(page.getByTestId(`receipt-${JSON.parse(item.bodyJson).id}`)).toContainText("已保存");
 });
 
 test("chat replacement preview and compensation leave the long-term plan and next session unchanged",async({page,context})=>{
@@ -134,10 +134,10 @@ test("chat replacement preview and compensation leave the long-term plan and nex
 });
 
 test("IME and multiline input never auto-submit; flag, account isolation and English chat",async({page,context})=>{
-  await start(page);const input=page.getByLabel("发给训练助手",{exact:true});await input.fill("仅存在本页的私有草稿");
-  await input.dispatchEvent("keydown",{key:"Enter",isComposing:true,keyCode:229});await expect(page.getByTestId("coach-turn")).toHaveCount(0);
-  await input.press("Shift+Enter");await expect(page.getByTestId("coach-turn")).toHaveCount(0);
-  await input.fill("帮助");await input.press("Enter");await expect(page.getByTestId("coach-turn")).toHaveCount(1);
+  await start(page);const input=page.getByLabel("发给训练助手",{exact:true}),turnCount=await page.getByTestId("coach-turn").count();await input.fill("仅存在本页的私有草稿");
+  await input.dispatchEvent("keydown",{key:"Enter",isComposing:true,keyCode:229});await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount);
+  await input.press("Shift+Enter");await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount);
+  await input.fill("帮助");await input.press("Enter");await expect(page.getByTestId("coach-turn")).toHaveCount(turnCount+1);
   await page.goto("/settings/account");await page.getByRole("button",{name:"退出登录",exact:true}).click();
   await expect.poll(async()=>(await page.request.get("/api/workout-sessions")).status()).toBe(401);
   await login(page,"offline-second@example.invalid");await page.goto("/coach");await synced(page);await expect(page.getByTestId("coach-turn")).toHaveCount(0);

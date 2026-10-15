@@ -63,11 +63,12 @@ test("unverified sources suppress provisional text and errors never produce a co
   await expect(page.getByTestId("personal-draft")).toHaveCount(0);await expect(page.getByTestId("coach-plan")).toHaveCount(0);
 });
 
-test("navigation aborts a reply and a new Agent visit cannot receive the old chunks",async({page})=>{
+test("navigation keeps a live reply running and returning to Agent retains both turns",async({page})=>{
   await login(page);await start(page,"你好 [stream-slow]");await expect(page.getByTestId("coach-turn").last()).toContainText("可以自然");
   await page.getByRole("navigation").getByRole("link",{name:"设置",exact:true}).click();await expect(page.getByTestId("settings-index")).toBeVisible();
   await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.locator("#coach-input")).toBeEnabled();
-  await start(page,"你好，新的页面");await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false");await expect(page.getByTestId("coach-turn")).toHaveCount(1);
+  await expect(page.getByTestId("coach-turn").last()).toContainText("今天的变化");
+  await start(page,"你好，新的页面");await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false");await expect(page.getByTestId("coach-turn")).toHaveCount(2);
 });
 
 test("Agent is usable before profile/history bootstrap completes, with no status request waterfall",async({page})=>{
