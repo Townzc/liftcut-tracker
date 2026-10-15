@@ -2,7 +2,7 @@ import { requireApiUser } from "@/app/api/ai/_lib";
 import { boundedJson, sameOrigin } from "@/services/agent/http";
 import { workoutOwnerMismatch } from "@/lib/workout-owner";
 import { coachRequestSchema } from "@/lib/coach-model";
-import { coachStatus, runCoach } from "@/services/ai/coach-agent";
+import { coachStatus } from "@/services/ai/coach-config";
 import { CoachReadError } from "@/services/ai/coach-store";
 import { ZodError } from "zod";
 import { COACH_STREAM_TYPE, type CoachStreamEvent } from "@/lib/coach-stream";
@@ -16,7 +16,11 @@ export async function POST(request:Request){
   const timer=new CoachTimer();
   if(!sameOrigin(request))return Response.json({error:"ORIGIN_REJECTED"},{status:403,headers});
   try{
-    const auth=await timer.measure("auth",requireApiUser);if(auth.errorResponse)return auth.errorResponse;
+    // Loading code is independent of identity; no model/database work starts before auth.
+    const [auth,{runCoach}]=await Promise.all([
+      timer.measure("auth",()=>requireApiUser((stage,ms)=>timer.auth(stage,ms))),
+      timer.measure("bootstrap",()=>import("@/services/ai/coach-agent")),
+    ]);if(auth.errorResponse)return auth.errorResponse;
     const mismatch=workoutOwnerMismatch(request,auth.user.id);if(mismatch)return mismatch;
     const input=coachRequestSchema.parse(await boundedJson(request));
     if(!coachStatus().available)return Response.json({error:"MODEL_UNAVAILABLE"},{status:503,headers});

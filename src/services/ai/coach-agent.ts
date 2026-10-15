@@ -3,15 +3,15 @@ import { randomUUID, createHash } from "node:crypto";
 import { ToolLoopAgent, isStepCount, tool, type ModelMessage } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { z } from "zod";
-import { COACH_CONSENT_VERSION, type CoachRequest, type CoachResponse, type CoachProposal, type CoachSource, type CoachStatus } from "@/lib/coach-model";
+import { type CoachRequest, type CoachResponse, type CoachProposal, type CoachSource } from "@/lib/coach-model";
 import { bodyExtractionSchema, foodExtractionSchema, personalExtractionSchema, workoutExtractionSchema, groundPersonal, groundWorkout, GroundingError, requestedReadRange } from "@/lib/coach-grounding";
 import { localDateAt, type Session } from "@/lib/today";
 import { workoutCanonical, workoutContextInput } from "@/lib/workout-context";
-import { getAiProviderConfig, requireAiProviderConfig } from "./config";
+import { requireAiProviderConfig } from "./config";
 import { signCoachProposal, type ModelProvenance } from "./coach-proof";
 import { CoachStore, readRecordsSchema, recordTopicSchema } from "./coach-store";
 import { TodayStore } from "@/services/today/store";
-import { todayEnabled, todayPool } from "@/services/today/database";
+import { todayPool } from "@/services/today/database";
 import { AgentStore } from "@/services/agent/store";
 import { agentPool } from "@/services/agent/database";
 import { contextSchema, planSchema, nutritionPlanSchema, planKindSchema, type Context } from "@/lib/agent/contracts";
@@ -21,12 +21,10 @@ import { streamingReply, type CoachStreamEvent } from "@/lib/coach-stream";
 import { CoachTimer } from "@/lib/coach-timing";
 import { CoachExecution } from "@/lib/coach-execution";
 import { initialRecordQuery } from "@/lib/coach-query";
+import { simpleCoachChat,smalltalkInstructions } from "@/lib/coach-smalltalk";
+import { coachModelName as modelName } from "./coach-config";
+export { coachStatus } from "./coach-config";
 
-const modelName=(provider:string,model:string)=>provider==="deepseek"&&model==="deepseek-v4-flash"?"deepseek-flash":model;
-export function coachStatus():CoachStatus{
-  const c=getAiProviderConfig();return {available:!!c&&todayEnabled()&&!!process.env.WORKOUT_DATABASE_URL&&(process.env.COACH_SIGNING_SECRET?.length??0)>=32,
-    provider:c?.provider??null,model:c?modelName(c.provider,c.model):null,consentVersion:COACH_CONSENT_VERSION};
-}
 function instructions(locale:string,anchor:string){return `You are LiftCut Agent, a helpful conversational fitness/data assistant. Reply in ${locale==="en"?"English":"natural simplified Chinese"}.
 Today in the user's timezone is ${anchor}. Use it for today/yesterday/this week; weeks begin Monday.
 You can chat, read the signed-in user's saved records, prepare entries and draft training/nutrition plans. You CANNOT approve, activate or execute a plan, save actual records, delete, start/end sessions, run SQL/code, browse or contact anyone.
@@ -38,13 +36,14 @@ For an actual body report call prepare_body; for a meal call prepare_food. Use e
 For workout reports/correction first call current_workout. Match an existing exercise uniquely or ask; use selectedExerciseId only if unambiguous. prepare_workout accepts reps quotes (Chinese numerals allowed), an optional explicit weight/unit quote, and optional RPE quote. Do not copy target reps/RPE or fill omitted sets. Correction currently changes reps only. If no active session, ask the user to say '开始训练' / 'start workout' to choose and confirm a workout inside this conversation. Unsupported history edits use the existing entry/receipt tools.
 For training or nutrition plan generation/adjustment, first call plan_context(kind). It loads current preferences, active plan and the selected pending draft, if any. Then use prepare_training_plan or prepare_nutrition_plan to publish ONE immutable preview in THIS chat. Do not send the user to another page. Training constraints come from the user's request or saved settings: if weekly days, session duration or equipment are unknown, ask one concise question before drafting. Nutrition: respect food restrictions/preferences; if calorie/protein targets and enough information to propose appropriate targets are missing, ask. Never invent a user's health condition or preference. Explain proposed targets as estimates, not actual consumption. Default NEW training to one repeatable week and NEW nutrition to a one-day repeatable menu unless another period is requested. For adjustments preserve every unrequested day/exercise/meal and the existing period. Use the pending draft when provided; otherwise adjust the active plan. Include a short summary of what changes and why, plus concrete warnings when relevant. Limits are constraints, not targets to exceed. If both plans are requested, ask which to prepare first. Draft creation does NOT change the active plan or settings. The card's confirmation is the ONLY approval; conversational 'yes' is not authorization to execute. On approval or stale-plan errors tell the user to inspect/retry the card, never claim success. Never generate clinical diets, extreme restriction or exercise through pain.
 When plan_context returns editablePlan, PREFER prepare_plan_adjustment for small changes. Send only explicitly changed leaf fields using zero-based JSON paths; code preserves all other content exactly. For example /weeks/0/days/0/exercises/0/sets or /daily_targets/calories. Food replacement may also change that food's amount and estimated nutrients. Do not change unrelated fields or regenerate the full plan for a small edit. Ask if a named target is ambiguous. Full prepare tools are for new plans or structural changes (adding/removing days/exercises/meals).
-Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Do not imply memory beyond this bounded conversation.
+Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Chat history is saved to the account, but you receive only the six latest complete turns in the selected conversation. Other conversations and incomplete replies are not automatic memory. Saved facts require fresh tools; chat history is not permanent factual memory. The History button opens earlier chats. Never claim to recover lost chats from before history was available.
 General advice: be modest and practical; no diagnosis, prescriptions, extreme calorie restriction, or aggressive exercise through pain. For acute chest pain, fainting or severe symptoms advise stopping exercise and seeking urgent local medical help. Avoid claiming clinical expertise.
 For queries and clarification, end by calling finish_response with sourceIds from THIS request's read_records or current_workout calls (empty for general chat/clarification), followed by a concise helpful message. Always serialize sourceIds FIRST and message SECOND so the verified answer can stream to the user. A successfully prepared draft ends the request automatically with its confirmation card; no further text generation is needed. current_workout is evidence about that session only, not complete historical statistics. Answer only the requested period; do not repeat statistics from previous replies without a fresh read covering that period. Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
 
 export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>,emit?:(event:CoachStreamEvent)=>void,timer=new CoachTimer()):Promise<CoachResponse>{
   const config=requireAiProviderConfig(),name=modelName(config.provider,config.model),pool=todayPool();
   const store=new CoachStore(pool,timer),anchor=localDateAt(new Date(),input.timezone);
+  const smalltalk=simpleCoachChat(input.text,input.history);
   await timer.measure("quota",()=>store.reserve(owner,input.id));
   const userTexts=[...input.history.filter(m=>m.role==="user").slice(-6).map(m=>m.content.slice(0,400)),input.text];
   const provenance:ModelProvenance={provider:config.provider,model:name,sourceTexts:[],version:"coach-v1"};
@@ -105,8 +104,8 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     }catch{readFailed=true;return {error:"READ_UNAVAILABLE",instruction:"A failed read is not empty data. Tell the user to retry; do not infer totals."};}
   };
   const agent=new ToolLoopAgent({
-    model:provider(name),instructions:instructions(input.locale,anchor),
-    temperature:0.2,maxOutputTokens:1800,maxRetries:0,
+    model:provider(name),instructions:smalltalk?smalltalkInstructions(input.locale):instructions(input.locale,anchor),
+    temperature:0.2,maxOutputTokens:smalltalk?600:1800,maxRetries:0,
     // v7's prepareCall forwards these options to streamText. Override its default
     // console.error(error), which includes request bodies; the route logs only kind.
     prepareCall:settings=>({...settings,onError:()=>{}}),
@@ -120,7 +119,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     onToolExecutionEnd:event=>{timer.tool(event.toolCall.toolName,toolStarts.get(event.toolCall.toolCallId)??timer.elapsed());},
     // Large plan schemas/output are available only after the relevant snapshot.
     // Ordinary questions keep the small tool menu and short output budget.
-    prepareStep:()=>planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
+    prepareStep:()=>smalltalk?{activeTools:["finish_response"]}:planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
       planSnapshot.kind==="training"?"prepare_training_plan":"prepare_nutrition_plan",...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
       {activeTools:["read_records","current_workout","prepare_body","prepare_food","prepare_workout","finish_response",...(process.env.AGENT_DATABASE_URL?["plan_context" as const]:[])]},
     stopWhen:[isStepCount(5),()=>final!==null||proposal!==undefined],

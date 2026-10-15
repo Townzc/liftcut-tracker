@@ -1,0 +1,15 @@
+▶ model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics
+  ✔ signed draft commits once; changed fields, owner and missing proof are rejected (47.3452ms)
+  ✔ fresh reads merge legacy/new records, exclude compensations and isolate users (18.7705ms)
+  ✔ expired unsent proposal rejected; committed exact retry remains valid after expiry (10.4565ms)
+  ✔ model workout confirmation reparses, checks context and keeps original words (91.1193ms)
+  ✔ quota reservation is atomic, per account, and private to the restricted runtime (33.8727ms)
+✔ model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics (230.4575ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 654.0492

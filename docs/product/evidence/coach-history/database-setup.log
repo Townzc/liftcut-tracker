@@ -1,0 +1,18 @@
+W1b upgrade: actual W1a schema + migration on local PostgreSQL; synthetic auth.uid, not hosted GoTrue
+▶ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery
+  ✔ parallel start retries return one UUID; second active session denied (56.9042ms)
+  ✔ double-click / parallel replay keeps one set and one event; SQL NULL persists (22.6324ms)
+  ✔ correction and undo advance revision; old requests cannot resurrect or overwrite (23.3241ms)
+  ✔ trace preserves record, correction, compensation and rejects other owners (6.3997ms)
+  ✔ RLS denies cross-owner select/insert/update; browser cannot bypass transaction API (21.1174ms)
+  ✔ three states reload, void excluded, snapshot survives plan changes; end leaves missing sets missing (36.6167ms)
+  ✔ Shanghai session retains start date across its midnight (13.8821ms)
+✔ W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery (566.6982ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2842.3423

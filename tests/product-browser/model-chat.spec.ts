@@ -28,7 +28,7 @@ test("model consent, oral body draft, no write until confirmation, signed replay
   await send(page,"那昨天呢");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
   await expect(page.getByTestId("coach-sources").last().locator("summary")).toHaveText("查看依据 · 1");
   await page.screenshot({path:"node_modules/.cache/coach-model/body-and-followup.png",fullPage:true});
-  await page.getByRole("button",{name:"对话选项"}).click();await page.getByRole("button",{name:"关闭并清空对话"}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(0);
+  await page.getByRole("button",{name:"对话选项"}).click();await page.getByRole("button",{name:"关闭自然对话"}).click();await expect(page.getByTestId("coach-turn")).toHaveCount(4);
   expect(errors).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 

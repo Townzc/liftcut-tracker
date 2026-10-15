@@ -1,0 +1,20 @@
+▶ conversational plans use the approval ledger for both kinds
+  ✔ plan writes retain owner locks with hosted auth schema restrictions and both JWT formats (25.1571ms)
+  ✔ generation, idempotent publication, constraint rejection and zero business writes (51.4359ms)
+  ✔ owner isolation and proposal kind validation (21.2807ms)
+  ✔ double execution and replay produce one plan and the same receipt (51.3448ms)
+  ✔ editing an unapproved preview supersedes and invalidates its old approval (78.1188ms)
+  ✔ a legacy descendant edit invalidates the old snapshot and pending preview (35.6684ms)
+  ✔ nutrition approval is atomic and leaves training and actual intake unchanged (59.506ms)
+  ✔ failed nutrition replacement rolls back activation and can retry the same intent (61.4071ms)
+  ✔ new current-plan activation makes competing previews stale; receipt replay remains historical (79.4635ms)
+  ✔ changed settings invalidate pending plans; browser roles cannot access ledger (30.4425ms)
+✔ conversational plans use the approval ledger for both kinds (529.4439ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 928.1781

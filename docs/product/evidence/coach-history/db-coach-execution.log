@@ -1,0 +1,12 @@
+coach_model {"requestId":"746103af-b92c-49c5-a443-8063c4e61771","model":"liftcut-coach","steps":1,"streaming":true,"reads":2,"draft":null,"timing":{"version":1,"serverMs":120,"firstTextMs":117,"authMs":null,"quotaMs":15,"model":[{"name":"model","startMs":50,"durationMs":35,"firstOutputMs":24,"httpHeadersMs":18,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"read_records","startMs":87,"durationMs":14},{"name":"read_records","startMs":87,"durationMs":30},{"name":"finish_response","startMs":87,"durationMs":30}],"database":[{"name":"quota.connect","startMs":13,"durationMs":7},{"name":"quota.setup","startMs":20,"durationMs":3},{"name":"quota.query","startMs":23,"durationMs":4},{"name":"quota.commit","startMs":27,"durationMs":1},{"name":"body.connect","startMs":89,"durationMs":2},{"name":"body.setup","startMs":91,"durationMs":1},{"name":"food.connect","startMs":89,"durationMs":7},{"name":"food.setup","startMs":96,"durationMs":2},{"name":"food.query","startMs":98,"durationMs":2},{"name":"food.commit","startMs":100,"durationMs":0},{"name":"body.query","startMs":92,"durationMs":25},{"name":"body.commit","startMs":117,"durationMs":0}],"toolWallMs":30,"quotaDetail":{"lockMs":0.1,"checkMs":0.56,"insertMs":0.45}}}
+coach_model {"requestId":"b54ee9aa-69d2-4c9a-8ee4-2a8d93a8fb36","model":"liftcut-coach","steps":1,"streaming":true,"reads":0,"draft":"personal","timing":{"version":1,"serverMs":20,"firstTextMs":null,"authMs":null,"quotaMs":6,"model":[{"name":"model","startMs":9,"durationMs":7,"firstOutputMs":5,"httpHeadersMs":2,"inputTokens":null,"cacheReadTokens":null,"outputTokens":null}],"tools":[{"name":"prepare_body","startMs":15,"durationMs":3},{"name":"prepare_body","startMs":15,"durationMs":3}],"database":[{"name":"quota.connect","startMs":0,"durationMs":2},{"name":"quota.setup","startMs":2,"durationMs":1},{"name":"quota.query","startMs":3,"durationMs":2},{"name":"quota.commit","startMs":5,"durationMs":1}],"toolWallMs":3,"quotaDetail":{"lockMs":0.02,"checkMs":0.16,"insertMs":0.09}}}
+✔ SDK executes separate reads concurrently, holds unverified prose, and keeps one unsaved draft (185.8217ms)
+✔ batched setup fails closed for privileged roles and returns a pooled connection without an owner (37.4992ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1259.8148

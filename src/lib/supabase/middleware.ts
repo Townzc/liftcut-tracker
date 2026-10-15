@@ -52,9 +52,11 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // This proxy only selects page shells. getClaims verifies signatures/expiry
+  // using cached public keys (or the Auth server for symmetric tokens).
+  // Mutation/data APIs still call getUser independently for fresh identity.
+  const {data:verified,error:claimsError}=await supabase.auth.getClaims();
+  const user=!claimsError&&verified?.claims.sub?{id:verified.claims.sub}:null;
   const guestEnabled = request.cookies.get(GUEST_COOKIE_NAME)?.value === GUEST_COOKIE_VALUE;
 
   const isAuthRoute = publicAuthRoutes.some((route) => pathname.startsWith(route));

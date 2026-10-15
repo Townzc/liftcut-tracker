@@ -941,9 +941,11 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/personal-records.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/coach-model.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/coach-execution.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/coach-history.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/plan-conversation.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps webkit
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
         run: npx playwright test --config playwright.w1b.config.ts
       - uses: actions/upload-artifact@v6
@@ -960,6 +962,7 @@ jobs:
             node_modules/.cache/minimal/*.png
             node_modules/.cache/coach-model/*.png
             node_modules/.cache/coach-stream-release/*.png
+            node_modules/.cache/coach-history-release/*.png
 
   quality:
     runs-on: ubuntu-latest

@@ -1,0 +1,505 @@
+{
+  "tag": "before",
+  "at": "2026-10-15T17:55:45.750Z",
+  "scope": "Real hosted model/auth/data; same synthetic account, empty history per prompt, same browser/network. Small sample, not P95 or mainland/mobile evidence.",
+  "navigation": [
+    {
+      "kind": "first tab entry",
+      "ms": 2425
+    },
+    {
+      "kind": "document reload",
+      "ms": 1236
+    },
+    {
+      "kind": "document reload",
+      "ms": 1515
+    },
+    {
+      "kind": "document reload",
+      "ms": 1326
+    },
+    {
+      "kind": "document reload",
+      "ms": 1454
+    }
+  ],
+  "replies": [
+    {
+      "prompt": "请核对我最近一周的身体和饮食记录，概括有哪些已保存的数据，哪些数值还未知。",
+      "ttfbMs": 1322.9000000059605,
+      "serverTiming": "auth;dur=112, ready;dur=173",
+      "requestStart": 14989.09999999404,
+      "chunks": 26,
+      "bytes": 4942,
+      "firstTextMs": 2599,
+      "timing": {
+        "version": 1,
+        "serverMs": 1975,
+        "firstTextMs": 1450,
+        "authMs": 112,
+        "quotaMs": 88,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 351,
+            "durationMs": 1620,
+            "firstOutputMs": 956,
+            "httpHeadersMs": 301,
+            "inputTokens": 3768,
+            "cacheReadTokens": 3328,
+            "outputTokens": 168
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 262,
+            "durationMs": 78
+          },
+          {
+            "name": "finish_response",
+            "startMs": 1972,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 172,
+            "durationMs": 49
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 221,
+            "durationMs": 9
+          },
+          {
+            "name": "quota.query",
+            "startMs": 230,
+            "durationMs": 24
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 254,
+            "durationMs": 5
+          },
+          {
+            "name": "body.connect",
+            "startMs": 263,
+            "durationMs": 2
+          },
+          {
+            "name": "body.setup",
+            "startMs": 265,
+            "durationMs": 7
+          },
+          {
+            "name": "food.connect",
+            "startMs": 263,
+            "durationMs": 28
+          },
+          {
+            "name": "body.query",
+            "startMs": 272,
+            "durationMs": 29
+          },
+          {
+            "name": "body.commit",
+            "startMs": 301,
+            "durationMs": 3
+          },
+          {
+            "name": "food.setup",
+            "startMs": 291,
+            "durationMs": 33
+          },
+          {
+            "name": "food.query",
+            "startMs": 324,
+            "durationMs": 12
+          },
+          {
+            "name": "food.commit",
+            "startMs": 336,
+            "durationMs": 4
+          }
+        ],
+        "toolWallMs": 78
+      },
+      "requestId": "7f926d08-96c6-4d8a-9d52-6d3c3a4c3665",
+      "characters": 142,
+      "sourceTopics": [
+        "body",
+        "food"
+      ],
+      "completeMs": 3123.7000000029802,
+      "firstDomMs": 2600.1000000089407,
+      "domUpdates": 23,
+      "clientAndPlatformResidualMs": 1148.7000000029802
+    },
+    {
+      "prompt": "查看今天身体记录，告诉我体重和腰围。",
+      "ttfbMs": 559.5,
+      "serverTiming": "auth;dur=35, ready;dur=36",
+      "requestStart": 1283.2999999970198,
+      "chunks": 15,
+      "bytes": 2903,
+      "firstTextMs": 1406.2999999970198,
+      "timing": {
+        "version": 1,
+        "serverMs": 1245,
+        "firstTextMs": 872,
+        "authMs": 35,
+        "quotaMs": 26,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 86,
+            "durationMs": 1157,
+            "firstOutputMs": 686,
+            "httpHeadersMs": 174,
+            "inputTokens": 3632,
+            "cacheReadTokens": 3328,
+            "outputTokens": 107
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 64,
+            "durationMs": 16
+          },
+          {
+            "name": "finish_response",
+            "startMs": 1244,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 36,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 38,
+            "durationMs": 8
+          },
+          {
+            "name": "quota.query",
+            "startMs": 46,
+            "durationMs": 11
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 57,
+            "durationMs": 5
+          },
+          {
+            "name": "body.connect",
+            "startMs": 64,
+            "durationMs": 0
+          },
+          {
+            "name": "body.setup",
+            "startMs": 64,
+            "durationMs": 8
+          },
+          {
+            "name": "body.query",
+            "startMs": 72,
+            "durationMs": 5
+          },
+          {
+            "name": "body.commit",
+            "startMs": 77,
+            "durationMs": 3
+          }
+        ],
+        "toolWallMs": 16
+      },
+      "requestId": "2b8b7900-2944-4f13-89c7-54fdfc2075b8",
+      "characters": 75,
+      "sourceTopics": [
+        "body"
+      ],
+      "completeMs": 1767.5,
+      "firstDomMs": 1408.2000000029802,
+      "domUpdates": 12,
+      "clientAndPlatformResidualMs": 522.5
+    },
+    {
+      "prompt": "请汇总过去7天的训练和身体记录。",
+      "ttfbMs": 535.5,
+      "serverTiming": "auth;dur=31, ready;dur=33",
+      "requestStart": 1573.2000000029802,
+      "chunks": 19,
+      "bytes": 4043,
+      "firstTextMs": 1549.7999999970198,
+      "timing": {
+        "version": 1,
+        "serverMs": 1419,
+        "firstTextMs": 1045,
+        "authMs": 31,
+        "quotaMs": 28,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 88,
+            "durationMs": 1329,
+            "firstOutputMs": 813,
+            "httpHeadersMs": 314,
+            "inputTokens": 3734,
+            "cacheReadTokens": 3328,
+            "outputTokens": 147
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 61,
+            "durationMs": 22
+          },
+          {
+            "name": "finish_response",
+            "startMs": 1417,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 33,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 33,
+            "durationMs": 8
+          },
+          {
+            "name": "quota.query",
+            "startMs": 41,
+            "durationMs": 14
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 55,
+            "durationMs": 5
+          },
+          {
+            "name": "body.connect",
+            "startMs": 61,
+            "durationMs": 0
+          },
+          {
+            "name": "workout.connect",
+            "startMs": 61,
+            "durationMs": 0
+          },
+          {
+            "name": "workout.setup",
+            "startMs": 62,
+            "durationMs": 7
+          },
+          {
+            "name": "body.setup",
+            "startMs": 61,
+            "durationMs": 9
+          },
+          {
+            "name": "body.query",
+            "startMs": 70,
+            "durationMs": 4
+          },
+          {
+            "name": "body.commit",
+            "startMs": 74,
+            "durationMs": 4
+          },
+          {
+            "name": "workout.query",
+            "startMs": 69,
+            "durationMs": 10
+          },
+          {
+            "name": "workout.commit",
+            "startMs": 79,
+            "durationMs": 4
+          }
+        ],
+        "toolWallMs": 22
+      },
+      "requestId": "aea45d32-ddbe-43db-9046-111803fafe03",
+      "characters": 101,
+      "sourceTopics": [
+        "body",
+        "workout"
+      ],
+      "completeMs": 1922,
+      "firstDomMs": 1551.7000000029802,
+      "domUpdates": 16,
+      "clientAndPlatformResidualMs": 503
+    },
+    {
+      "prompt": "用三句话介绍你能帮我做什么，以及修改前如何确认。",
+      "ttfbMs": 566.1000000089407,
+      "serverTiming": "auth;dur=54, ready;dur=56",
+      "requestStart": 1379.3999999910593,
+      "chunks": 30,
+      "bytes": 4072,
+      "firstTextMs": 1460.2999999970198,
+      "timing": {
+        "version": 1,
+        "serverMs": 1536,
+        "firstTextMs": 942,
+        "authMs": 54,
+        "quotaMs": 53,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 114,
+            "durationMs": 1420,
+            "firstOutputMs": 688,
+            "httpHeadersMs": 187,
+            "inputTokens": 3414,
+            "cacheReadTokens": 3200,
+            "outputTokens": 140
+          }
+        ],
+        "tools": [
+          {
+            "name": "finish_response",
+            "startMs": 1535,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 56,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 57,
+            "durationMs": 8
+          },
+          {
+            "name": "quota.query",
+            "startMs": 65,
+            "durationMs": 39
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 104,
+            "durationMs": 4
+          }
+        ],
+        "toolWallMs": 0
+      },
+      "requestId": "d99f9d0c-e764-474d-9246-7d53569a5ac5",
+      "characters": 157,
+      "sourceTopics": [],
+      "completeMs": 2044.7999999970198,
+      "firstDomMs": 1461.1000000089407,
+      "domUpdates": 28,
+      "clientAndPlatformResidualMs": 508.79999999701977
+    },
+    {
+      "prompt": "请核对最近一周的身体记录，并告诉我最新的体重和腰围。",
+      "ttfbMs": 548.7999999970198,
+      "serverTiming": "auth;dur=36, ready;dur=37",
+      "requestStart": 1518.7000000029802,
+      "chunks": 25,
+      "bytes": 4209,
+      "firstTextMs": 1302.8999999910593,
+      "timing": {
+        "version": 1,
+        "serverMs": 1230,
+        "firstTextMs": 781,
+        "authMs": 36,
+        "quotaMs": 24,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 86,
+            "durationMs": 1143,
+            "firstOutputMs": 591,
+            "httpHeadersMs": 187,
+            "inputTokens": 3636,
+            "cacheReadTokens": 3328,
+            "outputTokens": 148
+          }
+        ],
+        "tools": [
+          {
+            "name": "read_records.prefetch",
+            "startMs": 63,
+            "durationMs": 16
+          },
+          {
+            "name": "finish_response",
+            "startMs": 1229,
+            "durationMs": 0
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 37,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 38,
+            "durationMs": 8
+          },
+          {
+            "name": "quota.query",
+            "startMs": 46,
+            "durationMs": 11
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 57,
+            "durationMs": 4
+          },
+          {
+            "name": "body.connect",
+            "startMs": 64,
+            "durationMs": 0
+          },
+          {
+            "name": "body.setup",
+            "startMs": 64,
+            "durationMs": 7
+          },
+          {
+            "name": "body.query",
+            "startMs": 71,
+            "durationMs": 5
+          },
+          {
+            "name": "body.commit",
+            "startMs": 76,
+            "durationMs": 3
+          }
+        ],
+        "toolWallMs": 16
+      },
+      "requestId": "3a2f643d-a4d1-492a-9885-ad479ab2e5a3",
+      "characters": 129,
+      "sourceTopics": [
+        "body"
+      ],
+      "completeMs": 1739.5,
+      "firstDomMs": 1304.3999999910593,
+      "domUpdates": 22,
+      "clientAndPlatformResidualMs": 509.5
+    }
+  ],
+  "passed": true
+}
