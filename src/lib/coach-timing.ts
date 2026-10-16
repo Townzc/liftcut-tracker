@@ -4,6 +4,7 @@ export type CoachTiming = {
   version:1;serverMs:number;firstTextMs:number|null;authMs:number|null;quotaMs:number|null;
   model:CoachModelTiming[];tools:CoachSpan[];database:CoachSpan[];toolWallMs:number;
   bootstrapMs?:number;authDetail?:{clientMs?:number;requestMs?:number};quotaDetail?:{lockMs:number;checkMs:number;insertMs:number};
+  generation?:{startMs:number;durationMs:number;outputChars:number;lastOutputMs:number|null;finished:boolean};
 };
 
 /** Union, not sum: simultaneous reads must not inflate the wall-clock cost. */
@@ -32,5 +33,8 @@ export class CoachTimer {
   }
   tool(name:string,startMs:number){if(this.spans.tools.length<30)this.spans.tools.push({name,startMs,durationMs:this.elapsed()-startMs});}
   model(value:CoachModelTiming){if(this.spans.model.length<6)this.spans.model.push(value);}
-  snapshot():CoachTiming{return {...this.spans,serverMs:this.elapsed(),model:[...this.spans.model],tools:[...this.spans.tools],database:[...this.spans.database],toolWallMs:spanWallMs(this.spans.tools)};}
+  modelStarted(){this.spans.generation={startMs:this.elapsed(),durationMs:0,outputChars:0,lastOutputMs:null,finished:false};}
+  modelOutput(chars:number){const g=this.spans.generation;if(g){g.outputChars+=Math.max(0,chars);g.lastOutputMs=this.elapsed();}}
+  modelEnded(){const g=this.spans.generation;if(g){g.durationMs=this.elapsed()-g.startMs;g.finished=true;}}
+  snapshot():CoachTiming{const g=this.spans.generation;return {...this.spans,...(g?{generation:{...g,durationMs:g.finished?g.durationMs:this.elapsed()-g.startMs}}:{}),serverMs:this.elapsed(),model:[...this.spans.model],tools:[...this.spans.tools],database:[...this.spans.database],toolWallMs:spanWallMs(this.spans.tools)};}
 }

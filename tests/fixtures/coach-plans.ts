@@ -10,3 +10,11 @@ export const nutritionFixture:NutritionPlan={plan_name:"合成饮食计划",goal
   {meal_type:"lunch",title:"午餐",foods:[{name:"鸡肉米饭蔬菜",amount:"一份",estimated_calories:800,estimated_protein_g:50,notes:"",alternatives:[]}]},
   {meal_type:"dinner",title:"晚餐",foods:[{name:"鱼肉米饭蔬菜",amount:"一份",estimated_calories:700,estimated_protein_g:40,notes:"",alternatives:[]}]}]}]};
 export const planContextFixture={weeklyDays:2,sessionMinutes:45,equipment:["哑铃","自重"],notes:"合成约束"};
+const {weeks:trainingWeeks,...trainingMetadata}=trainingFixture;
+export const trainingProgramFixture={context:planContextFixture,program:{
+  ...trainingMetadata,total_weeks:12,
+  workouts:trainingWeeks[0].days.map(({day_number,...day})=>({...day,key:`day${day_number}`})),
+  phases:[{from_week:1,to_week:4,focus:"适应",workout_keys:["day1","day2"],sets_delta:0,rpe_delta:0,notes:"间隔一天"},
+    {from_week:5,to_week:11,focus:"进阶",workout_keys:["day1","day2"],sets_delta:1,rpe_delta:1,notes:"动作稳定后再进阶"},
+    {from_week:12,to_week:12,focus:"恢复",workout_keys:["day1","day2"],sets_delta:-1,rpe_delta:-1,notes:"减少训练量"}],
+}};

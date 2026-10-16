@@ -2,7 +2,7 @@
 // All UI/API/auth-boundary and PostgreSQL writes still execute application code.
 import {createServer} from "node:http";
 import {randomUUID} from "node:crypto";
-import {trainingFixture,nutritionFixture,planContextFixture} from "../fixtures/coach-plans";
+import {trainingFixture,nutritionFixture,planContextFixture,trainingProgramFixture} from "../fixtures/coach-plans";
 function call(name:string,args:unknown){return {id:"call_"+randomUUID(),type:"function",function:{name,arguments:JSON.stringify(args)}};}
 const bodyEmpty={dateQuote:null,weightQuote:null,waistQuote:null};
 const foodEmpty={dateQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
@@ -29,7 +29,12 @@ createServer(async(req,res)=>{
       chosen=call("prepare_nutrition_plan",{plan});
     }else{
       const plan=structuredClone(result.editablePlan??trainingFixture);if(text.includes("调整")){plan.weeks[0].days[0].exercises[0].sets=2;plan.plan_name="调整后的训练计划";}
-      chosen=call("prepare_training_plan",{context:planContextFixture,plan});
+      if(result.editablePlan||text.includes("[legacy-plan-structure]"))chosen=call("prepare_training_plan",{context:planContextFixture,plan});
+      else{
+        const args=structuredClone(trainingProgramFixture);
+        if(!text.includes("[long-program]")){args.program.total_weeks=1;args.program.phases=[{...args.program.phases[0],to_week:1}];}
+        chosen=call("prepare_training_program",args);
+      }
     }
   }else if(priorCall?.function.name==="read_records"&&result.sources){
     chosen=call("finish_response",{message:"已同时核对体重和饮食记录。",sourceIds:result.sources.map((s:{id:string})=>s.id)});
@@ -77,7 +82,8 @@ createServer(async(req,res)=>{
       if(res.destroyed)return;
       event({tool_calls:[{index:0,function:{arguments:chosen.function.arguments.slice(i,i+8)}}]});
       if(text.includes("[stream-break]")&&i>=40){res.destroy();return;}
-      await new Promise(r=>setTimeout(r,text.includes("[stream-slow]")?150:2));
+      const longProgram=text.includes("[long-program]")&&chosen.function.name==="prepare_training_program";
+      await new Promise(r=>setTimeout(r,longProgram?Math.ceil(23000/Math.ceil(chosen.function.arguments.length/8)):text.includes("[stream-slow]")?150:2));
     }
     event({},"tool_calls");res.end("data: [DONE]\n\n");return;
   }

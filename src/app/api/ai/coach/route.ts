@@ -7,6 +7,7 @@ import { CoachReadError } from "@/services/ai/coach-store";
 import { ZodError } from "zod";
 import { COACH_STREAM_TYPE, type CoachStreamEvent } from "@/lib/coach-stream";
 import { CoachTimer } from "@/lib/coach-timing";
+import {coachFailureCode} from "@/lib/coach-failure";
 
 export const runtime="nodejs";
 export const maxDuration=60;
@@ -34,7 +35,7 @@ export async function POST(request:Request){
           emit({type:"status",stage:"connecting"});
           void runCoach(auth.user.id,input,signal,undefined,emit,timer).then(result=>emit({type:"result",result})).catch(error=>{
             console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown",timing:timer.snapshot()}));
-            emit({type:"error",error:error instanceof CoachReadError?error.message:"MODEL_UNAVAILABLE"});
+            emit({type:"error",error:error instanceof CoachReadError?error.message:coachFailureCode(error)});
           }).finally(()=>{if(!closed){closed=true;stream.close();}});
         },
         cancel(){closed=true;controller.abort();},
@@ -48,6 +49,6 @@ export async function POST(request:Request){
     if(e instanceof CoachReadError)return Response.json({error:e.message},{status:e.message==="RATE_LIMITED"?429:409,headers:{...headers,"Retry-After":"60"}});
     if(e instanceof Error&&["REQUEST_TOO_LARGE","INVALID_JSON"].includes(e.message))return Response.json({error:e.message},{status:400,headers});
     console.warn("coach_model_failed",JSON.stringify({kind:e instanceof Error?e.name:"unknown",timing:timer.snapshot()}));
-    return Response.json({error:request.signal.aborted?"CANCELLED":"MODEL_UNAVAILABLE"},{status:503,headers});
+    return Response.json({error:request.signal.aborted?"CANCELLED":coachFailureCode(e)},{status:503,headers});
   }
 }
