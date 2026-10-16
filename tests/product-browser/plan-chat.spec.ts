@@ -1,5 +1,6 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
+import {randomUUID} from "node:crypto";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 const origin={Origin:"http://localhost:3103"};
 async function login(page:Page,email="p1-fixture@example.invalid"){
@@ -19,6 +20,20 @@ test.afterEach(async()=>{
   await db.query("delete from coach_request_usage where user_id=$1",[owner]);
 });
 test.afterAll(async()=>{await db.end();});
+
+test("legacy plans without a ledger snapshot retain full structural edits and approval",async({page})=>{
+  const legacy=`legacy-${randomUUID()}`;
+  await db.query("insert into training_plans(id,user_id,name,is_active) values($1,$2,'Legacy synthetic plan',true)",[legacy,owner]);
+  await db.query("insert into training_plan_weeks(id,training_plan_id,week_number) values($1,$2,1)",[legacy+'-w1',legacy]);
+  await db.query("insert into training_plan_days(id,week_id,day_number,title) values($1,$2,1,'Legacy day')",[legacy+'-d1',legacy+'-w1']);
+  try{
+    await login(page);await send(page,"把旧计划扩成每周两天、每次45分钟 [training-plan] [legacy-plan-structure]");
+    const run=(await recent(page))[0];expect(run.status).toBe("awaiting_approval");expect(run.proposal.plan.weeks[0].days).toHaveLength(2);
+    expect(await count("training_plans")).toBe(0);expect((await db.query("select is_active from training_plans where id=$1",[legacy])).rows[0].is_active).toBe(true);
+    await page.getByRole("button",{name:"确认并应用",exact:true}).click();await expect(page.getByTestId("plan-receipt")).toBeVisible();
+    expect(await count("training_plans")).toBe(1);expect((await db.query("select is_active from training_plans where id=$1",[legacy])).rows[0].is_active).toBe(false);
+  }finally{await db.query("delete from training_plans where id=$1 and user_id=$2",[legacy,owner]);}
+});
 
 test("a progressing 12-week plan survives 22 seconds, restores its preview, and requires confirmation",async({page})=>{
   await login(page);const began=Date.now();

@@ -29,7 +29,7 @@ createServer(async(req,res)=>{
       chosen=call("prepare_nutrition_plan",{plan});
     }else{
       const plan=structuredClone(result.editablePlan??trainingFixture);if(text.includes("调整")){plan.weeks[0].days[0].exercises[0].sets=2;plan.plan_name="调整后的训练计划";}
-      if(result.editablePlan)chosen=call("prepare_training_plan",{context:planContextFixture,plan});
+      if(result.editablePlan||text.includes("[legacy-plan-structure]"))chosen=call("prepare_training_plan",{context:planContextFixture,plan});
       else{
         const args=structuredClone(trainingProgramFixture);
         if(!text.includes("[long-program]")){args.program.total_weeks=1;args.program.phases=[{...args.program.phases[0],to_week:1}];}
