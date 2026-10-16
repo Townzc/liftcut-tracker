@@ -132,6 +132,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
             }
           }catch(error){interrupted=true;lines=[controller.signal.aborted?(en?"Stopped. The incomplete answer was discarded. Records and active plans were not changed. Refresh to recover a plan preview.":"已停止，未完成的回答已丢弃，记录和当前计划未修改。如已生成计划预览，可以刷新恢复。"):
             error instanceof Error&&error.message==="RATE_LIMITED"?(en?"Conversation limit reached. Please try again later.":"本轮对话次数已达上限，请稍后再试。"):
+            error instanceof Error&&["MODEL_TIMEOUT","MODEL_OUTPUT_LIMIT"].includes(error.message)?(en?"The plan or reply could not finish in time. Incomplete content was discarded; your records and active plan are unchanged. Please retry. Any completed preview can be recovered by refreshing.":"这次计划或回复未能完整生成，未完成内容已丢弃，记录和当前计划未修改。请重试；如已生成完整预览，可以刷新恢复。"):
             en?"The response was interrupted or temporarily unavailable. The incomplete answer was discarded. Records and active plans were not changed. Refresh or retry.":"回复中断或模型暂时不可用，未完成的回答已丢弃，记录和当前计划未修改。可以刷新恢复预览或重试。"];
           }finally{modelRequest.current=null;}
         }

@@ -20,6 +20,20 @@ test.afterEach(async()=>{
 });
 test.afterAll(async()=>{await db.end();});
 
+test("a progressing 12-week plan survives 22 seconds, restores its preview, and requires confirmation",async({page})=>{
+  await login(page);const began=Date.now();
+  await send(page,"做个12周每周两天、每次45分钟的训练计划 [training-plan] [long-program]");
+  expect(Date.now()-began).toBeGreaterThan(22000);
+  await expect(page.getByTestId("plan-preview").locator("section")).toHaveCount(12);
+  expect(await count("training_plans")).toBe(0);
+  await page.reload();await expect(page.getByTestId("plan-preview").locator("section")).toHaveCount(12);
+  const run=(await recent(page))[0];expect(run.proposal.plan.weeks).toHaveLength(12);
+  await page.getByRole("button",{name:"确认并应用",exact:true}).click();await expect(page.getByTestId("plan-receipt")).toBeVisible();
+  expect(await count("training_plans")).toBe(1);
+  const stored=await db.query("select count(*)::int n from training_plan_weeks w join training_plans p on p.id=w.training_plan_id where p.user_id=$1 and p.id like 'agent-%'",[owner]);
+  expect(stored.rows[0].n).toBe(12);
+});
+
 test("switching pages during a confirmed plan write preserves the receipt and releases the composer",async({page})=>{
   await login(page);await send(page,"生成每周两天、每次45分钟的训练计划 [training-plan]");
   let release!:()=>void,observed!:()=>void;const gate=new Promise<void>(r=>{release=r;}),blocked=new Promise<void>(r=>{observed=r;});

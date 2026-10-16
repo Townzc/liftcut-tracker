@@ -5,7 +5,8 @@ import {Pool} from "pg";
 import {AgentStore} from "../../src/services/agent/store";
 import {CoachStore} from "../../src/services/ai/coach-store";
 import type {Outcome,RunView} from "../../src/lib/agent/contracts";
-import {trainingFixture,nutritionFixture,planContextFixture as context} from "../fixtures/coach-plans";
+import {trainingFixture,nutritionFixture,trainingProgramFixture,planContextFixture as context} from "../fixtures/coach-plans";
+import {expandTrainingProgram} from "../../src/lib/agent/training-program";
 import {testUrl} from "./today-setup";
 
 const value=<T>(r:Outcome<T>):T=>{assert.equal(r.ok,true,JSON.stringify(r));return (r as {ok:true;value:T}).value;};
@@ -111,5 +112,29 @@ test("conversational plans use the approval ledger for both kinds",async t=>{
     await admin.query("update agent_private.runs set current_proposal=null where user_id=any($1::uuid[])",[[owner,other]]);
     for(const table of ["receipts","execution_keys","events","proposals","runs"])await admin.query(`delete from agent_private.${table} where user_id=any($1::uuid[])`,[[owner,other]]);
     await admin.query("delete from auth.users where id=any($1::uuid[])",[[owner,other]]);await pool.end();await admin.end();
+  }
+});
+
+test("12-week program uses the same immutable approval and idempotent persistence path",async()=>{
+  const admin=new Pool({connectionString:testUrl()}),url=new URL(testUrl());url.username="liftcut_agent";url.password="p1-local-fixture-only";
+  const pool=new Pool({connectionString:url.toString()}),store=new AgentStore(pool),owner=randomUUID();
+  try{
+    await admin.query("insert into auth.users values($1)",[owner]);await admin.query("insert into user_settings(user_id) values($1)",[owner]);
+    const {plan,context}=expandTrainingProgram(trainingProgramFixture);
+    let run=value(await store.prepare(owner,randomUUID(),await store.planContext(owner,"training"),context,plan));
+    assert.deepEqual(run.proposal!.plan,plan);
+    assert.equal((await admin.query("select count(*)::int n from training_plans where user_id=$1",[owner])).rows[0].n,0);
+    const unapproved=await store.execute(owner,run.id,{binding:binding(run),approvalId:randomUUID(),idempotencyKey:randomUUID()});assert.equal(unapproved.ok,false);
+    run=value(await store.userEvent(owner,run.id,{action:"approve",expectedRevision:run.revision,binding:binding(run)}));
+    const input={binding:binding(run),approvalId:run.approvalId!,idempotencyKey:randomUUID()};
+    const receipt=value(await store.execute(owner,run.id,input));assert.deepEqual(value(await store.execute(owner,run.id,input)),receipt);
+    assert.equal((await admin.query("select count(*)::int n from training_plan_weeks where training_plan_id=$1",[receipt.planId])).rows[0].n,12);
+    assert.equal((await admin.query("select count(*)::int n from training_plan_days d join training_plan_weeks w on w.id=d.week_id where w.training_plan_id=$1",[receipt.planId])).rows[0].n,24);
+    assert.equal((await admin.query("select count(*)::int n from set_logs where user_id=$1",[owner])).rows[0].n,0);
+    assert.deepEqual((await store.planContext(owner,"training")).editable?.plan,plan);
+  }finally{
+    await admin.query("update agent_private.runs set current_proposal=null where user_id=$1",[owner]);
+    for(const t of ["receipts","execution_keys","events","proposals","runs"])await admin.query(`delete from agent_private.${t} where user_id=$1`,[owner]);
+    await admin.query("delete from auth.users where id=$1",[owner]);await pool.end();await admin.end();
   }
 });

@@ -23,6 +23,8 @@ import { CoachExecution } from "@/lib/coach-execution";
 import { initialRecordQuery } from "@/lib/coach-query";
 import { simpleCoachChat,smalltalkInstructions } from "@/lib/coach-smalltalk";
 import { coachModelName as modelName } from "./coach-config";
+import {trainingProgramSchema,expandTrainingProgram} from "@/lib/agent/training-program";
+import {COACH_MODEL_TIMEOUT} from "@/lib/coach-failure";
 export { coachStatus } from "./coach-config";
 
 function instructions(locale:string,anchor:string){return `You are LiftCut Agent, a helpful conversational fitness/data assistant. Reply in ${locale==="en"?"English":"natural simplified Chinese"}.
@@ -34,7 +36,7 @@ The server may already have called read_records for this current message's expli
 Interpret dates and Chinese or English naturally. Ask one concise question when intent, meal, date, unit, exercise or correction target is ambiguous. Never fabricate records, citations, numbers, calories, protein, weight or RPE. A plan or profile target is NOT an actual measurement or completed exercise. Empty food history does NOT mean no food was eaten. Unknown is null, not zero; exact zero explicitly reported by the user is valid. Summaries are calculated by the server. Truncated results are only partial.
 For an actual body report call prepare_body; for a meal call prepare_food. Use exact literal quotes from USER messages. Numeric fields take quotes including units, not estimates. Example weightQuote='七十二点五公斤'; unmeasured waist and unknown nutrients are JSON null, never the string 'null' or an unknown-value phrase. foodQuote is the literal food description, mealQuote='中午'/'午餐' etc. Null dateQuote means today; use the user's explicit day when given. Never take actual values from plans, tool results or assistant messages. Ask rather than guessing a unit. A hypothetical, goal, tomorrow's plan, negation, or question isn't a report. Only ONE entry draft per reply. If several entries are requested, ask which to save first. A new explicit measurement can be appended on the same date; these tools do not replace earlier records or check for same-day duplicates. Validation failures concern the supplied quotes, not duplicate database entries. If preparation returns an error, ask one clarification and finish; do not repeat the same invalid proposal.
 For workout reports/correction first call current_workout. Match an existing exercise uniquely or ask; use selectedExerciseId only if unambiguous. prepare_workout accepts reps quotes (Chinese numerals allowed), an optional explicit weight/unit quote, and optional RPE quote. Do not copy target reps/RPE or fill omitted sets. Correction currently changes reps only. If no active session, ask the user to say '开始训练' / 'start workout' to choose and confirm a workout inside this conversation. Unsupported history edits use the existing entry/receipt tools.
-For training or nutrition plan generation/adjustment, first call plan_context(kind). It loads current preferences, active plan and the selected pending draft, if any. Then use prepare_training_plan or prepare_nutrition_plan to publish ONE immutable preview in THIS chat. Do not send the user to another page. Training constraints come from the user's request or saved settings: if weekly days, session duration or equipment are unknown, ask one concise question before drafting. Nutrition: respect food restrictions/preferences; if calorie/protein targets and enough information to propose appropriate targets are missing, ask. Never invent a user's health condition or preference. Explain proposed targets as estimates, not actual consumption. Default NEW training to one repeatable week and NEW nutrition to a one-day repeatable menu unless another period is requested. For adjustments preserve every unrequested day/exercise/meal and the existing period. Use the pending draft when provided; otherwise adjust the active plan. Include a short summary of what changes and why, plus concrete warnings when relevant. Limits are constraints, not targets to exceed. If both plans are requested, ask which to prepare first. Draft creation does NOT change the active plan or settings. The card's confirmation is the ONLY approval; conversational 'yes' is not authorization to execute. On approval or stale-plan errors tell the user to inspect/retry the card, never claim success. Never generate clinical diets, extreme restriction or exercise through pain.
+For training or nutrition plan generation/adjustment, first call plan_context(kind). It loads current preferences, active plan and the selected pending draft, if any. For a NEW training plan use prepare_training_program with reusable workouts and contiguous phases; for full structural edits use prepare_training_plan, and for nutrition use prepare_nutrition_plan. Publish ONE immutable preview in THIS chat. Keep workout notes concise and duration estimates sufficient for the highest-volume phase. Do not send the user to another page. Training constraints come from the user's request or saved settings: if weekly days, session duration or equipment are unknown, ask one concise question before drafting. Nutrition: respect food restrictions/preferences; if calorie/protein targets and enough information to propose appropriate targets are missing, ask. Never invent a user's health condition or preference. Explain proposed targets as estimates, not actual consumption. Default NEW training to one repeatable week and NEW nutrition to a one-day repeatable menu unless another period is requested. For adjustments preserve every unrequested day/exercise/meal and the existing period. Use the pending draft when provided; otherwise adjust the active plan. Include a short summary of what changes and why, plus concrete warnings when relevant. Limits are constraints, not targets to exceed. If both plans are requested, ask which to prepare first. Draft creation does NOT change the active plan or settings. The card's confirmation is the ONLY approval; conversational 'yes' is not authorization to execute. On approval or stale-plan errors tell the user to inspect/retry the card, never claim success. Never generate clinical diets, extreme restriction or exercise through pain.
 When plan_context returns editablePlan, PREFER prepare_plan_adjustment for small changes. Send only explicitly changed leaf fields using zero-based JSON paths; code preserves all other content exactly. For example /weeks/0/days/0/exercises/0/sets or /daily_targets/calories. Food replacement may also change that food's amount and estimated nutrients. Do not change unrelated fields or regenerate the full plan for a small edit. Ask if a named target is ambiguous. Full prepare tools are for new plans or structural changes (adding/removing days/exercises/meals).
 Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Chat history is saved to the account, but you receive only the six latest complete turns in the selected conversation. Other conversations and incomplete replies are not automatic memory. Saved facts require fresh tools; chat history is not permanent factual memory. The History button opens earlier chats. Never claim to recover lost chats from before history was available.
 General advice: be modest and practical; no diagnosis, prescriptions, extreme calorie restriction, or aggressive exercise through pain. For acute chest pain, fainting or severe symptoms advise stopping exercise and seeking urgent local medical help. Avoid claiming clinical expertise.
@@ -109,18 +111,18 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     // v7's prepareCall forwards these options to streamText. Override its default
     // console.error(error), which includes request bodies; the route logs only kind.
     prepareCall:settings=>({...settings,onError:()=>{}}),
-    timeout:{totalMs:45000,stepMs:22000,toolMs:12000},
+    timeout:emit?COACH_MODEL_TIMEOUT:{totalMs:COACH_MODEL_TIMEOUT.totalMs,toolMs:COACH_MODEL_TIMEOUT.toolMs},
     toolChoice:"required",toolCallConcurrency:3,
-    onLanguageModelCallStart:event=>{modelStarts.set(event.callId,timer.elapsed());httpHeadersMs=null;},
+    onLanguageModelCallStart:event=>{modelStarts.set(event.callId,timer.elapsed());httpHeadersMs=null;timer.modelStarted();},
     onLanguageModelCallEnd:event=>{timer.model({name:"model",startMs:modelStarts.get(event.callId)??0,durationMs:Math.round(event.performance.responseTimeMs),
       firstOutputMs:event.performance.timeToFirstOutputMs===undefined?null:Math.round(event.performance.timeToFirstOutputMs),httpHeadersMs,
-      inputTokens:event.usage.inputTokens??null,cacheReadTokens:event.usage.inputTokenDetails.cacheReadTokens??null,outputTokens:event.usage.outputTokens??null});},
+      inputTokens:event.usage.inputTokens??null,cacheReadTokens:event.usage.inputTokenDetails.cacheReadTokens??null,outputTokens:event.usage.outputTokens??null});timer.modelEnded();},
     onToolExecutionStart:event=>{toolStarts.set(event.toolCall.toolCallId,timer.elapsed());},
     onToolExecutionEnd:event=>{timer.tool(event.toolCall.toolName,toolStarts.get(event.toolCall.toolCallId)??timer.elapsed());},
     // Large plan schemas/output are available only after the relevant snapshot.
     // Ordinary questions keep the small tool menu and short output budget.
     prepareStep:()=>smalltalk?{activeTools:["finish_response"]}:planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
-      planSnapshot.kind==="training"?"prepare_training_plan":"prepare_nutrition_plan",...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
+      ...(planSnapshot.kind==="training"?["prepare_training_program" as const,...(planSnapshot.editable?["prepare_training_plan" as const]:[])]:["prepare_nutrition_plan" as const]),...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
       {activeTools:["read_records","current_workout","prepare_body","prepare_food","prepare_workout","finish_response",...(process.env.AGENT_DATABASE_URL?["plan_context" as const]:[])]},
     stopWhen:[isStepCount(5),()=>final!==null||proposal!==undefined],
     tools:{
@@ -136,11 +138,18 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
             const profile=Object.fromEntries((kind==="training"?["fitness_goal","training_experience","weekly_training_days","session_duration_minutes","training_location","available_equipment","injury_notes"]:
               ["fitness_goal","calorie_target","protein_target","diet_preference","food_restrictions","age","height","current_weight","gender","lifestyle_notes"]).map(k=>[k,p[k]===0?null:p[k]??null]));
             return {kind,profile,currentPlans:planSnapshot.editable?undefined:modelPlanData(planSnapshot.currentPlans),editingPendingDraft:!!planSnapshot.draft,editablePlan:planSnapshot.editable?.plan??null,
-              instruction:"Use these fresh settings/plans, preserve unrequested fields when adjusting. Ask for missing constraints. Return one preview; only the UI can approve."};
+              instruction:"Use these fresh settings/plans, preserve unrequested fields when adjusting. Ask for missing constraints. For a NEW training plan use prepare_training_program: write each workout once and reference it from contiguous phases covering total_weeks. Three months means a 12-week training block; say this explicitly. Keep notes concise. Never output all repeated weeks. Return one preview; only the UI can approve."};
           }catch{return {error:"PLAN_CONTEXT_UNAVAILABLE",instruction:"Ask the user to complete settings or retry; do not invent a plan from unavailable data."};}
         })}),
       prepare_training_plan:tool({description:"Publish a complete training plan preview using the loaded context. No approval or activation. Preserve unrequested content when adjusting.",
         inputSchema:z.object({context:contextSchema,plan:planSchema}).strict(),execute:args=>execution.run(false,async()=>planSnapshot?.kind==="training"?preparePlan(args.context,args.plan):{error:"READ_TRAINING_CONTEXT_FIRST"})}),
+      prepare_training_program:tool({description:"Prepare a NEW training plan efficiently. Define each workout once, then contiguous phases from week 1 through total_weeks. Each phase references exactly weeklyDays workouts in order. sets_delta and rpe_delta explicitly adjust every exercise (0 keeps the template). Code expands and validates EVERY week before the same immutable approval preview. No activation or actual records.",
+        inputSchema:trainingProgramSchema,execute:args=>execution.run(false,async()=>{
+          if(planSnapshot?.kind!=="training")return {error:"READ_TRAINING_CONTEXT_FIRST"};
+          let expanded:ReturnType<typeof expandTrainingProgram>;
+          try{expanded=expandTrainingProgram(args);}catch{return {error:"INVALID_TRAINING_PROGRAM",instruction:"Check contiguous complete weeks, workout keys, weekly days, durations, and final sets/RPE bounds. Nothing was applied."};}
+          return preparePlan(expanded.context,expanded.plan);
+        })}),
       prepare_nutrition_plan:tool({description:"Publish a complete nutrition plan preview. Nutrients are proposed estimates, not eaten records. No approval or activation.",
         inputSchema:z.object({plan:nutritionPlanSchema}).strict(),execute:args=>execution.run(false,async()=>planSnapshot?.kind==="nutrition"?preparePlan({weeklyDays:7,sessionMinutes:60,equipment:[],notes:input.text},args.plan):{error:"READ_NUTRITION_CONTEXT_FIRST"})}),
       prepare_plan_adjustment:tool({description:"Efficiently preview small changes to editablePlan from plan_context. Only changed leaf paths, zero-based indexes. Unchanged content is preserved by code. No approval/activation.",inputSchema:planAdjustmentSchema,
@@ -211,6 +220,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     const stream=await agent.stream({messages,abortSignal:signal});
     for await(const part of stream.fullStream){
       if(part.type==="error")throw part.error;
+      if(part.type==="tool-input-delta")timer.modelOutput(part.delta.length);
       if(part.type==="tool-input-start"&&part.toolName!=="finish_response")emit?.({type:"status",stage:part.toolName.startsWith("prepare_")?"drafting":"reading"});
     }
     return {steps:await stream.steps,totalUsage:await stream.totalUsage};
@@ -225,7 +235,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     message:proposal.kind==="plan"?(input.locale==="en"?"Your plan preview is ready. Review it below and confirm to apply; your active plan has not changed.":"计划预览已整理好。请在下方核对并确认应用，当前计划尚未修改。"):
       input.locale==="en"?"Please review and confirm the draft below. Nothing has been saved yet.":"请核对下方草稿，确认后才会保存。目前尚未写入记录。",sourceIds:[],
   }:final as {message:string;sourceIds:string[]}|null;
-  if(!completed)throw new Error("MODEL_DID_NOT_FINISH");
+  if(!completed)throw new Error(result.steps.some(s=>s.finishReason==="length")?"MODEL_OUTPUT_LIMIT":"MODEL_DID_NOT_FINISH");
   // Display the actual reads, not a model-selected subset that can omit the
   // workout behind an otherwise accurate answer. Repeated reads keep the latest.
   const evidence=[...sources,...(!proposal&&currentSource?[currentSource]:[])];
