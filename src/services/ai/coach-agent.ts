@@ -122,7 +122,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     // Large plan schemas/output are available only after the relevant snapshot.
     // Ordinary questions keep the small tool menu and short output budget.
     prepareStep:()=>smalltalk?{activeTools:["finish_response"]}:planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
-      ...(planSnapshot.kind==="training"?["prepare_training_program" as const,...(planSnapshot.editable?["prepare_training_plan" as const]:[])]:["prepare_nutrition_plan" as const]),...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
+      ...(planSnapshot.kind==="training"?["prepare_training_program" as const,...(planSnapshot.editable||planSnapshot.currentPlans.length?["prepare_training_plan" as const]:[])]:["prepare_nutrition_plan" as const]),...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
       {activeTools:["read_records","current_workout","prepare_body","prepare_food","prepare_workout","finish_response",...(process.env.AGENT_DATABASE_URL?["plan_context" as const]:[])]},
     stopWhen:[isStepCount(5),()=>final!==null||proposal!==undefined],
     tools:{
