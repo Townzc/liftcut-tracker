@@ -30,6 +30,24 @@ createServer(async(req,res)=>{
     chosen=call("read_memory",{exercise:null});
   }else if(priorCall?.function.name==="plan_context"){
     if(result.error)chosen=call("finish_response",{message:"暂时无法读取计划资料，请稍后重试。",sourceIds:[]});
+    else if(text.includes("[plan-memory]")){
+      const p=result.personalization,weight=p?.body?.find((f:{metric:string})=>f.metric==="weight");
+      if(p?.goal?.value!=="增肌"||!weight||p.exerciseLoads?.find((f:{exerciseName:string})=>f.exerciseName==="卧推")?.value!==50||p.recentLoads?.length<3){
+        res.statusCode=503;res.end('{"error":{"message":"Missing server-side planning memory in scripted fixture"}}');return;
+      }
+      const summary=`参考已确认增肌目标、${weight.date} 体重 ${weight.value} kg 和卧推 50 kg，日期是原记录日期。`;
+      if(result.editablePlan&&text.includes("调整"))chosen=call("prepare_plan_adjustment",{summary,changes:result.kind==="nutrition"?
+        [{path:"/daily_targets/calories",value:1900},{path:"/days/0/meals/2/foods/0/estimated_calories",value:600}]:[{path:"/weeks/0/days/0/exercises/0/sets",value:2}]});
+      else if(result.kind==="nutrition"){
+        if(p.diet.value!=="不吃奶制品"){res.statusCode=503;res.end('{"error":{"message":"Missing confirmed food preference"}}');return;}
+        chosen=call("prepare_nutrition_plan",{plan:{...structuredClone(nutritionFixture),goal_type:"muscle_gain",summary:summary+" 不吃奶制品。"}});
+      }else{
+        const args=structuredClone(trainingProgramFixture);args.program.total_weeks=1;args.program.phases=[{...args.program.phases[0],to_week:1}];
+        args.program.goal_type="muscle_gain";args.program.summary=summary;args.program.reasoning_summary=summary;
+        args.program.workouts[0].exercises[0].name="卧推";args.program.workouts[0].exercises[0].notes="参考实际50kg×10次；先保守试组，不视为今天已完成。";
+        chosen=call("prepare_training_program",args);
+      }
+    }
     else if(result.editablePlan&&text.includes("调整"))chosen=call("prepare_plan_adjustment",{summary:"按要求调整，其他保持不变。",changes:text.includes("[nutrition-plan]")?
       [{path:"/daily_targets/calories",value:2200},{path:"/days/0/meals/2/foods/0/estimated_calories",value:900}]:[{path:"/weeks/0/days/0/exercises/0/sets",value:2}]});
     else if(text.includes("[nutrition-plan]")){

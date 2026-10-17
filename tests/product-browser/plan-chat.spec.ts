@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import type {PersonalEntry} from "../../src/lib/personal-records";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 const origin={Origin:"http://localhost:3103"};
 async function login(page:Page,email="p1-fixture@example.invalid"){
@@ -21,6 +22,47 @@ test.afterEach(async()=>{
   await db.query("delete from coach_request_usage where user_id=$1",[owner]);
 });
 test.afterAll(async()=>{await db.end();});
+
+async function planningFacts(){
+  const ids:string[]=[];
+  const add=async(entry:PersonalEntry)=>{const id=randomUUID();ids.push(id);await db.query("insert into personal_record_events(id,user_id,request_hash,request,receipt) values($1,$2,$3,$4,$5)",
+    [id,owner,"b".repeat(64),{id,action:"create",entry,source:"manual",text:"",anchorDate:entry.date},{id,recordId:id,action:"create"}]);};
+  await add({kind:"preference",date:"2026-08-17",key:"goal",value:"增肌"});
+  await add({kind:"preference",date:"2026-08-17",key:"diet",value:"不吃奶制品"});
+  await add({kind:"body",date:"2026-08-17",weightKg:72.5,waistCm:80});
+  for(const [date,weight] of [["2026-08-15",45],["2026-08-16",47.5],["2026-08-17",50]] as const)await add({kind:"exercise",date,exerciseName:"卧推",weightKg:weight,reps:10,sets:null,rpe:null});
+  return {add,clear:()=>db.query("delete from personal_record_events where user_id=$1 and id=any($2)",[owner,ids])};
+}
+
+test("training uses stored facts in a new conversation, rejects stale memory and preserves unrelated edits",async({page})=>{
+  const facts=await planningFacts();
+  try{
+    await login(page);await send(page,"根据我的情况生成训练计划 [training-plan] [plan-memory]");
+    let run=(await recent(page))[0];expect(run.proposal.plan.goal_type).toBe("muscle_gain");expect(run.proposal.plan.reasoning_summary).toContain("72.5");
+    expect(run.proposal.plan.reasoning_summary).toContain("2026-08-17");expect(await count("training_plans")).toBe(0);
+    expect(run.events.some((e:{type:string})=>e.type==="planning_basis")).toBe(true);
+    await facts.add({kind:"body",date:"2026-10-16",weightKg:73,waistCm:null});await page.reload();await expect(page.getByTestId("coach-turn")).toHaveCount(1);await send(page,"查看回执");
+    await page.getByRole("button",{name:run.proposal.plan.plan_name,exact:true}).click();
+    await expect(page.getByTestId("coach-plan")).toContainText("已确认记录有变化");await review(page);await expect(page.getByRole("button",{name:"确认并应用",exact:true})).toHaveCount(0);
+    await send(page,"重新生成训练计划 [training-plan] [plan-memory]");run=(await recent(page))[0];expect(run.proposal.plan.reasoning_summary).toContain("73 kg");
+    await review(page);await page.getByRole("button",{name:"确认并应用",exact:true}).click();await expect(page.getByTestId("plan-receipt")).toBeVisible();
+    const original=run.proposal.plan;await send(page,"调整卧推为2组 [training-plan] [plan-memory]");run=(await recent(page))[0];
+    expect(run.proposal.plan.weeks[0].days[0].exercises[0].sets).toBe(2);expect(run.proposal.plan.weeks[0].days[1]).toEqual(original.weeks[0].days[1]);
+    expect(await count("training_plans")).toBe(1);
+  }finally{await facts.clear();}
+});
+
+test("nutrition reuses confirmed body/goal/food preference and adjusts only requested leaves",async({page})=>{
+  const facts=await planningFacts();
+  try{
+    await login(page);await send(page,"按我保存的数据做饮食计划 [nutrition-plan] [plan-memory]");let run=(await recent(page))[0];
+    expect(run.proposal.plan.goal_type).toBe("muscle_gain");expect(run.proposal.plan.summary).toContain("72.5");expect(run.proposal.plan.summary).toContain("不吃奶制品");expect(await count("nutrition_plans")).toBe(0);
+    const original=run.proposal.plan;await review(page);await page.getByRole("button",{name:"确认并应用",exact:true}).click();await expect(page.getByTestId("plan-receipt")).toBeVisible();
+    await send(page,"调整晚餐少100千卡，其余保持 [nutrition-plan] [plan-memory]");run=(await recent(page))[0];
+    expect(run.proposal.plan.daily_targets.calories).toBe(1900);expect(run.proposal.plan.days[0].meals.slice(0,2)).toEqual(original.days[0].meals.slice(0,2));
+    expect(await count("nutrition_plans")).toBe(1);
+  }finally{await facts.clear();}
+});
 
 test("legacy plans without a ledger snapshot retain full structural edits and approval",async({page})=>{
   const legacy=`legacy-${randomUUID()}`;
@@ -109,6 +151,6 @@ test("changed settings block a pending plan and independent reads return both so
   expect((await page.request.post(`/api/agent/runs/${run.id}/user-events`,{headers:{Origin:"https://attacker.invalid"},data:{action:"approve",expectedRevision:run.revision,binding}})).status()).toBe(403);
   expect((await page.request.post(`/api/agent/runs/${run.id}/user-events`,{headers:origin,data:{action:"approve",expectedRevision:run.revision,binding:{...binding,contentHash:"0".repeat(64)}}})).status()).toBe(409);
   await db.query("update user_settings set weekly_training_days=6 where user_id=$1",[owner]);await review(page);await page.getByRole("button",{name:"确认并应用",exact:true}).click();
-  await expect(page.getByTestId("coach-plan")).toContainText("已变化");expect(await count("training_plans")).toBe(0);await expect(page.getByRole("button",{name:"确认并应用",exact:true})).toHaveCount(0);
+  await expect(page.getByTestId("coach-plan")).toContainText("请重新生成预览");expect(await count("training_plans")).toBe(0);await expect(page.getByRole("button",{name:"确认并应用",exact:true})).toHaveCount(0);
   await send(page,"同时核对体重和饮食 [mixed-read]");await expect(page.getByTestId("coach-sources").last().locator("summary")).toHaveText("查看依据 · 2");
 });

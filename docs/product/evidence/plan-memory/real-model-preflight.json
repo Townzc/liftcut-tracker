@@ -1,0 +1,382 @@
+{
+  "recordedAt": "2026-10-17T08:12:22.959Z",
+  "environment": "Real DeepSeek; synthetic records; local PostgreSQL; no browser/Auth timing; no plan applied",
+  "scope": "Four development cases, not generalization or production latency statistics",
+  "cases": [
+    {
+      "request": "按我的目标和条件，生成一周训练计划。",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "goal": "muscle_gain",
+      "status": "awaiting_approval",
+      "context": {
+        "notes": "增肌目标，每周三次，每次不超过45分钟；健身房环境。2026-10-16卧推50kg×3组×10次（RPE8）作为参考负荷。",
+        "equipment": [
+          "杠铃",
+          "哑铃",
+          "训练凳",
+          "拉力器"
+        ],
+        "weeklyDays": 3,
+        "sessionMinutes": 45
+      },
+      "summary": "依据已确认的偏好：增肌目标、每周三次、每次最多45分钟、健身房有杠铃/哑铃/训练凳/拉力器（2026-10-16）；参考2026-10-16卧推50kg×3×10 RPE8与2026-10-14卧推47.5kg×3×10 RPE7的实际记录设定起始负荷。",
+      "timing": {
+        "version": 1,
+        "serverMs": 7005,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 74,
+            "durationMs": 1439,
+            "firstOutputMs": 1370,
+            "httpHeadersMs": 844,
+            "inputTokens": 4631,
+            "cacheReadTokens": 0,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 1575,
+            "durationMs": 5399,
+            "firstOutputMs": 1187,
+            "httpHeadersMs": 616,
+            "inputTokens": 5408,
+            "cacheReadTokens": 2048,
+            "outputTokens": 1268
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 1515,
+            "durationMs": 51
+          },
+          {
+            "name": "prepare_training_program",
+            "startMs": 6974,
+            "durationMs": 28
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 42,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 42,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 44,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 46,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 79,
+        "quotaDetail": {
+          "lockMs": 0.05,
+          "checkMs": 0.62,
+          "insertMs": 0.37
+        },
+        "generation": {
+          "startMs": 1575,
+          "durationMs": 5399,
+          "outputChars": 2547,
+          "lastOutputMs": 6959,
+          "finished": true
+        }
+      }
+    },
+    {
+      "request": "按我已保存的情况生成一天饮食计划。",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "goal": "muscle_gain",
+      "status": "awaiting_approval",
+      "context": {
+        "notes": "按我已保存的情况生成一天饮食计划。",
+        "equipment": [],
+        "weeklyDays": 7,
+        "sessionMinutes": 60
+      },
+      "summary": "依据你已保存的信息：目标增肌（2026-10-16确认）、体重72.5kg与腰围80cm（2026-10-16实测）、年龄28岁、身高178cm、日常久坐约6000步、每周训练3次每次≤45分钟，以及不吃奶制品。按体重约1.6g/kg蛋白估算，蛋白目标约115g；热量按轻度盈余估算约2600kcal，属于提议目标，不是实际摄入。全天不安排牛奶、酸奶、奶酪等奶制品，蛋白主要来自鸡蛋、鸡胸、牛肉、鱼、豆制品。",
+      "timing": {
+        "version": 1,
+        "serverMs": 6237,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 11,
+            "durationMs": 965,
+            "firstOutputMs": 921,
+            "httpHeadersMs": 455,
+            "inputTokens": 4630,
+            "cacheReadTokens": 4480,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 1017,
+            "durationMs": 5194,
+            "firstOutputMs": 711,
+            "httpHeadersMs": 433,
+            "inputTokens": 5099,
+            "cacheReadTokens": 2560,
+            "outputTokens": 1201
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 977,
+            "durationMs": 35
+          },
+          {
+            "name": "prepare_nutrition_plan",
+            "startMs": 6212,
+            "durationMs": 24
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.query",
+            "startMs": 3,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 4,
+            "durationMs": 2
+          }
+        ],
+        "toolWallMs": 59,
+        "quotaDetail": {
+          "lockMs": 0.03,
+          "checkMs": 0.21,
+          "insertMs": 0.11
+        },
+        "generation": {
+          "startMs": 1017,
+          "durationMs": 5194,
+          "outputChars": 2714,
+          "lastOutputMs": 6193,
+          "finished": true
+        }
+      }
+    },
+    {
+      "request": "把第1周第1天的第一个动作改成2组，其他所有内容保持不变。",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "goal": "muscle_gain",
+      "status": "awaiting_approval",
+      "context": {
+        "notes": "增肌目标，每周三次，每次不超过45分钟；健身房环境。2026-10-16卧推50kg×3组×10次（RPE8）作为参考负荷。",
+        "equipment": [
+          "杠铃",
+          "哑铃",
+          "训练凳",
+          "拉力器"
+        ],
+        "weeklyDays": 3,
+        "sessionMinutes": 45
+      },
+      "summary": "依据已确认的偏好：增肌目标、每周三次、每次最多45分钟、健身房有杠铃/哑铃/训练凳/拉力器（2026-10-16）；参考2026-10-16卧推50kg×3×10 RPE8与2026-10-14卧推47.5kg×3×10 RPE7的实际记录设定起始负荷。",
+      "timing": {
+        "version": 1,
+        "serverMs": 2964,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 6,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 10,
+            "durationMs": 1462,
+            "firstOutputMs": 1395,
+            "httpHeadersMs": 671,
+            "inputTokens": 4639,
+            "cacheReadTokens": 4480,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 1500,
+            "durationMs": 1438,
+            "firstOutputMs": 1138,
+            "httpHeadersMs": 429,
+            "inputTokens": 7632,
+            "cacheReadTokens": 2560,
+            "outputTokens": 118
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 1472,
+            "durationMs": 22
+          },
+          {
+            "name": "prepare_plan_adjustment",
+            "startMs": 2938,
+            "durationMs": 25
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 1,
+            "durationMs": 0
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 4,
+            "durationMs": 2
+          }
+        ],
+        "toolWallMs": 47,
+        "quotaDetail": {
+          "lockMs": 0.04,
+          "checkMs": 0.16,
+          "insertMs": 0.17
+        },
+        "generation": {
+          "startMs": 1500,
+          "durationMs": 1438,
+          "outputChars": 143,
+          "lastOutputMs": 2922,
+          "finished": true
+        }
+      }
+    },
+    {
+      "request": "这次只做维持体重的训练计划，其他沿用我的已保存条件。",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "goal": "maintenance",
+      "status": "awaiting_approval",
+      "context": {
+        "notes": "健身房训练，每周三次，每次不超过45分钟；本次目标为维持体重，训练以保持力量与肌肉为主，不做大幅加量。",
+        "equipment": [
+          "杠铃",
+          "哑铃",
+          "训练凳",
+          "拉力器"
+        ],
+        "weeklyDays": 3,
+        "sessionMinutes": 45
+      },
+      "summary": "依据2026-10-16确认的偏好：每周三次、每次最多45分钟、健身房器械（杠铃/哑铃/训练凳/拉力器）；本次明确目标改为维持体重，仅覆盖本次方案。参考2026-10-16卧推50kg×3组×10次（RPE8）与2026-10-14卧推47.5kg×3组×10次（RPE7）作为保守起始参考，不视为极限或今日能力。体重72.5kg、腰围80cm（2026-10-16）仅作背景。",
+      "timing": {
+        "version": 1,
+        "serverMs": 7575,
+        "firstTextMs": null,
+        "authMs": null,
+        "quotaMs": 5,
+        "model": [
+          {
+            "name": "model",
+            "startMs": 10,
+            "durationMs": 893,
+            "firstOutputMs": 824,
+            "httpHeadersMs": 440,
+            "inputTokens": 4637,
+            "cacheReadTokens": 4480,
+            "outputTokens": 32
+          },
+          {
+            "name": "model",
+            "startMs": 969,
+            "durationMs": 6533,
+            "firstOutputMs": 890,
+            "httpHeadersMs": 401,
+            "inputTokens": 5414,
+            "cacheReadTokens": 3840,
+            "outputTokens": 1450
+          }
+        ],
+        "tools": [
+          {
+            "name": "plan_context",
+            "startMs": 903,
+            "durationMs": 59
+          },
+          {
+            "name": "prepare_training_program",
+            "startMs": 7502,
+            "durationMs": 71
+          }
+        ],
+        "database": [
+          {
+            "name": "quota.connect",
+            "startMs": 0,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.setup",
+            "startMs": 1,
+            "durationMs": 1
+          },
+          {
+            "name": "quota.query",
+            "startMs": 2,
+            "durationMs": 2
+          },
+          {
+            "name": "quota.commit",
+            "startMs": 4,
+            "durationMs": 1
+          }
+        ],
+        "toolWallMs": 130,
+        "quotaDetail": {
+          "lockMs": 0.02,
+          "checkMs": 0.14,
+          "insertMs": 0.09
+        },
+        "generation": {
+          "startMs": 969,
+          "durationMs": 6533,
+          "outputChars": 2859,
+          "lastOutputMs": 7482,
+          "finished": true
+        }
+      }
+    }
+  ]
+}
