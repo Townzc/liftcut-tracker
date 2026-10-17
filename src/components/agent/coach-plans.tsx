@@ -1,6 +1,8 @@
 "use client";
 import { memo, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { RunView, Binding } from "@/lib/agent/contracts";
 import { PlanPreview } from "./plan-preview";
 import { useTrackerStore } from "@/store/use-tracker-store";
@@ -14,6 +16,7 @@ const bind=(r:RunView):Binding=>({proposalId:r.proposal!.proposalId,contentHash:
 export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHistory,onApplied,onSelect,onBusy,onUpdate}:{owner:string;fresh:RunView|null;en:boolean;locked:boolean;showHistory:boolean;onApplied?:()=>void;onSelect:(id:string|undefined)=>void;onBusy:(value:boolean)=>void;onUpdate:(value:RunView)=>void}){
   const [runs,setRuns]=useState<RunView[]>([]),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");
   const [busy,setBusy]=useState(false),flight=useRef(false),mounted=useRef(true),listRequest=useRef(0);
+  const [previewId,setPreviewId]=useState<string|null>(null);
   const refreshUserData=useTrackerStore(s=>s.refreshUserData);
   useEffect(()=>{mounted.current=true;let alive=true;const request=++listRequest.current;
     void api<RunView[]>("").then(values=>{if(alive&&request===listRequest.current){setRuns(values);const pending=values.find(r=>["awaiting_approval","approved"].includes(r.status));if(pending)setSelected(pending.id);}}).catch(()=>{if(alive&&request===listRequest.current)setError(en?"Plan history could not be read. Try refreshing.":"暂时无法读取计划提案，可以刷新重试。");});
@@ -28,6 +31,7 @@ export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHist
   const received=(value:RunView)=>{onUpdate(value);if(mounted.current)setRuns(previous=>previous.map(r=>r.id===value.id?value:r));};
   async function act(action:"apply"|"decline"|"refresh"){
     if(!run||flight.current||locked)return;flight.current=true;setBusy(true);onBusy(true);setError("");
+    if(action!=="refresh")setPreviewId(null);
     try{
       let current=await api<RunView>(`/${run.id}`);received(current);
       if(current.status==="applied"){onApplied?.();void refreshUserData().catch(()=>{});return;}
@@ -53,21 +57,36 @@ export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHist
   if((!runs.length||(!run&&!showHistory))&&!error)return null;
   return <section className="space-y-3" aria-label={en?"Plans in this conversation":"对话中的计划"}>
     {showHistory&&runs.length>0&&<div className="text-xs text-muted-foreground"><p className="py-2">{en?"Recent plan previews & receipts":"最近的计划预览与回执"} · {runs.length}</p><div className="flex flex-wrap gap-2 py-2">{runs.map(r=><Button key={r.id} size="sm" variant="outline" disabled={busy||locked} onClick={()=>setSelected(r.id)}>{r.proposal?.plan.plan_name??(en?"Plan":"计划")}</Button>)}</div></div>}
-    {run?.proposal&&<div className="space-y-4 rounded-2xl border bg-background p-4 sm:p-5" data-testid="coach-plan">
-      <p className="text-xs text-muted-foreground">{en?"AI generated · ":"AI 生成 · "}{run.kind==="training"?(en?"Training plan":"训练计划"):(en?"Nutrition plan":"饮食计划")}</p>
-      <p>{run.baseline.length?(en?`Will replace: ${run.baseline.map(p=>p.name).join(", ")}`:`确认后替换：${run.baseline.map(p=>p.name).join("、")}`):(en?"Creates a new active plan after confirmation.":"确认后将成为新的当前计划。")}</p>
-      {run.kind==="training"&&<p className="text-xs text-muted-foreground">{en?"Constraints":"本次约束"}：{run.context.weeklyDays} {en?"days/week":"天/周"} · {run.context.sessionMinutes} {en?"min/session":"分钟/次"} · {run.context.equipment.join("、")|| (en?"No equipment specified":"未指定器械")}{run.context.notes&&` · ${run.context.notes}`}</p>}
-      <PlanPreview plan={run.proposal.plan} en={en}/>
-      {!!changes.length&&<details className="text-xs text-muted-foreground"><summary className="cursor-pointer py-2">{en?"Compare exercises & menu":"对比动作、目标与菜单"} · {changes.length}</summary><ul className="space-y-2">{changes.map((change,i)=><li key={i}>{change}</li>)}</ul><p className="mt-2">{en?"Review the full preview above for notes, rest times and alternatives.":"说明、休息时间和替代选项请核对上方完整预览。"}</p></details>}
-      {run.status==="applied"&&run.receipt?<p role="status" data-testid="plan-receipt">{en?"Applied once. You can ask me to adjust it again.":"已应用，保存一次。还想调整，可以继续告诉我。"}</p>:
-        <p role="status">{["awaiting_approval","approved"].includes(run.status)?(en?"Not applied. Review all days before confirming.":"尚未应用，请展开各天安排核对后确认。"):
-          run.status==="stale"?(en?"Your plan or settings changed. Ask for a fresh preview.":"计划或个人设置已变化，请在对话里重新生成预览。"):
-          en?"This preview is closed and cannot be applied.":"此预览已关闭，不能继续应用。"}</p>}
-      <div className="flex flex-wrap gap-2">
-        {["awaiting_approval","approved"].includes(run.status)&&<><Button disabled={busy||locked} onClick={()=>void act("apply")}>{en?"Confirm & apply":"确认并应用"}</Button><Button variant="outline" disabled={busy||locked} onClick={()=>void act("decline")}>{en?"Discard preview":"放弃此方案"}</Button></>}
-        <Button variant="ghost" disabled={busy||locked} onClick={()=>void act("refresh")}>{en?"Refresh status":"刷新状态"}</Button>
+    {run?.proposal&&<div className="rounded-2xl border bg-background p-4 text-sm" data-testid="coach-plan">
+      {run.status==="applied"&&run.receipt?<div className="flex flex-wrap items-center justify-between gap-2">
+        <p role="status" data-testid="plan-receipt">{en?"Applied once.":"已应用，保存一次."}</p>
+        {run.kind==="training"&&<Link href="/current-plan" className="inline-flex min-h-11 items-center underline underline-offset-4">{en?"View current plan on Home":"查看首页当前计划"}</Link>}
+      </div>:<>
+        <p className="font-medium">{run.proposal.plan.plan_name}</p>
+        <p role="status" className="mt-2 text-xs leading-6 text-muted-foreground">{["awaiting_approval","approved"].includes(run.status)?(en?"Preview ready. Your current plan has not changed.":"方案已生成，当前计划尚未修改."):
+          run.status==="stale"?(en?"Your plan or settings changed. Ask for a fresh preview.":"计划或个人设置已变化，请重新生成预览."):
+          en?"This preview is closed and cannot be applied.":"此预览已关闭，不能继续应用."}</p>
+      </>}
+      <div className="mt-2 flex flex-wrap gap-2">
+        {(["awaiting_approval","approved"].includes(run.status)||showHistory)&&<Button variant="outline" disabled={busy||locked} onClick={()=>setPreviewId(run.id)}>{en?"Review plan":"查看方案"}</Button>}
+        {(error||showHistory)&&<Button variant="ghost" disabled={busy||locked} onClick={()=>void act("refresh")}>{en?"Refresh status":"刷新状态"}</Button>}
       </div>
-      {run.receipt&&<details className="text-xs text-muted-foreground"><summary className="cursor-pointer py-2">{en?"Receipt":"查看回执"}</summary><p className="break-all">{run.receipt.id} · {new Date(run.receipt.committedAt).toLocaleString()}</p></details>}
+      <Dialog open={previewId===run.id} onOpenChange={open=>setPreviewId(open?run.id:null)}>
+        <DialogContent className="flex max-h-[85dvh] flex-col overflow-hidden rounded-2xl sm:max-w-2xl">
+          <DialogTitle className="pr-8">{en?"Review plan":"核对计划方案"}</DialogTitle>
+          <DialogDescription>{run.baseline.length?(en?`Will replace: ${run.baseline.map(p=>p.name).join(", ")}`:`确认后替换：${run.baseline.map(p=>p.name).join("、")}`):(en?"Your plan changes only after confirmation.":"确认后才会修改当前计划.")}</DialogDescription>
+          <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain pr-1" data-testid="plan-review-scroll">
+            {run.kind==="training"&&<p className="text-xs text-muted-foreground">{en?"Constraints":"本次约束"}：{run.context.weeklyDays} {en?"days/week":"天/周"} · {run.context.sessionMinutes} {en?"min/session":"分钟/次"} · {run.context.equipment.join("、")||(en?"No equipment specified":"未指定器械")}{run.context.notes&&` · ${run.context.notes}`}</p>}
+            <PlanPreview plan={run.proposal.plan} en={en}/>
+            {!!changes.length&&<details className="text-xs text-muted-foreground"><summary className="cursor-pointer py-2">{en?"Compare exercises & menu":"对比动作、目标与菜单"} · {changes.length}</summary><ul className="space-y-2">{changes.map((change,i)=><li key={i}>{change}</li>)}</ul></details>}
+            {run.receipt&&<p className="break-all text-xs text-muted-foreground">{en?"Receipt":"回执"} · {run.receipt.id} · {new Date(run.receipt.committedAt).toLocaleString()}</p>}
+          </div>
+          {["awaiting_approval","approved"].includes(run.status)&&<div className="shrink-0 space-y-3 border-t pt-3">
+            <p className="text-xs text-muted-foreground">{en?"Review all training days before applying.":"请展开各天安排核对，确认后应用."}</p>
+            <div className="flex flex-wrap gap-2"><Button disabled={busy||locked} onClick={()=>void act("apply")}>{en?"Confirm & apply":"确认并应用"}</Button><Button variant="outline" disabled={busy||locked} onClick={()=>void act("decline")}>{en?"Discard preview":"放弃此方案"}</Button></div>
+          </div>}
+        </DialogContent>
+      </Dialog>
     </div>}
     {error&&<p role="alert" className="text-sm">{error}</p>}
   </section>;
