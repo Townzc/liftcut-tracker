@@ -7,7 +7,8 @@ export function currentPlanProgress(plan: TrainingPlan, logs: WorkoutLog[], now:
     [...week.days].sort((a, b) => a.dayNumber - b.dayNumber).map(day => ({ ...day, weekNumber: week.weekNumber })));
   const key = (week: number, day: number) => `${week}:${day}`;
   const recorded = new Set(logs.filter(log => log.userId === plan.userId && log.trainingPlanId === plan.id && log.completed &&
-    log.exercises.some(exercise => exercise.completed && exercise.actualReps !== null))
+    log.exercises.some(exercise => exercise.completed &&
+      [exercise.actualWeight, exercise.actualReps, exercise.actualRpe].some(value => typeof value === "number" && Number.isFinite(value))))
     .map(log => key(log.weekNumber, log.dayNumber)));
   const recordedDays = days.filter(day => recorded.has(key(day.weekNumber, day.dayNumber)));
   const nextDay = days.find(day => !recorded.has(key(day.weekNumber, day.dayNumber))) ?? null;

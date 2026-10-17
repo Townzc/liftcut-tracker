@@ -47,6 +47,12 @@ test("undo or removing the only real set reopens that training day", () => {
   entry.exercises = [];
   assert.equal(currentPlanProgress(fixture(), [entry], new Date(), "UTC").recordedDays, 0);
 });
+test("legacy weight-only or effort-only records count without inventing unknown reps", () => {
+  const weightOnly = log(); weightOnly.exercises[0].actualReps = null; weightOnly.exercises[0].actualWeight = 50;
+  const effortOnly = log({ dayNumber: 2 }); effortOnly.exercises[0].actualReps = null; effortOnly.exercises[0].actualRpe = 8;
+  assert.equal(currentPlanProgress(fixture(), [weightOnly, effortOnly], new Date(), "UTC").recordedDays, 2);
+  assert.equal(weightOnly.exercises[0].actualReps, null); assert.equal(effortOnly.exercises[0].actualWeight, null);
+});
 test("sorts training slots without mutating state and retains unknown start date", () => {
   const plan = fixture(); plan.weeks.reverse(); plan.weeks.forEach(week => week.days.reverse()); plan.createdAt = "unknown";
   const before = JSON.stringify(plan), progress = currentPlanProgress(plan, [], new Date(), "UTC");
