@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { CoachSource } from "@/lib/coach-model";
 import { CoachTimer } from "@/lib/coach-timing";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
+import {memorySource,memoryExerciseKey,type MemoryFact} from "@/lib/fitness-memory";
 
 export const recordTopicSchema=z.enum(["body","food","workout","plan","nutrition","profile"]);
 export const readRecordsSchema=z.object({topic:recordTopicSchema,from:z.iso.date(),to:z.iso.date()}).strict();
@@ -23,6 +24,34 @@ export class CoachStore {
       const value=(await db.query("select public.reserve_coach_request($1) as value",[id])).rows[0].value;
       if(value.error)throw new CoachReadError(z.enum(["RATE_LIMITED","REQUEST_ALREADY_USED"]).parse(value.error));
       this.timer.quota(z.object({lockMs:z.number().nonnegative(),checkMs:z.number().nonnegative(),insertMs:z.number().nonnegative()}).parse(value));
+    });
+  }
+  async memory(owner:string,anchor:string,exercise?:string):Promise<CoachSource>{
+    z.iso.date().parse(anchor);if(exercise)z.string().min(1).max(80).parse(exercise);
+    return this.tx(owner,"memory",async db=>{
+      const rows=(await db.query(`with facts as (
+        select e.id::text as id,e.id::text as record_id,e.request->'entry' as entry,e.created_at,e.request->>'source' as source
+        from public.personal_record_events e where e.user_id=$1 and e.parent_id is null
+        and not exists(select 1 from public.personal_record_events u where u.parent_id=e.id)
+        union all select 'legacy:'||id,null,jsonb_build_object('kind','body','date',date,'weightKg',weight,'waistCm',waist),created_at,'manual'
+        from public.body_metric_logs where user_id=$1
+        union all select 'set:'||l.id,null,jsonb_build_object('kind','exercise','date',s.local_date,'exerciseName',l.exercise_name,'weightKg',l.weight_kg,'reps',l.reps,'sets',1,'rpe',l.rpe),l.created_at,'workout'
+        from public.set_logs l join public.workout_sessions s on s.id=l.session_id where s.user_id=$1 and s.status<>'cancelled' and l.status='done'
+        union all select 'legacy-set:'||e.id,null,jsonb_build_object('kind','exercise','date',w.date,'exerciseName',e.name,'weightKg',e.actual_weight,'reps',e.actual_reps,'sets',null,'rpe',e.actual_rpe),w.created_at,'workout'
+        from public.workout_log_exercises e join public.workout_logs w on w.id=e.workout_log_id where w.user_id=$1 and e.completed
+      ), expanded as (
+        select f.*,m.metric,m.value,m.unit from facts f cross join lateral (values
+          (case when entry->>'kind'='body' then 'weight' end,entry->'weightKg','kg'),
+          (case when entry->>'kind'='body' then 'waist' end,entry->'waistCm','cm'),
+          (case when entry->>'kind'='exercise' then 'exercise:'||lower(regexp_replace(trim(entry->>'exerciseName'),'\\s+',' ','g')) end,entry->'weightKg','kg'),
+          (case when entry->>'kind'='preference' then 'preference:'||(entry->>'key') end,entry->'value',null)
+        ) m(metric,value,unit) where m.metric is not null and m.value is not null and m.value<>'null'::jsonb
+        and entry->>'date'<=$2 and ($3::text is null or m.metric='exercise:'||$3)
+      ) select * from (select distinct on(metric) jsonb_build_object('id',id,'recordId',record_id,'date',entry->>'date',
+        'createdAt',created_at,'metric',metric,'value',value,'unit',unit,'source',source,'exerciseName',entry->>'exerciseName',
+        'reps',entry->'reps','sets',entry->'sets','rpe',entry->'rpe') as data,metric
+        from expanded order by metric,entry->>'date' desc,created_at desc,id) latest order by case when metric like 'exercise:%' then 1 else 0 end,metric limit 101`,[owner,anchor,exercise?memoryExerciseKey(exercise):null])).rows.map(r=>r.data as MemoryFact);
+      return memorySource(rows.slice(0,100),anchor,rows.length>100);
     });
   }
   async read(owner:string,input:unknown,anchor:string):Promise<CoachSource>{
@@ -56,6 +85,12 @@ export class CoachStore {
             'legacy',true,'actualSets',coalesce((select jsonb_agg(jsonb_build_object('exercise',e.name,'reps',e.actual_reps,
               'weightKg',e.actual_weight,'rpe',e.actual_rpe)) from public.workout_log_exercises e where e.workout_log_id=w.id and e.completed),'[]'::jsonb))
           from public.workout_logs w where w.user_id=$1 and w.date between $2::date and $3::date
+          union all select (e.request->'entry'->>'date')::date,e.created_at,e.id::text,
+            jsonb_build_object('id',e.id,'date',e.request->'entry'->>'date','status','reported','legacy',false,'actualSets',
+              jsonb_build_array((e.request->'entry')||jsonb_build_object('exercise',e.request->'entry'->>'exerciseName')))
+          from public.personal_record_events e where e.user_id=$1 and e.parent_id is null and e.request->'entry'->>'kind'='exercise'
+            and (e.request->'entry'->>'date')::date between $2::date and $3::date
+            and not exists(select 1 from public.personal_record_events u where u.parent_id=e.id)
         ) workouts order by date desc,at desc,id limit 201`,[owner,r.from,r.to])).rows.map(x=>x.data);
       }else if(r.topic==="plan"){
         rows=(await db.query(`select jsonb_build_object('plan',p.name,'week',w.week_number,'day',d.day_number,'title',d.title,

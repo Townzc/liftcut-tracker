@@ -942,6 +942,7 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/coach-model.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/coach-execution.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/coach-history.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/guest-ai.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/plan-conversation.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium
@@ -963,6 +964,7 @@ jobs:
             node_modules/.cache/coach-model/*.png
             node_modules/.cache/coach-stream-release/*.png
             node_modules/.cache/coach-history-release/*.png
+            node_modules/.cache/guest-ai/*.png
 
   quality:
     runs-on: ubuntu-latest

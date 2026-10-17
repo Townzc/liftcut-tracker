@@ -8,7 +8,13 @@ const food = z.object({ kind: z.literal("food"), date: recordDate, foodName: z.s
   mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]),
   calories: z.number().min(0).max(10000).nullable(), protein: z.number().min(0).max(1000).nullable(),
 }).strict();
-export const personalEntrySchema = z.discriminatedUnion("kind", [body, food]);
+export const preferenceKeySchema = z.enum(["goal", "schedule", "equipment", "diet", "injury", "units"]);
+const exercise = z.object({kind:z.literal("exercise"),date:recordDate,exerciseName:z.string().trim().min(1).max(80),
+  weightKg:z.number().min(0).max(1000).nullable(),reps:z.number().int().min(1).max(100).nullable(),
+  sets:z.number().int().min(1).max(100).nullable(),rpe:z.number().min(1).max(10).nullable(),
+}).strict().refine(x=>x.weightKg!==null||x.reps!==null,"Report an actual load or reps");
+const preference = z.object({kind:z.literal("preference"),date:recordDate,key:preferenceKeySchema,value:z.string().trim().min(1).max(200)}).strict();
+export const personalEntrySchema = z.discriminatedUnion("kind", [body, food, exercise, preference]);
 export type PersonalEntry = z.infer<typeof personalEntrySchema>;
 export const personalCommandSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("create"), id: z.uuid(), entry: personalEntrySchema,
@@ -20,6 +26,11 @@ export type PersonalCommand = z.infer<typeof personalCommandSchema>;
 export type PersonalRecord = { id: string; entry: PersonalEntry; source: "manual" | "conversation";
   text: string; createdAt: string; undo: {id: string; createdAt: string} | null;
   model?:{provider:string;model:string;sourceTexts:string[];version:"coach-v1"} };
+
+/** Only confirmed local facts cross the guest boundary. No executable commands/proofs. */
+export const guestFactSchema=z.object({id:z.uuid(),entry:personalEntrySchema,source:z.enum(["manual","conversation"]),
+  text:z.string().max(400),createdAt:z.iso.datetime(),undo:z.null()}).strict();
+export const guestFactsSchema=z.array(guestFactSchema).max(500).refine(rows=>new Set(rows.map(r=>r.id)).size===rows.length,"Duplicate fact ID");
 
 /** Full-string grammar: no estimate, silent truncation, target-to-actual copy or partial numeric parsing. */
 export function parsePersonalEntry(input: string, anchorDate: string): PersonalEntry | null {
@@ -53,7 +64,14 @@ export function parsePersonalEntry(input: string, anchorDate: string): PersonalE
 }
 
 export function entryLines(entry: PersonalEntry, en: boolean): string[] {
+  if(entry.kind==="preference")return [preferenceLabel(entry.key,en),entry.value];
+  if(entry.kind==="exercise")return [entry.exerciseName,`${entry.weightKg??"—"} kg · ${entry.reps??"—"} ${en?"reps":"次"} · ${entry.sets??"—"} ${en?"sets":"组"}`,`RPE · ${entry.rpe??"—"}`];
   return entry.kind === "body" ? [
     `${en ? "Weight" : "体重"} · ${entry.weightKg ?? "—"} kg`, `${en ? "Waist" : "腰围"} · ${entry.waistCm ?? "—"} cm`,
   ] : [entry.foodName, `${en ? "Energy" : "热量"} · ${entry.calories ?? "—"} kcal`, `${en ? "Protein" : "蛋白质"} · ${entry.protein ?? "—"} g`];
+}
+
+export function preferenceLabel(key:z.infer<typeof preferenceKeySchema>,en:boolean){
+  const labels={goal:["目标","Goal"],schedule:["训练安排","Schedule"],equipment:["器械与场地","Equipment"],diet:["饮食偏好","Diet"],injury:["身体注意事项","Physical considerations"],units:["计量单位","Units"]};
+  return labels[key][en?1:0];
 }

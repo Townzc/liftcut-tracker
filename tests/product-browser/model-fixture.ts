@@ -20,7 +20,15 @@ createServer(async(req,res)=>{
   if(text.includes("[provider-down]")){res.statusCode=503;res.end('{"error":{"message":"synthetic provider unavailable"}}');return;}
   if(text.includes("[slow]")){await new Promise(r=>setTimeout(r,15000));}
   let chosen;
-  if(priorCall?.function.name==="plan_context"){
+  if(priorCall?.function.name==="read_memory"){
+    chosen=call("finish_response",{sourceIds:[result.id],message:result.rows?.length?result.rows.map((r:{metric:string;exerciseName?:string;value:string|number;unit:string|null;date:string})=>`${r.date} ${r.exerciseName??r.metric}: ${r.value} ${r.unit??""}`).join("\n"):"还没有已确认的记忆。"});
+  }else if(text.includes("[guest-exercise]")&&!lastTool){
+    chosen=call("prepare_exercise",{exerciseQuote:"卧推",dateQuote:null,weightQuote:"五十公斤",repsQuote:"十次",setsQuote:null,rpeQuote:null});
+  }else if(text.includes("[guest-preference]")&&!lastTool){
+    chosen=call("prepare_preference",{key:"goal",valueQuote:"增肌"});
+  }else if(text.includes("[guest-memory]")&&!lastTool){
+    chosen=call("read_memory",{exercise:null});
+  }else if(priorCall?.function.name==="plan_context"){
     if(result.error)chosen=call("finish_response",{message:"暂时无法读取计划资料，请稍后重试。",sourceIds:[]});
     else if(result.editablePlan&&text.includes("调整"))chosen=call("prepare_plan_adjustment",{summary:"按要求调整，其他保持不变。",changes:text.includes("[nutrition-plan]")?
       [{path:"/daily_targets/calories",value:2200},{path:"/days/0/meals/2/foods/0/estimated_calories",value:900}]:[{path:"/weeks/0/days/0/exercises/0/sets",value:2}]});

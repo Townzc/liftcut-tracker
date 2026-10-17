@@ -9,12 +9,12 @@ async function send(page:Page,text:string){await page.locator("#coach-input").fi
 async function guest(page:Page){await page.goto("/login");await page.getByRole("button",{name:"以游客身份继续",exact:true}).click();await expect(page.getByTestId("current-plan-card")).toBeVisible();await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.locator("#coach-input")).toBeEnabled();}
 test.afterAll(async()=>{await db.end();});
 
-test("guest screenshot prompts receive useful local replies, with honest mode and no disabled write preview",async({page})=>{
+test("guest local mode remains useful before AI consent and offers confirmed local writes",async({page})=>{
   const writes:string[]=[],errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
   page.on("request",r=>{if(r.method()==="POST"&&new URL(r.url()).pathname.startsWith("/api/"))writes.push(r.url());});
   await guest(page);
   for(const input of ["你好 你能做些什么","你能做什么呀"]){await send(page,input);const turn=page.getByTestId("coach-turn").last();await expect(turn).toContainText("访客当前使用本机数据模式");await expect(turn).not.toContainText("记录训练组前");}
-  await send(page,"记下体重 72.5 公斤");await expect(page.getByTestId("coach-turn").last()).toContainText("尚未保存");await expect(page.getByRole("button",{name:"确认补录",exact:true})).toHaveCount(0);
+  await send(page,"记下体重 72.5 公斤");await expect(page.getByTestId("personal-draft")).toContainText("72.5 kg");await expect(page.getByRole("button",{name:"确认补录",exact:true})).toBeEnabled();
   await page.getByRole("button",{name:"记忆范围",exact:true}).click();await expect(page.getByTestId("coach-memory-scope")).toContainText("无痕浏览结束");
   await expect(page.getByTestId("coach-memory-scope")).toContainText("不是数据保存期限");
   expect(writes).toEqual([]);expect(errors).toEqual([]);

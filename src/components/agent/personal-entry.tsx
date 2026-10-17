@@ -23,7 +23,7 @@ export function RecordSyncStatus() {
 }
 
 export function PersonalEntryForm() {
-  const en = useLocale() === "en", {owner,submit,pending,error} = usePersonalRecords();
+  const en = useLocale() === "en", {canWrite,guest,submit,pending,error} = usePersonalRecords();
   const [kind,setKind] = useState("body"), [date,setDate] = useState(()=>toDateString(new Date()));
   const [weight,setWeight] = useState(""), [waist,setWaist] = useState(""), [foodName,setFoodName] = useState("");
   const [calories,setCalories] = useState(""), [protein,setProtein] = useState(""), [mealType,setMealType] = useState("lunch");
@@ -37,11 +37,11 @@ export function PersonalEntryForm() {
       if (!parsed.success) {setMessage(en ? "Check the date and values. Enter a measurement or a food name." : "请检查日期和数值，至少填写一项身体数据或食物名称。");return;}
       if (await submit({action:"create",id:crypto.randomUUID(),entry:parsed.data,source:"manual",text:"",anchorDate:toDateString(new Date())})) {
         setWeight("");setWaist("");setFoodName("");setCalories("");setProtein("");
-        setMessage(en ? "Entry queued. Sync status and receipts appear below." : "已加入补录队列，可在下方查看同步结果和回执。");
+        setMessage(guest?(en?"Saved on this device. Sign in to sync.":"已保存在本机，登录后可同步."):(en ? "Entry queued. Sync status and receipts appear below." : "已加入补录队列，可在下方查看同步结果和回执。"));
       }
     } finally {flight.current=false;}
   }
-  if (!owner) return <p className="py-4 text-sm text-muted-foreground">{en ? "Sign in to record and sync your data." : "登录后即可补录并同步数据。"} <Link href="/login" className="underline">{en ? "Sign in" : "去登录"}</Link></p>;
+  if (!canWrite) return <p className="py-4 text-sm text-muted-foreground">{en ? "Sign in to record and sync your data." : "登录后即可补录并同步数据。"} <Link href="/login" className="underline">{en ? "Sign in" : "去登录"}</Link></p>;
   return <form onSubmit={save} className="space-y-5 pt-5" data-testid="personal-entry-form">
     <div className="flex flex-wrap gap-2">{[["body",en?"Body":"身体数据"],["food",en?"Food":"饮食记录"]].map(([id,label])=><Button type="button" key={id} variant={kind === id ? "secondary" : "ghost"} onClick={()=>{setKind(id);setMessage("");}} aria-pressed={kind===id} className="min-h-10 rounded-full px-4">{label}</Button>)}
       <Link href="/today" className="inline-flex min-h-10 items-center gap-1 px-4 text-sm">{en ? "Log a workout" : "补充训练"}<ArrowUpRight className="size-3.5" /></Link></div>

@@ -1,4 +1,4 @@
-import { requireApiUser } from "@/app/api/ai/_lib";
+import { requireApiContext } from "@/app/api/ai/_lib";
 import { boundedJson, sameOrigin } from "@/services/agent/http";
 import { workoutOwnerMismatch } from "@/lib/workout-owner";
 import { coachRequestSchema } from "@/lib/coach-model";
@@ -8,6 +8,10 @@ import { ZodError } from "zod";
 import { COACH_STREAM_TYPE, type CoachStreamEvent } from "@/lib/coach-stream";
 import { CoachTimer } from "@/lib/coach-timing";
 import {coachFailureCode} from "@/lib/coach-failure";
+import {guestSession,guestNetworkHash} from "@/services/ai/guest-session";
+import {GuestStore,GuestError} from "@/services/ai/guest-store";
+import {todayPool} from "@/services/today/database";
+import {localDateAt} from "@/lib/today";
 
 export const runtime="nodejs";
 export const maxDuration=60;
@@ -19,12 +23,20 @@ export async function POST(request:Request){
   try{
     // Loading code is independent of identity; no model/database work starts before auth.
     const [auth,{runCoach}]=await Promise.all([
-      timer.measure("auth",()=>requireApiUser((stage,ms)=>timer.auth(stage,ms))),
+      timer.measure("auth",()=>requireApiContext(request,(stage,ms)=>timer.auth(stage,ms))),
       timer.measure("bootstrap",()=>import("@/services/ai/coach-agent")),
     ]);if(auth.errorResponse)return auth.errorResponse;
-    const mismatch=workoutOwnerMismatch(request,auth.user.id);if(mismatch)return mismatch;
+    if(auth.user){const mismatch=workoutOwnerMismatch(request,auth.user.id);if(mismatch)return mismatch;}
+    else if(request.headers.has("X-Workout-Owner"))return Response.json({error:"OWNER_MISMATCH"},{status:409,headers});
     const input=coachRequestSchema.parse(await boundedJson(request));
+    if(auth.user&&input.guestRecords!==undefined)return Response.json({error:"GUEST_DATA_NOT_ALLOWED"},{status:400,headers});
     if(!coachStatus().available)return Response.json({error:"MODEL_UNAVAILABLE"},{status:503,headers});
+    const guest=auth.user?null:await guestSession();
+    if(!auth.user&&!guest)return Response.json({error:"GUEST_SESSION_REQUIRED"},{status:401,headers});
+    const owner=auth.user?.id??guest!,context=guest?{records:input.guestRecords??[]}:undefined;
+    if(context?.records.some(r=>r.entry.date>localDateAt(new Date(),input.timezone)))return Response.json({error:"FUTURE_RECORD"},{status:400,headers});
+    const quota=guest?await timer.measure("quota",()=>new GuestStore(todayPool()).reserve(guest,guestNetworkHash(request),input.id)):null;
+    const guestHeaders:Record<string,string>=quota?{"X-Guest-Remaining":String(quota.remaining),"X-Guest-Limit":String(quota.limit)}:{};
     if(request.headers.get("Accept")?.includes(COACH_STREAM_TYPE)){
       const controller=new AbortController(),encoder=new TextEncoder();
       const signal=AbortSignal.any([request.signal,controller.signal,AbortSignal.timeout(50000)]);
@@ -33,18 +45,19 @@ export async function POST(request:Request){
         start(stream){
           const emit=(event:CoachStreamEvent)=>{if(!closed&&!signal.aborted)stream.enqueue(encoder.encode(JSON.stringify(event)+"\n"));};
           emit({type:"status",stage:"connecting"});
-          void runCoach(auth.user.id,input,signal,undefined,emit,timer).then(result=>emit({type:"result",result})).catch(error=>{
+          void runCoach(owner,input,signal,undefined,emit,timer,context).then(result=>emit({type:"result",result})).catch(error=>{
             console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown",timing:timer.snapshot()}));
             emit({type:"error",error:error instanceof CoachReadError?error.message:coachFailureCode(error)});
           }).finally(()=>{if(!closed){closed=true;stream.close();}});
         },
         cancel(){closed=true;controller.abort();},
       });
-      return new Response(body,{headers:{"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no","Server-Timing":`auth;dur=${timer.snapshot().authMs??0}, ready;dur=${timer.elapsed()}`}});
+      return new Response(body,{headers:{...guestHeaders,"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no","Server-Timing":`auth;dur=${timer.snapshot().authMs??0}, ready;dur=${timer.elapsed()}`}});
     }
     const signal=AbortSignal.any([request.signal,AbortSignal.timeout(50000)]);
-    return Response.json(await runCoach(auth.user.id,input,signal,undefined,undefined,timer),{headers});
+    return Response.json(await runCoach(owner,input,signal,undefined,undefined,timer,context),{headers:{...headers,...guestHeaders}});
   }catch(e){
+    if(e instanceof GuestError)return Response.json({error:e.message},{status:e.message==="REQUEST_ALREADY_USED"?409:429,headers:{...headers,"Retry-After":e.message==="GUEST_DAILY_LIMIT"?"3600":"60"}});
     if(e instanceof ZodError||e instanceof SyntaxError)return Response.json({error:"INVALID_REQUEST"},{status:400,headers});
     if(e instanceof CoachReadError)return Response.json({error:e.message},{status:e.message==="RATE_LIMITED"?429:409,headers:{...headers,"Retry-After":"60"}});
     if(e instanceof Error&&["REQUEST_TOO_LARGE","INVALID_JSON"].includes(e.message))return Response.json({error:e.message},{status:400,headers});

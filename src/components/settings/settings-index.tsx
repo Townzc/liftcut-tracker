@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import {useLocale} from "next-intl";
-import {ChevronRight,Dumbbell,SlidersHorizontal,Download,Volleyball,UserRound} from "lucide-react";
+import {ChevronRight,Dumbbell,SlidersHorizontal,Download,Volleyball,UserRound,NotebookPen} from "lucide-react";
 import {useAuth} from "@/components/auth/auth-provider";
 import {UserAvatar} from "@/components/shared/user-avatar";
 
@@ -9,6 +9,7 @@ export function SettingsIndex(){
   const en=useLocale()==="en",{profile,user,authMode}=useAuth();
   const name=authMode==="guest"?(en?"Guest":"访客"):profile?.displayName||user?.email?.split("@")[0]||"LiftCut";
   const groups=[[
+    {href:"memory",icon:NotebookPen,title:en?"Memory":"记忆",description:en?"Confirmed measurements and preferences":"已确认的数据与健身偏好"},
     {href:"profile",icon:Dumbbell,title:en?"Training & nutrition":"训练与饮食偏好",description:en?"Your goals, equipment and preferences":"目标、器械与个人偏好"},
     {href:"preferences",icon:SlidersHorizontal,title:en?"Appearance & language":"外观与语言",description:en?"Make it feel like yours":"主题与语言设置"},
   ],[

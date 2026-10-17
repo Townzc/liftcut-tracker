@@ -26,6 +26,8 @@ import { COACH_STREAM_TYPE, consumeCoachStream } from "@/lib/coach-stream";
 import { useCoachMemory,type CoachWorkoutProposal as Proposal } from "@/components/agent/coach-memory-provider";
 import type { CoachTurn } from "@/lib/coach-history";
 import { CoachHistoryControls } from "@/components/agent/coach-history-controls";
+import {activeGuestFacts} from "@/lib/guest-records";
+import {ensureGuestSession} from "@/lib/guest-client";
 
 type Reply = CoachTurn["reply"];
 type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void;initialStatus?:CoachStatus};
@@ -39,8 +41,9 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
   const personal = usePersonalRecords(), en = locale === "en";
   const [modelStatus,setModelStatus]=useState<CoachStatus|null>(initialStatus??null),[modelEnabled,setModelEnabled]=useState(false);
   const [consentError,setConsentError]=useState(false);
+  const [guestQuota,setGuestQuota]=useState<{remaining:number;limit:number}|null>(null);
   const [optionsOpen,setOptionsOpen]=useState(false),[panel,setPanel]=useState<"workout"|"receipts"|null>(null);
-  const consentKey=personal.owner?`liftcut-coach-consent:${personal.owner}`:null;
+  const consentKey=personal.owner?`liftcut-coach-consent:${personal.owner}`:personal.guest?"liftcut-coach-consent:guest":null;
   const transcript = useRef<HTMLDivElement>(null);
   const followStream=useRef(true);
   const session = data.session, active = session?.status === "active" ? session : null;
@@ -66,6 +69,12 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     }).catch(()=>{});
     return()=>{alive=false;};
   },[consentKey,initialStatus]);
+  useEffect(()=>{
+    if(!personal.guest||!modelEnabled||!modelStatus?.available)return;
+    const controller=new AbortController();
+    void ensureGuestSession(controller.signal).then(setGuestQuota).catch(()=>{});
+    return()=>controller.abort();
+  },[personal.guest,modelEnabled,modelStatus?.available]);
   function toggleModel(enabled:boolean){
     if(!consentKey)return;
     try{if(enabled)localStorage.setItem(consentKey,COACH_CONSENT_VERSION);else localStorage.removeItem(consentKey);
@@ -100,24 +109,29 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       }else if(localIntent.kind==="receipts"){
         reply="data";setPanel("receipts");lines=[en?"Here are your saved changes and receipts.":"这是已保存的修改和回执."];
       }else if (entry) {
-        if(personal.owner){
+        if(personal.canWrite){
           reply="personal";
           setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
         }else{
           reply="data";lines=[en?"Sign in to save this entry through Agent. This message has not saved a measurement; after signing in, resend it and confirm its preview.":"Agent 补录需要登录. 这句话尚未保存为身体或饮食记录；登录后重新发送，核对预览并确认即可保存."];
         }
-      } else if(modelEnabled&&modelStatus?.available&&personal.owner&&!localAction){
+      } else if(modelEnabled&&modelStatus?.available&&personal.canWrite&&!localAction){
         reply="data";
         if(!navigator.onLine){lines=[en?"Model chat needs a connection. You can still use explicit entry phrases or manual entry offline.":"模型对话需要联网。离线时仍可使用明确的记录句式或手动补录。"];}else{
           const controller=new AbortController();modelRequest.current=controller;
           try{
             const signal=AbortSignal.any([controller.signal,AbortSignal.timeout(55000)]);
-            const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","Accept":COACH_STREAM_TYPE,"X-Workout-Owner":personal.owner},
+            if(personal.guest&&!guestQuota)setGuestQuota(await ensureGuestSession(signal));
+            const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","Accept":COACH_STREAM_TYPE,...(personal.owner?{"X-Workout-Owner":personal.owner}:{})},
               body:JSON.stringify({id,text:input,history:conversationHistory(turns),locale:en?"en":"zh",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
-                consent:COACH_CONSENT_VERSION,...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal});
+                consent:COACH_CONSENT_VERSION,...(personal.guest?{guestRecords:activeGuestFacts()}:{}),...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal});
+            if(response.headers.has("X-Guest-Remaining"))setGuestQuota({remaining:Number(response.headers.get("X-Guest-Remaining")),limit:10});
             if(!response.ok){
               interrupted=true;
-              lines=[response.status===429?(en?"You've reached the conversation limit. Please try again later; manual entry is still available.":"本轮对话次数已达上限，请稍后再试。手动补录仍可使用。"):
+              const failure=await response.json().catch(()=>({error:""}));
+              if(failure.error==="GUEST_DAILY_LIMIT")setGuestQuota({remaining:0,limit:10});
+              lines=[failure.error==="GUEST_DAILY_LIMIT"?(en?"Guest trial limit reached. Sign in to continue AI chat. Your local records are safe; manual entry is still available.":"今日访客试用额度已用完，登录后可继续 AI 对话. 本机记录仍保留，也可以继续手动补录."):
+                response.status===429?(en?"Please wait a minute before the next message. Manual entry is still available.":"请求较频繁，请稍等一分钟再试. 手动补录仍可使用."):
                 response.status===401?(en?"Please sign in again to continue.":"登录已过期，请重新登录后继续。"):
                 en?"Model chat is temporarily unavailable. No records or active plans were changed. Refresh to recover any plan preview.":"模型对话暂时不可用，记录和当前计划未修改。计划预览可刷新恢复，也可以重试或手动补录。"];
             }else{
@@ -244,7 +258,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
         <div className="mr-3 py-4 text-sm leading-7">
           <p className="mb-3 text-xs font-medium">Agent <span className="ml-2 font-normal text-muted-foreground">{turn.model?`${en?"AI generated":"AI 生成"} · ${turn.model}`:new Date(turn.at).toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"})}</span></p>
           {(turn.reply==="personal"&&personalProposal?.turnId!==turn.id)||(turn.reply==="draft"&&proposal?.turnId!==turn.id)?<p>{en?"This is an earlier draft. Resend your request for a fresh confirmation card; viewing history never applies it.":"这是历史草稿. 如需继续，请重新发送生成确认卡；查看历史不会自动应用."}</p>:turn.reply === "data" ? null : turn.reply === "personal" ? <p>{en?"Here's your entry. Confirm to save it.":"整理好了，确认一下就能记入你的数据。"}</p>
-            : turn.reply === "personalQueued" ? <p>{en?"Queued. Check sync status and the receipt below.":"已加入补录队列，保存状态和回执会显示在下方。"}</p>
+            : turn.reply === "personalQueued" ? <p>{personal.guest?(en?"Saved on this device. Sign in to sync to your account.":"已确认并保存在本机. 登录后可同步到账号."):(en?"Queued. Check sync status and the receipt below.":"已加入补录队列，保存状态和回执会显示在下方。")}</p>
             : <p>{turn.reply === "clarify" ? ts(`clarify.${turn.reason}`) : t(`replies.${turn.reply}`)}</p>}
           {turn.lines?.map((line, i) => <p className="mt-1 whitespace-pre-wrap break-words" key={i}>{line}</p>)}
           {turn.pending&&<span className="inline-block size-1.5 animate-pulse rounded-full bg-foreground motion-reduce:animate-none" aria-hidden="true"/>}
@@ -254,11 +268,11 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
           {proposal?.turnId === turn.id && draftView(proposal)}
           {personalProposal?.turnId === turn.id && <div className="mt-3 space-y-4 rounded-2xl border p-4" data-testid="personal-draft">
             <EntryPreview entry={personalProposal.command.entry} /><p className="text-xs text-muted-foreground">{en?"Unreported values stay blank. No nutritional estimates.":"未提供的数值保持空白，不估算营养数据。"}</p>
-            <div className="flex gap-2"><Button disabled={locked || !personal.owner || !!personal.pending.length} onClick={async()=>{
+            <div className="flex gap-2"><Button disabled={locked || !personal.canWrite || !!personal.pending.length} onClick={async()=>{
               if(flight.current)return;flight.current=true;setWorking(true);
               try{if(await personal.submit(personalProposal.command)){update(turn.id,"personalQueued");setPersonalProposal(null);}}finally{flight.current=false;setWorking(false);}
             }}>{en?"Confirm entry":"确认补录"}</Button><Button variant="ghost" disabled={locked} onClick={closeDraft}>{t("cancel")}</Button></div>
-            {!personal.owner && <Link href="/login" className="underline">{en?"Sign in to save":"登录后保存"}</Link>}
+            {!personal.canWrite && <Link href="/login" className="underline">{en?"Sign in to save":"登录后保存"}</Link>}
           </div>}
         </div>
       </div>)}
@@ -292,7 +306,8 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     <p className="text-center text-[11px] leading-5 text-muted-foreground">{pendingCount ? tt("outbox.pending",{count:pendingCount}) : modelEnabled&&modelStatus?.available?
       en?"AI can make mistakes. Check sources and confirm changes.":"AI 可能出错，请核对来源并确认修改.":
       en?"Data mode · uses saved records and explicit numbers.":"数据模式 · 按已存记录和明确数值处理."}
-      {!personal.owner&&<Link href="/login" className="ml-2 underline underline-offset-4">{en?"Sign in for AI chat":"登录开启 AI 对话"}</Link>}
+      {personal.guest&&guestQuota&&<span className="ml-2" data-testid="guest-quota">{en?`Guest trial · ${guestQuota.remaining}/${guestQuota.limit} left today`:`访客试用 · 今日剩余 ${guestQuota.remaining}/${guestQuota.limit} 次`}</span>}
+      {personal.guest&&<Link href="/login" className="ml-2 underline underline-offset-4">{en?"Sign in to sync":"登录同步"}</Link>}
       {personal.owner&&turns.length>0&&<span className="ml-2" data-testid="coach-sync-status">{snapshot.sync==="saved"?(en?"Chat synced":"对话已同步"):snapshot.sync==="saving"?(en?"Saving chat…":"对话同步中…"):snapshot.sync==="offline"||snapshot.sync==="error"?(en?"Chat not synced":"对话尚未同步"):""}</span>}
       <button className="ml-2 underline underline-offset-4" onClick={()=>setOptionsOpen(!optionsOpen)}>{en?"Memory scope":"记忆范围"}</button></p>
     {snapshot.error&&<p role="status" className="text-center text-xs text-muted-foreground">{en?"Chat sync needs attention. Your records have not been changed.":"对话同步暂未完成. 已有业务记录不受影响."}<Button variant="ghost" size="sm" onClick={()=>void history.flush()}>{en?"Retry":"重试同步"}</Button></p>}
@@ -302,11 +317,12 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       <p>{en?"AI uses the six latest complete turns in the selected conversation. This is not a retention limit for records. Confirmed measurements, meals and workouts keep their dates and are queried afresh, even months later or in a new conversation. Other chats and incomplete replies are excluded from model context.":"AI 使用当前对话最近六轮完整内容，这是上下文长度，不是数据保存期限. 已确认的身体、饮食和训练数据按日期独立保存，即使几个月后或开启新对话，也会重新查询. 其他对话和未完成回复不会自动进入模型上下文."}</p>
       <p>{en?"A number mentioned in chat is not automatically a saved record. Review and confirm an entry, then check its saved receipt. If the requested date has no record, Agent will say so rather than infer it from today's weight or a goal.":"聊天中提到数字，不等于已保存为记录. 补录要先核对并确认，以已保存回执为准. 所问日期没有记录就会说明，不会用现在的体重或目标值推测."}</p>
       <p>{en?"Opening history never confirms a change. Use New conversation to start without the old chat context.":"查看历史不会确认任何修改. 点击新对话，就会从新的聊天上下文开始."}</p>
+      <Link href="/settings/memory" className="inline-block underline underline-offset-4">{en?"View confirmed memory":"查看已确认的记忆"}</Link>
     </div>}
-    {modelStatus?.available&&personal.owner&&(!modelEnabled||optionsOpen)&&<section className="text-xs text-muted-foreground" data-testid="coach-consent">
+    {modelStatus?.available&&personal.canWrite&&(!modelEnabled||optionsOpen)&&<section className="text-xs text-muted-foreground" data-testid="coach-consent">
       <p className="py-2">{modelEnabled?(en?"AI conversation settings":"AI 对话设置"):(en?"Enable natural conversation":"开启自然对话")}</p>
       <div className="mt-2 space-y-3 rounded-2xl border p-4 leading-6">
-        <p>{en?`To understand your requests, LiftCut sends your messages, the six latest complete turns in this conversation and relevant saved records to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}). This can include body measurements, meals, training data and settings needed for plans. Chat history is saved to your account and can be viewed or deleted from History. Entries are saved only after confirmation, with the original request and quoted values. Deleting chat does not delete confirmed records, plans or approval receipts.`:
+        <p>{personal.guest?(en?`Guest trial uses ${modelStatus.provider} (${modelStatus.model}). Your messages, up to six complete turns and relevant confirmed local records are sent to the model. Confirmed data stays in this browser until you sign in and confirm import. Guest chat is not saved to a cloud account. Up to 10 AI requests daily (UTC), subject to shared service limits; failed attempts may count. Private browsing or clearing site data can erase local data.`:`访客试用使用 ${modelStatus.provider}（${modelStatus.model}）. 消息、最近六轮完整对话及需要的已确认本机记录会发送给模型. 确认的数据先保存在当前浏览器，登录并确认导入后才同步账号；访客聊天不保存到云端账号. 每日最多 10 次 AI 请求（UTC 重置），另有服务总量限制，失败的请求也可能计入. 无痕浏览结束或清除网站数据可能丢失本机数据.`):en?`To understand your requests, LiftCut sends your messages, the six latest complete turns in this conversation and relevant saved records to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}). This can include body measurements, meals, training data and settings needed for plans. Chat history is saved to your account and can be viewed or deleted from History. Entries are saved only after confirmation, with the original request and quoted values. Deleting chat does not delete confirmed records, plans or approval receipts.`:
           `开启后，LiftCut 会将你的消息、当前对话最近六轮完整内容及本次需要的记录发送给 ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider}（${modelStatus.model}），其中可能包含身体、饮食和训练数据，以及生成计划所需的个人设置。聊天记录保存在你的账号中，可从历史对话查看或删除。补录仍需你确认后才会保存，并保留该次原话和采用的数值片段。删除聊天不会删除已确认的记录、计划和回执。`}</p>
         <div className="flex flex-wrap gap-2"><Button size="sm" variant={modelEnabled?"outline":"default"} disabled={locked} onClick={()=>{toggleModel(!modelEnabled);setOptionsOpen(false);}}>{modelEnabled?(en?"Turn off natural conversation":"关闭自然对话"):(en?"Agree & enable":"同意并开启")}</Button></div>
         {consentError&&<p role="status">{en?"Your choice could not be saved in this browser.":"无法在此浏览器保存你的选择，请检查存储权限。"}</p>}

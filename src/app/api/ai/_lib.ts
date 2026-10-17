@@ -94,12 +94,16 @@ export async function consumeGuestAiQuotaFromRequest(
   };
 }
 
-export async function requireApiContext(request: Request) {
+export async function requireApiContext(request: Request,observe?:(stage:"client"|"request",ms:number)=>void) {
+  const started=performance.now();
   const supabase = await getSupabaseServerClient();
+  observe?.("client",performance.now()-started);const fetched=performance.now();
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
+
+  observe?.("request",performance.now()-fetched);
 
   if (!error && user) {
     return {

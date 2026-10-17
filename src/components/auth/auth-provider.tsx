@@ -13,9 +13,6 @@ import {
 
 import { createAuthRequiredError } from "@/lib/error-utils";
 import {
-  clearGuestSessionArtifacts,
-  getGuestAiHistory,
-  hasGuestAiHistory,
   isGuestModeEnabled,
   setGuestModeEnabled,
 } from "@/lib/guest-mode";
@@ -26,7 +23,8 @@ import {
   updateUserPreferredLanguage,
   updateUserProfile,
 } from "@/services/data-repository";
-import { migrateGuestDataToUser } from "@/services/guest-migration";
+import { migrateGuestFactsToUser,hasGuestFacts,remainingGuestSnapshot } from "@/services/guest-fact-migration";
+import {GUEST_RECORD_EVENT} from "@/lib/guest-records";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { AppLocale, AuthMode, UserProfile } from "@/types";
@@ -53,9 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const initializeForUser = useTrackerStore((state) => state.initializeForUser);
   const initializeGuestSession = useTrackerStore((state) => state.initializeGuestSession);
   const clearUserData = useTrackerStore((state) => state.clearUserData);
-  const clearGuestData = useTrackerStore((state) => state.clearGuestData);
   const getGuestSnapshot = useTrackerStore((state) => state.getGuestSnapshot);
-  const hasGuestData = useTrackerStore((state) => state.hasGuestData);
   const setTrackerAuthMode = useTrackerStore((state) => state.setAuthMode);
   const setLanguage = useUIStore((state) => state.setLanguage);
 
@@ -68,9 +64,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const bootstrappingUserRef = useRef<string | null>(null);
 
   const updatePendingGuestMigration = useCallback(() => {
-    const shouldMigrate = hasGuestData() || hasGuestAiHistory();
-    setPendingGuestMigration(shouldMigrate);
-  }, [hasGuestData]);
+    try{setPendingGuestMigration(hasGuestFacts(getGuestSnapshot()));}
+    catch{setPendingGuestMigration(true);} // An unreadable local ledger must not block account login.
+  }, [getGuestSnapshot]);
+  useEffect(()=>{
+    if(!user)return;
+    window.addEventListener(GUEST_RECORD_EVENT,updatePendingGuestMigration);window.addEventListener("storage",updatePendingGuestMigration);
+    return()=>{window.removeEventListener(GUEST_RECORD_EVENT,updatePendingGuestMigration);window.removeEventListener("storage",updatePendingGuestMigration);};
+  },[user,updatePendingGuestMigration]);
 
   const bootstrapUser = useCallback(
     async (nextUser: User) => {
@@ -316,28 +317,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const guestSnapshot = getGuestSnapshot();
-    if (!guestSnapshot) {
-      setPendingGuestMigration(false);
-      return;
-    }
-
     setLoading(true);
     try {
-      const guestAiHistory = getGuestAiHistory();
-      await migrateGuestDataToUser({
+      await migrateGuestFactsToUser({
         userId: user.id,
         guestSnapshot,
-        guestAiHistory,
       });
-
-      clearGuestData();
-      clearGuestSessionArtifacts();
-      setPendingGuestMigration(false);
+      useTrackerStore.setState(state=>({guestSnapshot:remainingGuestSnapshot(state.guestSnapshot)}));
+      updatePendingGuestMigration();
       await initializeForUser(user.id);
     } finally {
       setLoading(false);
     }
-  }, [clearGuestData, getGuestSnapshot, initializeForUser, user]);
+  }, [getGuestSnapshot, initializeForUser, user,updatePendingGuestMigration]);
 
   const dismissGuestMigration = useCallback(() => {
     setPendingGuestMigration(false);

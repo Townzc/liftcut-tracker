@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { PersonalCommand } from "./personal-records";
+import {guestFactsSchema, type PersonalCommand} from "./personal-records";
 import type { LogDraft } from "./workout-log-parser";
 import type { WorkoutOperation } from "./workout-outbox";
 import type { Session } from "./today";
@@ -13,6 +13,7 @@ export const coachRequestSchema = z.object({
   history:z.array(coachMessageSchema).max(12), locale:z.enum(["zh","en"]),
   timezone:z.string().max(100).refine(v=>{try {new Intl.DateTimeFormat("en",{timeZone:v});return true;}catch{return false;}}),
   consent:z.literal(COACH_CONSENT_VERSION), selectedExerciseId:z.string().max(150).optional(), planRunId:z.uuid().optional(),
+  guestRecords:guestFactsSchema.optional(),
 }).strict();
 export type CoachRequest = z.infer<typeof coachRequestSchema>;
 export type CoachMessage = z.infer<typeof coachMessageSchema>;
