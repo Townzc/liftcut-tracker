@@ -1,3 +1,4 @@
+import { recordPeriod } from "./record-period";
 /** Conservative read-ahead, not a replacement intent parser. Only explicit record
  * questions with one recognized period. Anything ambiguous uses model tools. */
 export function initialRecordQuery(text:string,anchor:string):{topic:"body"|"food"|"workout";alsoTopics:("body"|"food"|"workout")[];from:string;to:string}|null {
@@ -6,6 +7,13 @@ export function initialRecordQuery(text:string,anchor:string):{topic:"body"|"foo
   // A reference to already-saved data is not a request to save anything. Strip
   // only this noun phrase; a separate "保存..." clause must still block read-ahead.
   const intent=s.replace(/已保存的(?:数据|记录)/g,"记录");
+  // Dated body questions do not need the word "records". Pin historical reads
+  // before the model sees any data, even when no old chat turns are supplied.
+  const historical=recordPeriod(s,anchor);
+  if(s.length<=180&&historical.kind==="range"&&/体重|腰围|\b(weight|waist)\b/.test(s)&&
+    /多少|查|什么|\b(what|show|check)\b/.test(s)&&
+    !/["'“”「」`]|不要|不查|别查|计划|目标|建议|生成|制定|调整|修改|更正|删除|补录|添加|保存|记下|记一下|帮我记|假设|如果|饮食|训练|\b(plan|target|advice|generate|adjust|change|correct|delete|add|save|log|record|if|not|food|workout)\b/.test(intent))
+    return {topic:"body",alsoTopics:[],from:historical.from,to:historical.to};
   if(s.length>180||/["'“”「」`]/.test(s)||/不要|不查|别查|计划|目标|建议|生成|制定|调整|修改|更正|删除|补录|添加|保存|记下|记一下|帮我记|假设|如果|本次|比较|对比|相比|之间|到|至|上周|上月|去年|前年|今年|本月|\b(plan|target|advice|generate|adjust|change|correct|delete|add|save|log|record|if|not|compare|between|month|year|last week|current session)\b/.test(intent))return null;
   if(!/记录|数据|\b(records|logs|data)\b/.test(s)||!/查|核对|看看|列出|汇总|多少|哪些|什么|\b(show|check|list|summarize|what|how many)\b/.test(s))return null;
   const patterns=[

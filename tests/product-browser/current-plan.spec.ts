@@ -84,6 +84,25 @@ test("Home to current plan to real recording: no automatic writes, chosen day su
   expect(errors).toEqual([]);
 });
 
+test("navigation before the end acknowledgement keeps syncing and updates Home progress",async({page})=>{
+  await login(page);await openPlan(page);await page.getByRole("link",{name:"开始记录",exact:true}).click();
+  await page.getByRole("button",{name:"开始训练",exact:true}).click();
+  const row=page.getByTestId("set-"+plan+"-w1-d1-e1-1");
+  await row.getByLabel("次数",{exact:true}).fill("8");await row.getByRole("button",{name:"完成",exact:true}).click();
+  await expect(row.getByText("已完成",{exact:true})).toBeVisible();await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+  let release!:()=>void,observed!:()=>void;
+  const gate=new Promise<void>(r=>{release=r;}),started=new Promise<void>(r=>{observed=r;});
+  await page.route("**/api/workout-sessions?action=end",async route=>{const response=await route.fetch();observed();await gate;await route.fulfill({response});});
+  try{
+    await page.getByRole("button",{name:"结束训练",exact:true}).click();await started;
+    await expect(page.getByTestId("outbox-status")).toHaveText("待同步 1 条");
+    await page.getByRole("navigation").getByRole("link",{name:"首页",exact:true}).click();await expect(page.getByTestId("current-plan-card")).toBeVisible();
+    release();await expect(page.getByTestId("current-plan-card")).toContainText("已记录 1 次训练");
+    await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+    expect((await db.query("select status from workout_sessions where user_id=$1 and training_plan_id=$2",[owner,plan])).rows).toEqual([{status:"ended"}]);
+  }finally{release();}
+});
+
 test("an active session keeps its original prescription and never creates a second session", async ({ page }) => {
   await login(page);
   const response = await page.request.post("/api/workout-sessions?action=start", { headers: { Origin: "http://localhost:3103" }, data: { id: randomUUID(), dayId: plan + "-w1-d2", timezone: "Asia/Shanghai" } });

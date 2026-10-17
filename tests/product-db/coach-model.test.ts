@@ -8,6 +8,7 @@ import {signCoachProposal} from "../../src/services/ai/coach-proof";
 import {PersonalRecordStore} from "../../src/services/today/personal-record-store";
 import {TodayStore} from "../../src/services/today/store";
 import {workoutCanonical,workoutContextInput} from "../../src/lib/workout-context";
+import {requestedReadRange} from "../../src/lib/coach-grounding";
 process.env.COACH_SIGNING_SECRET="synthetic-test-secret-must-never-be-used-in-production";
 test("model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics",async t=>{
   const admin=new Pool({connectionString:testUrl()}),target=new URL(testUrl());target.username="liftcut_workout";target.password="w1b-local-fixture-only";
@@ -33,6 +34,18 @@ test("model proposals and reads preserve transactional ownership, provenance, nu
       await records.command(owner,{action:"undo",id:randomUUID(),recordId:body.id});await records.command(owner,command);
       read=await coach.read(owner,{topic:"body",from:"2026-10-12",to:day},day);assert.equal(read.rows.length,1);assert.equal(read.summary.latestWeightKg,74);
       await assert.rejects(coach.read(owner,{topic:"body",from:"2020-01-01",to:day},day),/DATE_RANGE/);
+    });
+    await t.test("confirmed historical measurements are queried independently of chat and six-turn context",async()=>{
+      const old={action:"create",id:randomUUID(),entry:{kind:"body",date:"2026-08-14",weightKg:77.25,waistCm:null},source:"conversation",text:"记录 2026-08-14 体重 77.25 公斤",anchorDate:day};
+      await records.command(owner,old);
+      const range=requestedReadRange("我两个月前的体重是多少",day)!;
+      assert.deepEqual(range,{from:"2026-08-14",to:"2026-08-14"});
+      const read=await coach.read(owner,{topic:"body",...range},day);
+      assert.equal(read.summary.latestWeightKg,77.25);assert.equal(read.rows[0].waistCm,null);assert.equal(read.rows[0].date,range.from);
+      assert.equal((await coach.read(other,{topic:"body",...range},day)).rows.length,0);
+      assert.equal((await coach.read(owner,{topic:"body",from:"2026-08-13",to:"2026-08-13"},day)).rows.length,0);
+      await records.command(owner,{action:"undo",id:randomUUID(),recordId:old.id});
+      assert.equal((await coach.read(owner,{topic:"body",...range},day)).rows.length,0);
     });
     await t.test("expired unsent proposal rejected; committed exact retry remains valid after expiry",async sub=>{
       const old={...body,id:randomUUID()};await assert.rejects(records.command(owner,{...old,modelProof:signCoachProposal(owner,old,provenance,Date.now()-8*86400000)}),/MODEL_PROPOSAL/);
