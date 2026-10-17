@@ -37,7 +37,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
   // Agent reads through authenticated APIs; its composer need not wait for the
   // profile and the legacy dashboard's complete historical bundle.
-  return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null}>
+  return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null} guest={authMode==="guest"}>
     <WorkoutSyncProvider owner={user?.id??null}>
     <CoachMemoryProvider owner={user?.id??null}>
     {loading && !(pathname==="/agent"&&user&&authMode==="authenticated")?<div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>:<div className="min-h-dvh bg-background">

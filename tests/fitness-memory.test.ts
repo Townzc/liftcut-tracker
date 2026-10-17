@@ -1,0 +1,30 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import {randomUUID} from "node:crypto";
+import {memoryFacts,readGuestRecords} from "../src/lib/fitness-memory";
+import {groundExercise,groundPreference} from "../src/lib/coach-grounding";
+import type {PersonalEntry,PersonalRecord} from "../src/lib/personal-records";
+const record=(entry:PersonalEntry):PersonalRecord=>({id:randomUUID(),entry,source:"conversation",text:"fixture",createdAt:entry.date+"T10:00:00Z",undo:null});
+test("durable facts retain dates, independent measurement fields, explicit zero and prior values after undo",()=>{
+  const old=record({kind:"body",date:"2026-08-01",weightKg:72.5,waistCm:80}),recent=record({kind:"body",date:"2026-10-01",weightKg:70,waistCm:null});
+  const lift=record({kind:"exercise",date:"2026-07-01",exerciseName:"Bench Press",weightKg:0,reps:10,sets:null,rpe:null});
+  const first=record({kind:"preference",date:"2026-08-01",key:"schedule",value:"每周训练三次"}),next=record({kind:"preference",date:"2026-10-01",key:"schedule",value:"每周训练两次"});
+  const facts=[old,recent,lift,first,next];let memory=memoryFacts(facts);
+  assert.equal(memory.find(f=>f.metric==="weight")?.value,70);assert.equal(memory.find(f=>f.metric==="waist")?.date,"2026-08-01");
+  assert.equal(memory.find(f=>f.exerciseName)?.value,0);assert.equal(memory.find(f=>f.exerciseName)?.sets,null);
+  assert.equal(memory.find(f=>f.metric==="preference:schedule")?.value,"每周训练两次");
+  next.undo={id:randomUUID(),createdAt:"2026-10-02T10:00:00Z"};recent.undo=next.undo;
+  memory=memoryFacts(facts);assert.equal(memory.find(f=>f.metric==="weight")?.value,72.5);assert.equal(memory.find(f=>f.metric==="preference:schedule")?.value,"每周训练三次");
+  assert.equal(readGuestRecords(facts,{topic:"body",from:"2026-08-01",to:"2026-08-01"},"2026-10-01").rows[0].weightKg,72.5);
+  assert.equal(readGuestRecords(facts,{topic:"body",from:"2026-08-02",to:"2026-08-02"},"2026-10-01").rows.length,0);
+});
+test("exercise and preference drafts require literal current reports, preserve unknowns and reject invented or hypothetical values",()=>{
+  const draft={exerciseQuote:"卧推",dateQuote:null,weightQuote:"五十公斤",repsQuote:null,setsQuote:null,rpeQuote:null};
+  assert.deepEqual(groundExercise(draft,["我刚做了卧推，五十公斤"],"2026-10-16"),{kind:"exercise",date:"2026-10-16",exerciseName:"卧推",weightKg:50,reps:null,sets:null,rpe:null});
+  assert.throws(()=>groundExercise({...draft,weightQuote:"六十公斤"},["卧推五十公斤"],"2026-10-16"));
+  assert.throws(()=>groundExercise(draft,["我的目标是卧推五十公斤"],"2026-10-16"));
+  assert.throws(()=>groundExercise({...draft,setsQuote:"三组"},["卧推五十公斤"],"2026-10-16"));
+  assert.equal(groundPreference({key:"goal",valueQuote:"增肌"},["记住我的目标是增肌"],"2026-10-16").kind,"preference");
+  assert.throws(()=>groundPreference({key:"injury",valueQuote:"肩部受伤"},["卧推不舒服"],"2026-10-16"));
+  assert.throws(()=>groundPreference({key:"goal",valueQuote:"增肌"},["我想增肌","你记住什么了？"],"2026-10-16"));
+});

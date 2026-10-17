@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { personalEntrySchema, type PersonalEntry } from "./personal-records";
+import { personalEntrySchema, preferenceKeySchema, type PersonalEntry } from "./personal-records";
 import { parseWorkoutLog, type LogDraft } from "./workout-log-parser";
 import { workoutContext } from "./workout-context";
 import type { Session } from "./today";
@@ -19,6 +19,8 @@ export const bodyExtractionSchema=personalExtractionSchema.pick({dateQuote:true,
   waistQuote:optionalQuote.describe("Exact numeric waist with cm unit, or JSON null if unmeasured. Never quote an unknown-value phrase."),
 });
 export const foodExtractionSchema=personalExtractionSchema.pick({dateQuote:true,foodQuote:true,mealQuote:true,caloriesQuote:true,proteinQuote:true});
+export const exerciseExtractionSchema=z.object({exerciseQuote:quote,dateQuote:optionalQuote,weightQuote:optionalQuote,repsQuote:optionalQuote,setsQuote:optionalQuote,rpeQuote:optionalQuote}).strict();
+export const preferenceExtractionSchema=z.object({key:preferenceKeySchema,valueQuote:z.string().trim().min(1).max(200)}).strict();
 export const workoutExtractionSchema=z.object({
   exerciseId:z.string().min(1).max(150), kind:z.enum(["record","correct"]),
   weightQuote:optionalQuote,repsQuotes:z.array(quote).min(1).max(16),
@@ -66,10 +68,10 @@ function literal(span:string,texts:string[]) {
   return value;
 }
 const num="[0-9零〇一二两三四五六七八九十百千点.]+";
-export function measurement(span:string|null,texts:string[],type:"weight"|"waist"|"calories"|"protein"|"reps"|"rpe"):{value:number;unit:string}|null {
+export function measurement(span:string|null,texts:string[],type:"weight"|"waist"|"calories"|"protein"|"reps"|"sets"|"rpe"):{value:number;unit:string}|null {
   if(span===null)return null;
   const value=literal(span,texts);
-  const units={weight:"kg|公斤|千克|斤|lbs?|磅",waist:"cm|厘米",calories:"kcal|千卡|大卡",protein:"g|克",reps:"次|个|reps?",rpe:""};
+  const units={weight:"kg|公斤|千克|斤|lbs?|磅",waist:"cm|厘米",calories:"kcal|千卡|大卡",protein:"g|克",reps:"次|个|reps?",sets:"组|sets?",rpe:""};
   const pattern=type==="rpe"?new RegExp(`^rpe\\s*(${num})$`,"i"):
     new RegExp(`^(${num})\\s*(${units[type]})${type==="reps"?"?":""}$`,"i");
   const match=pattern.exec(value);if(!match)fail("EXPLICIT_NUMBER_AND_UNIT_REQUIRED");
@@ -106,6 +108,20 @@ export function groundPersonal(input:unknown,texts:string[],anchor:string):Perso
   const meals:Record<string,string>={早餐:"breakfast",早饭:"breakfast",早上:"breakfast",breakfast:"breakfast",午餐:"lunch",午饭:"lunch",中午:"lunch",lunch:"lunch",晚餐:"dinner",晚饭:"dinner",晚上:"dinner",dinner:"dinner",加餐:"snack",零食:"snack",snack:"snack"};
   if(!meals[meal])fail("MEAL_NEEDS_CLARIFICATION");
   return personalEntrySchema.parse({kind:"food",date,foodName:p.foodQuote,mealType:meals[meal],calories:measurement(p.caloriesQuote,texts,"calories")?.value??null,protein:measurement(p.proteinQuote,texts,"protein")?.value??null});
+}
+export function groundExercise(input:unknown,texts:string[],anchor:string):PersonalEntry {
+  const p=exerciseExtractionSchema.parse(input);assertReport(texts.at(-1)??"");
+  literal(p.exerciseQuote,texts);
+  return personalEntrySchema.parse({kind:"exercise",date:groundedDate(p.dateQuote,texts,anchor),exerciseName:p.exerciseQuote,
+    weightKg:measurement(p.weightQuote,texts,"weight")?.value??null,reps:measurement(p.repsQuote,texts,"reps")?.value??null,
+    sets:measurement(p.setsQuote,texts,"sets")?.value??null,rpe:measurement(p.rpeQuote,texts,"rpe")?.value??null});
+}
+export function groundPreference(input:unknown,texts:string[],anchor:string):PersonalEntry {
+  const p=preferenceExtractionSchema.parse(input),current=texts.at(-1)??"";
+  // Preferences may describe goals, unlike actual measurements. They must still
+  // be literal, current user statements, never assistant inferences/history.
+  if(!normalize(current).includes(normalize(p.valueQuote))||/[?？]|不要记|别记|假如|假设|如果|\b(?:if|hypothetical)\b/i.test(current))fail("PREFERENCE_NEEDS_CLARIFICATION");
+  return personalEntrySchema.parse({kind:"preference",date:anchor,key:p.key,value:p.valueQuote});
 }
 export function groundWorkout(input:unknown,texts:string[],session:Session):{normalizedText:string;draft:LogDraft;exerciseId:string} {
   const p=workoutExtractionSchema.parse(input);assertReport(texts.at(-1)??"");

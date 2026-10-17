@@ -9,12 +9,12 @@ async function send(page:Page,text:string){await page.locator("#coach-input").fi
 async function guest(page:Page){await page.goto("/login");await page.getByRole("button",{name:"以游客身份继续",exact:true}).click();await expect(page.getByTestId("current-plan-card")).toBeVisible();await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.locator("#coach-input")).toBeEnabled();}
 test.afterAll(async()=>{await db.end();});
 
-test("guest screenshot prompts receive useful local replies, with honest mode and no disabled write preview",async({page})=>{
+test("guest local mode remains useful before AI consent and offers confirmed local writes",async({page})=>{
   const writes:string[]=[],errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
   page.on("request",r=>{if(r.method()==="POST"&&new URL(r.url()).pathname.startsWith("/api/"))writes.push(r.url());});
   await guest(page);
   for(const input of ["你好 你能做些什么","你能做什么呀"]){await send(page,input);const turn=page.getByTestId("coach-turn").last();await expect(turn).toContainText("访客当前使用本机数据模式");await expect(turn).not.toContainText("记录训练组前");}
-  await send(page,"记下体重 72.5 公斤");await expect(page.getByTestId("coach-turn").last()).toContainText("尚未保存");await expect(page.getByRole("button",{name:"确认补录",exact:true})).toHaveCount(0);
+  await send(page,"记下体重 72.5 公斤");await expect(page.getByTestId("personal-draft")).toContainText("72.5 kg");await expect(page.getByRole("button",{name:"确认补录",exact:true})).toBeEnabled();
   await page.getByRole("button",{name:"记忆范围",exact:true}).click();await expect(page.getByTestId("coach-memory-scope")).toContainText("无痕浏览结束");
   await expect(page.getByTestId("coach-memory-scope")).toContainText("不是数据保存期限");
   expect(writes).toEqual([]);expect(errors).toEqual([]);
@@ -28,11 +28,14 @@ test("guest reads persisted historical facts after eight turns and reload, witho
     const key="liftcut-tracker-ui-state",saved=JSON.parse(localStorage.getItem(key)!);
     saved.state.guestSnapshot.bodyMetricLogs=[{id:"synthetic-old-weight",userId:"guest-local",date:past,weight:72.5,waist:null,notes:"Synthetic fixture",createdAt:past+"T12:00:00Z"},
       {id:"synthetic-current-weight",userId:"guest-local",date:today,weight:68,waist:null,notes:"Synthetic fixture",createdAt:today+"T12:00:00Z"}];
+    saved.state.guestSnapshot.foodLogs=[{id:"synthetic-legacy-meal",userId:"guest-local",date:today,foodName:"回归鸡肉饭",mealType:"lunch",calories:400,protein:30,createdAt:today+"T12:00:00Z"}];
     localStorage.setItem(key,JSON.stringify(saved));
   },{past,today:dateInLA()});
   await page.reload();await expect(page.locator("#coach-input")).toBeEnabled();
   for(let i=0;i<8;i++)await send(page,"你好");
   await send(page,"我2个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText(past);await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");await expect(page.getByTestId("coach-turn").last()).not.toContainText("68 kg");
+  expect((await page.getByTestId("coach-turn").last().innerText()).match(/72\.5 kg/g)).toHaveLength(1);
+  await send(page,"今天吃了什么");await expect(page.getByTestId("coach-turn").last()).toContainText("400 kcal");await expect(page.getByTestId("coach-turn").last()).not.toContainText("800 kcal");
   await page.reload();await expect(page.locator("#coach-input")).toBeEnabled();await send(page,"我两个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
   await send(page,"我3个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText("没有身体记录");await expect(page.getByTestId("coach-turn").last()).not.toContainText("72.5 kg");
   await send(page,"查上个月的体重");await expect(page.getByTestId("coach-turn").last()).toContainText("没有用最近的数据代替");

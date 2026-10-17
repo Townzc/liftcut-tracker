@@ -5,7 +5,7 @@ const common = { WORKOUT_DATABASE_URL: process.env.W1B_RUNTIME_DATABASE_URL!, NE
   NEXT_PUBLIC_SUPABASE_ANON_KEY: "w1b-local-fixture-anon", AI_PROVIDER: "local", LOCAL_AI_BASE_URL: "http://127.0.0.1:59999/v1",
   COACH_SIGNING_SECRET:"synthetic-browser-signing-key-not-for-production" };
 export default defineConfig({
-  testDir: "tests/product-browser", testMatch: ["record-memory.spec.ts", "auth-navigation.spec.ts", "today.spec.ts", "workout-null.spec.ts", "sentence.spec.ts", "outbox.spec.ts", "replacement.spec.ts", "coach.spec.ts", "minimal-agent.spec.ts", "model-chat.spec.ts", "plan-chat.spec.ts", "current-plan.spec.ts", "stream-chat.spec.ts", "history-chat.spec.ts", "history-webkit.spec.ts"], workers: 1, retries: 0, timeout: 60000,
+  testDir: "tests/product-browser", testMatch: ["guest-ai.spec.ts", "record-memory.spec.ts", "auth-navigation.spec.ts", "today.spec.ts", "workout-null.spec.ts", "sentence.spec.ts", "outbox.spec.ts", "replacement.spec.ts", "coach.spec.ts", "minimal-agent.spec.ts", "model-chat.spec.ts", "plan-chat.spec.ts", "current-plan.spec.ts", "stream-chat.spec.ts", "history-chat.spec.ts", "history-webkit.spec.ts"], workers: 1, retries: 0, timeout: 60000,
   outputDir: "node_modules/.cache/w1b/browser", reporter: [["list"]],
   use: { baseURL: "http://localhost:3103", headless: true, viewport: { width:390,height:844 },
     timezoneId: "America/Los_Angeles", screenshot:"only-on-failure", trace:"retain-on-failure", launchOptions:{ executablePath:process.env.P1_BROWSER_EXECUTABLE } },
