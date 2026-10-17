@@ -103,7 +103,10 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       const entry=parsePersonalEntry(input,anchorDate);
       const localIntent=coachIntent(input,active,exerciseId||undefined);
       const localAction=["receipts","replace"].includes(localIntent.kind)||(localIntent.kind==="parse"&&localIntent.result.status==="draft");
-      const answer=answerDataQuestion(input,useTrackerStore.getState(),personal.records,active,en,new Date(),personal.owner??undefined);
+      const snapshotData=useTrackerStore.getState();
+      // The guest ledger already contains the adapted legacy body/food entries.
+      // Counting the legacy snapshot as well would double meals and trends.
+      const answer=answerDataQuestion(input,personal.guest?{...snapshotData,bodyMetricLogs:[],foodLogs:[]}:snapshotData,personal.records,active,en,new Date(),personal.owner??undefined);
       if(/^(?:开始(?:今天的|本次)?训练|我要开始训练|开始练|start (?:a |my )?workout)[。.!?？]*$/i.test(input.trim())){
         reply="data";setPanel("workout");lines=[workoutPanel?(active?(en?"Your current workout is ready below.":"这是你的本次训练."):(en?"Choose a day and confirm to start.":"选择这次要练的安排，确认后开始.")):(en?"Sign in to start a workout.":"登录后就可以开始训练.")];
       }else if(localIntent.kind==="receipts"){

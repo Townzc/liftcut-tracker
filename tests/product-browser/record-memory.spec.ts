@@ -28,11 +28,14 @@ test("guest reads persisted historical facts after eight turns and reload, witho
     const key="liftcut-tracker-ui-state",saved=JSON.parse(localStorage.getItem(key)!);
     saved.state.guestSnapshot.bodyMetricLogs=[{id:"synthetic-old-weight",userId:"guest-local",date:past,weight:72.5,waist:null,notes:"Synthetic fixture",createdAt:past+"T12:00:00Z"},
       {id:"synthetic-current-weight",userId:"guest-local",date:today,weight:68,waist:null,notes:"Synthetic fixture",createdAt:today+"T12:00:00Z"}];
+    saved.state.guestSnapshot.foodLogs=[{id:"synthetic-legacy-meal",userId:"guest-local",date:today,foodName:"回归鸡肉饭",mealType:"lunch",calories:400,protein:30,createdAt:today+"T12:00:00Z"}];
     localStorage.setItem(key,JSON.stringify(saved));
   },{past,today:dateInLA()});
   await page.reload();await expect(page.locator("#coach-input")).toBeEnabled();
   for(let i=0;i<8;i++)await send(page,"你好");
   await send(page,"我2个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText(past);await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");await expect(page.getByTestId("coach-turn").last()).not.toContainText("68 kg");
+  expect((await page.getByTestId("coach-turn").last().innerText()).match(/72\.5 kg/g)).toHaveLength(1);
+  await send(page,"今天吃了什么");await expect(page.getByTestId("coach-turn").last()).toContainText("400 kcal");await expect(page.getByTestId("coach-turn").last()).not.toContainText("800 kcal");
   await page.reload();await expect(page.locator("#coach-input")).toBeEnabled();await send(page,"我两个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText("72.5 kg");
   await send(page,"我3个月前的体重是多少");await expect(page.getByTestId("coach-turn").last()).toContainText("没有身体记录");await expect(page.getByTestId("coach-turn").last()).not.toContainText("72.5 kg");
   await send(page,"查上个月的体重");await expect(page.getByTestId("coach-turn").last()).toContainText("没有用最近的数据代替");
