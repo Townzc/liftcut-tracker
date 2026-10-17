@@ -5,6 +5,7 @@ import { ChevronDown, Plus } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { PersonalEntryForm, PersonalReceipts, RecordSyncStatus } from "@/components/agent/personal-entry";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
+import { CurrentPlanCard } from "@/components/plan/current-plan-card";
 
 export function DashboardPage() {
   const en = useLocale() === "en", {profile} = useAuth(), {records} = usePersonalRecords();
@@ -16,6 +17,7 @@ export function DashboardPage() {
       <h1 className="text-[32px] leading-[1.4] font-medium tracking-tight sm:text-[42px]">{en ? "A little better, every day." : "把注意力留给自己."}</h1>
       <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">{en ? "Your training, meals and progress. Just ask Agent." : "训练、饮食、身体变化，问 Agent 就好."}</p>
     </section>
+    <CurrentPlanCard />
     <details className="group border-t py-5" data-testid="manual-entry">
       <summary className="flex min-h-12 list-none items-center justify-between gap-3">
         <span className="flex items-center gap-3"><Plus className="size-4" /><span className="text-sm">{en ? "Add an entry yourself" : "手动补充一条数据"}</span></span>

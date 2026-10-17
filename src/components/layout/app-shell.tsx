@@ -29,8 +29,8 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   const email = currentProfile?.email || user?.email || "";
   const displayName = authMode === "guest" ? (en ? "Guest" : "访客") : currentProfile?.displayName || email.split("@")[0] || "LiftCut";
   const nav = [
-    { href: "/", label: en ? "Home" : "首页", icon: Home, active: pathname === "/" },
-    { href: "/agent", label: "Agent", icon: MessageCircle, active: pathname !== "/" && !pathname.startsWith("/settings") },
+    { href: "/", label: en ? "Home" : "首页", icon: Home, active: pathname === "/" || pathname.startsWith("/current-plan") },
+    { href: "/agent", label: "Agent", icon: MessageCircle, active: pathname !== "/" && !pathname.startsWith("/settings") && !pathname.startsWith("/current-plan") },
     { href: "/settings", label: en ? "Settings" : "设置", icon: Settings, active: pathname.startsWith("/settings") },
   ];
   if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
@@ -49,7 +49,8 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
       <main id="main-content" className="mx-auto w-full max-w-4xl px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-10">
         <GuestUpgradeBanner />
         {authMode === "guest" && <p className="mb-5 text-center text-xs text-muted-foreground">{en ? "Guest · data stays on this device" : "访客模式 · 数据保存在本机"}<Link href="/login" className="ml-3 underline underline-offset-4">{en ? "Sign in" : "登录同步"}</Link></p>}
-        {!primaryRoutes.includes(pathname) && !pathname.startsWith("/settings/") && <Link href="/agent" className="mb-6 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" />{en ? "Back to Agent" : "返回 Agent"}</Link>}
+        {pathname.startsWith("/current-plan/") && <Link href="/current-plan" className="mb-6 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="size-4" />{en ? "Current plan" : "返回当前计划"}</Link>}
+        {!primaryRoutes.includes(pathname) && !pathname.startsWith("/settings/") && !pathname.startsWith("/current-plan") && <Link href="/agent" className="mb-6 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" />{en ? "Back to Agent" : "返回 Agent"}</Link>}
         {children}
       </main>
       <nav aria-label={en ? "Main navigation" : "主导航"} className="fixed inset-x-0 bottom-0 z-30 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
