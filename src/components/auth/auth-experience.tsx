@@ -14,7 +14,7 @@ export function AuthExperience({
 }) {
   return (
     <section className="mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-sm flex-col justify-center py-12">
-      <Link href="/" className="mb-12 self-center text-2xl font-semibold tracking-tight">
+      <Link href="/" prefetch={false} className="mb-12 self-center text-2xl font-semibold tracking-tight">
         liftcut.
       </Link>
       <div className="mb-8 text-center">

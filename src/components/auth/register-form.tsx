@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LoaderCircle, UserRound, UserRoundPlus } from "lucide-react";
@@ -16,7 +15,6 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function RegisterForm() {
   const t = useTranslations("auth");
-  const router = useRouter();
   const { startGuestMode } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -56,8 +54,8 @@ export function RegisterForm() {
       setConfirmPassword("");
 
       if (signUpData.session) {
-        router.replace("/onboarding");
-        router.refresh();
+        // A new identity must not reuse routes cached before authentication.
+        window.location.replace("/onboarding");
       }
     } catch {
       setError(t("genericError"));
@@ -72,8 +70,7 @@ export function RegisterForm() {
     setSuccess(null);
     try {
       await startGuestMode();
-      router.replace("/");
-      router.refresh();
+      window.location.replace("/");
     } catch {
       setError(t("genericError"));
     } finally {
