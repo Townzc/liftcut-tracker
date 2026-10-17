@@ -9,12 +9,8 @@ test("intl provider configures a stable default time zone", () => {
   assert.match(source, /timeZone="Asia\/Shanghai"/);
 });
 
-test("guest mode enters the app without forcing onboarding", () => {
-  const login = read("src/components/auth/login-form.tsx");
-  const register = read("src/components/auth/register-form.tsx");
-  assert.match(login, /router\.replace\("\/"\)/);
-  assert.match(register, /router\.replace\("\/"\)/);
-});
+// Guest entry, destination and reload persistence are exercised in
+// product-browser/auth-navigation.spec.ts instead of matching navigation syntax.
 
 test("guest AI requests receive profile defaults before validation", () => {
   const helper = read("src/app/api/ai/_profile.ts");

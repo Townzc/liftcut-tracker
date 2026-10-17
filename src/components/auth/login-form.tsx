@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowUpRight, LoaderCircle, LogIn, MessageCircle, UserRound } from "lucide-react";
@@ -24,7 +24,6 @@ const oauthErrorMap: Record<string, string> = {
 
 export function LoginForm() {
   const t = useTranslations("auth");
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { startGuestMode } = useAuth();
 
@@ -56,8 +55,9 @@ export function LoginForm() {
         return;
       }
 
-      router.replace("/onboarding");
-      router.refresh();
+      // Discard anonymous route/prefetch results after the session cookies change.
+      // refresh() only clears the current route and can retain a cached login redirect.
+      window.location.replace("/onboarding");
     } catch {
       setError(t("genericError"));
     } finally {
@@ -70,8 +70,7 @@ export function LoginForm() {
     setError(null);
     try {
       await startGuestMode();
-      router.replace("/");
-      router.refresh();
+      window.location.replace("/");
     } catch {
       setError(t("genericError"));
     } finally {
