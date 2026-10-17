@@ -10,6 +10,7 @@ import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { PersonalRecordsProvider } from "@/components/agent/personal-records-provider";
 import { CoachMemoryProvider } from "@/components/agent/coach-memory-provider";
+import { WorkoutSyncProvider } from "@/components/today/workout-sync-provider";
 import { cn } from "@/lib/utils";
 
 const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding", "/demo"];
@@ -37,6 +38,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   // Agent reads through authenticated APIs; its composer need not wait for the
   // profile and the legacy dashboard's complete historical bundle.
   return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null}>
+    <WorkoutSyncProvider owner={user?.id??null}>
     <CoachMemoryProvider owner={user?.id??null}>
     {loading && !(pathname==="/agent"&&user&&authMode==="authenticated")?<div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">{t("loading")}</div>:<div className="min-h-dvh bg-background">
       <header className="mx-auto flex h-20 max-w-5xl items-center justify-between px-6 sm:px-10">
@@ -63,5 +65,6 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
       </nav>
     </div>}
     </CoachMemoryProvider>
+    </WorkoutSyncProvider>
   </PersonalRecordsProvider>;
 }

@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@/lib/today";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import { projectOutbox, type OutboxState, type OutboxItem } from "@/lib/workout-outbox";
-import { WorkoutOutboxClient } from "@/services/today/outbox-client";
+import { projectOutbox, type OutboxItem } from "@/lib/workout-outbox";
+import { useWorkoutSync } from "./workout-sync-provider";
 import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
 import { CoachConversation } from "./coach-conversation";
 import { exerciseCatalog, exerciseLabel } from "@/lib/exercise-catalog";
@@ -97,22 +97,14 @@ export function TodayPage({ enabled, conversation = false, initialStatus }: { en
 }
 function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;conversation:boolean;initialStatus?:import("@/lib/coach-model").CoachStatus}) {
   const t=useTranslations("today"),tc=useTranslations("coach"),locale=useLocale();
-  const [state,setState]=useState<OutboxState | null>(null);
-  const client=useRef<WorkoutOutboxClient | null>(null);
+  const {owner:syncOwner,state,client,error,setError,activate}=useWorkoutSync();
   const [remote,setRemote]=useState<{data:TodayData;revision:number} | null>(null);
   const [dayId, setDayId] = useState("");
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
   const personal = usePersonalRecords();
   const inFlight = useRef(false);
   const selectedWeek = useTrackerStore(s => s.selectedWeek), selectedDay = useTrackerStore(s => s.selectedDay);
-  const refreshHistory = useTrackerStore(s => s.refreshUserData);
-  useEffect(() => {
-    const outbox=new WorkoutOutboxClient(owner,next=>setState(old=>old && old.revision>=next.revision?old:next),setError,
-      ()=>{void refreshHistory().catch(()=>{});});
-    client.current=outbox;void outbox.start();
-    return ()=>{outbox.dispose();client.current=null;};
-  },[owner,refreshHistory]);
+  useEffect(()=>{if(syncOwner===owner)activate();},[activate,owner,syncOwner]);
   const projection=state?projectOutbox(state):{data:null,error:false}, data=projection.data;
   const head=state?.items[0], count=state?.items.length??0;
   const issue=error || (head?.status==="conflict"?"CONFLICT":head?.status==="auth"?"AUTH":head?.status==="retry"?"UNKNOWN":projection.error?"LOCAL_CONFLICT":"");
