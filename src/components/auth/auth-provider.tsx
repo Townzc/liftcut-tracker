@@ -74,6 +74,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const bootstrapUser = useCallback(
     async (nextUser: User) => {
+      // These forms finish sign-in with a full navigation. Let the destination
+      // bootstrap once instead of starting reads that this document will abort.
+      if (window.location.pathname === "/login" || window.location.pathname === "/register") {
+        setLoading(false);
+        return;
+      }
       if (bootstrappingUserRef.current === nextUser.id) {
         return;
       }

@@ -12,8 +12,12 @@ async function login(page: Page, email = "p1-fixture@example.invalid") {
   await expect(page.getByTestId("current-plan-card")).toBeVisible();
 }
 async function openPlan(page: Page) {
+  const status = page.waitForResponse(response => new URL(response.url()).pathname === "/api/workout-sessions" && response.request().method() === "GET");
   await page.getByTestId("current-plan-card").click();
   await expect(page.getByTestId("current-plan-exercises")).toBeVisible();
+  // Cached plan text can paint before the status effect runs. Wait for that read
+  // before forcing reload, which otherwise makes WebKit report unload as CORS.
+  await (await status).finished();
 }
 test.beforeEach(async () => {
   plan = "current-plan-fixture-" + randomUUID();
@@ -69,7 +73,9 @@ test("Home to current plan to real recording: no automatic writes, chosen day su
   await page.getByRole("navigation").getByRole("link", { name: "首页", exact: true }).click();
   await expect(page.getByTestId("current-plan-card")).toContainText("已记录 1 次训练");
   await openPlan(page); await expect(page.getByLabel("选择训练日", { exact: true })).toHaveValue(plan + "-w1-d1");
+  const reloadedStatus = page.waitForResponse(response => new URL(response.url()).pathname === "/api/workout-sessions" && response.request().method() === "GET");
   await page.reload(); await expect(page.getByTestId("recorded-plan-days")).toContainText("1 / 24");
+  await (await reloadedStatus).finished();
   const actual = (await db.query("select l.* from set_logs l join workout_sessions s on s.id=l.session_id where s.training_plan_id=$1", [plan])).rows;
   expect(actual).toHaveLength(1); expect(actual[0].reps).toBe(8); expect(actual[0].weight_kg).toBeNull(); expect(actual[0].rpe).toBeNull();
   await page.getByRole("link", { name: "让 Agent 调整计划" }).click();
