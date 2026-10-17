@@ -5,6 +5,7 @@ import type { CoachSource } from "@/lib/coach-model";
 import { CoachTimer } from "@/lib/coach-timing";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
 import {memorySource,memoryExerciseKey,type MemoryFact} from "@/lib/fitness-memory";
+import {fitnessFactsSql} from "./fitness-facts";
 
 export const recordTopicSchema=z.enum(["body","food","workout","plan","nutrition","profile"]);
 export const readRecordsSchema=z.object({topic:recordTopicSchema,from:z.iso.date(),to:z.iso.date()}).strict();
@@ -29,17 +30,7 @@ export class CoachStore {
   async memory(owner:string,anchor:string,exercise?:string):Promise<CoachSource>{
     z.iso.date().parse(anchor);if(exercise)z.string().min(1).max(80).parse(exercise);
     return this.tx(owner,"memory",async db=>{
-      const rows=(await db.query(`with facts as (
-        select e.id::text as id,e.id::text as record_id,e.request->'entry' as entry,e.created_at,e.request->>'source' as source
-        from public.personal_record_events e where e.user_id=$1 and e.parent_id is null
-        and not exists(select 1 from public.personal_record_events u where u.parent_id=e.id)
-        union all select 'legacy:'||id,null,jsonb_build_object('kind','body','date',date,'weightKg',weight,'waistCm',waist),created_at,'manual'
-        from public.body_metric_logs where user_id=$1
-        union all select 'set:'||l.id,null,jsonb_build_object('kind','exercise','date',s.local_date,'exerciseName',l.exercise_name,'weightKg',l.weight_kg,'reps',l.reps,'sets',1,'rpe',l.rpe),l.created_at,'workout'
-        from public.set_logs l join public.workout_sessions s on s.id=l.session_id where s.user_id=$1 and s.status<>'cancelled' and l.status='done'
-        union all select 'legacy-set:'||e.id,null,jsonb_build_object('kind','exercise','date',w.date,'exerciseName',e.name,'weightKg',e.actual_weight,'reps',e.actual_reps,'sets',null,'rpe',e.actual_rpe),w.created_at,'workout'
-        from public.workout_log_exercises e join public.workout_logs w on w.id=e.workout_log_id where w.user_id=$1 and e.completed
-      ), expanded as (
+      const rows=(await db.query(`with facts as (${fitnessFactsSql}), expanded as (
         select f.*,m.metric,m.value,m.unit from facts f cross join lateral (values
           (case when entry->>'kind'='body' then 'weight' end,entry->'weightKg','kg'),
           (case when entry->>'kind'='body' then 'waist' end,entry->'waistCm','cm'),

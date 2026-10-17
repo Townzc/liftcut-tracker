@@ -7,6 +7,9 @@ import { P1_VERSION, createRunSchema, proposalRequestSchema, userEventSchema, ex
 import { readPlanRows, type PlanSnapshot } from "./plan-state";
 import { persistNutritionPlan } from "./persist-nutrition";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
+import {readPlanningMemory} from "@/services/ai/fitness-facts";
+import {planningMemoryContent,type PlanningMemory} from "@/lib/agent/plan-personalization";
+import {localDateAt} from "@/lib/today";
 
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -54,12 +57,20 @@ export class AgentStore {
     const row = (await db.query("select to_jsonb(s) as profile from public.user_settings s where user_id=$1 for share", [userId])).rows[0];
     return row ? contentHash(row.profile) : null;
   }
-  private async fresh(db: PoolClient, run: Row): Promise<boolean> {
+  private async fresh(db: PoolClient, run: Row, memoryCache=new Map<string,PlanningMemory>()): Promise<boolean> {
     const profileFresh = await this.profile(db, run.user_id) === run.profile_hash;
     const planFresh = !run.base_state_hash || contentHash(await readPlanRows(db, run.user_id, run.kind)) === run.base_state_hash;
-    if (profileFresh && planFresh) return true;
+    const basis=(await db.query("select data from agent_private.events where run_id=$1 and type='planning_basis' order by sequence desc limit 1",[run.id])).rows[0]?.data as {memory:PlanningMemory;memoryHash:string}|undefined;
+    let memoryFresh=true;
+    if(basis){
+      const day=localDateAt(new Date(),basis.memory.timezone),key=`${run.kind}:${basis.memory.timezone}:${day}`;
+      // Only shared inside this locked owner transaction, never across requests.
+      const current=memoryCache.get(key)??await readPlanningMemory(db,run.user_id,run.kind,day,basis.memory.timezone);
+      memoryCache.set(key,current);memoryFresh=contentHash(planningMemoryContent(current))===basis.memoryHash;
+    }
+    if (profileFresh && planFresh && memoryFresh) return true;
     await db.query("update agent_private.runs set status='stale',approval_id=null,revision=revision+1 where id=$1", [run.id]);
-    await this.event(db, run, profileFresh ? "plan_changed" : "profile_changed", "system");
+    await this.event(db, run, !profileFresh ? "profile_changed" : !planFresh ? "plan_changed" : "memory_changed", "system");
     return false;
   }
   private async proposal(db: PoolClient, run: Row) {
@@ -96,13 +107,15 @@ export class AgentStore {
     });
   }
 
-  async planContext(userId: string, kind: PlanKind, draftId?: string): Promise<PlanSnapshot> {
+  async planContext(userId: string, kind: PlanKind, draftId?: string, timezone="UTC"): Promise<PlanSnapshot> {
+    const anchor=localDateAt(new Date(),timezone);
     return this.tx(userId, async db => {
       const profile = (await db.query("select to_jsonb(s) as data from public.user_settings s where user_id=$1 for share", [userId])).rows[0]?.data;
       if (!profile) throw new Error("PROFILE_REQUIRED");
       const currentPlans = await readPlanRows(db, userId, kind);
       if (JSON.stringify(currentPlans).length > 100000) throw new Error("PLAN_TOO_LARGE");
       const snapshot: PlanSnapshot = { kind, profile, currentPlans, profileHash: contentHash(profile), stateHash: contentHash(currentPlans) };
+      snapshot.memory=await readPlanningMemory(db,userId,kind,anchor,timezone);
       const saved=(await db.query(`select p.plan,r.context from agent_private.receipts receipt
         join agent_private.runs r on r.id=receipt.run_id join agent_private.proposals p on p.id=receipt.proposal_id
         where receipt.user_id=$1 and r.kind=$2 and receipt.receipt->>'appliedStateHash'=$3 limit 1`,[userId,kind,snapshot.stateHash])).rows[0];
@@ -122,11 +135,13 @@ export class AgentStore {
   async prepare(userId: string, requestKey: string, snapshot: PlanSnapshot, context: Context, input: unknown): Promise<Outcome<RunView>> {
     z.uuid().parse(requestKey); contextSchema.parse(context);
     const plan = (snapshot.kind === "training" ? planSchema : nutritionPlanSchema).parse(input);
-    const requestHash = contentHash({ kind: snapshot.kind, plan, context, stateHash: snapshot.stateHash, profileHash: snapshot.profileHash });
+    const memoryHash=snapshot.memory?contentHash(planningMemoryContent(snapshot.memory)):null;
+    const requestHash = contentHash({ kind: snapshot.kind, plan, context, stateHash: snapshot.stateHash, profileHash: snapshot.profileHash,...(memoryHash?{memoryHash}:{}) });
     return this.tx(userId, async db => {
       const old = (await db.query<Row & {request_hash: string}>("select * from agent_private.runs where user_id=$1 and request_key=$2", [userId, requestKey])).rows[0];
       if (old) return old.request_hash === requestHash ? {ok: true, value: await this.view(db, old)} : fail("KEY_CONFLICT");
       if (await this.profile(db, userId) !== snapshot.profileHash || contentHash(await readPlanRows(db, userId, snapshot.kind)) !== snapshot.stateHash) return fail("CONTEXT_STALE");
+      if(snapshot.memory&&contentHash(planningMemoryContent(await readPlanningMemory(db,userId,snapshot.kind,localDateAt(new Date(),snapshot.memory.timezone),snapshot.memory.timezone)))!==memoryHash)return fail("CONTEXT_STALE");
       if (!isNutritionPlan(plan) && validatePlanConstraints(plan, context).length) return fail("CONSTRAINT_VIOLATION");
       if (snapshot.draft) {
         const previous = await this.run(db, userId, snapshot.draft.runId);
@@ -137,6 +152,7 @@ export class AgentStore {
       const run = (await db.query<Row>(`insert into agent_private.runs(user_id,request_key,request_hash,context,profile_hash,version,kind,base_state_hash,baseline)
         values($1,$2,$3,$4,$5,$6,$7,$8,$9) returning *`, [userId,requestKey,requestHash,JSON.stringify(context),snapshot.profileHash,P1_VERSION,snapshot.kind,snapshot.stateHash,JSON.stringify(snapshot.currentPlans)])).rows[0];
       await this.event(db, run, "run_created", "user_request", {kind:snapshot.kind,context});
+      if(snapshot.memory)await this.event(db,run,"planning_basis","system",{memoryHash,memory:snapshot.memory});
       const hash = contentHash(plan);
       const p = (await db.query(`insert into agent_private.proposals(user_id,run_id,version,context_revision,content_hash,plan)
         values($1,$2,1,0,$3,$4) returning id`, [userId,run.id,hash,JSON.stringify(plan)])).rows[0];
@@ -151,8 +167,9 @@ export class AgentStore {
       const runs = (await db.query<Row>(`select * from agent_private.runs where user_id=$1 and base_state_hash is not null
         and status in ('awaiting_approval','approved','revoked','applied','stale') order by created_at desc limit 5`, [userId])).rows;
       const views:RunView[] = [];
+      const memoryCache=new Map<string,PlanningMemory>();
       for (const run of runs) {
-        if (["awaiting_approval","approved","revoked"].includes(run.status)) await this.fresh(db,run);
+        if (["awaiting_approval","approved","revoked"].includes(run.status)) await this.fresh(db,run,memoryCache);
         views.push(await this.view(db,run));
       }
       return {ok:true,value:views};

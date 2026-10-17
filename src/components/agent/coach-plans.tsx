@@ -64,7 +64,7 @@ export const CoachPlans=memo(function CoachPlans({owner,fresh,en,locked,showHist
       </div>:<>
         <p className="font-medium">{run.proposal.plan.plan_name}</p>
         <p role="status" className="mt-2 text-xs leading-6 text-muted-foreground">{["awaiting_approval","approved"].includes(run.status)?(en?"Preview ready. Your current plan has not changed.":"方案已生成，当前计划尚未修改."):
-          run.status==="stale"?(en?"Your plan or settings changed. Ask for a fresh preview.":"计划或个人设置已变化，请重新生成预览."):
+          run.status==="stale"?(en?"Your plan, settings or confirmed records changed. Ask for a fresh preview.":"计划、设置或已确认记录有变化，请重新生成预览."):
           en?"This preview is closed and cannot be applied.":"此预览已关闭，不能继续应用."}</p>
       </>}
       <div className="mt-2 flex flex-wrap gap-2">

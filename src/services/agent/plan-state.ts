@@ -26,6 +26,7 @@ export type PlanSnapshot = {
   profile: Record<string, unknown>; currentPlans: Record<string, unknown>[];
   draft?: { runId: string; revision: number; plan: import("@/lib/agent/contracts").AnyPlan };
   editable?: { plan: import("@/lib/agent/contracts").AnyPlan; context: import("@/lib/agent/contracts").Context };
+  memory?: import("@/lib/agent/plan-personalization").PlanningMemory;
 };
 
 /** Models need prescriptions, not owner identifiers or persistence metadata. */

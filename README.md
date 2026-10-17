@@ -39,7 +39,9 @@ Try `最近体重`, `今天吃了什么`, `本周训练`, `记下体重 72.5 公
 
 After separate consent, **open-ended DeepSeek conversation** can answer follow-ups, read current records through narrow tools, and interpret natural body, food and current-workout reports. Try `今早上秤七十二点五公斤，腰围没量，给我记一下` or `那昨天呢？`. Replies show an AI label and expandable data sources. Numeric draft values must be grounded in literal user spans; server signatures bind a draft to the authenticated owner, UUID and exact content. The model has no write tools. Every entry still needs an explicit confirmation.
 
-Deterministic entry phrases remain available without model consent and offline. Workout requests use the existing IndexedDB outbox; independent body/food entries use account-scoped immutable localStorage requests and the PostgreSQL receipt ledger. Offline support requires an already loaded page; there is no offline cold-start or background-delivery guarantee. Chat context is limited to six recent turns on the current page, with clear/disable controls; it is not durable memory. Per-account quotas, bounded reads and timeouts limit model usage.
+Deterministic entry phrases remain available without model consent and offline. Workout requests use the existing IndexedDB outbox; independent entries use account-scoped immutable localStorage requests and the PostgreSQL receipt ledger. Offline support requires an already loaded page; there is no offline cold-start or background-delivery guarantee. Account conversations persist across pages and reloads. Six recent turns are sent as conversational context; confirmed measurements and fitness preferences remain separately queryable by date. Guest AI uses a bounded trial and confirmed local records can be imported after login with explicit confirmation.
+
+Training and nutrition proposals automatically read saved goals, dated body measurements, restrictions and recent actual exercise loads. Current requests override preferences for that proposal only; confirmed preferences override older settings. The server binds each proposal to the data it used and rejects approval if relevant records changed or were undone. Plans remain prescriptions; only explicitly confirmed reports become actual records. See [plan memory verification](docs/product/PLAN_MEMORY_VERIFICATION.md) and the [current delivery status](docs/product/AGENT_PRODUCT_STATUS.md).
 
 The [model conversation verification](docs/product/MODEL_CONVERSATION_VERIFICATION.md) separates scripted CI tests from actual DeepSeek calls and hosted release checks.
 
@@ -182,7 +184,7 @@ pending; see the adapter report for cost and limitations.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Minimal home, Agent prompts and optional manual body/food entries |
+| `/` | Minimal home, current plan and optional manual entries |
 | `/agent` | Unified saved-data queries, confirmed entries and workout conversation |
 | `/coach` | Compatibility route for the Agent workspace |
 | `/today` | Detailed training card, opened from Agent |

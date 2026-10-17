@@ -28,6 +28,7 @@ import {COACH_MODEL_TIMEOUT} from "@/lib/coach-failure";
 import {exerciseExtractionSchema,preferenceExtractionSchema,groundExercise,groundPreference} from "@/lib/coach-grounding";
 import {memoryFacts,memorySource,latestMemory,readGuestRecords,initialMemoryQuery} from "@/lib/fitness-memory";
 import type {PersonalRecord,PersonalEntry} from "@/lib/personal-records";
+import {planPersonalization} from "@/lib/agent/plan-personalization";
 export { coachStatus } from "./coach-config";
 
 function instructions(locale:string,anchor:string){return `You are LiftCut Agent, a helpful conversational fitness/data assistant. Reply in ${locale==="en"?"English":"natural simplified Chinese"}.
@@ -123,7 +124,8 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const agent=new ToolLoopAgent({
     model:provider(name),instructions:(smalltalk?smalltalkInstructions(input.locale):instructions(input.locale,anchor))+`
 You have durable, user-confirmed fitness memory separate from chat context. Use read_memory for latest known weight, waist, per-exercise load, and preferences; each value carries its actual date. It is NOT a personal best or a measurement today. Use read_records for historical dates such as two months ago. Do not infer missing measurements or overwrite an old fact.
-For an actual exercise load outside an active workout use prepare_exercise with the literal exercise name and reported values; omitted sets/reps/RPE stay null. Do not require starting a workout for this standalone report. For an active workout prefer current_workout then prepare_workout. For explicit fitness preferences or goals the user asks to remember, use prepare_preference. Quote the user's current wording exactly, choose only a fitness category, and require the confirmation card. Never infer preferences or diagnoses; chat alone does not save memory. read_memory may be used before planning to respect confirmed preferences.\n`+
+For an actual exercise load outside an active workout use prepare_exercise with the literal exercise name and reported values; omitted sets/reps/RPE stay null. Do not require starting a workout for this standalone report. For an active workout prefer current_workout then prepare_workout. For explicit fitness preferences or goals the user asks to remember, use prepare_preference. Quote the user's current wording exactly, choose only a fitness category, and require the confirmation card. Never infer preferences or diagnoses; chat alone does not save memory.
+For EVERY plan generation or adjustment, plan_context automatically loads a fresh, dated personalization basis. Use personalization.goal, schedule, equipment, diet, precautions, body and recentLoads; do not ask the user to repeat these known details. The current explicit request overrides a stored preference for THIS proposal only; confirmed preferences override older settings. Keep safety/food restrictions unless explicitly resolved. Unclear or incomplete saved text still needs one targeted question. A past load is a dated reference, not today's strength or a prescribed target. Use comparable actual loads conservatively in exercise notes and mention their dates; do not assume a heavier load, missing RPE, complete training volume, or calories burned. For nutrition use dated body data and confirmed goals/restrictions, separate proposed targets from actual intake, and ask only if essential target inputs are truly missing. In summary/reasoning_summary briefly explain which dated facts informed the plan. During a small edit retain unrequested structure and period; do not silently rebuild the whole plan just because memory exists. Reading memory never authorizes a write.\n`+
       (guest?"CURRENT MODE: guest trial. Chat and read ONLY this browser's confirmed local facts, prepare body/food/exercise/preference entries. Confirmation saves locally; login then explicit import syncs to an account. No account data, saved active plans, plan activation or workout sessions are available. You can discuss suggested plans, but activating a persistent plan requires signing in. Guest chat is session-local; private browsing/clearing data can erase it. Do not claim cloud chat storage or that you can recover missing browser data.":"CURRENT MODE: authenticated account."),
     temperature:0.2,maxOutputTokens:smalltalk?600:1800,maxRetries:0,
     // v7's prepareCall forwards these options to streamText. Override its default
@@ -152,13 +154,14 @@ For an actual exercise load outside an active workout use prepare_exercise with 
         execute:({kind})=>execution.run(false,async()=>{
           ensureTime();if(planSnapshot&&planSnapshot.kind!==kind)return {error:"ONE_PLAN_KIND_PER_REPLY"};
           try{
-            const [snapshot,remembered]=await Promise.all([planSnapshot??planStore().planContext(owner,kind,input.planRunId),readMemory()]);
+            const snapshot=planSnapshot??await planStore().planContext(owner,kind,input.planRunId,input.timezone);
+            if(!snapshot.memory)throw new Error("PLANNING_MEMORY_REQUIRED");
+            const personalization=planPersonalization(snapshot.profile,snapshot.memory);
             planSnapshot=snapshot;
-            const p=planSnapshot.profile;
-            const profile=Object.fromEntries((kind==="training"?["fitness_goal","training_experience","weekly_training_days","session_duration_minutes","training_location","available_equipment","injury_notes"]:
-              ["fitness_goal","calorie_target","protein_target","diet_preference","food_restrictions","age","height","current_weight","gender","lifestyle_notes"]).map(k=>[k,p[k]===0?null:p[k]??null]));
-            return {kind,profile,confirmedMemory:remembered,currentPlans:planSnapshot.editable?undefined:modelPlanData(planSnapshot.currentPlans),editingPendingDraft:!!planSnapshot.draft,editablePlan:planSnapshot.editable?.plan??null,
-              instruction:"Use these fresh settings/plans, preserve unrequested fields when adjusting. Ask for missing constraints. For a NEW training plan use prepare_training_program: write each workout once and reference it from contiguous phases covering total_weeks. Three months means a 12-week training block; say this explicitly. Keep notes concise. Never output all repeated weeks. Return one preview; only the UI can approve."};
+            const source={...memorySource(snapshot.memory.facts,anchor,snapshot.memory.truncated),id:"memory:planning"};
+            if(!sources.some(s=>s.id===source.id))sources.push(source);
+            return {kind,personalization,sourceId:source.id,currentPlans:planSnapshot.editable?undefined:modelPlanData(planSnapshot.currentPlans),editingPendingDraft:!!planSnapshot.draft,editablePlan:planSnapshot.editable?.plan??null,
+              instruction:"Use the automatically loaded personalization; do not ask again for known goal, body values, schedule or equipment. Only clarify genuinely missing/ambiguous constraints. Preserve unrequested fields when adjusting. For a NEW training plan use prepare_training_program: write each workout once and reference it from contiguous phases covering total_weeks. Three months means a 12-week training block; say this explicitly. Keep notes concise. Never output all repeated weeks. Return one preview; only the UI can approve."};
           }catch{return {error:"PLAN_CONTEXT_UNAVAILABLE",instruction:"Ask the user to complete settings or retry; do not invent a plan from unavailable data."};}
         })}),
       prepare_training_plan:tool({description:"Publish a complete training plan preview using the loaded context. No approval or activation. Preserve unrequested content when adjusting.",
