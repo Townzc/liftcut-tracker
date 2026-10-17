@@ -7,6 +7,7 @@ import { ArrowUp, Ellipsis, MessageCircle, Plus, Square, X } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import type { TodayData } from "@/lib/today";
 import { coachIntent } from "@/lib/coach-conversation";
+import { localCoachReply } from "@/lib/coach-local-chat";
 import { localContextHash, workoutCanonical, workoutContextInput } from "@/lib/workout-context";
 import { exerciseLabel } from "@/lib/exercise-catalog";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
@@ -99,8 +100,12 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       }else if(localIntent.kind==="receipts"){
         reply="data";setPanel("receipts");lines=[en?"Here are your saved changes and receipts.":"这是已保存的修改和回执."];
       }else if (entry) {
-        reply="personal";
-        setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
+        if(personal.owner){
+          reply="personal";
+          setPersonalProposal({turnId:id,command:{action:"create",id:crypto.randomUUID(),entry,source:"conversation",text:input,anchorDate}});
+        }else{
+          reply="data";lines=[en?"Sign in to save this entry through Agent. This message has not saved a measurement; after signing in, resend it and confirm its preview.":"Agent 补录需要登录. 这句话尚未保存为身体或饮食记录；登录后重新发送，核对预览并确认即可保存."];
+        }
       } else if(modelEnabled&&modelStatus?.available&&personal.owner&&!localAction){
         reply="data";
         if(!navigator.onLine){lines=[en?"Model chat needs a connection. You can still use explicit entry phrases or manual entry offline.":"模型对话需要联网。离线时仍可使用明确的记录句式或手动补录。"];}else{
@@ -166,6 +171,9 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       const intent = coachIntent(input, active, exerciseId || undefined);
       if (intent.kind !== "parse") {
         reply = intent.kind;
+        if(intent.kind==="help"||intent.kind==="noSession"){
+          reply="data";lines=localCoachReply(input,!!personal.owner,en);
+        }
         if (intent.kind === "plan" && active) lines = active.prescription.exercises.map(e =>
           `${exerciseLabel(e.name, locale)} · ${tt("target", {sets: e.sets, reps: e.repRange, rpe: e.targetRpe})}`);
         if (intent.kind === "progress" && active) lines = [tt("progress", {
@@ -284,12 +292,15 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     <p className="text-center text-[11px] leading-5 text-muted-foreground">{pendingCount ? tt("outbox.pending",{count:pendingCount}) : modelEnabled&&modelStatus?.available?
       en?"AI can make mistakes. Check sources and confirm changes.":"AI 可能出错，请核对来源并确认修改.":
       en?"Data mode · uses saved records and explicit numbers.":"数据模式 · 按已存记录和明确数值处理."}
+      {!personal.owner&&<Link href="/login" className="ml-2 underline underline-offset-4">{en?"Sign in for AI chat":"登录开启 AI 对话"}</Link>}
       {personal.owner&&turns.length>0&&<span className="ml-2" data-testid="coach-sync-status">{snapshot.sync==="saved"?(en?"Chat synced":"对话已同步"):snapshot.sync==="saving"?(en?"Saving chat…":"对话同步中…"):snapshot.sync==="offline"||snapshot.sync==="error"?(en?"Chat not synced":"对话尚未同步"):""}</span>}
       <button className="ml-2 underline underline-offset-4" onClick={()=>setOptionsOpen(!optionsOpen)}>{en?"Memory scope":"记忆范围"}</button></p>
     {snapshot.error&&<p role="status" className="text-center text-xs text-muted-foreground">{en?"Chat sync needs attention. Your records have not been changed.":"对话同步暂未完成. 已有业务记录不受影响."}<Button variant="ghost" size="sm" onClick={()=>void history.flush()}>{en?"Retry":"重试同步"}</Button></p>}
     {optionsOpen&&<div className="space-y-2 rounded-2xl border p-4 text-xs leading-6 text-muted-foreground" data-testid="coach-memory-scope">
-      <p>{en?"Chat history is saved to your account. Switching tabs keeps the current answer running; refreshing restores saved messages. Earlier chats from before this feature cannot be recovered.":"聊天记录会保存到你的账号. 切换页面时当前回复会继续，刷新可恢复已保存的消息. 本功能上线前未保存的旧对话无法找回."}</p>
-      <p>{en?"AI uses the six latest complete turns in this conversation. Other conversations, stopped replies and partial answers are excluded. Your saved measurements, meals and plans are read fresh when needed; chat history is not permanent AI memory.":"AI 使用当前对话最近六轮完整内容，不自动引用其他对话、已停止或未完成的回复. 已确认的身体、饮食和训练数据会按需重新查询；保存聊天不等于 AI 永久记住所有内容."}</p>
+      <p>{personal.owner?(en?"Chat history is saved to your account. Switching tabs keeps the current answer running; refreshing restores saved messages. Earlier chats from before this feature cannot be recovered.":"聊天记录会保存到你的账号. 切换页面时当前回复会继续，刷新可恢复已保存的消息. 本功能上线前未保存的旧对话无法找回."):
+        (en?"Guest mode queries only records saved in this browser. Guest chat lasts for this page session and resets on refresh. Private browsing or clearing site data can erase local records; sign in for cloud storage.":"访客模式只查询当前浏览器的本机记录. 访客聊天仅在本次页面会话内保留，刷新会清空. 无痕浏览结束或清除网站数据可能丢失本机记录，长期保存请登录同步.")}</p>
+      <p>{en?"AI uses the six latest complete turns in the selected conversation. This is not a retention limit for records. Confirmed measurements, meals and workouts keep their dates and are queried afresh, even months later or in a new conversation. Other chats and incomplete replies are excluded from model context.":"AI 使用当前对话最近六轮完整内容，这是上下文长度，不是数据保存期限. 已确认的身体、饮食和训练数据按日期独立保存，即使几个月后或开启新对话，也会重新查询. 其他对话和未完成回复不会自动进入模型上下文."}</p>
+      <p>{en?"A number mentioned in chat is not automatically a saved record. Review and confirm an entry, then check its saved receipt. If the requested date has no record, Agent will say so rather than infer it from today's weight or a goal.":"聊天中提到数字，不等于已保存为记录. 补录要先核对并确认，以已保存回执为准. 所问日期没有记录就会说明，不会用现在的体重或目标值推测."}</p>
       <p>{en?"Opening history never confirms a change. Use New conversation to start without the old chat context.":"查看历史不会确认任何修改. 点击新对话，就会从新的聊天上下文开始."}</p>
     </div>}
     {modelStatus?.available&&personal.owner&&(!modelEnabled||optionsOpen)&&<section className="text-xs text-muted-foreground" data-testid="coach-consent">

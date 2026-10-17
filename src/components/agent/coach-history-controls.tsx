@@ -4,12 +4,14 @@ import { History,Plus,Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog,DialogContent,DialogTitle,DialogDescription } from "@/components/ui/dialog";
 import { useCoachMemory } from "./coach-memory-provider";
+import { usePersonalRecords } from "./personal-records-provider";
 
 export function CoachHistoryControls({en,locked,beforeChange}:{en:boolean;locked:boolean;beforeChange:()=>void}){
   const {history,snapshot}=useCoachMemory();
+  const {owner}=usePersonalRecords();
   const [open,setOpen]=useState(false),[deleteId,setDeleteId]=useState<string|null>(null);
   return <>
-    <Button variant="ghost" size="icon" aria-label={en?"Chat history":"历史对话"} onClick={()=>{setOpen(true);void history.refreshList();}}><History className="size-5"/></Button>
+    {owner&&<Button variant="ghost" size="icon" aria-label={en?"Chat history":"历史对话"} onClick={()=>{setOpen(true);void history.refreshList();}}><History className="size-5"/></Button>}
     <Button variant="ghost" size="icon" disabled={locked} aria-label={en?"New conversation":"新对话"} onClick={()=>{beforeChange();history.newConversation();}}><Plus className="size-5"/></Button>
     <Dialog open={open} onOpenChange={setOpen}><DialogContent><DialogTitle>{en?"Chat history":"历史对话"}</DialogTitle>
       <DialogDescription>{en?"Saved to your account. Open a conversation to continue it.":"对话保存在你的账号中，打开后可以继续聊."}</DialogDescription>

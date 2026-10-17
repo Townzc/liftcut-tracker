@@ -3,6 +3,7 @@ import { personalEntrySchema, type PersonalEntry } from "./personal-records";
 import { parseWorkoutLog, type LogDraft } from "./workout-log-parser";
 import { workoutContext } from "./workout-context";
 import type { Session } from "./today";
+import { recordPeriod } from "./record-period";
 
 const quote=z.string().trim().min(1).max(120), optionalQuote=quote.nullable();
 export const personalExtractionSchema=z.object({
@@ -26,16 +27,9 @@ export const workoutExtractionSchema=z.object({
 }).strict();
 export class GroundingError extends Error {}
 export function requestedReadRange(text:string,anchor:string):{from:string;to:string}|null {
-  const v=text.normalize("NFKC").toLowerCase();
-  // A short date follow-up narrows the fresh read instead of reusing a model's
-  // previous broad range. Comparisons/ranges retain the explicit tool interval.
-  if(/对比|相比|比较|之间|到|至|compare|between|\bto\b/.test(v))return null;
-  const dates=v.match(/\d{4}-\d{2}-\d{2}/g)??[];
-  if(dates.length===1&&z.iso.date().safeParse(dates[0]).success)return {from:dates[0],to:dates[0]};
-  const offsets=[[/前天|day before yesterday/,-2],[/昨天|yesterday/,-1],[/今天|今日|\btoday\b/,0]] as const;
-  const hits=offsets.filter(([p])=>p.test(v));if(hits.length!==1)return null;
-  const d=new Date(anchor+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+hits[0][1]);const date=d.toISOString().slice(0,10);
-  return {from:date,to:date};
+  const period=recordPeriod(text,anchor);
+  if(period.kind==="range")return {from:period.from,to:period.to};
+  return null;
 }
 const normalize=(v:string)=>v.normalize("NFKC").trim().toLowerCase();
 function fail(reason:string):never {throw new GroundingError(reason);}
