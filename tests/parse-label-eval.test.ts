@@ -4,6 +4,7 @@ import { resolveLabel, resolveOutput, resolveRuleResult, ruleContext, scoreParse
 import type { ParseLabel } from "@liftcut/core/parse-label";
 import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { buildAll, readHandwritten } from "../research/m4-parser/scripts/build-data";
+import { assistantMessage, userMessage } from "../research/m4-parser/src/prompt";
 
 const context = { exercises: ["杠铃卧推", "杠铃深蹲"], selected: "杠铃卧推", done: 2, setCount: 4 };
 const set = (reps: number, weight: number | null = 60, rpe: number | null = null) => ({ weight, unit: weight === null ? null : "kg" as const, reps, rpe });
@@ -62,4 +63,11 @@ test("the rule parser runs on the same sessions and its drafts resolve like labe
   assert.deepEqual(resolveRuleResult(result), { intent: "record", exercise: "杠铃卧推", sets: [set(5)] });
   assert.deepEqual(resolveRuleResult(parseWorkoutLog("bench press 8 reps", ruleContext(context))), { intent: "record", exercise: "杠铃卧推", sets: [set(8, null)] });
   assert.deepEqual(resolveRuleResult(parseWorkoutLog("更正第2组改成4个", ruleContext(context))), { intent: "correct", exercise: "杠铃卧推", setIndex: 2, changes: { reps: 4 } });
+});
+
+test("the shared prompt hides plan data and every training target scores as a perfect answer", () => {
+  for (const i of readHandwritten()) {
+    assert.deepEqual(Object.keys(JSON.parse(userMessage(i))), ["exercises", "sentence"]);
+    assert.deepEqual(resolveOutput(assistantMessage(i), i.context), { json: true, schema: true, resolved: resolveLabel(i.label, i.context) });
+  }
 });
