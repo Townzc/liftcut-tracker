@@ -13,6 +13,7 @@ import { projectOutbox, type OutboxItem } from "@liftcut/core/workout-outbox";
 import { useWorkoutSync } from "./workout-sync-provider";
 import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
 import { CoachConversation } from "./coach-conversation";
+import { WorkoutReview } from "./workout-review";
 import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { PersonalReceipts, RecordSyncStatus } from "@/components/agent/personal-entry";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
@@ -178,6 +179,7 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
       <p className="text-xs text-muted-foreground">{t("outbox.startHint")}</p>
       <Button disabled={!chosen || locked || !!count} onClick={() => void submit({ action:"start", body:{ id:crypto.randomUUID(), dayId:chosen, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone } })}>{t("start")}</Button>
     </CardContent></Card></details>}
+    {!conversation&&data&&!session&&<WorkoutReview owner={owner} />}
     {!conversation&&session && <>
       {session.status === "active" && <RestTimerBar timer={rest} />}
       {conversation ? <p className="border-b py-3 text-xs text-muted-foreground">{session.prescription.title} · {t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p> : <Card><CardHeader><CardTitle>{session.prescription.title}</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
@@ -201,10 +203,10 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
       }
       {!conversation && session.status === "active" ? <div className="space-y-2"><p className="text-sm text-muted-foreground">{t("endHint")}</p>
         <Button disabled={locked} onClick={() => void submit({ action:"end",body:{ id:session.id,revision:session.revision+1,status:"ended" } })}>{t("end")}</Button></div>
-        : session.status === "ended" && !count && <div className="flex flex-wrap items-center gap-3">
+        : session.status === "ended" && !count && <><WorkoutReview key={session.id} owner={owner} sessionId={session.id} /><div className="flex flex-wrap items-center gap-3">
           <Link href="/workout" className="underline">{t("history")}</Link>
           <Button variant="outline" disabled={locked} onClick={()=>void recover()}>{tc("anotherSession")}</Button>
-        </div>}
+        </div></>}
     </>}
     {conversation && <CoachConversation initialStatus={initialStatus} data={data??{session:null,days:[],previous:{}}} busy={!!(busy||error==="STORAGE"||error==="AUTH"||projection.error||head?.status==="conflict"||head?.status==="auth")} pendingCount={count} submit={submit} workoutPanel={workoutContent} receiptsPanel={receiptContent} onPlanApplied={()=>{void client.current?.refresh().catch(()=>setError("LOAD_FAILED"));}}/>}
     {conversation && <RecordSyncStatus />}

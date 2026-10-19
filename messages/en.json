@@ -872,6 +872,33 @@
         "triceps": "Triceps",
         "abdominals": "Abdominals"
       }
+    },
+    "review": {
+      "title": "Workout review",
+      "intro": "Ask the coach whether your plan should change, based on this and recent workouts. It only suggests; you decide on each change, and the plan changes only after you confirm.",
+      "start": "Review this workout",
+      "consent": "A review sends the sets of this and recent workouts to the model. Turn on the coach on the Agent page first.",
+      "openCoach": "Turn on",
+      "working": "Reviewing…",
+      "nochange": "Keep the current plan: {why}",
+      "evidence": "Based on {count} sets",
+      "apply": "Apply selected ({count})",
+      "decline": "Use none",
+      "note": "Confirming changes your current plan; you can undo it later. This workout's records stay as they are.",
+      "applied": "Applied to your training plan.",
+      "rollback": "Undo these changes",
+      "rolledBack": "Undone: the plan is back to how it was before the review.",
+      "declined": "None of this review's suggestions were used.",
+      "stale": "The plan changed after this review, so it no longer applies. You can review again.",
+      "again": "Review again",
+      "failed": "Not confirmed ({code}). You can tap again; the plan is never changed twice.",
+      "setsUp": "{exercise}: one more set each time",
+      "setsDown": "{exercise}: one set fewer each time",
+      "rpeUp": "{exercise}: target RPE +0.5",
+      "rpeDown": "{exercise}: target RPE −0.5",
+      "ruleLinear": "{exercise}: switch to linear progression",
+      "ruleDouble": "{exercise}: switch to double progression (reps first, then load)",
+      "replace": "{exercise} → {replacement}"
     }
   },
   "coach": {
