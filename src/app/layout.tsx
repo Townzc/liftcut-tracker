@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/auth/auth-provider";
 import { AppIntlProvider } from "@/components/i18n/app-intl-provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { HydrationGate } from "@/components/shared/hydration-gate";
+import { ServiceWorkerRegistration } from "@/components/shared/service-worker-registration";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import "./globals.css";
 
@@ -18,6 +19,8 @@ export const metadata: Metadata = {
   description:
     "A beginner-friendly, open-source training, nutrition, and body-progress tracker with guest mode and configurable AI planning.",
   applicationName: "LiftCut Tracker",
+  appleWebApp: { capable: true, title: "LiftCut", statusBarStyle: "default" },
+  icons: { apple: "/icons/apple-touch-icon.png" },
   alternates: {
     canonical: "/",
   },
@@ -64,6 +67,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </HydrationGate>
         </AppIntlProvider>
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );
