@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local research restores contain archived copies, not current application source.
     "research/liftcut-agent/outputs/**",
+    // The Expo app is a separate npm project with its own toolchain.
+    "apps/**",
   ]),
 ]);
 

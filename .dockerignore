@@ -10,3 +10,5 @@ research/liftcut-coach/checkpoints
 research/liftcut-coach/data/raw
 research/liftcut-coach/data/generated
 research/liftcut-coach/data/splits
+# The web image never contains the mobile app.
+apps
