@@ -1037,6 +1037,9 @@ jobs:
           name: workout-parser-evaluation
           path: workout-parser-report.json
 
+      - name: Replay recorded post-workout reviews without model calls
+        run: npm run m2:review -- --check
+
       - name: Run lint
         run: npm run lint
 

@@ -1,0 +1,38 @@
+{
+  "casesHash": "1c1d6aa622b231b3",
+  "cases": 48,
+  "kinds": [
+    "steady",
+    "one-bad-day",
+    "first-session",
+    "unknown-rpe",
+    "all-easy",
+    "repeated-misses"
+  ],
+  "systems": {
+    "bound-always-nochange": {
+      "source": "bound",
+      "cases": 48,
+      "answered": 48,
+      "typeValid": 48,
+      "evidenceReal": 1,
+      "shown": 48,
+      "unwarrantedChanges": 0,
+      "missedChanges": 16,
+      "wrongDirection": 0,
+      "problems": {}
+    },
+    "bound-always-add-set": {
+      "source": "bound",
+      "cases": 48,
+      "answered": 48,
+      "typeValid": 48,
+      "evidenceReal": 1,
+      "shown": 48,
+      "unwarrantedChanges": 32,
+      "missedChanges": 0,
+      "wrongDirection": 8,
+      "problems": {}
+    }
+  }
+}

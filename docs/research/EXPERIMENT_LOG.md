@@ -1,5 +1,15 @@
 # 实验与决策日志
 
+## 2026-10-19 — M2-5 复盘回放评测：工具就绪，模型录制未运行
+
+- **Why**：训练后复盘（M2-3）的模型回答会变成计划修改提案；需要在 CI 中、不花钱地检查“不该改时改了”、引用的组是否真实、类型是否合法。
+- **What**：[`research/m2-review`](../../research/m2-review/README.md)：48 个合成用例（steady、one-bad-day、first-session、unknown-rpe 不该改；all-easy 该加、repeated-misses 该减），标签只由类别决定，写于任何模型回答之前；共享线上提示（`packages/core/src/review-prompt.ts`）；评分 `packages/core/src/eval/review-eval.ts`；CI 以 `--check` 回放。
+- **Result**：只有两条固定边界（不是模型）：一律不改 → 该改未改 16/16；一律加一组 → 不该改却改 32/32、方向相反 8/8；两者证据真实率 1.0，可展示 48/48（[summary](../../research/m2-review/results/summary.json)）。这只证明评分能区分两种失败。
+- **Not run**：真实模型录制（DeepSeek 密钥 401），没有任何模型成绩，也没有用模拟回答代替。
+- **Limits**：合成规律不是真实教练判断；器械为空，未覆盖换动作；温度 0 的一次录制只代表一个模型版本。
+- **Next**：密钥可用时运行 `record.ts --name deepseek-chat-v1`，提交录制与新 summary；若“不该改却改”> 0，先调提示而不是放宽评分。
+- **Learning**：能解释为什么“一律不改”在不该改类上满分却没有用（16 次漏改），以及为什么无效或缺失的回答必须算作漏改而不是跳过。
+
 ## 2026-10-13 — 决策：研究线冻结，项目转向产品展品
 
 - **Why**：E1 模板任务 A/D 均 48/48、无配对收益，在同类任务上继续投入 GPU 不会产生新的区分；维护者另有两个纯研究项目，本项目的目标改为证明工程交付能力。P1（#62）已在真实 Postgres 上验证批准、撤销、幂等，可直接作为产品的长期计划变更通道。
