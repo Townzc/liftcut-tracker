@@ -4,8 +4,9 @@ import type { SetRequest } from "@liftcut/core/today";
 import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";
 import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { KeepScreenOn, RestBar, RestLength, useRest } from "@/components/rest-bar";
 import { SetRow } from "@/components/set-row";
 import { Button, Card } from "@/components/ui";
 import { ApiError, getJson, postJson, sessionSchema, todaySchema, type TodaySummary } from "@/lib/api";
@@ -13,6 +14,7 @@ import { useI18n } from "@/lib/i18n";
 import { useSession } from "@/lib/session";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
+import { feedback } from "@/lib/workout-aids";
 
 export default function Today() {
   const { session: auth } = useSession(), { t, locale } = useI18n(), c = useColors();
@@ -42,10 +44,17 @@ export default function Today() {
       return false;
     } finally { setBusy(false); }
   }
-  const submitSet = async (body: SetRequest) => { await write("set", body); };
+  const rest = useRest();
+  // Rest and the success haptic follow a newly completed set only; skips and undo get a light tap.
+  const submitSet = async (body: SetRequest, completed: boolean) => {
+    if (!(await write("set", body))) return;
+    if (completed) rest.start(); else feedback("light");
+  };
   const session = data?.session, active = session?.status === "active";
   const text = { color: c.text }, muted = { color: c.muted };
   const chosen = dayId || data?.days[0]?.id || "";
+  const { stop } = rest;
+  useEffect(() => { if (!active) stop(); }, [active, stop]); // Ending the workout cancels a pending rest notification.
   return <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled"
     refreshControl={<RefreshControl refreshing={loading && !!data} onRefresh={() => void load()} />}>
     {notice && <Card><Text accessibilityRole="alert" style={text}>{t(notice)}</Text>
@@ -58,9 +67,12 @@ export default function Today() {
           timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone })} />
       </Card> : <Text style={text}>{t("noPlan")}</Text>
       : <>
+        <KeepScreenOn active={active} />
+        {active && <RestBar rest={rest} />}
         <Card>
           <Text style={[styles.heading, text]}>{active ? t("activeSession") : t("ended")} · {session.prescription.title}</Text>
           <Text style={muted}>{t("progress", { done: session.sets.filter(s => s.status === "done").length, total: session.prescription.exercises.reduce((n, e) => n + e.sets, 0) })}</Text>
+          {active && <RestLength rest={rest} />}
         </Card>
         {session.prescription.exercises.map(e => {
           const rule = ruleForExercise(e, { bodyweight: identifyExercise(e.name)?.equipment.length === 0 }), history = data.history?.[e.name];
