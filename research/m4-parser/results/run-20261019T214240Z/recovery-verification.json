@@ -1,0 +1,200 @@
+{
+  "verified": true,
+  "run": "run-20261019T214240Z",
+  "commit": "20a610901fdd119b76cf175d84bf577fe4b10237",
+  "allPredictionSetsComplete": true,
+  "predictionCount": 2120,
+  "scorerReplays": 6,
+  "weightFilesVerified": 4,
+  "training": {
+    "seed": 20261019,
+    "steps": 500,
+    "train_examples": 4000,
+    "dev_examples": 500,
+    "batch": 16,
+    "lr": 0.0002,
+    "rank": 16,
+    "dtype": "torch.bfloat16",
+    "device": "cuda",
+    "dev_loss": 0.00078,
+    "seconds": 144.4
+  },
+  "summary": [
+    {
+      "model": "merged",
+      "split": "dev",
+      "total": 500,
+      "exact": 494,
+      "exactRate": 0.988,
+      "fieldAccuracy": 0.9976,
+      "invented": 12,
+      "jsonValidRate": 1,
+      "schemaValidRate": 1,
+      "latencyMs": {
+        "p50": 876.1,
+        "p95": 2976.6,
+        "max": 3782.2
+      }
+    },
+    {
+      "model": "merged",
+      "split": "test",
+      "total": 500,
+      "exact": 375,
+      "exactRate": 0.75,
+      "fieldAccuracy": 0.8478,
+      "invented": 141,
+      "jsonValidRate": 1,
+      "schemaValidRate": 0.924,
+      "latencyMs": {
+        "p50": 968.1,
+        "p95": 2893.8,
+        "max": 5890.2
+      }
+    },
+    {
+      "model": "merged",
+      "split": "handwritten",
+      "total": 60,
+      "exact": 50,
+      "exactRate": 0.8333,
+      "fieldAccuracy": 0.8759,
+      "invented": 12,
+      "jsonValidRate": 0.9833,
+      "schemaValidRate": 0.9,
+      "latencyMs": {
+        "p50": 587,
+        "p95": 2257.9,
+        "max": 3070.9
+      }
+    },
+    {
+      "model": "q4",
+      "split": "dev",
+      "total": 500,
+      "exact": 487,
+      "exactRate": 0.974,
+      "fieldAccuracy": 0.9843,
+      "invented": 3,
+      "jsonValidRate": 1,
+      "schemaValidRate": 0.984,
+      "latencyMs": {
+        "p50": 886.6,
+        "p95": 2193.9,
+        "max": 2552.9
+      }
+    },
+    {
+      "model": "q4",
+      "split": "test",
+      "total": 500,
+      "exact": 376,
+      "exactRate": 0.752,
+      "fieldAccuracy": 0.8731,
+      "invented": 154,
+      "jsonValidRate": 0.998,
+      "schemaValidRate": 0.9,
+      "latencyMs": {
+        "p50": 1052.1,
+        "p95": 2293.5,
+        "max": 4195.4
+      }
+    },
+    {
+      "model": "q4",
+      "split": "handwritten",
+      "total": 60,
+      "exact": 48,
+      "exactRate": 0.8,
+      "fieldAccuracy": 0.8346,
+      "invented": 13,
+      "jsonValidRate": 1,
+      "schemaValidRate": 0.8667,
+      "latencyMs": {
+        "p50": 670.7,
+        "p95": 1768.3,
+        "max": 2221.1
+      }
+    }
+  ],
+  "consistency": {
+    "items": 1060,
+    "missing": 0,
+    "sameText": 943,
+    "sameParsed": 946,
+    "parsedAgreement": 0.8925,
+    "minAgreement": 0.95
+  },
+  "qualityIsSeparateFromIntegrity": true,
+  "predictionFiles": [
+    {
+      "name": "pred-merged-all.jsonl",
+      "bytes": 192154,
+      "sha256": "39679cc6271e6f4fe59e3f3ca97e4c20bc5903f0c83dde5c9af55e9c5cc47d78"
+    },
+    {
+      "name": "pred-merged-dev.jsonl",
+      "bytes": 87421,
+      "sha256": "da03ab874743731e6b331673fa631460d21c02f00c54483c257aa36e3e455663"
+    },
+    {
+      "name": "pred-merged-handwritten.jsonl",
+      "bytes": 9229,
+      "sha256": "25c84a62dc35874184eb2ef13bf8e2687bac4491ea73f50be0ec1effd360d871"
+    },
+    {
+      "name": "pred-merged-test.jsonl",
+      "bytes": 95504,
+      "sha256": "403c9b168d8f11e979e9a778b91242833d92a818602452438a07b246d87e21c1"
+    },
+    {
+      "name": "pred-q4-all.jsonl",
+      "bytes": 194792,
+      "sha256": "d2ed931a70b5e02897c86d209caf41dc62de718c19197969ceb5f1ebe06bdd11"
+    },
+    {
+      "name": "pred-q4-dev.jsonl",
+      "bytes": 86896,
+      "sha256": "a5f458718c0b992c0f2d752bbd74f97249b548ebc29fc342ed7de867add21218"
+    },
+    {
+      "name": "pred-q4-handwritten.jsonl",
+      "bytes": 9092,
+      "sha256": "8a8a03fd301762dcdaf58ec79f945c2213086ee697574883adb0e70fb14f1357"
+    },
+    {
+      "name": "pred-q4-test.jsonl",
+      "bytes": 98804,
+      "sha256": "e344c1d359ed8e02d7594569c0b4e7eb1c4419d1357fd6e76a2ed4feaa9dc6db"
+    }
+  ],
+  "archiveManifest": {
+    "archives": [
+      {
+        "name": "evidence.tar.gz",
+        "bytes": 136948,
+        "sha256": "0a8722837b8ef6f8bd2a3952d9859e4e2a8bc453ae1516776a72a6fc073dedf4"
+      },
+      {
+        "name": "adapter.tar.gz",
+        "bytes": 37486084,
+        "sha256": "7dfa2e5d1cb34491d0591977072b8478888238033f058477512f05777f3a8ba8"
+      },
+      {
+        "name": "merged.tar.gz",
+        "bytes": 960531062,
+        "sha256": "6486d9fabf908794349e41ea24e5d5aced3492d9ad992dccc85d71a7f3710426"
+      },
+      {
+        "name": "gguf.tar.gz",
+        "bytes": 1320024999,
+        "sha256": "7f8b54d3a18098e55e56a754288a49bf4d18de5bdae68c5900b780c0765b014c"
+      }
+    ],
+    "createdUtc": "2026-10-19T22:33:27.114600+00:00"
+  },
+  "scope": "Local recovery verified by archive and weight SHA-256, complete unique prediction IDs and six exact scorer replays. Integrity is separate from model quality.",
+  "publicWeights": false,
+  "publicRawPredictions": false,
+  "preservation": "Complete archives, raw predictions, logs and weights are saved outside Git on the maintainer workstation; instance data disk retains a second copy."
+}

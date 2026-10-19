@@ -1,0 +1,296 @@
+{
+  "gold": "/root/autodl-tmp/liftcut-m4-20261019/repo/research/m4-parser/data/generated/eval/dev.gold.jsonl",
+  "system": "/root/autodl-tmp/liftcut-m4-20261019/work/pred-q4-dev.jsonl",
+  "total": 500,
+  "exact": 487,
+  "exactRate": 0.974,
+  "intentAccuracy": 0.974,
+  "fieldAccuracy": 0.9843,
+  "invented": 3,
+  "omissionRate": 0.0104,
+  "correctionLocalization": 1,
+  "clarifyPrecision": 0.9728,
+  "clarifyRecall": 0.9931,
+  "jsonValidRate": 1,
+  "schemaValidRate": 0.984,
+  "latencyMs": {
+    "p50": 886.6,
+    "p95": 2193.9,
+    "max": 2552.9
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      18,
+      18
+    ],
+    "record_list": [
+      47,
+      47
+    ],
+    "clarify_missing_reps": [
+      15,
+      15
+    ],
+    "record_uniform": [
+      47,
+      47
+    ],
+    "correct_weight": [
+      19,
+      19
+    ],
+    "clarify_plan_not_actual": [
+      12,
+      12
+    ],
+    "correct_reps": [
+      33,
+      33
+    ],
+    "skip": [
+      24,
+      24
+    ],
+    "record_pyramid": [
+      20,
+      20
+    ],
+    "clarify_out_of_range": [
+      15,
+      15
+    ],
+    "record_weighted": [
+      100,
+      104
+    ],
+    "clarify_missing_unit": [
+      9,
+      9
+    ],
+    "record_bodyweight": [
+      28,
+      28
+    ],
+    "clarify_unsupported_unit": [
+      9,
+      9
+    ],
+    "repeat": [
+      9,
+      16
+    ],
+    "clarify_rpe_scope": [
+      15,
+      15
+    ],
+    "end": [
+      12,
+      13
+    ],
+    "clarify_unknown_exercise": [
+      19,
+      20
+    ],
+    "clarify_question": [
+      20,
+      20
+    ],
+    "clarify_negation": [
+      11,
+      11
+    ],
+    "correct_rpe": [
+      5,
+      5
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      276,
+      282
+    ],
+    "mixed": [
+      37,
+      38
+    ],
+    "en": [
+      174,
+      180
+    ]
+  },
+  "failures": [
+    {
+      "id": "dev-00027",
+      "text": "好，同上，再来两组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "杠铃弯举",
+        "count": 2
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00030",
+      "text": "同上，再来四组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "Machine chest press",
+        "count": 4
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00032",
+      "text": "same again",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "坐姿器械划船",
+        "count": 1
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00042",
+      "text": "OK，同上，再来4组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "哑铃高脚杯深蹲",
+        "count": 4
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00086",
+      "text": "嗯，同上，再来5组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "哑铃卧推",
+        "count": 5
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00258",
+      "text": "Pull-up 7.5kg 2 reps",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Push-up",
+        "sets": [
+          {
+            "weight": 7.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-00298",
+      "text": "dumbbell preacher curl seventy lb ten reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃牧师凳弯举",
+        "sets": [
+          {
+            "weight": 70,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00314",
+      "text": "so end the session",
+      "gold": {
+        "intent": "end"
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00345",
+      "text": "好，barbell romanian deadlift 90千克 11个",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃罗马尼亚硬拉",
+        "sets": [
+          {
+            "weight": 90,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00356",
+      "text": "ok same again",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "杠铃俯身划船",
+        "count": 1
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00411",
+      "text": "ok 3 more sets, same as before",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "哑铃牧师凳弯举",
+        "count": 3
+      },
+      "pred": null
+    },
+    {
+      "id": "dev-00413",
+      "text": "OK，杠铃卧推 三百九十五 lbs 十五个",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 395,
+            "unit": "lb",
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00460",
+      "text": "好，坐姿哑铃推举 35 lb 2个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Seated dumbbell shoulder press",
+        "sets": [
+          {
+            "weight": 35,
+            "unit": "lb",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    }
+  ]
+}

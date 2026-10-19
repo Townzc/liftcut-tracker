@@ -1,4 +1,4 @@
-"""Exercise the M4 shell runner with local fakes: no GPU, packages, model or network."""
+"""Exercise M4 process boundaries and inference settings without a model or network."""
 import json
 import os
 from pathlib import Path
@@ -11,6 +11,66 @@ import unittest
 
 
 RUNNER = Path(os.environ.get("M4_RUNNER", Path(__file__).with_name("run_all.sh")))
+
+
+class ConsistencyEncodingTest(unittest.TestCase):
+    def test_unicode_report_is_utf8_in_a_non_utf8_locale(self):
+        # The Linux experiment must replay on a Windows Chinese-locale machine.
+        # C locale + disabled UTF-8 mode also reproduces this boundary on Linux.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            reference = json.dumps({"intent": "clarify", "reason": "先确认 🏋"}, ensure_ascii=False)
+            candidate = json.dumps({"intent": "clarify", "reason": "先追问"}, ensure_ascii=False)
+            for name, output in [("ref", reference), ("candidate", candidate)]:
+                (root / f"{name}.jsonl").write_text(
+                    json.dumps({"id": "unicode-fixture", "output": output}) + "\n", encoding="utf-8")
+            report = root / "comparison.json"
+            result = subprocess.run([
+                sys.executable, "-X", "utf8=0", str(RUNNER.parent / "train/consistency.py"),
+                "--reference", str(root / "ref.jsonl"), "--candidate", str(root / "candidate.jsonl"),
+                "--out", str(report),
+            ], env={**os.environ, "LC_ALL": "C", "LANG": "C", "PYTHONUTF8": "0", "PYTHONCOERCECLOCALE": "0"},
+                capture_output=True, timeout=20)
+            self.assertEqual(result.returncode, 3, result.stderr.decode("utf-8", errors="replace"))
+            data = json.loads(report.read_text(encoding="utf-8"))
+            self.assertEqual(data["disagreements"][0]["reference"], reference)
+            self.assertEqual(data["disagreements"][0]["candidate"], candidate)
+
+
+class PredictThreadsTest(unittest.TestCase):
+    def test_q4_threads_limit_both_decode_and_prefill(self):
+        # A quota-limited server can expose 128 host CPUs. The llama.cpp wrapper
+        # defaults prefill to that host count unless the caller explicitly sets it.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "transformers.py").write_text(
+                "class AutoTokenizer:\n"
+                "    @staticmethod\n"
+                "    def from_pretrained(*args, **kwargs): return AutoTokenizer()\n"
+                "    def apply_chat_template(self, *args, **kwargs): return 'prompt'\n")
+            (root / "llama_cpp.py").write_text(
+                "import json, os\n"
+                "class Llama:\n"
+                "    def __init__(self, *, n_threads, n_threads_batch=128, **kwargs):\n"
+                "        self.threads = {'decode': n_threads, 'prefill': n_threads_batch}\n"
+                "    def create_completion(self, *args, **kwargs):\n"
+                "        with open(os.environ['THREAD_OBSERVATION'], 'w') as f: json.dump(self.threads, f)\n"
+                "        return {'choices': [{'text': '{\"intent\":\"end\"}'}]}\n")
+            source = root / "input.jsonl"
+            source.write_text(json.dumps({"id": "fixture", "messages": []}) + "\n")
+            for flags, threads in [((), 4), (("--threads", "2"), 2)]:
+                with self.subTest(threads=threads):
+                    observation = root / "threads.json"
+                    output = root / "predictions.jsonl"
+                    result = subprocess.run([
+                        sys.executable, str(RUNNER.parent / "train/predict.py"),
+                        "--tokenizer", str(root), "--gguf", str(root / "fixture.gguf"),
+                        "--input", str(source), "--out", str(output), *flags,
+                    ], env={**os.environ, "PYTHONPATH": str(root), "THREAD_OBSERVATION": str(observation)},
+                        capture_output=True, text=True, timeout=20)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(json.loads(observation.read_text()), {"decode": threads, "prefill": threads})
+                    self.assertEqual(json.loads(output.read_text())["id"], "fixture")
 
 
 @unittest.skipUnless(os.name == "posix" and shutil.which("bash"), "requires Linux bash and GNU timeout")

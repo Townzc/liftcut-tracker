@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "20a610901fdd119b76cf175d84bf577fe4b10237",
+  "sourceTree": "72b8ad1cae89b5e5a28e7afe38e23ae5f3332ff4",
+  "python": "3.12.3",
+  "packages": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.20.1",
+    "peft": "0.21.2",
+    "accelerate": "1.15.0",
+    "llama-cpp-python": "0.3.36",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.23.3"
+  },
+  "cuda": "12.8",
+  "device": "NVIDIA GeForce RTX 4090",
+  "visibleHostCpus": 128,
+  "cpuQuota": "1600000 100000",
+  "memoryLimitBytes": 128849018880,
+  "launcherCpuAffinityCount": 16,
+  "q4GenerationThreads": 4,
+  "q4PrefillThreads": 128,
+  "q4PrefillReason": "Not explicitly set in the executed predict.py; llama-cpp-python 0.3.36 defaults n_threads_batch to multiprocessing.cpu_count().",
+  "phoneMeasurement": false,
+  "predictSourceSha256": "f3119e7f3396b2b59d09d135da65715faad32411d56432f4fb4e7adc08b65866"
+}

@@ -1,0 +1,918 @@
+{
+  "gold": "/root/autodl-tmp/liftcut-m4-20261019/repo/research/m4-parser/data/generated/eval/test.gold.jsonl",
+  "system": "/root/autodl-tmp/liftcut-m4-20261019/work/pred-merged-test.jsonl",
+  "total": 500,
+  "exact": 375,
+  "exactRate": 0.75,
+  "intentAccuracy": 0.768,
+  "fieldAccuracy": 0.8478,
+  "invented": 141,
+  "omissionRate": 0.1515,
+  "correctionLocalization": 0.9167,
+  "clarifyPrecision": 0.6723,
+  "clarifyRecall": 0.5517,
+  "jsonValidRate": 1,
+  "schemaValidRate": 0.924,
+  "latencyMs": {
+    "p50": 968.1,
+    "p95": 2893.8,
+    "max": 5890.2
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      15,
+      17
+    ],
+    "clarify_missing_unit": [
+      4,
+      20
+    ],
+    "correct_rpe": [
+      14,
+      18
+    ],
+    "record_weighted": [
+      58,
+      94
+    ],
+    "clarify_missing_reps": [
+      13,
+      17
+    ],
+    "clarify_negation": [
+      6,
+      13
+    ],
+    "skip": [
+      25,
+      26
+    ],
+    "record_list": [
+      59,
+      59
+    ],
+    "record_pyramid": [
+      19,
+      27
+    ],
+    "clarify_rpe_scope": [
+      2,
+      14
+    ],
+    "clarify_question": [
+      12,
+      12
+    ],
+    "repeat": [
+      17,
+      17
+    ],
+    "clarify_unknown_exercise": [
+      4,
+      9
+    ],
+    "record_uniform": [
+      31,
+      42
+    ],
+    "record_bodyweight": [
+      37,
+      37
+    ],
+    "correct_reps": [
+      20,
+      20
+    ],
+    "clarify_unsupported_unit": [
+      7,
+      9
+    ],
+    "end": [
+      5,
+      5
+    ],
+    "correct_weight": [
+      10,
+      10
+    ],
+    "clarify_out_of_range": [
+      4,
+      19
+    ],
+    "clarify_plan_not_actual": [
+      13,
+      15
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      206,
+      287
+    ],
+    "en": [
+      125,
+      152
+    ],
+    "mixed": [
+      44,
+      61
+    ]
+  },
+  "failures": [
+    {
+      "id": "test-00001",
+      "text": "好，142.5，17次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "史密斯深蹲",
+        "sets": [
+          {
+            "weight": 142.5,
+            "unit": "lb",
+            "reps": 17,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00004",
+      "text": "那个，单腿器械弯举这组五 千克推了十个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单腿器械弯举",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00006",
+      "text": "器械推胸今天没练",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00009",
+      "text": "那个，Kettlebell goblet squat 这组18千克推了8个",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 18,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00010",
+      "text": "dumbbell goblet squat ramping up: 26kgs x 9, then 31 kg x 4, then 36 kgs x 4",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 26,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 31,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "哑铃弯举",
+        "sets": [
+          {
+            "weight": 26,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 31,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00012",
+      "text": "alright, single-leg machine curl 40 x 14",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Single-leg machine curl",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 40,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00014",
+      "text": "Dumbbell split squat 24 x 7",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Dumbbell split squat",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00016",
+      "text": "绳索颈后臂屈伸 3x1 at 67.5 kilos rpe 7.5",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "绳索颈后臂屈伸",
+        "sets": [
+          {
+            "weight": 67.5,
+            "unit": "kg",
+            "reps": 1,
+            "rpe": 7.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00018",
+      "text": "alright, Reverse-grip lat pulldown 5x9 at 87.5 kilos rpe 9.5",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Reverse-grip lat pulldown",
+        "sets": [
+          {
+            "weight": 87.5,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": 9.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00020",
+      "text": "好，胸托哑铃划船这组32kg推了7个",
+      "gold": {
+        "intent": "record",
+        "exercise": "胸托哑铃划船",
+        "sets": [
+          {
+            "weight": 32,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00022",
+      "text": "嗯，站姿自重提踵做了5次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "自重深蹲",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00027",
+      "text": "嗯，壶铃高脚杯深蹲48斤做了16次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "壶铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 48,
+            "unit": "lb",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00028",
+      "text": "cable triceps pushdown 这组62.5 千克推了7个",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索下压",
+        "sets": [
+          {
+            "weight": 62.5,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00029",
+      "text": "嗯，36 千克 3组每组17个 RPE 9",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "哑铃提踵",
+        "sets": [
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 17,
+            "rpe": 9
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 17,
+            "rpe": 9
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 17,
+            "rpe": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00032",
+      "text": "单臂哑铃划船这组三十四kg推了十三个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单臂哑铃划船",
+        "sets": [
+          {
+            "weight": 34,
+            "unit": "kg",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00037",
+      "text": "OK，五组六次 五十 公斤，最后一组 RPE 7",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿哑铃推举",
+        "sets": [
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00038",
+      "text": "Back squat 四百lbs 两组每组二十个 RPE 8",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "杠铃深蹲",
+        "sets": [
+          {
+            "weight": 400,
+            "unit": "lb",
+            "reps": 20,
+            "rpe": 8
+          },
+          {
+            "weight": 400,
+            "unit": "lb",
+            "reps": 20,
+            "rpe": 8
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00044",
+      "text": "那个，俯身划船97.5斤做了7次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "杠铃俯身划船",
+        "sets": [
+          {
+            "weight": 97.5,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00050",
+      "text": "Deadlift at 220 kg today",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00056",
+      "text": "那个，哑铃罗马尼亚硬拉这组14 公斤推了8个",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃罗马尼亚硬拉",
+        "sets": [
+          {
+            "weight": 14,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00058",
+      "text": "OK，正握高位下拉做了18次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Standing bodyweight calf raise",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 18,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00061",
+      "text": "25 kilos x 20 rpe 15",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00065",
+      "text": "cable crunch 40 kg x 12 rpe 12",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00075",
+      "text": "嗯，单臂哑铃划船42，10次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "单臂哑铃划船",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00080",
+      "text": "那个，杠铃罗马尼亚硬拉137.5，17次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "杠铃罗马尼亚硬拉",
+        "sets": [
+          {
+            "weight": 137.5,
+            "unit": "kg",
+            "reps": 17,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00085",
+      "text": "a bunch of reps",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00096",
+      "text": "嗯，这组五十七点五 kg推了两个，RPE 6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿器械划船",
+        "sets": [
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "站姿哑铃推举",
+        "sets": [
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": 6.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00105",
+      "text": "这组12千克推了13个",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃颈后臂屈伸",
+        "sets": [
+          {
+            "weight": 12,
+            "unit": "kg",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00109",
+      "text": "哑铃卧推今天没练",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00112",
+      "text": "ok 192.5 kilos x 2 rpe 11",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00118",
+      "text": "OK，push-up 做了15次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "坐姿器械推胸",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "test-00120",
+      "text": "好，杠铃罗马尼亚硬拉 185磅 16个，RPE 14",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00132",
+      "text": "递增：五十五lb九个，六十五lbs七个，七十五 磅六个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Reverse-grip lat pulldown",
+        "sets": [
+          {
+            "weight": 55,
+            "unit": "lb",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 65,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "lb",
+            "reps": 6,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00134",
+      "text": "壶铃罗马尼亚硬拉今天没练",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00137",
+      "text": "好，坐姿绳索划船 27.5 千克 20个，RPE 14",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00138",
+      "text": "单腿器械弯举这组67.5公斤推了1个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单腿器械弯举",
+        "sets": [
+          {
+            "weight": 67.5,
+            "unit": "kg",
+            "reps": 1,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00142",
+      "text": "嗯，胸托哑铃划船这组46千克推了2个",
+      "gold": {
+        "intent": "record",
+        "exercise": "胸托哑铃划船",
+        "sets": [
+          {
+            "weight": 46,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00144",
+      "text": "嗯，这组82.5千克推了13个",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索腿弯举",
+        "sets": [
+          {
+            "weight": 82.5,
+            "unit": "kg",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00145",
+      "text": "那个，这组85千克推了13个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Reverse-grip lat pulldown",
+        "sets": [
+          {
+            "weight": 85,
+            "unit": "kg",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00154",
+      "text": "OK，俯卧腿弯举5组4次 30kg",
+      "gold": {
+        "intent": "record",
+        "exercise": "俯卧腿弯举",
+        "sets": [
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "俯卧腿弯举",
+        "sets": [
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      }
+    }
+  ]
+}
