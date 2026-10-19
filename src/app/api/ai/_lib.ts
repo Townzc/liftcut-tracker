@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { GUEST_COOKIE_NAME, GUEST_COOKIE_VALUE } from "@/lib/guest-mode";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/supabase/server";
 import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import { normalizeAiError } from "@/services/ai/errors";
@@ -95,17 +95,9 @@ export async function consumeGuestAiQuotaFromRequest(
 }
 
 export async function requireApiContext(request: Request,observe?:(stage:"client"|"request",ms:number)=>void) {
-  const started=performance.now();
-  const supabase = await getSupabaseServerClient();
-  observe?.("client",performance.now()-started);const fetched=performance.now();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  const { supabase, user, bearer } = await getRequestUser(observe);
 
-  observe?.("request",performance.now()-fetched);
-
-  if (!error && user) {
+  if (user) {
     return {
       mode: "authenticated" as ApiAuthMode,
       errorResponse: null,
@@ -114,7 +106,8 @@ export async function requireApiContext(request: Request,observe?:(stage:"client
     };
   }
 
-  if (isGuestCookieEnabled(request)) {
+  // A rejected bearer token never downgrades to a cookie guest.
+  if (!bearer && isGuestCookieEnabled(request)) {
     return {
       mode: "guest" as ApiAuthMode,
       errorResponse: null,
@@ -139,17 +132,9 @@ export async function requireApiContext(request: Request,observe?:(stage:"client
 }
 
 export async function requireApiUser(observe?:(stage:"client"|"request",ms:number)=>void) {
-  const started=performance.now();
-  const supabase = await getSupabaseServerClient();
-  observe?.("client",performance.now()-started);const fetched=performance.now();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  const { supabase, user } = await getRequestUser(observe);
 
-  observe?.("request",performance.now()-fetched);
-
-  if (error || !user) {
+  if (!user) {
     return {
       errorResponse: NextResponse.json(
         {

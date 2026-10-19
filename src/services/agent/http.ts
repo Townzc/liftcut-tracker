@@ -1,9 +1,13 @@
 import "server-only";
+import { bearerToken } from "@/lib/supabase/bearer";
 import { z } from "zod";
 import type { Outcome } from "@liftcut/core/agent-contracts";
 
 export function sameOrigin(request: Request): boolean {
   // These cookie-authenticated mutation routes are not model tool endpoints.
+  // A bearer-token request (the mobile app) carries no ambient browser credential,
+  // so it cannot be forged cross-site; the token itself is verified by requireApiUser.
+  if (bearerToken(request.headers.get("authorization"))) return request.headers.get("content-type")?.split(";")[0] === "application/json";
   return request.headers.get("origin") === new URL(request.url).origin &&
     [null, "same-origin", "none"].includes(request.headers.get("sec-fetch-site")) &&
     request.headers.get("content-type")?.split(";")[0] === "application/json";
