@@ -4,20 +4,38 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-## Current priority (since 2026-10-13)
+## Current priority (since 2026-10-18)
 
 - The project goal is an engineering showcase product for users in mainland China:
-  free, non-commercial, web-only. Product work now takes priority over new research.
-- For product work, read `docs/product/2026-10-13-showcase-plan.md` and the current
-  week's brief (`docs/product/WEEK1_CODEX_BRIEF.md` or its successor). Do not read
-  the full research history unless the task touches `research/` or `docs/research/`.
-- The rules in section 2 of the showcase plan are merge blockers: planned values are
-  never actual values; unknown is `null`, never 0; the model never writes directly;
-  every write is idempotent; undo is a compensating action; long-term plan changes
-  go through the existing approval ledger (`src/services/agent/store.ts`).
+  free and non-commercial. The end goal is a released mobile app; the web app stays
+  as the plan-management and demo surface. Product work takes priority over research.
+- For product work, read `docs/product/2026-10-18-mobile-agent-plan.md`, section 2 of
+  `docs/product/2026-10-13-showcase-plan.md`, and the task queue in
+  `docs/product/CLOUD_AGENT_BRIEF.md`. Do not read the full research history unless
+  the task touches `research/` or `docs/research/`.
+- The rules in section 2 of the showcase plan and section 6 of the mobile plan are
+  merge blockers: planned values are never actual values; unknown is `null`, never 0;
+  the model never writes directly; every write is idempotent; undo is a compensating
+  action; long-term plan changes go through the existing approval ledger
+  (`src/services/agent/store.ts`); the progression engine computes loads and the
+  model only chooses structure and policy; agent proposals use a closed list of change
+  types; data sent to a model is an explicit allowlist; mobile and web share one write
+  path.
+- `alexpcosta/opengym` is AGPL-3.0 and may be studied for design only. Never copy its
+  code, text, icons, body-map paths or exercise media into this MIT repository.
+- Authority (granted by the maintainer on 2026-10-18): agents may merge their own pull
+  requests into `main` once every CI check passes, and merging deploys production.
+  Production migrations are allowed only when additive, preceded by a backup of the
+  affected tables and followed by verification, the way `docs/product/W1_DEPLOYMENT.md`
+  did it. Still ask first before destructive schema or data changes, new paid services
+  or accounts, changes to production secrets, and anything that spends money.
+- Decisions on 2026-10-18: the mobile client uses Expo (React Native); Apple developer
+  registration waits until this upgrade round is finished; M4 (on-device distilled
+  parser) is enabled. GPU training runs only when the maintainer opens a server; see
+  the training handoff in `docs/product/CLOUD_AGENT_BRIEF.md`.
 - Out of scope unless the maintainer reopens them: multi-agent orchestration, nearby
-  restaurant recommendations, app-store releases, monetization, a general long-term
-  memory system, vector databases, new model training, new GPU experiments.
+  restaurant recommendations, monetization, a general long-term memory system, vector
+  databases, and new model training or GPU experiments other than M4.
 - Record each product PR in `docs/product/PRODUCT_LOG.md` (one entry, at most 15
   lines): why, what changed, what actually ran, limitations, next step.
 
