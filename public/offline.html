@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LiftCut · 当前离线</title>
+<style>
+  :root { color-scheme: light dark; --fg: #0a0a0a; --muted: #6b6b6b; --bg: #ffffff; --line: #e5e5e5; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #fafafa; --muted: #a3a3a3; --bg: #0a0a0a; --line: #262626; } }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  main { max-width: 26rem; padding: 2rem 1rem; }
+  h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .75rem; }
+  p { margin: 0 0 .75rem; color: var(--muted); font-size: .95rem; }
+  a { display: inline-block; margin-top: .5rem; padding: .7rem 1.4rem; border-radius: 999px; background: var(--fg); color: var(--bg); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>当前离线 · You're offline</h1>
+  <p>网页需要联网才能打开页面。已保存在本机、还没同步的训练记录不会因此丢失；联网后重新打开训练页，会按原顺序继续同步。</p>
+  <p>Pages need a connection to open. Workout entries already saved on this device and not yet synced are kept; reopen the workout page when you are back online and they sync in their original order.</p>
+  <a href="/">重试 · Retry</a>
+</main>
+</body>
+</html>
