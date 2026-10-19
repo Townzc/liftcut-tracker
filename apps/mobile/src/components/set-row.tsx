@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   header: { flexDirection: "row", justifyContent: "space-between" },
   bold: { fontWeight: "600" },
   inputs: { flexDirection: "row", gap: 8 },
-  input: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: 10, paddingHorizontal: 10, fontSize: 16 },
+  input: { flex: 1, minWidth: 0, minHeight: 44, borderWidth: 1, borderRadius: 10, paddingHorizontal: 10, fontSize: 16 }, // minWidth lets web inputs shrink to a third.
   grow: { flex: 1 },
 });
