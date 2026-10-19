@@ -65,9 +65,11 @@ test("90-second demo: offline cold start, sync, one-sentence correction, review,
   const recording = await record(page);
   await caption(page, "LiftCut 手机端 · 合成数据演示（教练回复来自脚本替身）", 6000);
   await page.getByRole("button", { name: "开始训练" }).click();
+  // The status still reads synced until the start is queued on disk, so wait for the server's session itself.
+  const active = async () => (await db.query("select prescription from workout_sessions where user_id=$1 and status='active'", [user])).rows[0];
+  await expect.poll(active).toBeTruthy();
   const status = page.getByTestId("outbox-status"); await expect(status).toHaveText("已同步");
-  const squat = (await db.query("select prescription from workout_sessions where user_id=$1 and status='active'", [user])).rows[0]
-    .prescription.exercises.find((e: { name: string }) => e.name === "深蹲").id;
+  const squat = (await active()).prescription.exercises.find((e: { name: string }) => e.name === "深蹲").id;
   const row = (n: number) => page.getByTestId(`set-${squat}-${n}`);
 
   await caption(page, "1 · 断网：照样记录，先存在手机里");
