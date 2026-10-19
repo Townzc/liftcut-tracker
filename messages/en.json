@@ -326,6 +326,19 @@
       "more": "More",
       "summaryDays": "Trained on {days} days in the past year.",
       "unknownOnly": "{date} · {rows} exercises completed, set counts unknown"
+    },
+    "volume": {
+      "title": "Muscle volume",
+      "hint": "Confirmed completed sets per body region from the exercise catalog; exercises it cannot place are listed, not guessed.",
+      "days7": "Last 7 days",
+      "days28": "Last 28 days",
+      "figure": "Figure shaded by training volume per body region; darker means more sets",
+      "front": "Front",
+      "back": "Back",
+      "sets": "{sets} sets",
+      "unknownRows": "plus {rows} exercises with unknown set counts",
+      "unclassified": "Unclassified: {names}",
+      "empty": "No confirmed sets in this period yet."
     }
   },
   "nutrition": {

@@ -326,6 +326,19 @@
       "more": "多",
       "summaryDays": "过去一年训练 {days} 天。",
       "unknownOnly": "{date} · {rows} 个动作已完成，组数未知"
+    },
+    "volume": {
+      "title": "肌肉训练量",
+      "hint": "按动作目录的身体部位统计确认完成的组；目录认不准的动作单列，不猜部位。",
+      "days7": "近 7 天",
+      "days28": "近 28 天",
+      "figure": "按身体部位着色的训练量示意图，颜色越深组数越多",
+      "front": "正面",
+      "back": "背面",
+      "sets": "{sets} 组",
+      "unknownRows": "另有 {rows} 个动作组数未知",
+      "unclassified": "未归类：{names}",
+      "empty": "这段时间还没有确认完成的组。"
     }
   },
   "nutrition": {

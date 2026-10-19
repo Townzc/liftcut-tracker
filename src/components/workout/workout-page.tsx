@@ -26,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { todayString } from "@/lib/date";
 import { normalizeActionError } from "@/lib/error-utils";
 import { MAX_ESTIMATE_REPS } from "@liftcut/core/one-rep-max";
+import { MuscleVolume } from "./muscle-volume";
 import { TrainingCalendar } from "./training-calendar";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
 import { getOneRepMaxByExercise } from "@/lib/pr-tracker";
@@ -539,6 +540,7 @@ export function WorkoutPage() {
       </Card>
 
       <TrainingCalendar logs={workoutLogs} />
+      <MuscleVolume logs={workoutLogs} />
 
       <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90" data-testid="one-rep-max">
         <CardHeader>
