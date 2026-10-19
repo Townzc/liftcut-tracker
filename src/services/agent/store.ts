@@ -132,7 +132,9 @@ export class AgentStore {
   }
 
   // A model may publish a checked immutable preview, never approve or execute.
-  async prepare(userId: string, requestKey: string, snapshot: PlanSnapshot, context: Context, input: unknown): Promise<Outcome<RunView>> {
+  // An optional note (e.g. the review a preview came from) is written in the same transaction.
+  async prepare(userId: string, requestKey: string, snapshot: PlanSnapshot, context: Context, input: unknown,
+    note?: { type: string; data: unknown }): Promise<Outcome<RunView>> {
     z.uuid().parse(requestKey); contextSchema.parse(context);
     const plan = (snapshot.kind === "training" ? planSchema : nutritionPlanSchema).parse(input);
     const memoryHash=snapshot.memory?contentHash(planningMemoryContent(snapshot.memory)):null;
@@ -158,18 +160,25 @@ export class AgentStore {
         values($1,$2,1,0,$3,$4) returning id`, [userId,run.id,hash,JSON.stringify(plan)])).rows[0];
       await db.query("update agent_private.runs set current_proposal=$2,status='awaiting_approval',revision=1 where id=$1", [run.id,p.id]);
       await this.event(db, run, "proposal_published", "coach_model", {proposalId:p.id,contentHash:hash});
+      if (note) await this.event(db, run, note.type, "system", note.data);
       return {ok:true,value:await this.view(db,run)};
     });
   }
 
-  /** An extra audit event on the caller's own run, e.g. the review a proposal came from. */
-  async annotate(userId: string, id: string, type: string, data: unknown): Promise<Outcome<true>> {
+  /** The caller's run made with this request key, so a retried request can return what the first one made. */
+  async byRequestKey(userId: string, requestKey: string): Promise<RunView | null> {
+    z.uuid().parse(requestKey);
     return this.tx(userId, async db => {
-      const run = await this.run(db, userId, id);
-      if (!run) return fail("NOT_FOUND");
-      await this.event(db, run, type, "system", data);
-      return { ok: true, value: true };
+      const run = (await db.query<Row>("select * from agent_private.runs where user_id=$1 and request_key=$2", [userId, requestKey])).rows[0];
+      return run ? this.view(db, run) : null;
     });
+  }
+
+  /** The latest event of one type on the caller's own run, or null. */
+  async annotation(userId: string, id: string, type: string): Promise<unknown> {
+    z.uuid().parse(id);
+    return this.tx(userId, async db => (await db.query("select data from agent_private.events where user_id=$1 and run_id=$2 and type=$3 order by sequence desc limit 1",
+      [userId, id, type])).rows[0]?.data ?? null);
   }
 
   async recent(userId: string): Promise<Outcome<RunView[]>> {

@@ -6,13 +6,14 @@ import type { Outcome, RunView } from "@liftcut/core/agent-contracts";
 import type { SetRequest } from "@liftcut/core/today";
 import { AgentStore } from "../../src/services/agent/store";
 import { TodayStore } from "../../src/services/today/store";
-import { reviewWorkout, type ReviewModel } from "../../src/services/ai/workout-review";
+import { acceptReview, reviewWorkout, rollbackReview, type ReviewModel, type ReviewOutcome } from "../../src/services/ai/workout-review";
 import { COACH_CONSENT_VERSION } from "../../src/lib/coach-model";
 import { trainingFixture, planContextFixture as context } from "../fixtures/coach-plans";
 import { testUrl } from "./today-setup";
 
 const value = <T>(r: Outcome<T>): T => { assert.equal(r.ok, true, JSON.stringify(r)); return (r as { ok: true; value: T }).value; };
 const binding = (r: RunView) => ({ proposalId: r.proposal!.proposalId, contentHash: r.proposal!.contentHash, contextRevision: r.proposal!.contextRevision });
+const proposed = (o: ReviewOutcome) => { assert.equal(o.status, "proposed", JSON.stringify(o)); return (o as { run: RunView }).run; };
 const role = (name: string, password: string) => { const url = new URL(testUrl()); url.username = name; url.password = password; return new Pool({ connectionString: url.toString(), max: 4 }); };
 
 test("a requested review becomes a ledger proposal only when its closed changes cite real sets", async t => {
@@ -68,6 +69,54 @@ test("a requested review becomes a ledger proposal only when its closed changes 
     await t.test("another account's session yields nothing to review", async () => {
       const outcome = await reviewWorkout(other, request(session.id), { pool: workoutPool, agent, model: async () => { throw new Error("must not call the model"); } });
       assert.deepEqual(outcome, { status: "unavailable", error: "NO_FINISHED_SETS" });
+    });
+    const twoChanges = scripted(ids => ({ outcome: "changes", changes: [{ type: "adjust_sets", exercise: "深蹲", delta: 1, why: "三组都很轻松", evidence: ids.slice(0, 2) },
+      { type: "adjust_rpe", exercise: "深蹲", delta: -0.5, why: "最后一组偏重", evidence: ids.slice(2, 3) }] }));
+    const squatNow = async () => (await admin.query(`select e.sets, e.target_rpe::float as rpe from training_plan_exercises e join training_plan_days d on d.id=e.day_id
+      join training_plan_weeks w on w.id=d.week_id join training_plans p on p.id=w.training_plan_id
+      where p.user_id=$1 and p.is_active and w.week_number=1 and d.day_number=1 and e.name='深蹲'`, [owner])).rows[0];
+    const apply = async (r: RunView) => {
+      const approved = value(await agent.userEvent(owner, r.id, { action: "approve", expectedRevision: r.revision, binding: binding(r) }));
+      value(await agent.execute(owner, r.id, { binding: binding(approved), approvalId: approved.approvalId!, idempotencyKey: approved.proposal!.proposalId }));
+    };
+    const status = async (id: string) => (await admin.query("select status from agent_private.runs where id=$1", [id])).rows[0].status;
+
+    await t.test("accepting some changes replaces the preview; applying and rolling back both go through approval", async () => {
+      const review = proposed(await reviewWorkout(owner, request(session.id), { pool: workoutPool, agent, model: twoChanges }));
+      const accept = { runId: review.id, requestKey: randomUUID(), timezone: "UTC", accepted: [0] };
+      const narrowed = proposed(await acceptReview(owner, accept, { agent }));
+      assert.notEqual(narrowed.id, review.id);
+      assert.equal(await status(review.id), "declined");
+      assert.equal(proposed(await acceptReview(owner, accept, { agent })).id, narrowed.id); // A retry returns the same preview.
+      assert.deepEqual(await acceptReview(owner, { ...accept, requestKey: randomUUID() }, { agent }), { status: "unavailable", error: "REVIEW_CLOSED" });
+      assert.deepEqual(await squatNow(), { sets: 3, rpe: 7 }); // Nothing applies before approval.
+      await apply(narrowed);
+      assert.deepEqual(await squatNow(), { sets: 4, rpe: 7 }); // Only the accepted change.
+
+      const undo = { runId: narrowed.id, requestKey: randomUUID(), timezone: "UTC" };
+      const restore = proposed(await rollbackReview(owner, undo, { agent }));
+      assert.equal(proposed(await rollbackReview(owner, undo, { agent })).id, restore.id);
+      assert.deepEqual(await squatNow(), { sets: 4, rpe: 7 });
+      await apply(restore);
+      assert.deepEqual(await squatNow(), { sets: 3, rpe: 7 });
+      assert.equal(await status(narrowed.id), "applied"); // History is kept; the undo is a new applied run.
+      assert.equal(proposed(await rollbackReview(owner, undo, { agent })).id, restore.id);
+      assert.deepEqual(await rollbackReview(owner, { ...undo, requestKey: randomUUID() }, { agent }), { status: "unavailable", error: "CONTEXT_STALE" });
+    });
+    await t.test("a review made before the plan changed can no longer be accepted, and keys cannot be reused across actions", async () => {
+      const older = proposed(await reviewWorkout(owner, request(session.id), { pool: workoutPool, agent, model: twoChanges }));
+      const newer = proposed(await reviewWorkout(owner, request(session.id), { pool: workoutPool, agent, model: twoChanges }));
+      const key = randomUUID();
+      const easier = proposed(await acceptReview(owner, { runId: newer.id, requestKey: key, timezone: "UTC", accepted: [1] }, { agent }));
+      assert.deepEqual(await rollbackReview(owner, { runId: newer.id, requestKey: key, timezone: "UTC" }, { agent }), { status: "unavailable", error: "KEY_CONFLICT" });
+      await apply(easier);
+      assert.deepEqual(await squatNow(), { sets: 3, rpe: 6.5 });
+      const again = { runId: easier.id, requestKey: randomUUID(), timezone: "UTC", accepted: [0] }; // All of it, after it was applied.
+      assert.deepEqual([proposed(await acceptReview(owner, again, { agent })).id, await status(easier.id)], [easier.id, "applied"]);
+      assert.deepEqual(await acceptReview(owner, { runId: older.id, requestKey: randomUUID(), timezone: "UTC", accepted: [0] }, { agent }),
+        { status: "unavailable", error: "CONTEXT_STALE" });
+      assert.deepEqual(await acceptReview(owner, { runId: older.id, requestKey: randomUUID(), timezone: "UTC", accepted: [3] }, { agent }),
+        { status: "unavailable", error: "REVIEW_NOT_FOUND" });
     });
     assert.ok(before >= 1);
   } finally {
