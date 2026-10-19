@@ -15,7 +15,7 @@ test.afterAll(async () => {
   await db.query("delete from training_plans where user_id=$1 and id=$2", [user, plan]); await db.end();
 });
 
-test("the history calendar shows today's confirmed sets on the local date; a skipped set and empty days add nothing", async ({ page }) => {
+test("the history calendar and muscle volume show only today's confirmed sets; a skipped set and empty days add nothing", async ({ page }) => {
   await page.goto("http://localhost:3103/login");
   await page.locator("#email").fill("p1-fixture@example.invalid"); await page.locator("#password").fill("p1-fixture-password");
   await page.locator('button[type="submit"]').click(); await page.waitForURL(/\/(?:onboarding)?$/);
@@ -38,4 +38,13 @@ test("the history calendar shows today's confirmed sets on the local date; a ski
   await cell.click(); await expect(card.getByTestId("calendar-selected")).toHaveText(`${today} · 2 组`);
   await card.scrollIntoViewIfNeeded();
   await page.screenshot({ path: "node_modules/.cache/w1b/training-calendar-mobile.png" });
+
+  // 卧推 is a chest exercise in the catalog: two confirmed sets, the lightest trained shade, nothing elsewhere.
+  const volume = page.getByTestId("muscle-volume"), list = volume.getByTestId("volume-list");
+  await expect(list.getByRole("listitem")).toHaveCount(1); await expect(list).toContainText("胸部"); await expect(list).toContainText("2 组");
+  await expect(volume.locator('[data-region="chest"]').first()).toHaveClass(/fill-slate-300/);
+  await expect(volume.locator('[data-region="quadriceps"]').first()).toHaveClass(/fill-slate-100/);
+  await volume.getByRole("button", { name: "近 28 天" }).click(); await expect(list).toContainText("2 组");
+  // Phone width; a taller window keeps the page's fixed save bar below the card for the capture.
+  await page.setViewportSize({ width: 390, height: 1800 }); await volume.screenshot({ path: "node_modules/.cache/w1b/muscle-volume-mobile.png" });
 });

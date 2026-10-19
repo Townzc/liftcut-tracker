@@ -98,6 +98,18 @@ export function identifyExercise(name:string,catalog=exerciseCatalog):CatalogExe
   const matches=catalog.filter(e=>[e.zh,e.en,...e.aliases].some(n=>normalize(n)===normalize(name)));
   return matches.length===1?matches[0]:null; // Never fuzzy-match an ambiguous/unknown name.
 }
+/**
+ * The body region of a name, only when every catalog exercise it can mean agrees: its
+ * exact matches, or, for a generic name ("深蹲", "划船"), every exercise whose name ends
+ * with it ("杠铃深蹲", "单臂哑铃划船"). Names end with the movement, so "腿举" does not
+ * mean "腿举机提踵", and "弯举" (arms and legs) stays unknown.
+ */
+export function bodyRegionOf(name:string,catalog=exerciseCatalog):string | null {
+  const q=normalize(name),names=(e:CatalogExercise)=>[e.zh,e.en,...e.aliases].map(normalize);
+  const agree=(list:CatalogExercise[])=>{const bodies=new Set(list.map(e=>e.body));return bodies.size===1?[...bodies][0]:null;};
+  const exact=catalog.filter(e=>names(e).includes(q));
+  return exact.length?agree(exact):q.length>=2?agree(catalog.filter(e=>names(e).some(n=>n.endsWith(q)))):null;
+}
 export function replacementCandidates(name:string,available:Equipment[]) {
   const source=identifyExercise(name);
   return !source?[]:exerciseCatalog.filter(e=>e.id!==source.id && e.pattern===source.pattern && e.body===source.body
