@@ -2,11 +2,13 @@ import type { Session, TodayData } from "@liftcut/core/today";
 import { emptyOutbox, mergeConfirmed, operationBody, operationId, projectOperation, projectOutbox, retryDisposition,
   type OutboxItem, type OutboxState, type WorkoutOperation } from "@liftcut/core/workout-outbox";
 
+/** A write's answer: the session, or for sentence commands the session plus receipts. */
+export type Confirmed = Session | { session: Session; receipts: TodayData["receipts"] };
 export type OutboxStore = { read(owner: string): Promise<OutboxState | null>; write(owner: string, state: OutboxState): Promise<void> };
 /** Network edge, injected so the queue logic is testable: a server answer, or a thrown error when the outcome is unknown. */
 export type OutboxApi = {
   today(): Promise<TodayData>;
-  send(action: WorkoutOperation["action"], bodyJson: string): Promise<{ ok: true; value: Session } | { ok: false; status: number; code: string }>;
+  send(action: WorkoutOperation["action"], bodyJson: string): Promise<{ ok: true; value: Confirmed } | { ok: false; status: number; code: string }>;
 };
 
 /**
@@ -85,7 +87,7 @@ export class MobileOutbox {
       if (!head || head.status === "conflict" || head.status === "auth" || head.nextAttempt > this.now()) return;
       let result: Awaited<ReturnType<OutboxApi["send"]>> | null = null;
       try { result = await this.api.send(head.action, head.bodyJson); } catch { /* Unknown outcome: resend the same bytes later. */ }
-      if (result?.ok && result.value.userId !== this.owner) result = { ok: false, status: 409, code: "ACCOUNT_CHANGED" };
+      if (result?.ok && ("session" in result.value ? result.value.session : result.value).userId !== this.owner) result = { ok: false, status: 409, code: "ACCOUNT_CHANGED" };
       const settled = result;
       await this.change(s => {
         if (s.items[0]?.id !== head.id) return false;
