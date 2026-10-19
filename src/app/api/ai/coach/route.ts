@@ -11,7 +11,7 @@ import {coachFailureCode} from "@/lib/coach-failure";
 import {guestSession,guestNetworkHash} from "@/services/ai/guest-session";
 import {GuestStore,GuestError} from "@/services/ai/guest-store";
 import {todayPool} from "@/services/today/database";
-import {localDateAt} from "@/lib/today";
+import {localDateAt} from "@liftcut/core/today";
 
 export const runtime="nodejs";
 export const maxDuration=60;

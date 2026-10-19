@@ -6,7 +6,7 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@/lib/today";
+import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@liftcut/core/today";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { projectOutbox, type OutboxItem } from "@/lib/workout-outbox";
 import { useWorkoutSync } from "./workout-sync-provider";

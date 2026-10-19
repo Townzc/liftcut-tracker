@@ -1,5 +1,5 @@
 import type { TrainingPlan, WorkoutLog } from "@liftcut/core/types";
-import { localDateAt } from "@/lib/today";
+import { localDateAt } from "@liftcut/core/today";
 
 /** A plan day is a training slot, not a weekday. Calendar time never completes it. */
 export function currentPlanProgress(plan: TrainingPlan, logs: WorkoutLog[], now: Date, timezone: string) {

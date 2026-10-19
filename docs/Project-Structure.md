@@ -17,6 +17,10 @@ packages/core/src/            # @liftcut/core，以 "@liftcut/core/<文件名>" 
   exercise-catalog.ts         # 60 个动作目录与本次替换候选
   progression.ts              # 确定性进阶引擎：只读确认过的实际组，给出下次目标与中英文理由
   one-rep-max.ts              # 估算 1RM（Brzycki）：只用确认过的实际组，超过 12 次不估，返回所用的组
+  today.ts                    # 今日训练契约：开始/记录一组/结束的 schema 与会话类型
+  workout-commands.ts         # 一句话记录的预览、确认与撤销契约
+  exercise-replacement.ts     # 本次替换动作的契约与投影（补偿撤销）
+  workout-context.ts          # 写入上下文的规范序列化（哈希在各端用各自的加密模块计算）
   eval/                       # 150 条合成解析评测语料与评测器（不调用模型）
 src/
   app/                        # Next.js App Router

@@ -2,13 +2,13 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
-import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet, type ExerciseHistory } from "@/lib/today";
+import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet, type ExerciseHistory } from "@liftcut/core/today";
 
 import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { bestOf } from "@liftcut/core/one-rep-max";
-import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
-import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
-import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";
+import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@liftcut/core/workout-commands";
+import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@liftcut/core/workout-context";
+import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@liftcut/core/exercise-replacement";
 import { verifyCoachProposal } from "@/services/ai/coach-proof";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
 

@@ -8,7 +8,7 @@ import {runCoach} from "../src/services/ai/coach-agent";
 import {PersonalRecordStore} from "../src/services/today/personal-record-store";
 import {TodayStore} from "../src/services/today/store";
 import {COACH_CONSENT_VERSION,type CoachMessage,type CoachResponse} from "../src/lib/coach-model";
-import {localDateAt} from "../src/lib/today";
+import {localDateAt} from "@liftcut/core/today";
 
 async function main(){
   if(process.env.COACH_LIVE_EVAL!=="true")throw new Error("Explicit COACH_LIVE_EVAL=true required; real provider calls incur usage");

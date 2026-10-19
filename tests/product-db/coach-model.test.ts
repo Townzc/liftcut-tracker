@@ -7,7 +7,7 @@ import {CoachStore} from "../../src/services/ai/coach-store";
 import {signCoachProposal} from "../../src/services/ai/coach-proof";
 import {PersonalRecordStore} from "../../src/services/today/personal-record-store";
 import {TodayStore} from "../../src/services/today/store";
-import {workoutCanonical,workoutContextInput} from "../../src/lib/workout-context";
+import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
 import {requestedReadRange} from "../../src/lib/coach-grounding";
 process.env.COACH_SIGNING_SECRET="synthetic-test-secret-must-never-be-used-in-production";
 test("model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics",async t=>{

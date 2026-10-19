@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { personalEntrySchema, preferenceKeySchema, type PersonalEntry } from "./personal-records";
 import { parseWorkoutLog, type LogDraft } from "@liftcut/core/workout-log-parser";
-import { workoutContext } from "./workout-context";
-import type { Session } from "./today";
+import { workoutContext } from "@liftcut/core/workout-context";
+import type { Session } from "@liftcut/core/today";
 import { recordPeriod } from "./record-period";
 
 const quote=z.string().trim().min(1).max(120), optionalQuote=quote.nullable();

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { PrescriptionExercise, Session } from "./today";
-import { equipmentIds, EXERCISE_CATALOG_VERSION, replacementCandidates, type Equipment } from "@liftcut/core/exercise-catalog";
+import { equipmentIds, EXERCISE_CATALOG_VERSION, replacementCandidates, type Equipment } from "./exercise-catalog";
 import { workoutCanonical } from "./workout-context";
 
 const common={id:z.uuid(),sessionId:z.uuid(),version:z.literal(1),revision:z.number().int().min(2),

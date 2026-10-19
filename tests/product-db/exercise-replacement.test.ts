@@ -5,7 +5,7 @@ import { Pool } from "pg";
 import { TodayStore } from "../../src/services/today/store";
 import { localContextHash } from "../../src/lib/workout-context";
 import { projectOperation, type WorkoutOperation } from "../../src/lib/workout-outbox";
-import type { Session } from "../../src/lib/today";
+import type { Session } from "@liftcut/core/today";
 import { testUrl } from "./today-setup";
 
 test("session replacement on real PostgreSQL: atomicity, isolation, concurrent histories and offline replay",async t=>{

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import { useAuth } from "@/components/auth/auth-provider";
-import type { StoredSet } from "@/lib/today";
+import type { StoredSet } from "@liftcut/core/today";
 type Trace = {events:{sequence:string;type:string;created_at:string;data:{before:StoredSet|null;after:StoredSet}}[];commands:{id:string;text:string}[]};
 export function SetHistory({id}:{id:string}) {
   const en=useLocale()==="en",{user}=useAuth(),[trace,setTrace]=useState<Trace|null>(null),[error,setError]=useState(false),[loading,setLoading]=useState(false);

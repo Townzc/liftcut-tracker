@@ -1,7 +1,7 @@
 import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
-import { workoutCanonical } from "@/lib/workout-context";
+import { workoutCanonical } from "@liftcut/core/workout-context";
 
 export type ModelProvenance={provider:string;model:string;sourceTexts:string[];version:"coach-v1"};
 // Only the literal spans used by this confirmed draft, never a whole chat history.

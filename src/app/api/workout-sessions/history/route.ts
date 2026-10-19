@@ -2,7 +2,7 @@ import { requireApiUser } from "@/app/api/ai/_lib";
 import { todayPool } from "@/services/today/database";
 import { TodayStore } from "@/services/today/store";
 import { errorResponse } from "@/services/agent/http";
-import { sessionsToWorkoutLogs } from "@/lib/today";
+import { sessionsToWorkoutLogs } from "@liftcut/core/today";
 import { workoutOwnerMismatch } from "@/lib/workout-owner";
 export const runtime = "nodejs";
 export async function GET(request: Request) {

@@ -6,7 +6,7 @@ import { useLocale } from "next-intl";
 import { ArrowLeft, ArrowUpRight, Check, Dumbbell } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import type { TodayData } from "@/lib/today";
+import type { TodayData } from "@liftcut/core/today";
 import { exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { useCurrentPlan } from "./use-current-plan";
 import { PlanProgressBar } from "./current-plan-card";

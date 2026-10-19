@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { TodayStore } from "../../src/services/today/store";
-import { sessionsToWorkoutLogs, type SetRequest } from "../../src/lib/today";
+import { sessionsToWorkoutLogs, type SetRequest } from "@liftcut/core/today";
 import { setup,testUrl } from "./today-setup";
 
 test("W1b real PostgreSQL upgrade, transactions, permissions and midnight recovery", async t => {

@@ -9,7 +9,7 @@ import { persistNutritionPlan } from "./persist-nutrition";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
 import {readPlanningMemory} from "@/services/ai/fitness-facts";
 import {planningMemoryContent,type PlanningMemory} from "@/lib/agent/plan-personalization";
-import {localDateAt} from "@/lib/today";
+import {localDateAt} from "@liftcut/core/today";
 
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;

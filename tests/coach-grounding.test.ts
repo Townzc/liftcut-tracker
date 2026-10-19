@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { bodyExtractionSchema, foodExtractionSchema, groundPersonal, groundWorkout, reportedNumber, requestedReadRange } from "../src/lib/coach-grounding";
 import { conversationHistory, coachRequestSchema } from "../src/lib/coach-model";
-import type { Session } from "../src/lib/today";
+import type { Session } from "@liftcut/core/today";
 const empty={dateQuote:null,weightQuote:null,waistQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
 const day="2026-10-14";
 test("entry tools reject cross-topic fields and ground an explicit current measurement",()=>{

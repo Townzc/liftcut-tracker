@@ -2,9 +2,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, createHash } from "node:crypto";
 import { projectOperation, mergeConfirmed, retryDisposition, operationId } from "../src/lib/workout-outbox";
-import { workoutCanonical, workoutContextInput, localContextHash } from "../src/lib/workout-context";
+import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
+import { localContextHash } from "../src/lib/workout-context";
 import { workoutOwnerMismatch } from "../src/lib/workout-owner";
-import type { TodayData, SetRequest } from "../src/lib/today";
+import type { TodayData, SetRequest } from "@liftcut/core/today";
 const user=randomUUID(), session=randomUUID(), exercise=randomUUID();
 const base=():TodayData=>({days:[],previous:{},receipts:[],session:{id:session,userId:user,localDate:"2026-10-13",timezone:"America/Los_Angeles",
   trainingPlanId:randomUUID(),weekNumber:1,dayNumber:1,status:"active",revision:1,startedAt:"2026-10-13T19:00:00Z",endedAt:null,sets:[],

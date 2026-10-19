@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { nextTarget, ruleForExercise } from "@liftcut/core/progression";
 import { TodayStore } from "../../src/services/today/store";
-import type { SetRequest } from "../../src/lib/today";
+import type { SetRequest } from "@liftcut/core/today";
 import { testUrl } from "./today-setup";
 
 test("today load returns owner-only ended history with every set status and all-time bests", async () => {
