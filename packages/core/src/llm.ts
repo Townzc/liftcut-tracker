@@ -1,4 +1,4 @@
-import type { FitnessGoal, Gender, TrainingExperience } from "@/types";
+import type { FitnessGoal, Gender, TrainingExperience } from "./types";
 
 export interface PlanGenerationInput {
   age: number;

@@ -41,7 +41,7 @@ LiftCut Tracker 是一个 AI 驱动的健身与减脂追踪平台。核心要解
 
 Zod 在项目中有两个核心作用：
 
-**1. AI 输出校验**：`src/lib/ai/schemas.ts` 定义了 `aiTrainingPlanSchema` 和 `aiNutritionPlanSchema`，用于校验 AI 生成的 JSON 是否符合预期结构。每个字段都有类型、范围、必填/可选的约束。
+**1. AI 输出校验**：`packages/core/src/ai-schemas.ts` 定义了 `aiTrainingPlanSchema` 和 `aiNutritionPlanSchema`，用于校验 AI 生成的 JSON 是否符合预期结构。每个字段都有类型、范围、必填/可选的约束。
 
 **2. 请求参数校验**：API route 用 Zod 校验前端发来的请求参数，防止非法数据进入后端。
 

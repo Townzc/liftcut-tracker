@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { WorkoutLog } from "@/types";
+import type { WorkoutLog } from "@liftcut/core/types";
 import type { CommandReceipt } from "@/lib/workout-commands";
 import type { ReplacementReceipt } from "@/lib/exercise-replacement";
 

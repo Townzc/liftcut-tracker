@@ -1,5 +1,5 @@
-import type { ParsedPlan } from "@/lib/plan-import-schema";
-import type { TrainingPlan } from "@/types";
+import type { ParsedPlan } from "@liftcut/core/plan-import-schema";
+import type { TrainingPlan } from "@liftcut/core/types";
 
 function nowIso(): string {
   return new Date().toISOString();

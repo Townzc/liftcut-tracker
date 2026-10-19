@@ -3,7 +3,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import type { RunView, Binding } from "@/lib/agent/contracts";
+import type { RunView, Binding } from "@liftcut/core/agent-contracts";
 import { PlanPreview } from "./plan-preview";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { planChanges } from "@/lib/agent/plan-changes";

@@ -25,7 +25,7 @@ import { getLocalizedFoodName, getLocalizedQuickFood } from "@/lib/demo-data";
 import { getNutritionByDate } from "@/lib/metrics";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
-import type { FoodLog, MealType, QuickFoodItem } from "@/types";
+import type { FoodLog, MealType, QuickFoodItem } from "@liftcut/core/types";
 
 const MEAL_ORDER: MealType[] = ["breakfast", "lunch", "dinner", "snack"];
 

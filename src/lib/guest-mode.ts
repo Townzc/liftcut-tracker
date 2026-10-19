@@ -1,4 +1,4 @@
-import type { AiNutritionPlan, AiTrainingPlan } from "@/lib/ai/schemas";
+import type { AiNutritionPlan, AiTrainingPlan } from "@liftcut/core/ai-schemas";
 
 export const GUEST_COOKIE_NAME = "liftcut_guest";
 export const GUEST_COOKIE_VALUE = "1";

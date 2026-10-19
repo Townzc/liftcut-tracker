@@ -1,6 +1,6 @@
 import "server-only";
 import type { PoolClient } from "pg";
-import type { NutritionPlan } from "@/lib/agent/contracts";
+import type { NutritionPlan } from "@liftcut/core/agent-contracts";
 
 // Only called within AgentStore.execute's approved transaction/savepoint.
 export async function persistNutritionPlan(db: PoolClient, owner: string, id: string, plan: NutritionPlan) {

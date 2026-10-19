@@ -2,7 +2,7 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { TrainingPlan } from "@/types";
+import type { TrainingPlan } from "@liftcut/core/types";
 import { createEmptyTrainingPlan } from "@/lib/demo-data";
 import {
   GUEST_USER_ID,

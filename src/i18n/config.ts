@@ -1,4 +1,4 @@
-import type { AppLocale } from "@/types";
+import type { AppLocale } from "@liftcut/core/types";
 
 export const defaultLocale: AppLocale = "zh-CN";
 export const supportedLocales: AppLocale[] = ["zh-CN", "en"];

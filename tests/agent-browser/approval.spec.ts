@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
-import type { RunView } from "../../src/lib/agent/contracts";
+import type { RunView } from "@liftcut/core/agent-contracts";
 const db = new Pool({ connectionString: process.env.P1_TEST_DATABASE_URL });
 test.afterAll(async () => { await db.end(); });
 const plan = { plan_name: "Browser synthetic plan", goal_type: "maintenance", summary: "Synthetic local fixture",

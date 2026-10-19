@@ -7,7 +7,7 @@ import {
   aiNutritionPlanSchema,
   aiProfileSnapshotSchema,
   aiTrainingPlanSchema,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 
 export const researchTaskSchema = z.enum([
   "generate_training_plan",

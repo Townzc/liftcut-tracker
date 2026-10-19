@@ -12,9 +12,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { normalizeActionError } from "@/lib/error-utils";
 import { isBasicProfileComplete } from "@/lib/profile-completion";
-import { userSettingsSchema } from "@/lib/schemas";
+import { userSettingsSchema } from "@liftcut/core/schemas";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import type { UserSettings } from "@/types";
+import type { UserSettings } from "@liftcut/core/types";
 
 export function OnboardingPage() {
   const t = useTranslations("onboarding");

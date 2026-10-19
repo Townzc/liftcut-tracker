@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { userSettingsSchema, quickFoodItemSchema } from "../src/lib/schemas";
+import { userSettingsSchema, quickFoodItemSchema } from "@liftcut/core/schemas";
 
 test("userSettingsSchema accepts valid settings", () => {
   const valid = {

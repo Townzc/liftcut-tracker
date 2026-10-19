@@ -1,4 +1,4 @@
-import type { AppDataSnapshot, UserSettings } from "@/types";
+import type { AppDataSnapshot, UserSettings } from "@liftcut/core/types";
 import type { GuestAiHistoryState } from "@/lib/guest-mode";
 import { isDefaultAvailableEquipment } from "@/lib/demo-data";
 import {

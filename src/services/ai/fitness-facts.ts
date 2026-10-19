@@ -1,7 +1,7 @@
 import "server-only";
 import type {PoolClient} from "pg";
 import {z} from "zod";
-import type {PlanKind} from "@/lib/agent/contracts";
+import type {PlanKind} from "@liftcut/core/agent-contracts";
 import type {PlanningMemory} from "@/lib/agent/plan-personalization";
 
 // Actual, owner-scoped sources only. Both query memory and plan memory share

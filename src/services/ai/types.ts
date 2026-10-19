@@ -4,7 +4,7 @@ import type {
   Gender,
   TrainingExperience,
   TrainingLocation,
-} from "@/types";
+} from "@liftcut/core/types";
 
 export type AiProviderName = "deepseek" | "local" | "openai_compatible";
 

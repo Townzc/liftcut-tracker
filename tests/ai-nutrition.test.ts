@@ -5,7 +5,7 @@ import {
   aiNutritionPlanRawSchema,
   aiNutritionPlanSchema,
   normalizeAiNutritionPlan,
-} from "../src/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import { buildNutritionPlanPrompt, NUTRITION_PROMPT_VERSION } from "../src/services/ai/prompts";
 
 test("normalizeMealType maps Chinese meal types to English enums", () => {

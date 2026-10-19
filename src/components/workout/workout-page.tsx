@@ -28,7 +28,7 @@ import { normalizeActionError } from "@/lib/error-utils";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
 import { estimateWorkoutCalories } from "@/lib/workout-calories";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import type { ExerciseLog, ExercisePlan, PlanDay, TrainingPlan, WorkoutLog } from "@/types";
+import type { ExerciseLog, ExercisePlan, PlanDay, TrainingPlan, WorkoutLog } from "@liftcut/core/types";
 
 function buildExerciseRows(currentDay: PlanDay, existingLog?: WorkoutLog): ExerciseLog[] {
   return currentDay.exercises.map((exercise) => {

@@ -3,6 +3,7 @@ FROM node:24-alpine AS base
 FROM base AS dependencies
 WORKDIR /app
 COPY package.json package-lock.json ./
+COPY packages/core/package.json ./packages/core/
 RUN npm ci
 
 FROM base AS builder

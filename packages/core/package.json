@@ -1,0 +1,17 @@
+{
+  "name": "@liftcut/core",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Framework-free domain code shared by the LiftCut web app and the mobile app.",
+  "sideEffects": false,
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

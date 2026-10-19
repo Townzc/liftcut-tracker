@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { actualWeightSchema, actualRepsSchema, actualRpeSchema } from "@/lib/workout-values";
+import { actualWeightSchema, actualRepsSchema, actualRpeSchema } from "./workout-values";
 
 const positiveNumber = z.coerce.number().finite().nonnegative();
 const genderSchema = z.enum(["male", "female", "other", "unknown"]);

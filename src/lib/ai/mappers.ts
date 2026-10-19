@@ -1,5 +1,5 @@
-import type { AiNutritionPlan, AiTrainingPlan } from "@/lib/ai/schemas";
-import type { TrainingPlan } from "@/types";
+import type { AiNutritionPlan, AiTrainingPlan } from "@liftcut/core/ai-schemas";
+import type { TrainingPlan } from "@liftcut/core/types";
 
 function nowIso(): string {
   return new Date().toISOString();

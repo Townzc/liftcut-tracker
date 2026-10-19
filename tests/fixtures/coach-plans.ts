@@ -1,4 +1,4 @@
-import type { Plan, NutritionPlan } from "../../src/lib/agent/contracts";
+import type { Plan, NutritionPlan } from "@liftcut/core/agent-contracts";
 export const trainingFixture:Plan={plan_name:"合成训练计划",goal_type:"maintenance",summary:"每周两天，保留恢复时间。",reasoning_summary:"用于验证，不是个人建议。",warnings:[],weeks:[{week_number:1,focus:"适应",days:[
   {day_number:1,title:"全身 A",notes:"",estimated_duration_minutes:30,exercises:[
     {name:"深蹲",sets:3,rep_range:"8-10",target_rpe:7,rest_seconds:90,notes:"",alternative_exercises:[]},

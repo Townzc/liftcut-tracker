@@ -26,7 +26,7 @@ import { exportTrainingPlanPdf } from "@/services/plan-export";
 import { planImportService } from "@/services/plan-import";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
-import type { TrainingPlan } from "@/types";
+import type { TrainingPlan } from "@liftcut/core/types";
 
 type PlanAction =
   | "create"

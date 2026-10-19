@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import type { z } from "zod";
 
-import { aiProfileSnapshotSchema } from "@/lib/ai/schemas";
+import { aiProfileSnapshotSchema } from "@liftcut/core/ai-schemas";
 import { AiServiceError } from "@/services/ai/errors";
 import { fetchAiProfileSnapshot } from "@/services/ai/persistence";
 import type { ApiAuthMode } from "@/app/api/ai/_lib";

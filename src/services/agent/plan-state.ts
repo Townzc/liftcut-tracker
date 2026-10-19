@@ -1,6 +1,6 @@
 import "server-only";
 import type { PoolClient } from "pg";
-import type { PlanKind } from "@/lib/agent/contracts";
+import type { PlanKind } from "@liftcut/core/agent-contracts";
 
 // Called inside the owner's advisory-locked transaction. The matching triggers
 // also serialize legacy browser writes, including inserts into an empty plan.
@@ -24,8 +24,8 @@ export async function readPlanRows(db: PoolClient, owner: string, kind: PlanKind
 export type PlanSnapshot = {
   kind: PlanKind; stateHash: string; profileHash: string;
   profile: Record<string, unknown>; currentPlans: Record<string, unknown>[];
-  draft?: { runId: string; revision: number; plan: import("@/lib/agent/contracts").AnyPlan };
-  editable?: { plan: import("@/lib/agent/contracts").AnyPlan; context: import("@/lib/agent/contracts").Context };
+  draft?: { runId: string; revision: number; plan: import("@liftcut/core/agent-contracts").AnyPlan };
+  editable?: { plan: import("@liftcut/core/agent-contracts").AnyPlan; context: import("@liftcut/core/agent-contracts").Context };
   memory?: import("@/lib/agent/plan-personalization").PlanningMemory;
 };
 

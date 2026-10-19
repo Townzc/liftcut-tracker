@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import { contextSchema, planSchema, isNutritionPlan, type Binding, type Context, type Execution, type RunView } from "@/lib/agent/contracts";
+import { contextSchema, planSchema, isNutritionPlan, type Binding, type Context, type Execution, type RunView } from "@liftcut/core/agent-contracts";
 
 const labels: Record<RunView["status"], string> = {
   planning: "请生成新的预览", awaiting_approval: "等待你批准当前预览", approved: "已批准，尚未写入",

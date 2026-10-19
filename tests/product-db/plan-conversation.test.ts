@@ -4,7 +4,7 @@ import {randomUUID} from "node:crypto";
 import {Pool} from "pg";
 import {AgentStore} from "../../src/services/agent/store";
 import {CoachStore} from "../../src/services/ai/coach-store";
-import type {Outcome,RunView} from "../../src/lib/agent/contracts";
+import type {Outcome,RunView} from "@liftcut/core/agent-contracts";
 import {trainingFixture,nutritionFixture,trainingProgramFixture,planContextFixture as context} from "../fixtures/coach-plans";
 import {expandTrainingProgram} from "../../src/lib/agent/training-program";
 import {testUrl} from "./today-setup";

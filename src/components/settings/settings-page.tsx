@@ -23,12 +23,12 @@ import {
 import { normalizeActionError } from "@/lib/error-utils";
 import { getDefaultAvailableEquipment, isDefaultAvailableEquipment } from "@/lib/demo-data";
 import { downloadJson } from "@/lib/import-export";
-import { userSettingsSchema } from "@/lib/schemas";
+import { userSettingsSchema } from "@liftcut/core/schemas";
 import { cn } from "@/lib/utils";
 import { clearUserAvatar, exportUserData, uploadUserAvatar } from "@/services/data-repository";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore, type ThemeMode } from "@/store/use-ui-store";
-import type { AppLocale, UserSettings } from "@/types";
+import type { AppLocale, UserSettings } from "@liftcut/core/types";
 
 type SettingsAction =
   | "save-profile"

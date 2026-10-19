@@ -1,4 +1,4 @@
-import type { AppDataSnapshot } from "@/types";
+import type { AppDataSnapshot } from "@liftcut/core/types";
 import type { PersonalRecord } from "./personal-records";
 import type { Session } from "./today";
 import { toDateString } from "./date";

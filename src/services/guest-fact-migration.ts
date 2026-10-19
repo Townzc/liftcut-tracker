@@ -1,4 +1,4 @@
-import type {AppDataSnapshot} from "@/types";
+import type {AppDataSnapshot} from "@liftcut/core/types";
 import {personalEntrySchema,guestFactsSchema,type PersonalEntry} from "@/lib/personal-records";
 import {activeGuestFacts,guestWorkspace,saveGuestCommand,clearImportedGuestFacts,nextGuestWorkspace} from "@/lib/guest-records";
 import {ensureGuestSession} from "@/lib/guest-client";

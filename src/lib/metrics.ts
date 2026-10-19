@@ -6,7 +6,7 @@ import type {
   TrainingPlan,
   UserSettings,
   WorkoutLog,
-} from "@/types";
+} from "@liftcut/core/types";
 import {
   compareDateAsc,
   formatDisplayDate,

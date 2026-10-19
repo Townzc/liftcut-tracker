@@ -7,7 +7,7 @@ import {Pool} from "pg";
 import {runCoach} from "../src/services/ai/coach-agent";
 import {AgentStore} from "../src/services/agent/store";
 import {COACH_CONSENT_VERSION,type CoachMessage,type CoachResponse} from "../src/lib/coach-model";
-import {isNutritionPlan,type RunView,type Outcome} from "../src/lib/agent/contracts";
+import {isNutritionPlan,type RunView,type Outcome} from "@liftcut/core/agent-contracts";
 const unwrap=<T>(r:Outcome<T>):T=>{assert.ok(r.ok,JSON.stringify(r));return (r as {ok:true;value:T}).value;};
 async function main(){
   if(process.env.COACH_LIVE_EVAL!=="true")throw new Error("Opt in with COACH_LIVE_EVAL=true");

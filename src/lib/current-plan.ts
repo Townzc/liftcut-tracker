@@ -1,4 +1,4 @@
-import type { TrainingPlan, WorkoutLog } from "@/types";
+import type { TrainingPlan, WorkoutLog } from "@liftcut/core/types";
 import { localDateAt } from "@/lib/today";
 
 /** A plan day is a training slot, not a weekday. Calendar time never completes it. */

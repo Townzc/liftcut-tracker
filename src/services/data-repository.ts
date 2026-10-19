@@ -1,6 +1,6 @@
 ﻿import { createDefaultSettings, createEmptyTrainingPlan, defaultQuickFoods } from "@/lib/demo-data";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { normalizeExerciseActuals } from "@/lib/workout-values";
+import { normalizeExerciseActuals } from "@liftcut/core/workout-values";
 import type { GuestAiHistoryItem } from "@/lib/guest-mode";
 import type {
   AppDataSnapshot,
@@ -13,7 +13,7 @@ import type {
   UserProfile,
   UserSettings,
   WorkoutLog,
-} from "@/types";
+} from "@liftcut/core/types";
 
 const AVATAR_BUCKET = "avatars";
 const MAX_NICKNAME_LENGTH = 30;

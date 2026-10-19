@@ -10,7 +10,7 @@ import {
   normalizeAiTrainingPlan,
   type AiNutritionGenerationConstraints,
   type AiTrainingGenerationConstraints,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import { loadEnvConfig } from "@next/env";
 import { callAiProviderForJson } from "@/services/ai/client";
 import { getAiProviderConfig } from "@/services/ai/config";

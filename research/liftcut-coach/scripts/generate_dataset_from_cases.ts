@@ -9,7 +9,7 @@ import {
   aiTrainingPlanSchema,
   generateNutritionPlanRequestSchema,
   generateTrainingPlanRequestSchema,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import {

@@ -1,4 +1,4 @@
-import type { AiLocale, AiNutritionPlan, AiTrainingPlan } from "@/lib/ai/schemas";
+import type { AiLocale, AiNutritionPlan, AiTrainingPlan } from "@liftcut/core/ai-schemas";
 
 const CJK_REGEXP = /[\u3400-\u9FFF]/;
 const ASCII_WORD_REGEXP = /[A-Za-z]{2,}/g;

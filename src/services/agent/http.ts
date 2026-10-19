@@ -1,6 +1,6 @@
 import "server-only";
 import { z } from "zod";
-import type { Outcome } from "@/lib/agent/contracts";
+import type { Outcome } from "@liftcut/core/agent-contracts";
 
 export function sameOrigin(request: Request): boolean {
   // These cookie-authenticated mutation routes are not model tool endpoints.

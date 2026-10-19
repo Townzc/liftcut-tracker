@@ -1,6 +1,6 @@
 import {z} from "zod";
-import {aiTrainingDaySchema,aiTrainingPlanSchema} from "@/lib/ai/schemas";
-import {contextSchema,planSchema,validatePlanConstraints,type Plan} from "./contracts";
+import {aiTrainingDaySchema,aiTrainingPlanSchema} from "@liftcut/core/ai-schemas";
+import {contextSchema,planSchema,validatePlanConstraints,type Plan} from "@liftcut/core/agent-contracts";
 
 // Model transport only. The approval ledger always receives the fully expanded,
 // validated plan; it never stores references that could change after approval.

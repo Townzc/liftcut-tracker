@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {isNutritionPlan,planSchema,nutritionPlanSchema,type AnyPlan} from "./contracts";
+import {isNutritionPlan,planSchema,nutritionPlanSchema,type AnyPlan} from "@liftcut/core/agent-contracts";
 export const planAdjustmentSchema=z.object({summary:z.string().trim().min(1).max(1000),changes:z.array(z.object({
   path:z.string().max(180),value:z.union([z.string().max(1000),z.number().finite(),z.array(z.string().max(120)).max(12)]),
 }).strict()).min(1).max(20)}).strict();

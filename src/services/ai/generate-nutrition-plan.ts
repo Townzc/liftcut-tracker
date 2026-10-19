@@ -5,7 +5,7 @@ import {
   normalizeAiNutritionPlan,
   type AiNutritionGenerationConstraints,
   type AiNutritionPlan,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import { callAiProviderForJson } from "@/services/ai/client";
 import { AiServiceError } from "@/services/ai/errors";
 import {
