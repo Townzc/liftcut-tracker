@@ -6,7 +6,7 @@ import { equipmentIds, type Equipment } from "@liftcut/core/exercise-catalog";
 import { REVIEW_SYSTEM, reviewMessage, type ReviewSet } from "@liftcut/core/review-prompt";
 import { samePlain } from "@liftcut/core/plain-data";
 import { applyReview, reviewProblems, reviewSchema, type Review } from "@liftcut/core/review-changes";
-import type { RunView } from "@liftcut/core/agent-contracts";
+import type { ReviewOutcome } from "@liftcut/core/review-client";
 import { COACH_CONSENT_VERSION } from "@/lib/coach-model";
 import type { AgentStore } from "@/services/agent/store";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
@@ -21,11 +21,7 @@ import { beginOwnerTransaction } from "@/services/owner-transaction";
 export const reviewRequestSchema = z.strictObject({ sessionId: z.uuid(), requestKey: z.uuid(), consent: z.literal(COACH_CONSENT_VERSION),
   locale: z.enum(["zh", "en"]), timezone: z.string().max(100), equipment: z.array(z.enum(equipmentIds)).max(equipmentIds.length).default([]) });
 export type ReviewModel = (prompt: { system: string; user: string }) => Promise<unknown>;
-export type ReviewOutcome =
-  | { status: "proposed"; review: Review; run: RunView }
-  | { status: "nochange"; review: Review }
-  | { status: "invalid"; problems: string[] }
-  | { status: "unavailable"; error: string };
+export type { ReviewOutcome }; // Shared with the web and mobile review cards.
 
 /** Sets of the finished session and the four before it that share an exercise; skipped sets count as evidence too. */
 async function readSets(pool: Pool, owner: string, sessionId: string): Promise<ReviewSet[]> {
