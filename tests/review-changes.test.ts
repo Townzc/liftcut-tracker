@@ -9,7 +9,7 @@ const plan: AiTrainingPlan = { plan_name: "P", goal_type: "muscle_gain", summary
   weeks: [1, 2].map(week_number => ({ week_number, focus: "", days: [{ day_number: 1, title: "A", notes: "", estimated_duration_minutes: 60,
     exercises: [exercise("杠铃卧推", 3, "5"), exercise("哑铃弯举", 3, "8-12", 9.5)] }] })) };
 const cited = { sets: new Map([["s1", "杠铃卧推"], ["s2", "杠铃卧推"], ["s3", "哑铃弯举"]]), equipment: ["dumbbells", "bench", "barbell", "rack"] as const };
-const review = (changes: unknown): Review => reviewSchema.parse({ outcome: "changes", changes });
+const review = (changes: unknown) => reviewSchema.parse({ outcome: "changes", changes }) as Extract<Review, { outcome: "changes" }>;
 const c = (type: string, extra: object, name = "杠铃卧推", evidence = ["s1"]) => ({ type, exercise: name, why: "最近两次都完成了", evidence, ...extra });
 
 test("only the closed change types parse; unknown types, raw loads and extra fields are rejected", () => {
@@ -23,7 +23,7 @@ test("only the closed change types parse; unknown types, raw loads and extra fie
 
 test("changes apply to every occurrence; the engine-facing numbers are computed, not chosen by the model", () => {
   const next = applyReview(plan, review([c("adjust_sets", { delta: 1 }), c("switch_rule", { to: "double" }),
-    c("adjust_rpe", { delta: -0.5 }, "哑铃弯举", ["s3"])]).changes as never);
+    c("adjust_rpe", { delta: -0.5 }, "哑铃弯举", ["s3"])]).changes);
   for (const week of next.weeks) {
     assert.deepEqual([week.days[0].exercises[0].sets, week.days[0].exercises[0].rep_range], [4, "5-8"]);
     assert.equal(week.days[0].exercises[1].target_rpe, 9);
