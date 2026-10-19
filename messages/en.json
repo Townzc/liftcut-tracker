@@ -312,7 +312,21 @@
     "restTimerReset": "Reset",
     "restTimerDone": "Time's up!",
     "restTimerPresets": "Presets",
-    "restTimerCustom": "Custom"
+    "restTimerCustom": "Custom",
+    "calendar": {
+      "title": "Training calendar",
+      "hint": "Confirmed completed sets per day over the past year; days without records stay empty.",
+      "summary": "Trained on {days} days in the past year, {sets} sets in total.",
+      "unknown": "{days} of those days come from older logs without set counts.",
+      "empty": "No confirmed training in the past year yet.",
+      "day": "{date} · {sets} sets",
+      "unknownDay": "{date} · {sets} sets, plus {rows} exercises with unknown set counts",
+      "tap": "Tap a square to see that day",
+      "less": "Less",
+      "more": "More",
+      "summaryDays": "Trained on {days} days in the past year.",
+      "unknownOnly": "{date} · {rows} exercises completed, set counts unknown"
+    }
   },
   "nutrition": {
     "title": "Nutrition Logging",
