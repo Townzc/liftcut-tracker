@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Session, SetLog, SetRequest, PrescriptionExercise, TodayData } from "@liftcut/core/today";
 import { tapSetRequest, voidSetRequest } from "@liftcut/core/set-requests";
 import { useTrackerStore } from "@/store/use-tracker-store";
-import { projectOutbox, type OutboxItem } from "@/lib/workout-outbox";
+import { projectOutbox, type OutboxItem } from "@liftcut/core/workout-outbox";
 import { useWorkoutSync } from "./workout-sync-provider";
 import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
 import { CoachConversation } from "./coach-conversation";

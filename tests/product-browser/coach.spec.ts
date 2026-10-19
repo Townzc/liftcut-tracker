@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
 import type { TodayData } from "@liftcut/core/today";
-import type { OutboxState } from "../../src/lib/workout-outbox";
+import type { OutboxState } from "@liftcut/core/workout-outbox";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL});
 const owner="11111111-1111-4111-8111-111111111111",plan=randomUUID(),day=randomUUID(),bench=randomUUID(),squat=randomUUID();
 test.beforeAll(async()=>{
