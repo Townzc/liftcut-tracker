@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { bestOneRepMax, estimateOneRepMax, MAX_ESTIMATE_REPS } from "@liftcut/core/one-rep-max";
+import { bestOf, bestOneRepMax, estimateOneRepMax, MAX_ESTIMATE_REPS, mergeBest, recordBroken } from "@liftcut/core/one-rep-max";
 import { getOneRepMaxByExercise, getPersonalRecords, getRecentPRs, getExerciseProgressData } from "../src/lib/pr-tracker";
 import type { WorkoutLog } from "@liftcut/core/types";
 
@@ -42,4 +42,16 @@ test("history: high-rep sets never produce or beat a 1RM; the estimate cites its
   assert.equal(getPersonalRecords(logs).find(r => r.exerciseName === "俯卧撑")?.bestEstimated1RM, null);
   assert.ok(!getRecentPRs(logs, 10).some(pr => pr.type === "1rm" && pr.date === "2026-10-03"));
   assert.deepEqual(getExerciseProgressData(logs, "卧推").map(p => p.estimated1RM), [67.5, null]);
+});
+
+test("set records need a confirmed set that beats an earlier best", () => {
+  const prior = bestOf([set("2026-10-01", 60, 5), set("2026-10-02", 62.5, 1), set("2026-10-03", 80, null), set("2026-10-04", 40, 30)]);
+  assert.deepEqual(prior, { weightKg: 62.5, oneRepMaxKg: 67.5 }); // 80 kg without reps proves nothing.
+  assert.deepEqual(recordBroken(set("d", 65, 3), prior), { kind: "weight", value: 65, previous: 62.5 });
+  assert.deepEqual(recordBroken(set("d", 60, 6), prior), { kind: "one_rep_max", value: 69.7, previous: 67.5 });
+  assert.deepEqual(recordBroken(set("d", 62.5, 5), prior), { kind: "one_rep_max", value: 70.3, previous: 67.5 }); // Same load, more reps.
+  for (const no of [set("d", 62.5, 1), set("d", 60, 20), set("d", null, 8), set("d", 70, null), { ...set("d", 70, 5), status: "voided" as const }])
+    assert.equal(recordBroken(no, prior), null, JSON.stringify(no));
+  assert.equal(recordBroken(set("d", 100, 5), { weightKg: null, oneRepMaxKg: null }), null); // First-ever set is not a "record".
+  assert.deepEqual(mergeBest({ weightKg: 60, oneRepMaxKg: null }, { weightKg: null, oneRepMaxKg: 70 }), { weightKg: 60, oneRepMaxKg: 70 });
 });

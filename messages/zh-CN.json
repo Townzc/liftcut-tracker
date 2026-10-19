@@ -713,6 +713,16 @@
     "endHint": "结束只关闭本次训练，未记录的组仍保持未记录。",
     "end": "结束训练",
     "history": "查看训练历史",
+    "progression": {
+      "title": "进阶目标",
+      "load": "{weight} kg × {reps} 次 × {sets} 组",
+      "bodyweight": "每组 {reps} 次 × {sets} 组",
+      "none": "暂不给数字"
+    },
+    "record": {
+      "weight": "本组破纪录：最大重量 {value} kg（之前 {previous} kg）",
+      "one_rep_max": "本组破纪录：估算 1RM {value} kg（之前 {previous} kg）"
+    },
     "rest": {
       "title": "组间休息",
       "done": "休息结束，可以开始下一组",

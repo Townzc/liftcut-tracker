@@ -945,6 +945,7 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/guest-ai.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/plan-conversation.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/plan-memory.test.ts
+          node --conditions=react-server --import tsx --test tests/product-db/progression-history.test.ts
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npx playwright install --with-deps webkit
