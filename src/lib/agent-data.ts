@@ -1,6 +1,6 @@
 import type { AppDataSnapshot } from "@liftcut/core/types";
 import type { PersonalRecord } from "./personal-records";
-import type { Session } from "./today";
+import type { Session } from "@liftcut/core/today";
 import { toDateString } from "./date";
 import { recordPeriod } from "./record-period";
 

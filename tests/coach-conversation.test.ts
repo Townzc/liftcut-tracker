@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { coachIntent } from "../src/lib/coach-conversation";
-import type { Session } from "../src/lib/today";
+import type { Session } from "@liftcut/core/today";
 const exercise = randomUUID();
 const session = (): Session => ({id: randomUUID(), userId: randomUUID(), localDate: "2026-10-14", timezone: "America/Los_Angeles",
   trainingPlanId: randomUUID(), weekNumber: 1, dayNumber: 1, status: "active", revision: 1,

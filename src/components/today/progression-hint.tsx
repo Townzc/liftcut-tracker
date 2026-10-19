@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { identifyExercise } from "@liftcut/core/exercise-catalog";
 import { recordBroken, type Best } from "@liftcut/core/one-rep-max";
 import { nextTarget, ruleForExercise } from "@liftcut/core/progression";
-import type { ExerciseHistory, PrescriptionExercise, SetLog } from "@/lib/today";
+import type { ExerciseHistory, PrescriptionExercise, SetLog } from "@liftcut/core/today";
 
 /** The engine computes the number from confirmed history; nothing here is written or copied into a set. */
 export function ProgressionTarget({ exercise, history }: { exercise: PrescriptionExercise; history?: ExerciseHistory }) {

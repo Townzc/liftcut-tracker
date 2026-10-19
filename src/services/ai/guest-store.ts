@@ -4,7 +4,7 @@ import type {Pool,PoolClient} from "pg";
 import {z} from "zod";
 import {beginOwnerTransaction} from "@/services/owner-transaction";
 import {guestFactsSchema} from "@/lib/personal-records";
-import {workoutCanonical} from "@/lib/workout-context";
+import { workoutCanonical } from "@liftcut/core/workout-context";
 
 export const GUEST_DAILY_LIMIT=10;
 export class GuestError extends Error{}

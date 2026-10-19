@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import type { Pool } from "pg";
 import { z } from "zod";
 import { personalCommandSchema, parsePersonalEntry, type PersonalRecord } from "@/lib/personal-records";
-import { workoutCanonical } from "@/lib/workout-context";
+import { workoutCanonical } from "@liftcut/core/workout-context";
 import { TodayConflict } from "./store";
 import { verifyCoachProposal } from "@/services/ai/coach-proof";
 

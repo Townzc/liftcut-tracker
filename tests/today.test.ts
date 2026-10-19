@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { localDateAt, sessionsToWorkoutLogs, setRequestSchema, type Session } from "../src/lib/today";
+import { localDateAt, sessionsToWorkoutLogs, setRequestSchema, type Session } from "@liftcut/core/today";
 import { getPersonalRecords } from "../src/lib/pr-tracker";
 import { estimateWorkoutCalories } from "../src/lib/workout-calories";
 

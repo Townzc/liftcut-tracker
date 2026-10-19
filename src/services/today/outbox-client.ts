@@ -1,6 +1,6 @@
 import { mergeConfirmed, operationBody, operationId, projectOperation, projectOutbox, retryDisposition,
   type OutboxItem, type OutboxState, type WorkoutOperation } from "@/lib/workout-outbox";
-import type { Session, TodayData } from "@/lib/today";
+import type { Session, TodayData } from "@liftcut/core/today";
 import { OutboxStorage } from "./outbox-storage";
 import { localContextHash } from "@/lib/workout-context";
 

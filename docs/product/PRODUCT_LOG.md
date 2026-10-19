@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-19 — M1-3a 今日训练写入契约迁入共享核心
+
+- **原因**：方案第 6 节规则 4：手机与网页共用同一套写入接口和幂等语义。手机端记录前，先让两端用同一份 schema 构造请求。
+- **实现**：`today.ts`（开始/记录一组/结束 schema、会话类型、`sessionsToWorkoutLogs`）、`workout-commands.ts`、`exercise-replacement.ts`、`workout-context.ts` 的纯函数（规范序列化、上下文、`storedSet`）原样迁入 `packages/core`，网页、服务端与测试改为从核心包引用。只有用 Web Crypto 计算的 `localContextHash` 留在网页（`src/lib/workout-context.ts`），因为 React Native 没有 `crypto.subtle`，手机端将用自己的加密模块对同一规范序列化计算哈希。行为不变。
+- **实际运行**：`npm test` 6 + 145、核心包类型检查（无 DOM、无 Node 类型）、lint、构建通过；本地 `postgres:16` 上 P1 32、W1a 1、产品 PostgreSQL 77 项通过；完整 W1b Chromium 89/90（唯一失败为 M0-5a 规格的刷新竞态，已在 #98 修正）；App 网页导出端到端 1 项通过。
+- **下一步**：M1-3b 手机端今日训练记录。
+
 ## 2026-10-19 — M1-2 Expo App 骨架
 
 - **原因**：方案第 3、4 节 M1：原生 App 与网页共用核心代码和接口，先建立能登录、能读数据的骨架。

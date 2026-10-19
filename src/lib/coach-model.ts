@@ -2,7 +2,7 @@ import { z } from "zod";
 import {guestFactsSchema, type PersonalCommand} from "./personal-records";
 import type { LogDraft } from "@liftcut/core/workout-log-parser";
 import type { WorkoutOperation } from "./workout-outbox";
-import type { Session } from "./today";
+import type { Session } from "@liftcut/core/today";
 import type { RunView } from "@liftcut/core/agent-contracts";
 import type { CoachTiming } from "./coach-timing";
 

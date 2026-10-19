@@ -1,9 +1,9 @@
 import { z } from "zod";
-import type { WorkoutLog } from "@liftcut/core/types";
-import type { Best } from "@liftcut/core/one-rep-max";
-import type { ExerciseSession } from "@liftcut/core/progression";
-import type { CommandReceipt } from "@/lib/workout-commands";
-import type { ReplacementReceipt } from "@/lib/exercise-replacement";
+import type { WorkoutLog } from "./types";
+import type { Best } from "./one-rep-max";
+import type { ExerciseSession } from "./progression";
+import type { CommandReceipt } from "./workout-commands";
+import type { ReplacementReceipt } from "./exercise-replacement";
 
 export function localDateAt(at: Date, timezone: string): string {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(at);

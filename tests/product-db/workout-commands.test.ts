@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { TodayStore } from "../../src/services/today/store";
 import { testUrl } from "./today-setup";
-import type { SetRequest } from "../../src/lib/today";
+import type { SetRequest } from "@liftcut/core/today";
 
 test("W2b real transactions: atomic commands, receipts, compensation and isolation",async t=>{
   const admin=new Pool({connectionString:testUrl()}),target=new URL(testUrl());

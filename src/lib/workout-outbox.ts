@@ -1,8 +1,8 @@
-import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, type TodayData, type StoredSet } from "@/lib/today";
-import { commandSchema, undoCommandSchema, type SetChange } from "@/lib/workout-commands";
+import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, type TodayData, type StoredSet } from "@liftcut/core/today";
+import { commandSchema, undoCommandSchema, type SetChange } from "@liftcut/core/workout-commands";
 import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
-import { storedSet, workoutCanonical, workoutContext } from "@/lib/workout-context";
-import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "@/lib/exercise-replacement";
+import { storedSet, workoutCanonical, workoutContext } from "@liftcut/core/workout-context";
+import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "@liftcut/core/exercise-replacement";
 
 export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo" | "replace" | "undoReplacement"; body:unknown };
 export type OutboxItem = { id:string; action:WorkoutOperation["action"]; bodyJson:string; createdAt:string;

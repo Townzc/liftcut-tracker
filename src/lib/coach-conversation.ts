@@ -1,6 +1,6 @@
-import type { Session } from "./today";
+import type { Session } from "@liftcut/core/today";
 import { parseWorkoutLog, type ParseResult } from "@liftcut/core/workout-log-parser";
-import { workoutContext } from "./workout-context";
+import { workoutContext } from "@liftcut/core/workout-context";
 import { identifyExercise } from "@liftcut/core/exercise-catalog";
 import { isCoachIntroduction } from "./coach-local-chat";
 
