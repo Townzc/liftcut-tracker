@@ -872,6 +872,33 @@
         "triceps": "肱三头肌",
         "abdominals": "腹部"
       }
+    },
+    "review": {
+      "title": "训练复盘",
+      "intro": "请教练根据本次和最近几次训练看看计划要不要调整。它只提出建议，由你逐条决定，确认后才修改计划。",
+      "start": "复盘这次训练",
+      "consent": "复盘会把本次和最近几次训练的组发给模型，请先在 Agent 页开启教练。",
+      "openCoach": "去开启",
+      "working": "正在复盘…",
+      "nochange": "建议保持当前计划：{why}",
+      "evidence": "依据 {count} 组记录",
+      "apply": "应用所选（{count} 项）",
+      "decline": "都不采用",
+      "note": "确认后修改当前计划，之后可以撤销；本次训练记录不变。",
+      "applied": "已应用到训练计划。",
+      "rollback": "撤销这些修改",
+      "rolledBack": "已撤销，计划恢复到复盘前。",
+      "declined": "这次复盘的建议都没有采用。",
+      "stale": "复盘之后计划有变化，这条复盘已失效，可以重新复盘。",
+      "again": "重新复盘",
+      "failed": "操作未确认（{code}）。可以再点一次，不会重复修改计划。",
+      "setsUp": "{exercise}：每次加 1 组",
+      "setsDown": "{exercise}：每次减 1 组",
+      "rpeUp": "{exercise}：目标 RPE 提高 0.5",
+      "rpeDown": "{exercise}：目标 RPE 降低 0.5",
+      "ruleLinear": "{exercise}：改为线性进阶",
+      "ruleDouble": "{exercise}：改为双重进阶（先加次数再加重量）",
+      "replace": "{exercise} 换成 {replacement}"
     }
   },
   "coach": {

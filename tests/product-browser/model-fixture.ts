@@ -11,6 +11,15 @@ createServer(async(req,res)=>{
   if(req.method==="GET"){res.end('{"fixture":"scripted, not a model"}');return;}
   let raw="";for await(const chunk of req)raw+=chunk;
   const body=JSON.parse(raw),messages=body.messages as {role:string;content:string;tool_calls?:{id:string;function:{name:string}}[];tool_call_id?:string}[];
+  // The post-workout review asks for one JSON object, not a tool call: two closed changes citing the first exercise's sets.
+  if(messages[0]?.content.startsWith("You review one finished workout")){
+    const sets=JSON.parse(messages[1].content).sets as {id:string;exercise:string;status:string}[],first=sets.find(x=>x.status==="done");
+    const ids=sets.filter(x=>x.exercise===first?.exercise).map(x=>x.id).slice(0,3);
+    const review=first?{outcome:"changes",changes:[{type:"adjust_sets",exercise:first.exercise,delta:1,why:"三组都完成了，RPE 偏低",evidence:ids},
+      {type:"adjust_rpe",exercise:first.exercise,delta:0.5,why:"可以稍微加大强度",evidence:ids.slice(0,1)}]}:{outcome:"nochange",why:"记录太少",evidence:[]};
+    res.end(JSON.stringify({id:"fixture_"+randomUUID(),object:"chat.completion",created:Math.floor(Date.now()/1000),model:"scripted-coach-fixture",
+      choices:[{index:0,finish_reason:"stop",message:{role:"assistant",content:JSON.stringify(review)}}],usage:{prompt_tokens:100,completion_tokens:50,total_tokens:150}}));return;
+  }
   const current=messages.findLastIndex(x=>x.role==="user"),text=messages[current]?.content??"";
   const since=messages.slice(current+1),lastTool=since.filter(x=>x.role==="tool").at(-1);
   const priorCall=lastTool?since.flatMap(x=>x.tool_calls??[]).find(x=>x.id===lastTool.tool_call_id):undefined;
