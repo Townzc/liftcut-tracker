@@ -112,6 +112,34 @@ flowchart TB
   Research -.-> Pipeline
 ```
 
+### Web, mobile app and agent (2026-10)
+
+One shared core runs on both clients; every write goes through the same versioned API, and the model only ever drafts.
+
+```mermaid
+flowchart LR
+  subgraph Clients
+    Web["Next.js web<br/>today · agent · history"]
+    Mobile["Expo app<br/>today · coach · history"]
+  end
+  Core["@liftcut/core<br/>schemas · rule parser · progression engine<br/>outbox projection · review change types · model-data allowlist"]
+  Web --- Core
+  Mobile --- Core
+  Web -->|"IndexedDB outbox · cookie"| API["Versioned write API<br/>client UUIDs · revisions · idempotent retries"]
+  Mobile -->|"SQLite outbox · bearer token"| API
+  API --> DB[("PostgreSQL + RLS<br/>confirmed actual sets")]
+  Web & Mobile --> Coach["Coach chat and post-workout review"]
+  Coach -->|"allowlisted fields only"| Model["Cloud model"]
+  Model -->|"drafts and closed change types"| Coach
+  Coach -->|"user approves"| Ledger["Approval ledger<br/>preview → approve → execute → receipt · undo = compensating run"]
+  Ledger --> DB
+  Engine["Progression engine<br/>loads computed by code"] -.-> Web
+  Engine -.-> Mobile
+  Parser["Sentence parsing: rules → on-device model (M4, training prepared) → cloud<br/>guard: every number must appear in the sentence"] -.-> Mobile
+```
+
+See the [mobile plan](docs/product/2026-10-18-mobile-agent-plan.md), [product log](docs/product/PRODUCT_LOG.md) and the [90-second phone demo](docs/product/DEMO_90S.md) (synthetic data; the coach answer in it is a scripted fixture).
+
 ## AI reliability pipeline
 
 Every generated plan follows the same deterministic boundary:
