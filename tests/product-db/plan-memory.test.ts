@@ -16,7 +16,9 @@ test("plans use durable dated memory and bind confirmation to its fresh contents
   const admin=new Pool({connectionString:testUrl()}),url=new URL(testUrl());url.username="liftcut_agent";url.password="p1-local-fixture-only";
   const pool=new Pool({connectionString:url.toString(),max:5}),store=new AgentStore(pool);url.username="liftcut_workout";url.password="w1b-local-fixture-only";
   const recordsPool=new Pool({connectionString:url.toString(),max:5}),records=new PersonalRecordStore(recordsPool),owner=randomUUID(),other=randomUUID();
-  const save=(entry:PersonalEntry,user=owner)=>records.command(user,{action:"create",id:randomUUID(),entry,source:"manual",text:"",anchorDate:entry.date});
+  // A legitimate record ID can contain the other account's measurement digits.
+  const ownedWeightId="00000199"+randomUUID().slice(8);
+  const save=(entry:PersonalEntry,user=owner,id:string=randomUUID())=>records.command(user,{action:"create",id,entry,source:"manual",text:"",anchorDate:entry.date});
   const approve=async(r:RunView)=>value(await store.userEvent(owner,r.id,{action:"approve",expectedRevision:r.revision,binding:binding(r)}));
   const execute=(r:RunView)=>store.execute(owner,r.id,{binding:binding(r),approvalId:r.approvalId!,idempotencyKey:r.proposal!.proposalId});
   const draft=async(kind:"training"|"nutrition"="training")=>value(await store.prepare(owner,randomUUID(),await store.planContext(owner,kind),context,kind==="training"?trainingFixture:nutritionFixture));
@@ -25,16 +27,23 @@ test("plans use durable dated memory and bind confirmation to its fresh contents
     await admin.query("insert into user_settings(user_id,fitness_goal,current_weight,weekly_training_days,session_duration_minutes) values($1,'fat_loss',90,2,45),($2,'maintenance',80,2,45)",[owner,other]);
     const goal=await save({kind:"preference",date:"2026-08-17",key:"goal",value:"增肌"});
     await save({kind:"body",date:"2026-08-17",weightKg:72.5,waistCm:80});
-    await save({kind:"body",date:"2026-09-17",weightKg:73,waistCm:null});
+    await save({kind:"body",date:"2026-09-17",weightKg:73,waistCm:null},owner,ownedWeightId);
     for(const [date,weight] of [["2026-08-17",45],["2026-09-01",47.5],["2026-09-17",50]] as const)
       await save({kind:"exercise",date,exerciseName:"卧推",weightKg:weight,reps:10,sets:null,rpe:null});
-    await save({kind:"body",date:"2026-09-17",weightKg:199,waistCm:100},other);
+    const otherBody=await save({kind:"body",date:"2026-09-17",weightKg:199,waistCm:100},other);
     await t.test("independent latest body values and three dated loads survive fresh context with account isolation",async()=>{
       const snapshot=await store.planContext(owner,"training"),m=snapshot.memory!,p=planPersonalization(snapshot.profile,m);
       assert.equal(p.profileContext.weight.value,73);assert.equal(p.body.find(f=>f.metric==="waist")?.value,80);
       assert.equal(p.goal.value,"增肌");assert.deepEqual(m.recentLoads.map(f=>f.value),[50,47.5,45]);
-      assert.ok(m.recentLoads.every(f=>f.rpe===null&&f.sets===null));assert.ok(!JSON.stringify(m).includes("199"));
-      assert.equal((await store.planContext(other,"training")).memory!.recentLoads.length,0);
+      assert.ok(m.recentLoads.every(f=>f.rpe===null&&f.sets===null));
+      assert.equal(m.facts.find(f=>f.metric==="weight")?.recordId,ownedWeightId);
+      const ownIds=new Set((await records.list(owner)).map(r=>r.id)),facts=[...m.facts,...m.recentLoads];
+      assert.ok(facts.every(f=>f.recordId!==null&&ownIds.has(f.recordId)));
+      assert.ok(facts.every(f=>f.recordId!==otherBody.id));
+      const otherMemory=(await store.planContext(other,"training")).memory!;
+      assert.deepEqual(otherMemory.facts.map(f=>[f.metric,f.value]).sort(),[["waist",100],["weight",199]]);
+      assert.ok(otherMemory.facts.every(f=>f.recordId===otherBody.id));
+      assert.equal(otherMemory.recentLoads.length,0);
       assert.equal((await admin.query("select count(*)::int n from training_plans where user_id=$1",[owner])).rows[0].n,0);
     });
     await t.test("fresh plan preview retains a server-generated basis without saving actuals",async()=>{
