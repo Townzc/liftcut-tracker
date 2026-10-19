@@ -8,7 +8,7 @@ import type { CommandReceipt, CommandRequest, ParsePreview } from "@liftcut/core
 import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { workoutContext } from "@liftcut/core/workout-context";
 import { localContextHash } from "@/lib/workout-context";
-import type { WorkoutOperation } from "@/lib/workout-outbox";
+import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { SetHistory } from "./set-history";
 
 export type TodayPending = WorkoutOperation;

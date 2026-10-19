@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { exerciseCatalog, identifyExercise, replacementCandidates, equipmentIds, EXERCISE_CATALOG_VERSION } from "@liftcut/core/exercise-catalog";
 import { projectReplacement, projectReplacementUndo, replaceExerciseSchema, type ReplaceExerciseRequest } from "@liftcut/core/exercise-replacement";
-import { projectOperation } from "../src/lib/workout-outbox";
+import { projectOperation } from "@liftcut/core/workout-outbox";
 import type { Session, SetLog } from "@liftcut/core/today";
 const base=():Session=>({id:randomUUID(),userId:randomUUID(),localDate:"2026-10-14",timezone:"UTC",trainingPlanId:"p",weekNumber:1,dayNumber:1,
   status:"active",revision:1,startedAt:"2026-10-14T00:00:00Z",endedAt:null,sets:[],prescription:{title:"Synthetic",exercises:[

@@ -11,7 +11,7 @@ import { localCoachReply } from "@/lib/coach-local-chat";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
 import { localContextHash } from "@/lib/workout-context";
 import { exerciseLabel } from "@liftcut/core/exercise-catalog";
-import type { WorkoutOperation } from "@/lib/workout-outbox";
+import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { ExerciseReplacement } from "./exercise-replacement";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { answerDataQuestion } from "@/lib/agent-data";

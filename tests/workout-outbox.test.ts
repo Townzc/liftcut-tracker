@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, createHash } from "node:crypto";
-import { projectOperation, mergeConfirmed, retryDisposition, operationId } from "../src/lib/workout-outbox";
+import { projectOperation, mergeConfirmed, retryDisposition, operationId } from "@liftcut/core/workout-outbox";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
 import { localContextHash } from "../src/lib/workout-context";
 import { workoutOwnerMismatch } from "../src/lib/workout-owner";

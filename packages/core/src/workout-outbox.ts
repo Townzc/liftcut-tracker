@@ -1,8 +1,9 @@
-import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, type TodayData, type StoredSet } from "@liftcut/core/today";
-import { commandSchema, undoCommandSchema, type SetChange } from "@liftcut/core/workout-commands";
-import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
-import { storedSet, workoutCanonical, workoutContext } from "@liftcut/core/workout-context";
-import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "@liftcut/core/exercise-replacement";
+import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, type TodayData, type StoredSet } from "./today";
+import { commandSchema, undoCommandSchema, type SetChange } from "./workout-commands";
+import { parseWorkoutLog } from "./workout-log-parser";
+import { storedSet, workoutCanonical, workoutContext } from "./workout-context";
+import { clonePlain } from "./plain-data";
+import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "./exercise-replacement";
 
 export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo" | "replace" | "undoReplacement"; body:unknown };
 export type OutboxItem = { id:string; action:WorkoutOperation["action"]; bodyJson:string; createdAt:string;
@@ -25,7 +26,7 @@ export const operationOf = (item:OutboxItem):WorkoutOperation => ({action:item.a
 // A local projection is explicitly pending, never a server receipt. The server
 // independently reparses/authorizes and validates every revision at commit time.
 export function projectOperation(base:TodayData, p:WorkoutOperation, at:string):TodayData {
-  const data=structuredClone(base), session=data.session;
+  const data=clonePlain(base), session=data.session;
   if (p.action === "start") { startSessionSchema.parse(p.body); if (session?.status === "active") conflict(); return data; }
   if (p.action === "undo") {
     const req=undoCommandSchema.parse(p.body), receipt=data.receipts?.find(r=>r.id===req.commandId);

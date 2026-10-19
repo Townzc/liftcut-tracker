@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { TodayStore } from "../../src/services/today/store";
 import { localContextHash } from "../../src/lib/workout-context";
-import { projectOperation, type WorkoutOperation } from "../../src/lib/workout-outbox";
+import { projectOperation, type WorkoutOperation } from "@liftcut/core/workout-outbox";
 import type { Session } from "@liftcut/core/today";
 import { testUrl } from "./today-setup";
 

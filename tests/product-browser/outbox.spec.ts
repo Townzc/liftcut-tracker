@@ -1,7 +1,7 @@
 import { test,expect,type Page } from "@playwright/test";
 import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
-import type { OutboxState } from "../../src/lib/workout-outbox";
+import type { OutboxState } from "@liftcut/core/workout-outbox";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL});
 const user="11111111-1111-4111-8111-111111111111",other="22222222-2222-4222-8222-222222222222";
 const plan=randomUUID(),day=randomUUID(),exercise=randomUUID();

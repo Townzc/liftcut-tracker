@@ -1,6 +1,6 @@
 "use client";
 import {createContext,useCallback,useContext,useEffect,useRef,useState,type ReactNode} from "react";
-import type {OutboxState} from "@/lib/workout-outbox";
+import type {OutboxState} from "@liftcut/core/workout-outbox";
 import {WorkoutOutboxClient} from "@/services/today/outbox-client";
 import {useTrackerStore} from "@/store/use-tracker-store";
 

@@ -21,6 +21,9 @@ packages/core/src/            # @liftcut/core，以 "@liftcut/core/<文件名>" 
   workout-commands.ts         # 一句话记录的预览、确认与撤销契约
   exercise-replacement.ts     # 本次替换动作的契约与投影（补偿撤销）
   workout-context.ts          # 写入上下文的规范序列化（哈希在各端用各自的加密模块计算）
+  set-requests.ts             # 点按记录一组与撤销（补偿）的请求构造，两端共用
+  workout-outbox.ts           # 离线发件箱的本地投影、操作 ID、冲突与重试判定
+  plain-data.ts               # 纯数据深拷贝与深比较（Node、浏览器、Hermes 行为一致）
   eval/                       # 150 条合成解析评测语料与评测器（不调用模型）
 src/
   app/                        # Next.js App Router

@@ -6,7 +6,7 @@ import type { PrescriptionExercise, Session } from "@liftcut/core/today";
 import { EXERCISE_CATALOG_VERSION, equipmentIds, exerciseLabel, identifyExercise, replacementCandidates, type Equipment } from "@liftcut/core/exercise-catalog";
 import { replacementBlocked, type ReplaceExerciseRequest, type UndoReplacementRequest } from "@liftcut/core/exercise-replacement";
 import { localContextHash } from "@/lib/workout-context";
-import type { WorkoutOperation } from "@/lib/workout-outbox";
+import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 
 type Props={session:Session;busy:boolean;submit:(p:WorkoutOperation)=>Promise<boolean>};
 export function ExerciseReplacement({session,exercise,busy,submit,initiallyOpen=false}:Props & {exercise:PrescriptionExercise;initiallyOpen?:boolean}) {

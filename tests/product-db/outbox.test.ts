@@ -5,7 +5,7 @@ import { Pool } from "pg";
 import { TodayStore } from "../../src/services/today/store";
 import { testUrl } from "./today-setup";
 import { localContextHash } from "../../src/lib/workout-context";
-import { projectOperation, type WorkoutOperation } from "../../src/lib/workout-outbox";
+import { projectOperation, type WorkoutOperation } from "@liftcut/core/workout-outbox";
 
 test("entire offline chain has identical contexts and values when replayed against real PostgreSQL",async()=>{
   const admin=new Pool({connectionString:testUrl()}),url=new URL(testUrl());url.username="liftcut_workout";url.password="w1b-local-fixture-only";

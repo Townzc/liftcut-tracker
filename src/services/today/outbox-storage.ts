@@ -1,4 +1,4 @@
-import { emptyOutbox, operationBody, operationId, operationOf, type OutboxState } from "@/lib/workout-outbox";
+import { emptyOutbox, operationBody, operationId, operationOf, type OutboxState } from "@liftcut/core/workout-outbox";
 
 export const OUTBOX_DB = "liftcut-workout-outbox-v1";
 // An account record and its queue/lease are committed in one IDB transaction.
