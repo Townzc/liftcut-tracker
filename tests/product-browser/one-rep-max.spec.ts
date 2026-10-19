@@ -21,6 +21,10 @@ test("mobile history shows an estimated 1RM with its source set and refuses sets
   await expect(card.getByText(/^依据 \d{4}-\d{2}-\d{2} · 60 kg × 5 次$/)).toBeVisible();
   await expect(card.getByText("不估算：没有 12 次以内的已确认组", { exact: true })).toBeVisible();
   await expect(card.getByTestId("one-rep-max-row")).toHaveCount(2);
+  // Older-format guest logs say which exercises were completed, not how many sets: the calendar marks the day without inventing sets.
+  const calendar = page.getByTestId("training-calendar");
+  await expect(calendar.getByRole("status")).toHaveText("过去一年训练 1 天。 其中 1 天来自旧记录，组数未知。");
+  await expect(calendar.getByRole("button", { name: /^\d{4}-\d{2}-\d{2} · 3 个动作已完成，组数未知$/ })).toHaveCount(1);
   await card.scrollIntoViewIfNeeded();
   await page.screenshot({ path: "node_modules/.cache/w1a/one-rep-max-mobile.png" });
 });

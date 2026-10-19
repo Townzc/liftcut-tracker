@@ -312,7 +312,21 @@
     "restTimerReset": "重置",
     "restTimerDone": "时间到！",
     "restTimerPresets": "预设",
-    "restTimerCustom": "自定义"
+    "restTimerCustom": "自定义",
+    "calendar": {
+      "title": "训练日历",
+      "hint": "过去一年里每天确认完成的组数；没有记录的日子留空。",
+      "summary": "过去一年训练 {days} 天，共 {sets} 组。",
+      "unknown": "其中 {days} 天来自旧记录，组数未知。",
+      "empty": "过去一年还没有确认完成的训练。",
+      "day": "{date} · {sets} 组",
+      "unknownDay": "{date} · {sets} 组，另有 {rows} 个动作组数未知",
+      "tap": "点一个格子查看当天",
+      "less": "少",
+      "more": "多",
+      "summaryDays": "过去一年训练 {days} 天。",
+      "unknownOnly": "{date} · {rows} 个动作已完成，组数未知"
+    }
   },
   "nutrition": {
     "title": "饮食记录",
