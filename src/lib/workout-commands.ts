@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { StoredSet } from "@/lib/today";
-import type { LogDraft, ParseResult } from "@/lib/workout-log-parser";
+import type { LogDraft, ParseResult } from "@liftcut/core/workout-log-parser";
 
 export const parseLogSchema = z.object({ sessionId: z.uuid(), text: z.string().trim().min(1).max(400),
   selectedExerciseId: z.string().min(1).max(150).optional() }).strict();

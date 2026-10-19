@@ -1,8 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseWorkoutLog, type ParseResult } from "../src/lib/workout-log-parser";
-import { contexts, workoutLogCorpus } from "./fixtures/workout-log-corpus";
-import { evaluateWorkoutParser } from "./helpers/workout-parser-eval";
+import { parseWorkoutLog, type ParseResult } from "@liftcut/core/workout-log-parser";
+import { contexts, workoutLogCorpus } from "@liftcut/core/eval/workout-log-corpus";
+import { evaluateWorkoutParser } from "@liftcut/core/eval/workout-parser";
 
 test("150 authored rule cases match exact drafts or request clarification; no invented nulls", () => {
   const report = evaluateWorkoutParser();
@@ -32,6 +32,11 @@ test("evaluation detects always-refuse, fabricated RPE and wrong correction targ
     const out=parseWorkoutLog(s,c);if(out.status==="draft" && out.draft.kind==="correct")out.draft.recordId="wrong";return out;
   });
   assert.equal(misdirected.correctionMatches,0);
+  // Exact match stays deep-strict: an extra key, even undefined, is a different draft.
+  const padded = evaluateWorkoutParser((s,c)=>{
+    const out=parseWorkoutLog(s,c);return out.status==="draft"?{...out,draft:{...out.draft,extra:undefined}}:out;
+  });
+  assert.equal(padded.draftMatches,0);
 });
 
 test("no mutation or inherited defaults; historical changes do not change new actuals", () => {

@@ -1,7 +1,7 @@
 import type { Session } from "./today";
-import { parseWorkoutLog, type ParseResult } from "./workout-log-parser";
+import { parseWorkoutLog, type ParseResult } from "@liftcut/core/workout-log-parser";
 import { workoutContext } from "./workout-context";
-import { identifyExercise } from "./exercise-catalog";
+import { identifyExercise } from "@liftcut/core/exercise-catalog";
 import { isCoachIntroduction } from "./coach-local-chat";
 
 export type CoachIntent = { kind: "help" | "plan" | "progress" | "receipts" | "longTerm" | "noSession" | "invalid" }

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { exerciseCatalog, identifyExercise, replacementCandidates, equipmentIds, EXERCISE_CATALOG_VERSION } from "../src/lib/exercise-catalog";
+import { exerciseCatalog, identifyExercise, replacementCandidates, equipmentIds, EXERCISE_CATALOG_VERSION } from "@liftcut/core/exercise-catalog";
 import { projectReplacement, projectReplacementUndo, replaceExerciseSchema, type ReplaceExerciseRequest } from "../src/lib/exercise-replacement";
 import { projectOperation } from "../src/lib/workout-outbox";
 import type { Session, SetLog } from "../src/lib/today";

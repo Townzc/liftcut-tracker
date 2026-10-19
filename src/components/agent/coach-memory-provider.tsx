@@ -3,7 +3,7 @@ import { createContext,useContext,useEffect,useRef,useState,useSyncExternalStore
 import { useLocale } from "next-intl";
 import { CoachHistoryClient } from "@/lib/coach-history-client";
 import type { Session } from "@/lib/today";
-import type { LogDraft } from "@/lib/workout-log-parser";
+import type { LogDraft } from "@liftcut/core/workout-log-parser";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
 import type { PersonalCommand } from "@/lib/personal-records";
 import type { RunView } from "@liftcut/core/agent-contracts";

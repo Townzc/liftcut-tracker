@@ -1,6 +1,6 @@
 import { startSessionSchema, endSessionSchema, setRequestSchema, type Session, type TodayData, type StoredSet } from "@/lib/today";
 import { commandSchema, undoCommandSchema, type SetChange } from "@/lib/workout-commands";
-import { parseWorkoutLog } from "@/lib/workout-log-parser";
+import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { storedSet, workoutCanonical, workoutContext } from "@/lib/workout-context";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "@/lib/exercise-replacement";
 

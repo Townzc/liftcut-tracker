@@ -1,7 +1,19 @@
-import { isDeepStrictEqual } from "node:util";
-import { parseWorkoutLog, type ParseResult } from "../../src/lib/workout-log-parser";
-import { contexts, workoutLogCorpus } from "../fixtures/workout-log-corpus";
+import { parseWorkoutLog, type ParseResult } from "../workout-log-parser";
+import { contexts, workoutLogCorpus } from "./workout-log-corpus";
 
+// Plain-data equivalents of Node's deep strict equality and structured clone, so
+// the evaluator also runs where Node built-ins do not exist (Expo, browsers).
+function same(a: unknown, b: unknown): boolean {
+  if (Object.is(a, b)) return true;
+  if (!a || !b || typeof a !== "object" || typeof b !== "object" || Array.isArray(a) !== Array.isArray(b)) return false;
+  const x = a as Record<string, unknown>, y = b as Record<string, unknown>, keys = Object.keys(x);
+  return keys.length === Object.keys(y).length && keys.every(k => Object.hasOwn(y, k) && same(x[k], y[k]));
+}
+function clone<T>(value: T): T {
+  if (Array.isArray(value)) return value.map(clone) as T;
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, clone(v)])) as T;
+  return value;
+}
 function fields(value: unknown, prefix = "", result: Record<string, unknown> = {}) {
   if (value !== null && typeof value === "object") {
     for (const [key,child] of Object.entries(value)) fields(child, `${prefix}.${key}`,result);
@@ -16,15 +28,15 @@ export function evaluateWorkoutParser(parser = parseWorkoutLog) {
   let expectedDrafts = 0, draftMatches = 0, falseDrafts = 0;
   const failures: {id:string;expected:unknown;actual:ParseResult}[] = [];
   for (const item of workoutLogCorpus) {
-    const actual = parser(item.text,structuredClone(contexts[item.context]));
+    const actual = parser(item.text,clone(contexts[item.context]));
     const expected = item.expected === "clarify" ? {status:"clarify"} : {status:"draft",draft:item.expected};
-    const correct = item.expected === "clarify" ? actual.status === "clarify" : isDeepStrictEqual(actual,expected);
+    const correct = item.expected === "clarify" ? actual.status === "clarify" : same(actual,expected);
     if (correct) exact++; else failures.push({id:item.id,expected,actual});
     if (item.expected === "clarify") { if (actual.status === "draft") falseDrafts++; continue; }
     expectedDrafts++; if (correct) draftMatches++;
     const gold = fields(item.expected), found = fields(actual.status === "draft" ? actual.draft : {});
     for (const [path, value] of Object.entries(gold)) {
-      fieldCount++; if (isDeepStrictEqual(value,found[path])) matchedFields++;
+      fieldCount++; if (same(value,found[path])) matchedFields++;
       if (value === null) { nullFields++; if (found[path] !== null && found[path] !== undefined) inventedNulls++; }
       // Count only actual numeric inputs, not missing IDs/status metadata.
       if (/\.(weightKg|reportedWeight|reps|rpe)$/.test(path) && value !== null) {
