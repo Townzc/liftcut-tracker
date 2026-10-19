@@ -26,6 +26,13 @@ export const MODEL_DATA: readonly ModelDataCategory[] = [
     "calorieTarget", "proteinTarget", "actual"],
     zh: "个人设置：目标、训练经验、地点与器械、每次时长、每周天数、目标体重、热量与蛋白质目标；生成或调整计划时还包括年龄、性别、身高、当前体重、饮食偏好与忌口、伤病与生活习惯备注",
     en: "Settings: goal, experience, location and equipment, session length, days per week, target weight, calorie and protein targets; when drafting a plan also age, gender, height, current weight, diet and food restrictions, injury and lifestyle notes" },
+  { id: "currentWorkout", topics: ["current_workout"], accountOnly: true, nested: ["exercises", "actualSets"],
+    fields: ["sourceId", "readAt", "active", "id", "date", "status", "revision", "exercises", "name", "actualSets", "exerciseId", "setIndex", "reps", "weightKg", "rpe", "selectedExerciseId"],
+    zh: "进行中的训练：处方里的动作名、已记录的组（组号、次数、重量、RPE、状态）", en: "The workout in progress: prescribed exercise names and the recorded sets (set, reps, weight, RPE, status)" },
+  { id: "planning", topics: ["plan_context"], accountOnly: true,
+    fields: ["kind", "personalization", "sourceId", "currentPlans", "editingPendingDraft", "editablePlan", "instruction"],
+    zh: "生成或调整计划时：把上面的个人设置、已确认记录和当前计划整理成计划依据，以及待你批准的计划草稿",
+    en: "When drafting a plan: the settings, confirmed values and current plans above, arranged as the plan basis, plus any draft awaiting your approval" },
 ];
 
 /** Keeps only the listed fields of each row (and of each record in a `nested` list); an unlisted topic yields no rows. */
@@ -37,6 +44,9 @@ export function allowModelRows(topic: string, rows: readonly Record<string, unkn
     .map(([k, v]) => [k, category.nested?.includes(k) && Array.isArray(v) ? v.map(x => x && typeof x === "object" ? pick(x as Record<string, unknown>) : x) : v]));
   return rows.map(pick);
 }
+
+/** One tool result through the same filter; null when its topic is not listed. */
+export const allowModelObject = (topic: string, value: Record<string, unknown>) => allowModelRows(topic, [value])[0] ?? null;
 
 /** FNV-1a over the list: no crypto module is needed on the phone or in the browser. */
 export const MODEL_DATA_HASH = (() => {
