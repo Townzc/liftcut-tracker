@@ -23,13 +23,19 @@ This version has breaking changes — APIs, conventions, and file structure may 
   path.
 - `alexpcosta/opengym` is AGPL-3.0 and may be studied for design only. Never copy its
   code, text, icons, body-map paths or exercise media into this MIT repository.
-- Unless the maintainer explicitly says otherwise: open pull requests but do not merge
-  them, deploy production, run production migrations, change production environment
-  variables or rent GPUs.
+- Authority (granted by the maintainer on 2026-10-18): agents may merge their own pull
+  requests into `main` once every CI check passes, and merging deploys production.
+  Production migrations are allowed only when additive, preceded by a backup of the
+  affected tables and followed by verification, the way `docs/product/W1_DEPLOYMENT.md`
+  did it. Still ask first before destructive schema or data changes, new paid services
+  or accounts, changes to production secrets, and anything that spends money.
+- Decisions on 2026-10-18: the mobile client uses Expo (React Native); Apple developer
+  registration waits until this upgrade round is finished; M4 (on-device distilled
+  parser) is enabled. GPU training runs only when the maintainer opens a server; see
+  the training handoff in `docs/product/CLOUD_AGENT_BRIEF.md`.
 - Out of scope unless the maintainer reopens them: multi-agent orchestration, nearby
   restaurant recommendations, monetization, a general long-term memory system, vector
-  databases, new GPU experiments, and new model training other than the optional M4
-  on-device parser once the maintainer enables it.
+  databases, and new model training or GPU experiments other than M4.
 - Record each product PR in `docs/product/PRODUCT_LOG.md` (one entry, at most 15
   lines): why, what changed, what actually ran, limitations, next step.
 
