@@ -1,5 +1,7 @@
 import { z } from "zod";
 import type { WorkoutLog } from "@liftcut/core/types";
+import type { Best } from "@liftcut/core/one-rep-max";
+import type { ExerciseSession } from "@liftcut/core/progression";
 import type { CommandReceipt } from "@/lib/workout-commands";
 import type { ReplacementReceipt } from "@/lib/exercise-replacement";
 
@@ -36,8 +38,11 @@ export type Prescription = { title: string; exercises: PrescriptionExercise[] };
 export type Session = { id: string; userId: string; localDate: string; timezone: string; trainingPlanId: string;
   weekNumber: number; dayNumber: number; status: "active" | "ended" | "cancelled"; revision: number;
   prescription: Prescription; startedAt: string; endedAt: string | null; sets: SetLog[]; replacements?:ReplacementReceipt[] };
+/** Confirmed history of one exercise name: recent ended sessions (every set status) and all-time bests. */
+export type ExerciseHistory = { sessions: ExerciseSession[]; best: Best };
 export type TodayData = { session: Session | null; days: { id: string; weekNumber: number; dayNumber: number; title: string }[];
-  previous: Record<string, { weightKg: number | null; reps: number | null }>; receipts?: CommandReceipt[] };
+  previous: Record<string, { weightKg: number | null; reps: number | null }>; receipts?: CommandReceipt[];
+  history?: Record<string, ExerciseHistory> };
 
 // One completed set is one actual row. Skipped, voided and unreported sets never
 // enter legacy statistics; prescription totals are not multiplied into actuals.

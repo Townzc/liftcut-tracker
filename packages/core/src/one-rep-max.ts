@@ -25,3 +25,23 @@ export function bestOneRepMax<T extends LoadedSet>(sets: T[]): OneRepMaxEstimate
   }
   return best;
 }
+
+export type Best = { weightKg: number | null; oneRepMaxKg: number | null };
+/** All-time bests from confirmed sets; a load without reps proves nothing and is ignored. */
+export function bestOf(sets: LoadedSet[]): Best {
+  const lifted = sets.filter(s => (s.status ?? "done") === "done" && s.weightKg !== null && s.weightKg > 0 && s.reps !== null && s.reps >= 1);
+  return { weightKg: lifted.length ? Math.max(...lifted.map(s => s.weightKg!)) : null, oneRepMaxKg: bestOneRepMax(sets)?.kg ?? null };
+}
+export const mergeBest = (a: Best, b: Best): Best => ({
+  weightKg: a.weightKg === null ? b.weightKg : b.weightKg === null ? a.weightKg : Math.max(a.weightKg, b.weightKg),
+  oneRepMaxKg: a.oneRepMaxKg === null ? b.oneRepMaxKg : b.oneRepMaxKg === null ? a.oneRepMaxKg : Math.max(a.oneRepMaxKg, b.oneRepMaxKg),
+});
+export type RecordBroken = { kind: "weight" | "one_rep_max"; value: number; previous: number };
+/** A record needs an earlier best to beat: a first-ever set is not called a record. */
+export function recordBroken(set: LoadedSet, prior: Best): RecordBroken | null {
+  if (bestOf([set]).weightKg === null) return null;
+  if (prior.weightKg !== null && set.weightKg! > prior.weightKg) return { kind: "weight", value: set.weightKg!, previous: prior.weightKg };
+  const estimate = estimateOneRepMax(set);
+  if (estimate && prior.oneRepMaxKg !== null && estimate.kg > prior.oneRepMaxKg) return { kind: "one_rep_max", value: estimate.kg, previous: prior.oneRepMaxKg };
+  return null;
+}

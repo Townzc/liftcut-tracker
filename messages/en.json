@@ -713,6 +713,16 @@
     "endHint": "Ending closes this session. Unrecorded sets remain unrecorded.",
     "end": "End training",
     "history": "View training history",
+    "progression": {
+      "title": "Progression target",
+      "load": "{weight} kg × {reps} reps × {sets} sets",
+      "bodyweight": "{reps} reps × {sets} sets",
+      "none": "No number yet"
+    },
+    "record": {
+      "weight": "Set record: heaviest weight {value} kg (previous {previous} kg)",
+      "one_rep_max": "Set record: estimated 1RM {value} kg (previous {previous} kg)"
+    },
     "rest": {
       "title": "Rest",
       "done": "Rest is over. Start the next set.",

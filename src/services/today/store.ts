@@ -2,9 +2,10 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
-import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet } from "@/lib/today";
+import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet, type ExerciseHistory } from "@/lib/today";
 
 import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
+import { bestOf } from "@liftcut/core/one-rep-max";
 import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
 import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";
@@ -49,6 +50,29 @@ export class TodayStore {
     await db.query("insert into public.workout_session_events(user_id,session_id,set_log_id,type,data) values($1,$2,$3,$4,$5)",
       [user, session, record, type, JSON.stringify(data)]);
   }
+  /**
+   * Engine input for every exercise of the active plan and session, so a session started
+   * offline already has it: the last 8 ended sessions per name and all-time bests.
+   */
+  private async exerciseHistory(db: PoolClient, session: Session | null): Promise<Record<string, ExerciseHistory>> {
+    const planned = (await db.query(`select distinct e.name from public.training_plans p join public.training_plan_weeks w on w.training_plan_id=p.id
+      join public.training_plan_days d on d.week_id=w.id join public.training_plan_exercises e on e.day_id=d.id where p.is_active`)).rows;
+    const names = [...new Set([...(session?.prescription.exercises.map(e => e.name) ?? []), ...planned.map(r => r.name as string)])];
+    const recent = (await db.query(`select s.local_date::text as date,e->>'name' as name,coalesce(jsonb_agg(jsonb_build_object(
+        'setIndex',l.set_index,'status',l.status,'weightKg',l.weight_kg,'reps',l.reps) order by l.set_index) filter (where l.id is not null),'[]') as sets
+      from public.workout_sessions s cross join lateral jsonb_array_elements(s.prescription->'exercises') e
+      left join public.set_logs l on l.session_id=s.id and l.plan_exercise_id=e->>'id'
+      where s.status='ended' and e->>'name'=any($1::text[])
+      group by s.id,s.local_date,s.started_at,e->>'id',e->>'name' order by s.local_date,s.started_at,s.id`,[names])).rows;
+    const lifts = (await db.query(`select l.exercise_name as name,l.weight_kg as weight,l.reps from public.set_logs l
+      join public.workout_sessions s on s.id=l.session_id where l.status='done' and s.status='ended' and l.exercise_name=any($1::text[])
+      union all select e.name,e.actual_weight,e.actual_reps from public.workout_log_exercises e
+      join public.workout_logs w on w.id=e.workout_log_id where e.completed and e.name=any($1::text[])`,[names])).rows;
+    return Object.fromEntries(names.map(name => [name, {
+      sessions: recent.filter(r => r.name === name).slice(-8).map(r => ({ date: r.date, sets: r.sets })),
+      best: bestOf(lifts.filter(r => r.name === name).map(r => ({ date: "", weightKg: r.weight === null ? null : Number(r.weight), reps: r.reps }))),
+    }]));
+  }
   async history(user: string): Promise<Session[]> {
     return this.tx(user, async db => {
       const rows = (await db.query("select id from public.workout_sessions order by started_at desc")).rows;
@@ -89,8 +113,10 @@ export class TodayStore {
         union all select e.name,e.actual_weight,e.actual_reps,w.created_at,e.id
         from public.workout_log_exercises e join public.workout_logs w on w.id=e.workout_log_id where e.completed
       ) history order by name,at desc,id desc`)).rows;
-      return { session: active ? await this.read(db, active.id) : null, days, receipts: await this.receipts(db),
-        previous: Object.fromEntries(rows.map(r => [r.name, { weightKg: r.weight === null ? null : Number(r.weight), reps: r.reps }])) };
+      const session = active ? await this.read(db, active.id) : null;
+      return { session, days, receipts: await this.receipts(db),
+        previous: Object.fromEntries(rows.map(r => [r.name, { weightKg: r.weight === null ? null : Number(r.weight), reps: r.reps }])),
+        history: await this.exerciseHistory(db, session) };
     });
   }
   async start(user: string, input: unknown): Promise<Session> {

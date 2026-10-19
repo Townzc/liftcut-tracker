@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { nextTarget, type ActualSet, type ExerciseSession, type ProgressionRule } from "@liftcut/core/progression";
+import { nextTarget, ruleForExercise, type ActualSet, type ExerciseSession, type ProgressionRule } from "@liftcut/core/progression";
 
 const LB = 0.45359237;
 const done = (setIndex: number, weightKg: number | null, reps: number | null): ActualSet => ({ setIndex, status: "done", weightKg, reps });
@@ -132,4 +132,14 @@ test("every outcome explains itself in both languages without leaking empty valu
     const { why } = nextTarget(rule, history);
     for (const text of [why.zh, why.en]) assert.ok(text.length > 10 && !/undefined|null|NaN|Infinity/.test(text), text);
   }
+});
+
+test("prescription rep ranges map to rules; unparseable prescriptions get no automatic target", () => {
+  assert.deepEqual(ruleForExercise({ sets: 3, repRange: "5" }), { kind: "linear", sets: 3, reps: 5, load: { increment: 2.5, unit: "kg" } });
+  for (const repRange of ["8-12", "8–12", " 8 ~ 12 次", "8到12"])
+    assert.deepEqual(ruleForExercise({ sets: 4, repRange }), { kind: "double", sets: 4, minReps: 8, maxReps: 12, load: { increment: 2.5, unit: "kg" } });
+  assert.deepEqual(ruleForExercise({ sets: 2, repRange: "10-15" }, { bodyweight: true }), { kind: "double", sets: 2, minReps: 10, maxReps: 15, load: "bodyweight" });
+  assert.deepEqual(ruleForExercise({ sets: 3, repRange: "5" }, { unit: "lb" })?.kind === "linear" && ruleForExercise({ sets: 3, repRange: "5" }, { unit: "lb" }), { kind: "linear", sets: 3, reps: 5, load: { increment: 5, unit: "lb" } });
+  for (const repRange of ["AMRAP", "30s", "12-8", "0", "", "5x5"]) assert.equal(ruleForExercise({ sets: 3, repRange }), null, repRange);
+  assert.equal(ruleForExercise({ sets: 0, repRange: "5" }), null);
 });

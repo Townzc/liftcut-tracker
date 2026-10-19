@@ -17,6 +17,8 @@ import { PersonalReceipts, RecordSyncStatus } from "@/components/agent/personal-
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
 import { SetHistory } from "./set-history";
 import { RestLength, RestTimerBar, useRestTimer, useScreenWakeLock } from "./session-aids";
+import { ProgressionTarget, SetRecord } from "./progression-hint";
+import { bestOf, mergeBest, type Best } from "@liftcut/core/one-rep-max";
 
 import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
 function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
@@ -31,9 +33,9 @@ function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
   return <li>{exercise?.name??"—"} · {t("set",{number:body.setIndex})} · {t(body.status)}:
     {" "}{body.weightKg??"—"} kg × {body.reps??"—"} · RPE {body.rpe??"—"}</li>;
 }
-function SetRow({ session, exercise, index, saved, previous, busy, submit, onDone }: {
+function SetRow({ session, exercise, index, saved, previous, prior, busy, submit, onDone }: {
   session: Session; exercise: PrescriptionExercise; index: number; saved?: SetLog;
-  previous?: { weightKg: number | null; reps: number | null }; busy: boolean; submit: (p: Pending) => Promise<boolean>;
+  previous?: { weightKg: number | null; reps: number | null }; prior?: Best; busy: boolean; submit: (p: Pending) => Promise<boolean>;
   onDone?: () => void;
 }) {
   const t = useTranslations("today");
@@ -65,6 +67,7 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit, onDon
       <span>{saved ? t(saved.status) : t("unrecorded")}</span></div>
     {saved && !editing ? <>
       <p className="text-sm">{saved.weightKg ?? "—"} kg × {saved.reps ?? "—"} · RPE {saved.rpe ?? "—"}</p>
+      <SetRecord saved={saved} prior={prior} />
       <SetHistory id={saved.id} />
       {!locked && <div className="flex gap-2">
         <Button variant="outline" disabled={busy} onClick={() => setEditing(true)}>{t("correct")}</Button>
@@ -194,10 +197,13 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
       {!conversation && session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
       {!conversation && session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exerciseLabel(exercise.name,locale)}</CardTitle>
         <p className="text-sm text-muted-foreground">{t("target", { sets:exercise.sets,reps:exercise.repRange,rpe:exercise.targetRpe })}</p></CardHeader>
-        <CardContent className="space-y-3"><ExerciseReplacement session={session} exercise={exercise} busy={locked} submit={submit} />{Array.from({ length:exercise.sets },(_,i)=> {
-          const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1);
+        <CardContent className="space-y-3"><ProgressionTarget exercise={exercise} history={data.history?.[exercise.name]} />
+          <ExerciseReplacement session={session} exercise={exercise} busy={locked} submit={submit} />{Array.from({ length:exercise.sets },(_,i)=> {
+          const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1), best = data.history?.[exercise.name]?.best;
+          // Best before this set: earlier sessions plus this session's earlier sets of the same exercise.
+          const prior = best && mergeBest(best, bestOf(session.sets.filter(s=>s.planExerciseId===exercise.id && s.setIndex<=i).map(s=>({...s,date:""}))));
           return <SetRow key={`${session.id}-${i}-${saved?.revision ?? 0}`} session={session} exercise={exercise} index={i+1} saved={saved}
-            previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} busy={locked} submit={submit} onDone={rest.start} />;
+            previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} prior={prior} busy={locked} submit={submit} onDone={rest.start} />;
         })}</CardContent></Card>)}
       {!conversation && <ReplacementReceipts session={session} busy={locked} submit={submit}
         pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />

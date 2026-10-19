@@ -164,3 +164,19 @@ function explain(rule: ProgressionRule, t: Omit<NextTarget, "why">, before: numb
         `Every set reached ${max} reps, the top of the range; add load or a harder variation. No weight is inferred.`);
   }
 }
+
+/**
+ * Default rule for a prescription row: "5" is linear, "8-12" is double progression.
+ * Bodyweight is only assumed when the caller says so (e.g. a catalog entry without
+ * equipment); anything else, such as "AMRAP" or "30s", gets no automatic target.
+ */
+export function ruleForExercise(exercise: { sets: number; repRange: string }, options: { bodyweight?: boolean; unit?: Unit } = {}): ProgressionRule | null {
+  const match = /^\s*(\d{1,2})\s*(?:[-–~～至到]\s*(\d{1,2}))?\s*(?:次|reps?)?\s*$/i.exec(exercise.repRange);
+  if (!match || !Number.isInteger(exercise.sets) || exercise.sets < 1) return null;
+  const min = Number(match[1]), max = Number(match[2] ?? match[1]);
+  if (min < 1 || max < min) return null;
+  const unit = options.unit ?? "kg", load = { increment: unit === "kg" ? 2.5 : 5, unit };
+  if (options.bodyweight) return { kind: "double", sets: exercise.sets, minReps: min, maxReps: max, load: "bodyweight" };
+  return min === max ? { kind: "linear", sets: exercise.sets, reps: min, load } : { kind: "double", sets: exercise.sets, minReps: min, maxReps: max, load };
+}
+
