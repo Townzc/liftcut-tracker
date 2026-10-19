@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { test } from "node:test";
 import { actualWeightSchema } from "@liftcut/core/workout-values";
 import { exerciseLogSchema } from "@liftcut/core/schemas";
@@ -15,7 +15,8 @@ test("shared core imports only its own files and zod", () => {
   for (const file of files) {
     const text = readFileSync(join(coreSource, file), "utf8");
     for (const [, specifier] of text.matchAll(/(?:from|import)\s*\(?\s*"([^"]+)"/g))
-      assert.ok(specifier === "zod" || specifier.startsWith("./"), `${file} imports ${specifier}`);
+      assert.ok(specifier === "zod" || (specifier.startsWith(".") &&
+        !relative(coreSource, join(coreSource, dirname(file), specifier)).startsWith("..")), `${file} imports ${specifier}`);
   }
 });
 

@@ -1,4 +1,4 @@
-import type { LogDraft, ParseContext, ParsedSet } from "../../src/lib/workout-log-parser";
+import type { LogDraft, ParseContext, ParsedSet } from "../workout-log-parser";
 
 // Authored synthetic oracle: no parser calls or observed-output generation.
 // Ten grammar families, fifteen variants each; this is development coverage,

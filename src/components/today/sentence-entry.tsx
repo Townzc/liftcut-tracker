@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Session, StoredSet } from "@/lib/today";
 import type { CommandReceipt, CommandRequest, ParsePreview } from "@/lib/workout-commands";
-import { parseWorkoutLog } from "@/lib/workout-log-parser";
+import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { localContextHash, workoutContext } from "@/lib/workout-context";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
 import { SetHistory } from "./set-history";

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { personalEntrySchema, preferenceKeySchema, type PersonalEntry } from "./personal-records";
-import { parseWorkoutLog, type LogDraft } from "./workout-log-parser";
+import { parseWorkoutLog, type LogDraft } from "@liftcut/core/workout-log-parser";
 import { workoutContext } from "./workout-context";
 import type { Session } from "./today";
 import { recordPeriod } from "./record-period";

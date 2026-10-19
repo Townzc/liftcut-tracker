@@ -4,7 +4,7 @@ import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
 import { startSessionSchema, endSessionSchema, setRequestSchema, localDateAt, type Session, type TodayData, type Prescription, type StoredSet } from "@/lib/today";
 
-import { parseWorkoutLog } from "@/lib/workout-log-parser";
+import { parseWorkoutLog } from "@liftcut/core/workout-log-parser";
 import { parseLogSchema, commandSchema, undoCommandSchema, type ParsePreview, type CommandReceipt, type SetChange } from "@/lib/workout-commands";
 import { workoutCanonical as canonical, storedSet as stored, workoutContext, workoutContextInput } from "@/lib/workout-context";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@/lib/exercise-replacement";

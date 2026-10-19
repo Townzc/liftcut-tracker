@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { PrescriptionExercise, Session } from "@/lib/today";
-import { EXERCISE_CATALOG_VERSION, equipmentIds, exerciseLabel, identifyExercise, replacementCandidates, type Equipment } from "@/lib/exercise-catalog";
+import { EXERCISE_CATALOG_VERSION, equipmentIds, exerciseLabel, identifyExercise, replacementCandidates, type Equipment } from "@liftcut/core/exercise-catalog";
 import { replacementBlocked, type ReplaceExerciseRequest, type UndoReplacementRequest } from "@/lib/exercise-replacement";
 import { localContextHash } from "@/lib/workout-context";
 import type { WorkoutOperation } from "@/lib/workout-outbox";

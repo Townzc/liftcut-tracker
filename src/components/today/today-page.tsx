@@ -12,7 +12,7 @@ import { projectOutbox, type OutboxItem } from "@/lib/workout-outbox";
 import { useWorkoutSync } from "./workout-sync-provider";
 import { ExerciseReplacement, ReplacementReceipts } from "./exercise-replacement";
 import { CoachConversation } from "./coach-conversation";
-import { exerciseCatalog, exerciseLabel } from "@/lib/exercise-catalog";
+import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { PersonalReceipts, RecordSyncStatus } from "@/components/agent/personal-entry";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
 import { SetHistory } from "./set-history";
