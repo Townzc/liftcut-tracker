@@ -43,6 +43,29 @@ async function tap(page:Page,n:number,reps="8") {
   const row=page.getByTestId(`set-${exercise}-${n}`);await row.getByLabel("次数",{exact:true}).fill(reps);
   await row.getByRole("button",{name:"完成",exact:true}).click();await expect(row.getByText("已完成",{exact:true})).toBeVisible();
 }
+test("identical refresh keeps the displayed revision valid; changed data still advances it",async({page})=>{
+  await page.addInitScript(()=>window.addEventListener("liftcut-workout-outbox-change",()=>{
+    document.documentElement.dataset.outboxRefreshed="yes";
+  }));
+  const refreshed=()=>expect(page.locator("html")).toHaveAttribute("data-outbox-refreshed","yes");
+  await login(page);await page.goto("/today");await refreshed();
+  await page.getByLabel("选择今天的训练日").selectOption(day);
+  const before=await snapshot(page);
+  await page.reload();await refreshed();
+  expect((await snapshot(page)).revision).toBe(before.revision);
+  await db.query("update training_plan_days set title='刷新后的训练' where id=$1",[day]);
+  try {
+    await page.reload();await refreshed();
+    const changed=await snapshot(page);
+    expect(changed.revision).toBeGreaterThan(before.revision);
+    expect(changed.confirmed!.days.find(d=>d.id===day)?.title).toBe("刷新后的训练");
+    await page.getByLabel("选择今天的训练日").selectOption(day);
+    await page.getByRole("button",{name:"开始训练",exact:true}).click();
+    await expect(page.getByTestId(`set-${exercise}-1`)).toBeVisible();await synced(page);
+    expect((await db.query("select count(*)::int n from workout_sessions where user_id=$1 and training_plan_id=$2",[user,plan])).rows[0].n).toBe(1);
+  } finally {await db.query("update training_plan_days set title='离线训练' where id=$1",[day]);}
+});
+
 test("fresh real-account bootstrap never sends demo plans or observed health records",async({page})=>{
   const writes:string[]=[];
   page.on("request",r=>{
