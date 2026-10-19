@@ -31,9 +31,11 @@ test("the phone reviews a finished workout: one change accepted and applied thro
   await signIn(page);
   await page.getByRole("link", { name: "教练" }).click(); await page.getByRole("button", { name: "同意并开启" }).click(); await page.goBack();
   await page.getByRole("button", { name: "开始训练" }).click();
+  // The status still reads synced until the start is queued on disk, so wait for the server's session itself.
+  const active = async () => (await db.query("select prescription from workout_sessions where user_id=$1 and status='active'", [user])).rows[0];
+  await expect.poll(active).toBeTruthy();
   const status = page.getByTestId("outbox-status"); await expect(status).toHaveText("已同步");
-  const session = (await db.query("select prescription from workout_sessions where user_id=$1 and status='active'", [user])).rows[0];
-  const squat = session.prescription.exercises.find((e: { name: string }) => e.name === "深蹲").id;
+  const squat = (await active()).prescription.exercises.find((e: { name: string }) => e.name === "深蹲").id;
   for (const n of [1, 2, 3]) {
     const row = page.getByTestId(`set-${squat}-${n}`);
     await row.getByLabel(`第 ${n} 组 重量 (kg)`).fill("60"); await row.getByLabel(`第 ${n} 组 次数`).fill("10");
