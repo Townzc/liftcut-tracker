@@ -19,7 +19,7 @@ import { useWorkout } from "@/lib/workout";
 import { feedback } from "@/lib/workout-aids";
 
 export default function Today() {
-  const { t, locale } = useI18n(), c = useColors(), { outbox, state } = useWorkout();
+  const { t, locale } = useI18n(), c = useColors(), { outbox, state, personal } = useWorkout();
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState<"offlineData" | "localConflict" | null>(null), [dayId, setDayId] = useState("");
   const load = useCallback(async () => {
@@ -33,10 +33,11 @@ export default function Today() {
   }, [outbox]);
   useFocusEffect(useCallback(() => {
     void load();
-    const timer = setInterval(() => void outbox?.drain(), 5000);
-    const foreground = AppState.addEventListener("change", s => { if (s === "active") void outbox?.drain(); });
+    const drain = () => { void outbox?.drain(); void personal?.drain(); };
+    const timer = setInterval(drain, 5000);
+    const foreground = AppState.addEventListener("change", s => { if (s === "active") drain(); });
     return () => { clearInterval(timer); foreground.remove(); };
-  }, [load, outbox]));
+  }, [load, outbox, personal]));
   async function write(operation: WorkoutOperation) {
     if (!outbox) return false;
     try { await outbox.enqueue(operation); setNotice(null); return true; }

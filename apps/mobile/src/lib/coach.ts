@@ -1,5 +1,6 @@
 import { COACH_CONSENT_VERSION, type CoachTurnMessage } from "@liftcut/core/coach-chat";
 import { COACH_STREAM_TYPE, coachStreamParser } from "@liftcut/core/coach-stream";
+import { personalCommandSchema } from "@liftcut/core/personal-records";
 import type { LogDraft } from "@liftcut/core/workout-log-parser";
 import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { z } from "zod";
@@ -10,7 +11,7 @@ const source = z.looseObject({ id: z.string(), topic: z.string(), from: z.string
 const proposal = z.discriminatedUnion("kind", [
   z.looseObject({ kind: z.literal("workout"), hash: z.string(), draft: z.custom<LogDraft>(v => !!v && typeof v === "object"),
     operation: z.custom<WorkoutOperation>(v => !!v && typeof v === "object" && "action" in v && "body" in v) }),
-  z.looseObject({ kind: z.literal("personal") }), z.looseObject({ kind: z.literal("plan") }),
+  z.looseObject({ kind: z.literal("personal"), command: personalCommandSchema }), z.looseObject({ kind: z.literal("plan") }),
 ]);
 const replySchema = z.looseObject({ requestId: z.string(), message: z.string(), sources: z.array(source), proposal: proposal.optional() });
 export type CoachReply = z.infer<typeof replySchema>;

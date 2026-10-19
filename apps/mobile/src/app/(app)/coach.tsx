@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COACH_CONSENT_VERSION, conversationHistory } from "@liftcut/core/coach-chat";
 import { MODEL_DATA } from "@liftcut/core/model-data";
+import { entryLines } from "@liftcut/core/personal-records";
 import { projectOutbox } from "@liftcut/core/workout-outbox";
 import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";
@@ -16,12 +17,12 @@ import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
 import { useWorkout } from "@/lib/workout";
 
-type Turn = { id: string; text: string; reply: "data" | "draft" | "queued" | "closed"; live?: string; lines?: string[]; pending?: boolean; interrupted?: boolean;
+type Turn = { id: string; text: string; reply: "data" | "draft" | "personal" | "queued" | "personalQueued" | "closed" | "stale"; live?: string; lines?: string[]; pending?: boolean; interrupted?: boolean;
   error?: string; sources?: CoachReply["sources"]; proposal?: CoachReply["proposal"] };
 
-/** The web coach on the phone: same endpoint and consent; a workout draft is saved only after confirmation, through the same queue. */
+/** The web coach on the phone: same endpoint and consent; a draft is saved only after confirmation, through the same queues as the web. */
 export default function Coach() {
-  const { session: auth } = useSession(), { t, locale } = useI18n(), c = useColors(), { outbox, state } = useWorkout();
+  const { session: auth } = useSession(), { t, locale } = useI18n(), c = useColors(), { outbox, state, personal } = useWorkout();
   const key = `liftcut-coach-consent:${auth?.user.id}`;
   const [consented, setConsented] = useState<boolean | null>(null), [turns, setTurns] = useState<Turn[]>([]);
   const [text, setText] = useState(""), [busy, setBusy] = useState(false), [notice, setNotice] = useState(false);
@@ -29,7 +30,7 @@ export default function Coach() {
   useEffect(() => { AsyncStorage.getItem(key).then(v => setConsented(v === COACH_CONSENT_VERSION)).catch(() => setConsented(false)); }, [key]);
   useEffect(() => { void outbox?.load().catch(() => {}); }, [outbox]);
   const session = state ? projectOutbox(state).data?.session ?? null : null;
-  const draftId = turns.findLast(x => x.proposal?.kind === "workout")?.id;
+  const draftId = turns.findLast(x => x.proposal?.kind === "workout" || x.proposal?.kind === "personal")?.id;
   const update = (id: string, patch: Partial<Turn>) => setTurns(ts => ts.map(x => x.id === id ? { ...x, ...patch } : x));
   const consent = (on: boolean) => { setConsented(on); void (on ? AsyncStorage.setItem(key, COACH_CONSENT_VERSION) : AsyncStorage.removeItem(key)).catch(() => {}); };
 
@@ -38,22 +39,24 @@ export default function Coach() {
     if (!input || busy || !auth) return;
     const id = randomUUID(), history = conversationHistory(turns);
     // Only the newest draft can be confirmed; a new message closes an unconfirmed one.
-    setTurns(ts => [...ts.map(x => x.id === draftId && x.reply === "draft" ? { ...x, reply: "closed" as const } : x), { id, text: input, reply: "data", pending: true }]);
+    setTurns(ts => [...ts.map(x => x.id === draftId && (x.reply === "draft" || x.reply === "personal") ? { ...x, reply: "closed" as const } : x), { id, text: input, reply: "data", pending: true }]);
     setText(""); setBusy(true);
     try {
       const reply = await askCoach(auth, { id, text: input, history, locale: locale === "en" ? "en" : "zh",
         timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone }, live => update(id, { live }));
-      update(id, { pending: false, lines: [reply.message], sources: reply.sources, proposal: reply.proposal, reply: reply.proposal?.kind === "workout" ? "draft" : "data" });
+      update(id, { pending: false, lines: [reply.message], sources: reply.sources, proposal: reply.proposal, reply: reply.proposal?.kind === "workout" ? "draft" : reply.proposal?.kind === "personal" ? "personal" : "data" });
     } catch (error) {
       update(id, { pending: false, interrupted: true, error: error instanceof ApiError ? error.code : error instanceof Error ? error.message : "UNKNOWN" });
     } finally { setBusy(false); }
   }
   async function confirm(turn: Turn) {
     const p = turn.proposal;
-    if (p?.kind !== "workout" || !outbox || busy) return;
+    if (busy || !p || p.kind === "plan") return;
     setBusy(true); setNotice(false);
     try {
-      if (!session || await contextHash(session) !== p.hash) return update(turn.id, { reply: "closed" });
+      if (p.kind === "personal") { if (!personal) return; await personal.submit(p.command); update(turn.id, { reply: "personalQueued" }); void personal.drain(); return; }
+      if (!outbox) return;
+      if (!session || await contextHash(session) !== p.hash) return update(turn.id, { reply: "stale" });
       await outbox.enqueue(p.operation); update(turn.id, { reply: "queued" }); void outbox.drain();
     } catch { setNotice(true); } finally { setBusy(false); }
   }
@@ -68,17 +71,23 @@ export default function Coach() {
   </Card></ScrollView>;
   return <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === "ios" ? "padding" : undefined}>
     <ScrollView ref={scroll} contentContainerStyle={styles.content} onContentSizeChange={() => scroll.current?.scrollToEnd()} keyboardShouldPersistTaps="handled">
-      {turns.map(turn => { const draft = turn.proposal?.kind === "workout" ? turn.proposal.draft : null; return <View key={turn.id} testID="coach-turn" style={styles.gap}>
+      {turns.map(turn => { const p = turn.proposal, draft = p?.kind === "workout" ? p.draft : null, entry = p?.kind === "personal" && p.command.action === "create" ? p.command.entry : null;
+        const open = turn.id === draftId && (turn.reply === "draft" || turn.reply === "personal");
+        return <View key={turn.id} testID="coach-turn" style={styles.gap}>
         <Text style={[text_, styles.user, { backgroundColor: c.card }]}>{turn.text}</Text>
         <Text style={text_}>{turn.interrupted ? t("coachFailed", { code: turn.error ?? "UNKNOWN" }) : turn.pending ? turn.live || t("coachReplying") : turn.lines?.join("\n")}</Text>
         {turn.sources?.map(s => <Text key={s.id} style={muted}>{t("coachSource", { topic: s.topic, from: s.from, to: s.to, count: s.rows.length })}</Text>)}
-        {turn.proposal && turn.proposal.kind !== "workout" && <Text style={muted}>{t("coachWebOnly")}</Text>}
-        {draft && (turn.reply === "queued" ? <Text accessibilityRole="alert" style={text_}>{t("coachQueued")}</Text>
-          : turn.reply === "closed" || turn.id !== draftId || !session ? <Text style={muted}>{t("coachStale")}</Text>
-          : <Card><Text style={[text_, styles.bold]}>{t("coachDraft")}{draft.kind !== "end" ? ` · ${session.prescription.exercises.find(e => e.id === draft.exerciseId)?.name ?? ""}` : ""}</Text>
+        {p?.kind === "plan" && <Text style={muted}>{t("coachWebOnly")}</Text>}
+        {(turn.reply === "queued" || turn.reply === "personalQueued") && <Text accessibilityRole="alert" style={text_}>{t("coachQueued")}</Text>}
+        {(draft || entry) && !open && turn.reply !== "queued" && turn.reply !== "personalQueued" && <Text style={muted}>{t(turn.reply === "stale" ? "coachStale" : "coachClosed")}</Text>}
+        {entry && open && <Card><Text style={[text_, styles.bold]}>{t("coachRecordDraft")} · {entry.date}</Text>
+          {entryLines(entry, locale === "en").map((line, i) => <Text key={i} style={text_}>{line}</Text>)}
+          <Button label={t("coachConfirmRecord")} disabled={busy} onPress={() => void confirm(turn)} />
+          <Text style={muted}>{t("coachRecordUnknown")}</Text></Card>}
+        {draft && open && session && <Card><Text style={[text_, styles.bold]}>{t("coachDraft")}{draft.kind !== "end" ? ` · ${session.prescription.exercises.find(e => e.id === draft.exerciseId)?.name ?? ""}` : ""}</Text>
             <DraftLines draft={draft} session={session} />
             <Button label={t("coachConfirm")} disabled={busy} onPress={() => void confirm(turn)} />
-            <Text style={muted}>{t("sentenceUnknown")}</Text></Card>)}
+            <Text style={muted}>{t("sentenceUnknown")}</Text></Card>}
       </View>; })}
       {notice && <Text accessibilityRole="alert" style={text_}>{t("localConflict")}</Text>}
     </ScrollView>
