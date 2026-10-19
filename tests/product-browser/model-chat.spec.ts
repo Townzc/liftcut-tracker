@@ -15,7 +15,10 @@ test.afterAll(async()=>{await db.end();});
 
 test("model consent, oral body draft, no write until confirmation, signed replay, fresh query and follow-up",async({page})=>{
   const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));await login(page);
-  await expect(page.getByTestId("coach-consent")).toContainText("身体、饮食和训练数据");
+  // The consent lists exactly the categories the allowlist lets through.
+  const categories=page.getByTestId("coach-data-categories").getByRole("listitem");
+  await expect(categories).toHaveCount(7);await expect(categories.nth(2)).toHaveText("饮食记录：日期、餐次、食物名、热量、蛋白质");
+  await page.screenshot({path:"node_modules/.cache/w1b/model-data-consent-mobile.png",fullPage:true});
   await send(page,"你好呀");expect((await db.query("select count(*)::int n from coach_request_usage where user_id=$1",[owner])).rows[0].n).toBe(0);
   await enable(page);await send(page,"昨天早上秤了一下，是七十二点五公斤，帮我补上吧");
   await expect(page.getByTestId("personal-draft")).toContainText("72.5 kg");await expect(page.getByTestId("personal-draft")).toContainText("— cm");expect(await entries(page)).toEqual([]);

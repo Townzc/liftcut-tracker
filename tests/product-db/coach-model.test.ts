@@ -8,6 +8,7 @@ import {signCoachProposal} from "../../src/services/ai/coach-proof";
 import {PersonalRecordStore} from "../../src/services/today/personal-record-store";
 import {TodayStore} from "../../src/services/today/store";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
+import {allowModelRows} from "@liftcut/core/model-data";
 import {requestedReadRange} from "../../src/lib/coach-grounding";
 process.env.COACH_SIGNING_SECRET="synthetic-test-secret-must-never-be-used-in-production";
 test("model proposals and reads preserve transactional ownership, provenance, nulls and retry semantics",async t=>{
@@ -70,6 +71,19 @@ test("model proposals and reads preserve transactional ownership, provenance, nu
       assert.equal((await workout.load(owner)).session?.sets[0].status,"voided");
       assert.deepEqual(await workout.current(owner),(await workout.load(owner)).session);
       assert.equal(await workout.current(other),null);
+    });
+    await t.test("every record read returns only fields on the model data allowlist",async()=>{
+      // Legacy rows for the topics the earlier steps did not fill; the active plan and body records already exist.
+      const log=randomUUID();
+      await admin.query("insert into food_logs(id,user_id,date,meal_type,food_name,calories,protein) values($1,$2,$3,'lunch','鸡胸肉',220,30)",[randomUUID(),owner,day]);
+      await admin.query("insert into workout_logs(id,user_id,date,training_plan_id,week_number,day_number,duration_minutes,completed) values($1,$2,$3,'p',1,1,40,true)",[log,owner,day]);
+      await admin.query("insert into workout_log_exercises(id,workout_log_id,exercise_plan_id,name,actual_weight,actual_reps,actual_rpe,completed) values($1,$2,'e','深蹲',100,5,null,true)",[randomUUID(),log]);
+      await admin.query("insert into user_settings(user_id) values($1) on conflict do nothing",[owner]);
+      for(const topic of ["body","food","workout","plan","profile"] as const){
+        const read=await coach.read(owner,{topic,from:"2026-10-01",to:day},day);
+        assert.ok(read.rows.length>0,topic);assert.deepEqual(allowModelRows(topic,read.rows),read.rows,topic);
+      }
+      const memory=await coach.memory(owner,day);assert.ok(memory.rows.length>0);assert.deepEqual(allowModelRows("memory",memory.rows),memory.rows);
     });
     await t.test("quota reservation is atomic, per account, and private to the restricted runtime",async()=>{
       const attempts=await Promise.allSettled(Array.from({length:10},()=>coach.reserve(owner,randomUUID())));

@@ -7,6 +7,7 @@ import { type CoachRequest, type CoachResponse, type CoachProposal, type CoachSo
 import { bodyExtractionSchema, foodExtractionSchema, personalExtractionSchema, workoutExtractionSchema, groundPersonal, groundWorkout, GroundingError, requestedReadRange } from "@/lib/coach-grounding";
 import { localDateAt, type Session } from "@liftcut/core/today";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
+import { allowModelRows } from "@liftcut/core/model-data";
 import { requireAiProviderConfig } from "./config";
 import { signCoachProposal, type ModelProvenance } from "./coach-proof";
 import { CoachStore, readRecordsSchema, recordTopicSchema } from "./coach-store";
@@ -85,11 +86,13 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     }catch(e){return proposalError(e);}
   };
   const preparePersonal=(args:z.infer<typeof personalExtractionSchema>)=>prepareEntry(args,()=>groundPersonal(args,userTexts,anchor));
+  // Only allowlisted fields reach the provider and the source cards (plan rule 3).
+  const allowed=(read:Promise<CoachSource>)=>read.then(source=>({...source,rows:allowModelRows(source.topic,source.rows)}));
   const readMemory=async(exercise?:string)=>{
     ensureTime();const key=`memory:${exercise??""}`;
     if(readCache.size>=4&&!readCache.has(key))return {error:"READ_LIMIT"};
     try{
-      if(!readCache.has(key))readCache.set(key,guest?Promise.resolve(memorySource(latestMemory(memoryFacts(guest.records),exercise),anchor)):store.memory(owner,anchor,exercise));
+      if(!readCache.has(key))readCache.set(key,allowed(guest?Promise.resolve(memorySource(latestMemory(memoryFacts(guest.records),exercise),anchor)):store.memory(owner,anchor,exercise)));
       const result=await readCache.get(key)!;
       const source={...result,id:exercise?`memory:${hash(exercise).slice(0,16)}`:result.id};
       if(!sources.some(s=>s.id===source.id))sources.push(source);
@@ -110,7 +113,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     if(readCache.size+keys.filter(k=>!readCache.has(k)).length>4)return {error:"READ_LIMIT",instruction:"Answer from existing sources or ask a narrower question."};
     try{
       const loaded=await Promise.all(topics.map((topic,i)=>{
-        if(!readCache.has(keys[i]))readCache.set(keys[i],guest?Promise.resolve().then(()=>readGuestRecords(guest.records,{topic,...range},anchor)):store.read(owner,{topic,...range},anchor));
+        if(!readCache.has(keys[i]))readCache.set(keys[i],allowed(guest?Promise.resolve().then(()=>readGuestRecords(guest.records,{topic,...range},anchor)):store.read(owner,{topic,...range},anchor)));
         return readCache.get(keys[i])!;
       }));
       const bounded=loaded.map(source=>{if(!sources.some(s=>s.id===source.id))sources.push(source);

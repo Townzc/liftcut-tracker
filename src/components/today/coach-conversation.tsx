@@ -29,6 +29,7 @@ import type { CoachTurn } from "@/lib/coach-history";
 import { CoachHistoryControls } from "@/components/agent/coach-history-controls";
 import {activeGuestFacts} from "@/lib/guest-records";
 import {ensureGuestSession} from "@/lib/guest-client";
+import { MODEL_DATA } from "@liftcut/core/model-data";
 
 type Reply = CoachTurn["reply"];
 type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void;initialStatus?:CoachStatus};
@@ -326,8 +327,14 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     {modelStatus?.available&&personal.canWrite&&(!modelEnabled||optionsOpen)&&<section className="text-xs text-muted-foreground" data-testid="coach-consent">
       <p className="py-2">{modelEnabled?(en?"AI conversation settings":"AI 对话设置"):(en?"Enable natural conversation":"开启自然对话")}</p>
       <div className="mt-2 space-y-3 rounded-2xl border p-4 leading-6">
-        <p>{personal.guest?(en?`Guest trial uses ${modelStatus.provider} (${modelStatus.model}). Your messages, up to six complete turns and relevant confirmed local records are sent to the model. Confirmed data stays in this browser until you sign in and confirm import. Guest chat is not saved to a cloud account. Up to 10 AI requests daily (UTC), subject to shared service limits; failed attempts may count. Private browsing or clearing site data can erase local data.`:`访客试用使用 ${modelStatus.provider}（${modelStatus.model}）. 消息、最近六轮完整对话及需要的已确认本机记录会发送给模型. 确认的数据先保存在当前浏览器，登录并确认导入后才同步账号；访客聊天不保存到云端账号. 每日最多 10 次 AI 请求（UTC 重置），另有服务总量限制，失败的请求也可能计入. 无痕浏览结束或清除网站数据可能丢失本机数据.`):en?`To understand your requests, LiftCut sends your messages, the six latest complete turns in this conversation and relevant saved records to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}). This can include body measurements, meals, training data and settings needed for plans. Chat history is saved to your account and can be viewed or deleted from History. Entries are saved only after confirmation, with the original request and quoted values. Deleting chat does not delete confirmed records, plans or approval receipts.`:
-          `开启后，LiftCut 会将你的消息、当前对话最近六轮完整内容及本次需要的记录发送给 ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider}（${modelStatus.model}），其中可能包含身体、饮食和训练数据，以及生成计划所需的个人设置。聊天记录保存在你的账号中，可从历史对话查看或删除。补录仍需你确认后才会保存，并保留该次原话和采用的数值片段。删除聊天不会删除已确认的记录、计划和回执。`}</p>
+        {/* What is sent is rendered from the same list that filters record reads (plan rule 3). */}
+        <p>{personal.guest?(en?`Guest trial uses ${modelStatus.provider} (${modelStatus.model}). Only what the answer needs from the following is sent to the model:`:`访客试用使用 ${modelStatus.provider}（${modelStatus.model}）。只会把回答需要的下列内容发送给模型：`)
+          :en?`To understand your requests, LiftCut sends only what the answer needs from the following to ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider} (${modelStatus.model}):`:`开启后，LiftCut 只会把回答需要的下列内容发送给 ${modelStatus.provider==="deepseek"?"DeepSeek":modelStatus.provider}（${modelStatus.model}）：`}</p>
+        <ul className="list-disc space-y-1 pl-5" data-testid="coach-data-categories">
+          {MODEL_DATA.filter(c=>!personal.guest||!c.accountOnly).map(c=><li key={c.id}>{en?c.en:c.zh}</li>)}
+        </ul>
+        <p>{personal.guest?(en?"Confirmed data stays in this browser until you sign in and confirm import. Guest chat is not saved to a cloud account. Up to 10 AI requests daily (UTC), subject to shared service limits; failed attempts may count. Private browsing or clearing site data can erase local data.":"确认的数据先保存在当前浏览器，登录并确认导入后才同步账号；访客聊天不保存到云端账号。每日最多 10 次 AI 请求（UTC 重置），另有服务总量限制，失败的请求也可能计入。无痕浏览结束或清除网站数据可能丢失本机数据。")
+          :en?"Chat history is saved to your account and can be viewed or deleted from History. Entries are saved only after confirmation, with the original request and quoted values. Deleting chat does not delete confirmed records, plans or approval receipts.":"聊天记录保存在你的账号中，可从历史对话查看或删除。补录仍需你确认后才会保存，并保留该次原话和采用的数值片段。删除聊天不会删除已确认的记录、计划和回执。"}</p>
         <div className="flex flex-wrap gap-2"><Button size="sm" variant={modelEnabled?"outline":"default"} disabled={locked} onClick={()=>{toggleModel(!modelEnabled);setOptionsOpen(false);}}>{modelEnabled?(en?"Turn off natural conversation":"关闭自然对话"):(en?"Agree & enable":"同意并开启")}</Button></div>
         {consentError&&<p role="status">{en?"Your choice could not be saved in this browser.":"无法在此浏览器保存你的选择，请检查存储权限。"}</p>}
       </div>
