@@ -12,6 +12,7 @@
     "lint": "eslint",
     "test": "node --test tests/*.test.mjs && node --test --import tsx tests/*.test.ts",
     "eval:workout-parser": "node --import tsx scripts/eval-workout-parser.ts",
+    "m4:data": "node --import tsx research/m4-parser/scripts/build-data.ts",
     "test:p1:setup": "node --import tsx tests/agent-db/setup.ts",
     "test:p1": "node --conditions=react-server --import tsx --test tests/agent-db/*.test.ts",
     "p1:rehearse": "node --conditions=react-server --import tsx research/p1-application/rehearse.ts",

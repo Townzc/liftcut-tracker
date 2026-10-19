@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "generator": "research/m4-parser/src/synth.ts",
+  "seeds": {
+    "test": 3,
+    "dev": 2,
+    "train": 1
+  },
+  "templates": {
+    "train_and_dev": 96,
+    "test_only": 41
+  },
+  "excludedFromTrain": {
+    "handwrittenAndCorpusTexts": 197
+  },
+  "splits": {
+    "train": {
+      "items": 4000,
+      "rendered": 4246,
+      "droppedAsDuplicateOrEvalText": 246,
+      "inconsistentLabels": 0,
+      "sha256": "dfaf57487f3c26324e440318d28c51eb8f115129a8c23f3c22e83e12886eba79",
+      "intents": {
+        "clarify": 1252,
+        "correct": 454,
+        "end": 95,
+        "record": 1866,
+        "repeat": 144,
+        "skip": 189
+      },
+      "languages": {
+        "en": 1429,
+        "mixed": 383,
+        "zh": 2188
+      },
+      "families": {
+        "clarify_missing_reps": 124,
+        "clarify_missing_unit": 141,
+        "clarify_negation": 131,
+        "clarify_out_of_range": 127,
+        "clarify_plan_not_actual": 130,
+        "clarify_question": 122,
+        "clarify_rpe_scope": 126,
+        "clarify_uncertain_quantity": 163,
+        "clarify_unknown_exercise": 112,
+        "clarify_unsupported_unit": 76,
+        "correct_reps": 233,
+        "correct_rpe": 83,
+        "correct_weight": 138,
+        "end": 95,
+        "record_bodyweight": 265,
+        "record_list": 428,
+        "record_pyramid": 184,
+        "record_uniform": 349,
+        "record_weighted": 640,
+        "repeat": 144,
+        "skip": 189
+      }
+    },
+    "dev": {
+      "items": 500,
+      "rendered": 513,
+      "droppedAsDuplicateOrEvalText": 13,
+      "inconsistentLabels": 0,
+      "sha256": "c853311bc405488e0f8e9bcdf6c36ed25807ab1382bfdca97777ff47a9c53306",
+      "intents": {
+        "clarify": 144,
+        "correct": 57,
+        "end": 13,
+        "record": 246,
+        "repeat": 16,
+        "skip": 24
+      },
+      "languages": {
+        "en": 180,
+        "mixed": 38,
+        "zh": 282
+      },
+      "families": {
+        "clarify_missing_reps": 15,
+        "clarify_missing_unit": 9,
+        "clarify_negation": 11,
+        "clarify_out_of_range": 15,
+        "clarify_plan_not_actual": 12,
+        "clarify_question": 20,
+        "clarify_rpe_scope": 15,
+        "clarify_uncertain_quantity": 18,
+        "clarify_unknown_exercise": 20,
+        "clarify_unsupported_unit": 9,
+        "correct_reps": 33,
+        "correct_rpe": 5,
+        "correct_weight": 19,
+        "end": 13,
+        "record_bodyweight": 28,
+        "record_list": 47,
+        "record_pyramid": 20,
+        "record_uniform": 47,
+        "record_weighted": 104,
+        "repeat": 16,
+        "skip": 24
+      }
+    },
+    "test": {
+      "items": 500,
+      "rendered": 514,
+      "droppedAsDuplicateOrEvalText": 14,
+      "inconsistentLabels": 0,
+      "sha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+      "intents": {
+        "clarify": 145,
+        "correct": 48,
+        "end": 5,
+        "record": 259,
+        "repeat": 17,
+        "skip": 26
+      },
+      "languages": {
+        "en": 152,
+        "mixed": 61,
+        "zh": 287
+      },
+      "families": {
+        "clarify_missing_reps": 17,
+        "clarify_missing_unit": 20,
+        "clarify_negation": 13,
+        "clarify_out_of_range": 19,
+        "clarify_plan_not_actual": 15,
+        "clarify_question": 12,
+        "clarify_rpe_scope": 14,
+        "clarify_uncertain_quantity": 17,
+        "clarify_unknown_exercise": 9,
+        "clarify_unsupported_unit": 9,
+        "correct_reps": 20,
+        "correct_rpe": 18,
+        "correct_weight": 10,
+        "end": 5,
+        "record_bodyweight": 37,
+        "record_list": 59,
+        "record_pyramid": 27,
+        "record_uniform": 42,
+        "record_weighted": 94,
+        "repeat": 17,
+        "skip": 26
+      }
+    }
+  }
+}
