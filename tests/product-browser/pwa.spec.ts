@@ -46,9 +46,10 @@ test("with the worker active: login, offline outbox sync and the offline page wo
   await page.locator("#email").fill("p1-fixture@example.invalid"); await page.locator("#password").fill("p1-fixture-password");
   await page.locator('button[type="submit"]').click(); await page.waitForURL(/\/(?:onboarding)?$/);
   await page.goto("/today"); await page.getByRole("button", { name: "开始训练", exact: true }).click();
-  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
-  await context.setOffline(true);
+  // The status already read 已同步 before the click: wait for the confirmed session's rows before going offline.
   const row = page.getByTestId(`set-${exercise}-1`);
+  await expect(row.getByLabel("重量 (kg)")).toBeVisible(); await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+  await context.setOffline(true);
   await row.getByLabel("重量 (kg)").fill("70"); await row.getByLabel("次数", { exact: true }).fill("5");
   await row.getByRole("button", { name: "完成", exact: true }).click();
   await expect(page.getByTestId("outbox-status")).toHaveText("待同步 1 条");
