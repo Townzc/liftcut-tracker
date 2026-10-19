@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-19 — M1-6 EAS 构建配置
+
+- **原因**：方案第 4 节 M1-6：开发版和安卓内部测试版要能在真机上安装，验证 SQLite、通知、常亮、震动。
+- **实现**：`apps/mobile/eas.json` 两个内部分发配置：`development`（`expo-dev-client`，APK）和 `preview`（安卓内部测试 APK，版本号远端自增），不含上架配置。新增 `expo-dev-client`、`expo-system-ui`（安卓跟随系统深色模式）；`app.json` 移除模板默认的存储读写和悬浮窗权限。`MOBILE.md` 写明维护者首次构建步骤：`eas login`、写入包名、`eas init`、用 `eas env:set` 设置公开配置、`eas build`。
+- **实际运行**：App 类型检查、单元测试 8 项、Android/iOS 打包、`expo install --check`、`expo-doctor` 20/20 通过；`eas.json` 用 eas-cli 25.2 的 `@expo/eas-json` 解析通过；`expo prebuild --platform android` 生成原生工程并核对权限与主题（生成目录未提交）。
+- **未运行**：EAS 云端构建、安装包、真机（需要维护者的 Expo 账号和手机）；iOS（需要付费 Apple 账号，暂不做）。
+- **待维护者决定**：Expo 账号由谁操作、安卓包名（建议 `com.liftcuttracker.app`），已在会话中询问。
+- **下一步**：M4-1 解析数据规格与合成。
+
 ## 2026-10-19 — M1-5 手机端一句话记录
 
 - **原因**：方案第 4 节 M1-5：在手机上用一句话记录，和网页同一份规则解析、同一条确认后写入路径（第 6 节规则 3、4）。
