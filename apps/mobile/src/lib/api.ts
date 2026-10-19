@@ -20,24 +20,20 @@ async function parse<T>(response: Response, schema: z.ZodType<T>): Promise<T> {
 export async function getJson<T>(path: string, session: Credentials, schema: z.ZodType<T>, fetcher: typeof fetch = fetch): Promise<T> {
   return parse(await fetcher(`${apiBase}${path}`, { headers: apiHeaders(session), cache: "no-store" }), schema);
 }
-/** Writes carry client UUIDs, so retrying the same body after a lost response is safe. */
-export async function postJson<T>(path: string, session: Credentials, body: unknown, schema: z.ZodType<T>, fetcher: typeof fetch = fetch): Promise<T> {
-  return parse(await fetcher(`${apiBase}${path}`, { method: "POST", headers: apiHeaders(session, true), body: JSON.stringify(body) }), schema);
-}
-
-// The subset of GET /api/workout-sessions the app uses; unknown fields are dropped.
+// Checks the fields the app relies on; loose objects keep the rest, because the offline
+// outbox stores and projects the server's full snapshot.
 const source = z.enum(["user_entered", "user_confirmed_prefill", "user_said"]).nullable();
-const set = z.object({ id: z.string(), sessionId: z.string(), planExerciseId: z.string(), setIndex: z.number().int(), revision: z.number().int(),
+const set = z.looseObject({ id: z.string(), sessionId: z.string(), planExerciseId: z.string(), setIndex: z.number().int(), revision: z.number().int(),
   status: z.enum(["done", "skipped", "voided"]), weightKg: z.number().nullable(), reps: z.number().int().nullable(), rpe: z.number().nullable(),
   weightSource: source, repsSource: source, inputUnit: z.enum(["kg", "lb"]), sourceRef: z.string(), exerciseName: z.string(), updatedAt: z.string() });
-const exercise = z.object({ id: z.string(), name: z.string(), sets: z.number().int(), repRange: z.string(), targetRpe: z.number(),
+const exercise = z.looseObject({ id: z.string(), name: z.string(), sets: z.number().int(), repRange: z.string(), targetRpe: z.number(),
   originalPlanExerciseId: z.string().optional() });
-export const sessionSchema = z.object({
-  id: z.string(), status: z.enum(["active", "ended", "cancelled"]), revision: z.number().int(),
+export const sessionSchema = z.looseObject({
+  id: z.string(), userId: z.string(), status: z.enum(["active", "ended", "cancelled"]), revision: z.number().int(),
   prescription: z.object({ title: z.string(), exercises: z.array(exercise) }), sets: z.array(set),
 });
 const actual = z.object({ setIndex: z.number().int(), status: z.enum(["done", "skipped", "voided"]), weightKg: z.number().nullable(), reps: z.number().int().nullable() });
-export const todaySchema = z.object({
+export const todaySchema = z.looseObject({
   days: z.array(z.object({ id: z.string(), weekNumber: z.number().int(), dayNumber: z.number().int(), title: z.string() })),
   session: sessionSchema.nullable(),
   previous: z.record(z.string(), z.object({ weightKg: z.number().nullable(), reps: z.number().int().nullable() })).default({}),
