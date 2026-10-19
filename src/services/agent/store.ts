@@ -162,6 +162,16 @@ export class AgentStore {
     });
   }
 
+  /** An extra audit event on the caller's own run, e.g. the review a proposal came from. */
+  async annotate(userId: string, id: string, type: string, data: unknown): Promise<Outcome<true>> {
+    return this.tx(userId, async db => {
+      const run = await this.run(db, userId, id);
+      if (!run) return fail("NOT_FOUND");
+      await this.event(db, run, type, "system", data);
+      return { ok: true, value: true };
+    });
+  }
+
   async recent(userId: string): Promise<Outcome<RunView[]>> {
     return this.tx(userId, async db => {
       const runs = (await db.query<Row>(`select * from agent_private.runs where user_id=$1 and base_state_hash is not null

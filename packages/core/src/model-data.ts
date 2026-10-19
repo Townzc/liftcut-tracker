@@ -20,7 +20,7 @@ export const MODEL_DATA: readonly ModelDataCategory[] = [
     zh: "已确认的最新记录：体重、腰围、各动作最近重量、你说过的训练偏好（目标、时间、器械、饮食、伤病、单位）",
     en: "Latest confirmed values: weight, waist, latest load per exercise, and the training preferences you stated (goal, schedule, equipment, diet, injuries, units)" },
   { id: "plans", topics: ["plan", "nutrition"], accountOnly: true, fields: ["plan", "week", "day", "title", "exercise", "targetSets", "targetReps", "targetRpe",
-    "calorieTarget", "proteinTarget", "mealType", "foods", "actual"],
+    "calorieTarget", "proteinTarget", "mealType", "foods", "actual", "rule", "candidates"],
     zh: "当前训练计划与营养计划（目标值，不是实际记录）", en: "Your current training and nutrition plans (targets, not actual records)" },
   { id: "profile", topics: ["profile"], accountOnly: true, fields: ["fitnessGoal", "experience", "equipment", "sessionMinutes", "weeklyTrainingDays", "targetWeightKg",
     "calorieTarget", "proteinTarget", "actual"],
