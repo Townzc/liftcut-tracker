@@ -16,9 +16,10 @@ async function planThroughLedger(page:Page){
 }
 async function finishSquats(page:Page){
   await page.goto("/today");await page.getByRole("button",{name:"开始训练",exact:true}).click();
-  await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
-  const session=(await db.query("select prescription from workout_sessions where user_id=$1 and status='active'",[owner])).rows[0];
-  const squat=session.prescription.exercises.find((e:{name:string})=>e.name==="深蹲").id;
+  // The status still reads synced until the start is queued on disk, so wait for the server's session itself.
+  const active=async()=>(await db.query("select prescription from workout_sessions where user_id=$1 and status='active'",[owner])).rows[0];
+  await expect.poll(active).toBeTruthy();await expect(page.getByTestId("outbox-status")).toHaveText("已同步");
+  const squat=(await active()).prescription.exercises.find((e:{name:string})=>e.name==="深蹲").id;
   for(const n of [1,2,3]){
     const row=page.getByTestId(`set-${squat}-${n}`);
     await row.getByLabel("重量 (kg)").fill("60");await row.getByLabel("次数").fill("10");await row.getByRole("button",{name:"完成",exact:true}).click();
