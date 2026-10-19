@@ -1,0 +1,58 @@
+{
+  "state": "done-consistency-below-threshold",
+  "lastStep": "hashes",
+  "smoke": true,
+  "commit": "d4dd975e8985cab022ecd6306c4881b15edc42dc",
+  "steps": [
+    {
+      "step": "env",
+      "seconds": 0,
+      "exit": 0
+    },
+    {
+      "step": "python",
+      "seconds": 11,
+      "exit": 0
+    },
+    {
+      "step": "base",
+      "seconds": 4,
+      "exit": 0
+    },
+    {
+      "step": "data",
+      "seconds": 3,
+      "exit": 0
+    },
+    {
+      "step": "train",
+      "seconds": 67,
+      "exit": 0
+    },
+    {
+      "step": "eval-merged",
+      "seconds": 152,
+      "exit": 0
+    },
+    {
+      "step": "export",
+      "seconds": 38,
+      "exit": 0
+    },
+    {
+      "step": "eval-q4",
+      "seconds": 83,
+      "exit": 0
+    },
+    {
+      "step": "consistency",
+      "seconds": 0,
+      "exit": 0
+    },
+    {
+      "step": "hashes",
+      "seconds": 12,
+      "exit": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "seed": 20261019,
+  "steps": 3,
+  "train_examples": 16,
+  "dev_examples": 16,
+  "batch": 4,
+  "lr": 0.0002,
+  "rank": 16,
+  "dtype": "torch.float32",
+  "device": "cpu",
+  "dev_loss": 1.14948,
+  "log": [
+    {
+      "step": 3,
+      "loss": 2.29344
+    }
+  ],
+  "seconds": 48.9
+}
