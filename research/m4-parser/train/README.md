@@ -8,6 +8,7 @@
 - **导出**（`export_gguf.py`）：llama.cpp 自带转换器转 f16，再用 llama.cpp 量化为 Q4_K_M。转换器取自固定版本 `llama-cpp-python==0.3.36` 的源码包（`llama-cpp-python.sha256` 与 PyPI 公布值一致），与一致性检查所用的 llama.cpp 相同。
 - **一致性**（`consistency.py`）：逐条比较合并模型与 Q4_K_M 的答案（原文与解析后的 JSON），解析后一致率低于 0.95 时，`run.json` 的最终状态为 `done-consistency-below-threshold`，其余结果与哈希照常写入，不删除任何文件。
 - **只入库指标和哈希**：结果写入 `results/run-<UTC 时间>/`（`run.json` 每步用时与退出码、`train_metrics.json`、`metrics-*.json`、`consistency.json`、`sha256.txt`）。权重、日志留在 `WORK_DIR`（默认 `~/liftcut-m4`）。
-- **时限**：`MAX_SECONDS`（默认 14400 秒）是整次运行的上限，超时停止并记录在哪一步。失败时该步日志末尾 80 行写入结果目录，不自动重试。
+- **启动检查**：完整运行要求 CUDA 可用，训练显式选择 CUDA；只有 `SMOKE=1` 选择 CPU。`python research/m4-parser/test_runner.py -v` 用本机替身检查真实脚本入口、失败记录、设备选择和超时，不下载依赖或模型。
+- **时限**：`MAX_SECONDS`（默认 14400 秒）限制整次任务，超时发 TERM，10 秒后仍未退出则强制结束该步骤进程组，记录在哪一步。失败时该步日志末尾 80 行写入结果目录，不自动重试。脚本不会关闭云服务器，计费直到平台关机/释放为止。
 
 冒烟测试（CPU、16 条数据、3 步）：`SMOKE=1 WORK_DIR=/tmp/m4 bash research/m4-parser/run_all.sh`。
