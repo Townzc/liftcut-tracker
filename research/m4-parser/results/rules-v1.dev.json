@@ -1,0 +1,996 @@
+{
+  "gold": "research/m4-parser/data/generated/dev.jsonl",
+  "system": "rules-v1",
+  "total": 500,
+  "exact": 163,
+  "exactRate": 0.326,
+  "intentAccuracy": 0.326,
+  "fieldAccuracy": 0.0708,
+  "invented": 0,
+  "omissionRate": 0.927,
+  "correctionLocalization": 0,
+  "clarifyPrecision": 0.2994,
+  "clarifyRecall": 1,
+  "jsonValidRate": null,
+  "schemaValidRate": null,
+  "latencyMs": {
+    "p50": 0.027,
+    "p95": 0.097,
+    "max": 0.74
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      18,
+      18
+    ],
+    "record_list": [
+      5,
+      47
+    ],
+    "clarify_missing_reps": [
+      15,
+      15
+    ],
+    "record_uniform": [
+      3,
+      47
+    ],
+    "correct_weight": [
+      0,
+      19
+    ],
+    "clarify_plan_not_actual": [
+      12,
+      12
+    ],
+    "correct_reps": [
+      0,
+      33
+    ],
+    "skip": [
+      1,
+      24
+    ],
+    "record_pyramid": [
+      0,
+      20
+    ],
+    "clarify_out_of_range": [
+      15,
+      15
+    ],
+    "record_weighted": [
+      8,
+      104
+    ],
+    "clarify_missing_unit": [
+      9,
+      9
+    ],
+    "record_bodyweight": [
+      2,
+      28
+    ],
+    "clarify_unsupported_unit": [
+      9,
+      9
+    ],
+    "repeat": [
+      0,
+      16
+    ],
+    "clarify_rpe_scope": [
+      15,
+      15
+    ],
+    "end": [
+      0,
+      13
+    ],
+    "clarify_unknown_exercise": [
+      20,
+      20
+    ],
+    "clarify_question": [
+      20,
+      20
+    ],
+    "clarify_negation": [
+      11,
+      11
+    ],
+    "correct_rpe": [
+      0,
+      5
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      94,
+      282
+    ],
+    "mixed": [
+      13,
+      38
+    ],
+    "en": [
+      56,
+      180
+    ]
+  },
+  "failures": [
+    {
+      "id": "dev-00001",
+      "text": "那个，Deadlift 245公斤 12,10,11,10，每组 RPE 6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Conventional barbell deadlift",
+        "sets": [
+          {
+            "weight": 245,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 6.5
+          },
+          {
+            "weight": 245,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": 6.5
+          },
+          {
+            "weight": 245,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": 6.5
+          },
+          {
+            "weight": 245,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00003",
+      "text": "55kg 4x11, last set rpe 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿绳索划船",
+        "sets": [
+          {
+            "weight": 55,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 55,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 55,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 55,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00004",
+      "text": "OK，第5组重量其实是42千克",
+      "gold": {
+        "intent": "correct",
+        "exercise": "哑铃颈后臂屈伸",
+        "setIndex": 5,
+        "changes": {
+          "weight": 42,
+          "unit": "kg"
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00005",
+      "text": "好，40千克 2x11，最后一组 RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃硬拉",
+        "sets": [
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00007",
+      "text": "change the last set to nineteen reps",
+      "gold": {
+        "intent": "correct",
+        "exercise": "Single-leg machine curl",
+        "setIndex": 4,
+        "changes": {
+          "reps": 19
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00008",
+      "text": "alright, skip set 4",
+      "gold": {
+        "intent": "skip",
+        "exercise": "Cable triceps pushdown",
+        "setIndex": 4
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00009",
+      "text": "22.5 kilos x 8, then 25 kg x 5",
+      "gold": {
+        "intent": "record",
+        "exercise": "器械提踵",
+        "sets": [
+          {
+            "weight": 22.5,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 25,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00010",
+      "text": "好，第5组重量其实是22 kg",
+      "gold": {
+        "intent": "correct",
+        "exercise": "壶铃分腿蹲",
+        "setIndex": 5,
+        "changes": {
+          "weight": 22,
+          "unit": "kg"
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00011",
+      "text": "嗯，壶铃分腿蹲 34公斤 2x4，每组 RPE 7",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃分腿蹲",
+        "sets": [
+          {
+            "weight": 34,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 7
+          },
+          {
+            "weight": 34,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00013",
+      "text": "嗯，更正：第四组其实是十三个",
+      "gold": {
+        "intent": "correct",
+        "exercise": "腿举机提踵",
+        "setIndex": 4,
+        "changes": {
+          "reps": 13
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00015",
+      "text": "did 14 reps of machine calf raise at 125 lb",
+      "gold": {
+        "intent": "record",
+        "exercise": "器械提踵",
+        "sets": [
+          {
+            "weight": 125,
+            "unit": "lb",
+            "reps": 14,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00017",
+      "text": "alright, 42kgs 10 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "仰卧哑铃臂屈伸",
+        "sets": [
+          {
+            "weight": 42,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00018",
+      "text": "腿举机提踵 180 千克 2x10，每组 RPE 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "Leg press calf raise",
+        "sets": [
+          {
+            "weight": 180,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": 6
+          },
+          {
+            "weight": 180,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00019",
+      "text": "bodyweight x thirty, rpe 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "自重分腿蹲",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 30,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00021",
+      "text": "so 2 sets of 6 at 72.5kgs, last set rpe 9",
+      "gold": {
+        "intent": "record",
+        "exercise": "史密斯分腿蹲",
+        "sets": [
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 9
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00022",
+      "text": "嗯，五公斤 四组每组十二个，每组都是RPE 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索颈后臂屈伸",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 6
+          },
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 6
+          },
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 6
+          },
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00023",
+      "text": "OK，杠铃弯举52.5 千克，分别5/3/5个，每组都是RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Barbell curl",
+        "sets": [
+          {
+            "weight": 52.5,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": 9.5
+          },
+          {
+            "weight": 52.5,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 9.5
+          },
+          {
+            "weight": 52.5,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00027",
+      "text": "好，同上，再来两组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "杠铃弯举",
+        "count": 2
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00029",
+      "text": "好，器械推胸 七点五 千克 十一、九，每组 RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿器械推胸",
+        "sets": [
+          {
+            "weight": 7.5,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": 9.5
+          },
+          {
+            "weight": 7.5,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00030",
+      "text": "同上，再来四组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "Machine chest press",
+        "count": 4
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00031",
+      "text": "did five reps of Cable crunch at forty kgs",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索卷腹",
+        "sets": [
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00032",
+      "text": "same again",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "坐姿器械划船",
+        "count": 1
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00033",
+      "text": "OK，最后一组改成12个",
+      "gold": {
+        "intent": "correct",
+        "exercise": "哑铃分腿蹲",
+        "setIndex": 5,
+        "changes": {
+          "reps": 12
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00035",
+      "text": "那个，训练完成",
+      "gold": {
+        "intent": "end"
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00038",
+      "text": "alright, Smith machine squat 75kgs, sets of 4/2/4/4",
+      "gold": {
+        "intent": "record",
+        "exercise": "Smith machine squat",
+        "sets": [
+          {
+            "weight": 75,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00040",
+      "text": "嗯，单臂壶铃推举44公斤，分别3、1、1个，每组 RPE 7.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Single-arm kettlebell press",
+        "sets": [
+          {
+            "weight": 44,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 7.5
+          },
+          {
+            "weight": 44,
+            "unit": "kg",
+            "reps": 1,
+            "rpe": 7.5
+          },
+          {
+            "weight": 44,
+            "unit": "kg",
+            "reps": 1,
+            "rpe": 7.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00041",
+      "text": "OK，18个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Bodyweight squat",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 18,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00042",
+      "text": "OK，同上，再来4组",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "哑铃高脚杯深蹲",
+        "count": 4
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00043",
+      "text": "alright, change the last set to 13 reps",
+      "gold": {
+        "intent": "correct",
+        "exercise": "绳索下压",
+        "setIndex": 2,
+        "changes": {
+          "reps": 13
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00044",
+      "text": "那个，哑铃卧推最后一组不练了",
+      "gold": {
+        "intent": "skip",
+        "exercise": "哑铃卧推",
+        "setIndex": 4
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00046",
+      "text": "八十公斤，分别八,八个，每组 RPE 8",
+      "gold": {
+        "intent": "record",
+        "exercise": "Machine calf raise",
+        "sets": [
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": 8
+          },
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": 8
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00047",
+      "text": "刚做完器械提踵，35kg9个",
+      "gold": {
+        "intent": "record",
+        "exercise": "器械提踵",
+        "sets": [
+          {
+            "weight": 35,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00048",
+      "text": "OK，三头下压72.5千克，分别10,10,9,10个",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索下压",
+        "sets": [
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          },
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          },
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00050",
+      "text": "so bodyweight x 7 @ rpe 6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "站姿自重提踵",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 7,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00052",
+      "text": "好，刚做完史密斯深蹲，72.5千克10个",
+      "gold": {
+        "intent": "record",
+        "exercise": "史密斯深蹲",
+        "sets": [
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00053",
+      "text": "Dumbbell curl 6kgs 2x4, all at rpe 6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃弯举",
+        "sets": [
+          {
+            "weight": 6,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 6.5
+          },
+          {
+            "weight": 6,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00054",
+      "text": "36 kilos x 15",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃卧推",
+        "sets": [
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00055",
+      "text": "嗯，237.5千克，分别4/2/3/4个，每组都是RPE 7.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 237.5,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 7.5
+          },
+          {
+            "weight": 237.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": 7.5
+          },
+          {
+            "weight": 237.5,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 7.5
+          },
+          {
+            "weight": 237.5,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": 7.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00057",
+      "text": "Dumbbell Romanian deadlift 20 lbs, sets of 4/3",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃罗马尼亚硬拉",
+        "sets": [
+          {
+            "weight": 20,
+            "unit": "lb",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 20,
+            "unit": "lb",
+            "reps": 3,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "dev-00058",
+      "text": "刚做完高位下拉，22.5千克8个，rpe 10",
+      "gold": {
+        "intent": "record",
+        "exercise": "Lat pulldown",
+        "sets": [
+          {
+            "weight": 22.5,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": 10
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    }
+  ]
+}

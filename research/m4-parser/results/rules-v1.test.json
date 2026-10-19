@@ -1,0 +1,1034 @@
+{
+  "gold": "research/m4-parser/data/generated/test.jsonl",
+  "system": "rules-v1",
+  "total": 500,
+  "exact": 142,
+  "exactRate": 0.284,
+  "intentAccuracy": 0.284,
+  "fieldAccuracy": 0,
+  "invented": 6,
+  "omissionRate": 1,
+  "correctionLocalization": 0,
+  "clarifyPrecision": 0.2857,
+  "clarifyRecall": 0.9793,
+  "jsonValidRate": null,
+  "schemaValidRate": null,
+  "latencyMs": {
+    "p50": 0.023,
+    "p95": 0.081,
+    "max": 0.879
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      17,
+      17
+    ],
+    "clarify_missing_unit": [
+      17,
+      20
+    ],
+    "correct_rpe": [
+      0,
+      18
+    ],
+    "record_weighted": [
+      0,
+      94
+    ],
+    "clarify_missing_reps": [
+      17,
+      17
+    ],
+    "clarify_negation": [
+      13,
+      13
+    ],
+    "skip": [
+      0,
+      26
+    ],
+    "record_list": [
+      0,
+      59
+    ],
+    "record_pyramid": [
+      0,
+      27
+    ],
+    "clarify_rpe_scope": [
+      14,
+      14
+    ],
+    "clarify_question": [
+      12,
+      12
+    ],
+    "repeat": [
+      0,
+      17
+    ],
+    "clarify_unknown_exercise": [
+      9,
+      9
+    ],
+    "record_uniform": [
+      0,
+      42
+    ],
+    "record_bodyweight": [
+      0,
+      37
+    ],
+    "correct_reps": [
+      0,
+      20
+    ],
+    "clarify_unsupported_unit": [
+      9,
+      9
+    ],
+    "end": [
+      0,
+      5
+    ],
+    "correct_weight": [
+      0,
+      10
+    ],
+    "clarify_out_of_range": [
+      19,
+      19
+    ],
+    "clarify_plan_not_actual": [
+      15,
+      15
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      79,
+      287
+    ],
+    "en": [
+      43,
+      152
+    ],
+    "mixed": [
+      20,
+      61
+    ]
+  },
+  "failures": [
+    {
+      "id": "test-00003",
+      "text": "alright, make the last set rpe 7",
+      "gold": {
+        "intent": "correct",
+        "exercise": "正握高位下拉",
+        "setIndex": 1,
+        "changes": {
+          "rpe": 7
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00004",
+      "text": "那个，单腿器械弯举这组五 千克推了十个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单腿器械弯举",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00007",
+      "text": "so skipping set 2 of Lying leg curl",
+      "gold": {
+        "intent": "skip",
+        "exercise": "俯卧腿弯举",
+        "setIndex": 2
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00008",
+      "text": "365lb做了几组：11、11、10、10、11，每组都是RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃弯举",
+        "sets": [
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00009",
+      "text": "那个，Kettlebell goblet squat 这组18千克推了8个",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 18,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00010",
+      "text": "dumbbell goblet squat ramping up: 26kgs x 9, then 31 kg x 4, then 36 kgs x 4",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 26,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 31,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00011",
+      "text": "chest-supported dumbbell row at 28 kilos: 11, 11 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "Chest-supported dumbbell row",
+        "sets": [
+          {
+            "weight": 28,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 28,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00013",
+      "text": "Smith machine squat ramping up: 172.5 kilos x 9, then 177.5 kilos x 11",
+      "gold": {
+        "intent": "record",
+        "exercise": "史密斯深蹲",
+        "sets": [
+          {
+            "weight": 172.5,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 177.5,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00015",
+      "text": "那个，壶铃分腿蹲递增：55磅7个，65lb5个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Kettlebell split squat",
+        "sets": [
+          {
+            "weight": 55,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 65,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00019",
+      "text": "6 reps with 36kg, rpe 8.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃地板卧推",
+        "sets": [
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 8.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00020",
+      "text": "好，胸托哑铃划船这组32kg推了7个",
+      "gold": {
+        "intent": "record",
+        "exercise": "胸托哑铃划船",
+        "sets": [
+          {
+            "weight": 32,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00021",
+      "text": "哑铃负重卷腹再来两组一样的",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "哑铃负重卷腹",
+        "count": 2
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00023",
+      "text": "alright, 哑铃弯举 100lb, 5 sets, 5 reps each, last set at rpe 9",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃弯举",
+        "sets": [
+          {
+            "weight": 100,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": 9
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00024",
+      "text": "那个，crunch 做了16个，自重",
+      "gold": {
+        "intent": "record",
+        "exercise": "卷腹",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00025",
+      "text": "坐姿器械划船 set 2 was actually 4",
+      "gold": {
+        "intent": "correct",
+        "exercise": "Seated machine row",
+        "setIndex": 2,
+        "changes": {
+          "reps": 4
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00026",
+      "text": "这组95磅推了4个 RPE6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Dumbbell curl",
+        "sets": [
+          {
+            "weight": 95,
+            "unit": "lb",
+            "reps": 4,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00028",
+      "text": "cable triceps pushdown 这组62.5 千克推了7个",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索下压",
+        "sets": [
+          {
+            "weight": 62.5,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00030",
+      "text": "skipping set 5 of Dumbbell calf raise",
+      "gold": {
+        "intent": "skip",
+        "exercise": "哑铃提踵",
+        "setIndex": 5
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00031",
+      "text": "6 reps with 5kg, rpe 6.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿绳索划船",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 6.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00032",
+      "text": "单臂哑铃划船这组三十四kg推了十三个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单臂哑铃划船",
+        "sets": [
+          {
+            "weight": 34,
+            "unit": "kg",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00033",
+      "text": "cable triceps pushdown 25kgs, 2 sets, 5 reps each",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索下压",
+        "sets": [
+          {
+            "weight": 25,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 25,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00034",
+      "text": "杠铃弯举这组35 千克推了12个",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃弯举",
+        "sets": [
+          {
+            "weight": 35,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00036",
+      "text": "坐姿器械推胸第2组应该是13下",
+      "gold": {
+        "intent": "correct",
+        "exercise": "坐姿器械推胸",
+        "setIndex": 2,
+        "changes": {
+          "reps": 13
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00037",
+      "text": "OK，五组六次 五十 公斤，最后一组 RPE 7",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿哑铃推举",
+        "sets": [
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 50,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00039",
+      "text": "ok kettlebell split squat 14 reps with 8 kilos",
+      "gold": {
+        "intent": "record",
+        "exercise": "Kettlebell split squat",
+        "sets": [
+          {
+            "weight": 8,
+            "unit": "kg",
+            "reps": 14,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00040",
+      "text": "so wrapping up the session",
+      "gold": {
+        "intent": "end"
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00041",
+      "text": "so 哑铃颈后臂屈伸 16 reps with 30kgs, rpe 7",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃颈后臂屈伸",
+        "sets": [
+          {
+            "weight": 30,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00042",
+      "text": "好，这组三十八公斤推了十六个",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 38,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00045",
+      "text": "127.5 千克做了几组：4、2、4、2、3，最后一组 RPE 8.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃俯身划船",
+        "sets": [
+          {
+            "weight": 127.5,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 127.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          },
+          {
+            "weight": 127.5,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 127.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          },
+          {
+            "weight": 127.5,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 8.5
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00047",
+      "text": "OK，杠铃弯举 225kg做了几组：11/11/11/11，最后一组RPE7",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃弯举",
+        "sets": [
+          {
+            "weight": 225,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 225,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 225,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 225,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00048",
+      "text": "哑铃卧推2组3次 40 公斤，每组都是RPE 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "Dumbbell bench press",
+        "sets": [
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 6
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00049",
+      "text": "好，坐姿哑铃推举跳过下一组",
+      "gold": {
+        "intent": "skip",
+        "exercise": "坐姿哑铃推举",
+        "setIndex": 2
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00051",
+      "text": "嗯，更正绳索下压第5组是67.5千克",
+      "gold": {
+        "intent": "correct",
+        "exercise": "绳索下压",
+        "setIndex": 5,
+        "changes": {
+          "weight": 67.5,
+          "unit": "kg"
+        }
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00052",
+      "text": "绳索下压再来5组一样的",
+      "gold": {
+        "intent": "repeat",
+        "exercise": "绳索下压",
+        "count": 5
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00053",
+      "text": "so Barbell bent-over row 190kgs, 3 sets, 12 reps each, last set rpe 8",
+      "gold": {
+        "intent": "record",
+        "exercise": "Barbell bent-over row",
+        "sets": [
+          {
+            "weight": 190,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": null
+          },
+          {
+            "weight": 190,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": null
+          },
+          {
+            "weight": 190,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": 8
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00054",
+      "text": "好，哑铃提踵 75磅做了几组：7、7、7、7，最后一组RPE7",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃提踵",
+        "sets": [
+          {
+            "weight": 75,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 75,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": 7
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00055",
+      "text": "so Cable overhead triceps extension at 45kgs: 6/6/5 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "Cable overhead triceps extension",
+        "sets": [
+          {
+            "weight": 45,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 45,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 45,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00056",
+      "text": "那个，哑铃罗马尼亚硬拉这组14 公斤推了8个",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃罗马尼亚硬拉",
+        "sets": [
+          {
+            "weight": 14,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00059",
+      "text": "ok 8 reps with 70kg @ rpe 6",
+      "gold": {
+        "intent": "record",
+        "exercise": "坐姿腿弯举",
+        "sets": [
+          {
+            "weight": 70,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": 6
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "test-00060",
+      "text": "好，Cable crunch 五十七点五公斤做了几组：八,八,七",
+      "gold": {
+        "intent": "record",
+        "exercise": "绳索卷腹",
+        "sets": [
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    }
+  ]
+}
