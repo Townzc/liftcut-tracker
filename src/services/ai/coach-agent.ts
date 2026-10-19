@@ -7,7 +7,7 @@ import { type CoachRequest, type CoachResponse, type CoachProposal, type CoachSo
 import { bodyExtractionSchema, foodExtractionSchema, personalExtractionSchema, workoutExtractionSchema, groundPersonal, groundWorkout, GroundingError, requestedReadRange } from "@/lib/coach-grounding";
 import { localDateAt, type Session } from "@liftcut/core/today";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
-import { allowModelRows } from "@liftcut/core/model-data";
+import { allowModelObject, allowModelRows } from "@liftcut/core/model-data";
 import { requireAiProviderConfig } from "./config";
 import { signCoachProposal, type ModelProvenance } from "./coach-proof";
 import { CoachStore, readRecordsSchema, recordTopicSchema } from "./coach-store";
@@ -163,8 +163,8 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
             planSnapshot=snapshot;
             const source={...memorySource(snapshot.memory.facts,anchor,snapshot.memory.truncated),id:"memory:planning"};
             if(!sources.some(s=>s.id===source.id))sources.push(source);
-            return {kind,personalization,sourceId:source.id,currentPlans:planSnapshot.editable?undefined:modelPlanData(planSnapshot.currentPlans),editingPendingDraft:!!planSnapshot.draft,editablePlan:planSnapshot.editable?.plan??null,
-              instruction:"Use the automatically loaded personalization; do not ask again for known goal, body values, schedule or equipment. Only clarify genuinely missing/ambiguous constraints. Preserve unrequested fields when adjusting. For a NEW training plan use prepare_training_program: write each workout once and reference it from contiguous phases covering total_weeks. Three months means a 12-week training block; say this explicitly. Keep notes concise. Never output all repeated weeks. Return one preview; only the UI can approve."};
+            return allowModelObject("plan_context",{kind,personalization,sourceId:source.id,currentPlans:planSnapshot.editable?undefined:modelPlanData(planSnapshot.currentPlans),editingPendingDraft:!!planSnapshot.draft,editablePlan:planSnapshot.editable?.plan??null,
+              instruction:"Use the automatically loaded personalization; do not ask again for known goal, body values, schedule or equipment. Only clarify genuinely missing/ambiguous constraints. Preserve unrequested fields when adjusting. For a NEW training plan use prepare_training_program: write each workout once and reference it from contiguous phases covering total_weeks. Three months means a 12-week training block; say this explicitly. Keep notes concise. Never output all repeated weeks. Return one preview; only the UI can approve."});
           }catch{return {error:"PLAN_CONTEXT_UNAVAILABLE",instruction:"Ask the user to complete settings or retry; do not invent a plan from unavailable data."};}
         })}),
       prepare_training_plan:tool({description:"Publish a complete training plan preview using the loaded context. No approval or activation. Preserve unrequested content when adjusting.",
@@ -191,9 +191,9 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
             currentSource={id:`workout:current:${session?.id??"none"}`,topic:"workout",from:session?.localDate??anchor,to:session?.localDate??anchor,readAt:new Date().toISOString(),
               rows:session?[{id:session.id,date:session.localDate,status:session.status,actualSets}]:[],
               summary:{recordCount:session?1:0,complete:true,completedSessions:session?.status==="ended"&&actualSets.length?1:0,scope:"Current session only; not full date-range history"},truncated:false};
-            return session?{sourceId:currentSource.id,readAt:currentSource.readAt,date:session.localDate,status:session.status,id:session.id,revision:session.revision,exercises:session.prescription.exercises.map(e=>({id:e.id,name:e.name})),
+            return allowModelObject("current_workout",session?{sourceId:currentSource.id,readAt:currentSource.readAt,date:session.localDate,status:session.status,id:session.id,revision:session.revision,exercises:session.prescription.exercises.map(e=>({id:e.id,name:e.name})),
               actualSets:session.sets.map(s=>({exerciseId:s.planExerciseId,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe,status:s.status})),
-              selectedExerciseId:input.selectedExerciseId??null}:{sourceId:currentSource.id,active:false};
+              selectedExerciseId:input.selectedExerciseId??null}:{sourceId:currentSource.id,active:false});
           }catch{readFailed=true;return {error:"READ_UNAVAILABLE"};}
         })}),
       prepare_body:tool({description:"Prepare ONE unsaved body measurement. Weight and waist use exact numeric quotes with units; unmeasured fields are JSON null. Multiple actual measurements on one date are allowed. A separate UI confirmation is required.",inputSchema:bodyExtractionSchema,

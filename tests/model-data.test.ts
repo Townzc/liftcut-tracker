@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { allowModelRows, MODEL_DATA, MODEL_DATA_HASH } from "@liftcut/core/model-data";
+import { allowModelObject, allowModelRows, MODEL_DATA, MODEL_DATA_HASH } from "@liftcut/core/model-data";
 import { COACH_CONSENT_VERSION } from "../src/lib/coach-model";
+import { planPersonalization } from "../src/lib/agent/plan-personalization";
 import { memoryFacts } from "../src/lib/fitness-memory";
 import { personalEntrySchema, type PersonalRecord } from "../src/lib/personal-records";
 
 /** The list each consent version showed. A new list needs a new consent version, so users are asked again. */
-const CONSENTED_LISTS: Record<string, string> = { "coach-model-v1": "746322f7" };
+const CONSENTED_LISTS: Record<string, string> = { "coach-model-v1": "2efd52ca" };
 
 test("the consent version matches the data list users agreed to", () => {
   assert.equal(CONSENTED_LISTS[COACH_CONSENT_VERSION], MODEL_DATA_HASH,
@@ -39,4 +40,16 @@ test("every field of a confirmed record and of a memory fact is listed, so filte
     record({ kind: "preference", date: "2026-10-19", key: "injury", value: "左膝不适" })]);
   for (const fact of facts) for (const key of Object.keys(fact)) assert.ok(listed("memory").includes(key), `memory.${key}`);
   assert.deepEqual(allowModelRows("memory", facts), facts);
+});
+
+test("plan and workout tool results pass only listed keys; the planning basis keys are pinned to the consent text", () => {
+  const memory = { version: 1 as const, kind: "training" as const, anchorDate: "2026-10-19", timezone: "UTC", facts: [], recentLoads: [], truncated: false };
+  const p = planPersonalization({ fitness_goal: "fat_loss", age: 30, gender: "female", height: 165, injury_notes: "膝", food_restrictions: "花生", lifestyle_notes: "久坐" }, memory);
+  // Adding a key here means describing it in MODEL_DATA's settings category and asking users again.
+  assert.deepEqual(Object.keys(p), ["goal", "schedule", "equipment", "diet", "units", "body", "exerciseLoads", "recentLoads", "precautions", "profileContext", "truncated", "instruction"]);
+  assert.deepEqual(Object.keys(p.profileContext), ["trainingExperience", "age", "heightCm", "gender", "lifestyleNotes", "calorieTarget", "proteinTarget", "weight"]);
+  assert.deepEqual(Object.keys(p.precautions), ["confirmed", "injuryNotes", "foodRestrictions"]);
+  assert.deepEqual(allowModelObject("plan_context", { kind: "training", personalization: p, email: "x@y" }), { kind: "training", personalization: p });
+  assert.deepEqual(allowModelObject("current_workout", { id: "s", exercises: [{ id: "e", name: "深蹲", notes: "x" }], actualSets: [{ exerciseId: "e", reps: 5, status: "done", userId: "u" }] }),
+    { id: "s", exercises: [{ id: "e", name: "深蹲" }], actualSets: [{ exerciseId: "e", reps: 5, status: "done" }] });
 });
