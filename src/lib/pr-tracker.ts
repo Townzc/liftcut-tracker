@@ -1,3 +1,4 @@
+import { bestOneRepMax, estimateOneRepMax, type OneRepMaxEstimate } from "@liftcut/core/one-rep-max";
 import type { WorkoutLog } from "@liftcut/core/types";
 import { formatDisplayDate } from "@/lib/date";
 
@@ -7,7 +8,7 @@ export interface PersonalRecord {
   maxWeightDate: string;
   maxReps: number;
   maxRepsDate: string;
-  bestEstimated1RM: number;
+  bestEstimated1RM: number | null;
   best1RMDate: string;
 }
 
@@ -22,14 +23,13 @@ export interface RecentPR {
 export interface ExerciseProgressPoint {
   date: string;
   label: string;
-  estimated1RM: number;
+  estimated1RM: number | null;
   maxWeight: number;
 }
 
-function estimate1RM(weight: number, reps: number): number {
-  if (reps <= 0 || weight <= 0) return 0;
-  if (reps === 1) return weight;
-  return weight * (36 / (37 - reps));
+// No estimate above 12 reps; unknown stays null rather than 0.
+function estimate1RM(weight: number, reps: number): number | null {
+  return estimateOneRepMax({ date: "", weightKg: weight, reps })?.kg ?? null;
 }
 
 interface ExerciseEntry {
@@ -79,7 +79,7 @@ export function getPersonalRecords(workoutLogs: WorkoutLog[]): PersonalRecord[] 
     let maxWeightDate = "";
     let maxReps = 0;
     let maxRepsDate = "";
-    let best1RM = 0;
+    let best1RM: number | null = null;
     let best1RMDate = "";
 
     for (const entry of exerciseEntries) {
@@ -94,7 +94,7 @@ export function getPersonalRecords(workoutLogs: WorkoutLog[]): PersonalRecord[] 
       }
 
       const e1RM = estimate1RM(entry.weight, entry.reps);
-      if (e1RM > best1RM) {
+      if (e1RM !== null && (best1RM === null || e1RM > best1RM)) {
         best1RM = e1RM;
         best1RMDate = entry.date;
       }
@@ -106,7 +106,7 @@ export function getPersonalRecords(workoutLogs: WorkoutLog[]): PersonalRecord[] 
       maxWeightDate,
       maxReps,
       maxRepsDate,
-      bestEstimated1RM: Math.round(best1RM * 10) / 10,
+      bestEstimated1RM: best1RM,
       best1RMDate,
     });
   }
@@ -122,7 +122,7 @@ export function getRecentPRs(workoutLogs: WorkoutLog[], limit = 3): RecentPR[] {
 
   const bestSoFar = new Map<
     string,
-    { weight: number; weightDate: string; reps: number; repsDate: string; best1RM: number; best1RMDate: string }
+    { weight: number; weightDate: string; reps: number; repsDate: string; best1RM: number | null; best1RMDate: string }
   >();
 
   const allPRs: RecentPR[] = [];
@@ -174,13 +174,13 @@ export function getRecentPRs(workoutLogs: WorkoutLog[], limit = 3): RecentPR[] {
       current.repsDate = entry.date;
     }
 
-    if (e1RM > current.best1RM) {
+    if (e1RM !== null && (current.best1RM === null || e1RM > current.best1RM)) {
       allPRs.push({
         exerciseName: entry.name,
         type: "1rm",
-        value: Math.round(e1RM * 10) / 10,
+        value: e1RM,
         date: entry.date,
-        previousValue: Math.round(current.best1RM * 10) / 10,
+        previousValue: current.best1RM,
       });
       current.best1RM = e1RM;
       current.best1RMDate = entry.date;
@@ -198,7 +198,7 @@ export function getExerciseProgressData(
     .filter((e) => e.name === exerciseName)
     .sort((a, b) => a.date.localeCompare(b.date));
 
-  const byDate = new Map<string, { maxWeight: number; best1RM: number }>();
+  const byDate = new Map<string, { maxWeight: number; best1RM: number | null }>();
 
   for (const entry of entries) {
     const e1RM = estimate1RM(entry.weight, entry.reps);
@@ -211,7 +211,7 @@ export function getExerciseProgressData(
       });
     } else {
       current.maxWeight = Math.max(current.maxWeight, entry.weight);
-      current.best1RM = Math.max(current.best1RM, e1RM);
+      if (e1RM !== null && (current.best1RM === null || e1RM > current.best1RM)) current.best1RM = e1RM;
     }
   }
 
@@ -220,7 +220,15 @@ export function getExerciseProgressData(
     .map(([date, data]) => ({
       date,
       label: formatDisplayDate(date),
-      estimated1RM: Math.round(data.best1RM * 10) / 10,
+      estimated1RM: data.best1RM,
       maxWeight: data.maxWeight,
     }));
+}
+
+/** Best estimate per exercise with its source set; null when no set qualifies (e.g. only > 12 reps). */
+export function getOneRepMaxByExercise(workoutLogs: WorkoutLog[]): { exerciseName: string; estimate: OneRepMaxEstimate<ExerciseEntry & { weightKg: number }> | null }[] {
+  const grouped = new Map<string, (ExerciseEntry & { weightKg: number })[]>();
+  for (const entry of collectCompletedExercises(workoutLogs))
+    grouped.set(entry.name, [...(grouped.get(entry.name) ?? []), { ...entry, weightKg: entry.weight }]);
+  return [...grouped].sort(([a], [b]) => a.localeCompare(b)).map(([exerciseName, sets]) => ({ exerciseName, estimate: bestOneRepMax(sets) }));
 }
