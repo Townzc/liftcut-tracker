@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-19 — M1-1 手机端认证：Bearer 访问令牌
+
+- **原因**：原生 App 没有网页 Cookie；方案第 3 节“手机端在请求头带 Supabase 访问令牌，服务端校验”，第 6 节规则 4 手机与网页共用同一套写入接口。
+- **实现**：`getRequestUser` 统一解析身份：有 `Authorization` 头时只用 `Bearer <JWT>`，交给 Supabase Auth 校验（不在本地解码信任），数据读取用带该令牌的客户端，仍受 RLS 约束；没有该头时沿用 Cookie。带 `Authorization` 的请求**不回退到 Cookie**，坏令牌即 401，也不会降级成访客。写接口的同源检查对合法格式的 Bearer 请求放行（没有浏览器自动携带的凭据，跨站伪造不了，且仍要求 JSON），Cookie 请求的同源检查不变。所有 API 路由经 `requireApiUser`/`requireApiContext` 自动支持，无需逐个修改。
+- **实际运行**：新增 W1b Playwright 3 项（生产构建 + 本地 `postgres:16` + 认证替身）：仅令牌、无 Origin 读写本人训练，重放幂等、改内容冲突；第二个用户的令牌看不到、写不进、查不到第一个用户的会话和组（404/409，数据库无新增）；`X-Workout-Owner` 不一致 409；伪造签名、非 JWT、Basic 均 401，且浏览器已登录另一账号时也不回退；Bearer 但非 JSON 403；跨站 Cookie 写仍 403；对话历史、计划运行接口同样按令牌识别。单元测试 1 项（令牌格式）。完整 W1b Chromium 套件 90/90 通过。
+- **边界**：认证替身按令牌字符串比对，不验证签名；真实签名校验由 Supabase Auth 完成，未在线上用真机令牌验证。访客模式不支持 Bearer。
+- **下一步**：M1-2 Expo App 骨架。
+
 ## 2026-10-19 — M0-6 PWA 清单与只缓存外壳的 Service Worker
 
 - **原因**：网页不能“安装”到主屏幕（[方案](2026-10-18-mobile-agent-plan.md)第 1 节缺口 3、第 4 节 M0），作为 App 上架前的过渡。
