@@ -1,7 +1,7 @@
 import type { Session } from "@liftcut/core/today";
 import type { CommandReceipt, CommandRequest } from "@liftcut/core/workout-commands";
 import { workoutContext } from "@liftcut/core/workout-context";
-import { parseWorkoutLog, type ParseResult } from "@liftcut/core/workout-log-parser";
+import { parseWorkoutLog, type LogDraft, type ParseResult } from "@liftcut/core/workout-log-parser";
 import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { randomUUID } from "expo-crypto";
 import { useState } from "react";
@@ -50,16 +50,23 @@ export function SentenceEntry({ session, busy, submit }: { session: Session; bus
     {preview?.result.status === "clarify" && <Text accessibilityRole="alert" style={text_}>{t(`clarify_${preview.result.reason}` as MessageKey)}</Text>}
     {draft && <View testID="sentence-preview" style={[styles.preview, { borderColor: c.border }]}>
       <Text style={[text_, styles.bold]}>{t("rulesDraft")}{exercise ? ` · ${exercise}` : ""}</Text>
-      {draft.kind === "record" && draft.sets.map(s => <Text key={s.setIndex} style={text_}>{t("set", { n: s.setIndex })}: {s.reportedWeight ?? "—"} {s.inputUnit ?? "kg"} × {s.reps ?? "—"} · RPE {s.rpe ?? "—"}</Text>)}
-      {draft.kind === "correct" && <Text style={text_}>{t("sentenceCorrection", { n: draft.setIndex, before: session.sets.find(s => s.id === draft.recordId)?.reps ?? "—", after: draft.changes.reps })}</Text>}
-      {draft.kind === "skip" && <Text style={text_}>{t("sentenceSkip", { n: draft.setIndex })}</Text>}
-      {draft.kind === "end" && <Text style={text_}>{t("endHint")}</Text>}
+      <DraftLines draft={draft} session={session} />
       <Button label={t(draft.kind === "end" ? "end" : "sentenceConfirm")} disabled={busy} onPress={() => void confirm()} />
       <Text style={muted}>{t("sentenceUnknown")}</Text>
     </View>}
   </Card>;
 }
 
+/** A draft's actual values as reported; unknown values show "—" and are never filled from the plan. */
+export function DraftLines({ draft, session }: { draft: LogDraft; session: Session }) {
+  const { t } = useI18n(), text_ = { color: useColors().text };
+  return <>
+    {draft.kind === "record" && draft.sets.map(s => <Text key={s.setIndex} style={text_}>{t("set", { n: s.setIndex })}: {s.reportedWeight ?? "—"} {s.inputUnit ?? "kg"} × {s.reps ?? "—"} · RPE {s.rpe ?? "—"}</Text>)}
+    {draft.kind === "correct" && <Text style={text_}>{t("sentenceCorrection", { n: draft.setIndex, before: session.sets.find(s => s.id === draft.recordId)?.reps ?? "—", after: draft.changes.reps })}</Text>}
+    {draft.kind === "skip" && <Text style={text_}>{t("sentenceSkip", { n: draft.setIndex })}</Text>}
+    {draft.kind === "end" && <Text style={text_}>{t("endHint")}</Text>}
+  </>;
+}
 export function SentenceReceipts({ receipts, pending, busy, submit }: { receipts: CommandReceipt[]; pending: string[]; busy: boolean; submit: (p: WorkoutOperation) => Promise<boolean> }) {
   const { t } = useI18n(), c = useColors();
   if (!receipts.length) return null;

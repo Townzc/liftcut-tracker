@@ -9,6 +9,7 @@ export default defineConfig({
   use: { baseURL: "http://localhost:8099", viewport: { width: 390, height: 844 }, locale: "zh-CN", headless: true,
     screenshot: "only-on-failure", launchOptions: { executablePath: process.env.P1_BROWSER_EXECUTABLE } },
   webServer: [
+    { command: "node --import tsx tests/product-browser/model-fixture.ts", url: "http://127.0.0.1:59999", reuseExistingServer: false },
     { command: "node --import tsx tests/agent-db/auth-fixture.ts", url: `${authUrl}/auth/v1/user`, reuseExistingServer: false,
       env: { P1_TEST_DATABASE_URL: process.env.W1B_TEST_DATABASE_URL!, AUTH_FIXTURE_PORT: "55440" } },
     { command: "npm run start -- --port 3103 --hostname 127.0.0.1", url: "http://localhost:3103/login", reuseExistingServer: false,
