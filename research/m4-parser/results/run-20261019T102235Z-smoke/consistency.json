@@ -1,0 +1,110 @@
+{
+  "items": 48,
+  "missing": 0,
+  "sameText": 3,
+  "sameParsed": 3,
+  "parsedAgreement": 0.0625,
+  "minAgreement": 0.95,
+  "disagreements": [
+    {
+      "id": "dev-00000",
+      "reference": "{\"label\":\"35kg\",\"count\":\"20\"}",
+      "candidate": "{\"label\":\"liftcut\",\"label_v1\":\"35kg\",\"count\":\"20\"}"
+    },
+    {
+      "id": "dev-00001",
+      "reference": "{\"label\":\"liftcut\",\"label_type\":\"v1\",\"data\":{\"exercise\":\"Deadlift\",\"weight\":\"245\",\"rpe\":\"6.5\",\"sets\":\"1\",\"reps\":\"12,11,10\",\"sets_per_rpe\":\"1\",\"sets_per_rpe_per_rep\":\"10\"}}",
+      "candidate": "{\"label\":\"liftcut\",\"v1\":\"245\",\"v2\":\"12101110\",\"v3\":\"6.5\"}"
+    },
+    {
+      "id": "dev-00002",
+      "reference": "{\"label\":\"LiftCut\",\"label_type\":\"exercise\",\"exercise\":\"仰卧哑铃臂屈伸\",\"weight\":\"48kg\"}",
+      "candidate": "{\"label\":\"liftcut\",\"sentence\":\"仰卧哑铃臂屈伸 48kg\",\"v1\":\"liftcut_48kg\"}"
+    },
+    {
+      "id": "dev-00003",
+      "reference": "{\"label\":\"55kg\",\"sets\":[{\"set\":\"4\",\"rpe\":\"6\"}]}",
+      "candidate": "{\"label\":\"55kg\",\"sets\":[{\"rpe\":6,\"sets\":[{\"set\":\"4x11\"}]}]}"
+    },
+    {
+      "id": "dev-00004",
+      "reference": "{\"label\":\"OK, 5th set weight is 42 kg\"}",
+      "candidate": "{\"label\":\"liftcut\",\"sentence\":\"OK，第5组重量其实是42千克\",\"v1\":\"5\",\"v1\":\"42\"}"
+    },
+    {
+      "id": "dev-00005",
+      "reference": "{\"label\":\"40kg\",\"rpe\":\"9.5\",\"group\":\"RPE\"}",
+      "candidate": "{\"label\":\"liftcut\",\"v1\":\"40kg 2x11 RPE 9.5\"}"
+    },
+    {
+      "id": "dev-00006",
+      "reference": "{\"label\":\"dumbbell overhead triceps extension\",\"sets\":1,\"reps\":4}",
+      "candidate": "{\"label\":\"dumbbell overhead triceps extension\",\"sets\":1,\"weight\":1}"
+    },
+    {
+      "id": "dev-00007",
+      "reference": "{\"label\":\"change\",\"set\":\"19\"}",
+      "candidate": "{\"label\":\"change\",\"reps\":\"19\"}"
+    },
+    {
+      "id": "dev-00008",
+      "reference": "{\"label\":\"ALRIGHT\",\"set\":\"4\"}",
+      "candidate": "{\"label\":\"skip\",\"set\":\"4\"}"
+    },
+    {
+      "id": "dev-00009",
+      "reference": "{\"label\":\"22.5\",\"label\":\"25\"}",
+      "candidate": "{\"label\":\"22.5\",\"label\":\"25\",\"label\":\"8\",\"label\":\"5\"}"
+    },
+    {
+      "id": "dev-00010",
+      "reference": "{\"label\":\"5\",\"weight\":\"22\"}",
+      "candidate": "{\"label\":\"liftcut\",\"v1\":\"5\",\"sentence\":\"好，第5组重量其实是22 kg\"}"
+    },
+    {
+      "id": "dev-00011",
+      "reference": "{\"label\":\"LiftCut\",\"label_type\":\"exercise\",\"exercise\":\"壶铃分腿蹲\",\"weight\":\"34\",\"rpe\":\"7\",\"sets\":\"1\",\"reps\":\"2\"}",
+      "candidate": "{\"exercise\":\"壶铃分腿蹲\",\"weight\":\"34公斤\",\"reps\":\"2x4\",\"rpe\":\"7\"}"
+    },
+    {
+      "id": "dev-00012",
+      "reference": "{\"label\":\"200\",\"group\":\"4\",\"sets\":\"4\"}",
+      "candidate": "{\"label\":\"lift\",\"label_type\":\"group\",\"group_count\":\"4\",\"weight\":\"200\",\"sets\":\"4\",\"sets_per_group\":\"4\"}"
+    },
+    {
+      "id": "dev-00013",
+      "reference": "{\"label\":\"liftcut\",\"label_type\":\"error\",\"error\":\"sentence\",\"error_type\":\"invalid\",\"error_message\":\"invalid\",\"error_line\":\"1\",\"error_position\":\"1\",\"error_line_number\":\"1\"}",
+      "candidate": "{\"exercises\":[\"绳索腿弯举\",\"腿举机提踵\",\"俯卧撑\",\"卷腹\"],\"sentence\":\"嗯，更正：第四组其实是十三个\"}"
+    },
+    {
+      "id": "dev-00014",
+      "reference": "{\"label\":\"3900\",\"type\":\"weight\",\"unit\":\"pound\"}",
+      "candidate": "{\"label\":\"LiftCut\",\"sentence\":\"哑铃卧推 3900 磅 4个\",\"v1\":\"3900\"}"
+    },
+    {
+      "id": "dev-00015",
+      "reference": "{\"label\":\"14\",\"weight\":\"125\"}",
+      "candidate": "{\"label\":\"lift\",\"label_type\":\"reps\",\"reps\":14,\"weight\":\"125\",\"weight_unit\":\"lb\"}"
+    },
+    {
+      "id": "hand-000",
+      "reference": "{\"exercise\":\"卧推\",\"weight\":\"60\",\"count\":\"8\",\"result\":\"感觉还行\"}",
+      "candidate": "{\"exercises\":[\"卧推\"],\"result\":\"60kg\",\"count\":\"8\",\"note\":\"感觉还行\"}"
+    },
+    {
+      "id": "hand-001",
+      "reference": "{\"exercise\":\"硬拉\",\"weight\":\"140\",\"reps\":\"3\",\"rpe\":\"9\"}",
+      "candidate": "{\"exercises\":[\"卧推\",\"深蹲\",\"硬拉\"],\"sentence\":\"硬拉 140 公斤 3 下，RPE 9\"}"
+    },
+    {
+      "id": "hand-002",
+      "reference": "{\"exercise\":\"卧推\",\"count\":\"10\",\"weight\":\"57.5\"}",
+      "candidate": "{\"label\":\"57.5\",\"count\":\"10\"}"
+    },
+    {
+      "id": "hand-003",
+      "reference": "{\"exercise\":\"Squat\",\"reps\":5,\"weight\":100}",
+      "candidate": "{\"label\":\"liftcut\",\"sentence\":\"squatted 100 kg for 5 reps\",\"exercises\":[\"Squat\",\"Bench press\",\"Lat pulldown\"]}"
+    }
+  ]
+}

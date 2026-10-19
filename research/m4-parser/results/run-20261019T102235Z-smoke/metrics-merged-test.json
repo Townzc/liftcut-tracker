@@ -1,0 +1,327 @@
+{
+  "gold": "/home/user/liftcut-tracker/research/m4-parser/data/generated/eval/test.gold.jsonl",
+  "system": "/tmp/claude-0/-home-user-liftcut-tracker/3ccac29d-782d-5019-8e7d-a16e873ccb12/scratchpad/m4work/pred-merged-test.jsonl",
+  "total": 16,
+  "exact": 0,
+  "exactRate": 0,
+  "intentAccuracy": 0,
+  "fieldAccuracy": 0,
+  "invented": 0,
+  "omissionRate": 1,
+  "correctionLocalization": 0,
+  "clarifyPrecision": null,
+  "clarifyRecall": 0,
+  "jsonValidRate": 1,
+  "schemaValidRate": 0,
+  "latencyMs": {
+    "p50": 2602.6,
+    "p95": 5393.5,
+    "max": 5393.5
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      0,
+      2
+    ],
+    "clarify_missing_unit": [
+      0,
+      3
+    ],
+    "correct_rpe": [
+      0,
+      1
+    ],
+    "record_weighted": [
+      0,
+      2
+    ],
+    "clarify_missing_reps": [
+      0,
+      1
+    ],
+    "clarify_negation": [
+      0,
+      1
+    ],
+    "skip": [
+      0,
+      1
+    ],
+    "record_list": [
+      0,
+      2
+    ],
+    "record_pyramid": [
+      0,
+      3
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      0,
+      8
+    ],
+    "en": [
+      0,
+      7
+    ],
+    "mixed": [
+      0,
+      1
+    ]
+  },
+  "failures": [
+    {
+      "id": "test-00000",
+      "text": "差不多185kg",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00001",
+      "text": "好，142.5，17次",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00002",
+      "text": "OK，差不多135lbs",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00003",
+      "text": "alright, make the last set rpe 7",
+      "gold": {
+        "intent": "correct",
+        "exercise": "正握高位下拉",
+        "setIndex": 1,
+        "changes": {
+          "rpe": 7
+        }
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00004",
+      "text": "那个，单腿器械弯举这组五 千克推了十个",
+      "gold": {
+        "intent": "record",
+        "exercise": "单腿器械弯举",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00005",
+      "text": "好，坐姿绳索划船做了32.5公斤",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00006",
+      "text": "器械推胸今天没练",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00007",
+      "text": "so skipping set 2 of Lying leg curl",
+      "gold": {
+        "intent": "skip",
+        "exercise": "俯卧腿弯举",
+        "setIndex": 2
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00008",
+      "text": "365lb做了几组：11、11、10、10、11，每组都是RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "杠铃弯举",
+        "sets": [
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": 9.5
+          },
+          {
+            "weight": 365,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00009",
+      "text": "那个，Kettlebell goblet squat 这组18千克推了8个",
+      "gold": {
+        "intent": "record",
+        "exercise": "壶铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 18,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00010",
+      "text": "dumbbell goblet squat ramping up: 26kgs x 9, then 31 kg x 4, then 36 kgs x 4",
+      "gold": {
+        "intent": "record",
+        "exercise": "哑铃高脚杯深蹲",
+        "sets": [
+          {
+            "weight": 26,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 31,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          },
+          {
+            "weight": 36,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00011",
+      "text": "chest-supported dumbbell row at 28 kilos: 11, 11 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "Chest-supported dumbbell row",
+        "sets": [
+          {
+            "weight": 28,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          },
+          {
+            "weight": 28,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00012",
+      "text": "alright, single-leg machine curl 40 x 14",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00013",
+      "text": "Smith machine squat ramping up: 172.5 kilos x 9, then 177.5 kilos x 11",
+      "gold": {
+        "intent": "record",
+        "exercise": "史密斯深蹲",
+        "sets": [
+          {
+            "weight": 172.5,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          },
+          {
+            "weight": 177.5,
+            "unit": "kg",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00014",
+      "text": "Dumbbell split squat 24 x 7",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "test-00015",
+      "text": "那个，壶铃分腿蹲递增：55磅7个，65lb5个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Kettlebell split squat",
+        "sets": [
+          {
+            "weight": 55,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 65,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    }
+  ]
+}

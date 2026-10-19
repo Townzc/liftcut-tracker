@@ -1,0 +1,9 @@
+# torch is installed first from the PyTorch index that matches the machine (CPU or the server's CUDA); see run_all.sh.
+transformers==5.20.1
+peft==0.21.2
+accelerate==1.15.0
+safetensors==0.8.0
+numpy==2.5.4
+sentencepiece==0.2.2
+# Builds llama.cpp from source (CPU). Its sdist vendors llama.cpp, including convert_hf_to_gguf.py and gguf-py.
+llama-cpp-python==0.3.36

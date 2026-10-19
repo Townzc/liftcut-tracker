@@ -1,0 +1,399 @@
+{
+  "gold": "/home/user/liftcut-tracker/research/m4-parser/data/generated/eval/handwritten.gold.jsonl",
+  "system": "/tmp/claude-0/-home-user-liftcut-tracker/3ccac29d-782d-5019-8e7d-a16e873ccb12/scratchpad/m4work/pred-q4-handwritten.jsonl",
+  "total": 16,
+  "exact": 0,
+  "exactRate": 0,
+  "intentAccuracy": 0,
+  "fieldAccuracy": 0,
+  "invented": 0,
+  "omissionRate": 1,
+  "correctionLocalization": null,
+  "clarifyPrecision": null,
+  "clarifyRecall": null,
+  "jsonValidRate": 0.875,
+  "schemaValidRate": 0,
+  "latencyMs": {
+    "p50": 1074.2,
+    "p95": 7336.4,
+    "max": 7336.4
+  },
+  "byFamily": {
+    "record_weighted": [
+      0,
+      8
+    ],
+    "record_bodyweight": [
+      0,
+      3
+    ],
+    "record_list": [
+      0,
+      3
+    ],
+    "record_uniform": [
+      0,
+      2
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      0,
+      9
+    ],
+    "en": [
+      0,
+      4
+    ],
+    "mixed": [
+      0,
+      3
+    ]
+  },
+  "failures": [
+    {
+      "id": "hand-000",
+      "text": "卧推今天 60 公斤做了 8 个，感觉还行",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-001",
+      "text": "硬拉 140 公斤 3 下，RPE 9",
+      "gold": {
+        "intent": "record",
+        "exercise": "硬拉",
+        "sets": [
+          {
+            "weight": 140,
+            "unit": "kg",
+            "reps": 3,
+            "rpe": 9
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-002",
+      "text": "这组 57.5 千克，做了 10 个",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 57.5,
+            "unit": "kg",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-003",
+      "text": "squatted 100 kg for 5 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "Squat",
+        "sets": [
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-004",
+      "text": "bench press: 185 lbs, 6 reps, felt like rpe 8",
+      "gold": {
+        "intent": "record",
+        "exercise": "Bench press",
+        "sets": [
+          {
+            "weight": 185,
+            "unit": "lb",
+            "reps": 6,
+            "rpe": 8
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-005",
+      "text": "bench 70kg 5 个",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 70,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-006",
+      "text": "deadlift 一百八十公斤 两个",
+      "gold": {
+        "intent": "record",
+        "exercise": "硬拉",
+        "sets": [
+          {
+            "weight": 180,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-007",
+      "text": "深蹲 225 lbs 5 reps",
+      "gold": {
+        "intent": "record",
+        "exercise": "深蹲",
+        "sets": [
+          {
+            "weight": 225,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-008",
+      "text": "引体向上 自重 10 个",
+      "gold": {
+        "intent": "record",
+        "exercise": "引体向上",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-009",
+      "text": "俯卧撑 二十个",
+      "gold": {
+        "intent": "record",
+        "exercise": "俯卧撑",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 20,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-010",
+      "text": "pull-ups, 8 reps, bodyweight",
+      "gold": {
+        "intent": "record",
+        "exercise": "Pull-up",
+        "sets": [
+          {
+            "weight": null,
+            "unit": null,
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-011",
+      "text": "深蹲 100kg 5个 5个 4个",
+      "gold": {
+        "intent": "record",
+        "exercise": "深蹲",
+        "sets": [
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-012",
+      "text": "推举 40kg 8、7、6，最后一组 RPE 9.5",
+      "gold": {
+        "intent": "record",
+        "exercise": "站姿杠铃推举",
+        "sets": [
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": 9.5
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-013",
+      "text": "overhead press 40kg x 6, 6, 5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Overhead press",
+        "sets": [
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          },
+          {
+            "weight": 40,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-014",
+      "text": "卧推三组，每组八个，六十公斤",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-015",
+      "text": "卧推 60kg 5x5",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          },
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    }
+  ]
+}
