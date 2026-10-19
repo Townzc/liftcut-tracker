@@ -8,6 +8,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppState, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { KeepScreenOn, RestBar, RestLength, useRest } from "@/components/rest-bar";
+import { SentenceEntry, SentenceReceipts } from "@/components/sentence-entry";
 import { SetRow } from "@/components/set-row";
 import { Button, Card } from "@/components/ui";
 import { ApiError } from "@/lib/api";
@@ -90,6 +91,7 @@ export default function Today() {
           <Text style={muted}>{t("progress", { done: session.sets.filter(s => s.status === "done").length, total: session.prescription.exercises.reduce((n, e) => n + e.sets, 0) })}</Text>
           {active && <RestLength rest={rest} />}
         </Card>
+        {active && <SentenceEntry key={session.id} session={session} busy={paused} submit={write} />}
         {session.prescription.exercises.map(e => {
           const rule = ruleForExercise(e, { bodyweight: identifyExercise(e.name)?.equipment.length === 0 }), history = data.history?.[e.name];
           const target = rule && history ? nextTarget(rule, history.sessions) : null;
@@ -104,6 +106,8 @@ export default function Today() {
             })}
           </Card>;
         })}
+        <SentenceReceipts receipts={data.receipts ?? []} busy={paused} submit={write}
+          pending={state?.items.filter(i => i.action === "apply" || i.action === "undo").map(i => i.action === "apply" ? JSON.parse(i.bodyJson).id : JSON.parse(i.bodyJson).commandId) ?? []} />
         {active ? <View style={styles.gap}><Text style={muted}>{t("endHint")}</Text>
           <Button label={t("end")} disabled={paused} onPress={() => void write({ action: "end", body: { id: session.id, revision: session.revision + 1, status: "ended" } })} /></View>
           : !pending && <Button variant="outline" label={t("anotherSession")} onPress={() => void load()} />}
