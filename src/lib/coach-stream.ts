@@ -1,12 +1,8 @@
 import type { CoachResponse } from "./coach-model";
+import { coachStreamParser, type CoachStreamEvent as Event } from "@liftcut/core/coach-stream";
 
-export const COACH_STREAM_TYPE = "application/x-ndjson";
-export type CoachStreamEvent =
-  | {type:"status";stage:"connecting"|"reading"|"drafting"}
-  | {type:"text";text:string}
-  | {type:"reset"}
-  | {type:"result";result:CoachResponse}
-  | {type:"error";error:string};
+export { COACH_STREAM_TYPE } from "@liftcut/core/coach-stream";
+export type CoachStreamEvent = Event<CoachResponse>;
 
 /** Only the explicitly framed reply string can be shown. Never parse plan/tool JSON
  * as prose. Source IDs precede the message so callers can verify them first. */
@@ -35,13 +31,11 @@ export function streamingReply(input:string):{text:string;sourceIds:string[]}|nu
   }catch{return null;}
 }
 
-/** A terminal result is mandatory. Truncation/cancellation must never become a
- * completed reply or an actionable proposal. Wire text is incremental; callbacks
- * receive the accumulated display text. The caller owns the abort signal. */
+/** Reads the response bytes into the shared parser; the caller owns the abort signal. */
 export async function consumeCoachStream(response:Response,requestId:string,onEvent:(event:CoachStreamEvent)=>void,signal:AbortSignal):Promise<CoachResponse>{
   if(!response.body)throw new Error("STREAM_INCOMPLETE");
-  const reader=response.body.getReader(),decoder=new TextDecoder("utf-8",{fatal:true});
-  let buffer="",bytes=0,text="",result:CoachResponse|undefined;
+  const reader=response.body.getReader(),decoder=new TextDecoder("utf-8",{fatal:true}),parser=coachStreamParser<CoachResponse>(requestId,onEvent);
+  let bytes=0;
   const abort=()=>{void reader.cancel().catch(()=>{});};
   signal.addEventListener("abort",abort,{once:true});
   try{
@@ -51,26 +45,8 @@ export async function consumeCoachStream(response:Response,requestId:string,onEv
       signal.throwIfAborted();
       bytes+=value?.byteLength??0;
       if(bytes>1024*1024)throw new Error("STREAM_TOO_LARGE");
-      buffer+=decoder.decode(value,{stream:!done});
-      let index:number;
-      while((index=buffer.indexOf("\n"))>=0){
-        const line=buffer.slice(0,index);buffer=buffer.slice(index+1);
-        if(!line.trim())continue;
-        if(result)throw new Error("STREAM_INVALID");
-        const event=JSON.parse(line) as CoachStreamEvent;
-        if(event.type==="error")throw new Error(event.error);
-        if(event.type==="result"){
-          if(event.result?.requestId!==requestId||typeof event.result.message!=="string"||!Array.isArray(event.result.sources))throw new Error("STREAM_INVALID");
-          result=event.result;continue;
-        }
-        if(event.type==="text"&&typeof event.text==="string"&&text.length+event.text.length<=2400){
-          text+=event.text;onEvent({type:"text",text});
-        }
-        else if(event.type==="reset"){text="";onEvent({type:"text",text});}
-        else if(event.type==="status"&&["connecting","reading","drafting"].includes(event.stage))onEvent(event);
-        else throw new Error("STREAM_INVALID");
-      }
-      if(done){if(result&&!buffer.trim())return result;throw new Error("STREAM_INCOMPLETE");}
+      parser.push(decoder.decode(value,{stream:!done}));
+      if(done)return parser.end();
     }
   }finally{signal.removeEventListener("abort",abort);await reader.cancel().catch(()=>{});reader.releaseLock();}
 }

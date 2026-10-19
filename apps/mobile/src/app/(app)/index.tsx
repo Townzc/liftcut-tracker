@@ -1,11 +1,11 @@
 import { identifyExercise, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { nextTarget, ruleForExercise } from "@liftcut/core/progression";
 import type { SetRequest } from "@liftcut/core/today";
-import { projectOutbox, type OutboxState, type WorkoutOperation } from "@liftcut/core/workout-outbox";
+import { projectOutbox, type WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";
 import { useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppState, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { KeepScreenOn, RestBar, RestLength, useRest } from "@/components/rest-bar";
 import { SentenceEntry, SentenceReceipts } from "@/components/sentence-entry";
@@ -13,22 +13,15 @@ import { SetRow } from "@/components/set-row";
 import { Button, Card } from "@/components/ui";
 import { ApiError } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
-import { MobileOutbox } from "@/lib/outbox";
-import { outboxApi } from "@/lib/outbox-api";
-import { outboxStore } from "@/lib/outbox-store";
-import { useSession } from "@/lib/session";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
+import { useWorkout } from "@/lib/workout";
 import { feedback } from "@/lib/workout-aids";
 
 export default function Today() {
-  const { session: auth } = useSession(), { t, locale } = useI18n(), c = useColors();
-  const authRef = useRef(auth); authRef.current = auth;
-  const owner = auth?.user.id;
-  const [state, setState] = useState<OutboxState | null>(null), [loading, setLoading] = useState(true);
+  const { t, locale } = useI18n(), c = useColors(), { outbox, state } = useWorkout();
+  const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState<"offlineData" | "localConflict" | null>(null), [dayId, setDayId] = useState("");
-  // One queue per account, kept in SQLite: it survives restarts and never mixes accounts.
-  const outbox = useMemo(() => owner ? new MobileOutbox(owner, outboxStore, outboxApi(() => authRef.current), setState) : null, [owner]);
   const load = useCallback(async () => {
     if (!outbox) return;
     setLoading(true);
