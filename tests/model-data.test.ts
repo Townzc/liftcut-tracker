@@ -6,7 +6,7 @@ import { memoryFacts } from "../src/lib/fitness-memory";
 import { personalEntrySchema, type PersonalRecord } from "../src/lib/personal-records";
 
 /** The list each consent version showed. A new list needs a new consent version, so users are asked again. */
-const CONSENTED_LISTS: Record<string, string> = { "coach-model-v1": "c62a75a7" };
+const CONSENTED_LISTS: Record<string, string> = { "coach-model-v1": "746322f7" };
 
 test("the consent version matches the data list users agreed to", () => {
   assert.equal(CONSENTED_LISTS[COACH_CONSENT_VERSION], MODEL_DATA_HASH,

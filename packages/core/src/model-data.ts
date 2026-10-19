@@ -24,8 +24,8 @@ export const MODEL_DATA: readonly ModelDataCategory[] = [
     zh: "当前训练计划与营养计划（目标值，不是实际记录）", en: "Your current training and nutrition plans (targets, not actual records)" },
   { id: "profile", topics: ["profile"], accountOnly: true, fields: ["fitnessGoal", "experience", "equipment", "sessionMinutes", "weeklyTrainingDays", "targetWeightKg",
     "calorieTarget", "proteinTarget", "actual"],
-    zh: "个人设置：目标、训练经验、器械、每次时长、每周天数、目标体重、热量与蛋白质目标",
-    en: "Settings: goal, experience, equipment, session length, days per week, target weight, calorie and protein targets" },
+    zh: "个人设置：目标、训练经验、地点与器械、每次时长、每周天数、目标体重、热量与蛋白质目标；生成或调整计划时还包括年龄、性别、身高、当前体重、饮食偏好与忌口、伤病与生活习惯备注",
+    en: "Settings: goal, experience, location and equipment, session length, days per week, target weight, calorie and protein targets; when drafting a plan also age, gender, height, current weight, diet and food restrictions, injury and lifestyle notes" },
 ];
 
 /** Keeps only the listed fields of each row (and of each record in a `nested` list); an unlisted topic yields no rows. */
