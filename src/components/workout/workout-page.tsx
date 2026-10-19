@@ -25,7 +25,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { todayString } from "@/lib/date";
 import { normalizeActionError } from "@/lib/error-utils";
+import { MAX_ESTIMATE_REPS } from "@liftcut/core/one-rep-max";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
+import { getOneRepMaxByExercise } from "@/lib/pr-tracker";
 import { estimateWorkoutCalories } from "@/lib/workout-calories";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import type { ExerciseLog, ExercisePlan, PlanDay, TrainingPlan, WorkoutLog } from "@liftcut/core/types";
@@ -357,6 +359,7 @@ export function WorkoutPage() {
     [currentDay?.dayNumber, currentWeek?.weekNumber, workoutDate, workoutLogs],
   );
   const recentLogs = useMemo(() => workoutLogs.slice(0, 5), [workoutLogs]);
+  const oneRepMaxes = useMemo(() => getOneRepMaxByExercise(workoutLogs), [workoutLogs]);
   const selectedRecentLog = useMemo(
     () => workoutLogs.find((log) => log.id === selectedRecentLogId) ?? null,
     [selectedRecentLogId, workoutLogs],
@@ -529,6 +532,34 @@ export function WorkoutPage() {
                   {t("recentLogsOpen")}
                 </span>
               </button>
+            ))
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-800/90" data-testid="one-rep-max">
+        <CardHeader>
+          <CardTitle className="text-base">{t("oneRepMaxTitle")}</CardTitle>
+          <CardDescription>{t("oneRepMaxDesc", { reps: MAX_ESTIMATE_REPS })}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          {oneRepMaxes.length === 0 ? (
+            <p className="text-sm text-slate-600 dark:text-slate-400">{t("oneRepMaxEmpty")}</p>
+          ) : (
+            oneRepMaxes.map(({ exerciseName, estimate }) => (
+              <div key={exerciseName} data-testid="one-rep-max-row" className="flex flex-wrap items-baseline justify-between gap-2 rounded-xl border border-slate-200 p-3 dark:border-slate-700">
+                <p className="font-medium text-slate-900 dark:text-slate-100">{exerciseName}</p>
+                {estimate ? (
+                  <div className="text-right">
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{t("oneRepMaxValue", { kg: estimate.kg })}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                      {t("oneRepMaxSource", { date: estimate.set.date, weight: estimate.set.weight, reps: estimate.set.reps })}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{t("oneRepMaxNone", { reps: MAX_ESTIMATE_REPS })}</p>
+                )}
+              </div>
             ))
           )}
         </CardContent>
