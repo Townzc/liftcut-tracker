@@ -2,9 +2,8 @@ import "server-only";
 import type { Pool } from "pg";
 import { z } from "zod";
 import type { AiTrainingPlan } from "@liftcut/core/ai-schemas";
-import { equipmentIds, replacementCandidates, type Equipment } from "@liftcut/core/exercise-catalog";
-import { allowModelRows } from "@liftcut/core/model-data";
-import { ruleForExercise } from "@liftcut/core/progression";
+import { equipmentIds, type Equipment } from "@liftcut/core/exercise-catalog";
+import { REVIEW_SYSTEM, reviewMessage, type ReviewSet } from "@liftcut/core/review-prompt";
 import { samePlain } from "@liftcut/core/plain-data";
 import { applyReview, reviewProblems, reviewSchema, type Review } from "@liftcut/core/review-changes";
 import type { RunView } from "@liftcut/core/agent-contracts";
@@ -28,17 +27,8 @@ export type ReviewOutcome =
   | { status: "invalid"; problems: string[] }
   | { status: "unavailable"; error: string };
 
-export const REVIEW_SYSTEM = `You review one finished workout against the user's current training plan. Reply with one JSON object only:
-{"outcome":"nochange","why":W,"evidence":[set ids]} or {"outcome":"changes","changes":[...]} with at most 5 changes of these types only:
-{"type":"adjust_sets","exercise":E,"delta":-1|1,"why":W,"evidence":[...]}
-{"type":"adjust_rpe","exercise":E,"delta":-0.5|0.5,"why":W,"evidence":[...]}
-{"type":"switch_rule","exercise":E,"to":"linear"|"double","why":W,"evidence":[...]}
-{"type":"replace_exercise","exercise":E,"replacement":one id from that exercise's candidates,"why":W,"evidence":[...]}
-E is a plan exercise name copied exactly. Evidence lists ids of sets of that exercise from the input. W is one short sentence in the user's language.
-Never propose loads or rep numbers: the progression engine computes them. Prefer nochange unless the sets clearly show a pattern (repeated misses, every set easy).`;
-
 /** Sets of the finished session and the four before it that share an exercise; skipped sets count as evidence too. */
-async function readSets(pool: Pool, owner: string, sessionId: string) {
+async function readSets(pool: Pool, owner: string, sessionId: string): Promise<ReviewSet[]> {
   const db = await pool.connect();
   try {
     await beginOwnerTransaction(db, owner, "liftcut_workout");
@@ -52,7 +42,7 @@ async function readSets(pool: Pool, owner: string, sessionId: string) {
       where l.session_id in (select id from recent) and l.status in ('done','skipped') and l.exercise_name in (select name from names)
       order by s.local_date desc,s.started_at desc,l.exercise_name,l.set_index limit 120`, [sessionId])).rows;
     await db.query("commit");
-    return rows.map(r => ({ ...r, weightKg: r.weightKg === null ? null : Number(r.weightKg), rpe: r.rpe === null ? null : Number(r.rpe) }));
+    return rows.map(r => ({ ...r, weightKg: r.weightKg === null ? null : Number(r.weightKg), rpe: r.rpe === null ? null : Number(r.rpe) }) as ReviewSet);
   } catch (error) { await db.query("rollback").catch(() => {}); throw error; } finally { db.release(); }
 }
 
@@ -64,18 +54,10 @@ export async function reviewWorkout(owner: string, input: unknown, deps: { pool:
   // Only plans created through the ledger have an editable copy to change; older plans keep their own editor.
   if (!snapshot.editable) return { status: "unavailable", error: "PLAN_NOT_EDITABLE" };
   const plan = snapshot.editable.plan as AiTrainingPlan, context = snapshot.editable.context, equipment: Equipment[] = request.equipment;
-  const names = [...new Set(plan.weeks.flatMap(w => w.days.flatMap(d => d.exercises.map(e => e.name))))];
-  const exercises = names.map(name => {
-    const e = plan.weeks.flatMap(w => w.days.flatMap(d => d.exercises)).find(x => x.name === name)!;
-    return { exercise: name, targetSets: e.sets, targetReps: e.rep_range, targetRpe: e.target_rpe,
-      rule: ruleForExercise({ sets: e.sets, repRange: e.rep_range })?.kind ?? null,
-      candidates: replacementCandidates(name, equipment).slice(0, 5).map(c => ({ id: c.id, name: request.locale === "en" ? c.en : c.zh })) };
-  });
-  const raw = await deps.model({ system: REVIEW_SYSTEM, user: JSON.stringify({ locale: request.locale,
-    plan: allowModelRows("plan", exercises), sets: allowModelRows("workout", sets) }) });
+  const raw = await deps.model({ system: REVIEW_SYSTEM, user: reviewMessage(plan, sets, request.locale, equipment) });
   const parsed = reviewSchema.safeParse(raw);
   if (!parsed.success) return { status: "invalid", problems: ["schema"] };
-  const problems = reviewProblems(plan, parsed.data, { sets: new Map(sets.map(s => [s.id as string, s.exercise as string])), equipment });
+  const problems = reviewProblems(plan, parsed.data, { sets: new Map(sets.map(s => [s.id, s.exercise])), equipment });
   if (problems.length) return { status: "invalid", problems };
   if (parsed.data.outcome === "nochange") return { status: "nochange", review: parsed.data };
   const prepared = await deps.agent.prepare(owner, request.requestKey, snapshot, context, applyReview(plan, parsed.data.changes),
