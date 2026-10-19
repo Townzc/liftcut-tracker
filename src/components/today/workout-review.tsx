@@ -4,22 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Binding, RunView } from "@liftcut/core/agent-contracts";
-import type { Review, ReviewChange } from "@liftcut/core/review-changes";
+import type { RunView } from "@liftcut/core/agent-contracts";
+import type { ReviewChange } from "@liftcut/core/review-changes";
+import { confirmPreview, previewOf, reviewBinding, reviewChanges as changesOf, type ReviewApi, type ReviewOutcome } from "@liftcut/core/review-client";
 import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { COACH_CONSENT_VERSION } from "@/lib/coach-model";
 import { useTrackerStore } from "@/store/use-tracker-store";
 
-type Outcome = { status: "proposed"; review: Review; run: RunView } | { status: "nochange"; review: Review } | { status: "invalid"; problems: string[] } | { status: "unavailable"; error: string };
-const bind = (r: RunView): Binding => ({ proposalId: r.proposal!.proposalId, contentHash: r.proposal!.contentHash, contextRevision: r.proposal!.contextRevision });
 const timezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
-async function review(action: "" | "accept" | "rollback", body: unknown): Promise<Outcome> {
-  const response = await fetch(`/api/workout-review${action && `?action=${action}`}`, { method: "POST", cache: "no-store", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body), signal: AbortSignal.timeout(45000) });
-  const result = await response.json().catch(() => null);
-  if (!result?.status) throw new Error(result?.error || "OUTCOME_UNKNOWN");
-  return result;
-}
 async function ledger<T = RunView>(path: string, body?: unknown): Promise<T> {
   const response = await fetch(`/api/agent/runs${path}`, { cache: "no-store", ...(body === undefined ? {} : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }),
     signal: AbortSignal.timeout(20000) });
@@ -27,22 +19,13 @@ async function ledger<T = RunView>(path: string, body?: unknown): Promise<T> {
   if (!response.ok || !result?.ok) throw new Error(result?.error || "OUTCOME_UNKNOWN");
   return result.value;
 }
-/** Approve and execute exactly the preview the user saw; a repeated call finds it already applied. */
-async function confirm(seen: RunView): Promise<RunView> {
-  let run = await ledger(`/${seen.id}`);
-  if (run.proposal?.contentHash !== seen.proposal?.contentHash) throw new Error("VERSION_CONFLICT");
-  if (run.status === "awaiting_approval") run = await ledger(`/${run.id}/user-events`, { action: "approve", expectedRevision: run.revision, binding: bind(run) });
-  if (run.status === "approved") {
-    await ledger(`/${run.id}/execute`, { binding: bind(run), approvalId: run.approvalId, idempotencyKey: run.proposal!.proposalId });
-    run = await ledger(`/${run.id}`);
-  }
-  if (run.status !== "applied") throw new Error(run.status === "stale" ? "CONTEXT_STALE" : "NEW_PREVIEW_REQUIRED");
-  return run;
-}
-const changesOf = (run: RunView | null): ReviewChange[] => {
-  const note = run?.events.findLast(e => e.type === "workout_review")?.data as { review?: Review } | undefined;
-  return note?.review?.outcome === "changes" ? note.review.changes : [];
-};
+const api: ReviewApi = { ledger, async review(action, body) {
+  const response = await fetch(`/api/workout-review${action && `?action=${action}`}`, { method: "POST", cache: "no-store", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body), signal: AbortSignal.timeout(45000) });
+  const result = await response.json().catch(() => null);
+  if (!result?.status) throw new Error(result?.error || "OUTCOME_UNKNOWN");
+  return result;
+} };
 
 /**
  * Post-workout review card: the model only suggests closed changes; each is chosen here and applied through the ledger.
@@ -78,31 +61,29 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
       if (run) await ledger(`/${run.id}`).then(show).catch(() => {});
     } finally { flight.current = false; setBusy(false); }
   }
-  const proposed = (o: Outcome) => {
-    if (o.status === "unavailable") throw new Error(o.error);
-    if (o.status === "invalid") throw new Error("INVALID_REVIEW");
-    if (o.status === "nochange") { setWhy(o.review.outcome === "nochange" ? o.review.why : ""); return null; }
-    return o.run;
+  const proposed = (o: ReviewOutcome) => {
+    if (o.status === "nochange") setWhy(o.review.outcome === "nochange" ? o.review.why : "");
+    return previewOf(o);
   };
   const start = () => act(async () => {
     setWhy(""); setUndo(null); keys.current = {};
-    const value = proposed(await review("", { sessionId: reviewed.current, requestKey: crypto.randomUUID(), consent: COACH_CONSENT_VERSION, locale: en ? "en" : "zh", timezone: timezone() }));
+    const value = proposed(await api.review("", { sessionId: reviewed.current, requestKey: crypto.randomUUID(), consent: COACH_CONSENT_VERSION, locale: en ? "en" : "zh", timezone: timezone() }));
     if (value) { show(value); remember({ runId: value.id }); }
   });
   const apply = () => act(async () => {
     const accepted = selected.flatMap((on, i) => on ? [i] : []), signature = accepted.join(",");
     if (keys.current.accept?.[0] !== signature) keys.current.accept = [signature, crypto.randomUUID()];
-    const preview = proposed(await review("accept", { runId: run!.id, requestKey: keys.current.accept[1], timezone: timezone(), accepted }))!;
+    const preview = proposed(await api.review("accept", { runId: run!.id, requestKey: keys.current.accept[1], timezone: timezone(), accepted }))!;
     remember({ runId: preview.id });
-    show(await confirm(preview)); void refreshUserData().catch(() => {});
+    show(await confirmPreview(api, preview)); void refreshUserData().catch(() => {});
   });
   const rollback = () => act(async () => {
     keys.current.rollback ??= crypto.randomUUID();
-    const preview = proposed(await review("rollback", { runId: run!.id, requestKey: keys.current.rollback, timezone: timezone() }))!;
+    const preview = proposed(await api.review("rollback", { runId: run!.id, requestKey: keys.current.rollback, timezone: timezone() }))!;
     remember({ runId: run!.id, undoId: preview.id });
-    setUndo(await confirm(preview)); void refreshUserData().catch(() => {});
+    setUndo(await confirmPreview(api, preview)); void refreshUserData().catch(() => {});
   });
-  const decline = () => act(async () => { show(await ledger(`/${run!.id}/user-events`, { action: "decline", expectedRevision: run!.revision, binding: bind(run!) })); });
+  const decline = () => act(async () => { show(await ledger(`/${run!.id}/user-events`, { action: "decline", expectedRevision: run!.revision, binding: reviewBinding(run!) })); });
 
   const changes = changesOf(run), open = !!run && ["awaiting_approval", "approved"].includes(run.status), count = selected.filter(Boolean).length;
   if (!sessionId && !acted && !(open || run?.status === "applied" && undo?.status !== "applied")) return null;

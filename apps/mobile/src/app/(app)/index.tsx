@@ -8,6 +8,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { KeepScreenOn, RestBar, RestLength, useRest } from "@/components/rest-bar";
+import { ReviewCard } from "@/components/review-card";
 import { SentenceEntry, SentenceReceipts } from "@/components/sentence-entry";
 import { SetRow } from "@/components/set-row";
 import { Button, Card } from "@/components/ui";
@@ -104,8 +105,10 @@ export default function Today() {
           pending={state?.items.filter(i => i.action === "apply" || i.action === "undo").map(i => i.action === "apply" ? JSON.parse(i.bodyJson).id : JSON.parse(i.bodyJson).commandId) ?? []} />
         {active ? <View style={styles.gap}><Text style={muted}>{t("endHint")}</Text>
           <Button label={t("end")} disabled={paused} onPress={() => void write({ action: "end", body: { id: session.id, revision: session.revision + 1, status: "ended" } })} /></View>
-          : !pending && <Button variant="outline" label={t("anotherSession")} onPress={() => void load()} />}
+          : !pending && <><ReviewCard key={session.id} sessionId={session.id} />
+            <Button variant="outline" label={t("anotherSession")} onPress={() => void load()} /></>}
       </>}
+    {data && !session && <ReviewCard />}
   </ScrollView>;
 }
 const styles = StyleSheet.create({
