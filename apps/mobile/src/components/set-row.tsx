@@ -1,14 +1,13 @@
 import { tapSetRequest, voidSetRequest } from "@liftcut/core/set-requests";
-import type { SetRequest } from "@liftcut/core/today";
+import type { SetLog, SetRequest } from "@liftcut/core/today";
 import { randomUUID } from "expo-crypto";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "@/components/ui";
-import type { WorkoutSession } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import { useColors } from "@/lib/theme";
 
-type Saved = WorkoutSession["sets"][number];
+type Saved = SetLog;
 const number = (s: string) => s.trim() === "" ? null : Number(s.replace(",", "."));
 
 /** Same write as the web row (shared builder): prefill provenance, skips without actuals, undo as compensation. */

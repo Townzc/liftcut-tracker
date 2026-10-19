@@ -51,6 +51,7 @@ test("the Expo app records sets through the shared write path: prefill provenanc
   await expect(row(1).getByText("已撤销")).toBeVisible();
   await page.getByRole("button", { name: "结束训练" }).click();
   await expect(page.getByText("已结束的训练 · 手机训练 B")).toBeVisible();
+  await expect(page.getByTestId("outbox-status")).toHaveText("已同步"); // The screen updates first; the server confirms in order.
   const rows = (await db.query(`select l.set_index,l.status,l.revision,l.weight_kg,l.reps,l.rpe,l.weight_source,l.reps_source from set_logs l
     join workout_sessions s on s.id=l.session_id where s.training_plan_id=$1 order by l.set_index`, [plan])).rows;
   expect(rows).toEqual([
