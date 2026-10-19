@@ -1,0 +1,232 @@
+{
+  "gold": "/root/autodl-tmp/liftcut-m4-20261019/repo/research/m4-parser/data/generated/eval/dev.gold.jsonl",
+  "system": "/root/autodl-tmp/liftcut-m4-20261019/work/pred-merged-dev.jsonl",
+  "total": 500,
+  "exact": 494,
+  "exactRate": 0.988,
+  "intentAccuracy": 0.99,
+  "fieldAccuracy": 0.9976,
+  "invented": 12,
+  "omissionRate": 0.0016,
+  "correctionLocalization": 1,
+  "clarifyPrecision": 0.9929,
+  "clarifyRecall": 0.9722,
+  "jsonValidRate": 1,
+  "schemaValidRate": 1,
+  "latencyMs": {
+    "p50": 876.1,
+    "p95": 2976.6,
+    "max": 3782.2
+  },
+  "byFamily": {
+    "clarify_uncertain_quantity": [
+      18,
+      18
+    ],
+    "record_list": [
+      47,
+      47
+    ],
+    "clarify_missing_reps": [
+      15,
+      15
+    ],
+    "record_uniform": [
+      47,
+      47
+    ],
+    "correct_weight": [
+      19,
+      19
+    ],
+    "clarify_plan_not_actual": [
+      12,
+      12
+    ],
+    "correct_reps": [
+      33,
+      33
+    ],
+    "skip": [
+      23,
+      24
+    ],
+    "record_pyramid": [
+      20,
+      20
+    ],
+    "clarify_out_of_range": [
+      14,
+      15
+    ],
+    "record_weighted": [
+      103,
+      104
+    ],
+    "clarify_missing_unit": [
+      9,
+      9
+    ],
+    "record_bodyweight": [
+      28,
+      28
+    ],
+    "clarify_unsupported_unit": [
+      9,
+      9
+    ],
+    "repeat": [
+      16,
+      16
+    ],
+    "clarify_rpe_scope": [
+      15,
+      15
+    ],
+    "end": [
+      13,
+      13
+    ],
+    "clarify_unknown_exercise": [
+      17,
+      20
+    ],
+    "clarify_question": [
+      20,
+      20
+    ],
+    "clarify_negation": [
+      11,
+      11
+    ],
+    "correct_rpe": [
+      5,
+      5
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      281,
+      282
+    ],
+    "mixed": [
+      37,
+      38
+    ],
+    "en": [
+      176,
+      180
+    ]
+  },
+  "failures": [
+    {
+      "id": "dev-00020",
+      "text": "那个，cable leg curl 一千五百kg 十二个",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Cable leg curl",
+        "sets": [
+          {
+            "weight": 150,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-00219",
+      "text": "ok dumbbell overhead triceps extension 80 kilos 15 reps",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "绳索颈后臂屈伸",
+        "sets": [
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-00258",
+      "text": "Pull-up 7.5kg 2 reps",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Push-up",
+        "sets": [
+          {
+            "weight": 7.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-00323",
+      "text": "drop the last set of Dumbbell overhead triceps extension",
+      "gold": {
+        "intent": "skip",
+        "exercise": "哑铃颈后臂屈伸",
+        "setIndex": 4
+      },
+      "pred": {
+        "intent": "skip",
+        "exercise": "哑铃弯举",
+        "setIndex": 4
+      }
+    },
+    {
+      "id": "dev-00451",
+      "text": "seated machine row 52.5 kilos 16 reps",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "器械提踵",
+        "sets": [
+          {
+            "weight": 52.5,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-00460",
+      "text": "好，坐姿哑铃推举 35 lb 2个",
+      "gold": {
+        "intent": "record",
+        "exercise": "Seated dumbbell shoulder press",
+        "sets": [
+          {
+            "weight": 35,
+            "unit": "lb",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    }
+  ]
+}

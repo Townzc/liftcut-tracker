@@ -20,7 +20,7 @@ def main():
     ap.add_argument("--input", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--max-new-tokens", type=int, default=256)
-    ap.add_argument("--threads", type=int, default=4)
+    ap.add_argument("--threads", type=int, default=4, help="CPU threads for both generation and prompt processing")
     args = ap.parse_args()
     if bool(args.model) == bool(args.gguf):
         raise SystemExit("pass exactly one of --model or --gguf")
@@ -43,7 +43,10 @@ def main():
             return tok.decode(out[0, ids.shape[1]:], skip_special_tokens=True)
     else:
         from llama_cpp import Llama
-        llm = Llama(model_path=args.gguf, n_ctx=1024, n_threads=args.threads, seed=0, verbose=False)
+        # The default prefill count uses host CPU count, which can exceed a
+        # container's CPU quota even when generation is limited to four threads.
+        llm = Llama(model_path=args.gguf, n_ctx=1024, n_threads=args.threads,
+                    n_threads_batch=args.threads, seed=0, verbose=False)
 
         def generate(prompt):
             # Raw completion on the template-rendered text; special tokens in it are parsed as such.

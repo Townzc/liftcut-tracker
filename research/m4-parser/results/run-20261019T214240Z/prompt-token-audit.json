@@ -1,0 +1,20 @@
+{
+  "items": 1060,
+  "method": "Actual pinned tokenizer and the same non-thinking chat template; no model inference",
+  "inputTokens": {
+    "full": {
+      "min": 359,
+      "max": 417,
+      "mean": 380.21,
+      "total": 403023
+    },
+    "short": {
+      "min": 48,
+      "max": 106,
+      "mean": 69.21,
+      "total": 73363
+    }
+  },
+  "reductionFraction": 0.818,
+  "phoneLatencyMeasured": false
+}

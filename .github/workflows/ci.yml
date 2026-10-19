@@ -40,6 +40,11 @@ jobs:
       - name: Verify CI tokenizer cache integrity and bounded retry
         run: python -m unittest discover -s tests/ci -v
 
+      - name: Verify M4 startup and timeout without a GPU or downloads
+        run: |
+          bash -n research/m4-parser/run_all.sh
+          python research/m4-parser/test_runner.py -v
+
       - name: Rebuild the saved G1 trajectory viewer without model calls
         run: python research/liftcut-agent/trajectory_demo.py --study g1 --public-dir research/liftcut-agent/reports/g1-seed42-2026-10-02 --output research/liftcut-agent/reports/g1-trajectory-demo-2026-10-03.html --check
 

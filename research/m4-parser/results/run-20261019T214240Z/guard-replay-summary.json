@@ -1,0 +1,43 @@
+{
+  "method": "Post-hoc deterministic replay of existing schema and number/unit checks. This is not a new model score, a production guard, or an independent validation.",
+  "original": {
+    "total": 500,
+    "exact": 375,
+    "exactRate": 0.75,
+    "intentAccuracy": 0.768,
+    "fieldAccuracy": 0.8478,
+    "invented": 141,
+    "omissionRate": 0.1515,
+    "correctionLocalization": 0.9167,
+    "clarifyPrecision": 0.6723,
+    "clarifyRecall": 0.5517,
+    "jsonValidRate": 1,
+    "schemaValidRate": 0.924,
+    "latencyMs": {
+      "p50": 968.1,
+      "p95": 2893.8,
+      "max": 5890.2
+    },
+    "failureCount": 125
+  },
+  "numberUnitRejectionReplay": {
+    "total": 500,
+    "exact": 422,
+    "exactRate": 0.844,
+    "intentAccuracy": 0.854,
+    "fieldAccuracy": 0.8236,
+    "invented": 93,
+    "omissionRate": 0.1793,
+    "correctionLocalization": 0.9167,
+    "clarifyPrecision": 0.6978,
+    "clarifyRecall": 0.8759,
+    "jsonValidRate": 1,
+    "schemaValidRate": 0.924,
+    "latencyMs": null,
+    "failureCount": 78
+  },
+  "schemaFailures": 38,
+  "additionalNumberUnitFailures": 34,
+  "shouldClarifyButProposedAction": 38,
+  "diagnosticSha256": "3b7e910c9f734c61c4c898a36b87c24bfec4f5e9336b1153eaa6251ba6f841b6"
+}

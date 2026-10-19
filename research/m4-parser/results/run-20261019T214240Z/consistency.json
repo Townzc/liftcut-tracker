@@ -1,0 +1,110 @@
+{
+  "items": 1060,
+  "missing": 0,
+  "sameText": 943,
+  "sameParsed": 946,
+  "parsedAgreement": 0.8925,
+  "minAgreement": 0.95,
+  "disagreements": [
+    {
+      "id": "dev-00020",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"Cable leg curl\",\"sets\":[{\"weight\":150,\"unit\":\"kg\",\"reps\":12,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"out_of_range\"}"
+    },
+    {
+      "id": "dev-00027",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":2}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":2}"
+    },
+    {
+      "id": "dev-00030",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":4}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":4}"
+    },
+    {
+      "id": "dev-00032",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":1}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":1}"
+    },
+    {
+      "id": "dev-00042",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":4}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":4}"
+    },
+    {
+      "id": "dev-00086",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":5}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":5}"
+    },
+    {
+      "id": "dev-00219",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"绳索颈后臂屈伸\",\"sets\":[{\"weight\":80,\"unit\":\"kg\",\"reps\":15,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"unknown_exercise\"}"
+    },
+    {
+      "id": "dev-00298",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"哑铃牧师凳弯举\",\"sets\":[{\"weight\":70,\"unit\":\"lb\",\"reps\":10,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"unknown_exercise\"}"
+    },
+    {
+      "id": "dev-00314",
+      "reference": "{\"intent\":\"end\"}",
+      "candidate": "{\"intent\":\"end_session\"}"
+    },
+    {
+      "id": "dev-00323",
+      "reference": "{\"intent\":\"skip\",\"exercise\":\"哑铃弯举\",\"target\":\"last\"}",
+      "candidate": "{\"intent\":\"skip\",\"exercise\":\"哑铃颈后臂屈伸\",\"target\":\"last\"}"
+    },
+    {
+      "id": "dev-00345",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"杠铃罗马尼亚硬拉\",\"sets\":[{\"weight\":90,\"unit\":\"kg\",\"reps\":11,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"unknown_exercise\"}"
+    },
+    {
+      "id": "dev-00356",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":1}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":1}"
+    },
+    {
+      "id": "dev-00411",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":3}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":3}"
+    },
+    {
+      "id": "dev-00413",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"杠铃卧推\",\"sets\":[{\"weight\":395,\"unit\":\"lb\",\"reps\":15,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"out_of_range\"}"
+    },
+    {
+      "id": "dev-00451",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"器械提踵\",\"sets\":[{\"weight\":52.5,\"unit\":\"kg\",\"reps\":16,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"unknown_exercise\"}"
+    },
+    {
+      "id": "hand-004",
+      "reference": "{\"intent\":\"clarify\",\"reason\":\"rpe_scope\"}",
+      "candidate": "{\"intent\":\"record\",\"exercise\":\"Bench press\",\"sets\":[{\"weight\":185,\"unit\":\"lb\",\"reps\":6,\"rpe\":8}]}"
+    },
+    {
+      "id": "hand-005",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"卧推\",\"sets\":[{\"weight\":70,\"unit\":\"kg\",\"reps\":5,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"record\",\"exercise\":\"bench\",\"sets\":[{\"weight\":70,\"unit\":\"kg\",\"reps\":5,\"rpe\":null}]}"
+    },
+    {
+      "id": "hand-008",
+      "reference": "{\"intent\":\"record\",\"exercise\":\"引体向上\",\"sets\":[{\"weight\":null,\"unit\":null,\"reps\":10,\"rpe\":null}]}",
+      "candidate": "{\"intent\":\"clarify\",\"reason\":\"self_reps\"}"
+    },
+    {
+      "id": "hand-021",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":1}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":1}"
+    },
+    {
+      "id": "hand-023",
+      "reference": "{\"intent\":\"repeat\",\"exercise\":null,\"count\":2}",
+      "candidate": "{\"intent\":\"repeat\",\"count\":2}"
+    }
+  ]
+}

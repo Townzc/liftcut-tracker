@@ -1,0 +1,10 @@
+{
+  "parser-f16.gguf": {
+    "bytes": 1198182144,
+    "sha256": "e0e1158e0988d8b2ef8a14045ac06c5f312b77877eadb1751c59d56fdebbc01d"
+  },
+  "parser-q4_k_m.gguf": {
+    "bytes": 396704512,
+    "sha256": "69a80ccaf979184f8031cf3f3bbef79597dfb66c5dfc06b10a850f377d4b5146"
+  }
+}

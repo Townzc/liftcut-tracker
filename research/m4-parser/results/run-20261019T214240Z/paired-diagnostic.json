@@ -1,0 +1,35 @@
+{
+  "method": "Post-hoc paired correctness and valid resolved equality using the unchanged scorer. Different from raw parsed JSON agreement; does not replace the original 0.95 gate.",
+  "reports": [
+    {
+      "split": "dev",
+      "total": 500,
+      "bothCorrect": 483,
+      "mergedOnlyCorrect": 11,
+      "q4OnlyCorrect": 4,
+      "bothWrong": 2,
+      "resolvedValidAndEqual": 485,
+      "atLeastOneInvalid": 8
+    },
+    {
+      "split": "test",
+      "total": 500,
+      "bothCorrect": 342,
+      "mergedOnlyCorrect": 33,
+      "q4OnlyCorrect": 34,
+      "bothWrong": 91,
+      "resolvedValidAndEqual": 399,
+      "atLeastOneInvalid": 61
+    },
+    {
+      "split": "handwritten",
+      "total": 60,
+      "bothCorrect": 45,
+      "mergedOnlyCorrect": 5,
+      "q4OnlyCorrect": 3,
+      "bothWrong": 7,
+      "resolvedValidAndEqual": 47,
+      "atLeastOneInvalid": 10
+    }
+  ]
+}

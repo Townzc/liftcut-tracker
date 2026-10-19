@@ -1,0 +1,275 @@
+{
+  "gold": "/root/autodl-tmp/liftcut-m4-20261019/repo/research/m4-parser/data/generated/eval/handwritten.gold.jsonl",
+  "system": "/root/autodl-tmp/liftcut-m4-20261019/work/pred-merged-handwritten.jsonl",
+  "total": 60,
+  "exact": 50,
+  "exactRate": 0.8333,
+  "intentAccuracy": 0.8333,
+  "fieldAccuracy": 0.8759,
+  "invented": 12,
+  "omissionRate": 0.12,
+  "correctionLocalization": 0.8333,
+  "clarifyPrecision": 0.85,
+  "clarifyRecall": 0.8095,
+  "jsonValidRate": 0.9833,
+  "schemaValidRate": 0.9,
+  "latencyMs": {
+    "p50": 587,
+    "p95": 2257.9,
+    "max": 3070.9
+  },
+  "byFamily": {
+    "record_weighted": [
+      6,
+      8
+    ],
+    "record_bodyweight": [
+      3,
+      3
+    ],
+    "record_list": [
+      3,
+      3
+    ],
+    "record_uniform": [
+      5,
+      5
+    ],
+    "record_pyramid": [
+      1,
+      2
+    ],
+    "repeat": [
+      4,
+      4
+    ],
+    "correct_reps": [
+      3,
+      3
+    ],
+    "correct_weight": [
+      1,
+      2
+    ],
+    "correct_rpe": [
+      1,
+      1
+    ],
+    "skip": [
+      3,
+      5
+    ],
+    "end": [
+      3,
+      3
+    ],
+    "clarify_uncertain_quantity": [
+      3,
+      3
+    ],
+    "clarify_plan_not_actual": [
+      2,
+      2
+    ],
+    "clarify_question": [
+      2,
+      2
+    ],
+    "clarify_negation": [
+      1,
+      2
+    ],
+    "clarify_missing_reps": [
+      2,
+      2
+    ],
+    "clarify_missing_unit": [
+      2,
+      3
+    ],
+    "clarify_unsupported_unit": [
+      1,
+      1
+    ],
+    "clarify_rpe_scope": [
+      1,
+      2
+    ],
+    "clarify_unknown_exercise": [
+      2,
+      2
+    ],
+    "clarify_out_of_range": [
+      1,
+      2
+    ]
+  },
+  "byLanguage": {
+    "zh": [
+      32,
+      38
+    ],
+    "en": [
+      15,
+      19
+    ],
+    "mixed": [
+      3,
+      3
+    ]
+  },
+  "failures": [
+    {
+      "id": "hand-000",
+      "text": "卧推今天 60 公斤做了 8 个，感觉还行",
+      "gold": {
+        "intent": "record",
+        "exercise": "卧推",
+        "sets": [
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "hand-004",
+      "text": "bench press: 185 lbs, 6 reps, felt like rpe 8",
+      "gold": {
+        "intent": "record",
+        "exercise": "Bench press",
+        "sets": [
+          {
+            "weight": 185,
+            "unit": "lb",
+            "reps": 6,
+            "rpe": 8
+          }
+        ]
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "hand-020",
+      "text": "squat 135 x 10 lbs, 185 lbs x 5",
+      "gold": {
+        "intent": "record",
+        "exercise": "Squat",
+        "sets": [
+          {
+            "weight": 135,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": null
+          },
+          {
+            "weight": 185,
+            "unit": "lb",
+            "reps": 5,
+            "rpe": null
+          }
+        ]
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-028",
+      "text": "last set was 102.5 kg, not 100",
+      "gold": {
+        "intent": "correct",
+        "exercise": "Squat",
+        "setIndex": 3,
+        "changes": {
+          "weight": 102.5,
+          "unit": "kg"
+        }
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-032",
+      "text": "下组跳了",
+      "gold": {
+        "intent": "skip",
+        "exercise": "卧推",
+        "setIndex": 2
+      },
+      "pred": {
+        "intent": "clarify"
+      }
+    },
+    {
+      "id": "hand-033",
+      "text": "跳过",
+      "gold": {
+        "intent": "skip",
+        "exercise": "卧推",
+        "setIndex": 2
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-046",
+      "text": "硬拉今天没做",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-052",
+      "text": "第一组重量记错了，应该是 57.5",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    },
+    {
+      "id": "hand-055",
+      "text": "bench 80 kg 5, 5, 5 at rpe 8",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": {
+        "intent": "record",
+        "exercise": "Bench press",
+        "sets": [
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": 8
+          },
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": 8
+          },
+          {
+            "weight": 80,
+            "unit": "kg",
+            "reps": 5,
+            "rpe": 8
+          }
+        ]
+      }
+    },
+    {
+      "id": "hand-059",
+      "text": "深蹲 100 公斤 5 个 RPE 12",
+      "gold": {
+        "intent": "clarify"
+      },
+      "pred": null
+    }
+  ]
+}

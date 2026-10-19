@@ -35,7 +35,7 @@ def main():
     report = {"items": len(ids), "missing": sum(i not in cand for i in ids), "sameText": same_text, "sameParsed": same_json,
               "parsedAgreement": round(same_json / max(len(ids), 1), 4), "minAgreement": args.min_agreement,
               "disagreements": [{"id": i, "reference": ref[i], "candidate": cand.get(i)} for i in ids if parsed(ref[i]) != parsed(cand.get(i, ""))][:20]}
-    Path(args.out).write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    Path(args.out).write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "disagreements"}))
     if report["parsedAgreement"] < args.min_agreement:
         raise SystemExit(3)
