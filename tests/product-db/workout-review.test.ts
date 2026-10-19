@@ -111,6 +111,8 @@ test("a requested review becomes a ledger proposal only when its closed changes 
       assert.deepEqual(await rollbackReview(owner, { runId: newer.id, requestKey: key, timezone: "UTC" }, { agent }), { status: "unavailable", error: "KEY_CONFLICT" });
       await apply(easier);
       assert.deepEqual(await squatNow(), { sets: 3, rpe: 6.5 });
+      const again = { runId: easier.id, requestKey: randomUUID(), timezone: "UTC", accepted: [0] }; // All of it, after it was applied.
+      assert.deepEqual([proposed(await acceptReview(owner, again, { agent })).id, await status(easier.id)], [easier.id, "applied"]);
       assert.deepEqual(await acceptReview(owner, { runId: older.id, requestKey: randomUUID(), timezone: "UTC", accepted: [0] }, { agent }),
         { status: "unavailable", error: "CONTEXT_STALE" });
       assert.deepEqual(await acceptReview(owner, { runId: older.id, requestKey: randomUUID(), timezone: "UTC", accepted: [3] }, { agent }),

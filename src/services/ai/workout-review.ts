@@ -111,8 +111,10 @@ export async function acceptReview(owner: string, input: unknown, deps: Deps): P
     ? { status: "proposed", review, run: replay } : { status: "unavailable", error: "KEY_CONFLICT" };
   const current = await deps.agent.get(owner, request.runId);
   if (current.ok && current.value.status === "stale") return { status: "unavailable", error: "CONTEXT_STALE" };
+  // Accepting all keeps the review's own preview, also once it is applied, so a retry stays harmless.
+  if (current.ok && subset.length === note.changes.length && ["awaiting_approval", "approved", "applied"].includes(current.value.status))
+    return { status: "proposed", review: note.review, run: current.value };
   if (!current.ok || !["awaiting_approval", "approved"].includes(current.value.status)) return { status: "unavailable", error: "REVIEW_CLOSED" };
-  if (subset.length === note.changes.length) return { status: "proposed", review: note.review, run: current.value };
   // The review's preview is still fresh, so the plan has not changed since the review was made.
   const snapshot = await deps.agent.planContext(owner, "training", request.runId, request.timezone);
   if (!snapshot.draft || !snapshot.editable) return { status: "unavailable", error: "CONTEXT_STALE" };
