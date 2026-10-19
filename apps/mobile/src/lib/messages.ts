@@ -92,6 +92,21 @@ const zh = {
   account: "账号",
   server: "服务器",
   signOut: "退出登录",
+  coach: "教练",
+  coachConsentTitle: "开启训练助手",
+  coachConsentHint: "开启后，你的消息和下面这些数据会发给模型，用来回答问题和起草记录。草稿要你确认才会保存。",
+  coachConsent: "同意并开启",
+  coachRevoke: "关闭训练助手（不再发送数据）",
+  coachInput: "发给训练助手",
+  coachSend: "发送",
+  coachReplying: "正在回复…",
+  coachSource: "来源：{topic} · {from} 至 {to} · {count} 条",
+  coachDraft: "待确认的记录草稿",
+  coachConfirm: "确认记录",
+  coachQueued: "已加入待同步，联网后保存。",
+  coachStale: "草稿之后训练有变化，这份草稿已关闭。请重新发送。",
+  coachWebOnly: "这类草稿请在网页的 Agent 页确认；这里不会保存。",
+  coachFailed: "回复中断或暂时不可用（{code}），未完成的回答已丢弃，记录没有改动。",
 } as const;
 export type MessageKey = keyof typeof zh;
 const en: Record<MessageKey, string> = {
@@ -187,6 +202,21 @@ const en: Record<MessageKey, string> = {
   account: "Account",
   server: "Server",
   signOut: "Sign out",
+  coach: "Coach",
+  coachConsentTitle: "Turn on the coach",
+  coachConsentHint: "When on, your messages and the data below are sent to the model to answer and draft entries. Drafts are saved only after you confirm.",
+  coachConsent: "Agree and turn on",
+  coachRevoke: "Turn off the coach (stop sending data)",
+  coachInput: "Message the coach",
+  coachSend: "Send",
+  coachReplying: "Replying…",
+  coachSource: "Source: {topic} · {from} to {to} · {count} rows",
+  coachDraft: "Entry draft to confirm",
+  coachConfirm: "Confirm entry",
+  coachQueued: "Queued; it is saved when you are online.",
+  coachStale: "Your workout changed after this draft, so it is closed. Send your message again.",
+  coachWebOnly: "Confirm this kind of draft on the web Agent page; nothing is saved here.",
+  coachFailed: "The reply was interrupted or is unavailable ({code}). The incomplete answer was discarded and no records changed.",
 };
 export type Locale = "zh-CN" | "en";
 export const messages: Record<Locale, Record<MessageKey, string>> = { "zh-CN": zh, en };
