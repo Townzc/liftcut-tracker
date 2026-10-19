@@ -54,3 +54,23 @@ test("the phone chat asks consent, streams a reply and saves a workout draft onl
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-mobile.png", fullPage: true });
   expectBearerOnly(sent); expect(errors).toEqual([]);
 });
+
+test("a body entry drafted in the phone chat is saved once, after confirmation, through the web's records API", async ({ page }) => {
+  const errors: string[] = [], sent: Sent[] = [];
+  page.on("pageerror", e => errors.push(e.message)); await relay(page, sent);
+  const entries = async () => (await db.query("select id,request from personal_record_events where user_id=$1 and request->>'source'='conversation'", [user])).rows;
+  const before = (await entries()).map(r => r.id);
+  try {
+    await signIn(page); await page.getByRole("link", { name: "教练" }).click(); await page.getByRole("button", { name: "同意并开启" }).click();
+    await page.getByLabel("发给训练助手").fill("昨天早上秤了一下，是七十二点五公斤，帮我补上吧"); await page.getByRole("button", { name: "发送", exact: true }).click();
+    const turn = page.getByTestId("coach-turn").last();
+    await expect(turn).toContainText("体重 · 72.5 kg"); await expect(turn).toContainText("腰围 · — cm");
+    expect(await entries()).toHaveLength(before.length); // A draft is not a record.
+    await turn.getByRole("button", { name: "确认补录" }).dblclick();
+    await expect(turn).toContainText("已加入待同步");
+    await expect.poll(async () => (await entries()).length).toBe(before.length + 1);
+    const saved = (await entries()).find(r => !before.includes(r.id))!.request;
+    expect([saved.entry.kind, saved.entry.weightKg, saved.entry.waistCm, saved.text]).toEqual(["body", 72.5, null, "昨天早上秤了一下，是七十二点五公斤，帮我补上吧"]);
+    expectBearerOnly(sent); expect(errors).toEqual([]);
+  } finally { await db.query("delete from personal_record_events where user_id=$1 and not (id = any($2))", [user, before]); }
+});

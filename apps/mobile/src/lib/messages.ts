@@ -105,7 +105,11 @@ const zh = {
   coachConfirm: "确认记录",
   coachQueued: "已加入待同步，联网后保存。",
   coachStale: "草稿之后训练有变化，这份草稿已关闭。请重新发送。",
-  coachWebOnly: "这类草稿请在网页的 Agent 页确认；这里不会保存。",
+  coachWebOnly: "计划草稿请在网页的 Agent 页查看并批准；这里不会修改计划。",
+  coachClosed: "这份草稿已关闭；需要时请重新发送。",
+  coachRecordDraft: "待确认的数据",
+  coachConfirmRecord: "确认补录",
+  coachRecordUnknown: "未提供的数值保持空白，不估算营养数据。",
   coachFailed: "回复中断或暂时不可用（{code}），未完成的回答已丢弃，记录没有改动。",
 } as const;
 export type MessageKey = keyof typeof zh;
@@ -215,7 +219,11 @@ const en: Record<MessageKey, string> = {
   coachConfirm: "Confirm entry",
   coachQueued: "Queued; it is saved when you are online.",
   coachStale: "Your workout changed after this draft, so it is closed. Send your message again.",
-  coachWebOnly: "Confirm this kind of draft on the web Agent page; nothing is saved here.",
+  coachWebOnly: "Review and approve plan drafts on the web Agent page; the plan is not changed here.",
+  coachClosed: "This draft is closed; send your message again if needed.",
+  coachRecordDraft: "Entry to confirm",
+  coachConfirmRecord: "Confirm entry",
+  coachRecordUnknown: "Unreported values stay blank. No nutrition is estimated.",
   coachFailed: "The reply was interrupted or is unavailable ({code}). The incomplete answer was discarded and no records changed.",
 };
 export type Locale = "zh-CN" | "en";
