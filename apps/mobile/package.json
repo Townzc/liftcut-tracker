@@ -19,6 +19,7 @@
     "@supabase/supabase-js": "2.108.2",
     "expo": "~58.0.14",
     "expo-constants": "~58.0.12",
+    "expo-crypto": "~58.0.7",
     "expo-linking": "~58.0.13",
     "expo-localization": "~58.0.4",
     "expo-router": "~58.0.23",
