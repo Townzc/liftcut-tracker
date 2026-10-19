@@ -10,7 +10,9 @@ test.afterAll(async()=>{await db.query("delete from coach_private.guest_ai_usage
 
 test("real guest API stream, confirmed local facts, login preview/import, new chat memory and confirmed undo",async({page})=>{
   test.setTimeout(90000);const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
-  await guest(page);await page.getByRole("button",{name:"同意并开启",exact:true}).click();
+  await guest(page);
+  await expect(page.getByTestId("coach-data-categories").getByRole("listitem")).toHaveCount(5); // Guests have no saved plans or settings to send.
+  await page.getByRole("button",{name:"同意并开启",exact:true}).click();
   await expect(page.getByTestId("guest-quota")).toContainText("10/10");
   const streamed=page.waitForResponse(r=>new URL(r.url()).pathname==="/api/ai/coach"&&r.request().method()==="POST");
   await send(page,"你好 你能做些什么");expect((await streamed).headers()["content-type"]).toContain("application/x-ndjson");await expect(page.getByTestId("guest-quota")).toContainText("9/10");
