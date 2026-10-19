@@ -75,6 +75,9 @@ export class WorkoutOutboxClient {
       const data=await this.fetchData();if(this.disposed)return;
       const state=await this.storage.change(s=>{
         if(s.items.length || s.revision!==before.revision)return false;
+        // A read of identical data must not invalidate a user action prepared from
+        // the displayed revision. Real changes still advance it and reject stale writes.
+        if(JSON.stringify(s.confirmed)===JSON.stringify(data))return false;
         s.confirmed=data;return true;
       });this.emit(state);this.notify();this.problem("");
     } catch(error) {if(!this.disposed)this.problem(error instanceof Error?error.message:"LOAD_FAILED");}
