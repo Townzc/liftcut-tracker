@@ -1,7 +1,7 @@
 ﻿import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-import type { AppLocale, TrainingPlan } from "@/types";
+import type { AppLocale, TrainingPlan } from "@liftcut/core/types";
 
 type PlanExportErrorCode =
   | "NO_PLAN"

@@ -14,7 +14,7 @@ import { TodayStore } from "@/services/today/store";
 import { todayPool } from "@/services/today/database";
 import { AgentStore } from "@/services/agent/store";
 import { agentPool } from "@/services/agent/database";
-import { contextSchema, planSchema, nutritionPlanSchema, planKindSchema, type Context } from "@/lib/agent/contracts";
+import { contextSchema, planSchema, nutritionPlanSchema, planKindSchema, type Context } from "@liftcut/core/agent-contracts";
 import { modelPlanData, type PlanSnapshot } from "@/services/agent/plan-state";
 import { adjustPlan, planAdjustmentSchema } from "@/lib/agent/plan-adjustment";
 import { streamingReply, type CoachStreamEvent } from "@/lib/coach-stream";

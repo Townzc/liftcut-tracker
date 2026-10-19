@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { saveTrainingPlanRequestSchema } from "@/lib/ai/schemas";
+import { saveTrainingPlanRequestSchema } from "@liftcut/core/ai-schemas";
 import { saveAiTrainingPlanAsFormalPlan } from "@/services/ai/persistence";
 import { requireApiUser } from "@/app/api/ai/_lib";
 

@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-19 — M0-1 单仓库与共享核心包
+
+- **原因**：手机 App（M1）要与网页共用同一套 schema 和契约（[方案](2026-10-18-mobile-agent-plan.md)第 3、4 节 M0），先建立不依赖框架的共享包。
+- **实现**：根目录启用 npm workspaces，新建 `packages/core`（`@liftcut/core`）；原样迁入领域类型、计划生成类型、应用 Zod schema、实际值 schema、计划导入 schema、AI 计划 schema 与批准账本契约，网页、测试、脚本与研究脚本改为 `@liftcut/core/<文件>` 引用。文件内容除内部相对引用外未改，行为不变。
+- **边界检查**：新测试要求核心包只引用自身文件和 `zod`；核心包用无 DOM、无 Node 类型的独立 tsconfig 做类型检查，已加入 CI。`next.config.ts` 显式列入 `transpilePackages`；Dockerfile 在 `npm ci` 前复制工作区清单。
+- **实际运行**：`npm test` 6 + 127 通过；`npm run lint` 0 错误、2 个原研究警告；`npm run build` 通过；核心包类型检查通过；本地 `postgres:16` 容器跑 P1 32、W1a 1、产品 PostgreSQL 76 项全部通过；W1a 手机宽度 Playwright 1 项通过。
+- **未运行**：Docker 镜像构建；WebKit 与其余 Playwright 场景（无界面改动，依赖 CI）。
+- **边界**：网页仍在仓库根目录，未移到 `apps/web`（避免改 Vercel 根目录）；解析器、动作目录与今日训练写入契约在 M0-2 迁移。
+- **下一步**：M0-2 迁移规则解析器、150 条评测与动作目录。
+
 ## 2026-10-18 — 下一阶段：手机 App + 训练 Agent（仅文档）
 
 - **原因**：用户在健身房带的是手机；网页已记录的最大局限是离线冷启动和真机未验证。维护者决定最终上线手机 App。

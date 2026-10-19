@@ -1,5 +1,5 @@
 "use client";
-import { isNutritionPlan, type AnyPlan } from "@/lib/agent/contracts";
+import { isNutritionPlan, type AnyPlan } from "@liftcut/core/agent-contracts";
 
 export function PlanPreview({plan,en=false}:{plan:AnyPlan;en?:boolean}) {
   const meals:Record<string,string>={breakfast:"早餐",lunch:"午餐",dinner:"晚餐",snack:"加餐"};

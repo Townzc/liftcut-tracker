@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import type { AiNutritionGenerationConstraints, AiTrainingGenerationConstraints } from "@/lib/ai/schemas";
+import type { AiNutritionGenerationConstraints, AiTrainingGenerationConstraints } from "@liftcut/core/ai-schemas";
 import { mapAiNutritionPlanToPersistence, mapAiTrainingPlanToTrainingPlan } from "@/lib/ai/mappers";
 import type { AiProfileSnapshot } from "@/services/ai/types";
 

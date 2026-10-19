@@ -2,7 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {adjustPlan} from "../src/lib/agent/plan-adjustment";
 import {planChanges} from "../src/lib/agent/plan-changes";
-import {nutritionPlanSchema} from "../src/lib/agent/contracts";
+import {nutritionPlanSchema} from "@liftcut/core/agent-contracts";
 import {trainingFixture,nutritionFixture} from "./fixtures/coach-plans";
 test("small training changes preserve all unrequested prescriptions and original input",()=>{
   const expected=structuredClone(trainingFixture);expected.weeks[0].days[0].exercises[0].sets=2;expected.summary="仅改一项";

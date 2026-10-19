@@ -1,4 +1,4 @@
-import {isNutritionPlan,type AnyPlan} from "./contracts";
+import {isNutritionPlan,type AnyPlan} from "@liftcut/core/agent-contracts";
 type Row=Record<string,unknown>;
 const rows=(value:unknown):Row[]=>Array.isArray(value)?value.filter((v):v is Row=>!!v&&typeof v==="object"):[];
 export function planChanges(baseline:Row[],plan:AnyPlan,en=false):string[]{

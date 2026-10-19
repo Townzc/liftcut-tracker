@@ -2,7 +2,7 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { BodyMetricLog } from "@/types";
+import type { BodyMetricLog } from "@liftcut/core/types";
 import {
   isGuestMode,
   nowIso,

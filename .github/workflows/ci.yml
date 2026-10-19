@@ -990,6 +990,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Type-check shared core without DOM or Node types
+        run: npm run typecheck -w @liftcut/core
+
       - name: Evaluate synthetic workout parsing without model calls
         run: node --import tsx scripts/eval-workout-parser.ts > workout-parser-report.json
 

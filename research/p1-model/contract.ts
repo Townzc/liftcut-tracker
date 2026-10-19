@@ -1,7 +1,7 @@
 // P1-M is a new application tool contract, not the unchanged E1 research system.
 import { createHash } from "node:crypto";
 import { z } from "zod";
-import type { RunView, Plan, Outcome } from "../../src/lib/agent/contracts";
+import type { RunView, Plan, Outcome } from "@liftcut/core/agent-contracts";
 import { planToolPort } from "../../src/services/agent/tool-port";
 import type { AgentStore } from "../../src/services/agent/store";
 

@@ -1,4 +1,4 @@
-import type { WorkoutLog } from "@/types";
+import type { WorkoutLog } from "@liftcut/core/types";
 import { formatDisplayDate } from "@/lib/date";
 
 export interface PersonalRecord {

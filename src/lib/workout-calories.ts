@@ -1,4 +1,4 @@
-import type { ExerciseLog, ExercisePlan } from "@/types";
+import type { ExerciseLog, ExercisePlan } from "@liftcut/core/types";
 
 export interface WorkoutCalorieInput {
   bodyWeightKg: number;

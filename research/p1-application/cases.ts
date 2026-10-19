@@ -1,5 +1,5 @@
 // CC0 synthetic application fixtures. These are known development cases, not unseen acceptance.
-import type { Context, Plan } from "../../src/lib/agent/contracts";
+import type { Context, Plan } from "@liftcut/core/agent-contracts";
 export const flows = ["preview", "approve", "no_reply", "decline", "revoke", "context_update", "lost_response", "resume"] as const;
 export const bundles: Context[] = [
   { weeklyDays: 1, sessionMinutes: 30, equipment: ["bodyweight"], notes: "Synthetic A; no real health information" },

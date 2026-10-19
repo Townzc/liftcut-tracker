@@ -2,7 +2,7 @@ import type {
   AiLocale,
   AiNutritionGenerationConstraints,
   AiTrainingGenerationConstraints,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import type { AiProfileSnapshot } from "@/services/ai/types";
 
 export const TRAINING_PROMPT_VERSION = "TRAINING_PROMPT_V1";

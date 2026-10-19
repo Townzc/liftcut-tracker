@@ -1,4 +1,4 @@
-import type { Gender, UserSettings } from "@/types";
+import type { Gender, UserSettings } from "@liftcut/core/types";
 
 export interface BasicProfileFields {
   gender?: Gender | null;

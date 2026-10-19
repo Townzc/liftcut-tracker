@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 
-import { appDataSnapshotSchema, getFirstZodError, trainingPlanSchema } from "@/lib/schemas";
-import type { AppDataSnapshot, TrainingPlan } from "@/types";
+import { appDataSnapshotSchema, getFirstZodError, trainingPlanSchema } from "@liftcut/core/schemas";
+import type { AppDataSnapshot, TrainingPlan } from "@liftcut/core/types";
 
 function nowIso(): string {
   return new Date().toISOString();

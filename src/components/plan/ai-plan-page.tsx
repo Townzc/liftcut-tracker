@@ -21,7 +21,7 @@ import {
   aiTrainingPlanSchema,
   type AiNutritionPlan,
   type AiTrainingPlan,
-} from "@/lib/ai/schemas";
+} from "@liftcut/core/ai-schemas";
 import { normalizeActionError } from "@/lib/error-utils";
 import { getDefaultAvailableEquipment, isDefaultAvailableEquipment } from "@/lib/demo-data";
 import {
@@ -36,7 +36,7 @@ import {
 } from "@/lib/guest-mode";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
-import type { DietPreference, FitnessGoal, TrainingLocation } from "@/types";
+import type { DietPreference, FitnessGoal, TrainingLocation } from "@liftcut/core/types";
 
 type LoadingState =
   | null

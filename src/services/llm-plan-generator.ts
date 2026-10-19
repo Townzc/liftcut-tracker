@@ -1,4 +1,4 @@
-﻿import type { PlanGenerationInput, PlanGenerationOutput } from "@/types/llm";
+﻿import type { PlanGenerationInput, PlanGenerationOutput } from "@liftcut/core/llm";
 
 export interface LlmPlanGenerator {
   generatePlan(input: PlanGenerationInput): Promise<PlanGenerationOutput>;

@@ -5,7 +5,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { Pool } from "pg";
 import { AgentStore } from "../../src/services/agent/store";
-import type { Outcome, RunView, Binding } from "../../src/lib/agent/contracts";
+import type { Outcome, RunView, Binding } from "@liftcut/core/agent-contracts";
 import { cases } from "./cases";
 import { localDatabase, runtimeUrl, snapshot, sha } from "./evidence";
 const unwrap = <T>(r: Outcome<T>): T => { assert.equal(r.ok, true, JSON.stringify(r)); return (r as { ok: true; value: T }).value; };

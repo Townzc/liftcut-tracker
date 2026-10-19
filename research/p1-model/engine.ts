@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import type { Pool } from "pg";
-import type { Binding, Outcome, RunView } from "../../src/lib/agent/contracts";
+import type { Binding, Outcome, RunView } from "@liftcut/core/agent-contracts";
 import { AgentStore } from "../../src/services/agent/store";
 import { cases } from "../p1-application/cases";
 import { snapshot } from "./database";

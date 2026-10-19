@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { currentPlanProgress } from "../src/lib/current-plan";
-import type { TrainingPlan, WorkoutLog } from "../src/types";
+import type { TrainingPlan, WorkoutLog } from "@liftcut/core/types";
 
 function fixture(): TrainingPlan {
   return { id: "plan-a", userId: "owner-a", name: "Synthetic 12 weeks", notes: "", isActive: true,

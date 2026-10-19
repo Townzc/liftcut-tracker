@@ -1,5 +1,5 @@
 import type {MemoryFact} from "@/lib/fitness-memory";
-import type {PlanKind} from "./contracts";
+import type {PlanKind} from "@liftcut/core/agent-contracts";
 
 export type PlanningMemory={version:1;kind:PlanKind;anchorDate:string;timezone:string;facts:MemoryFact[];recentLoads:MemoryFact[];truncated:boolean};
 /** Stable content only: midnight/read timestamps must not stale an unchanged plan. */

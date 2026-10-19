@@ -1,4 +1,4 @@
-﻿import type { PlanRecommendationInput, PlanRecommendationOutput } from "@/types/llm";
+﻿import type { PlanRecommendationInput, PlanRecommendationOutput } from "@liftcut/core/llm";
 
 export interface LlmPlanRecommender {
   recommend(input: PlanRecommendationInput): Promise<PlanRecommendationOutput>;

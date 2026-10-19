@@ -27,7 +27,7 @@ import { migrateGuestFactsToUser,hasGuestFacts,remainingGuestSnapshot } from "@/
 import {GUEST_RECORD_EVENT} from "@/lib/guest-records";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
-import type { AppLocale, AuthMode, UserProfile } from "@/types";
+import type { AppLocale, AuthMode, UserProfile } from "@liftcut/core/types";
 
 interface AuthContextValue {
   user: User | null;

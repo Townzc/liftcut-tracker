@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Produces the minimal Node.js server used by the production Docker image.
   output: "standalone",
+  // Shared domain code ships TypeScript source; keep it compiled with the app.
+  transpilePackages: ["@liftcut/core"],
   poweredByHeader: false,
   images: {
     remotePatterns: [

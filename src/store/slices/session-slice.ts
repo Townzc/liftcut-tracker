@@ -2,7 +2,7 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { AuthMode } from "@/types";
+import type { AuthMode } from "@liftcut/core/types";
 import { GUEST_USER_ID, isGuestMode, resolveUserId } from "../utils";
 
 export type SessionSlice = Pick<

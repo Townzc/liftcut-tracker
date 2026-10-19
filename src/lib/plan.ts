@@ -1,4 +1,4 @@
-import type { PlanDay, PlanWeek, TrainingPlan } from "@/types";
+import type { PlanDay, PlanWeek, TrainingPlan } from "@liftcut/core/types";
 
 function nowIso(): string {
   return new Date().toISOString();

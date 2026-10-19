@@ -1,7 +1,7 @@
-import { parsedPlanSchema } from "@/lib/plan-import-schema";
+import { parsedPlanSchema } from "@liftcut/core/plan-import-schema";
 import { normalizeParsedPlanToTrainingPlan } from "@/lib/plan-normalizer";
 import { parsePlanText } from "@/lib/plan-parser";
-import type { ParsedLineError, TrainingPlan } from "@/types";
+import type { ParsedLineError, TrainingPlan } from "@liftcut/core/types";
 
 export interface PlanImportOutput {
   plan: TrainingPlan | null;

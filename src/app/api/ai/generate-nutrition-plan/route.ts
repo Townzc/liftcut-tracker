@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { generateNutritionPlanRequestSchema } from "@/lib/ai/schemas";
+import { generateNutritionPlanRequestSchema } from "@liftcut/core/ai-schemas";
 import { getAiProviderConfig } from "@/services/ai/config";
 import { AiServiceError } from "@/services/ai/errors";
 import { verifyNutritionPlanLanguage } from "@/services/ai/language-check";

@@ -3,7 +3,7 @@ import {guestFactsSchema, type PersonalCommand} from "./personal-records";
 import type { LogDraft } from "./workout-log-parser";
 import type { WorkoutOperation } from "./workout-outbox";
 import type { Session } from "./today";
-import type { RunView } from "./agent/contracts";
+import type { RunView } from "@liftcut/core/agent-contracts";
 import type { CoachTiming } from "./coach-timing";
 
 export const COACH_CONSENT_VERSION = "coach-model-v1";

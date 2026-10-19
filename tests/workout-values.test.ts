@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { actualRpeSchema, normalizeExerciseActuals } from "../src/lib/workout-values";
+import { actualRpeSchema, normalizeExerciseActuals } from "@liftcut/core/workout-values";
 import { createDemoSnapshot } from "../src/lib/demo-data";
 import { validateAppSnapshot } from "../src/lib/import-export";
 import { mapWorkoutLogs } from "../src/services/data-repository";

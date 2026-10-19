@@ -2,7 +2,7 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { UserSettings } from "@/types";
+import type { UserSettings } from "@liftcut/core/types";
 import { GUEST_USER_ID, isGuestMode, normalizeSnapshotForUser, nowIso } from "../utils";
 import { upsertUserSettings } from "@/services/data-repository";
 

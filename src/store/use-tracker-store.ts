@@ -12,7 +12,7 @@ import type {
   TrainingPlanSummary,
   UserSettings,
   WorkoutLog,
-} from "@/types";
+} from "@liftcut/core/types";
 
 import { defaultSnapshot } from "./utils";
 import { createSessionSlice } from "./slices/session-slice";

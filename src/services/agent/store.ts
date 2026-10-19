@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { z } from "zod";
 import { P1_VERSION, createRunSchema, proposalRequestSchema, userEventSchema, executeSchema, contextSchema, planSchema, nutritionPlanSchema, isNutritionPlan,
-  validatePlanConstraints, type Binding, type Context, type Outcome, type AnyPlan, type PlanKind, type Receipt, type RunView } from "@/lib/agent/contracts";
+  validatePlanConstraints, type Binding, type Context, type Outcome, type AnyPlan, type PlanKind, type Receipt, type RunView } from "@liftcut/core/agent-contracts";
 import { readPlanRows, type PlanSnapshot } from "./plan-state";
 import { persistNutritionPlan } from "./persist-nutrition";
 import { beginOwnerTransaction } from "@/services/owner-transaction";

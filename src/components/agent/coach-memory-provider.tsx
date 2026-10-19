@@ -6,7 +6,7 @@ import type { Session } from "@/lib/today";
 import type { LogDraft } from "@/lib/workout-log-parser";
 import type { WorkoutOperation } from "@/lib/workout-outbox";
 import type { PersonalCommand } from "@/lib/personal-records";
-import type { RunView } from "@/lib/agent/contracts";
+import type { RunView } from "@liftcut/core/agent-contracts";
 export type CoachWorkoutProposal={turnId:string;session:Session;hash:string;draft:LogDraft;operation:WorkoutOperation};
 function useMemory(owner:string|null){
   const en=useLocale()==="en",[history]=useState(()=>new CoachHistoryClient(owner,en));

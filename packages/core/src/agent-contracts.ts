@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { aiTrainingPlanSchema, aiNutritionPlanSchema } from "@/lib/ai/schemas";
+import { aiTrainingPlanSchema, aiNutritionPlanSchema } from "./ai-schemas";
 
 // P1 is an application transaction adapter. It does not claim to be candidate D.
 export const P1_VERSION = "p1-app-v1";

@@ -9,7 +9,7 @@ import {
 import { createAuthRequiredError } from "@/lib/error-utils";
 import { GUEST_USER_ID } from "@/lib/guest-mode";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { normalizeExerciseActuals } from "@/lib/workout-values";
+import { normalizeExerciseActuals } from "@liftcut/core/workout-values";
 import type {
   AppDataSnapshot,
   BodyMetricLog,
@@ -17,7 +17,7 @@ import type {
   TrainingPlan,
   TrainingPlanSummary,
   WorkoutLog,
-} from "@/types";
+} from "@liftcut/core/types";
 import { useUIStore } from "@/store/use-ui-store";
 
 export { GUEST_USER_ID };

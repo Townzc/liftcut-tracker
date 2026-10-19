@@ -6,7 +6,7 @@ import {AgentStore} from "../../src/services/agent/store";
 import {PersonalRecordStore} from "../../src/services/today/personal-record-store";
 import {planPersonalization} from "../../src/lib/agent/plan-personalization";
 import type {PersonalEntry} from "../../src/lib/personal-records";
-import type {Outcome,RunView} from "../../src/lib/agent/contracts";
+import type {Outcome,RunView} from "@liftcut/core/agent-contracts";
 import {trainingFixture,nutritionFixture,planContextFixture as context} from "../fixtures/coach-plans";
 import {testUrl} from "./today-setup";
 const value=<T>(r:Outcome<T>):T=>{assert.equal(r.ok,true,JSON.stringify(r));return (r as {ok:true;value:T}).value;};

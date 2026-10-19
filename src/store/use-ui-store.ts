@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { defaultLocale } from "@/i18n/config";
-import type { AppLocale } from "@/types";
+import type { AppLocale } from "@liftcut/core/types";
 
 export type ThemeMode = "light" | "dark" | "system";
 

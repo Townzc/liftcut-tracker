@@ -5,7 +5,7 @@ import { fork } from "node:child_process";
 import { once } from "node:events";
 import { Pool } from "pg";
 import { AgentStore } from "../../src/services/agent/store";
-import { type Outcome, type RunView, type Execution } from "../../src/lib/agent/contracts";
+import { type Outcome, type RunView, type Execution } from "@liftcut/core/agent-contracts";
 
 const adminUrl = process.env.P1_TEST_DATABASE_URL;
 if (!adminUrl) throw new Error("P1_TEST_DATABASE_URL required; DB tests never silently skip");

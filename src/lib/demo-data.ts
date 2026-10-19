@@ -13,7 +13,7 @@ import type {
   UserSettings,
   WorkoutLog,
   AppLocale,
-} from "@/types";
+} from "@liftcut/core/types";
 import { toDateString } from "@/lib/date";
 
 const DEMO_USER_ID = "demo-user";

@@ -2,7 +2,17 @@
 
 ## 概览
 
+npm workspaces：仓库根目录是 Next.js 网页；`packages/core`（`@liftcut/core`）放网页和手机 App 共用、不依赖框架的领域代码，只允许引用自身文件和 `zod`（`tests/core-package.test.ts` 检查）。
+
 ```text
+packages/core/src/            # @liftcut/core，以 "@liftcut/core/<文件名>" 引用
+  types.ts                    # 领域类型（训练计划、记录、饮食、身体数据）
+  llm.ts                      # 计划生成/推荐的输入输出类型
+  schemas.ts                  # 应用级 Zod schema（设置、计划、记录、快照）
+  workout-values.ts           # 实际重量/次数/RPE：未报告为 null，不补 0
+  plan-import-schema.ts       # 文本导入计划的 schema
+  ai-schemas.ts               # AI 训练/饮食计划 schema（raw + final）
+  agent-contracts.ts          # 批准账本契约（提案、批准、执行、回执）
 src/
   app/                        # Next.js App Router
     api/                      # API routes
@@ -27,10 +37,8 @@ src/
     ui/                       # shadcn/ui base components
   lib/
     ai/
-      schemas.ts              # Zod schemas for training/nutrition plans (raw + final)
       mappers.ts              # AI plan → DB schema mapping
     supabase/                 # Supabase client setup
-    schemas.ts                # App-level schemas (user settings, quick food)
     guest-mode.ts             # Guest mode cookie, quota logic
     workout-calories.ts       # Calorie estimation
     plan-parser.ts            # Text-based plan import parser
@@ -99,7 +107,7 @@ docs/
 - **generate-training-plan.ts** / **generate-nutrition-plan.ts**：完整的生成 pipeline（prompt → API → raw parse → unwrap → normalize → final validate）
 - **types.ts**：`AiProviderConfig` 包含 `timeoutMs` 字段
 
-### `src/lib/ai/schemas.ts` — Zod Schema 定义
+### `packages/core/src/ai-schemas.ts` — Zod Schema 定义
 
 定义了三层 schema：
 

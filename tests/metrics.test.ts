@@ -8,7 +8,7 @@ import {
   getSuggestedTrainingDayNumber,
   getAverageWeightByDays,
 } from "../src/lib/metrics";
-import type { FoodLog, BodyMetricLog, UserSettings } from "../src/types";
+import type { FoodLog, BodyMetricLog, UserSettings } from "@liftcut/core/types";
 
 function makeSettings(overrides: Partial<UserSettings> = {}): UserSettings {
   return {

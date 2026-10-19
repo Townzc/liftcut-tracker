@@ -2,8 +2,8 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
-import type { WorkoutLog } from "@/types";
-import { normalizeExerciseActuals } from "@/lib/workout-values";
+import type { WorkoutLog } from "@liftcut/core/types";
+import { normalizeExerciseActuals } from "@liftcut/core/workout-values";
 import {
   isGuestMode,
   nowIso,

@@ -1,6 +1,6 @@
-﻿import type { ParsedLineError } from "@/types";
+﻿import type { ParsedLineError } from "@liftcut/core/types";
 
-import type { ParsedPlan } from "@/lib/plan-import-schema";
+import type { ParsedPlan } from "@liftcut/core/plan-import-schema";
 
 export interface ParsedPlanResult {
   draft: ParsedPlan | null;
