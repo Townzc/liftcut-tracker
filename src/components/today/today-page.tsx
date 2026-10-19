@@ -16,6 +16,7 @@ import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { PersonalReceipts, RecordSyncStatus } from "@/components/agent/personal-entry";
 import { usePersonalRecords } from "@/components/agent/personal-records-provider";
 import { SetHistory } from "./set-history";
+import { RestLength, RestTimerBar, useRestTimer, useScreenWakeLock } from "./session-aids";
 
 import { SentenceEntry, SentenceReceipts, type TodayPending as Pending } from "./sentence-entry";
 function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
@@ -30,9 +31,10 @@ function PendingOperation({item,data}:{item:OutboxItem;data:TodayData | null}) {
   return <li>{exercise?.name??"—"} · {t("set",{number:body.setIndex})} · {t(body.status)}:
     {" "}{body.weightKg??"—"} kg × {body.reps??"—"} · RPE {body.rpe??"—"}</li>;
 }
-function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
+function SetRow({ session, exercise, index, saved, previous, busy, submit, onDone }: {
   session: Session; exercise: PrescriptionExercise; index: number; saved?: SetLog;
   previous?: { weightKg: number | null; reps: number | null }; busy: boolean; submit: (p: Pending) => Promise<boolean>;
+  onDone?: () => void;
 }) {
   const t = useTranslations("today");
   const [id] = useState(() => saved?.id ?? crypto.randomUUID());
@@ -54,7 +56,8 @@ function SetRow({ session, exercise, index, saved, previous, busy, submit }: {
       weightSource: source("weight",weightKg), repsSource: source("reps",count), inputUnit: "kg", sourceRef: "today-tap" };
     const result = setRequestSchema.safeParse(body);
     if (!result.success) { setInvalid(true); return; }
-    await submit({ action: "set", body: result.data });
+    // Rest starts only after a newly completed set, never after a skip or a correction.
+    if (await submit({ action: "set", body: result.data }) && status === "done" && !saved) onDone?.();
   }
   const locked = session.status !== "active" || saved?.status === "voided";
   return <div className="space-y-3 rounded-xl border bg-background p-3" data-testid={`set-${exercise.id}-${index}`}>
@@ -132,6 +135,8 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
     finally { setBusy(false); inFlight.current = false; }
   }
   const session = data?.session;
+  const rest = useRestTimer();
+  useScreenWakeLock(!conversation && session?.status === "active");
   const chosen = dayId || data?.days.find(d => d.weekNumber === selectedWeek && d.dayNumber === selectedDay)?.id || data?.days[0]?.id || "";
   const receiptContent=<div className="space-y-4">
     {!data?.receipts?.length&&!session?.replacements?.length&&!personal.records.length&&<p className="text-sm text-muted-foreground">{tc("emptyReceipts")}</p>}
@@ -180,9 +185,11 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
       <Button disabled={!chosen || locked || !!count} onClick={() => void submit({ action:"start", body:{ id:crypto.randomUUID(), dayId:chosen, timezone:Intl.DateTimeFormat().resolvedOptions().timeZone } })}>{t("start")}</Button>
     </CardContent></Card></details>}
     {!conversation&&session && <>
+      {session.status === "active" && <RestTimerBar timer={rest} />}
       {conversation ? <p className="border-b py-3 text-xs text-muted-foreground">{session.prescription.title} · {t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p> : <Card><CardHeader><CardTitle>{session.prescription.title}</CardTitle></CardHeader><CardContent className="space-y-2 text-sm">
         <p>{session.localDate} · {session.timezone}</p><p>{t(session.status === "active" ? "active" : "ended")}</p>
         <p>{t("progress", { done:session.sets.filter(s=>s.status==="done").length, total:session.prescription.exercises.reduce((n,e)=>n+e.sets,0) })}</p>
+        {session.status === "active" && <RestLength timer={rest} />}
       </CardContent></Card>}
       {!conversation && session.status === "active" && <SentenceEntry key={session.id} session={session} busy={locked} submit={submit} />}
       {!conversation && session.prescription.exercises.map(exercise => <Card key={exercise.id}><CardHeader><CardTitle>{exerciseLabel(exercise.name,locale)}</CardTitle>
@@ -190,7 +197,7 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
         <CardContent className="space-y-3"><ExerciseReplacement session={session} exercise={exercise} busy={locked} submit={submit} />{Array.from({ length:exercise.sets },(_,i)=> {
           const saved = session.sets.find(s=>s.planExerciseId===exercise.id && s.setIndex===i+1);
           return <SetRow key={`${session.id}-${i}-${saved?.revision ?? 0}`} session={session} exercise={exercise} index={i+1} saved={saved}
-            previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} busy={locked} submit={submit} />;
+            previous={exercise.originalPlanExerciseId?undefined:data.previous[exercise.name]} busy={locked} submit={submit} onDone={rest.start} />;
         })}</CardContent></Card>)}
       {!conversation && <ReplacementReceipts session={session} busy={locked} submit={submit}
         pendingIds={state?.items.filter(i=>i.action==="replace"||i.action==="undoReplacement").map(i=>(JSON.parse(i.bodyJson) as {id:string}).id)} />

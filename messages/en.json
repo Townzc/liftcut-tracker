@@ -713,6 +713,15 @@
     "endHint": "Ending closes this session. Unrecorded sets remain unrecorded.",
     "end": "End training",
     "history": "View training history",
+    "rest": {
+      "title": "Rest",
+      "done": "Rest is over. Start the next set.",
+      "add": "+30 s",
+      "stop": "End rest",
+      "dismiss": "OK",
+      "length": "Rest length",
+      "seconds": "{seconds} s"
+    },
     "outbox": {
       "synced": "Synced",
       "pending": "{count} operations pending",
