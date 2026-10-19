@@ -713,6 +713,15 @@
     "endHint": "结束只关闭本次训练，未记录的组仍保持未记录。",
     "end": "结束训练",
     "history": "查看训练历史",
+    "rest": {
+      "title": "组间休息",
+      "done": "休息结束，可以开始下一组",
+      "add": "+30 秒",
+      "stop": "结束休息",
+      "dismiss": "知道了",
+      "length": "组间休息时长",
+      "seconds": "{seconds} 秒"
+    },
     "outbox": {
       "synced": "已同步",
       "pending": "待同步 {count} 条",
