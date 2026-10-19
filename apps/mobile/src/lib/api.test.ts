@@ -14,7 +14,7 @@ test("requests carry the bearer token and the account-switch guard, never cookie
   assert.equal(seen![0], `${apiBase}/api/workout-sessions`);
   assert.equal((seen![1]?.headers as Record<string, string>).Authorization, "Bearer aaa.bbb.ccc");
   assert.equal((seen![1] as { credentials?: string }).credentials, undefined);
-  assert.deepEqual(data, { days: [{ id: "d1", weekNumber: 1, dayNumber: 2, title: "A" }], session: null });
+  assert.deepEqual(data, { days: [{ id: "d1", weekNumber: 1, dayNumber: 2, title: "A" }], session: null, previous: {} });
 });
 
 test("server errors keep their status and code; malformed bodies are rejected", async () => {

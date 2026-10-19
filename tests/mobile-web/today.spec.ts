@@ -1,6 +1,7 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
+import { expectBearerOnly, relay, signIn, type Sent } from "./helpers";
 const db = new Pool({ connectionString: process.env.W1B_TEST_DATABASE_URL });
 const user = "11111111-1111-4111-8111-111111111111", plan = randomUUID(), day = randomUUID(), exercise = randomUUID();
 test.beforeAll(async () => {
@@ -15,28 +16,12 @@ test.afterAll(async () => {
   await db.query("delete from workout_sessions where user_id=$1 and training_plan_id=$2", [user, plan]);
   await db.query("delete from training_plans where user_id=$1 and id=$2", [user, plan]); await db.end();
 });
-// A native app has no CORS; the browser export does. Relay its cross-origin calls unchanged and add CORS headers.
-async function relay(page: Page, sent: { url: string; authorization?: string; cookie?: string }[]) {
-  await page.route(/^http:\/\/(127\.0\.0\.1:55440|localhost:3103)\//, async route => {
-    const request = route.request(), cors = { "access-control-allow-origin": "http://localhost:8099",
-      "access-control-allow-methods": "GET,POST,OPTIONS", "access-control-allow-headers": request.headers()["access-control-request-headers"] ?? "*" };
-    if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
-    if (request.url().includes("/api/")) sent.push({ url: request.url(), authorization: request.headers().authorization, cookie: request.headers().cookie });
-    const response = await route.fetch();
-    await route.fulfill({ response, headers: { ...response.headers(), ...cors } });
-  });
-}
-
 test("the Expo app signs in, reads today through a bearer token, switches language and signs out", async ({ page }) => {
-  const errors: string[] = [], sent: { url: string; authorization?: string; cookie?: string }[] = [];
+  const errors: string[] = [], sent: Sent[] = [];
   page.on("pageerror", e => errors.push(e.message)); await relay(page, sent);
-  await page.goto("/");
-  await expect(page.getByText("登录 LiftCut", { exact: true })).toBeVisible();
-  await page.getByLabel("邮箱").fill("p1-fixture@example.invalid"); await page.getByLabel("密码").fill("p1-fixture-password");
-  await page.screenshot({ path: "node_modules/.cache/mobile-web/sign-in-mobile.png" });
-  await page.getByRole("button", { name: "登录" }).click();
-  await expect(page.getByText("计划中的训练日")).toBeVisible();
-  await expect(page.getByText("第 1 周第 1 天 · 手机训练 A")).toBeVisible();
+  await signIn(page, "node_modules/.cache/mobile-web/sign-in-mobile.png");
+  await expect(page.getByText("选择今天的训练日")).toBeVisible();
+  await expect(page.getByRole("button", { name: "第 1 周第 1 天 · 手机训练 A" })).toBeVisible();
   // Start through the same API with the same kind of token; the app shows the session after a reload.
   const token = (await (await page.request.post("http://127.0.0.1:55440/auth/v1/token?grant_type=password",
     { data: { email: "p1-fixture@example.invalid", password: "p1-fixture-password" } })).json()).access_token;
@@ -45,10 +30,10 @@ test("the Expo app signs in, reads today through a bearer token, switches langua
   await page.reload();
   await expect(page.getByText("进行中的训练 · 手机训练 A")).toBeVisible();
   await expect(page.getByText("已完成 0 / 2 组")).toBeVisible();
-  await expect(page.getByText("杠铃卧推 · 计划：2 组 × 5 次 · 目标 RPE 8")).toBeVisible(); // Catalog label from @liftcut/core.
+  await expect(page.getByText("杠铃卧推", { exact: true })).toBeVisible(); // Catalog label from @liftcut/core.
+  await expect(page.getByText("计划：2 组 × 5 次 · 目标 RPE 8", { exact: true })).toBeVisible();
   await page.screenshot({ path: "node_modules/.cache/mobile-web/today-mobile.png" });
-  expect(sent.length).toBeGreaterThan(0);
-  for (const r of sent) { expect(r.authorization, r.url).toMatch(/^Bearer [\w-]+\.[\w-]+\.[\w-]+$/); expect(r.cookie, r.url).toBeUndefined(); }
+  expectBearerOnly(sent);
   await page.getByText("设置", { exact: true }).click();
   await page.getByRole("button", { name: "English" }).click();
   await expect(page.getByText("Language", { exact: true })).toBeVisible();

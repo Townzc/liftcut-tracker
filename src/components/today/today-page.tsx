@@ -6,7 +6,8 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { setRequestSchema, type Session, type SetLog, type SetRequest, type PrescriptionExercise, type TodayData } from "@liftcut/core/today";
+import type { Session, SetLog, SetRequest, PrescriptionExercise, TodayData } from "@liftcut/core/today";
+import { tapSetRequest, voidSetRequest } from "@liftcut/core/set-requests";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { projectOutbox, type OutboxItem } from "@/lib/workout-outbox";
 import { useWorkoutSync } from "./workout-sync-provider";
@@ -48,15 +49,9 @@ function SetRow({ session, exercise, index, saved, previous, prior, busy, submit
   const [invalid, setInvalid] = useState(false);
   const fieldId = `${exercise.id}-${index}`;
   const number = (s: string) => s.trim() === "" ? null : Number(s);
-  async function send(status: SetRequest["status"]) {
-    const weightKg = status === "skipped" ? null : number(weight), count = status === "skipped" ? null : number(reps);
-    const source = (key: "weight" | "reps", value: number | null) => value === null ? null
-      : saved && !changed[key] ? "user_entered" as const
-      : previous && !changed[key] ? "user_confirmed_prefill" as const : "user_entered" as const;
-    const body = { id, sessionId: session.id, planExerciseId: exercise.id, setIndex: index,
-      revision: (saved?.revision ?? 0) + 1, status, weightKg, reps: count, rpe: status === "skipped" ? null : number(rpe),
-      weightSource: source("weight",weightKg), repsSource: source("reps",count), inputUnit: "kg", sourceRef: "today-tap" };
-    const result = setRequestSchema.safeParse(body);
+  async function send(status: Exclude<SetRequest["status"], "voided">) {
+    const result = tapSetRequest({ id, sessionId: session.id, planExerciseId: exercise.id, setIndex: index, saved, prefilled: !!previous,
+      changed, status, weightKg: number(weight), reps: number(reps), rpe: number(rpe) });
     if (!result.success) { setInvalid(true); return; }
     // Rest starts only after a newly completed set, never after a skip or a correction.
     if (await submit({ action: "set", body: result.data }) && status === "done" && !saved) onDone?.();
@@ -71,11 +66,7 @@ function SetRow({ session, exercise, index, saved, previous, prior, busy, submit
       <SetHistory id={saved.id} />
       {!locked && <div className="flex gap-2">
         <Button variant="outline" disabled={busy} onClick={() => setEditing(true)}>{t("correct")}</Button>
-        {saved.status === "done" && <Button variant="outline" disabled={busy} onClick={() => {
-          const original = setRequestSchema.strip().parse({ ...saved, inputUnit:"kg", sourceRef:"today-tap",
-            weightSource:saved.weightKg===null?null:"user_entered",repsSource:saved.reps===null?null:"user_entered" });
-          void submit({ action: "set", body: { ...original, status: "voided", revision: saved.revision+1 } });
-        }}>{t("undo")}</Button>}
+        {saved.status === "done" && <Button variant="outline" disabled={busy} onClick={() => void submit({ action: "set", body: voidSetRequest(saved) })}>{t("undo")}</Button>}
       </div>}
     </> : <>
       {previous && <p className="text-xs text-muted-foreground">{t("previous", { weight: previous.weightKg ?? "—", reps: previous.reps ?? "—" })}</p>}
