@@ -35,12 +35,41 @@ npx expo start               # 开发服务器；原生模块需要开发构建�
 - 确认后与网页相同的 `apply`/`undo` 命令进入发件箱，服务器按上下文哈希（`expo-crypto` SHA-256，同一规范序列化）再次核验；撤销是补偿命令。
 - 尚未接入：规则解析失败时的服务器端模型补录。
 
+## 构建安装包（EAS）
+
+`apps/mobile/eas.json` 只有两个内部分发配置（上架不在当前范围）：
+
+- `development`：开发构建，含 `expo-dev-client`，安卓出 APK。装到手机后用 `npx expo start` 连本机开发服务器，原生模块（SQLite、通知、常亮、震动）都可调试。
+- `preview`：安卓内部测试版 APK，不含开发工具，行为接近正式版；版本号由 EAS 远端自增（`appVersionSource: remote`）。
+
+维护者首次构建（需要自己的 Expo 账号，免费额度即可；云端会话不持有账号或令牌）：
+
+```sh
+npm install -g eas-cli              # 25 或更高
+eas login
+cd apps/mobile
+# 1. 在 app.json 写入确认后的 expo.android.package（上架后不能改）
+eas init                            # 创建 EAS 项目，把 extra.eas.projectId 和 owner 写进 app.json；提交这两处改动
+# 2. 公开配置写入 EAS 环境变量。只放公开值：anon key 本来就随网页发布；服务端密钥绝不放进 App
+eas env:set --environment development --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_URL --value https://<项目>.supabase.co
+eas env:set --environment development --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <anon key>
+#    EXPO_PUBLIC_API_URL 不设置时默认 https://www.liftcuttracker.com
+# 3. 构建（排队在 Expo 云端完成，结束后给出安装链接和二维码）
+eas build --platform android --profile preview
+eas build --platform android --profile development
+```
+
+- EAS 上传整个 Git 仓库（App 通过 `file:../../packages/core` 引用核心包），只在 `apps/mobile` 里安装依赖（它不在根 workspaces 里，eas-cli 用的 `resolve-workspace-root` 本地核对为无工作区根），不会安装网页依赖。
+- 安卓权限只保留联网与震动（通知权限由 `expo-notifications` 在 Android 13+ 运行时申请）；模板默认的存储读写和悬浮窗权限已在 `app.json` 的 `blockedPermissions` 移除。
+- iOS 安装需要 Apple 开发者账号（付费），当前不做。
+
 ## 已验证与未验证
 
 - CI `mobile` 任务：独立安装、类型检查、单元测试、Android/iOS JS 打包。
 - CI `today-session` 任务：App 的网页导出在本地生产构建 + PostgreSQL + 认证替身上完成登录、按令牌读取今日训练、切换语言、退出（`tests/mobile-web/`，390×844 截图）。网页导出只用于自动化验证界面与接口，不是发布目标。
-- **未验证**：真机、iOS 原生构建（需要 Mac 或 EAS）、安卓安装包（M1-6 需要维护者的 Expo 账号）。
+- 本地（M1-6）：`eas.json` 用 eas-cli 25.2 自带的 `@expo/eas-json` 解析通过；`expo prebuild --platform android` 能生成原生工程（DayNight 主题、权限如上）；`expo-doctor` 20/20。
+- **未验证**：EAS 云端构建与安装包（需要维护者的 Expo 账号）、真机、iOS 原生构建（需要 Mac 或 EAS 与 Apple 账号）。
 
 ## 后续
 
-M1-3 今日训练记录、M1-4 SQLite 离线发件箱、M1-5 一句话记录、M1-6 EAS 构建配置（开发版、安卓内部测试版）。应用标识（Android 包名、iOS Bundle ID）在 M1-6 与维护者确认后再写入 `app.json`。
+应用标识（Android 包名）与 EAS 项目 ID 待维护者确认后写入 `app.json`；之后在真机上验证离线记录、组间计时通知、常亮与震动。
