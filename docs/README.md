@@ -2,7 +2,9 @@
 
 | Document | Purpose |
 | --- | --- |
-| [Showcase Product Plan](./product/2026-10-13-showcase-plan.md) | Current priority since 2026-10-13: scope, rules, milestones, highlights and China compliance; start here for product work |
+| [Mobile App + Agent Plan](./product/2026-10-18-mobile-agent-plan.md) | Current priority since 2026-10-18: status, opengym design lessons, Expo architecture, M0–M4 phases and China store track; start here for product work |
+| [Cloud Agent Brief](./product/CLOUD_AGENT_BRIEF.md) | Working rules and ordered task queue for long-running Claude Code cloud sessions |
+| [Showcase Product Plan](./product/2026-10-13-showcase-plan.md) | 2026-10-13 plan; W1–W4 shipped on the web. Section 2 rules still apply |
 | [Week 1 Codex Brief](./product/WEEK1_CODEX_BRIEF.md) | Unknown values stay null and the feature-flagged today-session card; see hosted release for actual rollout |
 | [Week 2 Codex Brief](./product/WEEK2_CODEX_BRIEF.md) | Next product increment: rules-only drafts, atomic sentence writes, receipts and compensating undo |
 | [W2a Parser Verification](./product/W2A_VERIFICATION.md) | Authored 150-case rules evaluation, null and correction checks; parser-only increment before W2b, no model evaluation |
