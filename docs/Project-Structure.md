@@ -15,6 +15,7 @@ packages/core/src/            # @liftcut/core，以 "@liftcut/core/<文件名>" 
   agent-contracts.ts          # 批准账本契约（提案、批准、执行、回执）
   workout-log-parser.ts       # 一句话记录的规则解析器（纯函数，只出草稿）
   exercise-catalog.ts         # 60 个动作目录与本次替换候选
+  progression.ts              # 确定性进阶引擎：只读确认过的实际组，给出下次目标与中英文理由
   eval/                       # 150 条合成解析评测语料与评测器（不调用模型）
 src/
   app/                        # Next.js App Router
