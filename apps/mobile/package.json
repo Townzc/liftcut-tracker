@@ -1,0 +1,41 @@
+{
+  "name": "@liftcut/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+    "test": "node --test --import tsx src/lib/*.test.ts",
+    "export:check": "expo export --platform android --platform ios --output-dir dist-native --clear"
+  },
+  "dependencies": {
+    "@liftcut/core": "file:../../packages/core",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@supabase/supabase-js": "2.108.2",
+    "expo": "~58.0.14",
+    "expo-constants": "~58.0.12",
+    "expo-linking": "~58.0.13",
+    "expo-localization": "~58.0.4",
+    "expo-router": "~58.0.23",
+    "expo-status-bar": "~58.0.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.0",
+    "react-native-url-polyfill": "^4.0.0",
+    "react-native-web": "^0.21.4",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/react": "~19.3.0",
+    "tsx": "4.22.4",
+    "typescript": "~6.0.3"
+  }
+}

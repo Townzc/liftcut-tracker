@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-19 — M1-2 Expo App 骨架
+
+- **原因**：方案第 3、4 节 M1：原生 App 与网页共用核心代码和接口，先建立能登录、能读数据的骨架。
+- **实现**：`apps/mobile`（Expo SDK 58、TypeScript、expo-router 的 `Stack.Protected` 登录保护）：邮箱密码登录（与网页同账号）、今日页（计划训练日或进行中训练的处方，动作名用 `@liftcut/core` 的动作目录）、设置页（跟随系统/中文/English、账号、退出）、黑白主题跟随系统深浅色、项目标志生成的图标。请求只带 Bearer 令牌和 `X-Workout-Owner`；令牌失效自动退出到登录页。
+- **工程决定**：SDK 58 固定 React 19.3.0、网页是 19.2.4，故 App 是独立 npm 项目，`file:` 链接核心包，Metro 监听 `packages/core` 并把 `zod` 固定到 App 副本；网页 tsconfig、ESLint、Docker 排除 `apps/`。说明见 [MOBILE.md](MOBILE.md)。移除了模板自带的 Expo 许可证文件和插件启用配置。
+- **实际运行**：App 类型检查（App 代码不含 Node 类型）、单元测试 4 项、Android/iOS Hermes 打包均通过，并在不含根目录依赖的干净副本中复跑通过；源映射确认只打包一份 React、一份 zod、核心包来自 `packages/core/src`。App 网页导出 + 本地生产服务器 + PostgreSQL + 认证替身的 Playwright 1 项通过（登录→计划日→用令牌开始训练后显示进行中→全部 API 请求带 Bearer、无 Cookie→切英文→退出），截图 `node_modules/.cache/mobile-web/*.png`。新增 CI `mobile` 任务与 `today-session` 中的网页导出验证。
+- **未运行**：真机、iOS/安卓原生构建、`expo lint`（未配置）。会话存于未加密的 AsyncStorage。
+- **下一步**：M1-3 今日训练记录（先把今日训练写入契约迁入核心包）。
+
 ## 2026-10-19 — M1-1 手机端认证：Bearer 访问令牌
 
 - **原因**：原生 App 没有网页 Cookie；方案第 3 节“手机端在请求头带 Supabase 访问令牌，服务端校验”，第 6 节规则 4 手机与网页共用同一套写入接口。

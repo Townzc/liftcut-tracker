@@ -951,6 +951,16 @@ jobs:
       - run: npx playwright install --with-deps webkit
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
         run: npx playwright test --config playwright.w1b.config.ts
+      - name: Expo app web export signs in and reads today through a bearer token
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          EXPO_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+          EXPO_PUBLIC_API_URL: http://localhost:3103
+        run: |
+          npm ci --prefix apps/mobile
+          (cd apps/mobile && npx expo export --platform web)
+          npx playwright test --config playwright.mobile.config.ts
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -967,6 +977,30 @@ jobs:
             node_modules/.cache/coach-stream-release/*.png
             node_modules/.cache/coach-history-release/*.png
             node_modules/.cache/guest-ai/*.png
+            node_modules/.cache/mobile-web/*.png
+            node_modules/.cache/mobile-web/browser/
+
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/mobile
+    env:
+      EXPO_NO_TELEMETRY: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      # A separate npm project: React Native pins its own React, so it is not a workspace.
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Bundle the Android and iOS JavaScript with Hermes (no native build on Linux)
+        run: npm run export:check
 
   quality:
     runs-on: ubuntu-latest

@@ -2,7 +2,7 @@
 
 ## 概览
 
-npm workspaces：仓库根目录是 Next.js 网页；`packages/core`（`@liftcut/core`）放网页和手机 App 共用、不依赖框架的领域代码，只允许引用自身文件和 `zod`（`tests/core-package.test.ts` 检查）。
+`apps/mobile` 是独立安装的 Expo 手机 App（见 [MOBILE.md](product/MOBILE.md)）。npm workspaces：仓库根目录是 Next.js 网页；`packages/core`（`@liftcut/core`）放网页和手机 App 共用、不依赖框架的领域代码，只允许引用自身文件和 `zod`（`tests/core-package.test.ts` 检查）。
 
 ```text
 packages/core/src/            # @liftcut/core，以 "@liftcut/core/<文件名>" 引用
