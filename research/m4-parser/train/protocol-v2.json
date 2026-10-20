@@ -1,0 +1,34 @@
+{
+  "version": "m4-v2-candidate-1",
+  "maxSeconds": 10800,
+  "quantization": "q8_0",
+  "oldMergedSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "dataManifestCanonicalSha256": "1b1c933eb4c48c69d4de6d8cb30088111e787ec4c526f0885df57f937e3a1b71",
+  "trainingArgs": [
+    "--device",
+    "cuda",
+    "--batch",
+    "16",
+    "--epochs",
+    "2",
+    "--seed",
+    "20261019",
+    "--rank",
+    "16",
+    "--lr",
+    "0.0002",
+    "--max-len",
+    "512"
+  ],
+  "gates": {
+    "rawAgreement": 0.95,
+    "challengeExact": 0.9,
+    "challengeSchema": 0.99,
+    "challengeCoverage": 0.9,
+    "rawChallengeInvented": 0,
+    "guardedUnsafe": 0,
+    "truncated": 0
+  },
+  "selection": "Q8 fixed before new challenge inference; saved-weight Q4 exceeds allowable raw disagreements",
+  "releaseReady": false
+}
