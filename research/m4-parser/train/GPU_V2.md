@@ -23,7 +23,9 @@ connection or treat a stopped training process as platform power-off.
   GGUF outputs. Quantization choice is fixed in `protocol-v2.json` before any new
   challenge inference: Q8_0. Saved-weight Q4 exceeded the 53 disagreements
   allowed by the original 1,060-case 95% gate even after input/runtime alignment.
-  The full Q8 diagnostic is still running and is not claimed to have passed yet.
+  The completed [saved-weight diagnostic](../results/quantization-audit-20261019/README.md)
+  gives Q8 1047/1060 (98.77%) against both references with no truncation. New
+  weights must pass again; this is not a quality or release pass.
 
 Candidate advancement requires raw parsed-JSON agreement >=95% against **both**
 references, no truncated quantized answers, challenge exact rate >=90%, schema
