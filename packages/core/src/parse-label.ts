@@ -68,6 +68,14 @@ const NUMBER = new RegExp(`\\d+(?:\\.\\d+)?|[零〇一二两俩三四五六七�
 /** Fixed phrases whose 一 is not a quantity: 最后一组, 每一组, 一共… (第一组 and 十一下 still count). */
 const NOT_A_NUMBER = /(最后|每|这|那|上|下|同)一(?=组|次|个|下)|(?<![零〇一二两俩三四五六七八九十百千点])一(共|起|直)/g;
 
+/** For a bounded grammar AFTER exercise names and symbolic set references have
+ * been removed. This preserves positions/duplicates; a bag of numbers cannot
+ * establish whether a number describes weight, reps, RPE or a set index. */
+export function replaceSpokenNumbers(text: string): string {
+  return text.normalize("NFKC").toLowerCase().replace(/千克/g, "kg").replace(NUMBER, m =>
+    String(/\d/.test(m) ? Number(m) : /^[a-z]/.test(m) ? englishNumber(m) : chineseNumber(m)));
+}
+
 /**
  * Every number a sentence states, in order: digits, Chinese numerals, English words
  * and ordinals. `ignore` removes names first (三头肌下压 and one-arm row are not numbers).
