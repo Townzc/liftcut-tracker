@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "originalManifestSha256": "a3499c8ddab1b5612a7fae521f489137f983e6db9ea158f93aeb93048599fbe9",
+  "system": "Parse one gym report as LiftCut label v1 JSON. Copy only explicit values and an exercise name from the list. Unknown is null, never a plan value or guess. Missing weight unit or reps, uncertainty, plans, questions and negated/failed sets require clarify. A correction changes only stated fields; repeat carries no values. Preserve set order. RPE for multiple sets needs explicit scope. Reply with one JSON object.",
+  "augmentation": {
+    "train": {
+      "seed": 202610201,
+      "pairs": 1200
+    },
+    "dev": {
+      "seed": 202610202,
+      "pairs": 120
+    },
+    "test": {
+      "seed": 202610203,
+      "pairs": 120
+    }
+  },
+  "counts": {
+    "train": 6400,
+    "dev": 740,
+    "challenge": 240
+  },
+  "provenance": "label-first synthetic contrastive pairs; no teacher, real data or unseen-human validation",
+  "files": {
+    "train.gold.jsonl": {
+      "sha256": "013a1b308b984d1bc73b3868338c33e598d324987929be90d9f71f0037873cad",
+      "lines": 6400
+    },
+    "train.jsonl": {
+      "sha256": "666fa2ee271493d071c647666c66e2f5cff5f682ae79c20ccc8dd4d69ff71862",
+      "lines": 6400
+    },
+    "dev.gold.jsonl": {
+      "sha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+      "lines": 740
+    },
+    "dev.jsonl": {
+      "sha256": "ee040f53e93271db1310df541b91461e10b7bb5983bf7bd4bb751207db2d0e9e",
+      "lines": 740
+    },
+    "challenge.gold.jsonl": {
+      "sha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+      "lines": 240
+    },
+    "challenge.jsonl": {
+      "sha256": "1b5bec25ef1a9de48fc1f3df715a36e22654ae060c9d18393b11a6f9f727b568",
+      "lines": 240
+    },
+    "old-test.gold.jsonl": {
+      "sha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+      "lines": 500
+    },
+    "old-test.jsonl": {
+      "sha256": "e3b7dbcc29ac6b7ed1467cc7dc4fda727f8d3839f2cbd1954d1b21b006f7a23d",
+      "lines": 500
+    },
+    "handwritten.gold.jsonl": {
+      "sha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+      "lines": 60
+    },
+    "handwritten.jsonl": {
+      "sha256": "fbed4ed0bdc7a378d97df63ec2a501fc97e4fddc1fd749e54cf8c9b433c38aa9",
+      "lines": 60
+    },
+    "dev-eval.gold.jsonl": {
+      "sha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+      "lines": 740
+    },
+    "dev-eval.jsonl": {
+      "sha256": "e7d38c6af18b6e6a64b9cdf745624f98f26d5e65f091566156bc379b0772fc50",
+      "lines": 740
+    }
+  }
+}
