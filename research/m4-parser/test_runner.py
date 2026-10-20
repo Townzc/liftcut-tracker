@@ -1,5 +1,6 @@
 """Exercise M4 process boundaries and inference settings without a model or network."""
 import json
+import importlib.util
 import os
 from pathlib import Path
 import shlex
@@ -11,6 +12,30 @@ import unittest
 
 
 RUNNER = Path(os.environ.get("M4_RUNNER", Path(__file__).with_name("run_all.sh")))
+
+
+class SameEngineComparisonTest(unittest.TestCase):
+    def test_raw_json_comparison_rejects_invalid_or_misaligned_predictions(self):
+        spec = importlib.util.spec_from_file_location("compare", RUNNER.parent / "train/compare_gguf.py")
+        compare = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(compare)
+        a = {"a": '{"intent":"record","n":1}', "b": '{"intent":"end"}'}
+        b = {"b": '{ "intent": "end" }', "a": '{"n":1,"intent":"record"}'}
+        self.assertEqual(compare.agreement(a, b)["rate"], 1)
+        for invalid in ('null', '[]', '{"n":NaN}', 'broken'):
+            self.assertEqual(compare.agreement({"a": invalid}, {"a": invalid})["same"], 0)
+        with self.assertRaises(ValueError):
+            compare.agreement(a, {"a": a["a"]})
+        with self.assertRaises(ValueError):
+            compare.agreement({}, {})
+        # This diagnostic uses canonical text: it is intentionally stricter than
+        # the original numeric JSON equality gate; report both, never relabel.
+        self.assertEqual(compare.agreement({"a": '{"n":1}'}, {"a": '{"n":1.0}'})["same"], 0)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate.jsonl"
+            path.write_text('{"id":"same"}\n{"id":"same"}\n')
+            with self.assertRaises(ValueError):
+                compare.read(path)
 
 
 class ConsistencyEncodingTest(unittest.TestCase):
@@ -44,24 +69,31 @@ class PredictThreadsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "transformers.py").write_text(
-                "class AutoTokenizer:\n"
+                "import os\nclass AutoTokenizer:\n"
                 "    @staticmethod\n"
                 "    def from_pretrained(*args, **kwargs): return AutoTokenizer()\n"
-                "    def apply_chat_template(self, *args, **kwargs): return 'prompt'\n")
+                "    def apply_chat_template(self, *args, **kwargs): return 'prompt'\n"
+                "    def encode(self, *args, **kwargs): return [12, 34] * (512 if os.environ.get('LONG_INPUT') else 1)\n")
             (root / "llama_cpp.py").write_text(
                 "import json, os\n"
                 "class Llama:\n"
                 "    def __init__(self, *, n_threads, n_threads_batch=128, **kwargs):\n"
                 "        self.threads = {'decode': n_threads, 'prefill': n_threads_batch}\n"
+                "    def tokenize(self, *args, **kwargs):\n"
+                "        return [0,12,34] if os.environ.get('BAD_TOKENS') else [12,34]\n"
+                "    def reset(self): self.did_reset = True\n"
+                "    def close(self): pass\n"
                 "    def create_completion(self, *args, **kwargs):\n"
+                "        assert args[0] == [12,34] and self.did_reset\n"
+                "        assert kwargs['repeat_penalty'] == 1 and kwargs['frequency_penalty'] == kwargs['presence_penalty'] == 0\n"
                 "        with open(os.environ['THREAD_OBSERVATION'], 'w') as f: json.dump(self.threads, f)\n"
-                "        return {'choices': [{'text': '{\"intent\":\"end\"}'}]}\n")
+                "        return {'choices': [{'text': '{\"intent\":\"end\"}', 'finish_reason': 'stop'}], 'usage': {}}\n")
             source = root / "input.jsonl"
             source.write_text(json.dumps({"id": "fixture", "messages": []}) + "\n")
             for flags, threads in [((), 4), (("--threads", "2"), 2)]:
                 with self.subTest(threads=threads):
                     observation = root / "threads.json"
-                    output = root / "predictions.jsonl"
+                    output = root / f"predictions-{threads}.jsonl"
                     result = subprocess.run([
                         sys.executable, str(RUNNER.parent / "train/predict.py"),
                         "--tokenizer", str(root), "--gguf", str(root / "fixture.gguf"),
@@ -71,6 +103,38 @@ class PredictThreadsTest(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, result.stderr)
                     self.assertEqual(json.loads(observation.read_text()), {"decode": threads, "prefill": threads})
                     self.assertEqual(json.loads(output.read_text())["id"], "fixture")
+                    audit = json.loads(Path(str(output) + ".audit.json").read_text())
+                    self.assertTrue(audit["resetBetweenItems"])
+                    self.assertEqual(audit["items"], 1)
+            # Reject answer leakage, duplicate IDs, context limits and tokenizer
+            # drift before the first completion; retain existing predictions.
+            cases = [
+                ({"BAD_TOKENS": "1"}, [{"id": "x", "messages": []}], [], "token IDs"),
+                ({}, [{"id": "x", "messages": [{"role": "assistant", "content": "answer"}]}], [], "answers"),
+                ({}, [{"id": "x", "messages": []}] * 2, [], "unique IDs"),
+                ({}, [{"id": "x", "messages": []}], ["--threads", "0"], "threads"),
+                ({"LONG_INPUT": "1"}, [{"id": "x", "messages": []}], [], "exceeds context"),
+            ]
+            for i, (extra, rows, flags, error) in enumerate(cases):
+                source.write_text("\n".join(map(json.dumps, rows)) + "\n")
+                output = root / f"rejected-{i}.jsonl"
+                result = subprocess.run([sys.executable, str(RUNNER.parent / "train/predict.py"),
+                    "--tokenizer", str(root), "--gguf", str(root / "fixture.gguf"),
+                    "--input", str(source), "--out", str(output), *flags],
+                    env={**os.environ, "PYTHONPATH": str(root), **extra}, capture_output=True, text=True, timeout=20)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(error, result.stderr)
+                self.assertFalse(output.exists())
+            source.write_text(json.dumps({"id": "x", "messages": []}) + "\n")
+            output = root / "predictions-4.jsonl"
+            original = output.read_bytes()
+            result = subprocess.run([sys.executable, str(RUNNER.parent / "train/predict.py"),
+                "--tokenizer", str(root), "--gguf", str(root / "fixture.gguf"),
+                "--input", str(source), "--out", str(output)],
+                env={**os.environ, "PYTHONPATH": str(root)}, capture_output=True, text=True, timeout=20)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("already exists", result.stderr)
+            self.assertEqual(output.read_bytes(), original)
 
 
 @unittest.skipUnless(os.name == "posix" and shutil.which("bash"), "requires Linux bash and GNU timeout")

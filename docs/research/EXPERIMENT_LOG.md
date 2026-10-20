@@ -1,5 +1,12 @@
 # 实验与决策日志
 
+## 2026-10-19 — M4 推理条件审计
+
+- **Why / change**：统一 HF 与 GGUF token ID、显式贪心参数与逐样本状态；排除评测答案输入、重复 ID、静默截断和输出覆盖。
+- **Actual**：Linux 12 项回归通过；真实 CPU 路径各 2 条旧 dev，输入 token 哈希一致、parsed JSON 2/2、无截断。不是完整质量验收。
+- **Evidence / limits**：[说明与固定对照脚本](../../research/m4-parser/train/INFERENCE_AUDIT.md)；1060 条旧数据的完整 f16/Q4/Q8 条件对照还在运行，Q8 触发规则在推理前固定。
+- **Next / learning**：完整结果另记；说明量化一致不等于正确，运行参数同时变化不能归因，严格 canonical JSON 与原 parsed JSON 数字相等规则也不能混称。
+
 ## 2026-10-19 — M4 v2 成对反例准备（尚无新训练结果）
 
 - **Why / what**：缺字段、计划和否定错误需要明确对照；新增标签先行的正负配对、相似动作列表及明确未知规则。原 4000 条训练不改，新总数 6400，dev 740，合成 challenge 240。
