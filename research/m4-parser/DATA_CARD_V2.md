@@ -29,8 +29,12 @@ an explicit new protocol, not another attempt against the same gate.
 The token audit on the original saved Qwen tokenizer found maximum 296 tokens
 for train, 287 for dev (including answer and end marker); no truncation is needed
 at the existing 512-token limit. Inputs alone: challenge max 156, old test 179,
-handwritten 156. These counts do not measure device latency. Eight-row CPU smoke
-and the bounded GPU runner are separate next steps, not claimed complete here.
+handwritten 156. These counts do not measure device latency. A real CPU smoke
+used eight new train/dev rows, batch 1 and two optimizer steps: 45.2 seconds,
+dev loss 0.04864, adapter and merged weights exported successfully. It reused the
+saved **v1 merged weights**, not the original base, in an isolated environment
+(torch 2.8.0+cpu, transformers 5.20.1, peft 0.21.2). This checks the training path,
+not fresh-base training or candidate quality. The bounded GPU runner is pending.
 
 Generate: `node --import tsx research/m4-parser/scripts/build-v2.ts`.
 Check: append `--check`. Tests verify original-data preservation, label schema,
