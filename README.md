@@ -2,12 +2,12 @@
 
 <p align="center">
   <a href="https://www.liftcuttracker.com/">
-    <img src="docs/product/evidence/minimal-agent/home-desktop.png" alt="LiftCut: a monochrome home with Home, Agent and Settings navigation; synthetic account" width="100%" />
+    <img src="docs/product/evidence/readme-20261021/home-desktop.png" alt="LiftCut: current plan on a monochrome home with Home, Agent and Settings navigation; synthetic account" width="100%" />
   </a>
 </p>
 
 <p align="center">
-  <strong>训练、饮食、身体变化，问 Agent 就好。</strong><br />
+  <strong>训练、饮食、身体变化，问 Agent 就好.</strong><br />
   An open-source fitness application and tool-using agent research project by <a href="https://townzc.github.io/">Zhice Tang</a>.
 </p>
 

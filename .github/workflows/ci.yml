@@ -947,6 +947,7 @@ jobs:
         run: |
           node --conditions=react-server --import tsx --test tests/product-db/today.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/workout-commands.test.ts
+            node --conditions=react-server --import tsx --test tests/product-db/m4-confirmed-context.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/outbox.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/exercise-replacement.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/personal-records.test.ts

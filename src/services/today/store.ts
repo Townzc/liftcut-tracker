@@ -11,6 +11,7 @@ import { workoutCanonical as canonical, storedSet as stored, workoutContext, wor
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo, ReplacementConflict } from "@liftcut/core/exercise-replacement";
 import { verifyCoachProposal } from "@/services/ai/coach-proof";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
+import { confirmReviewedSetDraft, type ReviewedSetDraft } from "@liftcut/core/confirmed-set-reference";
 
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
 export class TodayConflict extends Error {}
@@ -158,6 +159,25 @@ export class TodayStore {
       }
       await this.writeSetInTransaction(db,user,req);
       return this.read(db,req.sessionId);
+    });
+  }
+  /** Experimental internal port, deliberately NOT exposed by an HTTP route.
+   * retained must come from trusted server memory after source validation, never
+   * from request JSON. Uses the same owner lock, write validation and event log. */
+  async confirmReviewedSet(user: string, retained: ReviewedSetDraft, shown: ReviewedSetDraft,
+    authorization: "confirm_preview"): Promise<Session> {
+    return this.tx(user, async db => {
+      const session = await this.read(db, retained.sessionId);
+      if (authorization !== "confirm_preview" || canonical(retained) !== canonical(shown)
+          || retained.owner !== user || retained.requests.length !== 1) return fail("INVALID_APPROVAL");
+      const req = retained.requests[0];
+      // Exact retry after a lost response is idempotent. A changed or voided
+      // result cannot be resurrected by replaying an earlier approval.
+      const old = session.sets.find(s => s.id === req.id);
+      if (old && canonical(stored(old)) === canonical(req)) return session;
+      const requests = confirmReviewedSetDraft(session, retained, shown, authorization);
+      for (const request of requests) await this.writeSetInTransaction(db, user, request);
+      return this.read(db, session.id);
     });
   }
   private async writeSetInTransaction(db: PoolClient, user: string, req: StoredSet, compensating = false) {
