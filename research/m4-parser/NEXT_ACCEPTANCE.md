@@ -7,7 +7,8 @@ invented fields and is not automatically the next decoding configuration.
 
 1. Collect new natural utterances separately from training and development.
    The maintainer supplied 20 scenario utterances; spontaneous human collection
-   or authorship is not verified. Record provenance, exercise-name context and date; keep raw text
+   or authorship is not verified. The fixed CPU pilot has now observed these cases;
+   they are diagnostic evidence, not unseen final acceptance. Keep raw text
    private unless publication is authorized. AI-authored paraphrases remain
    synthetic and must not be labelled human data.
 2. Before inference, freeze raw inputs, interpretation labels, ambiguity decisions,

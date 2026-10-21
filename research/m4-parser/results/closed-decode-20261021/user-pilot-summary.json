@@ -1,0 +1,82 @@
+{
+  "mode": "private-user-supplied-component-pilot",
+  "newCpuCalls": 40,
+  "provenance": "Twenty maintainer-supplied hypothetical gym scenario utterances; authorship/spontaneous real-user collection unverified. Private evaluation only; never training.",
+  "metrics": {
+    "free": {
+      "literalRequests": 6,
+      "literalExact": 2,
+      "delegatedRequests": 14,
+      "delegated": 11,
+      "proposedOnDelegated": [
+        "user-pilot-08"
+      ],
+      "schemaValid": 18,
+      "guardCorrectLiteral": 0,
+      "guardAcceptedWrong": []
+    },
+    "G1": {
+      "literalRequests": 6,
+      "literalExact": 2,
+      "delegatedRequests": 14,
+      "delegated": 12,
+      "proposedOnDelegated": [
+        "user-pilot-08",
+        "user-pilot-11"
+      ],
+      "schemaValid": 20,
+      "guardCorrectLiteral": 0,
+      "guardAcceptedWrong": []
+    }
+  },
+  "sourceOnlyV2": {
+    "literalRequests": 6,
+    "literalExact": 0,
+    "delegatedRequests": 14,
+    "delegated": 14,
+    "proposedOnDelegated": [],
+    "schemaValid": 0,
+    "guardCorrectLiteral": 0,
+    "guardAcceptedWrong": []
+  },
+  "originalRules": {
+    "draftIds": [],
+    "clarifyIds": [
+      "user-pilot-01",
+      "user-pilot-02",
+      "user-pilot-03",
+      "user-pilot-04",
+      "user-pilot-05",
+      "user-pilot-06",
+      "user-pilot-07",
+      "user-pilot-08",
+      "user-pilot-09",
+      "user-pilot-10",
+      "user-pilot-11",
+      "user-pilot-12",
+      "user-pilot-13",
+      "user-pilot-14",
+      "user-pilot-15",
+      "user-pilot-16",
+      "user-pilot-17",
+      "user-pilot-18",
+      "user-pilot-19",
+      "user-pilot-20"
+    ]
+  },
+  "limitation": "Six context-free literal representations only; fourteen deferred tasks are not completed Agent workflows. Cases 5/7 lose per-hand/reference semantics in label-v1. Controlled snapshots use scripted approvals, not actual Agent memory or persistence. No overall pass rate or model activation.",
+  "sources": {
+    "cases.json": "a93883af71f65fe3be1926deb07c38890d206323df64b18b1d2f4b1c11b02f23",
+    "protocol.json": "5dff8d5715da67fbcfd0fccaab94ec4936c716764f5e25d2026d934174f90879",
+    "input.jsonl": "1c9b2d472c6ecc945c1590bac8f229e7181ab8edde1b19610ce5d7159bdf2939",
+    "free.jsonl": "226038fc57934f048aa31267bbb0a26422d7fd3750f92ba7c83b51ebafd5a4e6",
+    "G1.jsonl": "3830df45a99588b18104157489f39984a7beea1da86a1f3146307ed28fae1854",
+    "free.jsonl.audit.json": "2112a70970f3ab8445ebc59235c56690f64bd828124e55dfc105775c8e92a584",
+    "G1.jsonl.audit.json": "d302f8f1c6882d8f2ddc2249eeb0811c8f801758f39902925515d546b986ca4a"
+  },
+  "frozenAt": "2026-10-21T21:00:28.889960+00:00",
+  "codeCommit": "4b79135a7a63263d2ad58aca536fa207a9dd62f7",
+  "modelSha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+  "outcome": "Diagnostic failure: no product activation. Private source utterances and predictions are not published or used for training.",
+  "workflowStatus": "Expected continuous contexts and approval requirements prepared. No actual Agent or database round-trip was exercised by this component pilot."
+}

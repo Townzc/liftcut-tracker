@@ -77,3 +77,11 @@ hashed alternating-arm runner. No product parser, write path or UI imports G1.
 
 Next: [independent acceptance preparation](../../NEXT_ACCEPTANCE.md). Data v3 is
 CPU-checked preparation, not a trained candidate. Server opening is not needed yet.
+
+A later [20-scenario private pilot](user-pilot-summary.json) added 40 CPU calls,
+with inputs/expected behavior frozen before inference. Both arms exactly parsed
+2/6 representable literal requests; both guarded paths accepted 0/6. The other
+14 tasks require contextual Agent handling; delegating them is not completion.
+Grammar still confused quantity with target index. Only aggregates/hashes are
+published; no training reuse. These supplied hypothetical scenarios have unverified
+authorship, are now observed diagnostics, and do not prove continuous Agent behavior.
