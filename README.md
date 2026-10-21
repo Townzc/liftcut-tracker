@@ -25,11 +25,14 @@
   <a href="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Townzc/liftcut-tracker/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="https://www.liftcuttracker.com/"><img alt="Live" src="https://img.shields.io/badge/live-liftcuttracker.com-65a30d" /></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2563eb" /></a>
+  <a href="https://hub.xerj.org/contributors/Townzc"><img alt="XERJ Corpus Hub contributor" src="https://hub.xerj.org/contributors/Townzc/badge.svg" /></a>
   <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-111827" />
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6" />
 </p>
 
 LiftCut brings workout completion, exercise performance, food logs, body trends, and AI-generated plans into one bilingual product. Its AI layer treats model output as untrusted structured data: every plan is extracted, normalized, strictly validated, shown in an editable preview, and saved only after user confirmation.
+
+**已被 XERJ 语料库选录 · Selected for the XERJ Corpus Hub.** [查看官方收录记录 / View contributor record](https://hub.xerj.org/contributors/Townzc).
 
 ## Current product experience · October 2026
 
