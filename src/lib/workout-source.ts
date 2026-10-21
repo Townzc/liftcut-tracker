@@ -8,6 +8,7 @@ type Values = { exerciseId: string; kind: "record" | "correct"; reps: number[]; 
   rpe: number | null; rpeScope: "last" | "each" | null; correctionSet: number | "last" | null };
 const normalize = (s: string) => s.normalize("NFKC").toLowerCase();
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const refersToPriorSet = (s: string) => /那组|上一组|上组|刚才|刚刚|\b(?:previous|last|that) set\b/i.test(s);
 
 // Match only explicit, unambiguous names. A model-selected ID is not evidence
 // of conversation focus. Longer names win over their nested generic aliases.
@@ -72,7 +73,8 @@ export function workoutSourceIssue(text: string, session: Session, p: Values, se
     try { resolveConfirmedSet(session, { exerciseId: p.exerciseId, target: p.correctionSet }); }
     catch { return "WORKOUT_TARGET_NOT_CONFIRMED"; }
   } else {
-    if (p.correctionSet !== null || /更正|改正|不对|记错|说错|改成|改为|帮我改|\b(?:correction|correct|change)\b/i.test(text))
+    if (p.correctionSet !== null || /更正|改正|不对|记错|说错|改成|改为|帮我改|\b(?:correction|correct|change)\b/i.test(text)
+      || refersToPriorSet(text) && evidence.some(e => e.polarity === "retracted"))
       return "WORKOUT_CORRECTION_INTENT_REQUIRED";
     // A quoted repetition count cannot be duplicated into invented sets.
     const each = /每组|每一组|一组|组组|\beach\b|per set|sets? of|\d\s*[x×*]\s*\d/i.test(source);
@@ -107,7 +109,10 @@ export function standaloneExerciseIssue(text: string, name: string,
   const issue = reportIssue(text, true); if (issue) return issue;
   if (/更正|改正|不对|记错|说错|改成|改为|帮我改|\b(?:correction|correct|change)\b/i.test(text))
     return "WORKOUT_CORRECTION_NEEDS_REFERENCE";
-  const evidence = numericRoleEvidence(text, [name]).evidence.filter(e => e.polarity === "stated");
+  const allEvidence = numericRoleEvidence(text, [name]).evidence;
+  if (refersToPriorSet(text) && allEvidence.some(e => e.polarity === "retracted"))
+    return "WORKOUT_CORRECTION_NEEDS_REFERENCE";
+  const evidence = allEvidence.filter(e => e.polarity === "stated");
   const weights = evidence.filter(e => e.role === "weight").map(e => Math.round(e.value * (e.unit === "lb" ? .45359237 : 1) * 1e6) / 1e6);
   if (p.weightKg !== null && !weights.includes(p.weightKg)) return "WORKOUT_WEIGHT_ROLE_MISMATCH";
   if (new Set(weights).size > 1) return "WORKOUT_MULTIPLE_LOADS_REQUIRE_SEPARATE_DRAFTS";

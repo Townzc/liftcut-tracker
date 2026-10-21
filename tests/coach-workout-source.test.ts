@@ -74,6 +74,13 @@ test("correction ordinal and intent must be stated and bind an existing confirme
   assert.throws(() => groundWorkout({ ...proposal, correctionSet: 2 }, ["坐姿划船9次"], s), /CORRECTION_INTENT/);
 });
 
+test("a retraction referring to an earlier set cannot become a new record", () => {
+  const s = session(), text = "刚才那组坐姿划船不是9次，是7次";
+  assert.throws(() => groundWorkout({ ...proposal, repsQuotes: ["7次"] }, [text], s), /CORRECTION_INTENT/);
+  assert.throws(() => groundExercise({ exerciseQuote: "坐姿划船", dateQuote: null, weightQuote: null,
+    repsQuote: "7次", setsQuote: null, rpeQuote: null }, [text], "2026-10-21"), /CORRECTION_NEEDS_REFERENCE/);
+});
+
 test("one quote is not multiple sets; explicit uniform sets and ordered individual reps work", () => {
   const s = session(), p = { ...proposal, repsQuotes: ["9次", "9次", "9次"] };
   assert.throws(() => groundWorkout(p, ["坐姿划船9次"], s), /SET_COUNT/);
