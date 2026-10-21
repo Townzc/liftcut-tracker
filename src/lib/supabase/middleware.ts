@@ -97,7 +97,17 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
     .maybeSingle();
 
   if (settingsError) {
-    console.error("[middleware] failed to load user_settings for onboarding redirect", settingsError);
+    console.error("[middleware] failed to load user_settings", { code: settingsError.code });
+    // A denied/unavailable read is not an incomplete profile. Keep the session
+    // and offer a retry instead of sending an existing user through onboarding.
+    const unavailable = new NextResponse(
+      '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+      '<title>liftcut.</title><body style="font-family:system-ui;margin:12vh auto;padding:24px;max-width:480px;color:#171717;background:#fff">' +
+      '<h1 style="font-size:24px">暂时无法读取资料.</h1><p>请稍后重试，无需重新填写.</p><a href="" style="color:inherit">重新加载</a></body></html>',
+      { status: 503, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "Retry-After": "5" } },
+    );
+    response.cookies.getAll().forEach(cookie => unavailable.cookies.set(cookie));
+    return unavailable;
   } else {
     profileComplete = isBasicProfileComplete({
       gender: String(settingsRow?.gender ?? "unknown") as "male" | "female" | "other" | "unknown",
