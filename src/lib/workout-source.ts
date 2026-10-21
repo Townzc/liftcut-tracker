@@ -37,6 +37,8 @@ export function workoutSourceIssue(text: string, session: Session, p: Values, se
   if (workoutWorkflowBoundary(text) !== "atomic_candidate") return "WORKOUT_WORKFLOW_REQUIRED";
   if (/单侧|每只|每个哑铃|一边|一侧|each arm|per arm|each dumbbell|昨天|前天|上周|去年|yesterday|last week|\d{4}-\d{2}-\d{2}/i.test(text))
     return "WORKOUT_WORKFLOW_REQUIRED";
+  if (/同上|重量(?:没变|不变|一样|相同)|(?:同样|相同)的?重量|还是[^，,;；。]*重量|(?:上(?:一)?组|刚才那组|刚刚那组)|\b(?:same (?:weight|load)|previous set|that set)\b/i.test(text))
+    return "WORKOUT_CONFIRMED_REFERENCE_REQUIRED";
   if (/[?？]|(?:没|未|没有)(?:完成|做完|达到|做|练)|合适吗|要不要|可以吗|\b(?:didn't|did not|should|would|could)\b|\bcan i\b/i.test(text))
     return "WORKOUT_ACTUAL_REPORT_REQUIRED";
   if (/不确定|记不清|忘了|忘记|好像|大概|差不多|可能|也许|应该|最多|至少|不超过|不到|以上|以下|超过|少于|多于|约\s*[\d一二三四五六七八九十]|[\d一二三四五六七八九十]\s*左右|[\d一二三四五六七八九十]\s*(?:[-~～至到]|或(?:者)?)\s*[\d一二三四五六七八九十]|\b(?:about|around|maybe|probably|unsure)\b|not sure|can't remember|at most|at least|more than|less than|up to/i.test(text))

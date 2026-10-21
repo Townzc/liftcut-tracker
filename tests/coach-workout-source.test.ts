@@ -28,6 +28,8 @@ test("live workout proposals cannot borrow a load from chat history or from the 
   const result = groundWorkout(proposal, [input], s);
   assert.equal(result.draft.kind, "record");
   if (result.draft.kind === "record") assert.deepEqual(result.draft.sets.map(x => [x.weightKg, x.reps, x.rpe]), [[null, 9, null]]);
+  // A symbolic reference must not silently degrade to an unknown load either.
+  assert.throws(() => groundWorkout(proposal, ["坐姿划船同样的重量9次"], s), /CONFIRMED_REFERENCE/);
 });
 
 test("a bare quote must still have the reps role; retracted loads cannot be selected", () => {
