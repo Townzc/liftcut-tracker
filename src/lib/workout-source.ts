@@ -30,12 +30,10 @@ function mentionedExercises(input: string, session: Session): string[] {
   return [...ids];
 }
 
-/** Necessary checks for the live cloud tool. This does not parse a whole
- * conversation or authorize writes; unresolved references need clarification. */
-export function workoutSourceIssue(text: string, session: Session, p: Values, selectedExerciseId?: string): string | null {
-  if (session.status !== "active") return "SESSION_ENDED";
+function reportIssue(text: string, historical: boolean): string | null {
   if (workoutWorkflowBoundary(text) !== "atomic_candidate") return "WORKOUT_WORKFLOW_REQUIRED";
-  if (/单侧|每只|每个哑铃|一边|一侧|each arm|per arm|each dumbbell|昨天|前天|上周|去年|yesterday|last week|\d{4}-\d{2}-\d{2}/i.test(text))
+  if (/单侧|每只|每个哑铃|一边|一侧|each arm|per arm|each dumbbell/i.test(text)
+    || !historical && /昨天|前天|上周|去年|yesterday|last week|\d{4}-\d{2}-\d{2}/i.test(text))
     return "WORKOUT_WORKFLOW_REQUIRED";
   if (/同上|重量(?:没变|不变|一样|相同)|(?:同样|相同)的?重量|还是[^，,;；。]*重量|\bsame (?:weight|load)\b/i.test(text))
     return "WORKOUT_CONFIRMED_REFERENCE_REQUIRED";
@@ -43,6 +41,14 @@ export function workoutSourceIssue(text: string, session: Session, p: Values, se
     return "WORKOUT_ACTUAL_REPORT_REQUIRED";
   if (/不确定|记不清|忘了|忘记|好像|大概|差不多|可能|也许|应该|最多|至少|不超过|不到|以上|以下|超过|少于|多于|约\s*[\d一二三四五六七八九十]|[\d一二三四五六七八九十]\s*左右|[\d一二三四五六七八九十]\s*(?:[-~～至到]|或(?:者)?)\s*[\d一二三四五六七八九十]|\b(?:about|around|maybe|probably|unsure)\b|not sure|can't remember|at most|at least|more than|less than|up to/i.test(text))
     return "WORKOUT_QUANTITY_UNCERTAIN";
+  return null;
+}
+
+/** Necessary checks for the live cloud tool. This does not parse a whole
+ * conversation or authorize writes; unresolved references need clarification. */
+export function workoutSourceIssue(text: string, session: Session, p: Values, selectedExerciseId?: string): string | null {
+  if (session.status !== "active") return "SESSION_ENDED";
+  const issue = reportIssue(text, false); if (issue) return issue;
   const mentions = mentionedExercises(text, session);
   if (mentions.length > 1 || (mentions[0] ?? selectedExerciseId) !== p.exerciseId) return "WORKOUT_EXERCISE_NEEDS_REFERENCE";
   const { evidence, normalizedSource: source } = numericRoleEvidence(text, session.prescription.exercises.map(e => e.name));
@@ -91,5 +97,25 @@ export function workoutSourceIssue(text: string, session: Session, p: Values, se
       if (p.rpeScope === "last" && !lastRpe.test(text)) return "RPE_SCOPE_REQUIRED";
     }
   }
+  return null;
+}
+
+/** Standalone exercise memory cannot be used to bypass workout source checks.
+ * A historical date is allowed, but all actuals must be in this report. */
+export function standaloneExerciseIssue(text: string, name: string,
+  p: { weightKg: number | null; reps: number | null; sets: number | null; rpe: number | null }): string | null {
+  const issue = reportIssue(text, true); if (issue) return issue;
+  if (/更正|改正|不对|记错|说错|改成|改为|帮我改|\b(?:correction|correct|change)\b/i.test(text))
+    return "WORKOUT_CORRECTION_NEEDS_REFERENCE";
+  const evidence = numericRoleEvidence(text, [name]).evidence.filter(e => e.polarity === "stated");
+  const weights = evidence.filter(e => e.role === "weight").map(e => Math.round(e.value * (e.unit === "lb" ? .45359237 : 1) * 1e6) / 1e6);
+  if (p.weightKg !== null && !weights.includes(p.weightKg)) return "WORKOUT_WEIGHT_ROLE_MISMATCH";
+  if (new Set(weights).size > 1) return "WORKOUT_MULTIPLE_LOADS_REQUIRE_SEPARATE_DRAFTS";
+  for (const [key, role] of [["reps", "reps"], ["sets", "count"], ["rpe", "rpe"]] as const) {
+    const values = evidence.filter(e => e.role === role);
+    if (p[key] !== null && !values.some(e => e.value === p[key])) return `WORKOUT_${key.toUpperCase()}_ROLE_MISMATCH`;
+    if (new Set(values.map(e => e.value)).size > 1) return "WORKOUT_MULTIPLE_VALUES_REQUIRE_SEPARATE_DRAFTS";
+  }
+  if (evidence.some(e => e.role === "ordinal")) return "WORKOUT_SLOT_NEEDS_REFERENCE";
   return null;
 }

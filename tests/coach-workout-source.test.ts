@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { groundWorkout } from "../src/lib/coach-grounding";
+import { groundExercise, groundWorkout } from "../src/lib/coach-grounding";
 import type { Session, SetLog } from "@liftcut/core/today";
 
 // Synthetic API-boundary regressions, not private acceptance text or training.
@@ -21,6 +21,20 @@ function session(): Session {
 const proposal = { exerciseId: "row", kind: "record" as const, weightQuote: null as string | null,
   repsQuotes: ["9次"], rpeQuote: null as string | null, rpeScope: null as "last" | "each" | null,
   correctionSet: null as number | "last" | null };
+
+test("standalone exercise memory enforces current roles too, with explicit historical dates allowed", () => {
+  const p = { exerciseQuote: "坐姿划船", dateQuote: null as string | null, weightQuote: null as string | null,
+    repsQuote: "9次", setsQuote: null as string | null, rpeQuote: null };
+  const ground = (v: typeof p, ...texts: string[]) => groundExercise(v, texts, "2026-10-21");
+  assert.throws(() => ground({ ...p, weightQuote: "32.5公斤" }, "坐姿划船32.5公斤10次", "坐姿划船9次"), /QUOTE_NOT/);
+  assert.throws(() => ground({ ...p, repsQuote: "22" }, "坐姿划船22公斤"), /REPS_ROLE/);
+  assert.throws(() => ground({ ...p, setsQuote: "2组" }, "坐姿划船第2组9次"), /SETS_ROLE/);
+  for (const text of ["更正坐姿划船9次", "坐姿划船同样的重量9次", "坐姿划船左右各22公斤9次", "坐姿划船大概9次"])
+    assert.throws(() => ground(p, text), /WORKOUT_/);
+  const result = ground({ ...p, dateQuote: "2026-08-21", weightQuote: "32.5公斤" }, "2026-08-21坐姿划船32.5公斤9次");
+  assert.equal(result.date, "2026-08-21");
+  assert.equal(result.kind === "exercise" && result.weightKg, 32.5);
+});
 
 test("live workout proposals cannot borrow a load from chat history or from the plan", () => {
   const s = session(), input = "坐姿划船做了9次";

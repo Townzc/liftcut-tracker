@@ -4,7 +4,7 @@ import { parseWorkoutLog, type LogDraft } from "@liftcut/core/workout-log-parser
 import { workoutContext } from "@liftcut/core/workout-context";
 import type { Session } from "@liftcut/core/today";
 import { recordPeriod } from "./record-period";
-import { workoutSourceIssue } from "./workout-source";
+import { standaloneExerciseIssue, workoutSourceIssue } from "./workout-source";
 
 const quote=z.string().trim().min(1).max(120), optionalQuote=quote.nullable();
 export const personalExtractionSchema=z.object({
@@ -111,11 +111,13 @@ export function groundPersonal(input:unknown,texts:string[],anchor:string):Perso
   return personalEntrySchema.parse({kind:"food",date,foodName:p.foodQuote,mealType:meals[meal],calories:measurement(p.caloriesQuote,texts,"calories")?.value??null,protein:measurement(p.proteinQuote,texts,"protein")?.value??null});
 }
 export function groundExercise(input:unknown,texts:string[],anchor:string):PersonalEntry {
-  const p=exerciseExtractionSchema.parse(input);assertReport(texts.at(-1)??"");
-  literal(p.exerciseQuote,texts);
-  return personalEntrySchema.parse({kind:"exercise",date:groundedDate(p.dateQuote,texts,anchor),exerciseName:p.exerciseQuote,
-    weightKg:measurement(p.weightQuote,texts,"weight")?.value??null,reps:measurement(p.repsQuote,texts,"reps")?.value??null,
-    sets:measurement(p.setsQuote,texts,"sets")?.value??null,rpe:measurement(p.rpeQuote,texts,"rpe")?.value??null});
+  const p=exerciseExtractionSchema.parse(input),current=texts.at(-1)??"",source=[current];assertReport(current);
+  literal(p.exerciseQuote,source);
+  const values={weightKg:measurement(p.weightQuote,source,"weight")?.value??null,reps:measurement(p.repsQuote,source,"reps")?.value??null,
+    sets:measurement(p.setsQuote,source,"sets")?.value??null,rpe:measurement(p.rpeQuote,source,"rpe")?.value??null};
+  const date=groundedDate(p.dateQuote,source,anchor);
+  const issue=standaloneExerciseIssue(p.dateQuote?normalize(current).replace(normalize(p.dateQuote),""):current,p.exerciseQuote,values);if(issue)fail(issue);
+  return personalEntrySchema.parse({kind:"exercise",date,exerciseName:p.exerciseQuote,...values});
 }
 export function groundPreference(input:unknown,texts:string[],anchor:string):PersonalEntry {
   const p=preferenceExtractionSchema.parse(input),current=texts.at(-1)??"";

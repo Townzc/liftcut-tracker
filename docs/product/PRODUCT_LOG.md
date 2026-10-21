@@ -2,9 +2,9 @@
 
 ## 2026-10-21 — Bind live workout proposals to the current report
 
-- **Why / change**: the live cloud tool could quote old chat values, turn a load into a correction index or duplicate a reps quote into extra sets. Current-turn numeric roles, explicit exercise selection, set multiplicity and confirmed correction targets now gate previews.
+- **Why / change**: cloud workout tools could quote old chat values, turn a load into a correction index or duplicate a reps quote into extra sets. Current-turn roles, exercise selection, set multiplicity and confirmed targets now gate previews; standalone exercise memory follows the same source rules and allows explicit historical dates.
 - **Behavior**: uncertain, per-hand, multi-load and compound reports require clarification; corrections cannot silently become new sets. The existing signed preview, confirmation, version checks and shared write path remain.
-- **Verified**: 17 targeted unit tests, root 6 JS + 217 TS tests, type checks, full lint (two existing warnings) and production build. Four real PostgreSQL results exercise the actual AI SDK tool path with scripted HTTP responses: rejected proposals leave data intact; approved correction updates one ID once, including concurrent retries.
+- **Verified**: 18 targeted unit tests, root 6 JS + 218 TS tests, type checks, lint (two existing warnings in the full check) and production build. Five real PostgreSQL results exercise the actual AI SDK with scripted HTTP responses: rejected proposals leave data intact across both tools; approved correction updates one ID once, including concurrent retries. Nine model-chat/history browser scenarios passed.
 - **Regression caught**: CI rejected a fully stated report starting with “刚才那组”; narrowed the new symbolic-load check instead of changing the existing browser expectation. All six model-chat browser scenarios then passed locally against real PostgreSQL.
 - **Limits**: no real cloud-model or physical-device score; this is a necessary source check, not a complete natural-language parser. Contextual inheritance and per-hand storage still need the versioned workflow; no native activation or UI change.
 - **Next**: full CI and deployment verification; finish the separately frozen v3 GPU experiment, retain failures, verify backups and power off before any further M4 activation decision.

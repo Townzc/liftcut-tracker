@@ -14,15 +14,17 @@ test("live SDK workout tool rejects unsupported values before issuing an approva
   process.env.WORKOUT_DATABASE_URL = url.toString(); process.env.AI_PROVIDER = "local";
   process.env.COACH_SIGNING_SECRET = "synthetic-workout-source-test-not-production";
   const store = new TodayStore(todayPool()), owner = randomUUID(), plan = randomUUID(), day = randomUUID(), exercise = randomUUID();
-  let sessionId = "", round = 0, mode: "ordinal" | "history" | "correct" = "ordinal";
+  let sessionId = "", round = 0, mode: "ordinal" | "history" | "standalone" | "correct" = "ordinal";
   const server = createServer(async (req, res) => {
     for await (const part of req) void part;
     round++;
     const args = { exerciseId: exercise, kind: mode === "history" ? "record" : "correct",
       weightQuote: mode === "history" ? "32.5公斤" : null, repsQuotes: ["7次"], rpeQuote: null, rpeScope: null,
       correctionSet: mode === "ordinal" ? 17 : mode === "correct" ? 2 : null };
-    const name = round === 1 ? "current_workout" : round === 2 ? "prepare_workout" : "finish_response";
-    const input = round === 1 ? {} : round === 2 ? args : { message: "Please clarify the unsupported detail.", sourceIds: [`workout:current:${sessionId}`] };
+    const name = round === 1 ? "current_workout" : round === 2 ? mode === "standalone" ? "prepare_exercise" : "prepare_workout" : "finish_response";
+    const input = round === 1 ? {} : round === 2 ? mode === "standalone"
+      ? { exerciseQuote: "坐姿划船", dateQuote: null, weightQuote: "32.5公斤", repsQuote: "7次", setsQuote: null, rpeQuote: null }
+      : args : { message: "Please clarify the unsupported detail.", sourceIds: [`workout:current:${sessionId}`] };
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ id: "synthetic", object: "chat.completion", created: 1, model: "scripted-not-real",
       choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null,
@@ -57,6 +59,14 @@ test("live SDK workout tool rejects unsupported values before issuing an approva
         history: [{ role: "user", content: "坐姿划船32.5公斤10次" }] }, AbortSignal.timeout(15000), async steps => { trace = JSON.stringify(steps); });
       assert.equal(result.proposal, undefined); assert.match(trace, /QUOTE_NOT_IN_USER_TEXT/);
       assert.deepEqual(await store.current(owner), before);
+    });
+    await t.test("choosing standalone exercise memory cannot bypass the current-report check", async () => {
+      mode = "standalone"; round = 0; let trace = "";
+      const result = await runCoach(owner, { ...input, id: randomUUID(), text: "坐姿划船7次",
+        history: [{ role: "user", content: "坐姿划船32.5公斤10次" }] }, AbortSignal.timeout(15000), async steps => { trace = JSON.stringify(steps); });
+      assert.equal(result.proposal, undefined); assert.match(trace, /QUOTE_NOT_IN_USER_TEXT/);
+      assert.deepEqual(await store.current(owner), before);
+      assert.equal((await admin.query("select count(*)::int n from personal_record_events where user_id=$1", [owner])).rows[0].n, 0);
     });
     await t.test("valid correction is unsaved until approval; exact retries patch one row once", async () => {
       mode = "correct"; round = 0;
