@@ -51,7 +51,7 @@ before its acknowledgement. Process exit is not proof of platform power-off.
   TERM-ignoring process timeout, tampering, input/source drift, partial output,
   exported candidate rejection and no overwrite.
 - Actual CPU checkpointed backward/export: 8 training and 8 dev rows, two
-  optimizer steps, batch 2, 42.7 seconds; finite nonzero LoRA B weights and restored
+  optimizer steps, batch 2, 46.6 seconds including export (training/dev metrics: 42.7 seconds); finite nonzero LoRA B weights and restored
   `use_cache=true` verified. This uses saved v1 weights solely for an operational
   smoke test, not candidate training or quality measurement.
 - CUDA memory fit, candidate quality and full conversion consistency remain
