@@ -1,5 +1,12 @@
 # M4 GPU 训练交接
 
+**2026-10-21 CPU 进展：暂不需要开机。** source-v2 在保存输出重放中改善口语接受，
+但独立规则覆盖仍更高；[v3 数据](../../research/m4-parser/DATA_CARD_V3.md)的模板隔离、
+token 长度与两步 CPU 训练/导出检查已通过，尚无新训练候选。
+[G1 解码诊断](../../research/m4-parser/results/closed-decode-20261021/README.md)格式全部合法，
+多填字段却从 18 增至 22，不能启用。先完成[独立自然说法验收准备](../../research/m4-parser/NEXT_ACCEPTANCE.md)
+和下一候选的固定协议，再通知维护者开启服务器；本轮没有 SSH 重连或新 GPU 请求。
+
 **本轮已完成并关机（2026-10-20 洛杉矶 / 10-21 UTC）**：按
 [`run_v2.py` 的 v2 协议](../../research/m4-parser/train/GPU_V2.md)和
 [显式显存恢复](../../research/m4-parser/train/MEMORY_RECOVERY.md)完成 800 步、
