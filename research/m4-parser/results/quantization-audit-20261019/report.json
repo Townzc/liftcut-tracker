@@ -1,0 +1,388 @@
+{
+  "kind": "saved-weight CPU diagnostic; previously seen data",
+  "independentValidation": false,
+  "newTraining": false,
+  "productEnabled": false,
+  "protocol": {
+    "version": 1,
+    "purpose": "same-engine diagnostic on previously seen evaluation data, not independent acceptance",
+    "startedAt": 1792456812.219456,
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "llamaCppPython": "0.3.36",
+    "scriptSha256": "c20ea96dd0b7d9fb23a1dbb3f2ce87288a30cd6a97ab30ce23dd47d25453152c",
+    "inputSha256": "c7b334372bd735260480b6cb333f433744189c3e0c7135c1c3dc8a1f7b2a4dda",
+    "referenceSha256": "39679cc6271e6f4fe59e3f3ca97e4c20bc5903f0c83dde5c9af55e9c5cc47d78",
+    "f16Sha256": "e0e1158e0988d8b2ef8a14045ac06c5f312b77877eadb1751c59d56fdebbc01d",
+    "q4Sha256": "69a80ccaf979184f8031cf3f3bbef79597dfb66c5dfc06b10a850f377d4b5146",
+    "temperature": 0,
+    "repeatPenalty": 1,
+    "threads": 4,
+    "prefillThreads": 4,
+    "maxNewTokens": 256,
+    "resetBetweenItems": true,
+    "inputTokens": "HF and GGUF IDs must match, passed as token IDs without added BOS",
+    "minAgreement": 0.95,
+    "q8Trigger": "Q4 below 0.95 against either f16 or original HF; no threshold change"
+  },
+  "fullDiagnostic": {
+    "comparisons": {
+      "f16VsHF": {
+        "same": 1055,
+        "total": 1060,
+        "rate": 0.9952830188679245
+      },
+      "q4VsF16": {
+        "same": 942,
+        "total": 1060,
+        "rate": 0.8886792452830189
+      },
+      "q4VsHF": {
+        "same": 941,
+        "total": 1060,
+        "rate": 0.8877358490566037
+      },
+      "q8VsF16": {
+        "same": 1047,
+        "total": 1060,
+        "rate": 0.9877358490566037
+      },
+      "q8VsHF": {
+        "same": 1047,
+        "total": 1060,
+        "rate": 0.9877358490566037
+      }
+    },
+    "conditions": {
+      "f16": {
+        "fileSha256": "e0e1158e0988d8b2ef8a14045ac06c5f312b77877eadb1751c59d56fdebbc01d",
+        "predictionSha256": "4d66743beadf9cc12320dffed2bc84aec183c61e592e185d3bc1d95033bcfc2c",
+        "loadAndTokenAuditMs": 10683.957738000005,
+        "inputTokensMatch": true,
+        "truncated": 0
+      },
+      "q4": {
+        "fileSha256": "69a80ccaf979184f8031cf3f3bbef79597dfb66c5dfc06b10a850f377d4b5146",
+        "predictionSha256": "66e22901c24a17c57e55774d1372c2d671faf0244ce6651919734bc146e572d1",
+        "loadAndTokenAuditMs": 4725.35228300012,
+        "inputTokensMatch": true,
+        "truncated": 1
+      },
+      "q8": {
+        "fileSha256": "feb3524756122be6b8df2c5dcf8afae12374ff348ff7241aa2cb54bb89a1a8e7",
+        "predictionSha256": "96192446452ee0c451354550f7331d9eec19a83d67d6f21a98a63925d58d26e5",
+        "loadAndTokenAuditMs": 7580.804689999695,
+        "inputTokensMatch": true,
+        "truncated": 0
+      }
+    },
+    "quantizationCandidatesPassing": [
+      "q8"
+    ],
+    "qualityPassed": false,
+    "enabledInProduct": false,
+    "finishedAt": 1792460339.517445
+  },
+  "originalParsedGate": {
+    "f16Vshf": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 1056,
+      "sameParsed": 1055,
+      "parsedAgreement": 0.9953,
+      "minAgreement": 0.95
+    },
+    "f16Vsf16": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 1060,
+      "sameParsed": 1059,
+      "parsedAgreement": 0.9991,
+      "minAgreement": 0.95
+    },
+    "q4Vshf": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 939,
+      "sameParsed": 941,
+      "parsedAgreement": 0.8877,
+      "minAgreement": 0.95
+    },
+    "q4Vsf16": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 940,
+      "sameParsed": 942,
+      "parsedAgreement": 0.8887,
+      "minAgreement": 0.95
+    },
+    "q8Vshf": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 1048,
+      "sameParsed": 1047,
+      "parsedAgreement": 0.9877,
+      "minAgreement": 0.95
+    },
+    "q8Vsf16": {
+      "items": 1060,
+      "missing": 0,
+      "sameText": 1048,
+      "sameParsed": 1047,
+      "parsedAgreement": 0.9877,
+      "minAgreement": 0.95
+    }
+  },
+  "models": {
+    "f16": {
+      "predictionSha256": "4d66743beadf9cc12320dffed2bc84aec183c61e592e185d3bc1d95033bcfc2c",
+      "items": 1060,
+      "truncated": 0,
+      "metrics": {
+        "dev": {
+          "total": 500,
+          "exact": 495,
+          "exactRate": 0.99,
+          "invented": 9,
+          "jsonValidRate": 1,
+          "schemaValidRate": 1,
+          "latencyMs": {
+            "p50": 1160.6,
+            "p95": 3554.9,
+            "max": 5097.3
+          }
+        },
+        "test": {
+          "total": 500,
+          "exact": 377,
+          "exactRate": 0.754,
+          "invented": 141,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.926,
+          "latencyMs": {
+            "p50": 1277.1,
+            "p95": 3634.4,
+            "max": 8766.2
+          }
+        },
+        "handwritten": {
+          "total": 60,
+          "exact": 50,
+          "exactRate": 0.8333,
+          "invented": 12,
+          "jsonValidRate": 0.9833,
+          "schemaValidRate": 0.9,
+          "latencyMs": {
+            "p50": 619.6,
+            "p95": 2534.9,
+            "max": 3438.1
+          }
+        }
+      },
+      "weightBytes": 1198182144,
+      "weightSha256": "e0e1158e0988d8b2ef8a14045ac06c5f312b77877eadb1751c59d56fdebbc01d"
+    },
+    "q4": {
+      "predictionSha256": "66e22901c24a17c57e55774d1372c2d671faf0244ce6651919734bc146e572d1",
+      "items": 1060,
+      "truncated": 1,
+      "metrics": {
+        "dev": {
+          "total": 500,
+          "exact": 485,
+          "exactRate": 0.97,
+          "invented": 3,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.98,
+          "latencyMs": {
+            "p50": 526.7,
+            "p95": 1616.5,
+            "max": 2360.3
+          }
+        },
+        "test": {
+          "total": 500,
+          "exact": 374,
+          "exactRate": 0.748,
+          "invented": 164,
+          "jsonValidRate": 0.998,
+          "schemaValidRate": 0.904,
+          "latencyMs": {
+            "p50": 787.7,
+            "p95": 2487.3,
+            "max": 5827.1
+          }
+        },
+        "handwritten": {
+          "total": 60,
+          "exact": 46,
+          "exactRate": 0.7667,
+          "invented": 13,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.85,
+          "latencyMs": {
+            "p50": 410.5,
+            "p95": 1284.5,
+            "max": 1671.1
+          }
+        }
+      },
+      "weightBytes": 396704512,
+      "weightSha256": "69a80ccaf979184f8031cf3f3bbef79597dfb66c5dfc06b10a850f377d4b5146"
+    },
+    "q8": {
+      "predictionSha256": "96192446452ee0c451354550f7331d9eec19a83d67d6f21a98a63925d58d26e5",
+      "items": 1060,
+      "truncated": 0,
+      "metrics": {
+        "dev": {
+          "total": 500,
+          "exact": 495,
+          "exactRate": 0.99,
+          "invented": 12,
+          "jsonValidRate": 1,
+          "schemaValidRate": 1,
+          "latencyMs": {
+            "p50": 729.8,
+            "p95": 2155.1,
+            "max": 2524.4
+          }
+        },
+        "test": {
+          "total": 500,
+          "exact": 376,
+          "exactRate": 0.752,
+          "invented": 141,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.92,
+          "latencyMs": {
+            "p50": 831.2,
+            "p95": 2115.5,
+            "max": 3956
+          }
+        },
+        "handwritten": {
+          "total": 60,
+          "exact": 50,
+          "exactRate": 0.8333,
+          "invented": 12,
+          "jsonValidRate": 0.9833,
+          "schemaValidRate": 0.9,
+          "latencyMs": {
+            "p50": 432.2,
+            "p95": 1584.5,
+            "max": 2068
+          }
+        }
+      },
+      "weightBytes": 639446784,
+      "weightSha256": "feb3524756122be6b8df2c5dcf8afae12374ff348ff7241aa2cb54bb89a1a8e7"
+    }
+  },
+  "guarded": {
+    "f16": {
+      "dev": {
+        "accepted": 353,
+        "rejectedCorrect": 1,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "c853311bc405488e0f8e9bcdf6c36ed25807ab1382bfdca97777ff47a9c53306",
+          "predictionsSha256": "3f7aae99ba0720a6ce12c96e83d7bddfea6982f7a1d75cc50a18828bf7c3f5d6"
+        },
+        "invented": 0,
+        "guardedExact": 497
+      },
+      "test": {
+        "accepted": 205,
+        "rejectedCorrect": 91,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+          "predictionsSha256": "b3cc0e6b16e6f1570b4ea34aad31118d70c7b4206df7ea02513bb444a4320e5d"
+        },
+        "invented": 0,
+        "guardedExact": 350
+      },
+      "handwritten": {
+        "accepted": 14,
+        "rejectedCorrect": 19,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+          "predictionsSha256": "9801ab652b4c493135acde9df386656f6bc3be055cbbeca7b42368134d5ded77"
+        },
+        "invented": 0,
+        "guardedExact": 35
+      }
+    },
+    "q4": {
+      "dev": {
+        "accepted": 341,
+        "rejectedCorrect": 1,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "c853311bc405488e0f8e9bcdf6c36ed25807ab1382bfdca97777ff47a9c53306",
+          "predictionsSha256": "979a4c00a0eb28e717718f4d2949ce80d6e0968b8df4986c5644a899ce38a55c"
+        },
+        "invented": 0,
+        "guardedExact": 485
+      },
+      "test": {
+        "accepted": 204,
+        "rejectedCorrect": 93,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+          "predictionsSha256": "5fedc678836dc6735b0790d345da55ecae73f5f3e1535ba66dff5bb3faac13ac"
+        },
+        "invented": 0,
+        "guardedExact": 349
+      },
+      "handwritten": {
+        "accepted": 13,
+        "rejectedCorrect": 16,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+          "predictionsSha256": "f2c7000da5702c195d5cee498ae505a2562cc81803b3e7801c10563aed8533f3"
+        },
+        "invented": 0,
+        "guardedExact": 34
+      }
+    },
+    "q8": {
+      "dev": {
+        "accepted": 353,
+        "rejectedCorrect": 2,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "c853311bc405488e0f8e9bcdf6c36ed25807ab1382bfdca97777ff47a9c53306",
+          "predictionsSha256": "0dd9dcea792cbe4f253aa6022717f3dcf2f11aabd31fe0af32433ce2b5f95c9d"
+        },
+        "invented": 0,
+        "guardedExact": 497
+      },
+      "test": {
+        "accepted": 206,
+        "rejectedCorrect": 92,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+          "predictionsSha256": "1932994aa5b5b790e041a530d81e697f7ed30b47276c22d665b0d731eab373d7"
+        },
+        "invented": 0,
+        "guardedExact": 351
+      },
+      "handwritten": {
+        "accepted": 14,
+        "rejectedCorrect": 19,
+        "unsafeAccepted": 0,
+        "source": {
+          "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+          "predictionsSha256": "0f8667a030be9ea697cc87bd9d0b301368f7742fcaebde4422acf527cbe810d0"
+        },
+        "invented": 0,
+        "guardedExact": 35
+      }
+    }
+  }
+}

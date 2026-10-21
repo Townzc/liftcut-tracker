@@ -12,7 +12,7 @@ two existing development examples completed with both the saved HF and Q4
 weights, matching input IDs and parsed outputs (2/2, no truncation). This is a
 runtime smoke, not a quality or performance benchmark; no GPU was opened.
 
-`compare_gguf.py` is the exact frozen script for the ongoing full 1,060-item CPU
+`compare_gguf.py` is the exact frozen script for the completed 1,060-item CPU
 diagnostic. It compares the saved f16 and Q4 in one llama.cpp runtime against the
 saved HF predictions. A Q8 fallback is predeclared if Q4 is below 95% against
 either reference. No weight training or download occurs. External GNU timeout
@@ -22,7 +22,9 @@ script/input/weight hashes before inference. These are previously seen cases.
 Its canonical-JSON diagnostic is stricter than the original `consistency.py`
 gate for numeric spelling (`1` versus `1.0`). Report both explicitly; never
 replace the original 95% parsed-JSON gate with guarded outputs. Full results
-are pending, so this change makes no new consistency/quality claim. Different
+are in the [diagnostic report](../results/quantization-audit-20261019/README.md):
+Q4 remains below 95%; Q8 reaches 98.77% against both references. Quality still
+fails, and the model remains disabled. Different
 threads, token-input handling and reset behavior changed together; an observed
 difference cannot establish which one caused it. Neither tool enables writes
 or changes the confirmation flow. Phone measurements remain separate.
