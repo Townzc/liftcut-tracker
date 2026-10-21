@@ -80,13 +80,57 @@ def partition(out, data, name):
             f.write("".join(json.dumps(by_id[r["id"]], ensure_ascii=False) + "\n" for r in read(data / f"{split}.gold.jsonl")))
 
 
+def reuse_baseline(previous, manifest_sha, out, protocol, stop_at):
+    """Explicit operational recovery; reuse only the completed frozen baseline."""
+    previous = Path(previous).resolve()
+    if digest(previous / "sha256.json") != manifest_sha:
+        raise ValueError("baseline manifest mismatch")
+    hashes = json.loads((previous / "sha256.json").read_text())
+    names = ("run.json", "all-eval.jsonl", "data-manifest.json", "logs/train.log",
+             "old-new-prompt.jsonl", "old-new-prompt.jsonl.audit.json")
+    if any(digest(previous / name) != hashes.get(name) for name in names):
+        raise ValueError("baseline file mismatch")
+    old = json.loads((previous / "run.json").read_text())
+    source = "8520b9db248e5c61f4acaf2abc94b3f00dddad64"
+    if old["state"] != "stopped" or old["commit"] != source or stop_at > old["stopAt"]:
+        raise ValueError("baseline source/state/deadline mismatch")
+    steps = {step["name"]: step for step in old["steps"]}
+    if steps["old-new-prompt"]["exit"] != 0 or steps["train"]["exit"] != 1:
+        raise ValueError("baseline unfinished or not a failed training run")
+    if "OutOfMemoryError" not in (previous / "logs/train.log").read_text() or any(p.is_file() for p in (previous / "model").rglob("*")):
+        raise ValueError("recovery requires an OOM with no exported candidate")
+    for key in ("oldMergedSha256", "dataManifestCanonicalSha256", "gates", "quantization", "maxSeconds"):
+        if old["protocol"][key] != protocol[key]: raise ValueError("baseline protocol drift: " + key)
+    if old["protocol"]["trainingArgs"] + ["--gradient-checkpointing"] != protocol["trainingArgs"]:
+        raise ValueError("only activation checkpointing may change")
+    original_predict = subprocess.check_output(["git", "show", source + ":research/m4-parser/train/predict.py"], cwd=ROOT)
+    if hashlib.sha256(original_predict).hexdigest() != digest(M4 / "train/predict.py"):
+        raise ValueError("baseline inference source changed")
+    for name in ("all-eval.jsonl", "data-manifest.json"):
+        if digest(previous / name) != digest(out / name): raise ValueError("baseline inputs changed")
+    rows = read(out / "all-eval.jsonl")
+    predictions = read(previous / "old-new-prompt.jsonl")
+    audit = json.loads((previous / "old-new-prompt.jsonl.audit.json").read_text())
+    if [r["id"] for r in rows] != [r["id"] for r in predictions] or audit["items"] != len(rows) or audit["inputSha256"] != digest(out / "all-eval.jsonl"):
+        raise ValueError("baseline incomplete or reordered")
+    for name in names[-2:]:
+        with (out / name).open("xb") as target: target.write((previous / name).read_bytes())
+    provenance = {"sourceCommit": source, "manifestSha256": manifest_sha, "items": len(rows),
+                  "originalStopAt": old["stopAt"], "trainingRestartedFromBase": True}
+    write_json(out / "baseline-reuse.json", provenance)
+    return provenance
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", required=True, type=Path)
     ap.add_argument("--out", required=True, type=Path)
     ap.add_argument("--commit", required=True)
     ap.add_argument("--stop-at", required=True, type=float, help="absolute UTC epoch deadline, before power-off/backup reserve")
+    ap.add_argument("--baseline-run", type=Path)
+    ap.add_argument("--baseline-sha256")
     args = ap.parse_args()
+    if bool(args.baseline_run) != bool(args.baseline_sha256): raise ValueError("baseline path and manifest SHA are required together")
     protocol = json.loads((M4 / "train/protocol-v2.json").read_text())
     if protocol["gates"] != GATES: raise ValueError("protocol/gate mismatch")
     if os.name != "posix" or not shutil.which("timeout"): raise ValueError("Linux GNU timeout required")
@@ -133,7 +177,11 @@ def main():
         def predict(name, model_flag, model, tokenizer):
             python(name, "train/predict.py", model_flag, model, "--tokenizer", tokenizer,
                    "--input", out / "all-eval.jsonl", "--out", out / f"{name}.jsonl", "--threads", "4")
-        predict("old-new-prompt", "--model", cache / "model/merged", cache / "model/merged")
+        if args.baseline_run:
+            budget.report["reusedBaseline"] = reuse_baseline(args.baseline_run, args.baseline_sha256, out, protocol, args.stop_at)
+            write_json(out / "run.json", budget.report)
+        else:
+            predict("old-new-prompt", "--model", cache / "model/merged", cache / "model/merged")
         python("train", "train/sft.py", "--base", cache / "base", "--train", data / "train.jsonl", "--dev", data / "dev.jsonl",
                "--out", out / "model", *protocol["trainingArgs"])
         predict("merged", "--model", out / "model/merged", out / "model/merged")

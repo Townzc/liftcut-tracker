@@ -1,5 +1,6 @@
 {
-  "version": "m4-v2-candidate-1",
+  "version": "m4-v2-candidate-1-memory-recovery",
+  "recovery": "Explicit OOM repair: activation recomputation only; no batch, data, optimizer, seed or gate change. Original absolute deadline retained.",
   "maxSeconds": 10800,
   "quantization": "q8_0",
   "oldMergedSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
@@ -18,7 +19,8 @@
     "--lr",
     "0.0002",
     "--max-len",
-    "512"
+    "512",
+    "--gradient-checkpointing"
   ],
   "gates": {
     "rawAgreement": 0.95,

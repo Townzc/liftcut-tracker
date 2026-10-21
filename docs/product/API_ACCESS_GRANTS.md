@@ -69,6 +69,12 @@ then run `npx playwright test --config playwright.api-grants.config.ts`.
 
 ## Hosted migration
 
+PR #142 passed all nine checks and merged as `06c1e92`; the tested and merged
+file trees match. Its exact production deployment is READY with the live domain
+aliases. Anonymous requests to home, Agent and settings redirect to login and
+finish with HTTP 200. This availability check is separate from the real local
+fresh-database authenticated acceptance above.
+
 Applied the exact additive SQL to the existing LiftCut project after a private
 off-database backup of all 15 affected tables. Before/after ordered JSONB row
 digests match for all 1,715 rows. Existing table grants already included the

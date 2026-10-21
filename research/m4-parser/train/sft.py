@@ -63,6 +63,7 @@ def main():
     ap.add_argument("--rank", type=int, default=16)
     ap.add_argument("--max-len", type=int, default=512)
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    ap.add_argument("--gradient-checkpointing", action="store_true")
     args = ap.parse_args()
 
     random.seed(args.seed)
@@ -72,12 +73,22 @@ def main():
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     started = time.time()
+    def progress(steps, state):
+        temp = out / "progress.tmp"
+        temp.write_text(json.dumps({"completedSteps": steps, "state": state,
+                                   "seconds": round(time.time() - started, 1)}) + "\n")
+        temp.replace(out / "progress.json")
+    progress(0, "initializing")
 
     tok = AutoTokenizer.from_pretrained(args.base, local_files_only=True)
     dtype = torch.bfloat16 if args.device == "cuda" and torch.cuda.is_bf16_supported() else torch.float32
     model = AutoModelForCausalLM.from_pretrained(args.base, dtype=dtype, local_files_only=True).to(args.device)
     model = get_peft_model(model, LoraConfig(r=args.rank, lora_alpha=2 * args.rank, lora_dropout=0.05, task_type="CAUSAL_LM",
                                              target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]))
+    original_use_cache = model.config.use_cache
+    if args.gradient_checkpointing:
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False, "preserve_rng_state": True})
+        model.config.use_cache = False
     train = [encode(tok, r["messages"], args.max_len) for r in read(args.train, args.limit or None)]
     dev = [encode(tok, r["messages"], args.max_len) for r in read(args.dev, args.limit or None)]
     steps_per_epoch = math.ceil(len(train) / args.batch)
@@ -98,16 +109,19 @@ def main():
         return losses / max(tokens, 1)
 
     log, step = [], 0
+    progress(step, "training")
     model.train()
     while step < total:
         for ids, labels, mask in batches(train, args.batch, tok.pad_token_id, True, rng):
             loss = model(input_ids=ids.to(args.device), attention_mask=mask.to(args.device), labels=labels.to(args.device)).loss
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            progress(step, "optimizer-step-in-progress")
             optimizer.step()
             schedule.step()
             optimizer.zero_grad()
             step += 1
+            progress(step, "training")
             if step % 10 == 0 or step == total:
                 log.append({"step": step, "loss": round(float(loss), 5)})
                 print(json.dumps(log[-1]), flush=True)
@@ -116,12 +130,18 @@ def main():
 
     metrics = {"seed": args.seed, "steps": step, "train_examples": len(train), "dev_examples": len(dev), "batch": args.batch, "lr": args.lr,
                "rank": args.rank, "dtype": str(dtype), "device": args.device, "dev_loss": round(dev_loss(), 5), "log": log,
-               "seconds": round(time.time() - started, 1)}
+               "seconds": round(time.time() - started, 1), "gradientCheckpointing": args.gradient_checkpointing,
+               "peakCudaAllocatedBytes": torch.cuda.max_memory_allocated() if args.device == "cuda" else None}
+    # Training's cache setting must not disable KV caching in the exported parser.
+    model.config.use_cache = original_use_cache
+    if args.gradient_checkpointing:
+        model.gradient_checkpointing_disable()
     model.save_pretrained(out / "adapter")
     merged = model.merge_and_unload()
     merged.save_pretrained(out / "merged", safe_serialization=True)
     tok.save_pretrained(out / "merged")
     (out / "train_metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
+    progress(step, "exported")
     print(json.dumps({k: v for k, v in metrics.items() if k != "log"}))
 
 

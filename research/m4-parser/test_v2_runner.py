@@ -155,4 +155,64 @@ class V2RunnerTest(unittest.TestCase):
         self.assertTrue((self.out / "logs/hang.log").is_file())
 
 
+class BaselineRecoveryTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name); self.old = self.root / "old"; self.out = self.root / "new"
+        self.old.mkdir(); self.out.mkdir(); (self.old / "logs").mkdir()
+        self.protocol = json.loads((ROOT / "train/protocol-v2.json").read_text())
+        old_protocol = dict(self.protocol, trainingArgs=self.protocol["trainingArgs"][:-1])
+        runner.write_json(self.old / "run.json", {"state": "stopped", "commit": "8520b9db248e5c61f4acaf2abc94b3f00dddad64",
+            "stopAt": 100, "protocol": old_protocol, "steps": [{"name": "old-new-prompt", "exit": 0}, {"name": "train", "exit": 1}]})
+        (self.old / "all-eval.jsonl").write_text('{"id":"one"}\n')
+        (self.old / "data-manifest.json").write_text('{}\n')
+        (self.old / "logs/train.log").write_text('torch.OutOfMemoryError: test')
+        (self.old / "old-new-prompt.jsonl").write_text('{"id":"one","output":"raw"}\n')
+        runner.write_json(self.old / "old-new-prompt.jsonl.audit.json", {"items": 1,
+            "inputSha256": runner.digest(self.old / "all-eval.jsonl"), "tokenIdsSha256": "tokens"})
+        for name in ("all-eval.jsonl", "data-manifest.json"):
+            (self.out / name).write_bytes((self.old / name).read_bytes())
+        self.m4 = self.root / "m4"; (self.m4 / "train").mkdir(parents=True)
+        (self.m4 / "train/predict.py").write_bytes(b"fixed inference")
+        self.seal()
+
+    def seal(self):
+        runner.write_json(self.old / "sha256.json", {p.relative_to(self.old).as_posix(): runner.digest(p)
+            for p in self.old.rglob("*") if p.is_file() and p.name != "sha256.json"})
+        self.sha = runner.digest(self.old / "sha256.json")
+
+    def recover(self, stop=100, source=b"fixed inference"):
+        with patch.object(runner, "M4", self.m4), patch.object(runner.subprocess, "check_output", return_value=source):
+            return runner.reuse_baseline(self.old, self.sha, self.out, self.protocol, stop)
+
+    def test_reuses_raw_bytes_once_and_keeps_original_deadline(self):
+        result = self.recover()
+        self.assertEqual(result["originalStopAt"], 100)
+        self.assertEqual((self.out / "old-new-prompt.jsonl").read_bytes(), (self.old / "old-new-prompt.jsonl").read_bytes())
+        with self.assertRaises(FileExistsError): self.recover()
+
+    def test_rejects_tampered_manifest_and_raw_output(self):
+        saved = self.sha; self.sha = "wrong"
+        with self.assertRaisesRegex(ValueError, "manifest mismatch"): self.recover()
+        self.sha = saved; (self.old / "old-new-prompt.jsonl").write_text('{}\n')
+        with self.assertRaisesRegex(ValueError, "file mismatch"): self.recover()
+
+    def test_rejects_extended_deadline_changed_source_and_batch(self):
+        with self.assertRaisesRegex(ValueError, "deadline"): self.recover(stop=101)
+        with self.assertRaisesRegex(ValueError, "source changed"): self.recover(source=b"changed")
+        self.protocol["trainingArgs"][3] = "8"
+        with self.assertRaisesRegex(ValueError, "only activation"): self.recover()
+
+    def test_rejects_partial_predictions_even_with_valid_file_hash(self):
+        (self.old / "old-new-prompt.jsonl").write_text('{"id":"different"}\n'); self.seal()
+        with self.assertRaisesRegex(ValueError, "incomplete"): self.recover()
+
+    def test_rejects_new_inputs_and_exported_candidate(self):
+        (self.out / "all-eval.jsonl").write_text('{"id":"changed"}\n')
+        with self.assertRaisesRegex(ValueError, "inputs changed"): self.recover()
+        (self.out / "all-eval.jsonl").write_bytes((self.old / "all-eval.jsonl").read_bytes())
+        (self.old / "model").mkdir(); (self.old / "model/adapter").write_bytes(b"weights")
+        with self.assertRaisesRegex(ValueError, "no exported candidate"): self.recover()
+
+
 if __name__ == "__main__": unittest.main()
