@@ -1,0 +1,43 @@
+{
+  "version": "m4-v3-development-candidate-1",
+  "maxSeconds": 10800,
+  "backupAndShutdownReserveSeconds": 3600,
+  "quantization": "q8_0",
+  "previousQ8Sha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+  "trainingArgs": [
+    "--device",
+    "cuda",
+    "--batch",
+    "16",
+    "--epochs",
+    "2",
+    "--seed",
+    "20261019",
+    "--rank",
+    "16",
+    "--lr",
+    "0.0002",
+    "--max-len",
+    "512",
+    "--gradient-checkpointing"
+  ],
+  "gates": {
+    "rawAgreement": 0.95,
+    "challengeExact": 0.9,
+    "challengeSchema": 0.99,
+    "challengeCoverage": 0.9,
+    "rawChallengeInvented": 0,
+    "guardedUnsafe": 0,
+    "truncated": 0
+  },
+  "evaluationItems": 1040,
+  "maximumModelPredictions": 4160,
+  "decoding": "unchanged greedy; no G1",
+  "training": "original base only; fixed 6400 train / 740 development; no private utterances",
+  "releaseReady": false,
+  "selection": "One candidate, one seed, no automatic retry or sweep. Observed challenge and handwriting remain diagnostics. Source-v2 comparison never replaces original source-v1 gate.",
+  "dataManifestCanonicalSha256": {
+    "v2": "1b1c933eb4c48c69d4de6d8cb30088111e787ec4c526f0885df57f937e3a1b71",
+    "v3": "eadea453c25634e4e880adb54200c9737823398b553f4b67b421857d036a6079"
+  }
+}

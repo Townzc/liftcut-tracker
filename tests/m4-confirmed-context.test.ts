@@ -41,6 +41,11 @@ test("evidence preserves normalized spans and separates repeated numbers", () =>
   for (const e of result.evidence) assert.equal(result.normalizedSource.slice(e.start, e.end), e.text);
   assert.deepEqual(labelRoleProblems("25 lb, 9 reps, RPE 8", { intent: "record", exercise: null,
     sets: [{ weight: 25, unit: "lb", reps: 9, rpe: 8 }] }), []);
+  for (const text of ["25 lb × 9", "25 lb 2 × 9"]) assert.deepEqual(labelRoleProblems(text, { intent: "record", exercise: null,
+    sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }), []);
+  assert.deepEqual(labelRoleProblems("correct fifth set to 4 reps", { intent: "correct", exercise: null, target: 5, changes: { reps: 4 } }), []);
+  assert.ok(labelRoleProblems("不是25lb×9", { intent: "record", exercise: null,
+    sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }).length);
   // A necessary numeric check deliberately does not claim semantic validity.
   assert.deepEqual(labelRoleProblems("计划 25 lb 9 reps", { intent: "record", exercise: null,
     sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }), []);

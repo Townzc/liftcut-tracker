@@ -1,6 +1,7 @@
 # M4 next acceptance preparation
 
-Current state: **GPU not ready; native integration not started.** The v2 quality
+Current state: **the [fixed v3 experiment](train/GPU_V3.md) is prepared, pending
+exact-commit CI and the maintainer opening a GPU; native integration is not started.** The v2 quality
 failure remains recorded. [Data v3](DATA_CARD_V3.md) passed preparation checks;
 [G1](results/closed-decode-20261021/README.md) fixed format while increasing
 invented fields and is not automatically the next decoding configuration.
@@ -37,3 +38,11 @@ invented fields and is not automatically the next decoding configuration.
 
 No automatic model requests, training, server opening or product activation are
 scheduled by this document. Notify the maintainer when a concrete GPU window is ready.
+
+The [numeric-role/continuous-context replay](results/context-20261021/README.md)
+preserves the 20 originals and distinguishes archived model predictions from
+scripted DB approvals. Pending workout previews now have a separate versioned
+contract: approximate values stay approximate; unknown and previous-confirmed
+load are different; per-hand basis cannot silently disappear into scalar storage.
+Compound input is routed away from the atomic parser. These internal components
+do not yet have an app caller and cannot be claimed as full Agent acceptance.
