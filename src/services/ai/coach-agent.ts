@@ -200,13 +200,13 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
         execute:args=>execution.run(false,async()=>preparePersonal({...args,kind:"body",foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null}))}),
       prepare_food:tool({description:"Prepare ONE unsaved meal from exact food and meal-time quotes. Unknown calories/protein are JSON null, never estimates. A separate UI confirmation is required.",inputSchema:foodExtractionSchema,
         execute:args=>execution.run(false,async()=>preparePersonal({...args,kind:"food",weightQuote:null,waistQuote:null}))}),
-      prepare_exercise:tool({description:"Prepare one actual standalone exercise report without starting a workout. Literal exercise name, weight with unit, optional reps/sets/RPE; unreported fields null. No save until confirmation.",inputSchema:exerciseExtractionSchema,execute:args=>execution.run(false,async()=>prepareEntry(args,()=>groundExercise(args,userTexts,anchor)))}),
+      prepare_exercise:tool({description:"Prepare one actual standalone exercise report from the CURRENT message without starting a workout. Literal exercise name, weight with unit, optional reps/sets/RPE; unreported fields null. Never borrow old quotes or use this tool for corrections, inherited loads, or per-hand/uncertain values. No save until confirmation.",inputSchema:exerciseExtractionSchema,execute:args=>execution.run(false,async()=>prepareEntry(args,()=>groundExercise(args,userTexts,anchor)))}),
       prepare_preference:tool({description:"Propose remembering an explicit fitness preference from the CURRENT user message only. Exact literal valueQuote; never infer a preference or use an assistant suggestion. UI confirmation required.",inputSchema:preferenceExtractionSchema,execute:args=>execution.run(false,async()=>prepareEntry(args,()=>groundPreference(args,userTexts,anchor)))}),
-      prepare_workout:tool({description:"Prepare current-workout sets or a reps correction from literal user quotes. Call current_workout first. Never writes.",inputSchema:workoutExtractionSchema,
+      prepare_workout:tool({description:"Prepare current-workout sets or a reps correction from the CURRENT user message's explicit exercise and actual quantities only. Call current_workout first. Do not borrow historical quotes, infer a set number from a load, duplicate a rep quote without an explicit set count, or flatten per-hand/uncertain loads. Unsupported references require clarification. Never writes.",inputSchema:workoutExtractionSchema,
         execute:args=>execution.run(false,async()=>{
           ensureTime();if(proposal)return {error:"ONE_DRAFT_PER_REPLY"};if(!session||session.status!=="active")return {error:"START_A_WORKOUT_FIRST"};
           try{
-            const result=groundWorkout(args,userTexts,session),draft=result.draft,contextHash=hash(workoutContextInput(session));
+            const result=groundWorkout(args,userTexts,session,input.selectedExerciseId),draft=result.draft,contextHash=hash(workoutContextInput(session));
             if(draft.kind!=="record"&&draft.kind!=="correct")return {error:"UNSUPPORTED_DRAFT"};
             const body={id:randomUUID(),sessionId:session.id,text:result.normalizedText,originalText:input.text,
               selectedExerciseId:result.exerciseId,version:1 as const,contextHash,

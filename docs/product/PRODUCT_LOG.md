@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-21 — Bind live workout proposals to the current report
+
+- **Why / change**: cloud workout tools could quote old chat values, turn a load into a correction index or duplicate a reps quote into extra sets. Current-turn roles, exercise selection, set multiplicity and confirmed targets now gate previews; standalone exercise memory follows the same source rules and allows explicit historical dates.
+- **Behavior**: uncertain, per-hand, multi-load and compound reports require clarification; corrections cannot silently become new sets. The existing signed preview, confirmation, version checks and shared write path remain.
+- **Verified**: 19 targeted unit tests, root 6 JS + 219 TS tests, type checks and targeted lint. Production build, five real PostgreSQL results and nine model-chat/history browser scenarios passed before the final prior-set retraction guard; final CI reruns them. Scripted SDK responses verify rejected proposals leave data intact across both tools and approved correction updates one ID once, including concurrent retries.
+- **Regressions caught**: CI rejected a fully stated report starting with “刚才那组”; narrowed the symbolic-load check and kept the original browser expectation. A later failing unit test showed a retracted value referring to a prior set could still append a record; both tools now require correction targeting. A self-contained report that retracts a value remains supported.
+- **Limits**: no real cloud-model or physical-device score; this is a necessary source check, not a complete natural-language parser. Contextual inheritance and per-hand storage still need the versioned workflow; no native activation or UI change.
+- **Next**: full CI and deployment verification; finish the separately frozen v3 GPU experiment, retain failures, verify backups and power off before any further M4 activation decision.
+
 ## 2026-10-21 — M4 pending context and fixed v3 experiment
 
 - **Changed**: versioned pending previews distinguish unknown, approximate and previous-confirmed load; draft edits preserve omitted fields and cannot become saved records. Per-hand basis is retained and blocks unsupported scalar storage; compound requests leave the atomic parser. Numeric evidence also handles multiplication and English ordinals.
