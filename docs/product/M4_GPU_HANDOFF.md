@@ -1,11 +1,16 @@
 # M4 GPU 训练交接
 
-**当前执行（2026-10-20 洛杉矶）**：维护者已重新开机。本轮使用
-[`run_v2.py` 的 v2 协议](../../research/m4-parser/train/GPU_V2.md)，
-不是下面历史 v1 的 `run_all.sh`。1540 条旧模型对照完成后 SFT 显存不足；
-显式恢复条件、已验证备份和不延长截止的约束见
-[显存恢复记录](../../research/m4-parser/train/MEMORY_RECOVERY.md)。
-本轮仍未有新候选质量结论；不要释放实例或删除保留资产。
+**本轮已完成并关机（2026-10-20 洛杉矶 / 10-21 UTC）**：按
+[`run_v2.py` 的 v2 协议](../../research/m4-parser/train/GPU_V2.md)和
+[显式显存恢复](../../research/m4-parser/train/MEMORY_RECOVERY.md)完成 800 步、
+四种输出各 1540 条。Q8 对 HF/f16 为 98.51%/98.70%，但新挑战集
+213/240、schema 94.58%、仍多填 50 个字段，候选未达标，端侧保持关闭。
+[完整结果与限制](../../research/m4-parser/results/run-20261021T042106Z-v2/README.md)。
+127 文件异地恢复与 38 份报告重放一致；06:02:53 UTC 已核验平台关机。
+没有延长截止或追加训练，不要释放实例或删除保留资产。新方案先 CPU 验证、
+CI 和独立验收设计，再通知开 GPU；下文是历史 v1 操作参考，不是新开机指令。
+
+## 历史 v1 参考
 
 GPU 训练由维护者确认配置和预算、开启服务器后执行。本地 Codex/Claude Code 会话可在获得连接信息后通过 SSH 执行；受网络限制的云端会话交接给维护者。全部步骤由 `research/m4-parser/run_all.sh` 完成。
 

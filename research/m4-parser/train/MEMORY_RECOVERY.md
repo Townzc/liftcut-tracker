@@ -1,5 +1,13 @@
 # M4 v2 operational memory recovery — 2026-10-21 UTC
 
+**Completed:** recovery source `47e8fd4` finished all 800 steps and four outputs
+of 1540 predictions each. Peak allocated CUDA memory was 10,260,276,224 bytes.
+Q8 agreement passed, but raw quality failed; the candidate remains disabled.
+All 127 final files were restored and hashed off-instance, 38 reports replayed,
+and AutoDL was visibly off at 06:02:53 UTC, before both original deadlines.
+See the [complete results](../results/run-20261021T042106Z-v2/README.md).
+The following preserves the original failure and explicit recovery conditions.
+
 The maintainer opened the RTX 4090 window again. Frozen source `8520b9d`
 completed all 1540 old-model/new-prompt predictions in 1138.71 seconds, then
 training failed in backward with `torch.OutOfMemoryError`. It requested another
