@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-21 — M4 numeric roles, confirmed references and README capture
+
+- **Why**: load/count numbers could become target indices; contextual edits need confirmed IDs/revisions rather than draft or global-last values.
+- **Changed**: separate role gate; correction/inherit/void previews; internal approval port checks the exact preview under the existing owner transaction and preserves idempotency. No HTTP caller/native activation or schema change.
+- **Verified**: 6 new core tests; 4 real PostgreSQL results; 6 JS + 206 TS root tests; type checks/lint. Twenty original scenarios replayed with archived outputs and a separate scripted-confirmation DB lane.
+- **Limits**: natural-language acceptance still fails; scripted approvals are not model success. Per-hand units, partial drafts and compound intents need a versioned boundary. No GPU/model calls or training-data change.
+- **README**: recaptured the current home in Chromium with synthetic Auth + real local DB; ASCII periods in the image and tagline. Historical evidence retained.
+- **Next**: close the contextual proposal gaps before a new fixed GPU experiment; native/real-device release remains gated. [Evidence](../../research/m4-parser/results/context-20261021/README.md).
+
 ## 2026-10-21 — M4 封闭解码 CPU 诊断
 
 - **变化**：新增实验用 G1 语法、CPU 推理入口与输入边界检查；产品解析路径、界面、确认流程和冻结协议均不变。

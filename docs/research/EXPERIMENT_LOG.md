@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-21 — M4 numeric-role and confirmed-context boundary
+
+- **Change / reason**: numbers now have separate weight/reps/RPE/ordinal/count evidence; immutable record references and an atomic internal approval port prevent draft/global-last/stale-source binding. Frozen source guards and training data unchanged.
+- **Actual**: 6 new core tests, 4 PostgreSQL results, root 6 JS + 206 TS tests, type/lint checks and one Chromium fixture flow passed. Replayed 40 archived predictions for 20 unchanged private utterances; four wrong ordinal targets and two invalid outputs rejected. No new inference.
+- **Interpretation / limits**: separate scripted approvals exercised continuous DB identity/compensation, but semantic acceptance remains zero and full natural dialogue fails. This establishes transaction behavior, not model improvement, a blind test or phone evidence.
+- **Next / trigger**: version the missing contextual/compound contract before another fixed GPU candidate; originals never enter SFT. [Evidence and limitations](../../research/m4-parser/results/context-20261021/README.md).
+- **Learning**: explain why numeric membership is weaker than role validation, why a source record's revision matters, and why a correctly implemented confirmation path does not imply the model understood the user.
+
 ## 2026-10-21 — M4 G1 封闭输出的配对 CPU 检查
 
 - **Why / change**：原始输出同时有格式和语义错误，单独测试 GBNF 结构约束；固定旧 Q8、短提示和输入，未改训练、守卫、评分器或产品路径。
