@@ -4,6 +4,8 @@ import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
 
 test("real local Auth + fresh Data API: onboarding, saved profile, permission outage and recovery", async ({ page }) => {
+  const browserErrors: string[] = [];
+  page.on("pageerror", error => browserErrors.push(error.message));
   const url = process.env.API_GRANTS_SUPABASE_URL!, dbUrl = process.env.API_GRANTS_BROWSER_DATABASE_URL!;
   expect(["localhost", "127.0.0.1"]).toContain(new URL(dbUrl).hostname);
   expect(new URL(dbUrl).pathname).toMatch(/^\/liftcut_p1_grants_/);
@@ -24,8 +26,11 @@ test("real local Auth + fresh Data API: onboarding, saved profile, permission ou
       height: 175, current_weight: 75, target_weight: 70, weekly_training_days: 3 });
     expect(saved.error).toBeNull();
     await page.reload(); await expect(page).toHaveURL("http://localhost:3105/");
+    await expect(page.getByTestId("minimal-home")).toBeVisible();
     await page.goto("/settings"); await expect(page).toHaveURL(/\/settings$/);
+    await expect(page.getByTestId("settings-index")).toBeVisible();
     await page.reload(); await expect(page).toHaveURL(/\/settings$/);
+    await expect(page.getByTestId("settings-index")).toBeVisible();
     await page.goto("/login"); await expect(page).toHaveURL("http://localhost:3105/");
     expect((await admin.query("select count(*)::int as n from user_settings where user_id=$1", [owner])).rows[0].n).toBe(1);
 
@@ -38,10 +43,12 @@ test("real local Auth + fresh Data API: onboarding, saved profile, permission ou
     await page.screenshot({ path: "node_modules/.cache/api-grants/unavailable-mobile.png" });
     await admin.query("grant select on public.user_settings to authenticated"); revoked = false;
     await page.getByRole("link", { name: "重新加载" }).click(); await expect(page).toHaveURL(/\/settings$/);
+    await expect(page.getByTestId("settings-index")).toBeVisible();
     await expect(page.getByText("请稍后重试，无需重新填写.")).toHaveCount(0);
     const row = await client.from("user_settings").select("current_weight,weekly_training_days").single();
     expect(row.error).toBeNull(); expect(row.data?.current_weight).toBe(75);
     await page.screenshot({ path: "node_modules/.cache/api-grants/recovered-mobile.png" });
+    expect(browserErrors).toEqual([]);
   } finally {
     if (revoked) await admin.query("grant select on public.user_settings to authenticated");
     await client.auth.signOut(); await admin.end();
