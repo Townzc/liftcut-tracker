@@ -4,6 +4,7 @@
 
 - **Changed**: versioned pending previews distinguish unknown, approximate and previous-confirmed load; draft edits preserve omitted fields and cannot become saved records. Per-hand basis is retained and blocks unsupported scalar storage; compound requests leave the atomic parser. Numeric evidence also handles multiplication and English ordinals.
 - **Verified**: 4 new context tests plus 6 prior role/reference tests, core/app types and targeted lint; root 6 JS + 210 TS tests. No UI caller or native feature activation.
+- **Provenance**: new edits/inherited sets have their own source reference; approval references are recorded with the actual change in the same DB event. Existing source values and void evidence stay intact; database regression passed.
 - **Experiment**: new v3 runner/protocol, existing 6,400 train / 740 dev unchanged, 1,040 unique evaluation inputs × 4 arms. Original gates/source-v1 remain; extra source-v2 comparisons do not replace them.
 - **Actual / limits**: real file/hash/count assembly and original-utterance exclusion passed; 4 runner tests pass on Linux (3 + explicit skip on Windows), full process orchestration mocked. Prior real CPU SFT evidence remains historical; no new GPU/model calls.
 - **Next**: exact commit all-green CI → notify maintainer for one bounded 4090 experiment → collect/verify/off. Development pass never enables native; full natural Agent/device acceptance still required. [Runbook](../../research/m4-parser/train/GPU_V3.md).

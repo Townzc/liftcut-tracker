@@ -176,11 +176,13 @@ export class TodayStore {
       const old = session.sets.find(s => s.id === req.id);
       if (old && canonical(stored(old)) === canonical(req)) return session;
       const requests = confirmReviewedSetDraft(session, retained, shown, authorization);
-      for (const request of requests) await this.writeSetInTransaction(db, user, request);
+      for (const request of requests) await this.writeSetInTransaction(db, user, request, false,
+        {version:retained.version,kind:retained.kind,references:retained.references});
       return this.read(db, session.id);
     });
   }
-  private async writeSetInTransaction(db: PoolClient, user: string, req: StoredSet, compensating = false) {
+  private async writeSetInTransaction(db: PoolClient, user: string, req: StoredSet, compensating = false,
+    approval?: Pick<ReviewedSetDraft,"version"|"kind"|"references">) {
     // Same numeric/business contract for every entry point. Speech provenance is server-derived.
     setRequestSchema.parse({ ...req, inputUnit: "kg", sourceRef: "today-tap",
       weightSource: req.weightSource === "user_said" ? "user_entered" : req.weightSource,
@@ -212,7 +214,7 @@ export class TodayStore {
     else await db.query(`insert into public.set_logs(id,user_id,session_id,plan_exercise_id,exercise_name,set_index,weight_kg,reps,rpe,input_unit,
       weight_source,reps_source,status,revision,source_ref,payload,request_hash) values(${values.map((_,i) => `$${i+1}`).join(",")})`, values);
     await this.event(db,user,req.sessionId,req.id,req.status === "voided" ? "voided" : old ? "corrected" : "recorded",
-      { before: old?.payload ?? null, after: req });
+      { before: old?.payload ?? null, after: req, ...(approval?{approval}:{}) });
     return;
   }
   private context(session: Session, selectedExerciseId?: string) {

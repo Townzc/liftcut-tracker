@@ -51,6 +51,10 @@ test("M4 internal approval port: confirmed context, concurrent retries, stale in
       const inherited = s.sets.find(r => r.id === fresh.requests[0].id)!;
       assert.equal(inherited.weightKg, 42.5); assert.equal(inherited.reps, 4); assert.equal(inherited.rpe, null);
       assert.equal(inherited.weightSource, "user_confirmed_prefill");
+      const event = (await store.trace(owner, inherited.id)).events[0];
+      assert.equal(event.data.after.sourceRef, `m4-review:${inherited.id}:1`);
+      assert.deepEqual(event.data.approval.references, fresh.references);
+      assert.equal(event.data.approval.kind, "inherit_weight");
     });
     await t.test("void keeps its event history; separately confirmed redo is counted once", async () => {
       const p = previewSetVoid(s, { exerciseId: row, target: "last" });

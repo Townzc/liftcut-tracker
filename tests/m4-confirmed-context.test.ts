@@ -59,6 +59,7 @@ test("correction targets immutable identity and preserves omitted values; previe
   assert.equal(patch.id, target.id); assert.equal(patch.revision, 2);
   assert.equal(patch.reps, 4); assert.equal(patch.weightKg, 37.5); assert.equal(patch.rpe, 6);
   assert.equal(preview.references[0].recordId, target.id);
+  assert.equal(patch.sourceRef, `m4-review:${target.id}:2`);
   assert.throws(() => previewSetCorrection(s, { exerciseId: "row", target: 5 }, { reps: 4 }), /TARGET_NOT_CONFIRMED/);
   assert.throws(() => previewSetCorrection(s, { exerciseId: "row", target: 1 }, { reps: 4, extra: 8 } as never));
 });
@@ -69,6 +70,7 @@ test("inherit explicit load from the named exercise, never global-last or plan; 
   assert.equal(p.requests[0].rpe, null); assert.equal(p.requests[0].setIndex, 3);
   assert.equal(p.references[0].recordId, s.sets[1].id);
   assert.equal(p.requests[0].weightSource, "user_confirmed_prefill");
+  assert.equal(p.requests[0].sourceRef, `m4-review:${p.requests[0].id}:1`);
   s.sets[1].weightKg = null;
   assert.throws(() => previewInheritedWeight(s, "row", randomUUID(), 5), /SOURCE_WEIGHT_UNKNOWN/);
   assert.throws(() => resolveConfirmedSet(s, { exerciseId: "absent", target: "last" }), /EXERCISE_NOT_FOUND/);
