@@ -30,6 +30,8 @@ test("live workout proposals cannot borrow a load from chat history or from the 
   if (result.draft.kind === "record") assert.deepEqual(result.draft.sets.map(x => [x.weightKg, x.reps, x.rpe]), [[null, 9, null]]);
   // A symbolic reference must not silently degrade to an unknown load either.
   assert.throws(() => groundWorkout(proposal, ["坐姿划船同样的重量9次"], s), /CONFIRMED_REFERENCE/);
+  assert.equal(groundWorkout({ ...proposal, weightQuote: "32.5公斤" },
+    ["刚才那组坐姿划船我实打实做了9次，用的是32.5公斤，帮我记上"], s).draft.kind, "record");
 });
 
 test("a bare quote must still have the reps role; retracted loads cannot be selected", () => {
