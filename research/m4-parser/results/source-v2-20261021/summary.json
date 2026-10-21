@@ -1,0 +1,1066 @@
+{
+  "mode": "post-hoc-source-version-replay",
+  "newModelCalls": 0,
+  "replayedOutputs": 6160,
+  "priorRun": "run-20261021T042106Z-v2",
+  "productActivation": false,
+  "limitation": "Previously observed inputs; deterministic source-only baseline sees no model/gold labels. No fresh generalization or model added-value claim.",
+  "reports": {
+    "f16-challenge": {
+      "reportSha256": "685de4ee717411d8d9c0eaa79e147dcf7181a3255d8b0c6633458ae9d4965580",
+      "source": {
+        "goldSha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictionsSha256": "2671faf89f6b9eed8418982c6e9f157bf8e7eb1395097342df725dd401862d4f",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 240,
+          "exact": 207,
+          "fieldAccuracy": 1,
+          "invented": 69,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 0.7917,
+          "schemaValidRate": 0.9417
+        },
+        "guardV1": {
+          "total": 240,
+          "exact": 232,
+          "fieldAccuracy": 0.9406,
+          "invented": 0,
+          "omissionRate": 0.0587,
+          "clarifyPrecision": 0.9375,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 112,
+          "correctAccepted": 112,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 232,
+          "fieldAccuracy": 0.9406,
+          "invented": 0,
+          "omissionRate": 0.0587,
+          "clarifyPrecision": 0.9375,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 112,
+          "correctAccepted": 112,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "fieldAccuracy": 1,
+          "invented": 0,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "f16-dev-eval": {
+      "reportSha256": "cb2792e03ce3d2794e681721fe27cdd4b9de472e8b1c55329acdf24f0a164b86",
+      "source": {
+        "goldSha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+        "predictionsSha256": "ff269373c563f29cdd9dfedcc115eb75bfacac8f5a241de5d1ac8b6d3bead9ac",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9981,
+          "invented": 3,
+          "omissionRate": 0.0013,
+          "clarifyPrecision": 0.9962,
+          "clarifyRecall": 0.9962,
+          "schemaValidRate": 1
+        },
+        "guardV1": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 738,
+          "fieldAccuracy": 0.9984,
+          "invented": 0,
+          "omissionRate": 0.0009,
+          "clarifyPrecision": 0.9925,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 474,
+          "correctAccepted": 474,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "f16-handwritten": {
+      "reportSha256": "902eaa55a5fc63171075108bcb50d6128a2a25b0c53e4409ae85b10301cdea73",
+      "source": {
+        "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+        "predictionsSha256": "65a9c6865aa71d0ed497c73a91e25cfc066bc6a8bd3ee1f0b91502568dde0be1",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 60,
+          "exact": 50,
+          "fieldAccuracy": 0.9173,
+          "invented": 12,
+          "omissionRate": 0.0733,
+          "clarifyPrecision": 0.9412,
+          "clarifyRecall": 0.7619,
+          "schemaValidRate": 0.8833
+        },
+        "guardV1": {
+          "total": 60,
+          "exact": 35,
+          "fieldAccuracy": 0.5,
+          "invented": 0,
+          "omissionRate": 0.5067,
+          "clarifyPrecision": 0.4565,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 14,
+          "correctAccepted": 14,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 54,
+          "fieldAccuracy": 0.8722,
+          "invented": 0,
+          "omissionRate": 0.12,
+          "clarifyPrecision": 0.7778,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 33,
+          "correctAccepted": 33,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "fieldAccuracy": 0.9624,
+          "invented": 0,
+          "omissionRate": 0.04,
+          "clarifyPrecision": 0.9545,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "f16-old-test": {
+      "reportSha256": "a3b4bbd2819ec113bae04ea142f6b88ee1d03268c185e59e67a24980d6a51690",
+      "source": {
+        "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+        "predictionsSha256": "05d80840e987605e1550c614b90dd4c826a504f40e7f4eccaf387cf1ace34414",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 500,
+          "exact": 422,
+          "fieldAccuracy": 0.9691,
+          "invented": 79,
+          "omissionRate": 0.0197,
+          "clarifyPrecision": 0.956,
+          "clarifyRecall": 0.6,
+          "schemaValidRate": 0.912
+        },
+        "guardV1": {
+          "total": 500,
+          "exact": 383,
+          "fieldAccuracy": 0.6123,
+          "invented": 0,
+          "omissionRate": 0.3901,
+          "clarifyPrecision": 0.5534,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 238,
+          "correctAccepted": 238,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 500,
+          "exact": 383,
+          "fieldAccuracy": 0.6123,
+          "invented": 0,
+          "omissionRate": 0.3901,
+          "clarifyPrecision": 0.5534,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 238,
+          "correctAccepted": 238,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 500,
+          "exact": 403,
+          "fieldAccuracy": 0.6571,
+          "invented": 0,
+          "omissionRate": 0.3565,
+          "clarifyPrecision": 0.5992,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "merged-challenge": {
+      "reportSha256": "f8909281e5abf415f1a5377e4260c0befe403bbecd7bba67e2b5dcbb1db11e2d",
+      "source": {
+        "goldSha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictionsSha256": "8522075539d3cd12c9df78e960c72b78d8ad298aa31e221c6b6fbcd89d249777",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 240,
+          "exact": 205,
+          "fieldAccuracy": 1,
+          "invented": 77,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 0.775,
+          "schemaValidRate": 0.9375
+        },
+        "guardV1": {
+          "total": 240,
+          "exact": 232,
+          "fieldAccuracy": 0.9406,
+          "invented": 0,
+          "omissionRate": 0.0587,
+          "clarifyPrecision": 0.9375,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 112,
+          "correctAccepted": 112,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 232,
+          "fieldAccuracy": 0.9406,
+          "invented": 0,
+          "omissionRate": 0.0587,
+          "clarifyPrecision": 0.9375,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 112,
+          "correctAccepted": 112,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "fieldAccuracy": 1,
+          "invented": 0,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "merged-dev-eval": {
+      "reportSha256": "fe725bdea625ce1414e521ee38b9f20442343baa72488bd5f886220499fe9d7c",
+      "source": {
+        "goldSha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+        "predictionsSha256": "335eaea7889a1fd0bf8f156154e99efbb0b34d46a0718c170be94dacb81f430b",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9981,
+          "invented": 3,
+          "omissionRate": 0.0013,
+          "clarifyPrecision": 0.9962,
+          "clarifyRecall": 0.9962,
+          "schemaValidRate": 1
+        },
+        "guardV1": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 738,
+          "fieldAccuracy": 0.9984,
+          "invented": 0,
+          "omissionRate": 0.0009,
+          "clarifyPrecision": 0.9925,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 474,
+          "correctAccepted": 474,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "merged-handwritten": {
+      "reportSha256": "c19081a671b664d8753a90e4b6bb8547a349c751902428affe021f651404ee33",
+      "source": {
+        "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+        "predictionsSha256": "bf8c1e942b6a4897d2e140805e30299f96c4f4f0aa0c229943e54ab4f8aa12f9",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 60,
+          "exact": 50,
+          "fieldAccuracy": 0.9098,
+          "invented": 12,
+          "omissionRate": 0.08,
+          "clarifyPrecision": 0.8889,
+          "clarifyRecall": 0.7619,
+          "schemaValidRate": 0.8833
+        },
+        "guardV1": {
+          "total": 60,
+          "exact": 35,
+          "fieldAccuracy": 0.5,
+          "invented": 0,
+          "omissionRate": 0.5067,
+          "clarifyPrecision": 0.4565,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 14,
+          "correctAccepted": 14,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 54,
+          "fieldAccuracy": 0.8722,
+          "invented": 0,
+          "omissionRate": 0.12,
+          "clarifyPrecision": 0.7778,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 33,
+          "correctAccepted": 33,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "fieldAccuracy": 0.9624,
+          "invented": 0,
+          "omissionRate": 0.04,
+          "clarifyPrecision": 0.9545,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "merged-old-test": {
+      "reportSha256": "3bf1451493da2c15f90765b5aeb2ecd63fb458e6aaa4338e8b8979fbdb774364",
+      "source": {
+        "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+        "predictionsSha256": "c6e53d573bdfcea8157319a44fe27f7dd03f63f08c6c32b5045225b46e88d324",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 500,
+          "exact": 420,
+          "fieldAccuracy": 0.9671,
+          "invented": 82,
+          "omissionRate": 0.0203,
+          "clarifyPrecision": 0.9556,
+          "clarifyRecall": 0.5931,
+          "schemaValidRate": 0.91
+        },
+        "guardV1": {
+          "total": 500,
+          "exact": 382,
+          "fieldAccuracy": 0.6103,
+          "invented": 0,
+          "omissionRate": 0.3906,
+          "clarifyPrecision": 0.5513,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 237,
+          "correctAccepted": 237,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 500,
+          "exact": 382,
+          "fieldAccuracy": 0.6103,
+          "invented": 0,
+          "omissionRate": 0.3906,
+          "clarifyPrecision": 0.5513,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 237,
+          "correctAccepted": 237,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 500,
+          "exact": 403,
+          "fieldAccuracy": 0.6571,
+          "invented": 0,
+          "omissionRate": 0.3565,
+          "clarifyPrecision": 0.5992,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "old-new-prompt-challenge": {
+      "reportSha256": "31157c9b71dc7a9ccee553495ddd571ee288659a78160ea6849c31c6b2a6c6f1",
+      "source": {
+        "goldSha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictionsSha256": "5578518aa196fa43745ac07cccbe457ac9532252bc219bb55e656f90ef729861",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 240,
+          "exact": 75,
+          "fieldAccuracy": 0.6522,
+          "invented": 75,
+          "omissionRate": 0.3227,
+          "clarifyPrecision": null,
+          "clarifyRecall": 0,
+          "schemaValidRate": 0.4083
+        },
+        "guardV1": {
+          "total": 240,
+          "exact": 195,
+          "fieldAccuracy": 0.646,
+          "invented": 0,
+          "omissionRate": 0.3301,
+          "clarifyPrecision": 0.7273,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 75,
+          "correctAccepted": 75,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 195,
+          "fieldAccuracy": 0.646,
+          "invented": 0,
+          "omissionRate": 0.3301,
+          "clarifyPrecision": 0.7273,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 75,
+          "correctAccepted": 75,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "fieldAccuracy": 1,
+          "invented": 0,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "old-new-prompt-dev-eval": {
+      "reportSha256": "3c029a50f9e97b7b1d09a23c794d52055df87a775dffb03e03c4d7246a800d6d",
+      "source": {
+        "goldSha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+        "predictionsSha256": "e66c83de267c77b1f45c00c1219379b2ed020dde9d74140ca657762d9857cce1",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 740,
+          "exact": 483,
+          "fieldAccuracy": 0.9759,
+          "invented": 232,
+          "omissionRate": 0.0117,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 0.1364,
+          "schemaValidRate": 0.7459
+        },
+        "guardV1": {
+          "total": 740,
+          "exact": 708,
+          "fieldAccuracy": 0.9481,
+          "invented": 0,
+          "omissionRate": 0.0386,
+          "clarifyPrecision": 0.8919,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 444,
+          "correctAccepted": 444,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 708,
+          "fieldAccuracy": 0.9481,
+          "invented": 0,
+          "omissionRate": 0.0386,
+          "clarifyPrecision": 0.8919,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 444,
+          "correctAccepted": 444,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 738,
+          "fieldAccuracy": 0.9984,
+          "invented": 0,
+          "omissionRate": 0.0009,
+          "clarifyPrecision": 0.9925,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 474,
+          "correctAccepted": 474,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "old-new-prompt-handwritten": {
+      "reportSha256": "b1ea1525ff1fbf0d0f8dd9efd2735c1292fdbf6c19782000bf296f401898d6a2",
+      "source": {
+        "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+        "predictionsSha256": "345c7a665295b134ae3b69ada83d8d788259ac96f4357eed9a2cb7d4ea8e8aa7",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 60,
+          "exact": 32,
+          "fieldAccuracy": 0.8684,
+          "invented": 18,
+          "omissionRate": 0.0933,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 0.0952,
+          "schemaValidRate": 0.6
+        },
+        "guardV1": {
+          "total": 60,
+          "exact": 34,
+          "fieldAccuracy": 0.4774,
+          "invented": 0,
+          "omissionRate": 0.5133,
+          "clarifyPrecision": 0.4468,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 13,
+          "correctAccepted": 13,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 50,
+          "fieldAccuracy": 0.8233,
+          "invented": 0,
+          "omissionRate": 0.14,
+          "clarifyPrecision": 0.6774,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 29,
+          "correctAccepted": 29,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "fieldAccuracy": 0.9624,
+          "invented": 0,
+          "omissionRate": 0.04,
+          "clarifyPrecision": 0.9545,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "old-new-prompt-old-test": {
+      "reportSha256": "f5a9776e3b27a57c7dda8198c7d16baff52c5d8b5f42e6f53ffa4104a7fdefb3",
+      "source": {
+        "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+        "predictionsSha256": "56843a204034419d03524697b1b0c06a8e9a50051876c3cf87e3c8367c2bf76a",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 500,
+          "exact": 296,
+          "fieldAccuracy": 0.8093,
+          "invented": 164,
+          "omissionRate": 0.1868,
+          "clarifyPrecision": 0.8095,
+          "clarifyRecall": 0.1172,
+          "schemaValidRate": 0.726
+        },
+        "guardV1": {
+          "total": 500,
+          "exact": 347,
+          "fieldAccuracy": 0.4937,
+          "invented": 0,
+          "omissionRate": 0.5187,
+          "clarifyPrecision": 0.4866,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 202,
+          "correctAccepted": 202,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 500,
+          "exact": 347,
+          "fieldAccuracy": 0.4937,
+          "invented": 0,
+          "omissionRate": 0.5187,
+          "clarifyPrecision": 0.4866,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 202,
+          "correctAccepted": 202,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 500,
+          "exact": 403,
+          "fieldAccuracy": 0.6571,
+          "invented": 0,
+          "omissionRate": 0.3565,
+          "clarifyPrecision": 0.5992,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "quant-challenge": {
+      "reportSha256": "7d34116bd88e63b289147070f68ff04c94b695c0f9723bf50967e8e0ae1de70d",
+      "source": {
+        "goldSha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictionsSha256": "eac746a2e064acd1252285e27ce57cb95a7d10d91b96b18760457a943ba522ac",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 240,
+          "exact": 213,
+          "fieldAccuracy": 0.9926,
+          "invented": 50,
+          "omissionRate": 0.0073,
+          "clarifyPrecision": 0.9901,
+          "clarifyRecall": 0.8333,
+          "schemaValidRate": 0.9458
+        },
+        "guardV1": {
+          "total": 240,
+          "exact": 233,
+          "fieldAccuracy": 0.948,
+          "invented": 0,
+          "omissionRate": 0.0513,
+          "clarifyPrecision": 0.9449,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 113,
+          "correctAccepted": 113,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 233,
+          "fieldAccuracy": 0.948,
+          "invented": 0,
+          "omissionRate": 0.0513,
+          "clarifyPrecision": 0.9449,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 113,
+          "correctAccepted": 113,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "fieldAccuracy": 1,
+          "invented": 0,
+          "omissionRate": 0,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "quant-dev-eval": {
+      "reportSha256": "de3569063bbb1bfcbdaee6a18faa2b46d6433bc76c8669e8de87c6ac0263acb4",
+      "source": {
+        "goldSha256": "f61660abb13ef7c84e715330ddb195cd691f254803df81b2aa8004b4a0847ecd",
+        "predictionsSha256": "23374357bf9c3e2e5421a5c932b71b7002841e75578946128dc5ae053e84a60a",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9981,
+          "invented": 3,
+          "omissionRate": 0.0013,
+          "clarifyPrecision": 0.9962,
+          "clarifyRecall": 0.9962,
+          "schemaValidRate": 1
+        },
+        "guardV1": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 737,
+          "fieldAccuracy": 0.9968,
+          "invented": 0,
+          "omissionRate": 0.0022,
+          "clarifyPrecision": 0.9888,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 473,
+          "correctAccepted": 473,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 738,
+          "fieldAccuracy": 0.9984,
+          "invented": 0,
+          "omissionRate": 0.0009,
+          "clarifyPrecision": 0.9925,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 476,
+          "accepted": 474,
+          "correctAccepted": 474,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "quant-handwritten": {
+      "reportSha256": "fdbb9b0c825ce053cf293b0cdbfbefd276cc7ebcaa3bd5bde775689b89f49ba3",
+      "source": {
+        "goldSha256": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+        "predictionsSha256": "4644196feac5af18be4880d2a737df669e9a2f3be9a0349d18c844dc395245a9",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 60,
+          "exact": 51,
+          "fieldAccuracy": 0.9098,
+          "invented": 12,
+          "omissionRate": 0.08,
+          "clarifyPrecision": 0.8947,
+          "clarifyRecall": 0.8095,
+          "schemaValidRate": 0.9
+        },
+        "guardV1": {
+          "total": 60,
+          "exact": 35,
+          "fieldAccuracy": 0.5,
+          "invented": 0,
+          "omissionRate": 0.5067,
+          "clarifyPrecision": 0.4565,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 14,
+          "correctAccepted": 14,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 54,
+          "fieldAccuracy": 0.8722,
+          "invented": 0,
+          "omissionRate": 0.12,
+          "clarifyPrecision": 0.7778,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 33,
+          "correctAccepted": 33,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "fieldAccuracy": 0.9624,
+          "invented": 0,
+          "omissionRate": 0.04,
+          "clarifyPrecision": 0.9545,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    },
+    "quant-old-test": {
+      "reportSha256": "d2b910b3eb3c9683d8a3f061fda08cc326024c1824be01658994edf3b1ed0348",
+      "source": {
+        "goldSha256": "f0d53e4d5969642865a4e56559dfd3da6fcf545d82da130203cb4cb8f7e4e743",
+        "predictionsSha256": "f0646a7a54e96a5494370d78e1173fd4d1254b9eeb57e103f1817eeca19388e6",
+        "guardV1Sha256": "309ee2c965ddece3caa9ba0ffe97674876481b3a6c89fb3fc86ccba2681b1f90",
+        "guardV2Sha256": "5ff53f8f7eba0474233ade4d4ad1c96b47c7168c9382f1ed872e07fa6c8bc52b"
+      },
+      "metrics": {
+        "raw": {
+          "total": 500,
+          "exact": 421,
+          "fieldAccuracy": 0.9651,
+          "invented": 77,
+          "omissionRate": 0.0219,
+          "clarifyPrecision": 0.9457,
+          "clarifyRecall": 0.6,
+          "schemaValidRate": 0.91
+        },
+        "guardV1": {
+          "total": 500,
+          "exact": 383,
+          "fieldAccuracy": 0.6123,
+          "invented": 0,
+          "omissionRate": 0.3901,
+          "clarifyPrecision": 0.5534,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 238,
+          "correctAccepted": 238,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "guardV2": {
+          "total": 500,
+          "exact": 383,
+          "fieldAccuracy": 0.6123,
+          "invented": 0,
+          "omissionRate": 0.3901,
+          "clarifyPrecision": 0.5534,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 238,
+          "correctAccepted": 238,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        },
+        "sourceOnlyV2": {
+          "total": 500,
+          "exact": 403,
+          "fieldAccuracy": 0.6571,
+          "invented": 0,
+          "omissionRate": 0.3565,
+          "clarifyPrecision": 0.5992,
+          "clarifyRecall": 1,
+          "schemaValidRate": null,
+          "actionable": 355,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0,
+          "unsafeIds": []
+        }
+      }
+    }
+  }
+}
