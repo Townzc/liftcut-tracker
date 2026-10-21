@@ -16,10 +16,21 @@ export function numericRoleEvidence(input: string, exerciseNames: readonly strin
     if (normalized) source = source.replace(new RegExp(escape(normalized), "g"), " ");
   }
   source = source.replace(/(最后|每|这|那|上|下|同)一(?=组|次)/g, "$1")
-    .replace(/一共/g, "共");
+    .replace(/一共/g, "共")
+    .replace(/\b(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+set\b/g, "set $1");
   source = replaceSpokenNumbers(source).replace(/公斤|千克|kilograms?|kilos?|kgs?/g, "kg")
     .replace(/磅|pounds?|lbs?/g, "lb");
   const evidence: NumericEvidence[] = [];
+  // Explicit multiplication distinguishes a count/reps pair from a load/reps
+  // pair; never label a bare load as a set number just because it is numeric.
+  for (const m of source.matchAll(new RegExp(`${n}\\s*(?:(kg|lb)\\s*)?[x×*]\\s*${n}`, "g"))) {
+    const start = m.index!, right = start + m[0].lastIndexOf(m[3]);
+    const polarity = /(?:不是|并非|not)\s*$/.test(source.slice(0, start)) ? "retracted" as const : "stated" as const;
+    evidence.push({ role: m[2] ? "weight" : "count", value: Number(m[1]), ...(m[2] ? { unit: m[2] as "kg" | "lb" } : {}),
+      start, end: start + m[0].indexOf(m[2] ?? "") + (m[2]?.length ?? m[1].length), text: "", polarity },
+      { role: "reps", value: Number(m[3]), start: right, end: right + m[3].length, text: m[3], polarity });
+    evidence[evidence.length - 2].text = source.slice(start, evidence[evidence.length - 2].end);
+  }
   const patterns: [NumericRole, string][] = [["weight", `${n}\\s*(kg|lb)`],
     ["rpe", `rpe\\s*(?:大概|约|应该是|是|为|[:=])?\\s*${n}`],
     ["ordinal", `(?:第\\s*${n}\\s*组|(?:set\\s+${n})|${n}(?:st|nd|rd|th)\\s+set)`],

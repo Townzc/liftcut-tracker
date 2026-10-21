@@ -41,6 +41,11 @@ test("evidence preserves normalized spans and separates repeated numbers", () =>
   for (const e of result.evidence) assert.equal(result.normalizedSource.slice(e.start, e.end), e.text);
   assert.deepEqual(labelRoleProblems("25 lb, 9 reps, RPE 8", { intent: "record", exercise: null,
     sets: [{ weight: 25, unit: "lb", reps: 9, rpe: 8 }] }), []);
+  for (const text of ["25 lb × 9", "25 lb 2 × 9"]) assert.deepEqual(labelRoleProblems(text, { intent: "record", exercise: null,
+    sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }), []);
+  assert.deepEqual(labelRoleProblems("correct fifth set to 4 reps", { intent: "correct", exercise: null, target: 5, changes: { reps: 4 } }), []);
+  assert.ok(labelRoleProblems("不是25lb×9", { intent: "record", exercise: null,
+    sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }).length);
   // A necessary numeric check deliberately does not claim semantic validity.
   assert.deepEqual(labelRoleProblems("计划 25 lb 9 reps", { intent: "record", exercise: null,
     sets: [{ weight: 25, unit: "lb", reps: 9, rpe: null }] }), []);
@@ -54,6 +59,7 @@ test("correction targets immutable identity and preserves omitted values; previe
   assert.equal(patch.id, target.id); assert.equal(patch.revision, 2);
   assert.equal(patch.reps, 4); assert.equal(patch.weightKg, 37.5); assert.equal(patch.rpe, 6);
   assert.equal(preview.references[0].recordId, target.id);
+  assert.equal(patch.sourceRef, `m4-review:${target.id}:2`);
   assert.throws(() => previewSetCorrection(s, { exerciseId: "row", target: 5 }, { reps: 4 }), /TARGET_NOT_CONFIRMED/);
   assert.throws(() => previewSetCorrection(s, { exerciseId: "row", target: 1 }, { reps: 4, extra: 8 } as never));
 });
@@ -64,6 +70,7 @@ test("inherit explicit load from the named exercise, never global-last or plan; 
   assert.equal(p.requests[0].rpe, null); assert.equal(p.requests[0].setIndex, 3);
   assert.equal(p.references[0].recordId, s.sets[1].id);
   assert.equal(p.requests[0].weightSource, "user_confirmed_prefill");
+  assert.equal(p.requests[0].sourceRef, `m4-review:${p.requests[0].id}:1`);
   s.sets[1].weightKg = null;
   assert.throws(() => previewInheritedWeight(s, "row", randomUUID(), 5), /SOURCE_WEIGHT_UNKNOWN/);
   assert.throws(() => resolveConfirmedSet(s, { exerciseId: "absent", target: "last" }), /EXERCISE_NOT_FOUND/);

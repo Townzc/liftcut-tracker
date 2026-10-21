@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-21 — Pending-workout context and v3 experiment freeze
+
+- **Why / change**: a context-free null cannot express a load reference, and a pending RPE correction cannot target a nonexistent saved row. Added a separate pending-preview contract; no model targets or original training data changed.
+- **Actual**: four new contextual tests pass; root 6 JS + 210 TS tests, type/lint checks pass. Real v2/v3 file assembly verifies 1,040 unique eval IDs, all hashes/counts, and no maintainer originals in the unchanged 6,400-row training file.
+- **Experiment**: one original-base candidate, unchanged optimizer/short prompt/greedy/Q8 configuration, at most 4,160 predictions and three work hours plus backup/shutdown reserve. Four Linux runner regressions pass; Windows explicitly skips the Linux entry. Orchestration is mocked, not GPU execution.
+- **Limits / next**: 20 observed utterances remain private regressions. Original raw/quantization/source-v1 thresholds remain; source-v2 comparison is additional. No automatic activation, no claim of added model value or complete natural conversation. Exact-commit CI and maintainer opening the GPU trigger the next run. [Protocol and runbook](../../research/m4-parser/train/GPU_V3.md).
+- **Learning**: distinguish an edited pending preview from a corrected database row; explain why equal JSON structure, quantization agreement and full workflow correctness are different gates.
+
 ## 2026-10-21 — M4 numeric-role and confirmed-context boundary
 
 - **Change / reason**: numbers now have separate weight/reps/RPE/ordinal/count evidence; immutable record references and an atomic internal approval port prevent draft/global-last/stale-source binding. Frozen source guards and training data unchanged.

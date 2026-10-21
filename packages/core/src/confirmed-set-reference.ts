@@ -56,7 +56,8 @@ function request(s: SetLog): StoredSet {
 }
 function draft(session: Session, s: SetLog, kind: ReviewedSetDraft["kind"], req: StoredSet): ReviewedSetDraft {
   return { version: "confirmed-context-v1", sessionId: session.id, owner: session.userId, basis: basis(session),
-    references: [ref(s)], kind, requests: [req] };
+    references: [ref(s)], kind, requests: [{ ...req,
+      sourceRef: kind === "void" ? req.sourceRef : `m4-review:${req.id}:${req.revision}` }] };
 }
 
 /** No write and no model values are inferred. Caller must first verify source
