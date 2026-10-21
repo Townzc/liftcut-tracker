@@ -1,0 +1,407 @@
+{
+  "run": {
+    "state": "complete",
+    "startedAt": 1792614083.693247,
+    "items": 92,
+    "modelCalls": 184,
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "modelSha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+    "inputSha256": "06e93678576122c37d5fcc5037738a91dcaff7bb9d0cb7ce3bb8315cce711a26",
+    "tokenIdsSha256": "f2f33935a5ab00867b6b7a71e30af67118eae9696fa0f825dc5256cb61a0d690",
+    "protocolSha256": "9c1d9cf39de356476c35000efd5aca875a387727866310ad66d0f726000b26de",
+    "sources": {
+      "closed_decode.py": "6effc065973bafa8d05a31c60930c15c2f50d290e267355b78574a64213b27da",
+      "check_grammar.py": "07665ad057f0ca89d26c2fcc3b64ae344a8f9507c1e884e3f4121476506d6476",
+      "run_closed_decode.py": "ffd44e1c4921ec8f572ab9f55e0309a820365882d70b12c64515ccc8bc0d2aca"
+    },
+    "maxInputTokens": 156,
+    "contextTokens": 1024,
+    "maxNewTokens": 256,
+    "threads": 4,
+    "cpuOnly": true,
+    "boundaries": {
+      "validAccepted": 11,
+      "invalidRejected": 18,
+      "semanticCounterexampleAccepted": 1,
+      "method": "native grammar token mask + EOS; no model inference for boundary checks"
+    },
+    "finishedAt": 1792614325.7301736
+  },
+  "metrics": {
+    "mode": "post-hoc-fixed-local-CPU-decoder-comparison",
+    "newModelCalls": 184,
+    "metrics": {
+      "free": {
+        "challenge": {
+          "total": 32,
+          "exact": 28,
+          "exactRate": 0.875,
+          "intentAccuracy": 0.9375,
+          "fieldAccuracy": 1,
+          "invented": 6,
+          "omissionRate": 0,
+          "correctionLocalization": null,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 0.875,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.9375,
+          "latencyMs": {
+            "p50": 1115.7,
+            "p95": 1962.3,
+            "max": 2245
+          }
+        },
+        "handwritten": {
+          "total": 60,
+          "exact": 50,
+          "exactRate": 0.8333,
+          "intentAccuracy": 0.8333,
+          "fieldAccuracy": 0.891,
+          "invented": 12,
+          "omissionRate": 0.1,
+          "correctionLocalization": 0.8333,
+          "clarifyPrecision": 0.8947,
+          "clarifyRecall": 0.8095,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.8833,
+          "latencyMs": {
+            "p50": 755.9,
+            "p95": 2263.1,
+            "max": 3062.8
+          }
+        },
+        "all": {
+          "total": 92,
+          "exact": 78,
+          "exactRate": 0.8478,
+          "intentAccuracy": 0.8696,
+          "fieldAccuracy": 0.9233,
+          "invented": 18,
+          "omissionRate": 0.0721,
+          "correctionLocalization": 0.8333,
+          "clarifyPrecision": 0.9394,
+          "clarifyRecall": 0.8378,
+          "jsonValidRate": 1,
+          "schemaValidRate": 0.9022,
+          "latencyMs": {
+            "p50": 799.6,
+            "p95": 2173.2,
+            "max": 3062.8
+          }
+        }
+      },
+      "G1": {
+        "challenge": {
+          "total": 32,
+          "exact": 30,
+          "exactRate": 0.9375,
+          "intentAccuracy": 1,
+          "fieldAccuracy": 1,
+          "invented": 6,
+          "omissionRate": 0,
+          "correctionLocalization": null,
+          "clarifyPrecision": 1,
+          "clarifyRecall": 1,
+          "jsonValidRate": 1,
+          "schemaValidRate": 1,
+          "latencyMs": {
+            "p50": 1568.1,
+            "p95": 2912.3,
+            "max": 3330.3
+          }
+        },
+        "handwritten": {
+          "total": 60,
+          "exact": 52,
+          "exactRate": 0.8667,
+          "intentAccuracy": 0.8667,
+          "fieldAccuracy": 0.9098,
+          "invented": 16,
+          "omissionRate": 0.08,
+          "correctionLocalization": 1,
+          "clarifyPrecision": 0.7826,
+          "clarifyRecall": 0.8571,
+          "jsonValidRate": 1,
+          "schemaValidRate": 1,
+          "latencyMs": {
+            "p50": 932.4,
+            "p95": 3202.2,
+            "max": 4435.6
+          }
+        },
+        "all": {
+          "total": 92,
+          "exact": 82,
+          "exactRate": 0.8913,
+          "intentAccuracy": 0.913,
+          "fieldAccuracy": 0.9365,
+          "invented": 22,
+          "omissionRate": 0.0577,
+          "correctionLocalization": 1,
+          "clarifyPrecision": 0.8718,
+          "clarifyRecall": 0.9189,
+          "jsonValidRate": 1,
+          "schemaValidRate": 1,
+          "latencyMs": {
+            "p50": 964.1,
+            "p95": 3069.4,
+            "max": 4435.6
+          }
+        }
+      }
+    },
+    "fixes": [
+      "v2-test-98-negative",
+      "v2-test-66-negative",
+      "hand-028",
+      "hand-039"
+    ],
+    "regressions": [],
+    "truncation": {
+      "free": 0,
+      "G1": 0
+    },
+    "repeatedFreeArmChangedIds": [],
+    "source": {
+      "goldSha256": "f604e8c4d91f062a67d1ec2a4fbfb76d6870129d3618c3b085faa29687f8af0c",
+      "freeSha256": "48d5eeaf55c2ac2e373da09e2ef96e850703e6c00ef2293e2dfb0915741a31d3",
+      "G1Sha256": "0d8b47f4d63cef97c7c8d39cb002a2d9b932a85cf83c4d7d2facba90b2de2322"
+    }
+  },
+  "guards": {
+    "free": {
+      "raw": {
+        "total": 92,
+        "exact": 78,
+        "exactRate": 0.8478,
+        "intentAccuracy": 0.8696,
+        "fieldAccuracy": 0.9233,
+        "invented": 18,
+        "omissionRate": 0.0721,
+        "correctionLocalization": 0.8333,
+        "clarifyPrecision": 0.9394,
+        "clarifyRecall": 0.8378,
+        "jsonValidRate": 1,
+        "schemaValidRate": 0.9022,
+        "latencyMs": null
+      },
+      "guardV1": {
+        "total": 92,
+        "exact": 65,
+        "exactRate": 0.7065,
+        "intentAccuracy": 0.7065,
+        "fieldAccuracy": 0.6164,
+        "invented": 0,
+        "omissionRate": 0.3942,
+        "correctionLocalization": 0,
+        "clarifyPrecision": 0.5781,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 28,
+        "correctAccepted": 28,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      },
+      "guardV2": {
+        "total": 92,
+        "exact": 83,
+        "exactRate": 0.9022,
+        "intentAccuracy": 0.9022,
+        "fieldAccuracy": 0.8651,
+        "invented": 0,
+        "omissionRate": 0.1298,
+        "correctionLocalization": 0.8333,
+        "clarifyPrecision": 0.8043,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 46,
+        "correctAccepted": 46,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      },
+      "sourceOnlyV2": {
+        "total": 92,
+        "exact": 91,
+        "exactRate": 0.9891,
+        "intentAccuracy": 0.9891,
+        "fieldAccuracy": 0.9735,
+        "invented": 0,
+        "omissionRate": 0.0288,
+        "correctionLocalization": 1,
+        "clarifyPrecision": 0.9737,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 54,
+        "correctAccepted": 54,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      }
+    },
+    "G1": {
+      "raw": {
+        "total": 92,
+        "exact": 82,
+        "exactRate": 0.8913,
+        "intentAccuracy": 0.913,
+        "fieldAccuracy": 0.9365,
+        "invented": 22,
+        "omissionRate": 0.0577,
+        "correctionLocalization": 1,
+        "clarifyPrecision": 0.8718,
+        "clarifyRecall": 0.9189,
+        "jsonValidRate": 1,
+        "schemaValidRate": 1,
+        "latencyMs": null
+      },
+      "guardV1": {
+        "total": 92,
+        "exact": 65,
+        "exactRate": 0.7065,
+        "intentAccuracy": 0.7065,
+        "fieldAccuracy": 0.6164,
+        "invented": 0,
+        "omissionRate": 0.3942,
+        "correctionLocalization": 0,
+        "clarifyPrecision": 0.5781,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 28,
+        "correctAccepted": 28,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      },
+      "guardV2": {
+        "total": 92,
+        "exact": 84,
+        "exactRate": 0.913,
+        "intentAccuracy": 0.913,
+        "fieldAccuracy": 0.8783,
+        "invented": 0,
+        "omissionRate": 0.1154,
+        "correctionLocalization": 1,
+        "clarifyPrecision": 0.8222,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 47,
+        "correctAccepted": 47,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      },
+      "sourceOnlyV2": {
+        "total": 92,
+        "exact": 91,
+        "exactRate": 0.9891,
+        "intentAccuracy": 0.9891,
+        "fieldAccuracy": 0.9735,
+        "invented": 0,
+        "omissionRate": 0.0288,
+        "correctionLocalization": 1,
+        "clarifyPrecision": 0.9737,
+        "clarifyRecall": 1,
+        "jsonValidRate": null,
+        "schemaValidRate": null,
+        "latencyMs": null,
+        "actionable": 55,
+        "accepted": 54,
+        "correctAccepted": 54,
+        "unsafeAccepted": 0,
+        "unsafeIds": []
+      }
+    }
+  },
+  "publicCliSmoke": {
+    "free": {
+      "mode": "free",
+      "state": "complete",
+      "modelSha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+      "inputSha256": "df331d2be771ec8633f3a310cd96a52252a5f48c28bb617203d2107575a0444f",
+      "items": 2,
+      "tokenIdsSha256": "1b67b20b61d83be07889a89d5d8227351152530caf45b3fbcf54a40856ccc24a",
+      "maxInputTokens": 132,
+      "contextTokens": 1024,
+      "maxNewTokens": 256,
+      "threads": 4,
+      "cpuOnly": true,
+      "modelCalls": 2,
+      "sources": {
+        "closed_predict.py": "c5e03440937d11a5643c6b12af47f2808f7b6891352827ef0148743678a69055",
+        "closed_decode.py": "6effc065973bafa8d05a31c60930c15c2f50d290e267355b78574a64213b27da",
+        "check_grammar.py": "07665ad057f0ca89d26c2fcc3b64ae344a8f9507c1e884e3f4121476506d6476"
+      },
+      "boundaries": {
+        "validAccepted": 11,
+        "invalidRejected": 18,
+        "semanticCounterexampleAccepted": 1,
+        "method": "native grammar token mask + EOS; no model inference for boundary checks"
+      },
+      "seconds": 8.15
+    },
+    "G1": {
+      "mode": "G1",
+      "state": "complete",
+      "modelSha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+      "inputSha256": "df331d2be771ec8633f3a310cd96a52252a5f48c28bb617203d2107575a0444f",
+      "items": 2,
+      "tokenIdsSha256": "1b67b20b61d83be07889a89d5d8227351152530caf45b3fbcf54a40856ccc24a",
+      "maxInputTokens": 132,
+      "contextTokens": 1024,
+      "maxNewTokens": 256,
+      "threads": 4,
+      "cpuOnly": true,
+      "modelCalls": 2,
+      "sources": {
+        "closed_predict.py": "c5e03440937d11a5643c6b12af47f2808f7b6891352827ef0148743678a69055",
+        "closed_decode.py": "6effc065973bafa8d05a31c60930c15c2f50d290e267355b78574a64213b27da",
+        "check_grammar.py": "07665ad057f0ca89d26c2fcc3b64ae344a8f9507c1e884e3f4121476506d6476"
+      },
+      "boundaries": {
+        "validAccepted": 11,
+        "invalidRejected": 18,
+        "semanticCounterexampleAccepted": 1,
+        "method": "native grammar token mask + EOS; no model inference for boundary checks"
+      },
+      "seconds": 9.79
+    }
+  },
+  "decision": "G1 fixes syntax but increases invented fields; not enabled in product or adopted as the next candidate by itself",
+  "initialAttempt": {
+    "modelCalls": 0,
+    "failure": "Counterexample fixture used escaped Unicode instead of the canonical literal names; fixed serialization before any paired inference. Grammar unchanged."
+  },
+  "totalNewCpuInferences": 188,
+  "files": {
+    "closed-analysis.json": "97af9ee04a2e873aeb4b95f873c5e4482853f919ee649601b64c231c53a76b17",
+    "closed-cli-free.jsonl": "a47b157d65f3bfb5a4b94f4121b44ac6d8cd116300be2d6bb1f0227facaba834",
+    "closed-cli-free.jsonl.audit.json": "c494eb77db8608b899fd97d01af19b9e0a6ad7598f6585d437d27def6b92e43a",
+    "closed-cli-free.log": "d6e9ab3812b36119b1e404af66d60e38427283fb030bc6c2589bf4016614b766",
+    "closed-cli-G1.jsonl": "3d6589498c58527f8284de2258562ce7408fb83b744ab48fdc853c666b882958",
+    "closed-cli-G1.jsonl.audit.json": "811c2dc232378d02be004f6280e1f4cd4aad5eeaf999b89c6f88c8e1a74405a1",
+    "closed-cli-G1.log": "d6e9ab3812b36119b1e404af66d60e38427283fb030bc6c2589bf4016614b766",
+    "closed-cli-input.jsonl": "df331d2be771ec8633f3a310cd96a52252a5f48c28bb617203d2107575a0444f",
+    "closed-decode-protocol.json": "9c1d9cf39de356476c35000efd5aca875a387727866310ad66d0f726000b26de",
+    "closed-free-guards.json": "f7892a7d8c6b6938d341990a6705212548aec4c5cf0ad8fba7cc2da1e5047d5f",
+    "closed-G1-guards.json": "30a4f382a361c492a3e480450bf977660814c50b315e3248256de77062d77f38",
+    "closed-run.json": "f74d5e7abdcfc88e064f1e0758fd944c266a96a07b8c28f2fb22a4ddcfbc0a1c",
+    "closed-run.log": "a69e47d3cc250c9d38c1e3c07c1e037357db8d968c6579752e148fe768b3a88a",
+    "closed2-free.jsonl": "48d5eeaf55c2ac2e373da09e2ef96e850703e6c00ef2293e2dfb0915741a31d3",
+    "closed2-G1.jsonl": "0d8b47f4d63cef97c7c8d39cb002a2d9b932a85cf83c4d7d2facba90b2de2322",
+    "closed2-run.json": "e70912bd7ed82e6460af311f699bbdc8160f62d54887a5e028ccb9c6008b3d39",
+    "closed2-run.log": "ff37238f72a523355a147cfab25f024897119c77bf3f8e9e7f8b22f9646b0e37",
+    "closed_decode.py": "6effc065973bafa8d05a31c60930c15c2f50d290e267355b78574a64213b27da"
+  }
+}

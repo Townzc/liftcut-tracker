@@ -1,0 +1,21 @@
+{
+  "status": "fixed-before-inference",
+  "mode": "post-hoc-local-cpu-feasibility",
+  "candidate": "G1-canonical-label-grammar",
+  "model": "prior-v2-Q8",
+  "modelSha256": "8bf93ecba63db99c8853899b8a344200951008fbd0584af530509e0871f3d904",
+  "inputs": "Same fixed 32 paired challenge + 60 handwritten diagnostic inputs used in prior prompt comparison; every input already observed",
+  "arms": ["v2-short-prompt-unconstrained", "v2-short-prompt-G1-grammar"],
+  "threads": 4,
+  "contextTokens": 1024,
+  "maxNewTokens": 256,
+  "temperature": 0,
+  "repetitionPenalty": 1,
+  "resetBetweenItems": true,
+  "maximumWallSeconds": 1800,
+  "retriesAfterQualityFailure": 0,
+  "purpose": "Validate closed schema enforcement and measure paired semantic regressions; no prompt change, retraining, source-output repair or new acceptance claim",
+  "passCriteria": {"grammarBoundaryTests": "all", "constrainedSchemaValid": "all non-truncated outputs", "truncation": 0},
+  "report": ["raw schema/exact/invented", "paired fixes and regressions", "source-v2 guarded and independent rule baseline", "CPU elapsed and timing with no mobile latency claim"],
+  "next": "If structural failures remain, fix engineering and record failure; no quality-driven sweep. Neither arm becomes the v3 training candidate automatically."
+}
