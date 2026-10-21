@@ -1,0 +1,35 @@
+{
+  "mode": "CPU-tokenizer-only-v3-preparation",
+  "newModelCalls": 0,
+  "tokenizerFiles": {
+    "chat_template.jinja": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer_config.json": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95",
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+  },
+  "files": {
+    "train": {
+      "sha256": "60f8ab0c5e1cbc4cddf0b471bb152e0c3d2c06f0007d2ccf8d6a2037f95f7242",
+      "rows": 6400,
+      "maxTokens": 296,
+      "maxPromptTokens": 173,
+      "maxTargetTokens": 134,
+      "truncated": 0
+    },
+    "dev": {
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "rows": 740,
+      "maxTokens": 295,
+      "maxPromptTokens": 179,
+      "maxTargetTokens": 137,
+      "truncated": 0
+    },
+    "dev-eval": {
+      "sha256": "a4145ee3d0bca4ee49f69ab607ca50ab7ccadc52080e831c9a074452623c9b99",
+      "rows": 740,
+      "maxTokens": 179,
+      "maxPromptTokens": 179,
+      "maxTargetTokens": 0,
+      "truncated": 0
+    }
+  }
+}
