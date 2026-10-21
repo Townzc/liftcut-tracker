@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-21 — Apply numeric roles to the live cloud workout tool
+
+- **Observation / change**: the experimental context checks did not protect the existing cloud `prepare_workout` route. Literal quotes were allowed across previous user turns, while correction indices and repeated reps were model-supplied. Added a current-report source gate before creating a signed preview; unsupported references require clarification.
+- **Actual**: 17 targeted unit tests and 4 real PostgreSQL results passed, plus 6 JS + 217 TS root tests and type/lint checks. The SDK consumes scripted local HTTP responses; confirmation patches the original row once and preserves unmodified load/RPE. The first DB attempt failed because local WSL forwarding had stopped; after restarting the local service, the rerun passed and teardown now closes its mock server even on DB failure.
+- **Limits**: no original private utterances or rewrites were added to training or these synthetic tests. This is application boundary evidence, not model accuracy, continuous natural acceptance or phone performance. The separately frozen v3 experiment remains on its reviewed commit and original gates; these changes do not alter that run.
+- **Next / trigger**: exact-head all-green CI before deployment; finish and back up the single GPU candidate, verify platform OFF, then assess original gates and the private conversational regressions without claiming native readiness.
+- **Learning**: explain why a literal number is insufficient without its role, why an old user quote is not a new actual, and why a scripted tool result proves validation behavior rather than model comprehension.
+
 ## 2026-10-21 — Pending-workout context and v3 experiment freeze
 
 - **Why / change**: a context-free null cannot express a load reference, and a pending RPE correction cannot target a nonexistent saved row. Added a separate pending-preview contract; no model targets or original training data changed.

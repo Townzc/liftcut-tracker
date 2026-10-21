@@ -4,6 +4,7 @@ import { parseWorkoutLog, type LogDraft } from "@liftcut/core/workout-log-parser
 import { workoutContext } from "@liftcut/core/workout-context";
 import type { Session } from "@liftcut/core/today";
 import { recordPeriod } from "./record-period";
+import { workoutSourceIssue } from "./workout-source";
 
 const quote=z.string().trim().min(1).max(120), optionalQuote=quote.nullable();
 export const personalExtractionSchema=z.object({
@@ -123,13 +124,16 @@ export function groundPreference(input:unknown,texts:string[],anchor:string):Per
   if(!normalize(current).includes(normalize(p.valueQuote))||/[?？]|不要记|别记|假如|假设|如果|\b(?:if|hypothetical)\b/i.test(current))fail("PREFERENCE_NEEDS_CLARIFICATION");
   return personalEntrySchema.parse({kind:"preference",date:anchor,key:p.key,value:p.valueQuote});
 }
-export function groundWorkout(input:unknown,texts:string[],session:Session):{normalizedText:string;draft:LogDraft;exerciseId:string} {
-  const p=workoutExtractionSchema.parse(input);assertReport(texts.at(-1)??"");
+export function groundWorkout(input:unknown,texts:string[],session:Session,selectedExerciseId?:string):{normalizedText:string;draft:LogDraft;exerciseId:string} {
+  const p=workoutExtractionSchema.parse(input),current=texts.at(-1)??"";assertReport(current);
   const exercise=session.prescription.exercises.find(e=>e.id===p.exerciseId);if(!exercise)fail("EXERCISE_NOT_FOUND");
-  const reps=p.repsQuotes.map(q=>measurement(q,texts,"reps")!.value);
+  // Current actuals cannot borrow measurements from an earlier turn. Explicit
+  // inheritance needs a confirmed-record reference, not a historical quote.
+  const reps=p.repsQuotes.map(q=>measurement(q,[current],"reps")!.value);
   if(reps.some(n=>!Number.isInteger(n)||n>100))fail("OUT_OF_RANGE");
-  const weight=measurement(p.weightQuote,texts,"weight"),rpe=measurement(p.rpeQuote,texts,"rpe");
+  const weight=measurement(p.weightQuote,[current],"weight"),rpe=measurement(p.rpeQuote,[current],"rpe");
   if(rpe&&(rpe.value<1||rpe.value>10))fail("OUT_OF_RANGE");
+  const issue=workoutSourceIssue(current,session,{...p,reps,weightKg:weight?.value??null,rpe:rpe?.value??null},selectedExerciseId);if(issue)fail(issue);
   let normalizedText:string;
   if(p.kind==="correct"){
     if(reps.length!==1 || p.correctionSet===null || weight || rpe)fail("CORRECTION_NEEDS_CLARIFICATION");

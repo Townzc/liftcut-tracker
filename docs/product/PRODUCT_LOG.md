@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-21 — Bind live workout proposals to the current report
+
+- **Why / change**: the live cloud tool could quote old chat values, turn a load into a correction index or duplicate a reps quote into extra sets. Current-turn numeric roles, explicit exercise selection, set multiplicity and confirmed correction targets now gate previews.
+- **Behavior**: uncertain, per-hand, multi-load and compound reports require clarification; corrections cannot silently become new sets. The existing signed preview, confirmation, version checks and shared write path remain.
+- **Verified**: 17 targeted unit tests, root 6 JS + 217 TS tests, type checks, full lint (two existing warnings) and production build. Four real PostgreSQL results exercise the actual AI SDK tool path with scripted HTTP responses: rejected proposals leave data intact; approved correction updates one ID once, including concurrent retries.
+- **Limits**: no real cloud-model or physical-device score; this is a necessary source check, not a complete natural-language parser. Contextual inheritance and per-hand storage still need the versioned workflow; no native activation or UI change.
+- **Next**: full CI and deployment verification; finish the separately frozen v3 GPU experiment, retain failures, verify backups and power off before any further M4 activation decision.
+
 ## 2026-10-21 — M4 pending context and fixed v3 experiment
 
 - **Changed**: versioned pending previews distinguish unknown, approximate and previous-confirmed load; draft edits preserve omitted fields and cannot become saved records. Per-hand basis is retained and blocks unsupported scalar storage; compound requests leave the atomic parser. Numeric evidence also handles multiplication and English ordinals.
