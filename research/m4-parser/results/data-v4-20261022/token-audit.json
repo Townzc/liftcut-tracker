@@ -1,0 +1,43 @@
+{
+  "mode": "CPU-tokenization-only",
+  "newModelCalls": 0,
+  "tokenizerFiles": {
+    "chat_template.jinja": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer_config.json": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95",
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+  },
+  "files": {
+    "train": {
+      "sha256": "625ff6a1ed986149410eee30840f3c4b320b7b90f6af732ec5f292075bc5e29e",
+      "rows": 6400,
+      "maxTokens": 296,
+      "truncated": 0
+    },
+    "dev": {
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "rows": 740,
+      "maxTokens": 295,
+      "truncated": 0
+    },
+    "short": {
+      "sha256": "9fcdd18b8db9fb0a8e95a05e7ce381b80525a17d1ecd1868de7a8c9a7a884e84",
+      "rows": 1040,
+      "maxPromptTokens": 179,
+      "tokenIdsSha256": "7f18ca373f567dd458f521f397ff550cac8f86aebb776bca74a76d824551ddcb",
+      "truncated": 0
+    },
+    "enum": {
+      "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+      "rows": 1040,
+      "maxPromptTokens": 231,
+      "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5",
+      "truncated": 0
+    }
+  },
+  "privateAcceptanceIsolation": {
+    "sha256": "a93883af71f65fe3be1926deb07c38890d206323df64b18b1d2f4b1c11b02f23",
+    "originals": 20,
+    "exactOrSubstringOverlap": 0,
+    "generationInputs": "No private texts, rewrites, numeric variants or outputs used as seeds."
+  }
+}

@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-22 — v4 boundary-data preparation, before GPU outcomes
+
+- **Hypothesis**: implicit unit omission and RPE-position diversity can address cue dependence; a separate legal-reason-list prompt may address invalid enums. These are unproven explanations of the frozen v3 regression.
+- **Design**: replace only 360 paired training examples (720 rows), preserving 5,680 rows/order, 740 dev and all observed evaluations. Plan archived/new weights × short/reason-list prompts, one new original-base training; D is preselected. No private original, paraphrase, numeric variant or model output is a generator input.
+- **Actual**: full 9 JS + 232 TS tests, types/build pass, lint two existing warnings. Real token audit: train/dev 296/295 maximum, short/enum input 179/231, no truncation. Two CPU optimizer steps on the saved v1 merged model exported finite updated LoRA and `use_cache=true`; this is workflow evidence, not candidate efficacy.
+- **Evidence / pending**: [data card](../../research/m4-parser/DATA_CARD_V4.md), [manifest](../../research/m4-parser/data/v4-manifest.json), [CPU metrics](../../research/m4-parser/results/data-v4-20261022/cpu-smoke.json). Full frozen runner, deadline/failure tests and exact-head CI are still needed before the GPU request.
+- **Learning checkpoint**: changing fewer rows reduces confounding but does not create an independent test; a legal label is not necessarily the correct label, and clarification coverage must be paired with useful positive-case accuracy.
+
 ## 2026-10-22 — Paired challenge regression and real continuous Agent acceptance
 
 - **Observation**: offline reconstruction of frozen failure IDs yields 171 both-correct, 42 regressed, 16 improved, 11 both-wrong. Missing-unit/RPE over-acceptance and invalid clarification enums dominate. Same unquantized exact score rules out quantization as the main loss; template/cue dependence remains an interpretation without a factor-isolating ablation. [Reproducible counts](../../research/m4-parser/results/20261022-regression-analysis/paired.json).

@@ -1,0 +1,44 @@
+{
+  "mode": "two-step-CPU-workflow-smoke-not-candidate-training",
+  "metrics": {
+    "seed": 20261019,
+    "steps": 2,
+    "train_examples": 12,
+    "dev_examples": 6,
+    "batch": 1,
+    "lr": 0.0002,
+    "rank": 16,
+    "dtype": "torch.float32",
+    "device": "cpu",
+    "dev_loss": 0.0402,
+    "log": [
+      {
+        "step": 2,
+        "loss": 0.00438
+      }
+    ],
+    "seconds": 22.5,
+    "gradientCheckpointing": true,
+    "peakCudaAllocatedBytes": null
+  },
+  "adapterFinite": true,
+  "nonzeroLoraB": true,
+  "exportedCache": true,
+  "base": "saved v1 merged model, not original pretrained base",
+  "baseSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "sftSha256": "5b865276ebe12829f902b2d7729052f4c591038dd6d3f8ce7017e2d4d2fef2c8",
+  "inputs": {
+    "train": "ac5f7c54fabbdb0857d662ac93a72cf54d9d6e05b639672c24a9bc4d554c59e6",
+    "dev": "4b2ebb8d0cf1343b83416168f4dbf181b7e1cc7b767a9a19ac97b5fe7ead4e71"
+  },
+  "exports": {
+    "adapter/adapter_model.safetensors": "b9cba87f287e90b1e7b2bfbc7d86408bfb1445c434943cd1046634d375025fbf",
+    "merged/model.safetensors": "814c20c25119f145fe85c26655d709d125c5e663fd962c5774e57461e78ff94e",
+    "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+  },
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2"
+  }
+}
