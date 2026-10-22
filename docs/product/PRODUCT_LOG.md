@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-22 · M4 v6 token preflight and recovery
+
+- Change: fail before model loading if paired targets/sentences, allowlisted inputs or CPU-reviewed token hashes drift; version recovery to require a fresh v6 window.
+- Ran: real token audit of 6,400 + 6,400 + 740 rows (max 296/294/295, no truncation), two two-step CPU SFT/export smokes, three input and eight Linux backup fault tests. [Evidence](../../research/m4-parser/results/catalog-v6-20261022/README.md).
+- Prior app verification at #159: root 9 JS + 238 TS, lint/build and all 10 CI checks passed; this increment adds Python preflight/recovery, with full CI required again.
+- Limits: smoke base is saved v1, weights remain private, no GPU efficacy or native enablement. UI and confirmation unchanged; private originals/derivatives excluded.
+- Next: finish frozen runner/report replay/source restoration, then final CI before notifying a new GPU opening.
+
 ## 2026-10-22 · M4 v6 alias policy and CPU data consistency
 
 - Why: 40 v4 training labels called registered bench aliases unknown; v5 also lost action binding and missing-unit decisions.

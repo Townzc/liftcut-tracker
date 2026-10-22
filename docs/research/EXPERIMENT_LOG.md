@@ -1,5 +1,12 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v6: actual CPU train/export and bounded input/recovery contracts
+
+- **Actual**: both full training arms and dev encode with the real saved tokenizer without truncation (max 296/294/295, shared 208,114 supervised training tokens). Two separate two-step CPU SFT/export runs on 12 training/six dev examples produced finite updated adapters and merged exports with cache enabled; internal durations 46.1/44.7 seconds. [Receipt](../../research/m4-parser/results/catalog-v6-20261022/cpu-smoke.json).
+- **Boundaries**: the CPU smoke starts from saved v1 merged weights only to test workflow; the next GPU protocol must retain pinned original-base initialization. Three input mutation tests and eight Linux byte-fixture backup tests pass, including rejecting v5 windows. Token hashes bind actual encoded paired inputs before model loading.
+- **Limits / next**: no new model-quality inference, independent acceptance, native activation or private originals/derivatives. Complete the runner, report wiring, exact-head CI and source restoration before opening another GPU window. Old research/data files remain frozen.
+- **Learning**: distinguish synthetic fixture recovery from trained-weight recovery, token equality from learned equivalence, and CPU workflow success from a candidate quality pass.
+
 ## 2026-10-22 · M4 v6: reconcile labels before changing catalog exposure
 
 - **Observation / decision**: v5 found a policy contradiction, not proof of a loss mechanism. V6 adopts the existing shared registry's exact bare-bench alias and preserves longer specific names. Forty prior unknown targets become records using their paired label's explicit fields; no numeric target is inferred from an evaluation or model output.

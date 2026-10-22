@@ -1,0 +1,127 @@
+{
+  "mode": "CPU token audit and two-step train/export wiring, not original-base candidate training or quality",
+  "base": "saved v1 merged model; GPU initialization remains pinned original Qwen3-0.6B",
+  "baseSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "tokenAudit": {
+    "T-train": {
+      "rows": 6400,
+      "sha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "maxTokens": 296,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "4d29f57912948f320a21c3d5f608aae9fa60888fdcd0c0196e6df26dc6203de1",
+      "truncated": 0
+    },
+    "S-train": {
+      "rows": 6400,
+      "sha256": "920214fa14902e5ed00f9456430f3f3cd8ef8c77867372be76779fbec644a506",
+      "maxTokens": 294,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "84bda256a715ccf0392a3e5f6322b83e127bb7408f7ac5cb4037c9112215adc4",
+      "truncated": 0
+    },
+    "dev": {
+      "rows": 740,
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "maxTokens": 295,
+      "answerTokens": 25155,
+      "tokenIdsSha256": "c3c6571c9ae00a7c73827341480104e2dea6171e545ebd5c991745b3320290c1",
+      "truncated": 0
+    }
+  },
+  "trainIndices": [
+    4035,
+    4095,
+    4000,
+    4020,
+    4001,
+    4021,
+    4012,
+    4032,
+    4013,
+    4033,
+    4,
+    14
+  ],
+  "arms": {
+    "T": {
+      "metrics": {
+        "seed": 20261019,
+        "steps": 2,
+        "train_examples": 12,
+        "dev_examples": 6,
+        "batch": 2,
+        "lr": 0.0002,
+        "rank": 4,
+        "dtype": "torch.float32",
+        "device": "cpu",
+        "dev_loss": 0.09656,
+        "log": [
+          {
+            "step": 2,
+            "loss": 0.00081
+          }
+        ],
+        "seconds": 46.1,
+        "gradientCheckpointing": true,
+        "peakCudaAllocatedBytes": null
+      },
+      "finite": true,
+      "updated": true,
+      "cacheEnabled": true,
+      "inputSha256": "bff71d2ade3bfde5357fea13305f6258262699b4e7f54ef58b3c0e09dbdd23a0",
+      "exports": {
+        "adapter/adapter_model.safetensors": "a5d32cb825d8e0c3559c9e723e57135f63217c25e386faa93537b4fd1ce8b121",
+        "merged/model.safetensors": "4d68945d54947cc33e3d637a202259ba093c4b0a7a672b1bf8f3805d5e4d5433",
+        "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+      }
+    },
+    "S": {
+      "metrics": {
+        "seed": 20261019,
+        "steps": 2,
+        "train_examples": 12,
+        "dev_examples": 6,
+        "batch": 2,
+        "lr": 0.0002,
+        "rank": 4,
+        "dtype": "torch.float32",
+        "device": "cpu",
+        "dev_loss": 0.09748,
+        "log": [
+          {
+            "step": 2,
+            "loss": 0.00154
+          }
+        ],
+        "seconds": 44.7,
+        "gradientCheckpointing": true,
+        "peakCudaAllocatedBytes": null
+      },
+      "finite": true,
+      "updated": true,
+      "cacheEnabled": true,
+      "inputSha256": "2771f28753d9b8dc327a6472c04eb8fc583327baf96829d9ceaded1525abdf23",
+      "exports": {
+        "adapter/adapter_model.safetensors": "f592bf64ef88ec09e2b562ed7aa03388563090d31a1801c23c2f45b17548ee92",
+        "merged/model.safetensors": "6f7a1ba7de13d52a6a031b9e5e208ff5799a5d9aef15ebfb0b96ad3fb7014426",
+        "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+      }
+    }
+  },
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2"
+  },
+  "privateAcceptanceUsed": false,
+  "gpuRunPerformed": false,
+  "releaseReady": false,
+  "verifiedAt": 1792690192.2683046,
+  "sourcesLfSha256": {
+    "research/m4-parser/train/sft.py": "a3b3aab7c40a49c3f72625160638472362f18609b186a916ae8f1218be458613",
+    "research/m4-parser/train/audit_v6_inputs.py": "5fc8564990373c34aa1b8da842a2b77b85f5fa9c7dbd47b5ecc52802bda38d0e",
+    "research/m4-parser/src/training-policy-v6.ts": "f8826d3e40eb0e807c683684a6d24593f0747f654ba3d249d743a0b60cca7c17",
+    "research/m4-parser/scripts/build-v6.ts": "a64c1615471f0436b1a31e01587fe46453c3acdcae049a26644cce962dde60b4"
+  },
+  "tokenAuditReproducedByPublicPreflight": true
+}
