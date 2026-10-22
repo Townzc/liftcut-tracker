@@ -1,0 +1,159 @@
+{
+  "mode": "Training-only structural audit; no quality estimate, new data or changed prompt",
+  "newModelCalls": 0,
+  "sourcesLfSha256": {
+    "audit-v6-training.ts": "899655eae3d121d0b4a22fedd0aa559c6b71ddb0c6cfe51c842fc6a9099347d2",
+    "build-v6.ts": "a64c1615471f0436b1a31e01587fe46453c3acdcae049a26644cce962dde60b4",
+    "../src/training-policy-v6.ts": "f8826d3e40eb0e807c683684a6d24593f0747f654ba3d249d743a0b60cca7c17"
+  },
+  "manifestLfSha256": "207c763fac88e6acaabd16869be6578e2e89aaed708f67728522cf162ebdaf18",
+  "trainingSystemSha256": "94e89ee2adbc9e86fd8b1daa2d7a9e519022379932a5afca49aa886584e02929",
+  "evaluationSystemSha256": "167de978193a3c0d77030af51979155d842d5f7a6dfcfdf6e5d4acaba6abfcb8",
+  "sameSystem": false,
+  "trainingListedReasonTokens": [],
+  "evaluationListedReasonTokens": [
+    "uncertain_quantity",
+    "plan_not_actual",
+    "negation",
+    "question",
+    "missing_reps",
+    "missing_unit",
+    "unsupported_unit",
+    "rpe_scope",
+    "unknown_exercise",
+    "out_of_range"
+  ],
+  "arms": {
+    "T": {
+      "rows": 6400,
+      "inputSha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "goldSha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "policyErrors": 0,
+      "intents": {
+        "skip": 189,
+        "correct": 494,
+        "clarify": 2412,
+        "record": 3066,
+        "end": 95,
+        "repeat": 144
+      },
+      "clarificationReasons": {
+        "rpe_scope": 246,
+        "unsupported_unit": 196,
+        "unknown_exercise": 192,
+        "question": 242,
+        "plan_not_actual": 250,
+        "missing_reps": 244,
+        "negation": 251,
+        "uncertain_quantity": 283,
+        "out_of_range": 247,
+        "missing_unit": 261
+      },
+      "rpeMultipleSetRecords": 517,
+      "rpeScopeTargets": {
+        "each": 252,
+        "last": 265
+      },
+      "rpeTemplates": {
+        "en.clarify_rpe_scope.0": 40,
+        "zh.clarify_rpe_scope.0": 86,
+        "v4.rpe_scope.each.position-0.frame-0.en.positive": 8,
+        "v4.rpe_scope.each.position-0.frame-0.en.negative": 8,
+        "v4.rpe_scope.last.position-0.frame-0.en.positive": 12,
+        "v4.rpe_scope.last.position-0.frame-0.en.negative": 12,
+        "v4.rpe_scope.each.position-1.frame-1.zh.positive": 8,
+        "v4.rpe_scope.each.position-1.frame-1.zh.negative": 8,
+        "v4.rpe_scope.last.position-1.frame-1.zh.positive": 13,
+        "v4.rpe_scope.last.position-1.frame-1.zh.negative": 13,
+        "v4.rpe_scope.each.position-2.frame-2.zh.positive": 13,
+        "v4.rpe_scope.each.position-2.frame-2.zh.negative": 13,
+        "v4.rpe_scope.last.position-2.frame-2.zh.positive": 7,
+        "v4.rpe_scope.last.position-2.frame-2.zh.negative": 7,
+        "v4.rpe_scope.last.position-0.frame-0.zh.positive": 8,
+        "v4.rpe_scope.last.position-0.frame-0.zh.negative": 8,
+        "v4.rpe_scope.last.position-2.frame-2.en.positive": 13,
+        "v4.rpe_scope.last.position-2.frame-2.en.negative": 13,
+        "v4.rpe_scope.each.position-0.frame-0.zh.positive": 12,
+        "v4.rpe_scope.each.position-0.frame-0.zh.negative": 12,
+        "v4.rpe_scope.each.position-1.frame-1.en.positive": 12,
+        "v4.rpe_scope.each.position-1.frame-1.en.negative": 12,
+        "v4.rpe_scope.last.position-1.frame-1.en.positive": 7,
+        "v4.rpe_scope.last.position-1.frame-1.en.negative": 7,
+        "v4.rpe_scope.each.position-2.frame-2.en.positive": 7,
+        "v4.rpe_scope.each.position-2.frame-2.en.negative": 7
+      },
+      "bindingPositions": {
+        "0": 1103,
+        "1": 896,
+        "2": 353,
+        "3": 229
+      }
+    },
+    "S": {
+      "rows": 6400,
+      "inputSha256": "920214fa14902e5ed00f9456430f3f3cd8ef8c77867372be76779fbec644a506",
+      "goldSha256": "f784b99ab361cd2379e3bf1d0d5ba9f204388e64755bf38a0a79e346b65f16ec",
+      "policyErrors": 0,
+      "intents": {
+        "skip": 189,
+        "correct": 494,
+        "clarify": 2412,
+        "record": 3066,
+        "end": 95,
+        "repeat": 144
+      },
+      "clarificationReasons": {
+        "rpe_scope": 246,
+        "unsupported_unit": 196,
+        "unknown_exercise": 192,
+        "question": 242,
+        "plan_not_actual": 250,
+        "missing_reps": 244,
+        "negation": 251,
+        "uncertain_quantity": 283,
+        "out_of_range": 247,
+        "missing_unit": 261
+      },
+      "rpeMultipleSetRecords": 517,
+      "rpeScopeTargets": {
+        "each": 252,
+        "last": 265
+      },
+      "rpeTemplates": {
+        "en.clarify_rpe_scope.0": 40,
+        "zh.clarify_rpe_scope.0": 86,
+        "v4.rpe_scope.each.position-0.frame-0.en.positive": 8,
+        "v4.rpe_scope.each.position-0.frame-0.en.negative": 8,
+        "v4.rpe_scope.last.position-0.frame-0.en.positive": 12,
+        "v4.rpe_scope.last.position-0.frame-0.en.negative": 12,
+        "v4.rpe_scope.each.position-1.frame-1.zh.positive": 8,
+        "v4.rpe_scope.each.position-1.frame-1.zh.negative": 8,
+        "v4.rpe_scope.last.position-1.frame-1.zh.positive": 13,
+        "v4.rpe_scope.last.position-1.frame-1.zh.negative": 13,
+        "v4.rpe_scope.each.position-2.frame-2.zh.positive": 13,
+        "v4.rpe_scope.each.position-2.frame-2.zh.negative": 13,
+        "v4.rpe_scope.last.position-2.frame-2.zh.positive": 7,
+        "v4.rpe_scope.last.position-2.frame-2.zh.negative": 7,
+        "v4.rpe_scope.last.position-0.frame-0.zh.positive": 8,
+        "v4.rpe_scope.last.position-0.frame-0.zh.negative": 8,
+        "v4.rpe_scope.last.position-2.frame-2.en.positive": 13,
+        "v4.rpe_scope.last.position-2.frame-2.en.negative": 13,
+        "v4.rpe_scope.each.position-0.frame-0.zh.positive": 12,
+        "v4.rpe_scope.each.position-0.frame-0.zh.negative": 12,
+        "v4.rpe_scope.each.position-1.frame-1.en.positive": 12,
+        "v4.rpe_scope.each.position-1.frame-1.en.negative": 12,
+        "v4.rpe_scope.last.position-1.frame-1.en.positive": 7,
+        "v4.rpe_scope.last.position-1.frame-1.en.negative": 7,
+        "v4.rpe_scope.each.position-2.frame-2.en.positive": 7,
+        "v4.rpe_scope.each.position-2.frame-2.en.negative": 7
+      },
+      "bindingPositions": {
+        "0": 789,
+        "1": 750,
+        "2": 600,
+        "3": 442
+      }
+    }
+  },
+  "limitations": "Prompt mismatch was intentional in v4, not a proven cause. Regeneration checks frozen bytes; no private originals/derivatives or evaluator examples are training inputs."
+}

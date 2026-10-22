@@ -1,0 +1,403 @@
+{
+  "mode": "Post-result binding attribution; literal mismatch is not an actual write or a changed score",
+  "sourcesLfSha256": {
+    "audit-v6-bindings.ts": "2db5c855a10f74d318be0fae60d0ce673c903e7f00e780a72b6ef80d026cebc0",
+    "../../../packages/core/src/exercise-catalog.ts": "64bc0707db12b06fb1cbb759eac219a175de1644ebf77e5c0195b7d76294567d",
+    "../../../packages/core/src/parse-label.ts": "8d7f03f75ae5974091d4bf333f6f46f5295c1b3ee5d7c4c525a072a5dc92035b",
+    "../../../packages/core/src/eval/parse-label-eval.ts": "15a6dae1753f4f5f9b3b9805a37adbbaad08b03e71910edf241594d939973763",
+    "../../../packages/core/src/plain-data.ts": "3da616b1d81e7d68eecc60ec1d00d9fb6bb4829095ad6d3bf4c506b8f959ee61"
+  },
+  "newModelCalls": 0,
+  "manifestSha256": "a003d4bba99e5f0a0a9aa03c0ef38e8d3e9c80887205944808bf426a219409c8",
+  "inputsSha256": {
+    "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+    "H.jsonl": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+    "compare-H-dev-eval.json": "69c5fc00327e6a60eb94d48bd1bd4ba33459fd1c784ae4b6a386e01a6a6c0bcf",
+    "compare-H-challenge.json": "53e6768d4dc77ed53d52f3d6e696dae71d22da1ec281bf1fc3240e90f8f39dfb",
+    "compare-H-handwritten.json": "3b8cf0b5db4445722ca3310ed30b9c364182a39045449160dbf6231e97e65efa",
+    "T.jsonl": "1ea5f2c46e9c1a25792789e89e8789aeb3272f69ffa09c5b2cf8cc92b77ac5e9",
+    "compare-T-dev-eval.json": "20b2aabdb5b211291a0f32a5c32d426a2887cd4e27f341b370c16b1b34fecbf6",
+    "compare-T-challenge.json": "2ea1736b556c5eee6b5bb92e46eb7e6ca9f6a24b512c68a6208db921e6411319",
+    "compare-T-handwritten.json": "da7af3e7e5d3b63447645b190c2e591e59ecc14b7019728f39bf06a1e6dd5af2",
+    "S.jsonl": "f425c5b2650cb935a342b309970fb272e19d95f9e340e1847d1e4d81d385fad1",
+    "compare-S-dev-eval.json": "d0a3e8d72cd58540454fc593676253f58c9662202df67d4d7ef8aedfba6c3172",
+    "compare-S-challenge.json": "8a70c727a7763af9a71389fa04e4ca64228c63866f71b59eb790fc7716b8d46f",
+    "compare-S-handwritten.json": "86ca8c548572c6e1a197790a5b562c3a9685ccbad31ba3b741e5d13c4935e19d",
+    "S-HF.jsonl": "26a5607a87e4d46a7e89f5fac61573fb84940d25c1ea9d7e7e2fe7a33ed21751",
+    "S-F16.jsonl": "4c260ecb5bebe18aa621f61db476ade76d4bf6260085fe20021185f1ac87452a"
+  },
+  "arms": {
+    "H": {
+      "dev-eval": {
+        "exact": 613,
+        "fieldsExactLiteralExerciseMismatch": 21,
+        "categories": {
+          "different_available_identity": {
+            "count": 12,
+            "ids": [
+              "test-00010",
+              "test-00042",
+              "test-00086",
+              "test-00096",
+              "test-00195",
+              "test-00227",
+              "test-00254",
+              "test-00260",
+              "test-00284",
+              "test-00367",
+              "test-00453",
+              "test-00457"
+            ]
+          },
+          "resolved_equal": {
+            "count": 7,
+            "ids": [
+              "test-00144",
+              "test-00162",
+              "test-00233",
+              "test-00246",
+              "test-00321",
+              "test-00366",
+              "test-00480"
+            ]
+          },
+          "unavailable_unknown_name": {
+            "count": 2,
+            "ids": [
+              "test-00145",
+              "test-00361"
+            ]
+          }
+        }
+      },
+      "challenge": {
+        "exact": 206,
+        "fieldsExactLiteralExerciseMismatch": 7,
+        "categories": {
+          "different_available_identity": {
+            "count": 7,
+            "ids": [
+              "v2-test-1-positive",
+              "v2-test-26-positive",
+              "v2-test-36-positive",
+              "v2-test-64-positive",
+              "v2-test-84-positive",
+              "v2-test-91-positive",
+              "v2-test-108-positive"
+            ]
+          }
+        }
+      },
+      "handwritten": {
+        "exact": 49,
+        "fieldsExactLiteralExerciseMismatch": 1,
+        "categories": {
+          "different_available_identity": {
+            "count": 1,
+            "ids": [
+              "hand-005"
+            ]
+          }
+        }
+      }
+    },
+    "T": {
+      "dev-eval": {
+        "exact": 636,
+        "fieldsExactLiteralExerciseMismatch": 5,
+        "categories": {
+          "different_available_identity": {
+            "count": 3,
+            "ids": [
+              "test-00218",
+              "test-00237",
+              "test-00453"
+            ]
+          },
+          "resolved_equal": {
+            "count": 2,
+            "ids": [
+              "test-00366",
+              "test-00480"
+            ]
+          }
+        }
+      },
+      "challenge": {
+        "exact": 195,
+        "fieldsExactLiteralExerciseMismatch": 9,
+        "categories": {
+          "different_available_identity": {
+            "count": 9,
+            "ids": [
+              "v2-test-1-positive",
+              "v2-test-26-positive",
+              "v2-test-36-positive",
+              "v2-test-42-positive",
+              "v2-test-49-positive",
+              "v2-test-64-positive",
+              "v2-test-84-positive",
+              "v2-test-91-positive",
+              "v2-test-108-positive"
+            ]
+          }
+        }
+      },
+      "handwritten": {
+        "exact": 48,
+        "fieldsExactLiteralExerciseMismatch": 2,
+        "categories": {
+          "resolved_equal": {
+            "count": 1,
+            "ids": [
+              "hand-005"
+            ]
+          },
+          "unresolved_implicit_exercise": {
+            "count": 1,
+            "ids": [
+              "hand-012"
+            ]
+          }
+        }
+      }
+    },
+    "S": {
+      "dev-eval": {
+        "exact": 609,
+        "fieldsExactLiteralExerciseMismatch": 21,
+        "categories": {
+          "different_available_identity": {
+            "count": 11,
+            "ids": [
+              "test-00042",
+              "test-00145",
+              "test-00227",
+              "test-00237",
+              "test-00246",
+              "test-00260",
+              "test-00284",
+              "test-00321",
+              "test-00367",
+              "test-00453",
+              "test-00457"
+            ]
+          },
+          "resolved_equal": {
+            "count": 9,
+            "ids": [
+              "test-00096",
+              "test-00105",
+              "test-00144",
+              "test-00162",
+              "test-00195",
+              "test-00233",
+              "test-00254",
+              "test-00366",
+              "test-00480"
+            ]
+          },
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "test-00361"
+            ]
+          }
+        }
+      },
+      "challenge": {
+        "exact": 204,
+        "fieldsExactLiteralExerciseMismatch": 12,
+        "categories": {
+          "different_available_identity": {
+            "count": 12,
+            "ids": [
+              "v2-test-25-positive",
+              "v2-test-29-positive",
+              "v2-test-48-positive",
+              "v2-test-66-positive",
+              "v2-test-72-positive",
+              "v2-test-75-positive",
+              "v2-test-77-positive",
+              "v2-test-79-positive",
+              "v2-test-89-positive",
+              "v2-test-92-positive",
+              "v2-test-94-positive",
+              "v2-test-118-positive"
+            ]
+          }
+        }
+      },
+      "handwritten": {
+        "exact": 48,
+        "fieldsExactLiteralExerciseMismatch": 1,
+        "categories": {
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "hand-005"
+            ]
+          }
+        }
+      }
+    },
+    "S-HF": {
+      "dev-eval": {
+        "exact": 607,
+        "fieldsExactLiteralExerciseMismatch": 20,
+        "categories": {
+          "different_available_identity": {
+            "count": 10,
+            "ids": [
+              "test-00042",
+              "test-00145",
+              "test-00227",
+              "test-00237",
+              "test-00246",
+              "test-00284",
+              "test-00321",
+              "test-00367",
+              "test-00453",
+              "test-00457"
+            ]
+          },
+          "resolved_equal": {
+            "count": 9,
+            "ids": [
+              "test-00096",
+              "test-00105",
+              "test-00144",
+              "test-00162",
+              "test-00195",
+              "test-00233",
+              "test-00254",
+              "test-00366",
+              "test-00480"
+            ]
+          },
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "test-00361"
+            ]
+          }
+        }
+      },
+      "challenge": {
+        "exact": 205,
+        "fieldsExactLiteralExerciseMismatch": 12,
+        "categories": {
+          "different_available_identity": {
+            "count": 12,
+            "ids": [
+              "v2-test-25-positive",
+              "v2-test-29-positive",
+              "v2-test-48-positive",
+              "v2-test-66-positive",
+              "v2-test-72-positive",
+              "v2-test-75-positive",
+              "v2-test-77-positive",
+              "v2-test-79-positive",
+              "v2-test-89-positive",
+              "v2-test-92-positive",
+              "v2-test-94-positive",
+              "v2-test-118-positive"
+            ]
+          }
+        }
+      },
+      "handwritten": {
+        "exact": 48,
+        "fieldsExactLiteralExerciseMismatch": 1,
+        "categories": {
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "hand-005"
+            ]
+          }
+        }
+      }
+    },
+    "S-F16": {
+      "dev-eval": {
+        "exact": 610,
+        "fieldsExactLiteralExerciseMismatch": 20,
+        "categories": {
+          "different_available_identity": {
+            "count": 10,
+            "ids": [
+              "test-00042",
+              "test-00145",
+              "test-00227",
+              "test-00237",
+              "test-00246",
+              "test-00284",
+              "test-00321",
+              "test-00367",
+              "test-00453",
+              "test-00457"
+            ]
+          },
+          "resolved_equal": {
+            "count": 9,
+            "ids": [
+              "test-00096",
+              "test-00105",
+              "test-00144",
+              "test-00162",
+              "test-00195",
+              "test-00233",
+              "test-00254",
+              "test-00366",
+              "test-00480"
+            ]
+          },
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "test-00361"
+            ]
+          }
+        }
+      },
+      "challenge": {
+        "exact": 204,
+        "fieldsExactLiteralExerciseMismatch": 12,
+        "categories": {
+          "different_available_identity": {
+            "count": 12,
+            "ids": [
+              "v2-test-25-positive",
+              "v2-test-29-positive",
+              "v2-test-48-positive",
+              "v2-test-66-positive",
+              "v2-test-72-positive",
+              "v2-test-75-positive",
+              "v2-test-77-positive",
+              "v2-test-79-positive",
+              "v2-test-89-positive",
+              "v2-test-92-positive",
+              "v2-test-94-positive",
+              "v2-test-118-positive"
+            ]
+          }
+        }
+      },
+      "handwritten": {
+        "exact": 48,
+        "fieldsExactLiteralExerciseMismatch": 1,
+        "categories": {
+          "unavailable_unknown_name": {
+            "count": 1,
+            "ids": [
+              "hand-005"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

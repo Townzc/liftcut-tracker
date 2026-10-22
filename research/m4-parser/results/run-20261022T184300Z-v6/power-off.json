@@ -1,0 +1,12 @@
+{
+  "windowId": "m4-v6-20261022T184300Z",
+  "platformState": "OFF",
+  "firstObservedAt": "2026-10-22T20:32:55.858Z",
+  "verifiedAt": "2026-10-22T20:33:29.367Z",
+  "screenshotSha256": "586d1776926223cafe15cbac1c2e4e44551dba47ac47742b75c426ffa13c1a92",
+  "workStopAt": 1792705380,
+  "powerOffDeadline": 1792708980,
+  "backupBeforeShutdown": true,
+  "completedTimerCleared": true,
+  "releasedOrDeletedInstance": false
+}
