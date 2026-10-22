@@ -1,0 +1,23 @@
+{
+  "verified": true,
+  "mode": "Historical H/T bytes; S is a clone of T for report wiring only",
+  "bindingCategories": {
+    "H": {
+      "different_available_identity": 20,
+      "resolved_equal": 7,
+      "unavailable_unknown_name": 2
+    },
+    "T": {
+      "different_available_identity": 12,
+      "resolved_equal": 3,
+      "unresolved_implicit_exercise": 1
+    },
+    "S": {
+      "different_available_identity": 12,
+      "resolved_equal": 3,
+      "unresolved_implicit_exercise": 1
+    }
+  },
+  "otherScoresUnchanged": true,
+  "newModelCalls": 0
+}

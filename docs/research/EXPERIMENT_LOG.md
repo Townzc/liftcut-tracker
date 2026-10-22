@@ -1,5 +1,14 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v7: freeze one prompt-alignment comparison
+
+- **Decision**: train S once from the pinned original base with v6 T's exact sentences, repaired labels, catalogs, order and token-mean objective. Only train/dev system text changes to the existing inference enumeration. Historical T/H are validated controls, not new predictions; S is selected before outcomes. [Protocol/runbook](../../research/m4-parser/train/GPU_V7.md).
+- **Actual**: three Linux runner fault tests and one TS summary regression pass; all 53 source hashes match. Root 9 JS + 246 TS and lint (two existing warnings) pass. The cross-drive prototype build failed to resolve Next.js through dependency junctions; the actual production checkout builds successfully without changing application configuration.
+- **Replay**: all 14 archived control/provenance files are verified before copying. Reassembly preserves the 1,040 inference bytes/token IDs; 27 historical score objects and binding categories match saved H/T. S is a T clone only in this CPU replay, with zero artificial gains/losses and no inference. [Receipts and limits](../../research/m4-parser/results/prompt-v7-20261022/README.md).
+- **Interpretation**: prompt mismatch is a testable hypothesis, not an established failure cause. The summary distinguishes equal resolved actions from wrong available identities, keeps strict reasons and useful-positive gates, and does not alter old raw scores. Longer prompted dev loss cannot select the candidate or be compared directly with historical T's loss.
+- **Limits / next trigger**: all exact-head CI and actual full/incremental source restoration precede a fresh 3h-work/1h-backup GPU notice. One new training and three streams (3,120 predictions), no retries/extra seed/selection change. Cached controls do not support timing claims. No private originals/derivatives, GPU activity, native activation or UI/confirmation changes; development, continuous and physical-device gates remain distinct.
+- **Learning checkpoint**: explain the sole experimental variable, how a formatting pass can hide wrong action binding or blanket refusal, and why a source/score replay is neither a new model result nor independent acceptance.
+
 ## 2026-10-22 · M4 v7: recover the actual artifact size before another window
 
 - **Decision**: v7 has one new candidate and cached controls, so its new backup contract requires four S weights and five complete streams; v6's eight-weight contract is untouched. Explicit new window/commit/deadline binding rejects older windows.
