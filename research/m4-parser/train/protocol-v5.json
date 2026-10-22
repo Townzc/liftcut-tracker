@@ -1,0 +1,137 @@
+{
+  "version": "m4-v5-loss-reduction-1",
+  "candidate": "S",
+  "maxSeconds": 10800,
+  "backupAndShutdownReserveSeconds": 3600,
+  "requiredFreeDiskGiB": 16,
+  "storagePlanningBytes": {
+    "twoWeightSetsFromV4Sizes": 6140372384,
+    "fullUnstagedArchiveDuplicate": 6140372384,
+    "converterWorkspaceAllowance": 1073741824,
+    "sourceLogsDependenciesAndTemporaryReserve": 3221225472
+  },
+  "quantization": "q8_0",
+  "trainingRuns": 2,
+  "trainingArgs": [
+    "--device",
+    "cuda",
+    "--batch",
+    "16",
+    "--epochs",
+    "2",
+    "--seed",
+    "20261019",
+    "--rank",
+    "16",
+    "--lr",
+    "0.0002",
+    "--max-len",
+    "512",
+    "--gradient-checkpointing"
+  ],
+  "trainingMetrics": {
+    "seed": 20261019,
+    "steps": 800,
+    "train_examples": 6400,
+    "dev_examples": 740,
+    "batch": 16,
+    "lr": 0.0002,
+    "rank": 16,
+    "device": "cuda",
+    "dtype": "torch.bfloat16",
+    "gradientCheckpointing": true
+  },
+  "gates": {
+    "rawAgreement": 0.95,
+    "challengeExact": 0.9,
+    "challengeSchema": 0.99,
+    "challengeCoverage": 0.9,
+    "rawChallengeInvented": 0,
+    "guardedUnsafe": 0,
+    "truncated": 0
+  },
+  "focusGates": {
+    "negativeReasonExact": 0.9,
+    "positiveExact": 0.9,
+    "invalidClarificationReasons": 0
+  },
+  "evaluationItems": 1040,
+  "maximumModelPredictions": 4160,
+  "cachedPredictions": 1040,
+  "arms": {
+    "H": "archived v4 D Q8 + enum; historical only",
+    "T": "fresh original-base token-mean training, same v4 data and enum prompt",
+    "S": "fresh original-base sample-mean training, same v4 data and enum prompt; preselected"
+  },
+  "quantizationReferences": [
+    "S-HF",
+    "S-F16"
+  ],
+  "newStreamOrder": [
+    "T",
+    "S-HF",
+    "S-F16",
+    "S"
+  ],
+  "baselineCommit": "f9535a89fc2075d3e2eb96d6eaaa437b00955576",
+  "baselineFiles": {
+    "run.json": "3442381952f57f3199bfa3c3b8e8142247d1a7b94753761f05731416f5825ba6",
+    "enum-eval.jsonl": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+    "D.jsonl": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+    "D.jsonl.audit.json": "89670af2c249929a87601a80b4605c39ca6382ce7e1b776a4cc2fdba1000112a",
+    "model/train_metrics.json": "53b1c536a47317f77a49626c221b20b0eea73db2121383df076aeeb16b4370e1",
+    "gguf/parser-q8_0.gguf": "7f84feab833b9002848830c7db0b1a6f53c0df4b15e4cf980fe6c4e5ac2d0de4"
+  },
+  "input": {
+    "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+    "rows": 1040,
+    "maxPromptTokens": 231,
+    "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5",
+    "truncated": 0
+  },
+  "dataManifestCanonicalSha256": {
+    "v2": "1b1c933eb4c48c69d4de6d8cb30088111e787ec4c526f0885df57f937e3a1b71",
+    "v3": "eadea453c25634e4e880adb54200c9737823398b553f4b67b421857d036a6079",
+    "v4": "d853fffc48eb0eacff47aa994c4e4616ec5e64ff8a12c832bc975f02435a5c3b"
+  },
+  "sourceLfSha256": {
+    "research/m4-parser/run_v2.py": "b2ddf6855a5c84235c6e9f5fc5062807916b7ebcafaa0607a2aded2ed3f516d5",
+    "research/m4-parser/run_v3.py": "3d97efdc3eee0993465ad394e851b4365e9cdd112763c851c659f75a7c62e8e9",
+    "research/m4-parser/run_v4.py": "98a2391bb2de1914735785533f4d070cd0609e1a2f4f0261b16be3d8da97d3ca",
+    "research/m4-parser/train/acceptance_v2.py": "5fc82b1cc12c6800b14bd030981fcf09ed0f80c767725a99af5ebc9a6abf598d",
+    "research/m4-parser/train/sft.py": "a3b3aab7c40a49c3f72625160638472362f18609b186a916ae8f1218be458613",
+    "research/m4-parser/train/predict.py": "0aa90b2c5919728c8baf5850f01623f0e80647334f880c40befd2d7a63bcbcbd",
+    "research/m4-parser/train/consistency.py": "57acdc14d82cb73c59c884ee69075d04e52c8a9ecd74a55667bcd92018c6af3e",
+    "research/m4-parser/train/export_gguf.py": "b7150e2ab5f879c9b99db3563493f8d57f70536e988e308d398654277403c04c",
+    "research/m4-parser/scripts/build-data.ts": "8cb79f41f12eda22816f6f34dae2f8b9a785f10f060962de6e8f7b57f1b69aea",
+    "research/m4-parser/scripts/build-v2.ts": "c23eb0977943f479ae22189432513b4c65f2fc32d689d4d0a7739c606ef654bd",
+    "research/m4-parser/scripts/build-v3.ts": "3fe2d12cd8fa50b95284100cea5f460bd9041e0cf8f23fba0150fd593132372f",
+    "research/m4-parser/scripts/build-v4.ts": "e119da5e34dbb43d22601ac9ca8e78e6071314234d8afad05ede98caf3770251",
+    "research/m4-parser/scripts/evaluate.ts": "fa875ebb9a27ad74368deb5664ef2449fd9d3b010a9a94a37249c48777822582",
+    "research/m4-parser/scripts/evaluate-grounding.ts": "bdd8c987ecf35d1806d87fb3c495e92261c83c24db7d3761aad4484aa384883b",
+    "research/m4-parser/scripts/compare-source.ts": "97a237589ee7f39345be01ee8511330773ff85a707a03be1504913e084dd3e69",
+    "research/m4-parser/scripts/summarize-v4.ts": "9f1274366e5593d62e830b2f7431462d9826e2459b7814357699363ab7041d64",
+    "research/m4-parser/scripts/check-workspace.mjs": "9f04a4dc6cb4085ff3a94b7aa5beeaa6ccaf988df5af0386311a37f2524c9806",
+    "research/m4-parser/src/prompt.ts": "631bd10d2a553ef4c50a17d0c3bb13bc430791810c40890cc848a2ae7cc32b9c",
+    "research/m4-parser/src/synth.ts": "ae24f3e44dd7d9807a1e8b500fdd3a86e2085423b533d28410819804eca9682c",
+    "research/m4-parser/src/contrastive-data.ts": "ad477951b9950de5732ecb370d1b29e6225633d28730b051aa4d68ccd58237ac",
+    "research/m4-parser/src/contrastive-v3.ts": "c788dd381bd475d1795d443d04e7bf966944cf3f15d5dfe76d3e3eca9cbd7a22",
+    "research/m4-parser/src/contrastive-v4.ts": "dc09389203d6465d2fc15eb519acb9fd3efed737cf00c5c25b4c78749dcc2537",
+    "packages/core/src/parse-label.ts": "8d7f03f75ae5974091d4bf333f6f46f5295c1b3ee5d7c4c525a072a5dc92035b",
+    "packages/core/src/parse-label-grounding.ts": "01cc710fc4d00ccffc46462ad05784cd4f8b489aa4acca4abc18f5394a06fc7a",
+    "packages/core/src/parse-label-grounding-v2.ts": "0bc0b241a1d1c94fc29e6fc5eaf608f3d10de5330881ec26f1a14c002c409ee0",
+    "packages/core/src/eval/parse-label-eval.ts": "15a6dae1753f4f5f9b3b9805a37adbbaad08b03e71910edf241594d939973763",
+    "research/m4-parser/run_v5.py": "8b858bdfe885b4fcd3a1584f129d7b7f3990d70e802f44a9d6dd3e7dfc71f14e",
+    "research/m4-parser/train/sample_mean_loss.py": "697a84fd1d2ddf71741d52d2ea3df0f9b5c1885f4b4606aac6874aad03e3ec41",
+    "research/m4-parser/train/sft_sample_mean.py": "1c505df171a72b0502fc0ba03736412f7bfceda003678998ac228b7fc0436596",
+    "research/m4-parser/scripts/summarize-v5.ts": "5731f76b1c650299fa51d734bc6e0145cb91fcfc6eb39d4973dc56e0c56f4004",
+    "research/m4-parser/train/base-model.sha256": "6061ea4b46063be4feb174fa722245fcb27357ecfe6b9687587cc24db6a19182",
+    "research/m4-parser/train/llama-cpp-python.sha256": "8daf3102bc1798e2dfdf14d7a2ef98d076894364fd1b252ce10f98862906097e",
+    "research/m4-parser/train/backup_v5.py": "e85e0765287901ed54feaf1f9e6a6d7fdb78187fc2034d78184e3e627d65a3dc"
+  },
+  "decoding": "Frozen greedy, 256 tokens, four generation/prefill threads, reset KV. No grammar or repair.",
+  "selection": "Two original-base trainings, 800 steps each; S only. No retry, sweep, arm switching or relaxed quality thresholds.",
+  "truncationScope": "S Q8 plus S-HF and S-F16 must have zero truncations. T/H errors are reported controls, not candidate outputs. Historical H already has one known truncation.",
+  "limitations": "Previously observed 740 dev +240 challenge +60 handwritten; single seed, not independent generalization. Twenty private originals and all derivatives excluded.",
+  "releaseReady": false
+}

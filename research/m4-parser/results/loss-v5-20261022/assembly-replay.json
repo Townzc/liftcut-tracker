@@ -1,0 +1,15 @@
+{
+  "mode": "cached H outputs cloned as T/S only to test file assembly and report wiring; NOT new T/S predictions",
+  "inputs": 1040,
+  "uniqueIds": 1040,
+  "inputSha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+  "historicalPredictionSha256": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+  "historicalBytesUnchanged": true,
+  "historicalFocusMatches": true,
+  "clonedComparisonGains": 0,
+  "clonedComparisonLosses": 0,
+  "newModelCalls": 0,
+  "privateAcceptanceUsed": false,
+  "releaseReady": false,
+  "sourceLfSha256": "5731f76b1c650299fa51d734bc6e0145cb91fcfc6eb39d4973dc56e0c56f4004"
+}

@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-22 · M4 v5 loss comparison preparation
+
+- Why: v4's ambiguous-RPE failures persisted; a coefficient audit found short clarification examples underweighted by token-mean loss, without proving causation.
+- Change: frozen fresh token-mean T vs per-example S; same v4 data/prompt/base/seed, S only, 4,160 new predictions planned. V4 sources remain unchanged.
+- Ran: 10 real CPU gradient tests, two-step SFT/export smokes of both objectives, 7 Linux runner tests, 1,040-row assembly/replay and 8 backup tests; TS type/lint pass. A C-drive-full export failure is preserved; fresh E-drive candidate recheck passes with a byte-identical adapter (three complete CPU smokes, one failed export).
+- Limits: CPU smoke uses saved v1 weights, no new GPU or quality result. Candidate formats retain zero-truncation; historical/control failures are reported separately. Native stays off.
+- Next: exact-head CI plus source restore, then notify a fresh user-opened 3-hour work/1-hour backup window. Private 20 originals/derivatives remain excluded.
+- Operational review: 24 GiB exceeded the server's last observed free space; require 16 GiB from measured weight sizes plus a full archive duplicate and explicit reserves. Low-space preflight stops before dispatch; no asset deletion/upgrade assumed.
+- Evidence: [v5 preparation](../../research/m4-parser/results/loss-v5-20261022/README.md), [protocol/runbook](../../research/m4-parser/train/GPU_V5.md).
+
 ## 2026-10-22 — M4 v4 results, restored evidence and loss audit
 
 - **Actual**: one 800-step training, 5,200 new predictions and 1,040 cached A outputs; fixed A/B/C/D challenge scores 187/199/200/206 out of 240. D stays rejected, with no arm switch or extra training.

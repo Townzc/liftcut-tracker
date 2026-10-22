@@ -1,0 +1,124 @@
+{
+  "mode": "two-step CPU pipeline smokes of two objectives; candidate rechecked after removing persistent logits reference and one disk-full export failure. Not candidate training or model quality",
+  "base": "saved v1 merged model, not original pretrained base; GPU protocol still pins original base",
+  "baseSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "inputs": {
+    "train": "ac5f7c54fabbdb0857d662ac93a72cf54d9d6e05b639672c24a9bc4d554c59e6",
+    "dev": "4b2ebb8d0cf1343b83416168f4dbf181b7e1cc7b767a9a19ac97b5fe7ead4e71"
+  },
+  "arms": {
+    "control": {
+      "metrics": {
+        "seed": 20261019,
+        "steps": 2,
+        "train_examples": 12,
+        "dev_examples": 6,
+        "batch": 2,
+        "lr": 0.0002,
+        "rank": 16,
+        "dtype": "torch.float32",
+        "device": "cpu",
+        "dev_loss": 0.17792,
+        "log": [
+          {
+            "step": 2,
+            "loss": 0.10817
+          }
+        ],
+        "seconds": 82.4,
+        "gradientCheckpointing": true,
+        "peakCudaAllocatedBytes": null
+      },
+      "adapterFinite": true,
+      "nonzeroLoraB": true,
+      "exportedCache": true,
+      "exports": {
+        "adapter/adapter_model.safetensors": "b6c9e919953690d3484fa92d2beee28b0f27d44341931ddc9c7599944fffdbc6",
+        "merged/model.safetensors": "6939df72f3a5e65c07104ffb5055f9694a62a6ded2f6891c5a702440df2325de",
+        "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+      }
+    },
+    "candidate": {
+      "metrics": {
+        "objective": "sample-mean-answer-token-ce",
+        "devLossReduction": "token-mean",
+        "seed": 20261019,
+        "steps": 2,
+        "train_examples": 12,
+        "dev_examples": 6,
+        "batch": 2,
+        "lr": 0.0002,
+        "rank": 16,
+        "dtype": "torch.float32",
+        "device": "cpu",
+        "dev_loss": 0.27535,
+        "log": [
+          {
+            "step": 2,
+            "loss": 0.26301
+          }
+        ],
+        "seconds": 73.7,
+        "gradientCheckpointing": true,
+        "peakCudaAllocatedBytes": null
+      },
+      "adapterFinite": true,
+      "nonzeroLoraB": true,
+      "exportedCache": true,
+      "exports": {
+        "adapter/adapter_model.safetensors": "f0a5f36c38d9e8c6f6afc778d1b25dbf2940b26e43e3f8b338bd254fc80f7428",
+        "merged/model.safetensors": "c83808a76ec91963376f709c01fc765269e29f6a0c7fbafb713b2757f74a7a2a",
+        "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+      }
+    }
+  },
+  "sourcesLfSha256": {
+    "research/m4-parser/train/sft.py": "a3b3aab7c40a49c3f72625160638472362f18609b186a916ae8f1218be458613",
+    "research/m4-parser/train/sft_sample_mean.py": "1c505df171a72b0502fc0ba03736412f7bfceda003678998ac228b7fc0436596",
+    "research/m4-parser/train/sample_mean_loss.py": "697a84fd1d2ddf71741d52d2ea3df0f9b5c1885f4b4606aac6874aad03e3ec41",
+    "research/m4-parser/test_sample_mean_loss.py": "39f84ad1d144fcb3c70315022b9910b6d8f288a016c0f03a06d700e2495a5ff4"
+  },
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2"
+  },
+  "candidateRecheck": {
+    "reason": "avoid retaining previous batch logits during next forward; no mathematical objective change",
+    "initialMetrics": {
+      "objective": "sample-mean-answer-token-ce",
+      "devLossReduction": "token-mean",
+      "seed": 20261019,
+      "steps": 2,
+      "train_examples": 12,
+      "dev_examples": 6,
+      "batch": 2,
+      "lr": 0.0002,
+      "rank": 16,
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "dev_loss": 0.27535,
+      "log": [
+        {
+          "step": 2,
+          "loss": 0.26301
+        }
+      ],
+      "seconds": 77.2,
+      "gradientCheckpointing": true,
+      "peakCudaAllocatedBytes": null
+    },
+    "adapterByteIdentical": true,
+    "intermediateExportFailure": {
+      "reason": "C drive insufficient disk space during merged safetensors save",
+      "logSha256": "f3367483175f9c5df1bfb11ceed980adbffcff025400352c240b54befa941584",
+      "failedArtifactsPreserved": true,
+      "recovery": "fresh CPU output on E drive; original failed attempt retained"
+    },
+    "completedCpuRuns": 3,
+    "failedCpuExports": 1
+  },
+  "privateAcceptanceUsed": false,
+  "gpuRunPerformed": false,
+  "releaseReady": false
+}
