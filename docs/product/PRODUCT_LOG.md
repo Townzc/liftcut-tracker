@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-22 · M4 v7 artifact recovery and storage
+
+- Why: one prompt-alignment candidate needs four weights, while the old v6 recovery contract required eight.
+- Change: separate v7 binding/backup helper; retain v6 behavior. Recalculate 10 GiB live free for one weight set, full archive duplicate and reserves; retain all prior assets. [Recovery plan](../../research/m4-parser/train/RECOVERY_V7.md).
+- Ran: eight Linux backup fault/round-trip tests pass. A full 24-part archive restored four historical weights, five 1,040-row historical streams and metadata (3,121,069,088 bytes); every file hash matched. No new model predictions.
+- Limits/next: historical-byte rehearsal is not a v7 model result. Runner, final-source restoration and all exact-head CI still precede opening. UI, confirmations and native flags unchanged.
+
 ## 2026-10-22 · M4 v7 prompt-contract data preparation
 
 - Why: v6 training omitted the clarification enumeration used during inference; test alignment separately from catalog/loss changes.

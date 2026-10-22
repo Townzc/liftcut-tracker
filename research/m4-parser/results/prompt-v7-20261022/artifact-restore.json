@@ -1,0 +1,48 @@
+{
+  "verified": true,
+  "mode": "CPU historical-byte restore rehearsal; not a v7 run",
+  "sourceV6ManifestSha256": "a003d4bba99e5f0a0a9aa03c0ef38e8d3e9c80887205944808bf426a219409c8",
+  "sourceCommit": "e9d3443808fffc83f7a21006dd9af32c4ba34b7a",
+  "weights": {
+    "run/S/model/adapter/adapter_model.safetensors": {
+      "bytes": 40422168,
+      "sha256": "012172d2f7ba971cde0a0fbf6522012f49b3686846f9c79807b4bf4d5072a0be"
+    },
+    "run/S/model/merged/model.safetensors": {
+      "bytes": 1192135096,
+      "sha256": "22cb20f461ffbc2333711269b82d235eb090c099eb41b7702d313f23c708b2b5"
+    },
+    "run/S/gguf/parser-f16.gguf": {
+      "bytes": 1198182144,
+      "sha256": "d036e3f90a4b3979246cc44ba9c7269f0c46c575107e1bc189e8bf195f74dd69"
+    },
+    "run/S/gguf/parser-q8_0.gguf": {
+      "bytes": 639446784,
+      "sha256": "b390c6ba7617f4c7d1a89abfac196e721348c478a9b0907a3ac2485392f5351d"
+    }
+  },
+  "fullArchive": true,
+  "independentRestoredBytes": true,
+  "restore": {
+    "verified": true,
+    "windowId": "m4-v7-20000101T000000Z",
+    "manifestSha256": "0d75ae7e5ff675ae182bbd8101c420c5058ea4555707184a5d5e976268267280",
+    "archiveManifestSha256": "4d66b4cad1fcdbff7f00975cafff1e1b18949b891ba2e9aa4ebb0fee5de37ce9",
+    "archiveSha256": "3d20f417c3128d6819bcc2950323a50fce137a7b650e18c7bb033465ae845256",
+    "files": 15,
+    "bytes": 3121069088,
+    "state": "below-threshold",
+    "predictionRows": {
+      "H": 1040,
+      "T": 1040,
+      "S-HF": 1040,
+      "S-F16": 1040,
+      "S": 1040
+    },
+    "verifiedAt": 1792711436.3196545
+  },
+  "modelCalls": 0,
+  "gpuOpeningReady": false,
+  "verifiedAt": 1792711446.8696606,
+  "helperLfSha256": "70c9c047ed5a8217200741cec98ae5a51d2a5782024bd0f5950ad48ba3bc4927"
+}

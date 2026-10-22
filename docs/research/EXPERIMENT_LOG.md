@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v7: recover the actual artifact size before another window
+
+- **Decision**: v7 has one new candidate and cached controls, so its new backup contract requires four S weights and five complete streams; v6's eight-weight contract is untouched. Explicit new window/commit/deadline binding rejects older windows.
+- **Actual**: eight Linux backup regressions pass, including corruption, partial/missing artifacts, traversal and real pack/restore. A separate full archive restores four historical v6 weights and five full historical streams; all 3,121,069,088 restored bytes match their hashes. The rehearsal creates no predictions or GPU activity. [Receipt](../../research/m4-parser/results/prompt-v7-20261022/artifact-restore.json).
+- **Storage**: measured weights total 3,070,186,192 bytes. Full archive duplicate plus 1 GiB converter and 3 GiB miscellaneous reserve gives 10,435,339,680 bytes, rounded up to a 10 GiB live check for v7. Old 16 GiB v6 check stays fixed. Historical utilization cannot establish live capacity; choose an existing filesystem meeting the check or stop, retaining old assets.
+- **Limit / next trigger**: the fixture's below-threshold state is historical, not a v7 result. Its source bundle is the data-preparation commit; final runner/source recovery and exact-head CI remain separate readiness conditions. Model/continuous/device gates and confirmations stay unchanged.
+- **Learning checkpoint**: explain why token/CPU success, full-byte artifact recovery and a new model quality result are different evidence, and why cached controls reduce storage but do not justify a speed claim.
+
 ## 2026-10-22 · M4 v7: isolate prompt-contract alignment
 
 - **Hypothesis**: v6 T trained without the legal-reason enumeration that inference supplies. Changing only that system text may improve action binding, missing-unit clarification and RPE scope; previous failures do not establish causality. [Design and official sources](../../research/m4-parser/train/DATA_V7.md).
