@@ -6,8 +6,24 @@ import {trainingFixture,nutritionFixture,planContextFixture,trainingProgramFixtu
 function call(name:string,args:unknown){return {id:"call_"+randomUUID(),type:"function",function:{name,arguments:JSON.stringify(args)}};}
 const bodyEmpty={dateQuote:null,weightQuote:null,waistQuote:null};
 const foodEmpty={dateQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null,proteinQuote:null};
+// Loopback-only test control. Hold a real partial provider stream until the
+// browser has asserted/navigation-tested it; elapsed time must never release it.
+const streamGates=new Map<string,{ready:Promise<boolean>;finish:(released:boolean)=>void}>();
 createServer(async(req,res)=>{
   res.setHeader("Content-Type","application/json");
+  const gateId=/^\/__test\/stream-gates\/([a-f0-9-]{36})$/.exec(req.url??"")?.[1];
+  if(gateId){
+    if(req.method==="POST"&&!streamGates.has(gateId)){
+      let settle!:(released:boolean)=>void;
+      const ready=new Promise<boolean>(resolve=>{settle=resolve;});
+      const finish=(released:boolean)=>{clearTimeout(timer);streamGates.delete(gateId);settle(released);};
+      const timer=setTimeout(()=>finish(false),45000);timer.unref();
+      streamGates.set(gateId,{ready,finish});res.statusCode=201;
+    }else if(req.method==="DELETE"){
+      streamGates.get(gateId)?.finish(true);res.statusCode=204;
+    }else res.statusCode=409;
+    res.end();return;
+  }
   if(req.method==="GET"){res.end('{"fixture":"scripted, not a model"}');return;}
   let raw="";for await(const chunk of req)raw+=chunk;
   const body=JSON.parse(raw),messages=body.messages as {role:string;content:string;tool_calls?:{id:string;function:{name:string}}[];tool_call_id?:string}[];
@@ -111,11 +127,21 @@ createServer(async(req,res)=>{
     const args=JSON.parse(chosen.function.arguments);
     // Match the schema's source-first framing, including actual network chunks.
     if(chosen.function.name==="finish_response")chosen.function.arguments=JSON.stringify({sourceIds:args.sourceIds,message:args.message});
+    const heldId=/\[stream-gate:([a-f0-9-]{36})\]/.exec(text)?.[1];
+    const held=heldId?streamGates.get(heldId):undefined;
+    if(heldId&&!held){res.statusCode=400;res.end();return;}
+    const holdAfter=chosen.function.arguments.indexOf("可以自然")+"可以自然".length;
+    let heldOnce=false;
+    if(held)res.once("close",()=>held.finish(false));
     const event=(delta:unknown,finish:string|null=null)=>res.write("data: "+JSON.stringify({id:"fixture",object:"chat.completion.chunk",created:1,model:"scripted-coach-fixture",choices:[{index:0,delta,finish_reason:finish}]})+"\n\n");
     event({role:"assistant",tool_calls:[{index:0,id:chosen.id,type:"function",function:{name:chosen.function.name,arguments:""}}]});
     for(let i=0;i<chosen.function.arguments.length;i+=8){
       if(res.destroyed)return;
       event({tool_calls:[{index:0,function:{arguments:chosen.function.arguments.slice(i,i+8)}}]});
+      if(held&&!heldOnce&&i+8>=holdAfter){
+        heldOnce=true;
+        if(!await held.ready){res.destroy();return;}
+      }
       if(text.includes("[stream-break]")&&i>=40){res.destroy();return;}
       const longProgram=text.includes("[long-program]")&&chosen.function.name==="prepare_training_program";
       await new Promise(r=>setTimeout(r,longProgram?Math.ceil(23000/Math.ceil(chosen.function.arguments.length/8)):text.includes("[stream-slow]")?150:2));

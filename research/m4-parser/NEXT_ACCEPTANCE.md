@@ -1,10 +1,27 @@
 # M4 next acceptance preparation
 
-Current state: **the [fixed v3 experiment](train/GPU_V3.md) is prepared, pending
-exact-commit CI and the maintainer opening a GPU; native integration is not started.** The v2 quality
-failure remains recorded. [Data v3](DATA_CARD_V3.md) passed preparation checks;
+Current state: **the [fixed v3 experiment](results/run-20261021T222100Z-v3/README.md)
+completed inference, was backed up and shut down, and failed quality gates after
+offline scoring recovery. Native integration is not started.** Q8 challenge exact
+fell from 213/240 to 187/240; invented fields increased from 50 to 153. Quantization
+agreement passed. The original scoring environment failure remains recorded.
+[Data v3](DATA_CARD_V3.md) passed preparation checks;
 [G1](results/closed-decode-20261021/README.md) fixed format while increasing
 invented fields and is not automatically the next decoding configuration.
+
+Before another GPU experiment, finish the application contract: a server-owned
+pending preview and a confirmed row have distinct IDs/revisions; explicit inherited
+load binds an exercise-specific confirmed source; per-hand basis survives storage;
+void and redo are separate confirmed operations. Connect these to a real Agent
+caller and test continuous dialogue with reads, clarifications and approval actions.
+The 20 originals remain private regressions, never training data or paraphrase seeds.
+An atomic parser replay plus scripted approvals does not satisfy this requirement.
+
+The next runtime must pass `scripts/check-workspace.mjs` from its own reviewed
+checkout before any model invocation. Reusing dependency files is allowed only when
+workspace imports resolve to that checkout. The v3 runner now enforces this; no
+failed-run file or score was overwritten. Consider moving future GGUF CPU evaluation
+off the GPU instance after verified export/backup, in a separately frozen protocol.
 
 1. Collect new natural utterances separately from training and development.
    The maintainer supplied 20 scenario utterances; spontaneous human collection

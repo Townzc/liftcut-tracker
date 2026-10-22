@@ -919,7 +919,9 @@ jobs:
 
   today-session:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # DB upgrade + production build + 95 serial browser cases + Expo export.
+    # Keep per-test timeouts/retries unchanged; 15m cut the suite off at 42/95.
+    timeout-minutes: 35
     services:
       postgres:
         image: postgres:16
@@ -962,8 +964,7 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/progression-history.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/workout-review.test.ts
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - run: npx playwright install --with-deps webkit
+      - run: npx playwright install --with-deps chromium webkit
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
         run: npx playwright test --config playwright.w1b.config.ts
       - name: Expo app web export signs in and reads today through a bearer token

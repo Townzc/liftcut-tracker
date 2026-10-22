@@ -1,0 +1,84 @@
+{
+  "cpuComponent": {
+    "mode": "observed-v3-Q8-component-diagnostic",
+    "newCpuCalls": 20,
+    "modelSha256": "a70a1bddfde97db3d5c56222b16011395c6412ae621fa8755ff751c13773f39b",
+    "casesSha256": "a93883af71f65fe3be1926deb07c38890d206323df64b18b1d2f4b1c11b02f23",
+    "inputSha256": "1c9b2d472c6ecc945c1590bac8f229e7181ab8edde1b19610ce5d7159bdf2939",
+    "seconds": 23.25,
+    "metrics": {
+      "literalRequests": 6,
+      "literalExact": 2,
+      "schemaValid": 16,
+      "truncated": 0,
+      "delegatedRequests": 14,
+      "delegated": 9,
+      "proposedOnDelegated": [
+        "user-pilot-14"
+      ],
+      "roleRejected": [
+        {
+          "id": "user-pilot-06",
+          "problems": [
+            "target_requires_ordinal"
+          ]
+        },
+        {
+          "id": "user-pilot-08",
+          "problems": [
+            "invalid_output"
+          ]
+        },
+        {
+          "id": "user-pilot-11",
+          "problems": [
+            "invalid_output"
+          ]
+        },
+        {
+          "id": "user-pilot-14",
+          "problems": [
+            "target_requires_ordinal",
+            "values[0].rpe_role"
+          ]
+        },
+        {
+          "id": "user-pilot-16",
+          "problems": [
+            "invalid_output"
+          ]
+        },
+        {
+          "id": "user-pilot-19",
+          "problems": [
+            "invalid_output"
+          ]
+        }
+      ],
+      "guardCorrectLiteral": 0,
+      "guardAcceptedWrong": []
+    },
+    "rawPredictionsSha256": "ebbfd30840909640eaf3388eb6bc1b3f4f5e681b8011c1e0f2e87f634b3f1308",
+    "auditSha256": "9cdce0e90f1ca99e5ef50a237ff47c80f46bce896a42d1d62fab15fa4acb519a",
+    "releaseReady": false,
+    "fullContinuousAgentAccepted": false,
+    "limitation": "Same previously observed 20 original utterances; no retraining, rewriting or quality retry. Context-free literal scores do not validate confirmed inheritance, per-hand storage, pending corrections or void/redo conversation. No product writes or phone performance claim."
+  },
+  "continuousReplay": {
+    "casesSha256": "a93883af71f65fe3be1926deb07c38890d206323df64b18b1d2f4b1c11b02f23",
+    "originalUtterances": 20,
+    "changedOriginals": 0,
+    "modelCalls": 0,
+    "originalModelPredictionsReplayed": 20,
+    "semanticAccepted": 0,
+    "actualDatabase": true,
+    "manualConfirmationLane": true,
+    "fullNaturalLanguageAcceptance": "FAILED",
+    "nativeEnabled": false,
+    "fixtureRows": 8,
+    "ended": false
+  },
+  "scriptedApprovalSourceCommit": "8ff4d27bab465da5009346082c08bee068f179bc",
+  "privateArchiveSha256": "2da3fb3d215d1a5039ecf32b8f75fcbed2216a5d447d2aefc8fee1ccfcd8d246",
+  "limits": "Originals, per-turn snapshots and approval scripts are private. A scripted confirmation is not a model-generated action or a production/phone acceptance result."
+}

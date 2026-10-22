@@ -1,0 +1,243 @@
+{
+  "verified": true,
+  "originalRunState": "stopped",
+  "originalFailure": "Stale cached workspace binding: MODULE_NOT_FOUND for parse-label-grounding.ts",
+  "sourceCommit": "44978c5ec594fa680538b1d5236d1c7110fbd84d",
+  "sourceZipSha256": "7cc82a6974e41bb1185b5fc68a92d5c70342b543ac9e3dc8f0a850dae9023032",
+  "reportsComputed": 38,
+  "originalReportsCompared": 3,
+  "newModelCalls": 0,
+  "originalsUnchanged": true,
+  "scorerCoreBinding": "Own frozen checkout packages/core; no cached workspace binding",
+  "acceptanceRecomputed": true,
+  "reports": [
+    {
+      "name": "metrics-previous-q8-dev-eval",
+      "recoveredSha256": "075fd99726700e116a34be0bdfa481f8c22d2fdccda529ca70946ab45300ebd7",
+      "originalMatched": true,
+      "originalSha256": "b136f563f14e0a100877a2889d2c9feea81dce79a5799592e8f5c3062fc9b6f7"
+    },
+    {
+      "name": "ground-previous-q8-dev-eval",
+      "recoveredSha256": "54678e3d2dc05bea73c8e80a0bf3524e026b193d6a7b3f668d15a149eb2fefc6",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-previous-q8-dev-eval",
+      "recoveredSha256": "0ebe42656d7fd1dd3a72451bc4326109277f9d368aa12b28bc1bbb07895918f6",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-previous-q8-challenge",
+      "recoveredSha256": "69a4a907e2fd62195056bbf970f772ae986049d428996981c69fbab553ce61c3",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-previous-q8-challenge",
+      "recoveredSha256": "3c14b33f79f6797e03070647f11db630c3fa734cf0edc1ce6f548931fd7be727",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-previous-q8-challenge",
+      "recoveredSha256": "1d95954a895f8afbd8c6aca6779554b4d2cf1d836d24d4502764eecf5bcb7352",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-previous-q8-handwritten",
+      "recoveredSha256": "e656e7128be757b0e3b4552ea3466b5df90bf0775c961033b95638fbda601714",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-previous-q8-handwritten",
+      "recoveredSha256": "d25c3b51b3a2c6ec383ab5e986c4c6ed9f156ebdeacde327e4b4302c14aa2afa",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-previous-q8-handwritten",
+      "recoveredSha256": "ae4cd508c3f5290c945b41d6e9085ae460bb04d3fadf784d3a1aa806a75adc60",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-merged-dev-eval",
+      "recoveredSha256": "5c337af22ada9b709f4abef261b760c4cba308d0ea2abe5755ccfa07e99a019a",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-merged-dev-eval",
+      "recoveredSha256": "8bbc64b64c25879c89fbd4b9b1f6779918fd8b187e9a64abcb8a2cb0dd504839",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-merged-dev-eval",
+      "recoveredSha256": "6c61e67edcdc55ccc4350797b3505942e579874db92a221f16f3c9d648e1f08c",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-merged-challenge",
+      "recoveredSha256": "0843b4ee12bf77cfac37f9168d193b6ad92f74b66528b7c2a04c127b5291ec32",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-merged-challenge",
+      "recoveredSha256": "8840bf8be71b046f4565de32c6eeb7378af88d203258454fa71031ab6c688588",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-merged-challenge",
+      "recoveredSha256": "d49c139c90a50220793d57b2aa7b97f1679002b898e78c8033e62f524419d457",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-merged-handwritten",
+      "recoveredSha256": "92d533620e77ad4924f5dba24002b8e14403dc56095fccbb00d7901e4b0736e3",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-merged-handwritten",
+      "recoveredSha256": "c9c30337f104fb9b6e6d144391bb8500ec7594e336f55ce403d1eb6d2ee900f3",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-merged-handwritten",
+      "recoveredSha256": "9b23635978f765fc1cbcb27ef9e90f936ed97b33800b859eb6a38cb6d2060c02",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-f16-dev-eval",
+      "recoveredSha256": "96e8873ce75aec2ec04ebc97b7940919cdea7d4423eddd4e16229b0d7ea136ee",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-f16-dev-eval",
+      "recoveredSha256": "673a93a46e94a82bcf6f1d3c2c18a5982cf5edd0c198066656fd1c920c27acd0",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-f16-dev-eval",
+      "recoveredSha256": "04dd611729e158c70a3a07545c17541c798aa84a6aaaabe2b6a40491e750f493",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-f16-challenge",
+      "recoveredSha256": "2ffba0cb427b9cb75802257d781d793a3e522c742f993f5a628bbc868d7da506",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-f16-challenge",
+      "recoveredSha256": "096d1d7aed91ada6213c36f4f1db0f193e14beeb89944a3b43e71cc94ad8ed4a",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-f16-challenge",
+      "recoveredSha256": "60c6a29320e4ff7371f191c723d34492fdd9b99ab38931557b53c4cb7c253fac",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-f16-handwritten",
+      "recoveredSha256": "9d65a8faf8aee148dbf85564103b55200e05cdd070690c9d45ee66e0bf31205c",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-f16-handwritten",
+      "recoveredSha256": "fdd699baf65bf786bfd90e289c383fc600be7004945da1acc60b860ce2cd1524",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-f16-handwritten",
+      "recoveredSha256": "e06a2b330e389d6fb5be9322b5beef1e9feb1af5b64bce85d5fe61724239f897",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-quant-dev-eval",
+      "recoveredSha256": "2e9a74caa1a2b7a8efb9245a128b1fbf1a1797eeee4170b964b345254f17d7e9",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-quant-dev-eval",
+      "recoveredSha256": "98159b328f7c5a0d80962bd11c17cb9c97eb1fd85322c502e4131e676cbe6957",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-quant-dev-eval",
+      "recoveredSha256": "4e66d265a757923a5353f153456bed5d6dc4f56aaf21e00828abd48ccb7c5e2b",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-quant-challenge",
+      "recoveredSha256": "292dd53a466ef06abb4bc3bdf6153496196c4e871235b03817cc87987140cdde",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-quant-challenge",
+      "recoveredSha256": "c641f3880339ecfd6f7d147ef605a8206d4f5b090de851d371f5bdc81e863d03",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-quant-challenge",
+      "recoveredSha256": "a2c50dccc07d4e3cd98f39f09ab4f2e2e8b875348ed55cf36e0f905d11e9d0ac",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "metrics-quant-handwritten",
+      "recoveredSha256": "650b4f47886363fb85515e8b46c95e0713839e35cc0463d365716a7d5c3ae44f",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "ground-quant-handwritten",
+      "recoveredSha256": "d5e3fbb10573c824684a40d5e48f39e12ee92e5d42581e478024b45bd8fc6937",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "compare-quant-handwritten",
+      "recoveredSha256": "662341724720ae837364c198fe0210896e865178fa417518e842e2a076e534d3",
+      "originalMatched": null,
+      "originalSha256": null
+    },
+    {
+      "name": "agreement-merged",
+      "recoveredSha256": "4e32b7a10598f24062220b917c9d24dd8a3f486b71b1c9635d498fde04829748",
+      "originalMatched": true,
+      "originalSha256": "8a275ea5e0a6a37467517fefaa9838199c86bb2114a41097c94f9b735375796c"
+    },
+    {
+      "name": "agreement-f16",
+      "recoveredSha256": "ab28ae3a31f192dc260bfbeab6f79025f588aca48fd669efea87b9cd0f354313",
+      "originalMatched": true,
+      "originalSha256": "9a7ef01163df15553536125109c09947aaf928f8622d0f2ccba5b47712f61e48"
+    }
+  ]
+}
