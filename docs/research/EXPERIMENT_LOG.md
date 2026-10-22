@@ -1,5 +1,13 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v6: reconcile labels before changing catalog exposure
+
+- **Observation / decision**: v5 found a policy contradiction, not proof of a loss mechanism. V6 adopts the existing shared registry's exact bare-bench alias and preserves longer specific names. Forty prior unknown targets become records using their paired label's explicit fields; no numeric target is inferred from an evaluation or model output.
+- **Controlled data**: fresh T and preselected S share these corrected labels and all 6,400 original training sentence bytes. S alone changes training-derived catalog membership/order with seed 2026102206; 6,397 catalogs differ, size and stated identity remain. No new utterances, evaluator failure strings or private originals/derivatives are synthesized. Old v1–v5 sources and scores remain historical.
+- **Actual CPU checks**: all 12,800 rows pass schema, registered identity, unit binding and RPE-scope consistency checks. Five data/mutation tests reject wrong action/number roles, unscoped RPE, invented records and false refusal; root 9 JS + 238 TS, lint and build pass. [Builder, mutation tests and manifest](../../research/m4-parser/train/DATA_V6.md).
+- **Limit / next**: catalog membership and order are one augmentation package, not individually isolated causes. This is preparation, not a trained-candidate result; a frozen runner must keep the missing-unit/RPE strict-reason and positive-usefulness gates. Complete token audit, CPU SFT/export, recovery, CI and source restore before notifying a new GPU window. No native enablement.
+- **Learning**: distinguish the common label repair from T→S's catalog intervention, explain why preserving sentence/label bytes prevents private-data rewriting, and why valid synthetic targets do not predict learned model accuracy.
+
 ## 2026-10-22 · M4 v5 completed: loss normalization helps syntax, not the required boundary
 
 - **Actual**: reviewed `8b89c828`, two fresh original-base Qwen3-0.6B trainings (800 steps each), four 1,040-output streams. H is archived v4; T reproduces all H outputs/finish reasons and all four weight hashes. S alone was selected; no retry, extra seed, altered cap or gate.

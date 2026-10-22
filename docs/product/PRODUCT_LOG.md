@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-22 · M4 v6 alias policy and CPU data consistency
+
+- Why: 40 v4 training labels called registered bench aliases unknown; v5 also lost action binding and missing-unit decisions.
+- Change: versioned v6 data fixes exactly those 40 targets in both arms; S changes only training-derived catalog membership/order. All 6,400 sentences and historical data/scores stay unchanged.
+- Verification: 12,800 row audits, five mutation/data tests, root 9 JS + 238 TS tests, lint (zero errors/two existing warnings), production build pass. [Data policy](../../research/m4-parser/train/DATA_V6.md).
+- Limits: no model-quality result, private originals/derivatives excluded, no UI/write/flag changes. CPU checks are synthetic-data audits, not a general parser.
+- Next: freeze the two-arm runner, token audit, actual CPU train/export and restoration checks; final CI before a fresh GPU opening. Native/device acceptance remains gated.
+
 ## 2026-10-22 · M4 v5 results and reproducible error diagnosis
 
 - Ran: two original-base 800-step trainings, 4,160 new predictions; T reproduces v4's 1,040 outputs and all four weight hashes. S remains the sole candidate and is rejected.
