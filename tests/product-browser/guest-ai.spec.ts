@@ -50,7 +50,7 @@ test("guest quota rejection persists after reload, forged identities fail and ac
   await send(page,"你好");const used=(await db.query("select guest_id,network_hash from coach_private.guest_ai_usage order by created_at desc limit 1")).rows[0];
   await db.query("insert into coach_private.guest_ai_usage(request_id,guest_id,network_hash,created_at) select gen_random_uuid(),$1,$2,now()-interval '2 minutes' from generate_series(1,9)",[used.guest_id,used.network_hash]);
   await page.reload();await expect(page.getByTestId("guest-quota")).toContainText("0/10");await send(page,"你能做什么呀");await expect(page.getByTestId("coach-turn").last()).toContainText("今日访客试用额度已用完");
-  const body={id:randomUUID(),text:"hello",history:[],locale:"en",timezone:"UTC",consent:"coach-model-v1",guestRecords:[]};
+  const body={id:randomUUID(),text:"hello",history:[],locale:"en",timezone:"UTC",consent:"coach-model-v2",guestRecords:[]};
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103","X-Workout-Owner":owner},data:body})).status()).toBe(409);
   for(const path of ["/api/personal-records","/api/coach-memory","/api/coach-history"]){const res=await page.request.get(path);expect([401,404]).toContain(res.status());}
   const old=(await page.context().cookies()).find(c=>c.name==="liftcut_ai_guest")!;

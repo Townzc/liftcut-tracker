@@ -7,7 +7,8 @@ import type { LogDraft } from "@liftcut/core/workout-log-parser";
 import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import type { PersonalCommand } from "@/lib/personal-records";
 import type { RunView } from "@liftcut/core/agent-contracts";
-export type CoachWorkoutProposal={turnId:string;session:Session;hash:string;draft:LogDraft;operation:WorkoutOperation};
+import type {WorkoutReview} from "@liftcut/core/workout-review";
+export type CoachWorkoutProposal={turnId:string;session:Session;hash:string;draft:LogDraft|null;review?:WorkoutReview;operation:WorkoutOperation};
 function useMemory(owner:string|null){
   const en=useLocale()==="en",[history]=useState(()=>new CoachHistoryClient(owner,en));
   const snapshot=useSyncExternalStore(history.subscribe,history.snapshot,history.serverSnapshot);

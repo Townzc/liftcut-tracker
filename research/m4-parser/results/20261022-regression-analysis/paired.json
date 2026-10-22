@@ -1,0 +1,136 @@
+{
+  "method": "paired existing frozen-scorer failures; no new inference, normalization or training",
+  "n": 240,
+  "paired": {
+    "both_correct": 171,
+    "regressed": 42,
+    "improved": 16,
+    "both_wrong": 11
+  },
+  "regression_intents": {
+    "clarify -> record": 20,
+    "record -> record": 8,
+    "clarify -> clarify": 14
+  },
+  "families": {
+    "contrast_missing_reps_negative": {
+      "n": 15,
+      "previous": 15,
+      "current": 15,
+      "regressed": 0,
+      "improved": 0
+    },
+    "contrast_missing_reps_positive": {
+      "n": 15,
+      "previous": 14,
+      "current": 13,
+      "regressed": 2,
+      "improved": 1
+    },
+    "contrast_missing_unit_negative": {
+      "n": 15,
+      "previous": 11,
+      "current": 3,
+      "regressed": 8,
+      "improved": 0
+    },
+    "contrast_missing_unit_positive": {
+      "n": 15,
+      "previous": 15,
+      "current": 14,
+      "regressed": 1,
+      "improved": 0
+    },
+    "contrast_negation_negative": {
+      "n": 15,
+      "previous": 15,
+      "current": 15,
+      "regressed": 0,
+      "improved": 0
+    },
+    "contrast_negation_positive": {
+      "n": 15,
+      "previous": 14,
+      "current": 14,
+      "regressed": 1,
+      "improved": 1
+    },
+    "contrast_plan_not_actual_negative": {
+      "n": 15,
+      "previous": 2,
+      "current": 11,
+      "regressed": 1,
+      "improved": 10
+    },
+    "contrast_plan_not_actual_positive": {
+      "n": 15,
+      "previous": 14,
+      "current": 13,
+      "regressed": 2,
+      "improved": 1
+    },
+    "contrast_question_negative": {
+      "n": 15,
+      "previous": 15,
+      "current": 15,
+      "regressed": 0,
+      "improved": 0
+    },
+    "contrast_question_positive": {
+      "n": 15,
+      "previous": 14,
+      "current": 15,
+      "regressed": 0,
+      "improved": 1
+    },
+    "contrast_rpe_scope_negative": {
+      "n": 15,
+      "previous": 12,
+      "current": 0,
+      "regressed": 12,
+      "improved": 0
+    },
+    "contrast_rpe_scope_positive": {
+      "n": 15,
+      "previous": 15,
+      "current": 15,
+      "regressed": 0,
+      "improved": 0
+    },
+    "contrast_uncertain_quantity_negative": {
+      "n": 15,
+      "previous": 15,
+      "current": 15,
+      "regressed": 0,
+      "improved": 0
+    },
+    "contrast_uncertain_quantity_positive": {
+      "n": 15,
+      "previous": 13,
+      "current": 12,
+      "regressed": 2,
+      "improved": 1
+    },
+    "contrast_unknown_exercise_negative": {
+      "n": 15,
+      "previous": 15,
+      "current": 2,
+      "regressed": 13,
+      "improved": 0
+    },
+    "contrast_unknown_exercise_positive": {
+      "n": 15,
+      "previous": 14,
+      "current": 15,
+      "regressed": 0,
+      "improved": 1
+    }
+  },
+  "source_sha256": {
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "previous-q8.jsonl": "9ea45a4b0848e14c733fb6fb0d3fc478da6bf01a891c258258392b4d2df8dd01",
+    "quant.jsonl": "cbd2d9f1e3eb6754fb6741ed07f419ef6286b89b2e8dc92b369f13d379c1c53d",
+    "compare-previous-q8-challenge.json": "1d95954a895f8afbd8c6aca6779554b4d2cf1d836d24d4502764eecf5bcb7352",
+    "compare-quant-challenge.json": "a2c50dccc07d4e3cd98f39f09ab4f2e2e8b875348ed55cf36e0f905d11e9d0ac"
+  }
+}

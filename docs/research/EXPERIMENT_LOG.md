@@ -1,5 +1,14 @@
 # 实验与决策日志
 
+## 2026-10-22 — Paired challenge regression and real continuous Agent acceptance
+
+- **Observation**: offline reconstruction of frozen failure IDs yields 171 both-correct, 42 regressed, 16 improved, 11 both-wrong. Missing-unit/RPE over-acceptance and invalid clarification enums dominate. Same unquantized exact score rules out quantization as the main loss; template/cue dependence remains an interpretation without a factor-isolating ablation. [Reproducible counts](../../research/m4-parser/results/20261022-regression-analysis/paired.json).
+- **Engineering**: connected immutable previews and fresh confirmed references to the real provider/tools/DB path. The model quotes changed fields; server code selects record revisions, resolves explicit inherited loads and computes progress. Void and redo stay separate confirmed operations. Numeric politeness/anaphora bugs, stale quotes, competing tools, local queue validation and false completion prose were found during actual runs and repaired.
+- **Actual**: nine successive development repair runs retained. Final `sdk-09` uses 20 unchanged private originals + 3 frozen supplied-detail replies in one conversation, with six-turn prompt context. Thirteen useful previews explicitly confirmed by the driver; ten original ambiguous/query turns never write. Browser/API/DB approval is verified separately with a scripted provider. [Aggregate results and failed-run hashes](../../research/m4-parser/results/20261022-continuous-agent/summary.json).
+- **Limits**: the final result is system acceptance with deterministic guards and read rendering, not 20/20 raw model parsing, unseen generalization, real-provider browser approval, phone performance or native readiness. The originals, paraphrases and outputs are excluded from training. No GPU experiment or weight change occurred; v3 and prior G1 failures remain final.
+- **Next / trigger**: exact-head CI and additive migration backup/verification gate the web release. A new native candidate needs a separately frozen, CPU-audited data/decoding hypothesis and GPU opening by the maintainer; physical-device acceptance follows quality gates, never precedes them.
+- **Learning checkpoint**: distinguish a saved fact from a chat assertion; explain why repeated observed acceptance and a source guard do not establish raw-model generalization, and why high quantization agreement can coexist with worse semantic decisions.
+
 ## 2026-10-21 — v3 GPU result rejected; offline scoring recovery
 
 - **Actual**: pinned original base, unchanged 6,400 v3 train / 740 dev, 800 steps, four arms × 1,040 outputs. New Q8 challenge 187/240, schema 92.50%, 153 invented fields; same-input previous Q8 213/240, 94.58%, 50 fields. Challenge has 16 improvements and 42 regressions. HF/F16/Q8 all score 187/240: quantization is not the sole cause.

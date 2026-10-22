@@ -30,6 +30,9 @@ export type SetRequest = z.infer<typeof setRequestSchema>;
 export type StoredSet = Omit<SetRequest, "weightSource" | "repsSource" | "inputUnit" | "sourceRef"> & {
   weightSource: SetRequest["weightSource"] | "user_said"; repsSource: SetRequest["repsSource"] | "user_said";
   inputUnit: "kg" | "lb"; sourceRef: string;
+  /** Explicit per-hand load. Total load is unknown; weightKg stays null so
+   * legacy totals and 1RM never silently mix per-hand and total quantities. */
+  perHandLoad?: { value:number; unit:"kg"|"lb" };
 };
 export type SetLog = StoredSet & { exerciseName: string; updatedAt: string };
 export type PrescriptionExercise = { id: string; name: string; sets: number; repRange: string; targetRpe: number;

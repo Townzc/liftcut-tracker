@@ -44,11 +44,15 @@ export class CoachHistoryStore {
     return {saved:true};
   });}
   async remove(owner:string,id:string){z.uuid().parse(id);return this.tx(owner,async db=>{
+    await db.query("select pg_advisory_xact_lock(hashtextextended($1,714))",[owner]);
     await db.query("select pg_advisory_xact_lock(hashtextextended($1,717))",[id]);
     // Keep an empty tombstone so a delayed offline upload cannot recreate a deleted chat.
     await db.query("insert into public.coach_conversations(id,user_id,title,deleted_at) values($1,$2,'',now()) on conflict(id) do nothing",[id,owner]);
     await db.query("update public.coach_conversations set title='',deleted_at=coalesce(deleted_at,now()) where id=$1 and user_id=$2",[id,owner]);
     await db.query("delete from public.coach_turns where conversation_id=$1 and user_id=$2",[id,owner]);
+    await db.query("update public.workout_coach_contexts set request_id=gen_random_uuid(),state=$2,updated_at=now() where conversation_id=$1",
+      [id,JSON.stringify({focus:null,pendingText:null})]);
+    await db.query("delete from public.workout_coach_reviews where conversation_id=$1 and status<>'applied'",[id]);
     return {deleted:true};
   });}
 }

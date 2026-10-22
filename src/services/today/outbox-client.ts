@@ -119,7 +119,7 @@ export class WorkoutOutboxClient {
         let status:OutboxItem["status"]="retry", code="NETWORK";
         try {
           const endpoint=item.action==="replace" || item.action==="undoReplacement"?"/api/workout-replacements":
-            item.action==="apply" || item.action==="undo"?"/api/workout-commands":"/api/workout-sessions";
+            item.action==="apply" || item.action==="undo" || item.action==="review"?"/api/workout-commands":"/api/workout-sessions";
           const response=await fetch(`${endpoint}?action=${item.action}`,{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":this.owner},
             body:item.bodyJson,signal:this.request.signal});
           const result=await response.json();

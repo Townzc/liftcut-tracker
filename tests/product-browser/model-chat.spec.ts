@@ -75,7 +75,7 @@ test("untrusted model numbers, provider failure, cancellation and missing consen
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{}})).status()).toBe(401);
   await login(page);expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"hi",history:[],locale:"zh",timezone:"UTC"}})).status()).toBe(400);
   await enable(page);await send(page,"帮我记体重 [invent]");await expect(page.getByTestId("personal-draft")).toHaveCount(0);expect(await entries(page)).toEqual([]);
-  const priorTarget=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"帮我记体重 [invent]",history:[{role:"user",content:"我的目标是82公斤"}],locale:"zh",timezone:"UTC",consent:"coach-model-v1"}});
+  const priorTarget=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"帮我记体重 [invent]",history:[{role:"user",content:"我的目标是82公斤"}],locale:"zh",timezone:"UTC",consent:"coach-model-v2"}});
   expect(priorTarget.status()).toBe(200);expect((await priorTarget.json()).proposal).toBeUndefined();expect(await entries(page)).toEqual([]);
   await send(page,"你好 [provider-down]");await expect(page.getByTestId("coach-turn").last()).toContainText("暂时不可用");
   await page.getByLabel("发给训练助手",{exact:true}).fill("你好 [slow]");await page.getByRole("button",{name:"发送",exact:true}).click();
@@ -97,8 +97,8 @@ test("natural workout report uses the existing versioned queue and preserves sou
     expect((await db.query("select * from set_logs where user_id=$1",[owner])).rowCount).toBe(0);
     await page.getByTestId("coach-draft").getByRole("button",{name:"确认保存这句话"}).click();await expect(page.getByTestId("coach-draft")).toHaveCount(0);
     await expect.poll(async()=>(await db.query("select reps from set_logs where user_id=$1",[owner])).rows.map(r=>r.reps)).toEqual([8]);
-    const row=(await db.query("select receipt from workout_commands where user_id=$1 order by created_at desc limit 1",[owner])).rows[0].receipt;
-    expect(row.text).toContain("实打实");expect(row.model).toBeTruthy();expect(row.changes[0].after.rpe).toBe(null);
+    const row=(await db.query("select payload from workout_coach_reviews where user_id=$1 and status='applied' order by applied_at desc limit 1",[owner])).rows[0].payload;
+    expect(row.text).toContain("实打实");expect(row.model).toBeTruthy();expect(row.requests[0].rpe).toBe(null);
     const reply=page.waitForRequest(r=>r.url().includes("/api/ai/coach")&&r.method()==="POST");
     await send(page,"看看本次实际训练 [current-read]");
     // Chromium does not retain no-store streaming bodies for CDP inspection.

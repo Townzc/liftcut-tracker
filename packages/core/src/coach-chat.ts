@@ -1,5 +1,5 @@
 /** Consent to send the data listed in model-data.ts to the coach model; asked again whenever that list grows. */
-export const COACH_CONSENT_VERSION = "coach-model-v1";
+export const COACH_CONSENT_VERSION = "coach-model-v2";
 export type CoachTurnMessage = { role: "user" | "assistant"; content: string };
 
 /** Current conversation only, bounded to six complete turns. Saved chat is not a facts cache. */

@@ -30,6 +30,8 @@ import {exerciseExtractionSchema,preferenceExtractionSchema,groundExercise,groun
 import {memoryFacts,memorySource,latestMemory,readGuestRecords,initialMemoryQuery} from "@/lib/fitness-memory";
 import type {PersonalRecord,PersonalEntry} from "@/lib/personal-records";
 import {planPersonalization} from "@/lib/agent/plan-personalization";
+import {workoutAppendExtractionSchema,workoutCorrectionExtractionSchema,correctionAsReview,groundWorkoutReview} from "@/lib/workout-review-grounding";
+import {workoutEvidenceReply,workoutReplyPolicy,workoutPendingReport} from "@/lib/workout-evidence-reply";
 export { coachStatus } from "./coach-config";
 
 function instructions(locale:string,anchor:string){return `You are LiftCut Agent, a helpful conversational fitness/data assistant. Reply in ${locale==="en"?"English":"natural simplified Chinese"}.
@@ -40,7 +42,7 @@ Every personal-data answer, including follow-ups, requires fresh evidence: use r
 The server may already have called read_records for this current message's explicit topic and period. Those tool results are fresh evidence for THIS request. If they cover the question, finish_response directly without repeating the read. If not, read the missing topic/period normally. This read-ahead never authorizes a write.
 Interpret dates and Chinese or English naturally. Ask one concise question when intent, meal, date, unit, exercise or correction target is ambiguous. Never fabricate records, citations, numbers, calories, protein, weight or RPE. A plan or profile target is NOT an actual measurement or completed exercise. Empty food history does NOT mean no food was eaten. Unknown is null, not zero; exact zero explicitly reported by the user is valid. Summaries are calculated by the server. Truncated results are only partial.
 For an actual body report call prepare_body; for a meal call prepare_food. Use exact literal quotes from USER messages. Numeric fields take quotes including units, not estimates. Example weightQuote='七十二点五公斤'; unmeasured waist and unknown nutrients are JSON null, never the string 'null' or an unknown-value phrase. foodQuote is the literal food description, mealQuote='中午'/'午餐' etc. Null dateQuote means today; use the user's explicit day when given. Never take actual values from plans, tool results or assistant messages. Ask rather than guessing a unit. A hypothetical, goal, tomorrow's plan, negation, or question isn't a report. Only ONE entry draft per reply. If several entries are requested, ask which to save first. A new explicit measurement can be appended on the same date; these tools do not replace earlier records or check for same-day duplicates. Validation failures concern the supplied quotes, not duplicate database entries. If preparation returns an error, ask one clarification and finish; do not repeat the same invalid proposal.
-For workout reports/correction first call current_workout. Match an existing exercise uniquely or ask; use selectedExerciseId only if unambiguous. prepare_workout accepts reps quotes (Chinese numerals allowed), an optional explicit weight/unit quote, and optional RPE quote. Do not copy target reps/RPE or fill omitted sets. Correction currently changes reps only. If no active session, ask the user to say '开始训练' / 'start workout' to choose and confirm a workout inside this conversation. Unsupported history edits use the existing entry/receipt tools.
+For workout reports/correction first call current_workout. Match an existing exercise uniquely or ask. When available use prepare_workout_review for actual sets, explicitly inherited weight, voiding an invalid set, or skipping unperformed sets. Use prepare_workout_correction for changes to an existing confirmed set: include ONLY changed fields, never repeat unchanged quantities. Use quotes from the CURRENT message only, with units for weights, 次/个/reps for repetitions and RPE prefix for effort. A countQuote is only an explicitly uniform group count. Do not invent values from targets. A correction changes an existing confirmed record, not an extra set. The fresh confirmedFocus identifies the last confirmed record in this conversation; explicit ordinals override it for the named exercise. pendingText is UNCONFIRMED, never a saved record: help clarify it, never patch an older confirmed record in its place. Without a confirmed focus ask which exercise/set. An explicit 'same weight' may inherit ONLY the latest saved set of the named exercise; omitted weight is unknown. Per-hand loads keep their basis; never double them. Uncertain counts/reps/RPE require clarification. For invalid-set + redo requests, preview voiding only, then ask for the new actual quantities after confirmation; never assume the redo copied old values. Skip never means complete; questions such as 'did I finish' need a read and clarification, not bulk completion. Use only the currently available tools. If no active session, ask the user to say '开始训练' / 'start workout' to choose and confirm a workout inside this conversation.
 For training or nutrition plan generation/adjustment, first call plan_context(kind). It loads current preferences, active plan and the selected pending draft, if any. For a NEW training plan use prepare_training_program with reusable workouts and contiguous phases; for full structural edits use prepare_training_plan, and for nutrition use prepare_nutrition_plan. Publish ONE immutable preview in THIS chat. Keep workout notes concise and duration estimates sufficient for the highest-volume phase. Do not send the user to another page. Training constraints come from the user's request or saved settings: if weekly days, session duration or equipment are unknown, ask one concise question before drafting. Nutrition: respect food restrictions/preferences; if calorie/protein targets and enough information to propose appropriate targets are missing, ask. Never invent a user's health condition or preference. Explain proposed targets as estimates, not actual consumption. Default NEW training to one repeatable week and NEW nutrition to a one-day repeatable menu unless another period is requested. For adjustments preserve every unrequested day/exercise/meal and the existing period. Use the pending draft when provided; otherwise adjust the active plan. Include a short summary of what changes and why, plus concrete warnings when relevant. Limits are constraints, not targets to exceed. If both plans are requested, ask which to prepare first. Draft creation does NOT change the active plan or settings. The card's confirmation is the ONLY approval; conversational 'yes' is not authorization to execute. On approval or stale-plan errors tell the user to inspect/retry the card, never claim success. Never generate clinical diets, extreme restriction or exercise through pain.
 When plan_context returns editablePlan, PREFER prepare_plan_adjustment for small changes. Send only explicitly changed leaf fields using zero-based JSON paths; code preserves all other content exactly. For example /weeks/0/days/0/exercises/0/sets or /daily_targets/calories. Food replacement may also change that food's amount and estimated nutrients. Do not change unrelated fields or regenerate the full plan for a small edit. Ask if a named target is ambiguous. Full prepare tools are for new plans or structural changes (adding/removing days/exercises/meals).
 Drafts are NOT saved. Say 'please review and confirm the card' and never 'recorded/saved/updated'. A later user saying yes in chat is NOT UI approval; show the draft card again if needed. User confirmation and server checks are separate. Chat history is saved to the account, but you receive only the six latest complete turns in the selected conversation. Other conversations and incomplete replies are not automatic memory. Saved facts require fresh tools; chat history is not permanent factual memory. The History button opens earlier chats. Never claim to recover lost chats from before history was available.
@@ -52,11 +54,14 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const store=new CoachStore(pool,timer),anchor=localDateAt(new Date(),input.timezone);
   const smalltalk=simpleCoachChat(input.text,input.history);
   if(!guest)await timer.measure("quota",()=>store.reserve(owner,input.id));
+  const todayStore=new TodayStore(pool);
+  const conversation=!guest&&input.conversationId?await todayStore.beginConversation(owner,input.conversationId,input.id):null;
   const userTexts=[...input.history.filter(m=>m.role==="user").slice(-6).map(m=>m.content.slice(0,400)),input.text];
   const provenance:ModelProvenance={provider:config.provider,model:name,sourceTexts:[],version:"coach-v1"};
   const quoted=(args:Record<string,unknown>)=>[...new Set(Object.entries(args).filter(([k])=>/Quotes?$/.test(k)).flatMap(([,v])=>Array.isArray(v)?v:typeof v==="string"?[v]:[]))] as string[];
-  const sources:CoachSource[]=[];let proposal:CoachProposal|undefined,session:Session|null=null,currentSource:CoachSource|undefined;
-  let planSnapshot:PlanSnapshot|undefined;
+  const sources:CoachSource[]=[];let proposal:CoachProposal|undefined,session:Session|null=conversation?.session??null,currentSource:CoachSource|undefined;
+  let planSnapshot:PlanSnapshot|undefined,workoutRejected=false,workoutFailures=0;
+  const evidencePolicy=conversation?workoutReplyPolicy(input.text):null;
   const planStore=()=>new AgentStore(agentPool());
   const readCache=new Map<string,Promise<CoachSource>>(),execution=new CoachExecution();
   let currentRead:Promise<Session|null>|undefined;
@@ -76,6 +81,27 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
     transformRequestBody:body=>config.provider==="deepseek"?{...body,thinking:{type:"disabled"}}:body});
   const ensureTime=()=>{if(signal.aborted)throw new Error("ABORTED");};
   const proposalError=(error:unknown)=>({ok:false,reason:error instanceof GroundingError?error.message:"DRAFT_NEEDS_CLARIFICATION",instruction:"Ask for explicit missing/corrected details; no entry was saved."});
+  const prepareWorkoutReview=async(args:unknown)=>{
+    ensureTime();if(proposal)return {error:"ONE_DRAFT_PER_REPLY"};
+    if(!session||!conversation||!input.conversationId)return {error:"START_A_WORKOUT_FIRST"};
+    try{
+      const review=groundWorkoutReview(args,input.text,session,conversation.state,
+        {id:randomUUID(),conversationId:input.conversationId,requestId:input.id,newId:randomUUID});
+      review.model=provenance;
+      await todayStore.prepareReview(owner,review);
+      proposal={kind:"workoutReview",session,hash:hash(workoutContextInput(session)),review,
+        operation:{action:"review",body:{id:review.id,conversationId:input.conversationId,sessionId:session.id,version:1,authorization:"confirm_preview"}}};
+      return {saved:false,requiresUserConfirmation:true,kind:review.kind};
+    }catch(e){
+      workoutFailures++;
+      const repair=workoutFailures===1&&e instanceof GroundingError&&[
+        "QUOTE_NOT_IN_CURRENT_MESSAGE","NUMERIC_ROLE_MISMATCH","REPS_REQUIRED_FOR_EACH_GROUP","STATED_WEIGHT_OMITTED",
+      ].includes(e.message);
+      workoutRejected=!repair;
+      await todayStore.holdConversation(owner,input.conversationId,input.id,input.text);
+      return repair?{...proposalError(e),repairAllowed:true,instruction:"One extraction repair is allowed using only exact CURRENT-message spans. Expand explicitly listed repetitions into one group per set; never compress them into an invented count quote. Do not infer missing information. If still unclear, finish with a question."}:proposalError(e);
+    }
+  };
   const prepareEntry=(args:Record<string,unknown>,ground:()=>PersonalEntry)=>{
     ensureTime();if(proposal)return {error:"ONE_DRAFT_PER_REPLY"};
     try{
@@ -127,9 +153,10 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const agent=new ToolLoopAgent({
     model:provider(name),instructions:(smalltalk?smalltalkInstructions(input.locale):instructions(input.locale,anchor))+`
 You have durable, user-confirmed fitness memory separate from chat context. Use read_memory for latest known weight, waist, per-exercise load, and preferences; each value carries its actual date. It is NOT a personal best or a measurement today. Use read_records for historical dates such as two months ago. Do not infer missing measurements or overwrite an old fact.
-For an actual exercise load outside an active workout use prepare_exercise with the literal exercise name and reported values; omitted sets/reps/RPE stay null. Do not require starting a workout for this standalone report. For an active workout prefer current_workout then prepare_workout. For explicit fitness preferences or goals the user asks to remember, use prepare_preference. Quote the user's current wording exactly, choose only a fitness category, and require the confirmation card. Never infer preferences or diagnoses; chat alone does not save memory.
+For an actual exercise load outside an active workout use prepare_exercise with the literal exercise name and reported values; omitted sets/reps/RPE stay null. Do not require starting a workout for this standalone report. For an active workout use current_workout then the available workout review/correction tool. The standalone prepare_exercise tool is unavailable during an active workout. For explicit fitness preferences or goals the user asks to remember, use prepare_preference. Quote the user's current wording exactly, choose only a fitness category, and require the confirmation card. Never infer preferences or diagnoses; chat alone does not save memory.
 For EVERY plan generation or adjustment, plan_context automatically loads a fresh, dated personalization basis. Use personalization.goal, schedule, equipment, diet, precautions, body and recentLoads; do not ask the user to repeat these known details. The current explicit request overrides a stored preference for THIS proposal only; confirmed preferences override older settings. Keep safety/food restrictions unless explicitly resolved. Unclear or incomplete saved text still needs one targeted question. A past load is a dated reference, not today's strength or a prescribed target. Use comparable actual loads conservatively in exercise notes and mention their dates; do not assume a heavier load, missing RPE, complete training volume, or calories burned. For nutrition use dated body data and confirmed goals/restrictions, separate proposed targets from actual intake, and ask only if essential target inputs are truly missing. In summary/reasoning_summary briefly explain which dated facts informed the plan. During a small edit retain unrequested structure and period; do not silently rebuild the whole plan just because memory exists. Reading memory never authorizes a write.\n`+
-      (guest?"CURRENT MODE: guest trial. Chat and read ONLY this browser's confirmed local facts, prepare body/food/exercise/preference entries. Confirmation saves locally; login then explicit import syncs to an account. No account data, saved active plans, plan activation or workout sessions are available. You can discuss suggested plans, but activating a persistent plan requires signing in. Guest chat is session-local; private browsing/clearing data can erase it. Do not claim cloud chat storage or that you can recover missing browser data.":"CURRENT MODE: authenticated account."),
+      (guest?"CURRENT MODE: guest trial. Chat and read ONLY this browser's confirmed local facts, prepare body/food/exercise/preference entries. Confirmation saves locally; login then explicit import syncs to an account. No account data, saved active plans, plan activation or workout sessions are available. You can discuss suggested plans, but activating a persistent plan requires signing in. Guest chat is session-local; private browsing/clearing data can erase it. Do not claim cloud chat storage or that you can recover missing browser data.":"CURRENT MODE: authenticated account.")+`
+Recording semantics: Only a confirmed database row is a saved actual. Missing records mean NOT RECORDED, never NOT PERFORMED. Even if a user reports completion, missing set quantities require clarification, not a claim of non-performance. Uncertain words (好像/大概/应该/左右/maybe) apply in your prose too: do not turn an uncertain count or RPE into a definite fact or claim it has been remembered/saved. State which value remains uncertain and ask a targeted question; unknown weight may remain null. A pending statement is NOT a confirmed focus, and saying "改成" in chat has not modified any record.`,
     temperature:0.2,maxOutputTokens:smalltalk?600:1800,maxRetries:0,
     // v7's prepareCall forwards these options to streamText. Override its default
     // console.error(error), which includes request bodies; the route logs only kind.
@@ -144,9 +171,9 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
     onToolExecutionEnd:event=>{timer.tool(event.toolCall.toolName,toolStarts.get(event.toolCall.toolCallId)??timer.elapsed());},
     // Large plan schemas/output are available only after the relevant snapshot.
     // Ordinary questions keep the small tool menu and short output budget.
-    prepareStep:()=>smalltalk?{activeTools:["finish_response"]}:planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
+    prepareStep:()=>evidencePolicy&&!currentSource?{activeTools:["current_workout"]}:evidencePolicy?{activeTools:["finish_response"]}:smalltalk||workoutRejected?{activeTools:["finish_response"]}:workoutFailures?{activeTools:["current_workout","prepare_workout_review","prepare_workout_correction","finish_response"]}:planSnapshot?{maxOutputTokens:6500,activeTools:["read_records","finish_response",
       ...(planSnapshot.kind==="training"?["prepare_training_program" as const,...(planSnapshot.editable||planSnapshot.currentPlans.length?["prepare_training_plan" as const]:[])]:["prepare_nutrition_plan" as const]),...(planSnapshot.editable?["prepare_plan_adjustment" as const]:[])]}:
-      {activeTools:["read_records","read_memory","prepare_body","prepare_food","prepare_exercise","prepare_preference","finish_response",...(!guest?["current_workout" as const,"prepare_workout" as const]:[]),...(!guest&&process.env.AGENT_DATABASE_URL?["plan_context" as const]:[])]},
+      {activeTools:["read_records","read_memory","prepare_body","prepare_food",...(!session?["prepare_exercise" as const]:[]),"prepare_preference","finish_response",...(!guest?["current_workout" as const,...(conversation?["prepare_workout_review" as const,"prepare_workout_correction" as const]:["prepare_workout" as const])]:[]),...(!guest&&process.env.AGENT_DATABASE_URL?["plan_context" as const]:[])]},
     stopWhen:[isStepCount(5),()=>final!==null||proposal!==undefined],
     tools:{
       read_memory:tool({description:"Read latest confirmed measurements, exercise loads and fitness preferences, with original dates. No age cutoff. For an older date use read_records. Optional exact exercise name narrows all-history lookup.",inputSchema:z.object({exercise:z.string().min(1).max(80).nullable()}).strict(),execute:args=>execution.run(true,()=>readMemory(args.exercise??undefined))}),
@@ -186,13 +213,14 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
         })}),
       current_workout:tool({description:"Load the current active workout for a report/correction; targets and actual sets are separate. No write.",inputSchema:z.object({}).strict(),
         execute:()=>execution.run(true,async()=>{
-          ensureTime();try{session=await(currentRead??=new TodayStore(pool).current(owner));
-            const actualSets=session?.sets.filter(s=>s.status==="done").map(s=>({exercise:s.exerciseName,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe}))??[];
+          ensureTime();try{session=await(currentRead??=conversation?Promise.resolve(conversation.session):todayStore.current(owner));
+            const actualSets=session?.sets.filter(s=>s.status==="done").map(s=>({exercise:s.exerciseName,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe,...(s.perHandLoad?{perHandLoad:s.perHandLoad}:{})}))??[];
             currentSource={id:`workout:current:${session?.id??"none"}`,topic:"workout",from:session?.localDate??anchor,to:session?.localDate??anchor,readAt:new Date().toISOString(),
               rows:session?[{id:session.id,date:session.localDate,status:session.status,actualSets}]:[],
               summary:{recordCount:session?1:0,complete:true,completedSessions:session?.status==="ended"&&actualSets.length?1:0,scope:"Current session only; not full date-range history"},truncated:false};
             return allowModelObject("current_workout",session?{sourceId:currentSource.id,readAt:currentSource.readAt,date:session.localDate,status:session.status,id:session.id,revision:session.revision,exercises:session.prescription.exercises.map(e=>({id:e.id,name:e.name})),
-              actualSets:session.sets.map(s=>({exerciseId:s.planExerciseId,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe,status:s.status})),
+              actualSets:session.sets.map(s=>({exerciseId:s.planExerciseId,setIndex:s.setIndex,reps:s.reps,weightKg:s.weightKg,rpe:s.rpe,status:s.status,...(s.perHandLoad?{perHandLoad:s.perHandLoad}:{})})),
+              ...(conversation?{confirmedFocus:conversation.state.focus,pendingText:conversation.state.pendingText}:{}),
               selectedExerciseId:input.selectedExerciseId??null}:{sourceId:currentSource.id,active:false});
           }catch{readFailed=true;return {error:"READ_UNAVAILABLE"};}
         })}),
@@ -215,6 +243,10 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
             return {draft,saved:false,requiresUserConfirmation:true};
           }catch(e){return proposalError(e);}
         })}),
+      prepare_workout_review:tool({description:"Prepare an immutable current-workout confirmation card for explicit record, inherited weight, void or skip. For corrections use prepare_workout_correction. Read current_workout first. Current literal quotes and confirmed references only. Cannot save, approve, end a workout or auto-redo.",inputSchema:workoutAppendExtractionSchema,
+        execute:args=>execution.run(false,()=>prepareWorkoutReview({...args,targetQuote:null}))}),
+      prepare_workout_correction:tool({description:"Preview a patch to ONE confirmed workout set, after current_workout. Include ONLY changed fields explicitly quoted in the CURRENT message; omitted fields are preserved by the server. Never copy unchanged reps/load/RPE into changes. Never append a record. Pending or ambiguous references require clarification. UI confirmation required.",inputSchema:workoutCorrectionExtractionSchema,
+        execute:args=>execution.run(false,()=>prepareWorkoutReview(correctionAsReview(args)))}),
       finish_response:tool({description:"Finish the response with natural language. Cite only source IDs read in this request. A draft is unsaved until the UI confirms.",
         inputSchema:z.object({sourceIds:z.array(z.string().max(100)).max(4),message:z.string().min(1).max(2400)}).strict(),
         onInputStart:({toolCallId})=>{streamedInputs.set(toolCallId,"");publishText("");},
@@ -223,13 +255,16 @@ For EVERY plan generation or adjustment, plan_context automatically loads a fres
           if(raw.length>20000){streamedInputs.delete(toolCallId);return;}
           streamedInputs.set(toolCallId,raw);
           const partial=streamingReply(raw);
-          if(partial&&execution.idle&&!readFailed&&!proposal&&validSources(partial.sourceIds))publishText(partial.text);
+          if(partial&&!evidencePolicy&&execution.idle&&!readFailed&&!proposal&&validSources(partial.sourceIds))publishText(partial.text);
         },
         execute:args=>execution.run(false,async()=>{
           ensureTime();
           if(!validSources(args.sourceIds)){publishText("");return {error:"UNVERIFIED_SOURCE",instruction:"Cite the sources read in this request."};}
-          if(!readFailed&&!proposal)publishText(args.message);
-          final=args;return {complete:true};
+          if(session&&conversation&&input.conversationId&&!proposal&&workoutPendingReport(input.text))
+            await todayStore.holdConversation(owner,input.conversationId,input.id,input.text);
+          const message=!readFailed&&session&&currentSource?workoutEvidenceReply(session,input.text,input.locale==="en")??args.message:args.message;
+          if(!readFailed&&!proposal)publishText(message);
+          final={...args,message};return {complete:true};
         })}),
     },
   });

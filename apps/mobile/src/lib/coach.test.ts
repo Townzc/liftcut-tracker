@@ -36,7 +36,7 @@ test("the reply grows as chunks arrive, a split character survives, and only the
   assert.deepEqual(seen, [["你", false], ["你好", true]]); // The first text arrives while the end is still held back.
   const headers = log.init!.headers as Record<string, string>, body = JSON.parse(log.init!.body as string);
   assert.equal(headers.Authorization, "Bearer a.b.c"); assert.equal(headers.Accept, "application/x-ndjson");
-  assert.deepEqual([body.consent, body.id, body.text], ["coach-model-v1", id, input.text]);
+  assert.deepEqual([body.consent, body.id, body.text], ["coach-model-v2", id, input.text]);
 });
 
 test("a truncated, failed or foreign stream never becomes a reply", async () => {

@@ -12,7 +12,7 @@ const refersToPriorSet = (s: string) => /那组|上一组|上组|刚才|刚刚|\
 
 // Match only explicit, unambiguous names. A model-selected ID is not evidence
 // of conversation focus. Longer names win over their nested generic aliases.
-function mentionedExercises(input: string, session: Session): string[] {
+export function mentionedExercises(input: string, session: Session): string[] {
   const text = normalize(input), hits: { id: string; start: number; end: number }[] = [];
   for (const e of session.prescription.exercises) {
     const item = identifyExercise(e.name);

@@ -4,8 +4,9 @@ import { parseWorkoutLog } from "./workout-log-parser";
 import { storedSet, workoutCanonical, workoutContext } from "./workout-context";
 import { clonePlain } from "./plain-data";
 import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, projectReplacementUndo } from "./exercise-replacement";
+import { workoutReviewApprovalSchema } from "./workout-review";
 
-export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo" | "replace" | "undoReplacement"; body:unknown };
+export type WorkoutOperation = { action:"start" | "set" | "end" | "apply" | "undo" | "replace" | "undoReplacement" | "review"; body:unknown };
 export type OutboxItem = { id:string; action:WorkoutOperation["action"]; bodyJson:string; createdAt:string;
   status:"pending" | "retry" | "auth" | "conflict"; attempts:number; nextAttempt:number; error?:string };
 export type OutboxState = { owner:string; version:1; revision:number; confirmed:TodayData | null; items:OutboxItem[];
@@ -15,7 +16,7 @@ const conflict = ():never => { throw new Error("LOCAL_CONFLICT"); };
 export function operationBody(p:WorkoutOperation) {
   return (p.action === "start" ? startSessionSchema : p.action === "set" ? setRequestSchema
     : p.action === "end" ? endSessionSchema : p.action === "apply" ? commandSchema : p.action === "replace" ? replaceExerciseSchema
-    : p.action === "undoReplacement" ? undoReplacementSchema : undoCommandSchema).parse(p.body);
+    : p.action === "undoReplacement" ? undoReplacementSchema : p.action === "review" ? workoutReviewApprovalSchema : undoCommandSchema).parse(p.body);
 }
 export function operationId(p:WorkoutOperation) {
   const body=operationBody(p);
@@ -43,6 +44,13 @@ export function projectOperation(base:TodayData, p:WorkoutOperation, at:string):
     receipt.undo={id:req.id,createdAt:at,changes};return data;
   }
   if (!session || session.status !== "active") return conflict();
+  if(p.action==="review"){
+    const req=workoutReviewApprovalSchema.parse(p.body);
+    if(req.sessionId!==session.id)return conflict();
+    // Only the server has the retained preview. Keep queued confirmation visible
+    // as pending; never treat its uncommitted projection as confirmed memory.
+    return data;
+  }
   if(p.action==="replace" || p.action==="undoReplacement") {
     data.session=p.action==="replace"?projectReplacement(session,p.body,at):projectReplacementUndo(session,p.body,at);return data;
   }
@@ -54,13 +62,15 @@ export function projectOperation(base:TodayData, p:WorkoutOperation, at:string):
   if (p.action === "set") {
     let req:StoredSet=setRequestSchema.parse(p.body);
     const before=session.sets.find(s=>s.id===req.id), exercise=session.prescription.exercises.find(e=>e.id===req.planExerciseId);
-    if (req.sessionId !== session.id || !exercise || req.setIndex > exercise.sets || req.revision !== (before?.revision ?? 0)+1
+    if (req.sessionId !== session.id || !exercise || req.setIndex > exercise.sets && !before || req.revision !== (before?.revision ?? 0)+1
       || before?.status === "voided" || (before && (before.setIndex !== req.setIndex || before.planExerciseId !== req.planExerciseId))
       || (!before && session.sets.some(s=>s.planExerciseId===req.planExerciseId && s.setIndex===req.setIndex))) return conflict();
     if (req.status === "voided") {
       if (!before || ["weightKg","reps","rpe"].some(k=>before[k as keyof StoredSet]!==req[k as keyof StoredSet])) return conflict();
       req={...storedSet(before),status:"voided",revision:req.revision};
     }
+    else if(before?.perHandLoad&&req.weightKg===null&&req.status==="done")
+      req={...req,perHandLoad:before.perHandLoad,weightSource:null};
     replaceSets(session,[{before:before?storedSet(before):null,after:req,exerciseName:exercise.name}],at);return data;
   }
   const req=commandSchema.parse(p.body);
