@@ -1,0 +1,25 @@
+{
+  "developmentGatePassed": false,
+  "checks": {
+    "sameInputTokens": true,
+    "rawAgreement": true,
+    "noTruncation": true,
+    "challengeExact": false,
+    "challengeSchema": false,
+    "challengeNoInvented": false,
+    "guardedSafety": true,
+    "challengeCoverage": true
+  },
+  "coverage": {
+    "dev-eval": 0.5094736842105263,
+    "challenge": 0.925,
+    "handwritten": 0.3333333333333333
+  },
+  "releaseReady": false,
+  "pending": [
+    "continuous natural-language Agent acceptance",
+    "useful coverage beyond rules",
+    "native and physical-device acceptance"
+  ],
+  "note": "Observed diagnostic sets; original thresholds and source-v1 gate retained. Source-v2 is an additional comparison, not a substituted pass."
+}

@@ -20,6 +20,15 @@ challenge correct acceptance ≥90%. The original source-v1 gate is retained.
 Source-v2 and independent source-only results are separate comparisons, never
 a substituted pass. Their equality-based coverage cannot prove model utility.
 
+Actual [2026-10-21 result](../results/run-20261021T222100Z-v3/README.md): rejected.
+All inference completed; scoring stopped on an old cached workspace binding and
+was recovered offline after backup/shutdown. That run used commit `44978c5`.
+The subsequent runner preflight checks that core exports resolve to the current
+checkout before any model call. This is a later operational fix, not a rerun or
+a change to the experiment's original quality gates.
+This experiment is closed; do not rerun it for a better score. A further GPU
+window requires a newly prepared and reviewed protocol.
+
 Even if all development checks pass, `releaseReady` remains false. Full continuous
 Agent acceptance, per-hand load storage, confirmation UI and physical-device
 behavior still need verification. The new pending-draft context keeps uncertain
@@ -32,6 +41,12 @@ After the exact PR commit has all required CI checks, notify the maintainer to
 open the authorized AutoDL RTX 4090 (24 GB). Verify current connection details,
 ≥20 GiB free disk, cached runtime versions and pinned base/previous-Q8 hashes.
 Do not reuse an old SSH session or treat an old OFF observation as current.
+
+Run `node research/m4-parser/scripts/check-workspace.mjs` in the reviewed checkout.
+Do not link its entire `node_modules` to another workspace: internal package links
+can keep resolving to stale code even while data generation and training succeed.
+Use dependencies installed for the checkout, or explicitly bind its own core
+package and verify the preflight. The runner also checks this before inference.
 
 The work deadline is within **10,800 seconds (3 hours)**. Reserve another hour
 within the existing four-hour operational window for off-instance backup,
@@ -63,4 +78,5 @@ Canonical manifest hashes work across CRLF/LF checkouts. Real-token auditing and
 two-step CPU SFT/export are already recorded in DATA_CARD_V3; no new training is
 claimed here. Four new runner checks pass on Linux; Windows passes three and
 explicitly skips the GNU-timeout entry. Full orchestration is mocked, not a GPU
-rehearsal. Existing Budget timeout tests still run. GPU quality/time are unmeasured.
+rehearsal. Existing Budget timeout tests still run. GPU quality/time were unmeasured
+at preparation; the actual completed-window result is linked above.

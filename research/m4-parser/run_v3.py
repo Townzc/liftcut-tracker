@@ -116,6 +116,7 @@ def main():
         budget.step(name, ["node", "--import", "tsx", M4 / script, *extra])
     try:
         if shutil.disk_usage(out).free < 20 * 1024**3: raise ValueError("20 GiB free required")
+        budget.step("workspace-bindings", ["node", M4 / "scripts/check-workspace.mjs", "--root", ROOT])
         for line in (M4 / "train/base-model.sha256").read_text().splitlines():
             sha, name = line.split()
             if digest(cache / "base" / name) != sha: raise ValueError("base hash mismatch")

@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-21 — M4 v3 result, scoring recovery and runtime preflight
+
+- **Result**: one fixed 800-step run, 4,160 outputs. Q8 agreement with HF/F16 is 97.69%/98.08%; challenge exact 187/240 and 153 invented fields regress from previous Q8 213/240 and 50. Candidate rejected; native stays off.
+- **Failure / fix**: scoring hit a stale cached workspace after inference. Preserve the stopped run; offline frozen-source scoring produced 38 reports, matching the three existing server reports. Added preflight before inference, with three real filesystem tests and a Linux fail-before-prediction regression.
+- **Backup / power**: 49 run files, all weights, four complete output files and operational evidence restored/hash-verified (3,084,378,205 bytes); platform OFF verified 2026-10-22T00:00:09.395Z. No deadline extension or additional training.
+- **Pilot**: 20 unchanged originals, 20 CPU calls, no training use. Raw literal 2/6, guard acceptance 0/6; scripted continuous DB approvals do not establish natural Agent success.
+- **Application**: #151 all nine checks passed; production READY on `1f36767`. Current-report role/target checks protect previews; UI and confirmation stay intact.
+- **Verified**: root 9 JS + 219 TS tests, four Linux runner tests, own-checkout preflight, types and production build passed; full lint has zero errors/two existing warnings. Exact-head PR CI is required before merge.
+- **Next**: connect pending/confirmed references and per-hand basis to the live workflow before another fixed experiment. No GPU needed now; native/device release remains gated. [Evidence](../../research/m4-parser/results/run-20261021T222100Z-v3/README.md).
+
 ## 2026-10-21 — Bind live workout proposals to the current report
 
 - **Why / change**: cloud workout tools could quote old chat values, turn a load into a correction index or duplicate a reps quote into extra sets. Current-turn roles, exercise selection, set multiplicity and confirmed targets now gate previews; standalone exercise memory follows the same source rules and allows explicit historical dates.

@@ -87,6 +87,15 @@ class V3RunnerTest(unittest.TestCase):
             patch.object(sys, "argv", ["v3", "--cache", str(self.cache), "--out", str(self.out), "--previous-gguf", str(previous),
                 "--commit", "reviewed", "--stop-at", str(time.time()+60)]):
             self.assertEqual(runner.main(), 0)
+            self.assertEqual(calls[0][0], "workspace-bindings")
+            stopped = self.root / "stale-workspace"
+            bad_args = list(sys.argv); bad_args[bad_args.index("--out") + 1] = str(stopped)
+            with patch.object(sys, "argv", bad_args), patch.object(runner.Budget, "step", side_effect=RuntimeError("stale workspace")) as blocked:
+                with self.assertRaisesRegex(RuntimeError, "stale workspace"): runner.main()
+                self.assertEqual(blocked.call_count, 1)
+                self.assertEqual(blocked.call_args.args[0], "workspace-bindings")
+            self.assertEqual(json.loads((stopped / "run.json").read_text())["state"], "stopped")
+            self.assertFalse((stopped / "previous-q8.jsonl").exists())
         training = dict(calls)["train"]
         self.assertTrue(training[training.index("--train")+1].endswith("generated/v3/train.jsonl"))
         self.assertEqual(training[training.index("--base")+1], str(self.cache / "base"))
