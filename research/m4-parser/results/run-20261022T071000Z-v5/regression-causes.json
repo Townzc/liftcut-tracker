@@ -1,0 +1,54 @@
+{
+  "mode": "Post-result attribution; not a training intervention or new acceptance gate",
+  "newModelCalls": 0,
+  "inputsSha256": {
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "T.jsonl": "7608cec758c1943cba64bb8c426e07256a064f880e5506a8636ec2e4dc3d48e9",
+    "compare-T-challenge.json": "ded13ef6e8e3648136fff3fa3344717d9534252a4f86b7ab02027a0f6dda9230",
+    "S.jsonl": "d9611d5e9767168df462daec5f748daca21678e987ed9519f072c164d4c823b4",
+    "compare-S-challenge.json": "f3826d6810f33bc5843a691c886226391c8114748a4eb2847a0e3b759144b176"
+  },
+  "challengeTotal": 240,
+  "gained": 8,
+  "lost": 17,
+  "exerciseOnly": [
+    "v2-test-7-positive",
+    "v2-test-19-positive",
+    "v2-test-34-positive",
+    "v2-test-41-positive",
+    "v2-test-42-positive",
+    "v2-test-49-positive",
+    "v2-test-61-positive",
+    "v2-test-63-positive",
+    "v2-test-74-positive",
+    "v2-test-80-positive",
+    "v2-test-81-positive",
+    "v2-test-109-positive"
+  ],
+  "exerciseConfusions": {
+    "Pull-up -> 卧推": 10,
+    "Barbell bench press -> Dumbbell curl": 2
+  },
+  "missingUnitFilled": [
+    "v2-test-16-negative",
+    "v2-test-104-negative",
+    "v2-test-112-negative"
+  ],
+  "missingUnitExpandedToUnweightedSets": [
+    "v2-test-8-negative",
+    "v2-test-56-negative"
+  ],
+  "invalidReasonRepaired": [
+    "v2-test-2-negative",
+    "v2-test-18-negative",
+    "v2-test-26-negative",
+    "v2-test-50-negative",
+    "v2-test-66-negative",
+    "v2-test-82-negative"
+  ],
+  "otherGains": [
+    "v2-test-57-negative",
+    "v2-test-110-negative"
+  ],
+  "unclassifiedLosses": []
+}

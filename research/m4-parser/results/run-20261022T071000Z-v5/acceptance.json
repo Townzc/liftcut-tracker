@@ -1,0 +1,32 @@
+{
+  "candidate": "S",
+  "developmentGatePassed": false,
+  "checks": {
+    "sameInputs": true,
+    "fixedTraining": true,
+    "rawAgreement": true,
+    "noTruncation": true,
+    "challengeExact": false,
+    "challengeSchema": false,
+    "challengeNoInvented": false,
+    "guardedSafety": true,
+    "challengeCoverage": false,
+    "focusNegativeReasons": false,
+    "focusPositiveUseful": false,
+    "challengePositiveUseful": false,
+    "clarificationVocabulary": true
+  },
+  "coverage": {
+    "dev-eval": 0.5284210526315789,
+    "challenge": 0.8416666666666667,
+    "handwritten": 0.3076923076923077
+  },
+  "releaseReady": false,
+  "pending": [
+    "passing-candidate continuous acceptance",
+    "useful coverage beyond source-only parsing",
+    "native integration",
+    "physical-device acceptance"
+  ],
+  "note": "Candidate S plus its two references must never truncate. T and historical H remain diagnostics, never substitutes. Observed inputs."
+}

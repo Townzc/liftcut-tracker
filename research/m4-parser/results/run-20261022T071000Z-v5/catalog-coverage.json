@@ -1,0 +1,5173 @@
+{
+  "mode": "Post-result input coverage audit, not a model ablation or new training data",
+  "newModelCalls": 0,
+  "trainRows": 6400,
+  "trainGoldSha256": "52595386e80420517aa0faf931dc666aea19eff758f8b41b0017ff4e0963f7a8",
+  "trainSftSha256": "625ff6a1ed986149410eee30840f3c4b320b7b90f6af732ec5f292075bc5e29e",
+  "savedDataManifestSha256": "9430913e997cc3bff3946b425a6f6b4aaf15112501fff8c5587767de17e9404e",
+  "filesRegeneratedAndMatched": 5,
+  "modelVisibleUserKeys": {
+    "train": [
+      "exercises,sentence"
+    ],
+    "evaluation": [
+      "exercises,sentence"
+    ]
+  },
+  "splits": {
+    "dev-eval": {
+      "total": 740,
+      "exactCatalogSeenInTrain": 276,
+      "catalogMembersSeenInTrain": 304,
+      "catalogs": [
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "史密斯深蹲",
+            "单臂壶铃推举",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing bodyweight calf raise",
+            "Dumbbell crunch",
+            "Cable leg curl",
+            "Barbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "反向卷腹",
+            "单腿器械弯举",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "史密斯分腿蹲",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "坐姿哑铃推举",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "弹力带辅助引体向上",
+            "坐姿器械划船",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "杠铃弯举",
+            "俯卧撑",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "哑铃高脚杯深蹲",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Chin-up",
+            "Chest-supported dumbbell row",
+            "Machine chest press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell curl",
+            "Single-leg machine curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "绳索弯举",
+            "杠铃卧推",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell split squat",
+            "Dumbbell goblet squat",
+            "Chest-supported dumbbell row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell split squat",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "反握引体向上"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Standing bodyweight calf raise",
+            "Dumbbell calf raise",
+            "Bodyweight split squat",
+            "Reverse-grip lat pulldown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "胸托哑铃划船",
+            "弹力带卷腹",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃负重卷腹",
+            "杠铃弯举",
+            "弹力带卷腹",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "自重深蹲",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "绳索颈后臂屈伸",
+            "哑铃弯举",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "卷腹",
+            "哑铃高脚杯深蹲",
+            "壶铃罗马尼亚硬拉",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Band leg curl",
+            "Seated cable row",
+            "Seated machine row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell Romanian deadlift",
+            "Dumbbell preacher curl",
+            "Dumbbell goblet squat",
+            "Dumbbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "坐姿腿弯举",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃提踵",
+            "器械肩推",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "哑铃提踵",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿绳索划船",
+            "哑铃牧师凳弯举",
+            "哑铃弯举",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "正握引体向上",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "哑铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "腿举机提踵",
+            "绳索下压",
+            "器械提踵",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "反握引体向上",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Reverse crunch",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Leg press calf raise",
+            "Dumbbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃俯身划船",
+            "仰卧哑铃臂屈伸",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "器械提踵",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell goblet squat",
+            "Leg press calf raise",
+            "Seated machine row"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "站姿自重提踵",
+            "杠铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell bench press",
+            "Barbell bench press",
+            "Reverse crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "杠铃传统硬拉",
+            "自重深蹲",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "正握引体向上",
+            "腿举机提踵",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "绳索卷腹",
+            "器械提踵",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Barbell bent-over row",
+            "Band curl",
+            "Dumbbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "杠铃传统硬拉",
+            "哑铃提踵",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell goblet squat",
+            "Cable overhead triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "单臂壶铃推举",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing dumbbell overhead press",
+            "Kettlebell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated leg curl",
+            "Single-arm dumbbell row",
+            "Standing bodyweight calf raise",
+            "Barbell back squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "哑铃颈后臂屈伸",
+            "弹力带腿弯举",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索卷腹",
+            "单腿自重提踵",
+            "站姿哑铃推举",
+            "绳索腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重分腿蹲",
+            "器械提踵",
+            "坐姿绳索划船",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Crunch",
+            "Kettlebell goblet squat",
+            "Band triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Bodyweight split squat",
+            "Barbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "腿举机提踵",
+            "反握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "哑铃负重卷腹",
+            "反握引体向上",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "自重分腿蹲",
+            "站姿自重提踵",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "史密斯分腿蹲",
+            "哑铃卧推",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated machine row",
+            "Single-arm dumbbell row",
+            "Standing dumbbell overhead press",
+            "Push-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell Romanian deadlift",
+            "Dumbbell Romanian deadlift",
+            "Lying leg curl",
+            "Cable crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated leg curl",
+            "Reverse-grip lat pulldown",
+            "Cable crunch",
+            "Kettlebell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Lying leg curl",
+            "Single-arm kettlebell press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "壶铃罗马尼亚硬拉",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell split squat",
+            "Dumbbell calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂哑铃划船",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "正握高位下拉",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "单臂壶铃推举",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "杠铃卧推",
+            "弹力带卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell split squat",
+            "Kettlebell split squat",
+            "Lat pulldown",
+            "Cable triceps pushdown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重分腿蹲",
+            "杠铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "自重深蹲",
+            "哑铃高脚杯深蹲",
+            "反握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "哑铃弯举",
+            "绳索下压",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "杠铃弯举",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿自重提踵",
+            "弹力带腿弯举",
+            "哑铃负重卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "绳索弯举",
+            "弹力带臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "杠铃罗马尼亚硬拉"
+          ],
+          "items": 2,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "腿举机提踵",
+            "弹力带卷腹",
+            "俯卧撑",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂哑铃划船",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-leg bodyweight calf raise",
+            "Machine shoulder press",
+            "Lying dumbbell triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "站姿杠铃推举",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "弹力带辅助引体向上",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing dumbbell overhead press",
+            "Chin-up",
+            "Cable leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "站姿哑铃推举",
+            "壶铃高脚杯深蹲",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿哑铃推举",
+            "杠铃传统硬拉",
+            "站姿杠铃推举",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell goblet squat",
+            "Lying dumbbell triceps extension",
+            "Dumbbell bench press",
+            "Cable overhead triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "哑铃地板卧推",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "坐姿器械划船",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "站姿杠铃推举",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "站姿哑铃推举",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "哑铃分腿蹲",
+            "杠铃深蹲",
+            "器械提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "站姿杠铃推举",
+            "弹力带腿弯举",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "器械肩推",
+            "杠铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell split squat",
+            "Lying leg curl",
+            "Machine calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "卷腹",
+            "绳索颈后臂屈伸",
+            "反握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "弹力带弯举",
+            "自重深蹲",
+            "反握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿绳索划船",
+            "反握高位下拉",
+            "绳索腿弯举",
+            "器械提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿哑铃推举",
+            "杠铃俯身划船",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "杠铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated dumbbell shoulder press",
+            "Seated leg curl",
+            "Single-leg bodyweight calf raise",
+            "Dumbbell calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated machine row",
+            "Standing barbell overhead press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Pull-up",
+            "Dumbbell floor press",
+            "Dumbbell goblet squat",
+            "Seated dumbbell shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "史密斯分腿蹲",
+            "卷腹",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握引体向上",
+            "自重深蹲",
+            "杠铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Cable leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿绳索划船",
+            "坐姿腿弯举",
+            "反握引体向上",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Band-assisted pull-up",
+            "Cable curl",
+            "Dumbbell preacher curl",
+            "Kettlebell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "器械肩推",
+            "绳索弯举",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重分腿蹲",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "弹力带臂屈伸",
+            "自重分腿蹲",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "壶铃硬拉",
+            "单臂壶铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable triceps pushdown",
+            "Barbell back squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "弹力带辅助引体向上",
+            "弹力带弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Reverse-grip lat pulldown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "坐姿腿弯举",
+            "壶铃罗马尼亚硬拉",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable crunch",
+            "Barbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "哑铃高脚杯深蹲",
+            "弹力带臂屈伸",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated cable row",
+            "Dumbbell floor press",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带弯举",
+            "坐姿绳索划船",
+            "坐姿哑铃推举",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "哑铃弯举",
+            "弹力带辅助引体向上"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell crunch",
+            "Barbell split squat",
+            "Single-leg machine curl",
+            "Seated leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine chest press",
+            "Machine shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 2,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "胸托哑铃划船",
+            "壶铃高脚杯深蹲",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "壶铃分腿蹲",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "正握高位下拉",
+            "壶铃高脚杯深蹲",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Reverse-grip lat pulldown",
+            "Smith machine squat",
+            "Lying dumbbell triceps extension",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿绳索划船",
+            "弹力带卷腹",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "正握引体向上",
+            "卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "仰卧哑铃臂屈伸",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "正握高位下拉",
+            "史密斯深蹲",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索弯举",
+            "哑铃高脚杯深蹲",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "杠铃深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带臂屈伸",
+            "哑铃罗马尼亚硬拉",
+            "仰卧哑铃臂屈伸",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧腿弯举",
+            "哑铃地板卧推",
+            "单腿自重提踵",
+            "坐姿腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "站姿自重提踵",
+            "反握引体向上",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "哑铃卧推",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "站姿杠铃推举",
+            "站姿自重提踵",
+            "卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "正握引体向上",
+            "弹力带卷腹",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell Romanian deadlift",
+            "Machine shoulder press",
+            "Seated leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "反握引体向上",
+            "壶铃罗马尼亚硬拉",
+            "弹力带臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "单腿自重提踵",
+            "壶铃高脚杯深蹲",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell Romanian deadlift",
+            "Band-assisted pull-up",
+            "Barbell back squat",
+            "Chin-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "绳索颈后臂屈伸",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Band triceps extension",
+            "Lying leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "绳索腿弯举"
+          ],
+          "items": 2,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "单臂壶铃推举",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂壶铃推举",
+            "绳索弯举",
+            "单臂哑铃划船",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "俯卧撑",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握高位下拉",
+            "杠铃俯身划船",
+            "单腿器械弯举",
+            "正握引体向上"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable leg curl",
+            "Cable overhead triceps extension",
+            "Chest-supported dumbbell row",
+            "Lying leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Band leg curl",
+            "Dumbbell floor press",
+            "Dumbbell calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "器械肩推",
+            "哑铃罗马尼亚硬拉",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated cable row",
+            "Dumbbell goblet squat",
+            "Lat pulldown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "弹力带弯举",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "哑铃分腿蹲",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable leg curl",
+            "Standing bodyweight calf raise",
+            "Kettlebell goblet squat",
+            "Crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带弯举",
+            "弹力带臂屈伸",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Conventional barbell deadlift",
+            "Barbell bent-over row",
+            "Machine calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "绳索弯举",
+            "仰卧哑铃臂屈伸",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "器械提踵",
+            "哑铃提踵",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带辅助引体向上",
+            "站姿哑铃推举",
+            "杠铃深蹲",
+            "弹力带腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "绳索腿弯举",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "哑铃牧师凳弯举",
+            "坐姿腿弯举",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Lying dumbbell triceps extension",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine chest press",
+            "Single-leg bodyweight calf raise",
+            "Kettlebell goblet squat",
+            "Single-leg machine curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "弹力带卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 3,
+          "trainSameMembers": 3
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "哑铃提踵",
+            "俯卧撑",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "坐姿哑铃推举",
+            "坐姿腿弯举",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索下压",
+            "壶铃硬拉",
+            "器械提踵",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell back squat",
+            "Dumbbell split squat",
+            "Dumbbell overhead triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "杠铃深蹲",
+            "站姿哑铃推举",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "器械提踵",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "站姿自重提踵",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Machine shoulder press",
+            "Chin-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃硬拉",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "站姿哑铃推举",
+            "杠铃传统硬拉",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "仰卧哑铃臂屈伸",
+            "站姿自重提踵",
+            "史密斯深蹲",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Chin-up",
+            "Conventional barbell deadlift",
+            "Kettlebell deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "杠铃弯举",
+            "哑铃卧推",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing barbell overhead press",
+            "Smith machine squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "坐姿哑铃推举",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃罗马尼亚硬拉",
+            "单臂壶铃推举",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Leg press calf raise",
+            "Dumbbell preacher curl",
+            "Seated dumbbell shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧腿弯举",
+            "坐姿哑铃推举",
+            "反握引体向上",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "仰卧哑铃臂屈伸",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "站姿哑铃推举",
+            "反向卷腹",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine split squat",
+            "Lying leg curl",
+            "Leg press calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "哑铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握引体向上",
+            "反握引体向上",
+            "壶铃高脚杯深蹲",
+            "坐姿腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine shoulder press",
+            "Dumbbell preacher curl",
+            "Dumbbell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃俯身划船",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "哑铃高脚杯深蹲",
+            "壶铃硬拉",
+            "弹力带弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "仰卧哑铃臂屈伸",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell floor press",
+            "Lying dumbbell triceps extension",
+            "Barbell curl",
+            "Barbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧腿弯举",
+            "绳索下压",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃硬拉",
+            "俯卧腿弯举",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带辅助引体向上",
+            "弹力带臂屈伸",
+            "哑铃提踵",
+            "哑铃牧师凳弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable leg curl",
+            "Machine calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "单臂壶铃推举",
+            "杠铃传统硬拉",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Reverse-grip lat pulldown",
+            "Barbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "绳索卷腹",
+            "反向卷腹",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "腿举机提踵",
+            "坐姿腿弯举",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Dumbbell crunch",
+            "Barbell bent-over row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂壶铃推举",
+            "单腿自重提踵",
+            "杠铃罗马尼亚硬拉",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Pull-up",
+            "Barbell back squat",
+            "Cable crunch",
+            "Dumbbell floor press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Band curl",
+            "Dumbbell goblet squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "反握引体向上",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell bent-over row",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "自重分腿蹲",
+            "壶铃分腿蹲",
+            "杠铃深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell Romanian deadlift",
+            "Seated leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "卷腹",
+            "器械提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "反握引体向上",
+            "杠铃罗马尼亚硬拉",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine shoulder press",
+            "Chin-up",
+            "Single-leg bodyweight calf raise",
+            "Smith machine split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Bodyweight split squat",
+            "Machine chest press"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Band curl",
+            "Standing bodyweight calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "弹力带辅助引体向上",
+            "哑铃提踵",
+            "杠铃深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "单臂哑铃划船",
+            "杠铃俯身划船",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Pull-up",
+            "Barbell curl",
+            "Chin-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "杠铃分腿蹲",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell curl",
+            "Barbell curl",
+            "Single-leg bodyweight calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "杠铃俯身划船",
+            "弹力带弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂哑铃划船",
+            "哑铃罗马尼亚硬拉",
+            "杠铃弯举",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell split squat",
+            "Standing dumbbell overhead press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "器械提踵",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "坐姿腿弯举",
+            "俯卧撑",
+            "哑铃牧师凳弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing barbell overhead press",
+            "Reverse-grip lat pulldown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃提踵",
+            "哑铃负重卷腹",
+            "站姿自重提踵",
+            "卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "哑铃提踵",
+            "哑铃弯举",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "自重深蹲",
+            "胸托哑铃划船",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "哑铃提踵",
+            "杠铃卧推",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "器械肩推",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "弹力带卷腹",
+            "史密斯分腿蹲",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "器械提踵",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "哑铃地板卧推",
+            "壶铃分腿蹲",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "壶铃硬拉",
+            "反握高位下拉",
+            "哑铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "哑铃负重卷腹",
+            "哑铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "站姿哑铃推举",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "弹力带臂屈伸",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃硬拉",
+            "哑铃弯举",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握高位下拉",
+            "绳索颈后臂屈伸",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索卷腹",
+            "弹力带臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿绳索划船",
+            "哑铃地板卧推",
+            "卷腹",
+            "杠铃深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿哑铃推举",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Cable triceps pushdown",
+            "Machine chest press",
+            "Barbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "腿举机提踵",
+            "单腿器械弯举",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃提踵",
+            "站姿杠铃推举",
+            "杠铃传统硬拉",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "绳索弯举",
+            "自重分腿蹲",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "杠铃俯身划船",
+            "弹力带卷腹",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索卷腹",
+            "反握引体向上",
+            "壶铃罗马尼亚硬拉",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "弹力带辅助引体向上",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "坐姿腿弯举",
+            "腿举机提踵",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂哑铃划船",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "正握高位下拉",
+            "杠铃深蹲",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-leg machine curl",
+            "Cable leg curl",
+            "Dumbbell overhead triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握引体向上",
+            "自重分腿蹲",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Single-arm kettlebell press",
+            "Push-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Barbell bent-over row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "弹力带卷腹",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "单臂壶铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "胸托哑铃划船",
+            "杠铃俯身划船",
+            "杠铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "杠铃罗马尼亚硬拉",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "哑铃罗马尼亚硬拉",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Bodyweight squat",
+            "Machine chest press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "史密斯深蹲",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing dumbbell overhead press",
+            "Dumbbell preacher curl",
+            "Band triceps extension",
+            "Standing barbell overhead press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "站姿杠铃推举",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "站姿哑铃推举",
+            "单臂壶铃推举",
+            "卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Chin-up",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "坐姿哑铃推举",
+            "绳索弯举",
+            "哑铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "正握引体向上",
+            "杠铃卧推",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "坐姿器械推胸",
+            "弹力带弯举",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "正握引体向上",
+            "哑铃提踵",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃负重卷腹",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "弹力带卷腹",
+            "站姿哑铃推举",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "壶铃罗马尼亚硬拉",
+            "杠铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-arm dumbbell row",
+            "Barbell back squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "绳索颈后臂屈伸",
+            "腿举机提踵",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing dumbbell overhead press",
+            "Machine shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "壶铃硬拉",
+            "单臂哑铃划船",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "反握高位下拉",
+            "反向卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "绳索腿弯举",
+            "哑铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带臂屈伸",
+            "自重深蹲",
+            "单臂壶铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "卷腹",
+            "杠铃俯身划船",
+            "器械提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine shoulder press",
+            "Dumbbell curl",
+            "Dumbbell goblet squat",
+            "Band-assisted pull-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "杠铃俯身划船",
+            "哑铃分腿蹲",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell split squat",
+            "Band curl",
+            "Smith machine split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握高位下拉",
+            "单腿自重提踵",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "哑铃颈后臂屈伸",
+            "腿举机提踵",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃俯身划船",
+            "壶铃高脚杯深蹲",
+            "哑铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带臂屈伸",
+            "器械肩推",
+            "壶铃罗马尼亚硬拉",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "杠铃卧推",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Standing barbell overhead press",
+            "Lat pulldown"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Dumbbell floor press",
+            "Band crunch",
+            "Barbell back squat",
+            "Single-arm kettlebell press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "杠铃分腿蹲",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿自重提踵",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "自重分腿蹲",
+            "哑铃颈后臂屈伸",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "哑铃弯举",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "器械提踵",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "坐姿绳索划船",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带卷腹",
+            "杠铃传统硬拉",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "坐姿绳索划船",
+            "卷腹",
+            "杠铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂哑铃划船",
+            "哑铃颈后臂屈伸",
+            "杠铃卧推",
+            "弹力带腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Lying leg curl",
+            "Seated leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Cable overhead triceps extension",
+            "Single-leg bodyweight calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-arm kettlebell press",
+            "Single-leg bodyweight calf raise",
+            "Dumbbell bench press",
+            "Smith machine split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing dumbbell overhead press",
+            "Chin-up",
+            "Barbell bench press",
+            "Barbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "弹力带弯举",
+            "哑铃卧推",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带卷腹",
+            "绳索颈后臂屈伸",
+            "单腿器械弯举",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "哑铃提踵",
+            "自重分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索弯举",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell overhead triceps extension",
+            "Reverse-grip lat pulldown",
+            "Band-assisted pull-up",
+            "Dumbbell preacher curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃负重卷腹",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "杠铃弯举",
+            "站姿哑铃推举",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated cable row",
+            "Dumbbell goblet squat",
+            "Barbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Chest-supported dumbbell row",
+            "Dumbbell overhead triceps extension",
+            "Chin-up",
+            "Standing bodyweight calf raise"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "哑铃卧推",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "哑铃负重卷腹",
+            "杠铃俯身划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell Romanian deadlift",
+            "Barbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧腿弯举",
+            "哑铃地板卧推",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "绳索弯举",
+            "反向卷腹",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell bench press",
+            "Dumbbell Romanian deadlift",
+            "Machine calf raise",
+            "Chin-up"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable leg curl",
+            "Crunch",
+            "Dumbbell crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反向卷腹",
+            "坐姿器械推胸",
+            "俯卧腿弯举",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械推胸",
+            "坐姿哑铃推举",
+            "壶铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Seated dumbbell shoulder press",
+            "Crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "哑铃罗马尼亚硬拉",
+            "绳索卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "弹力带臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell back squat",
+            "Barbell curl",
+            "Smith machine split squat",
+            "Cable overhead triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "杠铃分腿蹲",
+            "坐姿腿弯举",
+            "哑铃负重卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Chest-supported dumbbell row",
+            "Band-assisted pull-up",
+            "Single-arm dumbbell row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单臂壶铃推举",
+            "哑铃颈后臂屈伸",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃深蹲",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "Dumbbell split squat",
+            "Kettlebell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "单臂壶铃推举",
+            "哑铃罗马尼亚硬拉",
+            "俯卧撑"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "哑铃高脚杯深蹲",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell overhead triceps extension",
+            "Lat pulldown",
+            "Single-arm dumbbell row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Machine calf raise",
+            "Chest-supported dumbbell row"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重分腿蹲",
+            "器械肩推",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "绳索弯举",
+            "反握高位下拉",
+            "哑铃弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "正握引体向上",
+            "哑铃分腿蹲",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "哑铃牧师凳弯举",
+            "腿举机提踵",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带辅助引体向上",
+            "哑铃卧推",
+            "俯卧撑",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "哑铃负重卷腹",
+            "绳索下压"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿哑铃推举",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "哑铃罗马尼亚硬拉",
+            "单腿器械弯举",
+            "哑铃提踵",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带弯举",
+            "正握引体向上",
+            "壶铃分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "哑铃负重卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "站姿杠铃推举",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "反握高位下拉",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "仰卧哑铃臂屈伸",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 3
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "哑铃分腿蹲",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "弹力带卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃提踵",
+            "壶铃硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "器械提踵",
+            "杠铃卧推",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带卷腹",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "壶铃分腿蹲",
+            "哑铃颈后臂屈伸",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell curl",
+            "Dumbbell bench press",
+            "Smith machine split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃罗马尼亚硬拉",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "绳索弯举",
+            "反向卷腹",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃分腿蹲",
+            "坐姿器械推胸",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃罗马尼亚硬拉",
+            "腿举机提踵",
+            "史密斯分腿蹲",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "绳索颈后臂屈伸",
+            "胸托哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重分腿蹲",
+            "史密斯深蹲",
+            "单腿器械弯举",
+            "哑铃高脚杯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "壶铃高脚杯深蹲",
+            "坐姿器械推胸",
+            "坐姿器械划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "哑铃卧推",
+            "站姿杠铃推举",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿自重提踵",
+            "弹力带弯举",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "杠铃卧推",
+            "弹力带卷腹",
+            "单臂哑铃划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带卷腹",
+            "单腿自重提踵",
+            "弹力带弯举",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable triceps pushdown",
+            "Crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Leg press calf raise",
+            "Single-arm kettlebell press",
+            "Kettlebell deadlift",
+            "Cable triceps pushdown"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "单腿自重提踵",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Smith machine squat",
+            "Cable crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "杠铃俯身划船",
+            "站姿杠铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell overhead triceps extension",
+            "Barbell back squat",
+            "Barbell Romanian deadlift"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "哑铃卧推",
+            "哑铃提踵",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell bench press",
+            "Dumbbell Romanian deadlift",
+            "Dumbbell goblet squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿自重提踵",
+            "自重分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "绳索腿弯举",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Push-up",
+            "Barbell split squat",
+            "Chest-supported dumbbell row",
+            "Dumbbell floor press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell goblet squat",
+            "Barbell split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Standing barbell overhead press",
+            "Seated dumbbell shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃硬拉",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "哑铃牧师凳弯举",
+            "弹力带弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Bodyweight split squat",
+            "Band curl",
+            "Cable curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "胸托哑铃划船",
+            "坐姿器械划船",
+            "哑铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell overhead triceps extension",
+            "Barbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "坐姿腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "Seated cable row",
+            "Machine calf raise",
+            "Single-leg machine curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "站姿自重提踵",
+            "俯卧腿弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "坐姿腿弯举",
+            "杠铃深蹲",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "哑铃负重卷腹"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "哑铃负重卷腹",
+            "史密斯深蹲",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell deadlift",
+            "Single-leg bodyweight calf raise",
+            "Machine shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "正握引体向上"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械提踵",
+            "坐姿绳索划船"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "杠铃分腿蹲",
+            "杠铃传统硬拉",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "自重深蹲",
+            "哑铃负重卷腹",
+            "壶铃分腿蹲",
+            "坐姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃传统硬拉",
+            "杠铃卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "杠铃俯身划船",
+            "站姿杠铃推举",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "器械肩推",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Conventional barbell deadlift",
+            "Cable crunch",
+            "Barbell curl",
+            "Dumbbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "绳索腿弯举",
+            "史密斯分腿蹲",
+            "站姿自重提踵",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃高脚杯深蹲",
+            "仰卧哑铃臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 2,
+          "trainSameMembers": 3
+        },
+        {
+          "exercises": [
+            "史密斯分腿蹲",
+            "史密斯深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿哑铃推举",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿腿弯举",
+            "壶铃硬拉",
+            "史密斯分腿蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell curl",
+            "Cable leg curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "器械提踵",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃分腿蹲",
+            "杠铃弯举",
+            "站姿自重提踵",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell goblet squat",
+            "Cable crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "弹力带卷腹",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "哑铃牧师凳弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃地板卧推",
+            "绳索下压",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃颈后臂屈伸",
+            "坐姿绳索划船",
+            "壶铃罗马尼亚硬拉",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Reverse crunch",
+            "Barbell curl"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "弹力带腿弯举",
+            "壶铃罗马尼亚硬拉",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "史密斯深蹲",
+            "腿举机提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃硬拉",
+            "哑铃高脚杯深蹲",
+            "自重分腿蹲",
+            "哑铃提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Kettlebell deadlift",
+            "Dumbbell floor press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "腿举机提踵",
+            "单臂壶铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 2,
+          "trainSameMembers": 3
+        },
+        {
+          "exercises": [
+            "绳索颈后臂屈伸",
+            "杠铃传统硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "哑铃牧师凳弯举",
+            "坐姿器械推胸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "哑铃高脚杯深蹲",
+            "自重分腿蹲",
+            "正握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧腿弯举",
+            "单臂壶铃推举",
+            "仰卧哑铃臂屈伸",
+            "器械肩推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell curl",
+            "Band curl",
+            "Seated dumbbell shoulder press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "器械肩推",
+            "哑铃罗马尼亚硬拉",
+            "单腿器械弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "单腿器械弯举",
+            "坐姿绳索划船",
+            "反握引体向上",
+            "哑铃颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿自重提踵",
+            "哑铃地板卧推"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell curl",
+            "Push-up",
+            "Cable crunch"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Cable leg curl",
+            "Lying dumbbell triceps extension"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃罗马尼亚硬拉",
+            "弹力带辅助引体向上",
+            "坐姿器械划船",
+            "绳索弯举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带弯举",
+            "壶铃硬拉",
+            "单腿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "壶铃高脚杯深蹲",
+            "绳索卷腹",
+            "器械提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "俯卧撑",
+            "反握高位下拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带臂屈伸",
+            "壶铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 1
+        },
+        {
+          "exercises": [
+            "绳索卷腹",
+            "杠铃罗马尼亚硬拉",
+            "壶铃高脚杯深蹲",
+            "自重深蹲"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带卷腹",
+            "杠铃罗马尼亚硬拉"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "哑铃卧推",
+            "绳索颈后臂屈伸"
+          ],
+          "items": 1,
+          "trainSameOrder": 1,
+          "trainSameMembers": 2
+        },
+        {
+          "exercises": [
+            "Kettlebell split squat",
+            "Cable leg curl",
+            "Barbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-arm dumbbell row",
+            "Machine calf raise",
+            "Dumbbell bench press"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Single-leg machine curl",
+            "Dumbbell calf raise",
+            "Smith machine split squat"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "弹力带辅助引体向上",
+            "绳索腿弯举",
+            "哑铃地板卧推",
+            "站姿自重提踵"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "杠铃弯举",
+            "弹力带辅助引体向上"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "坐姿器械划船",
+            "哑铃高脚杯深蹲",
+            "站姿自重提踵",
+            "站姿哑铃推举"
+          ],
+          "items": 1,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Barbell bench press",
+            "Dumbbell bench press",
+            "Pull-up",
+            "Push-up"
+          ],
+          "items": 130,
+          "trainSameOrder": 1212,
+          "trainSameMembers": 1212
+        },
+        {
+          "exercises": [
+            "杠铃卧推",
+            "哑铃卧推",
+            "引体向上",
+            "俯卧撑"
+          ],
+          "items": 110,
+          "trainSameOrder": 1188,
+          "trainSameMembers": 1188
+        }
+      ]
+    },
+    "challenge": {
+      "total": 240,
+      "exactCatalogSeenInTrain": 0,
+      "catalogMembersSeenInTrain": 0,
+      "catalogs": [
+        {
+          "exercises": [
+            "卧推",
+            "深蹲",
+            "Pull-up",
+            "Push-up"
+          ],
+          "items": 108,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Dumbbell bench press",
+            "Barbell bench press",
+            "Dumbbell curl",
+            "Barbell curl"
+          ],
+          "items": 132,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        }
+      ]
+    },
+    "handwritten": {
+      "total": 60,
+      "exactCatalogSeenInTrain": 0,
+      "catalogMembersSeenInTrain": 0,
+      "catalogs": [
+        {
+          "exercises": [
+            "卧推",
+            "深蹲",
+            "硬拉"
+          ],
+          "items": 37,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Squat",
+            "Bench press",
+            "Lat pulldown"
+          ],
+          "items": 16,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "站姿杠铃推举",
+            "杠铃俯身划船",
+            "引体向上",
+            "俯卧撑"
+          ],
+          "items": 4,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        },
+        {
+          "exercises": [
+            "Overhead press",
+            "Pull-up",
+            "Dumbbell curl"
+          ],
+          "items": 3,
+          "trainSameOrder": 0,
+          "trainSameMembers": 0
+        }
+      ]
+    }
+  },
+  "aliasPolicy": {
+    "scope": "Bare 卧推/bench press with both barbell and dumbbell bench variants available; existing synthetic rows only",
+    "registryResolution": {
+      "卧推": "barbell-bench",
+      "bench press": "barbell-bench"
+    },
+    "registrySourceLfSha256": "64bc0707db12b06fb1cbb759eac219a175de1644ebf77e5c0195b7d76294567d",
+    "trainIntents": {
+      "unknown_exercise": 40
+    },
+    "challengeIntents": {
+      "record": 9,
+      "missing_reps": 2,
+      "plan_not_actual": 2,
+      "uncertain_quantity": 3,
+      "missing_unit": 1,
+      "negation": 1
+    },
+    "trainUnknownDespiteRegistryAlias": [
+      "v4-train-17-negative",
+      "v4-train-47-negative",
+      "v4-train-77-negative",
+      "v4-train-107-negative",
+      "v4-train-137-negative",
+      "v4-train-167-negative",
+      "v4-train-197-negative",
+      "v4-train-227-negative",
+      "v4-train-257-negative",
+      "v4-train-287-negative",
+      "v4-train-317-negative",
+      "v4-train-347-negative",
+      "v4-train-377-negative",
+      "v4-train-407-negative",
+      "v4-train-437-negative",
+      "v4-train-467-negative",
+      "v4-train-497-negative",
+      "v4-train-527-negative",
+      "v4-train-557-negative",
+      "v4-train-587-negative",
+      "v4-train-617-negative",
+      "v4-train-647-negative",
+      "v4-train-677-negative",
+      "v4-train-707-negative",
+      "v4-train-737-negative",
+      "v4-train-767-negative",
+      "v4-train-797-negative",
+      "v4-train-827-negative",
+      "v4-train-857-negative",
+      "v4-train-887-negative",
+      "v4-train-917-negative",
+      "v4-train-947-negative",
+      "v4-train-977-negative",
+      "v4-train-1007-negative",
+      "v4-train-1037-negative",
+      "v4-train-1067-negative",
+      "v4-train-1097-negative",
+      "v4-train-1127-negative",
+      "v4-train-1157-negative",
+      "v4-train-1187-negative"
+    ],
+    "note": "Training asks unknown-exercise clarification for these registered aliases, while challenge contains record targets for the same alias policy. Different full catalogs/frames remain; this is a policy mismatch to resolve before new training, not proof of v5 causation. Historical labels and scores stay unchanged."
+  },
+  "note": "An unseen exact catalog is not an unseen exercise or proof of cause. No training, evaluation labels, thresholds or private originals changed."
+}
