@@ -1,5 +1,17 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v5: prepare a single loss-reduction comparison
+
+Observation: v4 improved observed challenge exact to 206/240 but still invented 138 fields (132 in ambiguous RPE); its candidate remains rejected. The answer-token coefficient audit measured clarification at 16.15% of coefficients despite 38.31% of examples. This is not a causal explanation or a quality prediction.
+
+Choice: [v5 protocol](../../research/m4-parser/train/GPU_V5.md) compares fresh original-base token-mean T with per-example-mean S, preserving v4 data, ordering, optimizer, seed, short SFT/enum inference prompts and numeric gates. H is archived v4 D. S is preselected; two 800-step trainings and four 1,040-output streams are planned, not run. Candidate Q8/HF/F16 must not truncate; historical H and control T errors are reported separately, unlike v4's across-all-cells check. V4 failure is unchanged.
+
+Actual CPU work: 10 autograd/tiny-random-Qwen tests; two-step, batch-2 SFT/export smokes of both objectives on saved v1 weights; 7 Linux runner tests; exact 1,040-input and historical-byte assembly; 8 tar/restore/fault tests with byte fixtures; TS type/lint. Both initial CPU adapters were finite, updated and different, exported cache enabled. Removing an unnecessary retained-logits reference prompted candidate revalidation: one merged-model export failed with C-drive disk exhaustion, and its log/partial output remain preserved; a fresh E-drive replay completed in 73.7 training seconds with a byte-identical candidate adapter. Three CPU smokes completed and one export failed. [Receipts and limitations](../../research/m4-parser/results/loss-v5-20261022/README.md). No new pretrained-model inference, GPU opening or private 20-utterance use. New training data count is zero.
+
+Interpretation: arithmetic, masking and workflow checks support running the comparison, not accepting the candidate. Sample mean changes coefficient mass; gradient difficulty/clipping and generalization remain unknown. Fresh T guards against attributing historical drift to S. Positive-case floors protect against indiscriminate clarification. All observed evaluation sets remain observed.
+
+Next trigger: final exact-head CI, reviewed-source restore, then notify the maintainer for a fresh server window (work ≤3h, reserve 1h). Verify eight weights and all outputs off-instance, then platform OFF. Native stays disabled until the candidate and subsequent continuous/device gates pass. Learning checkpoint: token vs example averaging, fresh vs historical control, and why passing CPU checks is not improved model quality.
+
 ## 2026-10-22 — v4 completed; data/prompt gains do not pass the candidate gate
 
 - **Actual**: exact reviewed `f9535a89`, one original-base 800-step LoRA run; A cached, B/D-HF/D-F16/C/D each 1,040 predictions. No retry, extra model call, grammar constraint, arm switch or threshold relaxation. Dev loss 0.05173 and training metric time 348.3 seconds are not quality acceptance.

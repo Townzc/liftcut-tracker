@@ -1,0 +1,3 @@
+# Install torch from the CPU wheel index first (see CI). No pretrained weights.
+torch==2.8.0
+transformers==5.20.1

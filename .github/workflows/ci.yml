@@ -47,6 +47,8 @@ jobs:
           python research/m4-parser/test_v2_runner.py -v
           python research/m4-parser/test_v3_runner.py -v
           python research/m4-parser/test_v4_runner.py -v
+          python research/m4-parser/test_v5_runner.py -v
+          python research/m4-parser/test_v5_backup.py -v
           python research/m4-parser/test_loss_mass.py -v
           python research/m4-parser/test_closed_decode.py -v
 
@@ -87,6 +89,26 @@ jobs:
           python research/liftcut-agent/protocol_experiment.py mock --output-dir research/liftcut-agent/outputs/ci-protocol-matrix
           python research/liftcut-agent/compare_protocols.py --run-root research/liftcut-agent/outputs/ci-protocol-matrix
           python research/liftcut-agent/export_trajectories.py --run-dir research/liftcut-agent/reports/deepseek-development-2026-09-28 --output-dir research/liftcut-agent/outputs/ci-decisions
+
+  m4-loss:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: research/m4-parser/train/requirements-loss-cpu.txt
+      - name: Install CPU-only autograd runtime without model weights
+        run: |
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.8.0
+          pip install -r research/m4-parser/train/requirements-loss-cpu.txt
+      - name: Verify causal loss, masking, padding and actual tiny-model gradients
+        env:
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
+        run: python research/m4-parser/test_sample_mean_loss.py -v
 
   tokenizer-audit:
     runs-on: ubuntu-latest
