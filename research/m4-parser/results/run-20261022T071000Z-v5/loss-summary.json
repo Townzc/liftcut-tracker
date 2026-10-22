@@ -1,0 +1,1759 @@
+{
+  "arms": {
+    "H": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 10,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 7,
+      "correctReason": 241,
+      "clarificationGold": 406,
+      "falseRefusals": 5,
+      "challengePositive": {
+        "total": 120,
+        "exact": 113
+      }
+    },
+    "T": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 10,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 7,
+      "correctReason": 241,
+      "clarificationGold": 406,
+      "falseRefusals": 5,
+      "challengePositive": {
+        "total": 120,
+        "exact": 113
+      }
+    },
+    "S": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 5,
+          "positiveTotal": 15,
+          "positiveExact": 13
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 1,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 13
+        }
+      },
+      "invalidClarificationReasons": 0,
+      "correctReason": 245,
+      "clarificationGold": 406,
+      "falseRefusals": 3,
+      "challengePositive": {
+        "total": 120,
+        "exact": 101
+      }
+    }
+  },
+  "comparisons": {
+    "H->T": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 4
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 17
+        },
+        "correct_rpe": {
+          "total": 18,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 7
+        },
+        "record_weighted": {
+          "total": 94,
+          "bothCorrect": 82,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 12
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "bothCorrect": 8,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 9
+        },
+        "clarify_negation": {
+          "total": 13,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "skip": {
+          "total": 26,
+          "bothCorrect": 22,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 4
+        },
+        "record_list": {
+          "total": 59,
+          "bothCorrect": 56,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "record_pyramid": {
+          "total": 27,
+          "bothCorrect": 21,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 6
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "bothCorrect": 10,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 4
+        },
+        "clarify_question": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 17,
+          "bothCorrect": 17,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 4
+        },
+        "record_uniform": {
+          "total": 42,
+          "bothCorrect": 41,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "bothCorrect": 37,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_reps": {
+          "total": 20,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 5
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "bothCorrect": 9,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "end": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 10,
+          "bothCorrect": 10,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "bothCorrect": 6,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 13
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 2
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "bothCorrect": 6,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 6
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 12
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "bothCorrect": 7,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 5
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 11
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "bothCorrect": 10,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 5
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "bothCorrect": 9,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 6
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 15
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_list": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_uniform": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_pyramid": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 4,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "correct_reps": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_rpe": {
+          "total": 1,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "skip": {
+          "total": 5,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "end": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_question": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_negation": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      }
+    },
+    "T->S": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "bothCorrect": 13,
+          "gained": 2,
+          "lost": 0,
+          "bothWrong": 2
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "bothCorrect": 1,
+          "gained": 6,
+          "lost": 2,
+          "bothWrong": 11
+        },
+        "correct_rpe": {
+          "total": 18,
+          "bothCorrect": 11,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "record_weighted": {
+          "total": 94,
+          "bothCorrect": 81,
+          "gained": 12,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "bothCorrect": 8,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 5
+        },
+        "clarify_negation": {
+          "total": 13,
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "skip": {
+          "total": 26,
+          "bothCorrect": 21,
+          "gained": 4,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_list": {
+          "total": 59,
+          "bothCorrect": 55,
+          "gained": 3,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_pyramid": {
+          "total": 27,
+          "bothCorrect": 16,
+          "gained": 4,
+          "lost": 5,
+          "bothWrong": 2
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "bothCorrect": 8,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 4
+        },
+        "clarify_question": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 17,
+          "bothCorrect": 17,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "bothCorrect": 3,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 3
+        },
+        "record_uniform": {
+          "total": 42,
+          "bothCorrect": 38,
+          "gained": 1,
+          "lost": 3,
+          "bothWrong": 0
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "bothCorrect": 36,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "correct_reps": {
+          "total": 20,
+          "bothCorrect": 15,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "bothCorrect": 4,
+          "gained": 0,
+          "lost": 5,
+          "bothWrong": 0
+        },
+        "end": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 10,
+          "bothCorrect": 10,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 4,
+          "bothWrong": 13
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 2,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "bothCorrect": 6,
+          "gained": 5,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "bothCorrect": 6,
+          "gained": 0,
+          "lost": 6,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 12
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "bothCorrect": 7,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "bothCorrect": 1,
+          "gained": 11,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 5,
+          "bothWrong": 5
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "bothCorrect": 9,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "bothCorrect": 0,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 14
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "bothCorrect": 4,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 2
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_list": {
+          "total": 3,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_uniform": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_pyramid": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 4,
+          "bothCorrect": 3,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_reps": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_rpe": {
+          "total": 1,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "skip": {
+          "total": 5,
+          "bothCorrect": 2,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 2
+        },
+        "end": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_question": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_negation": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      }
+    },
+    "H->S": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "bothCorrect": 13,
+          "gained": 2,
+          "lost": 0,
+          "bothWrong": 2
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "bothCorrect": 1,
+          "gained": 6,
+          "lost": 2,
+          "bothWrong": 11
+        },
+        "correct_rpe": {
+          "total": 18,
+          "bothCorrect": 11,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "record_weighted": {
+          "total": 94,
+          "bothCorrect": 81,
+          "gained": 12,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "bothCorrect": 8,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 5
+        },
+        "clarify_negation": {
+          "total": 13,
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "skip": {
+          "total": 26,
+          "bothCorrect": 21,
+          "gained": 4,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_list": {
+          "total": 59,
+          "bothCorrect": 55,
+          "gained": 3,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_pyramid": {
+          "total": 27,
+          "bothCorrect": 16,
+          "gained": 4,
+          "lost": 5,
+          "bothWrong": 2
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "bothCorrect": 8,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 4
+        },
+        "clarify_question": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 17,
+          "bothCorrect": 17,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "bothCorrect": 3,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 3
+        },
+        "record_uniform": {
+          "total": 42,
+          "bothCorrect": 38,
+          "gained": 1,
+          "lost": 3,
+          "bothWrong": 0
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "bothCorrect": 36,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "correct_reps": {
+          "total": 20,
+          "bothCorrect": 15,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "bothCorrect": 4,
+          "gained": 0,
+          "lost": 5,
+          "bothWrong": 0
+        },
+        "end": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 10,
+          "bothCorrect": 10,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 4,
+          "bothWrong": 13
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 2,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "bothCorrect": 6,
+          "gained": 5,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "bothCorrect": 6,
+          "gained": 0,
+          "lost": 6,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 12
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "bothCorrect": 7,
+          "gained": 4,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "bothCorrect": 1,
+          "gained": 11,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 5,
+          "bothWrong": 5
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "bothCorrect": 9,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "bothCorrect": 0,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 14
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "bothCorrect": 4,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 2
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_list": {
+          "total": 3,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "record_uniform": {
+          "total": 5,
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "record_pyramid": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "repeat": {
+          "total": 4,
+          "bothCorrect": 3,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_reps": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_weight": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "correct_rpe": {
+          "total": 1,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "skip": {
+          "total": 5,
+          "bothCorrect": 2,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 2
+        },
+        "end": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_question": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_negation": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "bothCorrect": 1,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      }
+    }
+  },
+  "note": "Fresh T vs S changes only training loss reduction. H is historical v4 D; its timing is not a fresh latency control. Strict clarification and positive gates retained. Observed inputs, not independent holdout."
+}

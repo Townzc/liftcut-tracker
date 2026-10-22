@@ -1,0 +1,34 @@
+{
+  "newModelCalls": 0,
+  "mode": "post-result saved-output diagnostic",
+  "arms": {
+    "H": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 13
+      }
+    ],
+    "T": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 13
+      }
+    ],
+    "S": [],
+    "S-HF": [],
+    "S-F16": []
+  },
+  "note": "Complete truncation listing from saved outputs, including historical H and fresh control T. Candidate gates cover S, S-HF and S-F16. No token limit, output or gate was changed."
+}
