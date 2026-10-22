@@ -1,0 +1,52 @@
+{
+  "mode": "real assembly and archived-A scoring; cloned other cells check wiring only; no new inference",
+  "newModelCalls": 0,
+  "inputRows": 1040,
+  "uniqueIds": 1040,
+  "baselineFilesVerified": {
+    "run.json": "5202c514b4e5988bb57d0b5b9eb4e94f43e0220d29e5ff77a380aa34a608ac94",
+    "all-eval.jsonl": "9fcdd18b8db9fb0a8e95a05e7ce381b80525a17d1ecd1868de7a8c9a7a884e84",
+    "quant.jsonl": "cbd2d9f1e3eb6754fb6741ed07f419ef6286b89b2e8dc92b369f13d379c1c53d",
+    "quant.jsonl.audit.json": "c12671d36d39e21b2dd5123a314f79b4f13cecb72a166718278510afe44dae11",
+    "gguf/parser-q8_0.gguf": "a70a1bddfde97db3d5c56222b16011395c6412ae621fa8755ff751c13773f39b"
+  },
+  "shortSha256": "9fcdd18b8db9fb0a8e95a05e7ce381b80525a17d1ecd1868de7a8c9a7a884e84",
+  "enumSha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+  "archivedA": {
+    "challengeExact": 187,
+    "total": 240,
+    "inventedFields": 153,
+    "focus": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 3,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 2,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 18,
+      "correctReason": 223,
+      "clarificationGold": 406,
+      "falseRefusals": 5,
+      "challengePositive": {
+        "total": 120,
+        "exact": 111
+      }
+    }
+  },
+  "clonedComparisonGainsAndLosses": 0,
+  "protocolSha256": "8c723364befc5fd741b875bfd69515e627ded1fa1598f39759c3bac7087c53f9"
+}

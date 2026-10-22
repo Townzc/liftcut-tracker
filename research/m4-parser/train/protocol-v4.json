@@ -1,0 +1,119 @@
+{
+  "version": "m4-v4-data-prompt-factorial-1",
+  "candidate": "D",
+  "maxSeconds": 10800,
+  "backupAndShutdownReserveSeconds": 3600,
+  "quantization": "q8_0",
+  "trainingArgs": [
+    "--device",
+    "cuda",
+    "--batch",
+    "16",
+    "--epochs",
+    "2",
+    "--seed",
+    "20261019",
+    "--rank",
+    "16",
+    "--lr",
+    "0.0002",
+    "--max-len",
+    "512",
+    "--gradient-checkpointing"
+  ],
+  "gates": {
+    "rawAgreement": 0.95,
+    "challengeExact": 0.9,
+    "challengeSchema": 0.99,
+    "challengeCoverage": 0.9,
+    "rawChallengeInvented": 0,
+    "guardedUnsafe": 0,
+    "truncated": 0
+  },
+  "focusGates": {
+    "negativeReasonExact": 0.9,
+    "positiveExact": 0.9,
+    "invalidClarificationReasons": 0
+  },
+  "evaluationItems": 1040,
+  "maximumModelPredictions": 5200,
+  "cachedPredictions": 1040,
+  "arms": {
+    "A": "archived v3 Q8 + short; cached only",
+    "B": "archived v3 Q8 + enum",
+    "C": "new v4 Q8 + short",
+    "D": "new v4 Q8 + enum; preselected candidate"
+  },
+  "quantizationReferences": [
+    "D-HF",
+    "D-F16"
+  ],
+  "newStreamOrder": [
+    "B",
+    "D-HF",
+    "D-F16",
+    "C",
+    "D"
+  ],
+  "baselineCommit": "44978c5ec594fa680538b1d5236d1c7110fbd84d",
+  "baselineFiles": {
+    "run.json": "5202c514b4e5988bb57d0b5b9eb4e94f43e0220d29e5ff77a380aa34a608ac94",
+    "all-eval.jsonl": "9fcdd18b8db9fb0a8e95a05e7ce381b80525a17d1ecd1868de7a8c9a7a884e84",
+    "quant.jsonl": "cbd2d9f1e3eb6754fb6741ed07f419ef6286b89b2e8dc92b369f13d379c1c53d",
+    "quant.jsonl.audit.json": "c12671d36d39e21b2dd5123a314f79b4f13cecb72a166718278510afe44dae11",
+    "gguf/parser-q8_0.gguf": "a70a1bddfde97db3d5c56222b16011395c6412ae621fa8755ff751c13773f39b"
+  },
+  "inputs": {
+    "short": {
+      "sha256": "9fcdd18b8db9fb0a8e95a05e7ce381b80525a17d1ecd1868de7a8c9a7a884e84",
+      "rows": 1040,
+      "maxPromptTokens": 179,
+      "tokenIdsSha256": "7f18ca373f567dd458f521f397ff550cac8f86aebb776bca74a76d824551ddcb",
+      "truncated": 0
+    },
+    "enum": {
+      "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+      "rows": 1040,
+      "maxPromptTokens": 231,
+      "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5",
+      "truncated": 0
+    }
+  },
+  "dataManifestCanonicalSha256": {
+    "v2": "1b1c933eb4c48c69d4de6d8cb30088111e787ec4c526f0885df57f937e3a1b71",
+    "v3": "eadea453c25634e4e880adb54200c9737823398b553f4b67b421857d036a6079",
+    "v4": "d853fffc48eb0eacff47aa994c4e4616ec5e64ff8a12c832bc975f02435a5c3b"
+  },
+  "sourceLfSha256": {
+    "research/m4-parser/run_v2.py": "b2ddf6855a5c84235c6e9f5fc5062807916b7ebcafaa0607a2aded2ed3f516d5",
+    "research/m4-parser/run_v3.py": "3d97efdc3eee0993465ad394e851b4365e9cdd112763c851c659f75a7c62e8e9",
+    "research/m4-parser/run_v4.py": "98a2391bb2de1914735785533f4d070cd0609e1a2f4f0261b16be3d8da97d3ca",
+    "research/m4-parser/train/acceptance_v2.py": "5fc82b1cc12c6800b14bd030981fcf09ed0f80c767725a99af5ebc9a6abf598d",
+    "research/m4-parser/train/sft.py": "a3b3aab7c40a49c3f72625160638472362f18609b186a916ae8f1218be458613",
+    "research/m4-parser/train/predict.py": "0aa90b2c5919728c8baf5850f01623f0e80647334f880c40befd2d7a63bcbcbd",
+    "research/m4-parser/train/consistency.py": "57acdc14d82cb73c59c884ee69075d04e52c8a9ecd74a55667bcd92018c6af3e",
+    "research/m4-parser/train/export_gguf.py": "b7150e2ab5f879c9b99db3563493f8d57f70536e988e308d398654277403c04c",
+    "research/m4-parser/scripts/build-data.ts": "8cb79f41f12eda22816f6f34dae2f8b9a785f10f060962de6e8f7b57f1b69aea",
+    "research/m4-parser/scripts/build-v2.ts": "c23eb0977943f479ae22189432513b4c65f2fc32d689d4d0a7739c606ef654bd",
+    "research/m4-parser/scripts/build-v3.ts": "3fe2d12cd8fa50b95284100cea5f460bd9041e0cf8f23fba0150fd593132372f",
+    "research/m4-parser/scripts/build-v4.ts": "e119da5e34dbb43d22601ac9ca8e78e6071314234d8afad05ede98caf3770251",
+    "research/m4-parser/scripts/evaluate.ts": "fa875ebb9a27ad74368deb5664ef2449fd9d3b010a9a94a37249c48777822582",
+    "research/m4-parser/scripts/evaluate-grounding.ts": "bdd8c987ecf35d1806d87fb3c495e92261c83c24db7d3761aad4484aa384883b",
+    "research/m4-parser/scripts/compare-source.ts": "97a237589ee7f39345be01ee8511330773ff85a707a03be1504913e084dd3e69",
+    "research/m4-parser/scripts/summarize-v4.ts": "9f1274366e5593d62e830b2f7431462d9826e2459b7814357699363ab7041d64",
+    "research/m4-parser/scripts/check-workspace.mjs": "9f04a4dc6cb4085ff3a94b7aa5beeaa6ccaf988df5af0386311a37f2524c9806",
+    "research/m4-parser/src/prompt.ts": "631bd10d2a553ef4c50a17d0c3bb13bc430791810c40890cc848a2ae7cc32b9c",
+    "research/m4-parser/src/synth.ts": "ae24f3e44dd7d9807a1e8b500fdd3a86e2085423b533d28410819804eca9682c",
+    "research/m4-parser/src/contrastive-data.ts": "ad477951b9950de5732ecb370d1b29e6225633d28730b051aa4d68ccd58237ac",
+    "research/m4-parser/src/contrastive-v3.ts": "c788dd381bd475d1795d443d04e7bf966944cf3f15d5dfe76d3e3eca9cbd7a22",
+    "research/m4-parser/src/contrastive-v4.ts": "dc09389203d6465d2fc15eb519acb9fd3efed737cf00c5c25b4c78749dcc2537",
+    "packages/core/src/parse-label.ts": "8d7f03f75ae5974091d4bf333f6f46f5295c1b3ee5d7c4c525a072a5dc92035b",
+    "packages/core/src/parse-label-grounding.ts": "01cc710fc4d00ccffc46462ad05784cd4f8b489aa4acca4abc18f5394a06fc7a",
+    "packages/core/src/parse-label-grounding-v2.ts": "0bc0b241a1d1c94fc29e6fc5eaf608f3d10de5330881ec26f1a14c002c409ee0",
+    "packages/core/src/eval/parse-label-eval.ts": "15a6dae1753f4f5f9b3b9805a37adbbaad08b03e71910edf241594d939973763"
+  },
+  "decoding": "Frozen greedy, 256 tokens, four generation/prefill threads, reset KV. No G1 or output repair.",
+  "selection": "One original-base training, 800 steps. D only; no arm switching, retries, sweeps or relaxed gates.",
+  "limitations": "Previously observed 740 dev + 240 challenge + 60 handwritten. No independent test claim. Twenty private originals and their derivatives excluded from training and this runner.",
+  "releaseReady": false
+}

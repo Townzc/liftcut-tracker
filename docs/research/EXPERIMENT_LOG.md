@@ -1,5 +1,14 @@
 # 实验与决策日志
 
+## 2026-10-22 — v4 protocol and failure-path freeze
+
+- **Decision before outcomes**: one v4 training with unchanged original-base hyperparameters; archived A and new B/C/D form the data × prompt comparison. D is preselected, with HF/F16 references on identical enum input tokens. At most 5,200 new predictions; no baseline rerun, retry, output repair or post-result arm selection.
+- **Scoring finding**: the original evaluator collapses legal clarification reasons into the same action. Keep its historical metrics intact and add strict reason correctness for the three focus families, useful positive accuracy and zero invalid reason labels. Tests distinguish legal-but-wrong reasons from schema validity and reject all-clarify behavior.
+- **Actual**: CPU assembly verifies all 1,040 IDs, both input hashes and five archived baseline files. Archived A reproduces 187/240 and 153 invented fields; its strict target reasons are 3/15 missing-unit, 0/15 RPE and 2/15 unknown-exercise. Copied other cells check report wiring only, not model outcomes.
+- **Verification**: four Linux runner tests plus 13 existing timeout/budget tests; an actual TERM-ignoring test worker is killed by GNU timeout. Full orchestration is mocked. A fixture-method omission initially failed two Windows tests, then was corrected; final Linux has no skips. Full 9 JS + 233 TS, type/build pass, lint only two old warnings.
+- **Evidence / trigger**: [frozen protocol and runbook](../../research/m4-parser/train/GPU_V4.md), [actual assembly replay](../../research/m4-parser/results/data-v4-20261022/assembly-report.json). Exact-head CI and source backup gate GPU notification. Three work hours plus one backup/shutdown hour; no implicit power-off, deadline extension or release activation.
+- **Learning checkpoint**: explain the four comparisons, why a cached baseline cannot provide a new speed comparison, why an added gate is different from changing an old score, and why CPU/CI passing cannot establish candidate quality or phone readiness.
+
 ## 2026-10-22 — v4 boundary-data preparation, before GPU outcomes
 
 - **Hypothesis**: implicit unit omission and RPE-position diversity can address cue dependence; a separate legal-reason-list prompt may address invalid enums. These are unproven explanations of the frozen v3 regression.
