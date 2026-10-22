@@ -33,7 +33,7 @@ class V5RunnerTest(unittest.TestCase):
         for row in enum:
             row["messages"][0]["content"] = "fixture enum"
         (self.baseline / "enum-eval.jsonl").write_bytes(b"".join((json.dumps(r) + "\n").encode() for r in enum))
-        self.protocol = {"candidate": "S", "trainingRuns": 2, "maxSeconds": 10800,
+        self.protocol = {"candidate": "S", "trainingRuns": 2, "maxSeconds": 10800, "requiredFreeDiskGiB": 16,
             "quantization": "q8_0", "gates": runner.GATES, "focusGates": runner.FOCUS_GATES,
             "evaluationItems": 3, "maximumModelPredictions": 12, "newStreamOrder": list(runner.NEW),
             "trainingArgs": ["--device", "cuda"], "trainingMetrics": {"steps": 800}, "sourceLfSha256": {},
@@ -91,6 +91,8 @@ class V5RunnerTest(unittest.TestCase):
         self.assertEqual(actual["focusGates"], old["focusGates"])
         self.assertEqual((actual["trainingRuns"], actual["maximumModelPredictions"], actual["candidate"]), (2, 4160, "S"))
         self.assertEqual(actual["trainingMetrics"]["steps"], 800)
+        self.assertEqual(actual["requiredFreeDiskGiB"], 16)
+        self.assertLessEqual(sum(actual["storagePlanningBytes"].values()), 16 * 1024**3)
         self.assertEqual(actual["newStreamOrder"], list(runner.NEW))
         self.assertFalse(actual["releaseReady"])
         for name, expected in actual["sourceLfSha256"].items():
@@ -204,6 +206,13 @@ class V5RunnerTest(unittest.TestCase):
             self.assertEqual(runner.load(late / "run.json")["state"], "stopped")
             self.assertTrue((late / "sha256.json").exists())
             self.assertTrue((late / "T.jsonl").exists()); self.assertFalse((late / "S.jsonl").exists())
+            low = self.root / "low-space"; bad_args[bad_args.index("--out")+1] = str(low)
+            with patch.object(sys, "argv", bad_args), \
+                 patch.object(runner.shutil, "disk_usage", return_value=SimpleNamespace(free=16*1024**3-1)), \
+                 patch.object(runner.Budget, "step") as dispatch:
+                with self.assertRaisesRegex(ValueError, "16 GiB"): runner.main()
+                dispatch.assert_not_called()
+            self.assertEqual(runner.load(low / "run.json")["state"], "stopped")
 
 
 if __name__ == "__main__":

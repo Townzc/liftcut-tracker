@@ -7,6 +7,7 @@
 - Ran: 10 real CPU gradient tests, two-step SFT/export smokes of both objectives, 7 Linux runner tests, 1,040-row assembly/replay and 8 backup tests; TS type/lint pass. A C-drive-full export failure is preserved; fresh E-drive candidate recheck passes with a byte-identical adapter (three complete CPU smokes, one failed export).
 - Limits: CPU smoke uses saved v1 weights, no new GPU or quality result. Candidate formats retain zero-truncation; historical/control failures are reported separately. Native stays off.
 - Next: exact-head CI plus source restore, then notify a fresh user-opened 3-hour work/1-hour backup window. Private 20 originals/derivatives remain excluded.
+- Operational review: 24 GiB exceeded the server's last observed free space; require 16 GiB from measured weight sizes plus a full archive duplicate and explicit reserves. Low-space preflight stops before dispatch; no asset deletion/upgrade assumed.
 - Evidence: [v5 preparation](../../research/m4-parser/results/loss-v5-20261022/README.md), [protocol/runbook](../../research/m4-parser/train/GPU_V5.md).
 
 ## 2026-10-22 — M4 v4 results, restored evidence and loss audit

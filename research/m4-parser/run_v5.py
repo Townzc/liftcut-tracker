@@ -147,8 +147,8 @@ def main():
     def node(name, script, *extra):
         budget.step(name, ["node", "--import", "tsx", M4 / script, *extra])
     try:
-        if shutil.disk_usage(out).free < 24 * 1024**3:
-            raise ValueError("24 GiB free required for two complete sets of weights")
+        if shutil.disk_usage(out).free < protocol["requiredFreeDiskGiB"] * 1024**3:
+            raise ValueError("16 GiB free required for two weight sets, a full archive and reserves")
         budget.step("workspace-bindings", ["node", M4 / "scripts/check-workspace.mjs", "--root", ROOT])
         for name, expected in protocol["sourceLfSha256"].items():
             if hashlib.sha256((ROOT / name).read_bytes().replace(b"\r\n", b"\n")).hexdigest() != expected:

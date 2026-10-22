@@ -3,6 +3,13 @@
   "candidate": "S",
   "maxSeconds": 10800,
   "backupAndShutdownReserveSeconds": 3600,
+  "requiredFreeDiskGiB": 16,
+  "storagePlanningBytes": {
+    "twoWeightSetsFromV4Sizes": 6140372384,
+    "fullUnstagedArchiveDuplicate": 6140372384,
+    "converterWorkspaceAllowance": 1073741824,
+    "sourceLogsDependenciesAndTemporaryReserve": 3221225472
+  },
   "quantization": "q8_0",
   "trainingRuns": 2,
   "trainingArgs": [
@@ -114,7 +121,7 @@
     "packages/core/src/parse-label-grounding.ts": "01cc710fc4d00ccffc46462ad05784cd4f8b489aa4acca4abc18f5394a06fc7a",
     "packages/core/src/parse-label-grounding-v2.ts": "0bc0b241a1d1c94fc29e6fc5eaf608f3d10de5330881ec26f1a14c002c409ee0",
     "packages/core/src/eval/parse-label-eval.ts": "15a6dae1753f4f5f9b3b9805a37adbbaad08b03e71910edf241594d939973763",
-    "research/m4-parser/run_v5.py": "8c7048fefc93813cd52b2e839a317274cb0f10a886943ec08c0bcbdd0b48c195",
+    "research/m4-parser/run_v5.py": "8b858bdfe885b4fcd3a1584f129d7b7f3990d70e802f44a9d6dd3e7dfc71f14e",
     "research/m4-parser/train/sample_mean_loss.py": "697a84fd1d2ddf71741d52d2ea3df0f9b5c1885f4b4606aac6874aad03e3ec41",
     "research/m4-parser/train/sft_sample_mean.py": "1c505df171a72b0502fc0ba03736412f7bfceda003678998ac228b7fc0436596",
     "research/m4-parser/scripts/summarize-v5.ts": "5731f76b1c650299fa51d734bc6e0145cb91fcfc6eb39d4973dc56e0c56f4004",

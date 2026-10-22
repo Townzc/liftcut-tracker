@@ -95,7 +95,14 @@ the original opening-based deadlines. Schedule a platform shutdown backstop.
 The reviewed clean checkout needs its own `@liftcut/core` workspace binding.
 Cache requirements are the pinned original base, torch 2.8.0, transformers 5.20.1,
 peft 0.21.2, llama-cpp-python 0.3.36 and the hashed converter archive. No downloads.
-Require CUDA with bfloat16 support, at least 22 GiB GPU memory and 24 GiB free disk.
+Require CUDA with bfloat16 support, at least 22 GiB GPU memory and **16 GiB free disk**
+on the actual output filesystem. Two sets of v4-shaped weights total about 5.72 GiB;
+the budget includes another full 5.72 GiB archive even without weight staging,
+1 GiB converter allowance and 3 GiB for source, logs, dependencies and temporary
+work (15.44 GiB total, rounded up). The initially proposed 24 GiB guard exceeded
+the server's last observed pre-v4 free space; it was corrected before any v5 GPU
+opening. Live free space must still pass; no old asset deletion or disk upgrade is
+assumed. This operational guard changes no model-quality threshold.
 `BASELINE` is the preserved v4 run directory; it is never modified or re-evaluated.
 
 ```sh

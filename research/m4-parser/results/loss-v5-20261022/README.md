@@ -29,6 +29,8 @@ What actually ran:
   altered history/assistant leakage, candidate selection, original positive and
   strict-reason gates, truncation scope, two trainings/four streams and stopped
   partial evidence. Process dispatch is mocked; no model result is fabricated.
+  A low-disk check stops before any dispatch. The fixed 16 GiB requirement covers
+  both weight sets, a full archive duplicate and explicit conversion/temp reserves.
   [Tests](../../test_v5_runner.py).
 - The exact 1,040 inputs and H bytes were assembled from the restored v4 run.
   Historical H was cloned under T/S names **only to exercise report wiring**;

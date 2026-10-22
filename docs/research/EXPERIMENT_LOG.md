@@ -10,6 +10,8 @@ Actual CPU work: 10 autograd/tiny-random-Qwen tests; two-step, batch-2 SFT/expor
 
 Interpretation: arithmetic, masking and workflow checks support running the comparison, not accepting the candidate. Sample mean changes coefficient mass; gradient difficulty/clipping and generalization remain unknown. Fresh T guards against attributing historical drift to S. Positive-case floors protect against indiscriminate clarification. All observed evaluation sets remain observed.
 
+Operational review before v5 opening: the initial 24 GiB free-space guard exceeded the server's 21.28 GiB pre-v4 snapshot. Measured v4-shaped weights imply 5.72 GiB for both arms; a second full archive copy plus 1 GiB conversion and 3 GiB source/log/temp allowances total 15.44 GiB. Require 16 GiB live free space, reject below it before dispatch, and assume no deletion or storage upgrade. This changes only a resource preflight, not model gates; the earlier source restoration is retained separately from the final reviewed revision.
+
 Next trigger: final exact-head CI, reviewed-source restore, then notify the maintainer for a fresh server window (work ≤3h, reserve 1h). Verify eight weights and all outputs off-instance, then platform OFF. Native stays disabled until the candidate and subsequent continuous/device gates pass. Learning checkpoint: token vs example averaging, fresh vs historical control, and why passing CPU checks is not improved model quality.
 
 ## 2026-10-22 — v4 completed; data/prompt gains do not pass the candidate gate
