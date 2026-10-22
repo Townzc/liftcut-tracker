@@ -932,6 +932,13 @@ jobs:
           RESTORED_URL="${P1_TEST_DATABASE_URL/liftcut_p1_ci/liftcut_p1_restored}"
           pg_restore --exit-on-error --dbname="$RESTORED_URL" /tmp/p1-ci.dump
           P1_TEST_DATABASE_URL="$RESTORED_URL" npm run p1:audit -- research/liftcut-agent/outputs/ci-p1-workflows
+      - name: Bound browser dependency downloads on the official Ubuntu mirror
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+          printf '%s\n' 'Acquire::Retries "2";' 'Acquire::http::Timeout "30";' 'Acquire::https::Timeout "30";' \
+            | sudo tee /etc/apt/apt.conf.d/80-liftcut-browser-timeouts > /dev/null
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --config playwright.p1.config.ts
       - uses: actions/upload-artifact@v6
@@ -992,6 +999,13 @@ jobs:
           node --conditions=react-server --import tsx --test tests/product-db/progression-history.test.ts
           node --conditions=react-server --import tsx --test tests/product-db/workout-review.test.ts
       - run: npm run build
+      - name: Bound browser dependency downloads on the official Ubuntu mirror
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+          printf '%s\n' 'Acquire::Retries "2";' 'Acquire::http::Timeout "30";' 'Acquire::https::Timeout "30";' \
+            | sudo tee /etc/apt/apt.conf.d/80-liftcut-browser-timeouts > /dev/null
       - run: npx playwright install --with-deps chromium webkit
       - name: Mobile browser to API to PostgreSQL including lost responses and disabled flag
         run: npx playwright test --config playwright.w1b.config.ts
