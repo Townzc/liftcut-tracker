@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-22 · M4 v7 prompt-contract data preparation
+
+- Why: v6 training omitted the clarification enumeration used during inference; test alignment separately from catalog/loss changes.
+- Change: versioned builder changes only S train/dev system text. All 6,400 v6 T sentences, targets, catalogs and row order, and every evaluation byte stay fixed. Private 20 originals/derivatives remain excluded.
+- Ran: two TS byte/provenance checks, three Python input-mutation checks, root 9 JS + 245 TS, lint (zero errors/two old warnings), and production build pass. Full token/mask audit and a real two-step CPU train/export smoke pass. [CPU evidence](../../research/m4-parser/results/prompt-v7-20261022/cpu-smoke.json).
+- Limits/next: this is CPU preparation, not GPU/model acceptance. Finish runner, provenance, storage/restore and exact-head CI before a fresh opening notice. UI, confirmation and native flags unchanged. [Design and primary sources](../../research/m4-parser/train/DATA_V7.md).
+
 ## 2026-10-22 · M4 v6 GPU results and CPU attribution
 
 - Actual: fixed T/S training and 4,160 new predictions completed; S scores 204/240 challenge, below the unchanged gate. Q8 agreement passes (98.17% HF / 98.46% F16), but missing-unit and RPE-scope reasons remain 9/15 and 0/15.

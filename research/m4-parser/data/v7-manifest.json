@@ -1,0 +1,45 @@
+{
+  "version": "v7-prompt-alignment-1",
+  "gpuReady": false,
+  "provenance": "V6 T training sentences, labels, catalogs and order unchanged. Only S train/dev system uses the existing v4 inference enum. No new examples or private originals/derivatives. Inference inputs and all gold remain frozen.",
+  "sourceV6ManifestSha256": "86d1526f51d73313de60cbf56fae8ab8ce471073960b52f3a695bd4339fb405a",
+  "rows": 6400,
+  "controlSystem": "Parse one gym report as LiftCut label v1 JSON. Copy only explicit values and an exercise name from the list. Unknown is null, never a plan value or guess. Missing weight unit or reps, uncertainty, plans, questions and negated/failed sets require clarify. A correction changes only stated fields; repeat carries no values. Preserve set order. RPE for multiple sets needs explicit scope. Reply with one JSON object.",
+  "alignedSystem": "Parse one gym report as LiftCut label v1 JSON. Copy only explicit values and an exercise name from the list. Unknown is null, never a plan value or guess. Missing weight unit or reps, uncertainty, plans, questions and negated/failed sets require clarify. A correction changes only stated fields; repeat carries no values. Preserve set order. RPE for multiple sets needs explicit scope. Reply with one JSON object. For intent clarify, reason must be exactly one of: uncertain_quantity, plan_not_actual, negation, question, missing_reps, missing_unit, unsupported_unit, rpe_scope, unknown_exercise, out_of_range. No other reason value is valid.",
+  "unchangedTextSequenceSha256": "8a55923f7b358eb4786611a00dccecefb633a05b3c53298a0345a32e3df8383b",
+  "unchangedTargetSequenceSha256": "fbdeb54375dd21d6604c1eeb4330e70937bf24997692e52f4abd15620b4042b0",
+  "files": {
+    "dev.gold.jsonl": {
+      "sha256": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+      "lines": 740
+    },
+    "dev.jsonl": {
+      "sha256": "0748191410013407c3ddbb55c36c91a293ac8508e90ab271a393039d31b3eedb",
+      "lines": 740
+    },
+    "dev-eval.jsonl": {
+      "sha256": "a4145ee3d0bca4ee49f69ab607ca50ab7ccadc52080e831c9a074452623c9b99",
+      "lines": 740
+    },
+    "T-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "T-train.jsonl": {
+      "sha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "lines": 6400
+    },
+    "S-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "S-train.jsonl": {
+      "sha256": "28818e64f24361c3720df4059c2899970efa8e88c882ec5cc67f3033e976b410",
+      "lines": 6400
+    },
+    "dev-control.jsonl": {
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "lines": 740
+    }
+  }
+}

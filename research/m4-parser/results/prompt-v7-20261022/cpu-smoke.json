@@ -1,0 +1,114 @@
+{
+  "mode": "CPU full token/mask audit and bounded two-step S train/export wiring; no GPU or quality result",
+  "base": "saved v1 merged weights only for CPU smoke; GPU stays pinned original base",
+  "baseSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "tokenizerFiles": {
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "tokenizer_config.json": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+  },
+  "tokenizerEquivalence": "All original T training/dev token IDs and 1040 frozen enum inference token IDs match GPU-reviewed v6 hashes; saved serialization differs from original base",
+  "trainingInputAudit": {
+    "T-train": {
+      "rows": 6400,
+      "sha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "maxTokens": 296,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "4d29f57912948f320a21c3d5f608aae9fa60888fdcd0c0196e6df26dc6203de1",
+      "maskSha256": "af2a4e934fb8c7a0575b36f3f2428fe927f8d71ae2e802111ae0526d20431c7a",
+      "promptTokenIdsSha256": "0bdc45c84c4dc049e40bae35019b20f3639d6afb81eed71443408e47cf6b7d04",
+      "truncated": 0
+    },
+    "S-train": {
+      "rows": 6400,
+      "sha256": "28818e64f24361c3720df4059c2899970efa8e88c882ec5cc67f3033e976b410",
+      "maxTokens": 348,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "9ef36a05d26722e44760c986abe9458937b98d7d9bef74a46ca7d3c7919c338c",
+      "maskSha256": "d167b028214d446edee97ae66cc589843cb1b85d3288da1d655bd2b96672e02e",
+      "promptTokenIdsSha256": "289f0d927780f1cf2b22ba210bef8dbebb175553b0a8fbb5e56f22012a105d0f",
+      "truncated": 0
+    },
+    "dev-control": {
+      "rows": 740,
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "maxTokens": 295,
+      "answerTokens": 25155,
+      "tokenIdsSha256": "c3c6571c9ae00a7c73827341480104e2dea6171e545ebd5c991745b3320290c1",
+      "maskSha256": "3c92efb3ff1b2b4f9ca9543749f76396ad741c5a35c85c0a166979e00f541a7d",
+      "promptTokenIdsSha256": "12a81f9817a7f7709071d70c0e7fdb6dd5fa6a0988300fd81f4024ec65a5e9ef",
+      "truncated": 0
+    },
+    "dev": {
+      "rows": 740,
+      "sha256": "0748191410013407c3ddbb55c36c91a293ac8508e90ab271a393039d31b3eedb",
+      "maxTokens": 347,
+      "answerTokens": 25155,
+      "tokenIdsSha256": "e105d8cde701eff121ad542862470b0da72f501d2f6cd9194d014918f12432b8",
+      "maskSha256": "83612cb3e4d98d26e65b2eeab036828a638c6addef6c8d4724b1abe4410138c6",
+      "promptTokenIdsSha256": "bb9501165dcfcb59202db06fe0e79b057a9834e2a12bbed9656cb2e04fcc710b",
+      "truncated": 0
+    }
+  },
+  "frozenEvaluationInput": {
+    "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+    "rows": 1040,
+    "maxPromptTokens": 231,
+    "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5",
+    "truncated": 0
+  },
+  "maskMatchesActualTrainer": true,
+  "trainIndices": [
+    4035,
+    4095,
+    4000,
+    4020,
+    4001,
+    4021,
+    4012,
+    4032,
+    4013,
+    4033,
+    4,
+    14
+  ],
+  "privateOriginalsAndDerivativesUsed": false,
+  "gpuRunPerformed": false,
+  "releaseReady": false,
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2"
+  },
+  "smoke": {
+    "metrics": {
+      "seed": 20261019,
+      "steps": 2,
+      "train_examples": 12,
+      "dev_examples": 6,
+      "batch": 2,
+      "lr": 0.0002,
+      "rank": 4,
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "dev_loss": 0.06285,
+      "log": [
+        {
+          "step": 2,
+          "loss": 0.00138
+        }
+      ],
+      "seconds": 55.0,
+      "gradientCheckpointing": true,
+      "peakCudaAllocatedBytes": null
+    },
+    "finite": true,
+    "updated": true,
+    "cacheEnabled": true,
+    "exports": {
+      "adapter/adapter_model.safetensors": "e3827e338de8465397464cfdc2028f5648bff9919e680bcb4a0ff606fbcd4607",
+      "merged/model.safetensors": "d9bfbd4ef2bef74bb5c4fcba1a6ca375d3c1d3620fad89f7f195824b66648ded",
+      "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+    }
+  },
+  "verifiedAt": 1792711181.0364757
+}

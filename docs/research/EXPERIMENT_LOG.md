@@ -1,5 +1,14 @@
 # 实验与决策日志
 
+## 2026-10-22 · M4 v7: isolate prompt-contract alignment
+
+- **Hypothesis**: v6 T trained without the legal-reason enumeration that inference supplies. Changing only that system text may improve action binding, missing-unit clarification and RPE scope; previous failures do not establish causality. [Design and official sources](../../research/m4-parser/train/DATA_V7.md).
+- **Intervention**: 6,400 original T sentences/targets/catalogs/order stay byte-identical. S train/dev use the frozen enum; inference, gold, loss and training parameters stay fixed. No private originals or derivatives or examples from observed errors enter training. Dev loss under the changed prompt is not a directly comparable selection metric.
+- **Actual**: two TS and three Python regressions pass; 9 JS + 245 TS, lint (two old warnings), build pass. All four train/dev token and mask sequences match the real trainer; longest aligned train/dev examples are 348/347 of 512 tokens. Saved tokenizer serialization reproduces T's original training/dev and all 1,040 reviewed inference token IDs. [CPU receipt](../../research/m4-parser/results/prompt-v7-20261022/cpu-smoke.json).
+- **CPU smoke**: two optimizer steps on 12 training/six dev rows using saved v1 merged weights produce finite updated adapter and merged exports with cache enabled. This is workflow verification, not original-base GPU training or model quality. Initial invocation used the general Python without peft and stopped before model loading; rerun uses the existing pinned CPU environment without installation.
+- **Limits / next trigger**: no GPU calls or model activation. Finish bounded runner, historical-control provenance, storage/recovery and all exact-head CI before a fresh opening notice. Quantization, useful-positive and strict-reason gates remain unchanged; private continuous and device acceptance follow model gates.
+- **Learning checkpoint**: explain why matching prompt text/token IDs isolates a factor but does not guarantee accuracy, why cached controls cannot establish speed improvements, and why a development pass cannot replace independent continuous acceptance.
+
 ## 2026-10-22 · M4 v6: completed comparison, rejected candidate and restored attribution
 
 - **Question/design**: after the shared 40 alias-label corrections, does training-derived catalog membership/order improve useful binding without losing clarification? Fixed T/S original-base token-mean runs use identical 6,400 sentence/label sequences; S alone is eligible. H is the cached historical v4 control. [Frozen protocol](../../research/m4-parser/train/GPU_V6.md).
