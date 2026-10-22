@@ -1,5 +1,9 @@
 # M4 v4: fixed data × prompt comparison
 
+**Completed result:** [v4 run and verified shutdown](../results/run-20261022T034000Z-v4/README.md).
+Candidate D failed the unchanged gates; native remains off. This document records
+that experiment's frozen design and operation, not authorization for another run.
+
 The [runner](../run_v4.py) and [protocol](protocol-v4.json) are a new experiment;
 v2/v3 failures remain closed. [Data changes](../DATA_CARD_V4.md) replace only
 720 boundary rows, retaining 5,680 rows/order, 740 dev and the short SFT prompt.
@@ -95,4 +99,5 @@ fields. Cloned cells only exercise report wiring, not new B/C/D model results.
 Four new Linux runner regressions and 13 existing budget/timeout tests pass;
 full process dispatch is mocked, while GNU timeout really kills its test worker.
 Full root suite: 9 JS + 233 TS; type/lint checks pass (two existing lint warnings).
-GPU metrics and phone performance remain unmeasured for v4.
+At this preparation stage GPU metrics and phone performance were unmeasured.
+The completed GPU result is linked above; physical-device performance remains unmeasured.

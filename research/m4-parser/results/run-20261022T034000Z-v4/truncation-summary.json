@@ -1,0 +1,57 @@
+{
+  "newModelCalls": 0,
+  "mode": "post-result saved-output diagnostic",
+  "arms": {
+    "A": [],
+    "B": [],
+    "C": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 14
+      }
+    ],
+    "D": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 13
+      }
+    ],
+    "D-HF": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 13
+      }
+    ],
+    "D-F16": [
+      {
+        "id": "test-00307",
+        "split": "dev-eval",
+        "family": "clarify_missing_unit",
+        "expectedIntent": "clarify",
+        "expectedReason": "missing_unit",
+        "finishReason": "length",
+        "completionTokens": 256,
+        "emittedSetObjectCount": 13
+      }
+    ]
+  },
+  "note": "All four new-model streams truncate on the same observed development missing-unit item. Repeated set objects are not a valid long answer. No token limit, output or gate was changed."
+}

@@ -1,0 +1,31 @@
+{
+  "candidate": "D",
+  "developmentGatePassed": false,
+  "checks": {
+    "sameFactorInputs": true,
+    "rawAgreement": true,
+    "noTruncation": false,
+    "challengeExact": false,
+    "challengeSchema": false,
+    "challengeNoInvented": false,
+    "guardedSafety": true,
+    "challengeCoverage": true,
+    "focusNegativeReasons": false,
+    "focusPositiveUseful": true,
+    "challengePositiveUseful": true,
+    "clarificationVocabulary": false
+  },
+  "coverage": {
+    "dev-eval": 0.47578947368421054,
+    "challenge": 0.9416666666666667,
+    "handwritten": 0.358974358974359
+  },
+  "releaseReady": false,
+  "pending": [
+    "passing-candidate continuous acceptance",
+    "useful coverage beyond deterministic source baseline",
+    "native integration",
+    "physical-device acceptance"
+  ],
+  "note": "Original source-v1 gates retained. Source-v2 and other arms cannot replace a failed D. Observed diagnostic inputs."
+}

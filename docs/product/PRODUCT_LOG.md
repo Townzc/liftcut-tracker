@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-22 — M4 v4 results, restored evidence and loss audit
+
+- **Actual**: one 800-step training, 5,200 new predictions and 1,040 cached A outputs; fixed A/B/C/D challenge scores 187/199/200/206 out of 240. D stays rejected, with no arm switch or extra training.
+- **Failures**: D invents 138 fields (132 from ambiguous RPE scope); correct focus reasons 10/15 units, 0/15 RPE, 15/15 unknown exercises. Seven invalid clarification reasons and one repeated-set truncation remain. Q8/HF and Q8/F16 agreement pass at 96.54%/96.83%.
+- **Evidence**: all 140 run files/four weights restored and hashed; 40 reports independently reproduced exactly, plus six first-offline reference scores. Platform OFF and timer cleanup verified 05:43:34 UTC; timer cleared after the first OFF observation, original deadlines unchanged. [Report](../../research/m4-parser/results/run-20261022T034000Z-v4/README.md).
+- **CPU diagnosis**: clarification is 38.31% of rows but 16.15% of reconstructed batch loss coefficients. New source/tokenizer/data-bound audit and five arithmetic/input/source regressions pass; this is a hypothesis for a later controlled comparison, not a proven cause or changed loss.
+- **Verification / next**: root 9 JS + 233 TS pass; exact-head CI remains mandatory. No private originals/derivatives in training, no UI/approval/model activation change. Prepare CPU gradient/padding checks and a new frozen experiment before another GPU notification; native/device acceptance remains gated.
+
 ## 2026-10-22 — M4 v4 bounded factorial runner
 
 - **Changed**: archived/new weights × short/reason-list prompts, one original-base training, five new streams/5,200 predictions. D is preselected; all inputs, source and baseline bytes are bound before inference.

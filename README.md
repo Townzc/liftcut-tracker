@@ -138,12 +138,12 @@ flowchart LR
   Ledger --> DB
   Engine["Progression engine<br/>loads computed by code"] -.-> Web
   Engine -.-> Mobile
-  Parser["Planned sentence fallback: rules → on-device model → cloud<br/>M4 v3 quality gate failed; native integration pending<br/>source checks + user confirmation required"] -.-> Mobile
+  Parser["Planned sentence fallback: rules → on-device model → cloud<br/>M4 v4 quality gate failed; native integration pending<br/>source checks + user confirmation required"] -.-> Mobile
 ```
 
 See the [mobile plan](docs/product/2026-10-18-mobile-agent-plan.md), [product log](docs/product/PRODUCT_LOG.md) and the [90-second phone demo](docs/product/DEMO_90S.md) (synthetic data; the coach answer in it is a scripted fixture).
 
-[M4 v3 evidence](research/m4-parser/results/run-20261021T222100Z-v3/README.md): quantization agreement passed, raw quality regressed, and the candidate was rejected. The report separates model results, deterministic checks and scripted approvals; no on-device release is claimed.
+[M4 v4 evidence](research/m4-parser/results/run-20261022T034000Z-v4/README.md): the fixed data × prompt comparison improved challenge accuracy from 187/240 to 206/240, but 138 invented fields and unresolved RPE scope still reject the candidate. Quantization agreement passed; native integration remains pending. The report includes verified backup/replay, per-family errors and a reproducible CPU loss-coefficient audit.
 
 ## AI reliability pipeline
 

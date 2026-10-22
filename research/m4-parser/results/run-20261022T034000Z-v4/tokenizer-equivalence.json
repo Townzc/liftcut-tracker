@@ -1,0 +1,8 @@
+{
+  "verified": true,
+  "answers": 6400,
+  "sameAnswerTokenIds": true,
+  "sameCoefficientGroups": true,
+  "answerTokenIdsSha256": "47f2f2a5af088fcb87cf85e6287ec3c5bd11c8193720c3315cfadf387082313c",
+  "modelCalls": 0
+}

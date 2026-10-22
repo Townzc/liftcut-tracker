@@ -1,0 +1,443 @@
+{
+  "mode": "post-result CPU-tokenization diagnostic",
+  "newModelCalls": 0,
+  "tokenizerRuntime": "0.22.2",
+  "tokenizerSha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "dataSha256": "625ff6a1ed986149410eee30840f3c4b320b7b90f6af732ec5f292075bc5e29e",
+  "trainingSourceLfSha256": "a3b3aab7c40a49c3f72625160638472362f18609b186a916ae8f1218be458613",
+  "protocolLfSha256": "8c723364befc5fd741b875bfd69515e627ded1fa1598f39759c3bac7087c53f9",
+  "rows": 6400,
+  "supervisedTokens": 207144,
+  "steps": 800,
+  "seed": 20261019,
+  "batch": 16,
+  "epochs": 2,
+  "batchOrderSha256": "d91746b26a14fd59118f78510974692a49bd59fa63f848eb57e95fe009b48543",
+  "groups": {
+    "changed:contrast_missing_unit_negative": {
+      "rows": 120,
+      "tokens": 1440,
+      "meanTokens": 12.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.006952,
+      "fixedBatchLossCoefficientShare": 0.007793
+    },
+    "changed:contrast_missing_unit_positive": {
+      "rows": 120,
+      "tokens": 4119,
+      "meanTokens": 34.325,
+      "rowShare": 0.01875,
+      "tokenShare": 0.019885,
+      "fixedBatchLossCoefficientShare": 0.020105
+    },
+    "changed:contrast_rpe_scope_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.007989
+    },
+    "changed:contrast_rpe_scope_positive": {
+      "rows": 120,
+      "tokens": 9083,
+      "meanTokens": 75.691667,
+      "rowShare": 0.01875,
+      "tokenShare": 0.043849,
+      "fixedBatchLossCoefficientShare": 0.041725
+    },
+    "changed:contrast_unknown_exercise_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.008118
+    },
+    "changed:contrast_unknown_exercise_positive": {
+      "rows": 120,
+      "tokens": 4447,
+      "meanTokens": 37.058333,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021468,
+      "fixedBatchLossCoefficientShare": 0.022095
+    },
+    "family:clarify_missing_reps": {
+      "rows": 124,
+      "tokens": 1612,
+      "meanTokens": 13.0,
+      "rowShare": 0.019375,
+      "tokenShare": 0.007782,
+      "fixedBatchLossCoefficientShare": 0.008398
+    },
+    "family:clarify_missing_unit": {
+      "rows": 141,
+      "tokens": 1692,
+      "meanTokens": 12.0,
+      "rowShare": 0.022031,
+      "tokenShare": 0.008168,
+      "fixedBatchLossCoefficientShare": 0.009117
+    },
+    "family:clarify_negation": {
+      "rows": 131,
+      "tokens": 1572,
+      "meanTokens": 12.0,
+      "rowShare": 0.020469,
+      "tokenShare": 0.007589,
+      "fixedBatchLossCoefficientShare": 0.008203
+    },
+    "family:clarify_out_of_range": {
+      "rows": 127,
+      "tokens": 1651,
+      "meanTokens": 13.0,
+      "rowShare": 0.019844,
+      "tokenShare": 0.00797,
+      "fixedBatchLossCoefficientShare": 0.008727
+    },
+    "family:clarify_plan_not_actual": {
+      "rows": 130,
+      "tokens": 1690,
+      "meanTokens": 13.0,
+      "rowShare": 0.020313,
+      "tokenShare": 0.008159,
+      "fixedBatchLossCoefficientShare": 0.008916
+    },
+    "family:clarify_question": {
+      "rows": 122,
+      "tokens": 1342,
+      "meanTokens": 11.0,
+      "rowShare": 0.019062,
+      "tokenShare": 0.006479,
+      "fixedBatchLossCoefficientShare": 0.007013
+    },
+    "family:clarify_rpe_scope": {
+      "rows": 126,
+      "tokens": 1638,
+      "meanTokens": 13.0,
+      "rowShare": 0.019688,
+      "tokenShare": 0.007908,
+      "fixedBatchLossCoefficientShare": 0.008591
+    },
+    "family:clarify_uncertain_quantity": {
+      "rows": 163,
+      "tokens": 2119,
+      "meanTokens": 13.0,
+      "rowShare": 0.025469,
+      "tokenShare": 0.01023,
+      "fixedBatchLossCoefficientShare": 0.01122
+    },
+    "family:clarify_unknown_exercise": {
+      "rows": 112,
+      "tokens": 1456,
+      "meanTokens": 13.0,
+      "rowShare": 0.0175,
+      "tokenShare": 0.007029,
+      "fixedBatchLossCoefficientShare": 0.007533
+    },
+    "family:clarify_unsupported_unit": {
+      "rows": 76,
+      "tokens": 912,
+      "meanTokens": 12.0,
+      "rowShare": 0.011875,
+      "tokenShare": 0.004403,
+      "fixedBatchLossCoefficientShare": 0.004784
+    },
+    "family:contrast_missing_reps_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.00826
+    },
+    "family:contrast_missing_reps_positive": {
+      "rows": 120,
+      "tokens": 4383,
+      "meanTokens": 36.525,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021159,
+      "fixedBatchLossCoefficientShare": 0.022254
+    },
+    "family:contrast_missing_unit_negative": {
+      "rows": 120,
+      "tokens": 1440,
+      "meanTokens": 12.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.006952,
+      "fixedBatchLossCoefficientShare": 0.007793
+    },
+    "family:contrast_missing_unit_positive": {
+      "rows": 120,
+      "tokens": 4119,
+      "meanTokens": 34.325,
+      "rowShare": 0.01875,
+      "tokenShare": 0.019885,
+      "fixedBatchLossCoefficientShare": 0.020105
+    },
+    "family:contrast_negation_negative": {
+      "rows": 120,
+      "tokens": 1440,
+      "meanTokens": 12.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.006952,
+      "fixedBatchLossCoefficientShare": 0.007579
+    },
+    "family:contrast_negation_positive": {
+      "rows": 120,
+      "tokens": 4406,
+      "meanTokens": 36.716667,
+      "rowShare": 0.01875,
+      "tokenShare": 0.02127,
+      "fixedBatchLossCoefficientShare": 0.021612
+    },
+    "family:contrast_out_of_range_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.00813
+    },
+    "family:contrast_out_of_range_positive": {
+      "rows": 120,
+      "tokens": 4400,
+      "meanTokens": 36.666667,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021241,
+      "fixedBatchLossCoefficientShare": 0.022383
+    },
+    "family:contrast_plan_not_actual_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.008169
+    },
+    "family:contrast_plan_not_actual_positive": {
+      "rows": 120,
+      "tokens": 4374,
+      "meanTokens": 36.45,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021116,
+      "fixedBatchLossCoefficientShare": 0.021653
+    },
+    "family:contrast_question_negative": {
+      "rows": 120,
+      "tokens": 1320,
+      "meanTokens": 11.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.006372,
+      "fixedBatchLossCoefficientShare": 0.007031
+    },
+    "family:contrast_question_positive": {
+      "rows": 120,
+      "tokens": 4412,
+      "meanTokens": 36.766667,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021299,
+      "fixedBatchLossCoefficientShare": 0.021674
+    },
+    "family:contrast_rpe_scope_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.007989
+    },
+    "family:contrast_rpe_scope_positive": {
+      "rows": 120,
+      "tokens": 9083,
+      "meanTokens": 75.691667,
+      "rowShare": 0.01875,
+      "tokenShare": 0.043849,
+      "fixedBatchLossCoefficientShare": 0.041725
+    },
+    "family:contrast_uncertain_quantity_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.008202
+    },
+    "family:contrast_uncertain_quantity_positive": {
+      "rows": 120,
+      "tokens": 4407,
+      "meanTokens": 36.725,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021275,
+      "fixedBatchLossCoefficientShare": 0.021647
+    },
+    "family:contrast_unknown_exercise_negative": {
+      "rows": 120,
+      "tokens": 1560,
+      "meanTokens": 13.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.007531,
+      "fixedBatchLossCoefficientShare": 0.008118
+    },
+    "family:contrast_unknown_exercise_positive": {
+      "rows": 120,
+      "tokens": 4447,
+      "meanTokens": 37.058333,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021468,
+      "fixedBatchLossCoefficientShare": 0.022095
+    },
+    "family:contrast_unsupported_unit_negative": {
+      "rows": 120,
+      "tokens": 1440,
+      "meanTokens": 12.0,
+      "rowShare": 0.01875,
+      "tokenShare": 0.006952,
+      "fixedBatchLossCoefficientShare": 0.007767
+    },
+    "family:contrast_unsupported_unit_positive": {
+      "rows": 120,
+      "tokens": 4431,
+      "meanTokens": 36.925,
+      "rowShare": 0.01875,
+      "tokenShare": 0.021391,
+      "fixedBatchLossCoefficientShare": 0.022244
+    },
+    "family:correct_reps": {
+      "rows": 233,
+      "tokens": 5027,
+      "meanTokens": 21.575107,
+      "rowShare": 0.036406,
+      "tokenShare": 0.024268,
+      "fixedBatchLossCoefficientShare": 0.025606
+    },
+    "family:correct_rpe": {
+      "rows": 83,
+      "tokens": 1834,
+      "meanTokens": 22.096386,
+      "rowShare": 0.012969,
+      "tokenShare": 0.008854,
+      "fixedBatchLossCoefficientShare": 0.009357
+    },
+    "family:correct_weight": {
+      "rows": 138,
+      "tokens": 3538,
+      "meanTokens": 25.637681,
+      "rowShare": 0.021562,
+      "tokenShare": 0.01708,
+      "fixedBatchLossCoefficientShare": 0.01811
+    },
+    "family:end": {
+      "rows": 95,
+      "tokens": 570,
+      "meanTokens": 6.0,
+      "rowShare": 0.014844,
+      "tokenShare": 0.002752,
+      "fixedBatchLossCoefficientShare": 0.003085
+    },
+    "family:record_bodyweight": {
+      "rows": 265,
+      "tokens": 9048,
+      "meanTokens": 34.143396,
+      "rowShare": 0.041406,
+      "tokenShare": 0.04368,
+      "fixedBatchLossCoefficientShare": 0.045536
+    },
+    "family:record_list": {
+      "rows": 428,
+      "tokens": 37526,
+      "meanTokens": 87.67757,
+      "rowShare": 0.066875,
+      "tokenShare": 0.181159,
+      "fixedBatchLossCoefficientShare": 0.166913
+    },
+    "family:record_pyramid": {
+      "rows": 184,
+      "tokens": 12117,
+      "meanTokens": 65.853261,
+      "rowShare": 0.02875,
+      "tokenShare": 0.058496,
+      "fixedBatchLossCoefficientShare": 0.056759
+    },
+    "family:record_uniform": {
+      "rows": 349,
+      "tokens": 29773,
+      "meanTokens": 85.309456,
+      "rowShare": 0.054531,
+      "tokenShare": 0.143731,
+      "fixedBatchLossCoefficientShare": 0.132392
+    },
+    "family:record_weighted": {
+      "rows": 640,
+      "tokens": 23341,
+      "meanTokens": 36.470312,
+      "rowShare": 0.1,
+      "tokenShare": 0.11268,
+      "fixedBatchLossCoefficientShare": 0.116066
+    },
+    "family:repeat": {
+      "rows": 144,
+      "tokens": 2226,
+      "meanTokens": 15.458333,
+      "rowShare": 0.0225,
+      "tokenShare": 0.010746,
+      "fixedBatchLossCoefficientShare": 0.011532
+    },
+    "family:skip": {
+      "rows": 189,
+      "tokens": 2998,
+      "meanTokens": 15.862434,
+      "rowShare": 0.029531,
+      "tokenShare": 0.014473,
+      "fixedBatchLossCoefficientShare": 0.015713
+    },
+    "intent:clarify": {
+      "rows": 2452,
+      "tokens": 30684,
+      "meanTokens": 12.513866,
+      "rowShare": 0.383125,
+      "tokenShare": 0.148129,
+      "fixedBatchLossCoefficientShare": 0.161539
+    },
+    "intent:correct": {
+      "rows": 494,
+      "tokens": 11557,
+      "meanTokens": 23.394737,
+      "rowShare": 0.077188,
+      "tokenShare": 0.055792,
+      "fixedBatchLossCoefficientShare": 0.058655
+    },
+    "intent:end": {
+      "rows": 95,
+      "tokens": 570,
+      "meanTokens": 6.0,
+      "rowShare": 0.014844,
+      "tokenShare": 0.002752,
+      "fixedBatchLossCoefficientShare": 0.003085
+    },
+    "intent:record": {
+      "rows": 3026,
+      "tokens": 159109,
+      "meanTokens": 52.580635,
+      "rowShare": 0.472813,
+      "tokenShare": 0.768108,
+      "fixedBatchLossCoefficientShare": 0.749477
+    },
+    "intent:repeat": {
+      "rows": 144,
+      "tokens": 2226,
+      "meanTokens": 15.458333,
+      "rowShare": 0.0225,
+      "tokenShare": 0.010746,
+      "fixedBatchLossCoefficientShare": 0.011532
+    },
+    "intent:skip": {
+      "rows": 189,
+      "tokens": 2998,
+      "meanTokens": 15.862434,
+      "rowShare": 0.029531,
+      "tokenShare": 0.014473,
+      "fixedBatchLossCoefficientShare": 0.015713
+    }
+  },
+  "limitation": "Scalar loss-coefficient imbalance is observed, not proof of gradient impact or a causal quality explanation. Token difficulty and repeated JSON syntax also matter. No data, loss, weights or candidate changed."
+}
