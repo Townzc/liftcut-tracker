@@ -1,0 +1,24 @@
+{
+  "mode": "Historical H cloned under T/S to exercise file assembly/scoring only; NOT new T/S predictions",
+  "inputs": 1040,
+  "uniqueIds": 1040,
+  "inputSha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+  "historicalPredictionSha256": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+  "historicalBytesUnchanged": true,
+  "recomputedScoresMatchingHistory": 27,
+  "strictFocusMatchesHistory": true,
+  "clonedComparisonGains": 0,
+  "clonedComparisonLosses": 0,
+  "provenanceMetadata": "Two initial checks stopped on Windows CRLF hashes and absolute report paths; attempts preserved. Score objects match exactly. Paths validated separately and prediction/guard hashes checked after LF normalization. Historical reports untouched.",
+  "fieldDiagnostics": {
+    "recordGold": 516,
+    "recordOutput": 509,
+    "fieldsExact": 505,
+    "exerciseExact": 480,
+    "fieldsExactWrongExercise": 29
+  },
+  "newModelCalls": 0,
+  "privateAcceptanceUsed": false,
+  "releaseReady": false,
+  "summarySourceLfSha256": "015685a4e9cb957a3558dc6c88c4b528d9019037b36991217fcd4fdd6e875837"
+}

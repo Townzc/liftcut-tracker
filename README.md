@@ -145,6 +145,8 @@ See the [mobile plan](docs/product/2026-10-18-mobile-agent-plan.md), [product lo
 
 [M4 v5 evidence](research/m4-parser/results/run-20261022T071000Z-v5/README.md): a fresh loss-reduction comparison reproduces the previous control exactly, but the candidate falls from 206/240 to 197/240 challenge accuracy. Quantization agreement, zero truncation and legal clarification labels pass; exercise binding, missing units and RPE scope still reject the candidate. Verified backup/replay and reproducible CPU error/catalog audits explain the next step; native integration remains pending.
 
+[M4 v6 preparation](research/m4-parser/train/GPU_V6.md) aligns 40 conflicting alias labels and fixes a two-arm catalog comparison, with actual CPU token/train/export and recovery checks. It has no GPU quality result yet; original acceptance gates and the exclusion of private utterances/derivatives remain in force.
+
 ## AI reliability pipeline
 
 Every generated plan follows the same deterministic boundary:
