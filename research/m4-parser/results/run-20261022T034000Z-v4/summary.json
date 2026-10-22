@@ -1,0 +1,3290 @@
+{
+  "windowId": "m4-v4-20261022T034000Z",
+  "sourceCommit": "f9535a89fc2075d3e2eb96d6eaaa437b00955576",
+  "protocolSha256": "8c723364befc5fd741b875bfd69515e627ded1fa1598f39759c3bac7087c53f9",
+  "executionState": "below-threshold",
+  "newModelPredictions": 5200,
+  "archivedPredictions": 1040,
+  "raw": {
+    "A": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 610,
+        "exactRate": 0.8243,
+        "schemaValidRate": 0.9162,
+        "jsonValidRate": 1,
+        "invented": 243,
+        "fieldAccuracy": 0.9785,
+        "omissionRate": 0.0206,
+        "clarifyPrecision": 0.9873,
+        "clarifyRecall": 0.5887,
+        "latencyMs": {
+          "p50": 1013.9,
+          "p95": 2340.4,
+          "max": 3914.1
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            15,
+            17
+          ],
+          "clarify_missing_unit": [
+            0,
+            20
+          ],
+          "correct_rpe": [
+            11,
+            18
+          ],
+          "record_weighted": [
+            93,
+            94
+          ],
+          "clarify_missing_reps": [
+            4,
+            17
+          ],
+          "clarify_negation": [
+            6,
+            13
+          ],
+          "skip": [
+            20,
+            26
+          ],
+          "record_list": [
+            59,
+            59
+          ],
+          "record_pyramid": [
+            25,
+            27
+          ],
+          "clarify_rpe_scope": [
+            5,
+            14
+          ],
+          "clarify_question": [
+            12,
+            12
+          ],
+          "repeat": [
+            17,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            9
+          ],
+          "record_uniform": [
+            40,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            17,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            2,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            0,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            15,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            11,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            1,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            11,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            0,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            328,
+            397
+          ],
+          "en": [
+            235,
+            282
+          ],
+          "mixed": [
+            47,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 187,
+        "exactRate": 0.7792,
+        "schemaValidRate": 0.925,
+        "jsonValidRate": 1,
+        "invented": 153,
+        "fieldAccuracy": 0.9889,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.6333,
+        "latencyMs": {
+          "p50": 947.6,
+          "p95": 1732,
+          "max": 1911.1
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            3,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            13,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            15,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            13,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            11,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            15,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            2,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            96,
+            122
+          ],
+          "zh": [
+            91,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 47,
+        "exactRate": 0.7833,
+        "schemaValidRate": 0.9167,
+        "jsonValidRate": 1,
+        "invented": 17,
+        "fieldAccuracy": 0.906,
+        "omissionRate": 0.08,
+        "clarifyPrecision": 0.8235,
+        "clarifyRecall": 0.6667,
+        "latencyMs": {
+          "p50": 683.6,
+          "p95": 1773.2,
+          "max": 2315.6
+        },
+        "byFamily": {
+          "record_weighted": [
+            5,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            4,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            2,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            3,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            1,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            1,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            0,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            1,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            30,
+            38
+          ],
+          "en": [
+            15,
+            19
+          ],
+          "mixed": [
+            2,
+            3
+          ]
+        }
+      }
+    },
+    "B": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 609,
+        "exactRate": 0.823,
+        "schemaValidRate": 0.8959,
+        "jsonValidRate": 1,
+        "invented": 215,
+        "fieldAccuracy": 0.9756,
+        "omissionRate": 0.0184,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.6075,
+        "latencyMs": {
+          "p50": 1053.3,
+          "p95": 2319.3,
+          "max": 3104.5
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            15,
+            17
+          ],
+          "clarify_missing_unit": [
+            0,
+            20
+          ],
+          "correct_rpe": [
+            11,
+            18
+          ],
+          "record_weighted": [
+            93,
+            94
+          ],
+          "clarify_missing_reps": [
+            6,
+            17
+          ],
+          "clarify_negation": [
+            11,
+            13
+          ],
+          "skip": [
+            11,
+            26
+          ],
+          "record_list": [
+            59,
+            59
+          ],
+          "record_pyramid": [
+            25,
+            27
+          ],
+          "clarify_rpe_scope": [
+            6,
+            14
+          ],
+          "clarify_question": [
+            9,
+            12
+          ],
+          "repeat": [
+            17,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            3,
+            9
+          ],
+          "record_uniform": [
+            41,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            19,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            6,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            0,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            15,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            7,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            11,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            0,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            330,
+            397
+          ],
+          "en": [
+            233,
+            282
+          ],
+          "mixed": [
+            46,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 199,
+        "exactRate": 0.8292,
+        "schemaValidRate": 0.9667,
+        "jsonValidRate": 1,
+        "invented": 143,
+        "fieldAccuracy": 0.9889,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.7333,
+        "latencyMs": {
+          "p50": 1008,
+          "p95": 1775.6,
+          "max": 1989.5
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            2,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            13,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            15,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            13,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            15,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            11,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            15,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            105,
+            122
+          ],
+          "zh": [
+            94,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 48,
+        "exactRate": 0.8,
+        "schemaValidRate": 0.9,
+        "jsonValidRate": 1,
+        "invented": 17,
+        "fieldAccuracy": 0.9098,
+        "omissionRate": 0.0733,
+        "clarifyPrecision": 0.8824,
+        "clarifyRecall": 0.7143,
+        "latencyMs": {
+          "p50": 755.5,
+          "p95": 1986.6,
+          "max": 2395.4
+        },
+        "byFamily": {
+          "record_weighted": [
+            6,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            4,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            1,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            2,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            2,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            2,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            0,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            1,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            30,
+            38
+          ],
+          "en": [
+            15,
+            19
+          ],
+          "mixed": [
+            3,
+            3
+          ]
+        }
+      }
+    },
+    "C": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 624,
+        "exactRate": 0.8432,
+        "schemaValidRate": 0.9203,
+        "jsonValidRate": 0.9986,
+        "invented": 201,
+        "fieldAccuracy": 0.9761,
+        "omissionRate": 0.0179,
+        "clarifyPrecision": 0.9833,
+        "clarifyRecall": 0.6679,
+        "latencyMs": {
+          "p50": 881.4,
+          "p95": 1987.5,
+          "max": 4731
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            13,
+            17
+          ],
+          "clarify_missing_unit": [
+            4,
+            20
+          ],
+          "correct_rpe": [
+            13,
+            18
+          ],
+          "record_weighted": [
+            81,
+            94
+          ],
+          "clarify_missing_reps": [
+            9,
+            17
+          ],
+          "clarify_negation": [
+            8,
+            13
+          ],
+          "skip": [
+            25,
+            26
+          ],
+          "record_list": [
+            57,
+            59
+          ],
+          "record_pyramid": [
+            24,
+            27
+          ],
+          "clarify_rpe_scope": [
+            9,
+            14
+          ],
+          "clarify_question": [
+            12,
+            12
+          ],
+          "repeat": [
+            16,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            5,
+            9
+          ],
+          "record_uniform": [
+            42,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            18,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            9,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            5,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            13,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            5,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            11,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            10,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            3,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            337,
+            397
+          ],
+          "en": [
+            236,
+            282
+          ],
+          "mixed": [
+            51,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 200,
+        "exactRate": 0.8333,
+        "schemaValidRate": 0.9708,
+        "jsonValidRate": 1,
+        "invented": 147,
+        "fieldAccuracy": 0.9889,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.7417,
+        "latencyMs": {
+          "p50": 848.2,
+          "p95": 1499.9,
+          "max": 1708
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            5,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            13,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            15,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            13,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            9,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            15,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            15,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            107,
+            122
+          ],
+          "zh": [
+            93,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 48,
+        "exactRate": 0.8,
+        "schemaValidRate": 0.95,
+        "jsonValidRate": 1,
+        "invented": 21,
+        "fieldAccuracy": 0.9211,
+        "omissionRate": 0.06,
+        "clarifyPrecision": 0.8421,
+        "clarifyRecall": 0.7619,
+        "latencyMs": {
+          "p50": 526.3,
+          "p95": 1549.2,
+          "max": 2060.8
+        },
+        "byFamily": {
+          "record_weighted": [
+            5,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            3,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            2,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            2,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            2,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            1,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            1,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            2,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            33,
+            38
+          ],
+          "en": [
+            13,
+            19
+          ],
+          "mixed": [
+            2,
+            3
+          ]
+        }
+      }
+    },
+    "D": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 613,
+        "exactRate": 0.8284,
+        "schemaValidRate": 0.9081,
+        "jsonValidRate": 0.9986,
+        "invented": 190,
+        "fieldAccuracy": 0.9554,
+        "omissionRate": 0.0404,
+        "clarifyPrecision": 0.9888,
+        "clarifyRecall": 0.6679,
+        "latencyMs": {
+          "p50": 997.7,
+          "p95": 2130.8,
+          "max": 5064.7
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            13,
+            17
+          ],
+          "clarify_missing_unit": [
+            3,
+            20
+          ],
+          "correct_rpe": [
+            11,
+            18
+          ],
+          "record_weighted": [
+            82,
+            94
+          ],
+          "clarify_missing_reps": [
+            8,
+            17
+          ],
+          "clarify_negation": [
+            12,
+            13
+          ],
+          "skip": [
+            22,
+            26
+          ],
+          "record_list": [
+            56,
+            59
+          ],
+          "record_pyramid": [
+            21,
+            27
+          ],
+          "clarify_rpe_scope": [
+            10,
+            14
+          ],
+          "clarify_question": [
+            12,
+            12
+          ],
+          "repeat": [
+            17,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            5,
+            9
+          ],
+          "record_uniform": [
+            41,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            15,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            9,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            6,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            13,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            6,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            11,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            7,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            1,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            335,
+            397
+          ],
+          "en": [
+            229,
+            282
+          ],
+          "mixed": [
+            49,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 206,
+        "exactRate": 0.8583,
+        "schemaValidRate": 0.9667,
+        "jsonValidRate": 1,
+        "invented": 138,
+        "fieldAccuracy": 0.9913,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.775,
+        "latencyMs": {
+          "p50": 912.8,
+          "p95": 1622.5,
+          "max": 1864.5
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            10,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            14,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            14,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            9,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            15,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            15,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            108,
+            122
+          ],
+          "zh": [
+            98,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 49,
+        "exactRate": 0.8167,
+        "schemaValidRate": 0.9333,
+        "jsonValidRate": 1,
+        "invented": 15,
+        "fieldAccuracy": 0.9135,
+        "omissionRate": 0.0667,
+        "clarifyPrecision": 0.85,
+        "clarifyRecall": 0.8095,
+        "latencyMs": {
+          "p50": 652.7,
+          "p95": 1719.9,
+          "max": 2166.3
+        },
+        "byFamily": {
+          "record_weighted": [
+            5,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            3,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            2,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            3,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            2,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            1,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            1,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            2,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            33,
+            38
+          ],
+          "en": [
+            14,
+            19
+          ],
+          "mixed": [
+            2,
+            3
+          ]
+        }
+      }
+    }
+  },
+  "referenceRaw": {
+    "D-HF": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 611,
+        "exactRate": 0.8257,
+        "fieldAccuracy": 0.951,
+        "invented": 190,
+        "omissionRate": 0.044,
+        "clarifyPrecision": 0.9835,
+        "clarifyRecall": 0.6755,
+        "jsonValidRate": 0.9986,
+        "schemaValidRate": 0.9068,
+        "latencyMs": {
+          "p50": 654.7,
+          "p95": 1831.3,
+          "max": 4777.8
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            13,
+            17
+          ],
+          "clarify_missing_unit": [
+            3,
+            20
+          ],
+          "correct_rpe": [
+            11,
+            18
+          ],
+          "record_weighted": [
+            81,
+            94
+          ],
+          "clarify_missing_reps": [
+            8,
+            17
+          ],
+          "clarify_negation": [
+            13,
+            13
+          ],
+          "skip": [
+            21,
+            26
+          ],
+          "record_list": [
+            56,
+            59
+          ],
+          "record_pyramid": [
+            20,
+            27
+          ],
+          "clarify_rpe_scope": [
+            10,
+            14
+          ],
+          "clarify_question": [
+            12,
+            12
+          ],
+          "repeat": [
+            16,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            5,
+            9
+          ],
+          "record_uniform": [
+            41,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            15,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            9,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            4,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            6,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            11,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            8,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            2,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            333,
+            397
+          ],
+          "en": [
+            229,
+            282
+          ],
+          "mixed": [
+            49,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 200,
+        "exactRate": 0.8333,
+        "fieldAccuracy": 0.9889,
+        "invented": 142,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.7417,
+        "jsonValidRate": 1,
+        "schemaValidRate": 0.9625,
+        "latencyMs": {
+          "p50": 630.3,
+          "p95": 1371.5,
+          "max": 1575.5
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            7,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            13,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            14,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            13,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            8,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            15,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            15,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            107,
+            122
+          ],
+          "zh": [
+            93,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 51,
+        "exactRate": 0.85,
+        "fieldAccuracy": 0.9173,
+        "invented": 15,
+        "omissionRate": 0.0667,
+        "clarifyPrecision": 0.8571,
+        "clarifyRecall": 0.8571,
+        "jsonValidRate": 1,
+        "schemaValidRate": 0.95,
+        "latencyMs": {
+          "p50": 277.2,
+          "p95": 1402.2,
+          "max": 1998.1
+        },
+        "byFamily": {
+          "record_weighted": [
+            5,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            4,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            2,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            3,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            2,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            2,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            1,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            2,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            34,
+            38
+          ],
+          "en": [
+            15,
+            19
+          ],
+          "mixed": [
+            2,
+            3
+          ]
+        }
+      }
+    },
+    "D-F16": {
+      "dev-eval": {
+        "total": 740,
+        "exact": 614,
+        "exactRate": 0.8297,
+        "fieldAccuracy": 0.9525,
+        "invented": 188,
+        "omissionRate": 0.0431,
+        "clarifyPrecision": 0.9835,
+        "clarifyRecall": 0.6755,
+        "jsonValidRate": 0.9986,
+        "schemaValidRate": 0.9081,
+        "latencyMs": {
+          "p50": 1946.5,
+          "p95": 4195.3,
+          "max": 9464.4
+        },
+        "byFamily": {
+          "clarify_uncertain_quantity": [
+            13,
+            17
+          ],
+          "clarify_missing_unit": [
+            3,
+            20
+          ],
+          "correct_rpe": [
+            11,
+            18
+          ],
+          "record_weighted": [
+            83,
+            94
+          ],
+          "clarify_missing_reps": [
+            8,
+            17
+          ],
+          "clarify_negation": [
+            13,
+            13
+          ],
+          "skip": [
+            21,
+            26
+          ],
+          "record_list": [
+            56,
+            59
+          ],
+          "record_pyramid": [
+            20,
+            27
+          ],
+          "clarify_rpe_scope": [
+            10,
+            14
+          ],
+          "clarify_question": [
+            12,
+            12
+          ],
+          "repeat": [
+            16,
+            17
+          ],
+          "clarify_unknown_exercise": [
+            5,
+            9
+          ],
+          "record_uniform": [
+            41,
+            42
+          ],
+          "record_bodyweight": [
+            37,
+            37
+          ],
+          "correct_reps": [
+            16,
+            20
+          ],
+          "clarify_unsupported_unit": [
+            9,
+            9
+          ],
+          "end": [
+            5,
+            5
+          ],
+          "correct_weight": [
+            10,
+            10
+          ],
+          "clarify_out_of_range": [
+            4,
+            19
+          ],
+          "clarify_plan_not_actual": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_unit_negative": [
+            6,
+            12
+          ],
+          "contrast_missing_reps_positive": [
+            12,
+            12
+          ],
+          "contrast_missing_reps_negative": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_positive": [
+            12,
+            12
+          ],
+          "contrast_plan_not_actual_negative": [
+            12,
+            12
+          ],
+          "contrast_negation_positive": [
+            12,
+            12
+          ],
+          "contrast_negation_negative": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            12
+          ],
+          "contrast_uncertain_quantity_negative": [
+            12,
+            12
+          ],
+          "contrast_question_positive": [
+            12,
+            12
+          ],
+          "contrast_question_negative": [
+            12,
+            12
+          ],
+          "contrast_rpe_scope_positive": [
+            11,
+            12
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            12
+          ],
+          "contrast_unknown_exercise_positive": [
+            12,
+            12
+          ],
+          "contrast_unknown_exercise_negative": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_positive": [
+            12,
+            12
+          ],
+          "contrast_unsupported_unit_negative": [
+            8,
+            12
+          ],
+          "contrast_out_of_range_positive": [
+            12,
+            12
+          ],
+          "contrast_out_of_range_negative": [
+            2,
+            12
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            335,
+            397
+          ],
+          "en": [
+            230,
+            282
+          ],
+          "mixed": [
+            49,
+            61
+          ]
+        }
+      },
+      "challenge": {
+        "total": 240,
+        "exact": 203,
+        "exactRate": 0.8458,
+        "fieldAccuracy": 0.9889,
+        "invented": 141,
+        "omissionRate": 0,
+        "clarifyPrecision": 1,
+        "clarifyRecall": 0.7667,
+        "jsonValidRate": 1,
+        "schemaValidRate": 0.9708,
+        "latencyMs": {
+          "p50": 1846.4,
+          "p95": 3225.4,
+          "max": 3721.5
+        },
+        "byFamily": {
+          "contrast_missing_unit_positive": [
+            14,
+            15
+          ],
+          "contrast_missing_unit_negative": [
+            9,
+            15
+          ],
+          "contrast_missing_reps_positive": [
+            13,
+            15
+          ],
+          "contrast_missing_reps_negative": [
+            14,
+            15
+          ],
+          "contrast_plan_not_actual_positive": [
+            13,
+            15
+          ],
+          "contrast_plan_not_actual_negative": [
+            9,
+            15
+          ],
+          "contrast_negation_positive": [
+            14,
+            15
+          ],
+          "contrast_negation_negative": [
+            15,
+            15
+          ],
+          "contrast_uncertain_quantity_positive": [
+            12,
+            15
+          ],
+          "contrast_uncertain_quantity_negative": [
+            15,
+            15
+          ],
+          "contrast_question_positive": [
+            15,
+            15
+          ],
+          "contrast_question_negative": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_positive": [
+            15,
+            15
+          ],
+          "contrast_rpe_scope_negative": [
+            0,
+            15
+          ],
+          "contrast_unknown_exercise_positive": [
+            15,
+            15
+          ],
+          "contrast_unknown_exercise_negative": [
+            15,
+            15
+          ]
+        },
+        "byLanguage": {
+          "en": [
+            108,
+            122
+          ],
+          "zh": [
+            95,
+            118
+          ]
+        }
+      },
+      "handwritten": {
+        "total": 60,
+        "exact": 50,
+        "exactRate": 0.8333,
+        "fieldAccuracy": 0.9173,
+        "invented": 15,
+        "omissionRate": 0.0667,
+        "clarifyPrecision": 0.85,
+        "clarifyRecall": 0.8095,
+        "jsonValidRate": 1,
+        "schemaValidRate": 0.9333,
+        "latencyMs": {
+          "p50": 1258.9,
+          "p95": 3625.7,
+          "max": 4526.2
+        },
+        "byFamily": {
+          "record_weighted": [
+            5,
+            8
+          ],
+          "record_bodyweight": [
+            3,
+            3
+          ],
+          "record_list": [
+            3,
+            3
+          ],
+          "record_uniform": [
+            5,
+            5
+          ],
+          "record_pyramid": [
+            2,
+            2
+          ],
+          "repeat": [
+            4,
+            4
+          ],
+          "correct_reps": [
+            3,
+            3
+          ],
+          "correct_weight": [
+            2,
+            2
+          ],
+          "correct_rpe": [
+            1,
+            1
+          ],
+          "skip": [
+            2,
+            5
+          ],
+          "end": [
+            3,
+            3
+          ],
+          "clarify_uncertain_quantity": [
+            3,
+            3
+          ],
+          "clarify_plan_not_actual": [
+            2,
+            2
+          ],
+          "clarify_question": [
+            2,
+            2
+          ],
+          "clarify_negation": [
+            1,
+            2
+          ],
+          "clarify_missing_reps": [
+            1,
+            2
+          ],
+          "clarify_missing_unit": [
+            2,
+            3
+          ],
+          "clarify_unsupported_unit": [
+            1,
+            1
+          ],
+          "clarify_rpe_scope": [
+            1,
+            2
+          ],
+          "clarify_unknown_exercise": [
+            2,
+            2
+          ],
+          "clarify_out_of_range": [
+            2,
+            2
+          ]
+        },
+        "byLanguage": {
+          "zh": [
+            33,
+            38
+          ],
+          "en": [
+            15,
+            19
+          ],
+          "mixed": [
+            2,
+            3
+          ]
+        }
+      }
+    }
+  },
+  "sourceComparisons": {
+    "A": {
+      "dev-eval": {
+        "guardV1": {
+          "total": 740,
+          "exact": 507,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 242,
+          "correctAccepted": 242,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 507,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 242,
+          "correctAccepted": 242,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 523,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0
+        }
+      },
+      "challenge": {
+        "guardV1": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0
+        }
+      },
+      "handwritten": {
+        "guardV1": {
+          "total": 60,
+          "exact": 34,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 13,
+          "correctAccepted": 13,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 52,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 31,
+          "correctAccepted": 31,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0
+        }
+      }
+    },
+    "B": {
+      "dev-eval": {
+        "guardV1": {
+          "total": 740,
+          "exact": 499,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 234,
+          "correctAccepted": 234,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 499,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 234,
+          "correctAccepted": 234,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 523,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0
+        }
+      },
+      "challenge": {
+        "guardV1": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0
+        }
+      },
+      "handwritten": {
+        "guardV1": {
+          "total": 60,
+          "exact": 34,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 13,
+          "correctAccepted": 13,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 52,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 31,
+          "correctAccepted": 31,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0
+        }
+      }
+    },
+    "C": {
+      "dev-eval": {
+        "guardV1": {
+          "total": 740,
+          "exact": 494,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 229,
+          "correctAccepted": 229,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 494,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 229,
+          "correctAccepted": 229,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 523,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0
+        }
+      },
+      "challenge": {
+        "guardV1": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 231,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 111,
+          "correctAccepted": 111,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0
+        }
+      },
+      "handwritten": {
+        "guardV1": {
+          "total": 60,
+          "exact": 35,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 14,
+          "correctAccepted": 14,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 52,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 31,
+          "correctAccepted": 31,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0
+        }
+      }
+    },
+    "D": {
+      "dev-eval": {
+        "guardV1": {
+          "total": 740,
+          "exact": 491,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 226,
+          "correctAccepted": 226,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 740,
+          "exact": 491,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 226,
+          "correctAccepted": 226,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 740,
+          "exact": 523,
+          "invented": 0,
+          "actionable": 475,
+          "accepted": 258,
+          "correctAccepted": 258,
+          "unsafeAccepted": 0
+        }
+      },
+      "challenge": {
+        "guardV1": {
+          "total": 240,
+          "exact": 233,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 113,
+          "correctAccepted": 113,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 240,
+          "exact": 233,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 113,
+          "correctAccepted": 113,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 240,
+          "exact": 240,
+          "invented": 0,
+          "actionable": 120,
+          "accepted": 120,
+          "correctAccepted": 120,
+          "unsafeAccepted": 0
+        }
+      },
+      "handwritten": {
+        "guardV1": {
+          "total": 60,
+          "exact": 35,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 14,
+          "correctAccepted": 14,
+          "unsafeAccepted": 0
+        },
+        "guardV2": {
+          "total": 60,
+          "exact": 52,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 31,
+          "correctAccepted": 31,
+          "unsafeAccepted": 0
+        },
+        "sourceOnlyV2": {
+          "total": 60,
+          "exact": 59,
+          "invented": 0,
+          "actionable": 39,
+          "accepted": 38,
+          "correctAccepted": 38,
+          "unsafeAccepted": 0
+        }
+      }
+    }
+  },
+  "paired": {
+    "A->B": {
+      "dev-eval": {
+        "items": 740,
+        "bothCorrect": 591,
+        "gained": 18,
+        "lost": 19,
+        "bothWrong": 112
+      },
+      "challenge": {
+        "items": 240,
+        "bothCorrect": 182,
+        "gained": 17,
+        "lost": 5,
+        "bothWrong": 36
+      },
+      "handwritten": {
+        "items": 60,
+        "bothCorrect": 45,
+        "gained": 3,
+        "lost": 2,
+        "bothWrong": 10
+      }
+    },
+    "A->C": {
+      "dev-eval": {
+        "items": 740,
+        "bothCorrect": 578,
+        "gained": 46,
+        "lost": 32,
+        "bothWrong": 84
+      },
+      "challenge": {
+        "items": 240,
+        "bothCorrect": 183,
+        "gained": 17,
+        "lost": 4,
+        "bothWrong": 36
+      },
+      "handwritten": {
+        "items": 60,
+        "bothCorrect": 44,
+        "gained": 4,
+        "lost": 3,
+        "bothWrong": 9
+      }
+    },
+    "B->D": {
+      "dev-eval": {
+        "items": 740,
+        "bothCorrect": 571,
+        "gained": 42,
+        "lost": 38,
+        "bothWrong": 89
+      },
+      "challenge": {
+        "items": 240,
+        "bothCorrect": 191,
+        "gained": 15,
+        "lost": 8,
+        "bothWrong": 26
+      },
+      "handwritten": {
+        "items": 60,
+        "bothCorrect": 45,
+        "gained": 4,
+        "lost": 3,
+        "bothWrong": 8
+      }
+    },
+    "C->D": {
+      "dev-eval": {
+        "items": 740,
+        "bothCorrect": 599,
+        "gained": 14,
+        "lost": 25,
+        "bothWrong": 102
+      },
+      "challenge": {
+        "items": 240,
+        "bothCorrect": 198,
+        "gained": 8,
+        "lost": 2,
+        "bothWrong": 32
+      },
+      "handwritten": {
+        "items": 60,
+        "bothCorrect": 48,
+        "gained": 1,
+        "lost": 0,
+        "bothWrong": 11
+      }
+    },
+    "A->D": {
+      "dev-eval": {
+        "items": 740,
+        "bothCorrect": 567,
+        "gained": 46,
+        "lost": 43,
+        "bothWrong": 84
+      },
+      "challenge": {
+        "items": 240,
+        "bothCorrect": 182,
+        "gained": 24,
+        "lost": 5,
+        "bothWrong": 29
+      },
+      "handwritten": {
+        "items": 60,
+        "bothCorrect": 45,
+        "gained": 4,
+        "lost": 2,
+        "bothWrong": 9
+      }
+    }
+  },
+  "strictReasons": {
+    "A": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 3,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 2,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 18,
+      "correctReason": 223,
+      "clarificationGold": 406,
+      "falseRefusals": 5,
+      "challengePositive": {
+        "total": 120,
+        "exact": 111
+      }
+    },
+    "B": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 2,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 8,
+      "correctReason": 219,
+      "clarificationGold": 406,
+      "falseRefusals": 2,
+      "challengePositive": {
+        "total": 120,
+        "exact": 111
+      }
+    },
+    "C": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 5,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 9,
+      "correctReason": 241,
+      "clarificationGold": 406,
+      "falseRefusals": 6,
+      "challengePositive": {
+        "total": 120,
+        "exact": 111
+      }
+    },
+    "D": {
+      "focus": {
+        "missing_unit": {
+          "negativeTotal": 15,
+          "correctReason": 10,
+          "positiveTotal": 15,
+          "positiveExact": 14
+        },
+        "rpe_scope": {
+          "negativeTotal": 15,
+          "correctReason": 0,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        },
+        "unknown_exercise": {
+          "negativeTotal": 15,
+          "correctReason": 15,
+          "positiveTotal": 15,
+          "positiveExact": 15
+        }
+      },
+      "invalidClarificationReasons": 7,
+      "correctReason": 241,
+      "clarificationGold": 406,
+      "falseRefusals": 5,
+      "challengePositive": {
+        "total": 120,
+        "exact": 113
+      }
+    }
+  },
+  "agreements": {
+    "D-HF": {
+      "items": 1040,
+      "missing": 0,
+      "sameText": 1005,
+      "sameParsed": 1004,
+      "parsedAgreement": 0.9654,
+      "minAgreement": 0.95
+    },
+    "D-F16": {
+      "items": 1040,
+      "missing": 0,
+      "sameText": 1008,
+      "sameParsed": 1007,
+      "parsedAgreement": 0.9683,
+      "minAgreement": 0.95
+    }
+  },
+  "acceptance": {
+    "candidate": "D",
+    "developmentGatePassed": false,
+    "checks": {
+      "sameFactorInputs": true,
+      "rawAgreement": true,
+      "noTruncation": false,
+      "challengeExact": false,
+      "challengeSchema": false,
+      "challengeNoInvented": false,
+      "guardedSafety": true,
+      "challengeCoverage": true,
+      "focusNegativeReasons": false,
+      "focusPositiveUseful": true,
+      "challengePositiveUseful": true,
+      "clarificationVocabulary": false
+    },
+    "coverage": {
+      "dev-eval": 0.47578947368421054,
+      "challenge": 0.9416666666666667,
+      "handwritten": 0.358974358974359
+    },
+    "releaseReady": false,
+    "pending": [
+      "passing-candidate continuous acceptance",
+      "useful coverage beyond deterministic source baseline",
+      "native integration",
+      "physical-device acceptance"
+    ],
+    "note": "Original source-v1 gates retained. Source-v2 and other arms cannot replace a failed D. Observed diagnostic inputs."
+  },
+  "training": {
+    "seed": 20261019,
+    "steps": 800,
+    "train_examples": 6400,
+    "dev_examples": 740,
+    "batch": 16,
+    "lr": 0.0002,
+    "rank": 16,
+    "dtype": "torch.bfloat16",
+    "device": "cuda",
+    "dev_loss": 0.05173,
+    "seconds": 348.3,
+    "gradientCheckpointing": true,
+    "peakCudaAllocatedBytes": 10258342912
+  },
+  "latency": {
+    "A": {
+      "items": 1040,
+      "historical": true,
+      "p50Ms": 988.2,
+      "p95Ms": 2195.3,
+      "sumSeconds": 1115.411,
+      "promptTokens": 148470,
+      "completionTokens": 37003,
+      "truncated": 0
+    },
+    "B": {
+      "items": 1040,
+      "historical": false,
+      "p50Ms": 1034.6,
+      "p95Ms": 2202.6,
+      "sumSeconds": 1135.091,
+      "promptTokens": 202550,
+      "completionTokens": 36683,
+      "truncated": 0
+    },
+    "C": {
+      "items": 1040,
+      "historical": false,
+      "p50Ms": 865.95,
+      "p95Ms": 1885.9,
+      "sumSeconds": 952.866,
+      "promptTokens": 148470,
+      "completionTokens": 37440,
+      "truncated": 1
+    },
+    "D": {
+      "items": 1040,
+      "historical": false,
+      "p50Ms": 966.0,
+      "p95Ms": 2033.2,
+      "sumSeconds": 1064.92,
+      "promptTokens": 202550,
+      "completionTokens": 36857,
+      "truncated": 1
+    },
+    "D-HF": {
+      "items": 1040,
+      "historical": false,
+      "p50Ms": 640.9,
+      "p95Ms": 1714.4,
+      "sumSeconds": 708.198,
+      "promptTokens": 202550,
+      "completionTokens": 37898,
+      "truncated": 1
+    },
+    "D-F16": {
+      "items": 1040,
+      "historical": false,
+      "p50Ms": 1912.4,
+      "p95Ms": 4014.3,
+      "sumSeconds": 2082.851,
+      "promptTokens": 202550,
+      "completionTokens": 36819,
+      "truncated": 1
+    }
+  },
+  "resourceObservations": {
+    "samples": 215,
+    "observedIntervalSeconds": 6435.68,
+    "firstSample": 1792641127.4622529,
+    "lastSample": 1792647563.1400838,
+    "intervalWeightedGpuPercent": 8.05,
+    "observedMaximumMemoryMiB": 18522.0,
+    "note": "30-second read-only samples during the runner, excluding setup/backup-only time. Observed maximum is not a continuous peak."
+  },
+  "stepSeconds": {
+    "workspace-bindings": 0.06,
+    "check-v2": 1.5,
+    "data-v2": 1.45,
+    "check-v3": 2.89,
+    "data-v3": 2.79,
+    "check-v4": 3.88,
+    "data-v4": 4.01,
+    "runtime": 5.74,
+    "B": 1142.17,
+    "train": 356.52,
+    "D-HF": 715.63,
+    "export": 22.95,
+    "D-F16": 2090.86,
+    "C": 960.04,
+    "D": 1072.29,
+    "agreement-D-HF": 0.08,
+    "agreement-D-F16": 0.09,
+    "metrics-A-dev-eval": 0.52,
+    "ground-A-dev-eval": 0.75,
+    "compare-A-dev-eval": 1.41,
+    "metrics-A-challenge": 0.39,
+    "ground-A-challenge": 0.49,
+    "compare-A-challenge": 0.69,
+    "metrics-A-handwritten": 0.38,
+    "ground-A-handwritten": 0.42,
+    "compare-A-handwritten": 0.48,
+    "metrics-B-dev-eval": 0.43,
+    "ground-B-dev-eval": 0.67,
+    "compare-B-dev-eval": 1.31,
+    "metrics-B-challenge": 0.39,
+    "ground-B-challenge": 0.42,
+    "compare-B-challenge": 0.71,
+    "metrics-B-handwritten": 0.37,
+    "ground-B-handwritten": 0.41,
+    "compare-B-handwritten": 0.46,
+    "metrics-C-dev-eval": 0.43,
+    "ground-C-dev-eval": 0.68,
+    "compare-C-dev-eval": 1.27,
+    "metrics-C-challenge": 0.39,
+    "ground-C-challenge": 0.49,
+    "compare-C-challenge": 0.61,
+    "metrics-C-handwritten": 0.38,
+    "ground-C-handwritten": 0.44,
+    "compare-C-handwritten": 0.48,
+    "metrics-D-dev-eval": 0.43,
+    "ground-D-dev-eval": 0.69,
+    "compare-D-dev-eval": 1.29,
+    "metrics-D-challenge": 0.38,
+    "ground-D-challenge": 0.49,
+    "compare-D-challenge": 0.7,
+    "metrics-D-handwritten": 0.38,
+    "ground-D-handwritten": 0.43,
+    "compare-D-handwritten": 0.49,
+    "factor-summary": 0.59
+  },
+  "weightsSha256": {
+    "gguf/parser-f16.gguf": "3972bb8d94206fe369e1dbb0bc110a9aa3c9ba0b61de6a3b296345fa48a76c27",
+    "gguf/parser-q8_0.gguf": "7f84feab833b9002848830c7db0b1a6f53c0df4b15e4cf980fe6c4e5ac2d0de4",
+    "model/adapter/adapter_model.safetensors": "4b1b73055efde8529d9419fcd23a35acbe9106fc07913743a598ea886d1c8ec4",
+    "model/merged/model.safetensors": "17264d620056b20cfa5a9c91f030644b55c1e5410fbf4b5945ec9ebb062b4598"
+  },
+  "dataManifestsSha256": "9430913e997cc3bff3946b425a6f6b4aaf15112501fff8c5587767de17e9404e",
+  "runManifestSha256": "8592d6fcd79b621cb7115fa2879081e163811a0d87334116474056bff7cbd3bd",
+  "archiveManifestSha256": "da52e0dde0877c5f6b34aaff67541e9bfc2dcab85d7d7ac4a549fbabd1fbc044",
+  "archiveSha256": "fb4122125f0f93204c294f83ce4098ea8b57b7a02f530da064d324e21008441a",
+  "backup": {
+    "verified": true,
+    "files": 140,
+    "bytes": 3136847761,
+    "predictionRows": {
+      "A": 1040,
+      "B": 1040,
+      "C": 1040,
+      "D": 1040,
+      "D-HF": 1040,
+      "D-F16": 1040
+    }
+  },
+  "replay": {
+    "reportsMatched": 40,
+    "newModelCalls": 0,
+    "additionalOfflineReferenceScores": 6
+  },
+  "limitations": [
+    "All 1040 inputs are previously observed development diagnostics, not independent acceptance.",
+    "One training seed and fixed execution order; no replicate-based causal or speed significance claim.",
+    "A outputs/timing are archived. HF uses server CUDA and GGUF uses server CPU, not a phone benchmark.",
+    "Source-v2 guard matches its deterministic baseline; its safety cannot demonstrate added model utility.",
+    "Twenty private originals and derivatives were excluded from training and this runner. Product confirmation flow unchanged.",
+    "D was preselected; a better alternate arm cannot replace it. Development pass alone does not authorize native release."
+  ]
+}

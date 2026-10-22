@@ -1,5 +1,9 @@
 # M4 v4 controlled boundary-data preparation
 
+The subsequent [fixed GPU experiment](results/run-20261022T034000Z-v4/README.md)
+completed and rejected candidate D. The sections below retain the preparation-time
+facts; the data, historical metrics and original quality gates are unchanged.
+
 This is preparation, not a candidate accuracy result. The [paired v3 regression](results/20261022-regression-analysis/README.md)
 found 42 losses and 16 gains: missing-unit/RPE over-acceptance and invalid clarification
 labels dominate. HF, F16 and Q8 all scored 187/240, so quantization is not the main

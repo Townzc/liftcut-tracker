@@ -47,6 +47,7 @@ jobs:
           python research/m4-parser/test_v2_runner.py -v
           python research/m4-parser/test_v3_runner.py -v
           python research/m4-parser/test_v4_runner.py -v
+          python research/m4-parser/test_loss_mass.py -v
           python research/m4-parser/test_closed_decode.py -v
 
       - name: Rebuild the saved G1 trajectory viewer without model calls
