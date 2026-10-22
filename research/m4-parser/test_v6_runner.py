@@ -98,6 +98,9 @@ class V6RunnerTest(unittest.TestCase):
         self.assertEqual((actual["trainingRuns"], actual["maximumModelPredictions"], actual["candidate"]), (2, 4160, "S"))
         self.assertEqual(actual["trainingMetrics"]["steps"], 800)
         self.assertEqual(actual["requiredFreeDiskGiB"], 16)
+        manifest = json.loads((runner.M4 / "data/v6-manifest.json").read_text(encoding="utf8"))
+        self.assertEqual(actual["dataManifestCanonicalSha256"]["v6"],
+                         hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest())
         self.assertLessEqual(sum(actual["storagePlanningBytes"].values()), 16 * 1024**3)
         self.assertEqual(actual["newStreamOrder"], list(runner.NEW))
         self.assertFalse(actual["releaseReady"])

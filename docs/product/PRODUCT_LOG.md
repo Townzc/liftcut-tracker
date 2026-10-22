@@ -4,6 +4,7 @@
 - Why: separate catalog exposure from shared alias repair and identify correct fields bound to the wrong exercise.
 - Change: two original-base token-mean trainings, four fixed prediction streams, S-only selection, original numeric gates and separate field/binding reports. [Protocol](../../research/m4-parser/train/GPU_V6.md).
 - Ran: 8 Linux runner checks; exact 1,040-input/token audit; 27 historical score objects replayed with provenance checked separately; 9 JS + 239 TS, lint (two existing warnings) and build pass.
+- Restore found a cp936-decoded local protocol hash despite unchanged data; fixed the preparer to explicit UTF-8 and added a canonical-manifest regression assertion. Failed source restore is retained; corrected source/CI must pass.
 - Limits: H cloned as T/S tests report wiring, not new quality. CPU smokes use saved v1 weights. No GPU, private originals/derivatives, native flag, UI or confirmation change.
 - Next: all exact-head CI plus actual full/incremental source restoration, then notify a fresh 3h-work/1h-reserve GPU window. Continuous/native/device gates follow model acceptance.
 

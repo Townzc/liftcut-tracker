@@ -41,6 +41,12 @@ Actual checks so far:
   1,040 inputs: maximum prompt 231 tokens, no truncation, exact frozen token-ID
   hash. Root tests pass (9 JS + 239 TS), build passes and lint has zero errors
   with two existing warnings.
+- The first reviewed-source restoration stopped before model dispatch because
+  a local protocol refresh decoded the Chinese manifest using Windows cp936.
+  The data bytes were unchanged. The preparer now reads UTF-8 explicitly and
+  the runner's actual-protocol test checks the canonical manifest hash. The
+  failed bundle/logs are retained; the corrected revision requires a fresh
+  restore and exact-head CI before any opening notice.
 
 The frozen v1–v5 files remain unchanged. The 20 private originals and all
 derivatives are outside both training and these diagnostic inputs. App UI,
