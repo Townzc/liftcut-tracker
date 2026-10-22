@@ -6,6 +6,7 @@
 - Diagnosis: saved-output attribution separates literal names from resolved actions; S has 23 field-exact wrong available identities, nine resolved-equal names and two unknown names. Training-only audit reproduces 12,800 arm rows with zero policy errors; prompt alignment remains a hypothesis, not a proven cause.
 - Recovery: all 135 run files/eight full weights and five complete streams restored and hashed; 31 frozen reports replay exactly. OFF verified 20:33:29 UTC after backup; completed timer cleared. Approx. ¥4.01 time proxy, not invoice.
 - Verification: four new attribution/tamper/training regressions and root 9 JS + 243 TS pass; lint has zero errors/two existing warnings, production build passes. Exact-head CI required before merge. [Report and evidence](../../research/m4-parser/results/run-20261022T184300Z-v6/README.md).
+- CI follow-up: the quality job still used slow Azure APT mirrors; live logs showed repeated waits before browser tests. Applied the same official mirror/download bounds already used by the other two browser jobs, retaining every test and timeout gate.
 - Limits/next: development failed; keep native off, UI and confirmation unchanged. Private 20 originals/derivatives remain excluded. Prepare isolated prompt-contract CPU comparison and storage recovery plan before the next GPU notice; continuous/device gates still follow model acceptance.
 
 ## 2026-10-22 · M4 v6 fixed comparison and scoring provenance

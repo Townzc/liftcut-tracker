@@ -87,6 +87,8 @@ Safe rejection is separate from useful coverage. The original source-v1 challeng
 
 Concurrent weight staging, fixed order and CUDA-versus-CPU inference prevent a controlled speed claim. Per-stream latency and read-only resource samples are in the summary; a sampled GPU maximum is not a continuous peak.
 
+Release CI follow-up: the first result commit's quality job repeatedly waited on the Azure Ubuntu mirror before starting its browser tests. The missing mirror/HTTP timeout setup was extended from the other two browser jobs to this job; tests and job timeout remain unchanged. Final release requires every check on the updated commit, not the partial earlier run.
+
 [Acceptance](acceptance.json) · [Replay](replay-verification.json) · [Run hashes](run-sha256.json) · [Power evidence](power-off.json) · [Frozen protocol](../../train/GPU_V6.md)
 
 ## Interpretation and next step
