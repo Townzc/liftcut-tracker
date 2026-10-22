@@ -1,0 +1,12 @@
+{
+  "verified": true,
+  "input": {
+    "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+    "rows": 1040,
+    "maxPromptTokens": 231,
+    "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5",
+    "truncated": 0
+  },
+  "modelCalls": 0,
+  "privateAcceptanceUsed": false
+}
