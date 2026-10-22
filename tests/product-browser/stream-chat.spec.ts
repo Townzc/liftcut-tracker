@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import {holdGreetingStream} from "./stream-gate";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 async function login(page:Page){
   await page.goto("/login");await page.locator("#email").fill("p1-fixture@example.invalid");await page.locator("#password").fill("p1-fixture-password");
@@ -26,11 +27,14 @@ test("explicit record queries read fresh sources before one model call, with pri
 test("a real HTTP stream renders incremental prose before completion, with no raw tool arguments",async({page})=>{
   await login(page);let completed=false;
   page.on("response",r=>{if(r.url().endsWith("/api/ai/coach")&&r.request().method()==="POST")void r.finished().then(()=>{completed=true;}).catch(()=>{});});
-  await start(page,"你好 [stream-slow]");const turn=page.getByTestId("coach-turn").last();
+  const stream=await holdGreetingStream(page.request);try{
+  await start(page,stream.text);const turn=page.getByTestId("coach-turn").last();
   await expect(turn).toContainText("可以自然");await expect(turn).toHaveAttribute("aria-busy","true");expect(completed).toBe(false);
   await expect(turn).not.toContainText("sourceIds");await expect(turn).not.toContainText("finish_response");
+  await stream.release();
   await expect(turn).toHaveAttribute("aria-busy","false");await expect(turn).toContainText("今天的变化");
   await page.screenshot({path:"node_modules/.cache/coach-stream-release/stream-complete-mobile.png",fullPage:true});
+  }finally{await stream.release();}
 });
 
 test("long replies complete in the browser and transmit each character once instead of repeating prefixes",async({page})=>{
@@ -45,14 +49,17 @@ test("long replies complete in the browser and transmit each character once inst
 });
 
 test("stopped and broken replies are discarded and never sent as later conversation memory",async({page})=>{
-  await login(page);await start(page,"你好 [stream-slow]");await expect(page.getByTestId("coach-turn").last()).toContainText("可以自然");
+  await login(page);const stream=await holdGreetingStream(page.request);try{
+  await start(page,stream.text);await expect(page.getByTestId("coach-turn").last()).toContainText("可以自然");
   await page.getByRole("button",{name:"停止",exact:true}).click();await expect(page.getByTestId("coach-turn").last()).toContainText("已停止");
   await expect(page.getByTestId("coach-turn").last()).not.toContainText("可以自然");
+  await stream.release();
   await start(page,"你好 [stream-break]");await expect(page.getByTestId("coach-turn").last()).toContainText("未完成的回答已丢弃");
   const request=page.waitForRequest(r=>r.url().endsWith("/api/ai/coach")&&r.method()==="POST");
   await start(page,"你好，重新开始");expect((await request).postDataJSON().history).toEqual([]);
   await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false");
   expect((await db.query("select count(*)::int n from personal_record_events where user_id=$1",[owner])).rows[0].n).toBe(0);
+  }finally{await stream.release();}
 });
 
 test("unverified sources suppress provisional text and errors never produce a confirmation",async({page})=>{
@@ -64,11 +71,14 @@ test("unverified sources suppress provisional text and errors never produce a co
 });
 
 test("navigation keeps a live reply running and returning to Agent retains both turns",async({page})=>{
-  await login(page);await start(page,"你好 [stream-slow]");await expect(page.getByTestId("coach-turn").last()).toContainText("可以自然");
+  await login(page);const stream=await holdGreetingStream(page.request);try{
+  await start(page,stream.text);await expect(page.getByTestId("coach-turn").last()).toContainText("可以自然");
   await page.getByRole("navigation").getByRole("link",{name:"设置",exact:true}).click();await expect(page.getByTestId("settings-index")).toBeVisible();
-  await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.locator("#coach-input")).toBeEnabled();
+  await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","true");
+  await stream.release();await expect(page.locator("#coach-input")).toBeEnabled();
   await expect(page.getByTestId("coach-turn").last()).toContainText("今天的变化");
   await start(page,"你好，新的页面");await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false");await expect(page.getByTestId("coach-turn")).toHaveCount(2);
+  }finally{await stream.release();}
 });
 
 test("Agent is usable before profile/history bootstrap completes, with no status request waterfall",async({page})=>{

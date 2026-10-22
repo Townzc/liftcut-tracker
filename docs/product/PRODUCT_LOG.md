@@ -7,7 +7,8 @@
 - **Backup / power**: 49 run files, all weights, four complete output files and operational evidence restored/hash-verified (3,084,378,205 bytes); platform OFF verified 2026-10-22T00:00:09.395Z. No deadline extension or additional training.
 - **Pilot**: 20 unchanged originals, 20 CPU calls, no training use. Raw literal 2/6, guard acceptance 0/6; scripted continuous DB approvals do not establish natural Agent success.
 - **Application**: #151 all nine checks passed; production READY on `1f36767`. Current-report role/target checks protect previews; UI and confirmation stay intact.
-- **Verified**: root 9 JS + 219 TS tests, four Linux runner tests, own-checkout preflight, types and production build passed; full lint has zero errors/two existing warnings. Exact-head PR CI is required before merge.
+- **CI regression**: the 15-minute job ceiling cut the browser suite off at 42/95; a WebKit assertion also raced a completed reply. Hold the loopback provider's partial stream until the test explicitly releases it, checking navigation while still busy. Combine browser dependency installation and allow 35 minutes for DB/build/browser/Expo; individual assertions, timeouts and zero retries remain.
+- **Verified**: root 9 JS + 219 TS tests, four Linux runner tests, own-checkout preflight, types and production build passed; full lint has zero errors/two existing warnings. All 15 local streaming/history browser cases, including WebKit and slow-network WeChat user-agent simulation, pass after the fixture fix. These are scripted HTTP/provider tests, not real-model or physical-device acceptance. Exact-head PR CI is required before merge.
 - **Next**: connect pending/confirmed references and per-hand basis to the live workflow before another fixed experiment. No GPU needed now; native/device release remains gated. [Evidence](../../research/m4-parser/results/run-20261021T222100Z-v3/README.md).
 
 ## 2026-10-21 — Bind live workout proposals to the current report

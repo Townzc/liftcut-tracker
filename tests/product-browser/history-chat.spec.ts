@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import {holdGreetingStream} from "./stream-gate";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL});
 const owner="11111111-1111-4111-8111-111111111111",other="22222222-2222-4222-8222-222222222222";
 async function login(page:Page,email="p1-fixture@example.invalid"){
@@ -87,17 +88,18 @@ test("another account cannot read or mutate history and API still rejects unauth
 test("Android WeChat user agent under slow 4G keeps streaming, composition and tab continuity",async({browser})=>{
   const context=await browser.newContext({baseURL:"http://localhost:3103",viewport:{width:393,height:851},isMobile:true,hasTouch:true,
     userAgent:"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36 MicroMessenger/8.0.50"});
-  const page=await context.newPage();try{
+  const page=await context.newPage(),stream=await holdGreetingStream(context.request);try{
     await login(page);const cdp=await context.newCDPSession(page);await cdp.send("Network.enable");
     await cdp.send("Network.emulateNetworkConditions",{offline:false,latency:150,downloadThroughput:200000,uploadThroughput:100000});
-    await page.locator("#coach-input").fill("你好 [stream-slow]");await page.getByRole("button",{name:"发送",exact:true}).click();
+    await page.locator("#coach-input").fill(stream.text);await page.getByRole("button",{name:"发送",exact:true}).click();
     await expect(page.getByTestId("coach-turn")).toContainText("可以自然");await expect(page.getByTestId("coach-turn")).toHaveAttribute("aria-busy","true");
     await page.getByRole("navigation").getByRole("link",{name:"设置",exact:true}).click();await expect(page.getByTestId("settings-index")).toBeVisible();
-    await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveAttribute("aria-busy","false");await synced(page);
+    await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.getByTestId("coach-turn")).toHaveAttribute("aria-busy","true");
+    await stream.release();await expect(page.getByTestId("coach-turn")).toHaveAttribute("aria-busy","false");await expect(page.getByTestId("coach-turn")).toContainText("今天的变化");await synced(page);
     await page.locator("#coach-input").fill("输入法组合中");await page.locator("#coach-input").dispatchEvent("keydown",{key:"Enter",code:"Enter",isComposing:true,keyCode:229});
     await expect(page.getByTestId("coach-turn")).toHaveCount(1);await expect(page.locator("#coach-input")).toHaveValue("输入法组合中");
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     await page.screenshot({path:"node_modules/.cache/coach-history-release/wechat-slow4g-mobile.png",fullPage:true});
     await page.reload();await expect(page.getByTestId("coach-turn")).toHaveCount(1);await expect(page.locator("#coach-input")).toHaveValue("输入法组合中");
-  }finally{await context.close();}
+  }finally{await stream.release();await context.close();}
 });
