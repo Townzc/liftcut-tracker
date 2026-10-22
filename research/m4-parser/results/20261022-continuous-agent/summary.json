@@ -1,0 +1,210 @@
+{
+  "scope": "Real DeepSeek + product SDK/tools + disposable PostgreSQL; explicit test-driver confirmations. Scripted browser provider verified separately. Observed development acceptance, not held-out model accuracy.",
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "originalInputSha256": "a93883af71f65fe3be1926deb07c38890d206323df64b18b1d2f4b1c11b02f23",
+  "originals": {
+    "requests": 20,
+    "requiredPreviewsConfirmed": 10,
+    "clarificationOrReadOnly": 10,
+    "contractFailures": 0
+  },
+  "fixedAdditionalReplies": {
+    "requests": 3,
+    "previewsConfirmed": 3
+  },
+  "humanProseReview": {
+    "queries19and20": "Fresh database counts; missing records never asserted as unperformed or confirmed done.",
+    "uncertainReports": "Server preserves uncertainty in displayed prose; exact values are not silently saved.",
+    "limitations": "Does not guarantee correctness of all unrestricted model prose."
+  },
+  "confirmationBoundary": "Every request checked actual rows unchanged before explicit approval; only matching server previews approved.",
+  "finalRows": {
+    "done": 12,
+    "voided": 1,
+    "skipped": 9
+  },
+  "auditEvents": {
+    "started": 1,
+    "recorded": 22,
+    "corrected": 2,
+    "voided": 1
+  },
+  "observedLatencyMs": {
+    "p50": 2376,
+    "max": 10075,
+    "scope": "23 heterogeneous Agent requests; remote provider with local DB, excludes hosted auth, production network and phone. Not a controlled speed comparison."
+  },
+  "providerHttpRounds": 47,
+  "repairRunsRetained": [
+    {
+      "run": "sdk-01",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 2,
+      "contractFailures": [
+        {
+          "n": 5,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 6,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 7,
+          "reason": "Error: MODEL_DID_NOT_FINISH"
+        },
+        {
+          "n": 8,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 11,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 112,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 114,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 15,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 17,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 18,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 118,
+          "reason": "UNEXPECTED_OR_INCORRECT_PROPOSAL_NOT_APPROVED"
+        }
+      ],
+      "reportSha256": "abe508d959b85c02c4aa601565116df6018b186227f65a06ff17009e4eacd569",
+      "limitations": []
+    },
+    {
+      "run": "sdk-02",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 11,
+      "contractFailures": [
+        {
+          "n": 6,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 15,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        }
+      ],
+      "reportSha256": "dc3cb9376ef10dc5ba14eaab073d76f03a80c3bdbb14f728c881b36eb80e0ed6",
+      "limitations": []
+    },
+    {
+      "run": "sdk-03",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 10,
+      "contractFailures": [
+        {
+          "n": 5,
+          "reason": "Error: MODEL_DID_NOT_FINISH"
+        },
+        {
+          "n": 6,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 114,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        }
+      ],
+      "reportSha256": "425abd8012cd8bc8312fdf9a36c8a6915822bc48ac5de22f4fb65becf48e46ef",
+      "limitations": []
+    },
+    {
+      "run": "sdk-04",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 13,
+      "contractFailures": [],
+      "reportSha256": "2b1be18f114caeba00724a8d3de17666c05ca827bb08add96b5f01c9d8b4ea02",
+      "limitations": [
+        "prose review found uncertainty/completion claims; not full acceptance"
+      ]
+    },
+    {
+      "run": "sdk-05",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 11,
+      "contractFailures": [
+        {
+          "n": 5,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 6,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        }
+      ],
+      "reportSha256": "1cfb915a6c862db5d52b89e46ce61f51543952e7947a357142bb9d4467e35843",
+      "limitations": []
+    },
+    {
+      "run": "sdk-06",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 12,
+      "contractFailures": [
+        {
+          "n": 6,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        }
+      ],
+      "reportSha256": "1207f1bbf265aaa29ef2bc2fe6f932123b573807c6ed1b7efab1fd37ca25f3e6",
+      "limitations": []
+    },
+    {
+      "run": "sdk-07",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 13,
+      "contractFailures": [],
+      "reportSha256": "9a2f28b2cd3a8c4e4777fa13bc3fb1fbd30c43363576ece3a0419c54e0a930a1",
+      "limitations": [
+        "prose review found uncertainty/completion claims; not full acceptance"
+      ]
+    },
+    {
+      "run": "sdk-08",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 11,
+      "contractFailures": [
+        {
+          "n": 112,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        },
+        {
+          "n": 114,
+          "reason": "EXPECTED_USEFUL_PREVIEW_MISSING"
+        }
+      ],
+      "reportSha256": "999381c0a9b1ce0596e52780db200ed2e85347344586945ca6528680961ab287",
+      "limitations": []
+    },
+    {
+      "run": "sdk-09",
+      "agentRequests": 23,
+      "requiredPreviewsConfirmed": 13,
+      "contractFailures": [],
+      "reportSha256": "c261ea6dbfe7152dd500b1ad8a7d0a3b11f9aa1f4fa04d3bcb02a328a51878d3",
+      "limitations": []
+    }
+  ],
+  "nativeEnabled": false,
+  "gpuCalls": 0,
+  "originalsUsedForTraining": false
+}

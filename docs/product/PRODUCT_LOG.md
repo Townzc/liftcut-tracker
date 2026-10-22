@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-22 — M4 continuous confirmed workout conversation
+
+- **Changed**: persistent confirmed references, immutable review approvals, current-turn numeric roles, changed-fields-only corrections, explicit inherited load, per-hand units, void and separately confirmed redo. All writes use the owner transaction/outbox; UI stays in chat.
+- **Read truth**: progress answers use fresh database counts; uncertain reports remain uncertain in displayed prose. Missing records are never treated as unperformed exercises or confirmed completion. One bounded quote/list repair retains the same source guards.
+- **Real provider**: 20 unchanged private originals in one conversation plus 3 fixed clarifying replies completed in `sdk-09`: 10 required original previews + 3 supplied-detail previews confirmed; 10 original clarification/read-only turns, zero contract failures. All pre-approval actual rows unchanged. Earlier failures/prose errors retained, not overwritten; observed development acceptance, not an unseen model benchmark or browser-to-real-provider test.
+- **Verified locally**: 9 JS + 228 TS root tests; 96 browser scenarios, then 13 relevant scenarios after later contract changes; 9 conversation DB results and 7 live-SDK source/repair results; fresh-schema/null migration tests; mobile types + 12 tests; build and lint (zero errors, two existing warnings). Exact-head CI remains the release gate.
+- **Privacy / isolation**: new tables force owner RLS, browser roles have no access, approval payloads cannot be edited, applied evidence cannot be deleted by runtime. Deleting chat removes unconfirmed review prose; no originals/outputs enter training or public fixtures. Source audit retains model provenance and record revisions.
+- **Regression analysis**: old/new Q8 challenge 213/240 → 187/240: 42 regressions, 16 improvements; 20 clarification→record, 14 invalid clarification labels, 8 wrong record contents. Same 187/240 for HF/F16/Q8; quantization is not the main explanation. [Analysis](../../research/m4-parser/results/20261022-regression-analysis/README.md).
+- **Limits / next**: additive production migration requires backup and verification before rollout. Native candidate remains rejected; no new GPU, device or mainland-network evidence. [Contract](M4_CONTINUOUS_CONVERSATION.md) · [aggregate evidence](../../research/m4-parser/results/20261022-continuous-agent/summary.json).
+
 ## 2026-10-21 — M4 v3 result, scoring recovery and runtime preflight
 
 - **Result**: one fixed 800-step run, 4,160 outputs. Q8 agreement with HF/F16 is 97.69%/98.08%; challenge exact 187/240 and 153 invented fields regress from previous Q8 213/240 and 50. Candidate rejected; native stays off.

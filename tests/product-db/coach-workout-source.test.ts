@@ -14,17 +14,24 @@ test("live SDK workout tool rejects unsupported values before issuing an approva
   process.env.WORKOUT_DATABASE_URL = url.toString(); process.env.AI_PROVIDER = "local";
   process.env.COACH_SIGNING_SECRET = "synthetic-workout-source-test-not-production";
   const store = new TodayStore(todayPool()), owner = randomUUID(), plan = randomUUID(), day = randomUUID(), exercise = randomUUID();
-  let sessionId = "", round = 0, mode: "ordinal" | "history" | "standalone" | "correct" = "ordinal";
+  let sessionId = "", round = 0, mode: "ordinal" | "history" | "standalone" | "correct" | "repair" = "ordinal";
+  const menus: string[][]=[];
   const server = createServer(async (req, res) => {
-    for await (const part of req) void part;
+    let body="";for await (const part of req) body+=part;
+    menus.push(JSON.parse(body).tools.map((t:{function:{name:string}})=>t.function.name));
     round++;
     const args = { exerciseId: exercise, kind: mode === "history" ? "record" : "correct",
       weightQuote: mode === "history" ? "32.5公斤" : null, repsQuotes: ["7次"], rpeQuote: null, rpeScope: null,
       correctionSet: mode === "ordinal" ? 17 : mode === "correct" ? 2 : null };
-    const name = round === 1 ? "current_workout" : round === 2 ? mode === "standalone" ? "prepare_exercise" : "prepare_workout" : "finish_response";
-    const input = round === 1 ? {} : round === 2 ? mode === "standalone"
+    let name = round === 1 ? "current_workout" : round === 2 ? mode === "standalone" ? "prepare_exercise" : "prepare_workout" : "finish_response";
+    let input:unknown = round === 1 ? {} : round === 2 ? mode === "standalone"
       ? { exerciseQuote: "坐姿划船", dateQuote: null, weightQuote: "32.5公斤", repsQuote: "7次", setsQuote: null, rpeQuote: null }
       : args : { message: "Please clarify the unsupported detail.", sourceIds: [`workout:current:${sessionId}`] };
+    if(mode==="repair"&&(round===2||round===3)){
+      name="prepare_workout_review";
+      input={kind:"record",exerciseId:exercise,groups:[6,9,9].map((n,i)=>({weightQuote:"32.5公斤",repsQuote:`${n}次`,
+        rpeQuote:null,countQuote:round===2&&i===1?"两组":null}))};
+    }
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ id: "synthetic", object: "chat.completion", created: 1, model: "scripted-not-real",
       choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null,
@@ -46,7 +53,7 @@ test("live SDK workout tool rejects unsupported values before issuing an approva
       weightSource: "user_entered", repsSource: "user_entered", inputUnit: "kg", sourceRef: "today-tap" });
     const before = await store.current(owner), target = session.sets.find(s => s.setIndex === 2)!;
     const input = { id: randomUUID(), text: "更正坐姿划船，17公斤，7次", history: [], locale: "en" as const,
-      timezone: "UTC", consent: "coach-model-v1" as const };
+      timezone: "UTC", consent: "coach-model-v2" as const };
     await t.test("a load cannot select an existing set number", async () => {
       let trace = "";
       const result = await runCoach(owner, input, AbortSignal.timeout(15000), async steps => { trace = JSON.stringify(steps); });
@@ -64,9 +71,23 @@ test("live SDK workout tool rejects unsupported values before issuing an approva
       mode = "standalone"; round = 0; let trace = "";
       const result = await runCoach(owner, { ...input, id: randomUUID(), text: "坐姿划船7次",
         history: [{ role: "user", content: "坐姿划船32.5公斤10次" }] }, AbortSignal.timeout(15000), async steps => { trace = JSON.stringify(steps); });
-      assert.equal(result.proposal, undefined); assert.match(trace, /QUOTE_NOT_IN_USER_TEXT/);
+      assert.equal(result.proposal, undefined); assert.match(trace, /AI_NoSuchToolError/);
       assert.deepEqual(await store.current(owner), before);
       assert.equal((await admin.query("select count(*)::int n from personal_record_events where user_id=$1", [owner])).rows[0].n, 0);
+    });
+    await t.test("persisted active conversation excludes standalone writes from the first model step",async()=>{
+      mode="standalone";round=0;menus.length=0;
+      const result=await runCoach(owner,{...input,id:randomUUID(),conversationId:randomUUID(),text:"坐姿划船7次"},AbortSignal.timeout(15000));
+      assert.equal(result.proposal,undefined);assert.ok(!menus[0].includes("prepare_exercise"));
+      assert.ok(menus[0].includes("prepare_workout_review"));assert.deepEqual(await store.current(owner),before);
+    });
+    await t.test("one quoted-field repair can expand a list without inventing a group count or writing data",async()=>{
+      mode="repair";round=0;menus.length=0;
+      const result=await runCoach(owner,{...input,id:randomUUID(),conversationId:randomUUID(),text:"坐姿划船，每组32.5公斤，6次、9次、9次"},AbortSignal.timeout(15000));
+      assert.equal(round,3);assert.equal(result.proposal?.kind,"workoutReview");
+      if(result.proposal?.kind!=="workoutReview")throw new Error("expected repaired preview");
+      assert.deepEqual(result.proposal.review.requests.map(r=>r.reps),[6,9,9]);
+      assert.deepEqual(await store.current(owner),before);
     });
     await t.test("valid correction is unsaved until approval; exact retries patch one row once", async () => {
       mode = "correct"; round = 0;

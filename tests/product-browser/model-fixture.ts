@@ -96,7 +96,15 @@ createServer(async(req,res)=>{
       `已查到 ${result.summary.recordCount} 条身体记录，最近体重 ${result.summary.latestWeightKg??"未知"} kg。`,sourceIds:result.id?[result.id]:[]});
   }else if(priorCall?.function.name==="current_workout"){
     const exercise=result.exercises?.find((x:{name:string})=>x.name==="深蹲")??result.exercises?.[0];
-    chosen=text.includes("[current-read]")?call("finish_response",{message:"本次已记录的实际组，请核对来源。",sourceIds:[]}):exercise?call("prepare_workout",{exerciseId:exercise.id,kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null}):call("finish_response",{message:"请先开始本次训练。",sourceIds:[]});
+    const review=body.tools?.some((t:{function:{name:string}})=>t.function.name==="prepare_workout_review");
+    if(text.includes("[context-audit]"))chosen=call("finish_response",{sourceIds:[result.sourceId],message:"FORGED_COMPLETION: 全部40组都已完成并保存。"});
+    else if(text.includes("[context-" )&&exercise){
+      const kind=text.includes("[context-correct]")?"correct":text.includes("[context-inherit]")?"inherit_weight":text.includes("[context-void]")?"void":"record";
+      chosen=kind==="correct"?call("prepare_workout_correction",{exerciseId:exercise.id,changes:[{field:"reps",quote:"5次"}]}):call("prepare_workout_review",{exerciseId:exercise.id,kind,
+        groups:kind==="void"?[]:[{weightQuote:kind==="record"?"42公斤":null,repsQuote:"9次",rpeQuote:null,countQuote:null}]});
+    }else chosen=text.includes("[current-read]")?call("finish_response",{message:"本次已记录的实际组，请核对来源。",sourceIds:[]}):exercise?
+      review?call("prepare_workout_review",{exerciseId:exercise.id,kind:"record",groups:[{weightQuote:"五十公斤",repsQuote:"八次",rpeQuote:null,countQuote:null}]}):
+      call("prepare_workout",{exerciseId:exercise.id,kind:"record",weightQuote:"五十公斤",repsQuotes:["八次"],rpeQuote:null,rpeScope:null,correctionSet:null}):call("finish_response",{message:"请先开始本次训练。",sourceIds:[]});
   }else if(priorCall?.function.name==="prepare_body"&&text.includes("[oral-append]")){
     if(result.draft){res.statusCode=503;res.end('{"error":{"message":"The valid draft must return without another provider call"}}');return;}
     chosen=call("prepare_body",{...bodyEmpty,dateQuote:"现在",weightQuote:"七十三点一公斤"});
@@ -116,7 +124,7 @@ createServer(async(req,res)=>{
     chosen=call("prepare_body",{...bodyEmpty,weightQuote:"七十二点五公斤",dateQuote:text.includes("昨天")?"昨天":null});
   }else if(text.includes("吃了一碗牛肉面")){
     chosen=call("prepare_food",{...foodEmpty,foodQuote:"一碗牛肉面",mealQuote:"中午"});
-  }else if(text.includes("实打实")||text.includes("[current-read]"))chosen=call("current_workout",{});
+  }else if(text.includes("实打实")||text.includes("[current-read]")||text.includes("[context-"))chosen=call("current_workout",{});
   else if(text.includes("体重")||text.includes("昨天呢")||text.includes("午餐")||text.includes("吃了")){
     chosen=call("read_records",{topic:text.includes("午餐")||text.includes("吃了")?"food":"body",from:text.includes("昨天")?shifted(-1):shifted(-27),to:text.includes("昨天")?shifted(-1):today});
   }else chosen=call("finish_response",{message:"你好，可以自然地问我记录，也可以告诉我今天的变化。",sourceIds:[]});

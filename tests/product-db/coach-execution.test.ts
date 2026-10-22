@@ -33,7 +33,7 @@ test("SDK executes separate reads concurrently, holds unverified prose, and keep
   try{
     await admin.query("insert into auth.users values($1)",[owner]);
     await lock.query("begin; lock public.body_metric_logs in access exclusive mode");
-    const input={id:randomUUID(),text:"核对身体和饮食数据",history:[],locale:"en" as const,timezone:"UTC",consent:"coach-model-v1" as const},timer=new CoachTimer();
+    const input={id:randomUUID(),text:"核对身体和饮食数据",history:[],locale:"en" as const,timezone:"UTC",consent:"coach-model-v2" as const},timer=new CoachTimer();
     running=runCoach(owner,input,AbortSignal.timeout(10000),undefined,e=>{if(e.type==="text")emitted.push(e.text);},timer);
     void running.catch(()=>{});
     // A real PostgreSQL lock holds the body query. The independent food query

@@ -5,6 +5,7 @@ import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import type { Session } from "@liftcut/core/today";
 import type { RunView } from "@liftcut/core/agent-contracts";
 import type { CoachTiming } from "./coach-timing";
+import type { WorkoutReview } from "@liftcut/core/workout-review";
 
 import { COACH_CONSENT_VERSION } from "@liftcut/core/coach-chat";
 export { COACH_CONSENT_VERSION, conversationHistory } from "@liftcut/core/coach-chat";
@@ -15,6 +16,7 @@ export const coachRequestSchema = z.object({
   timezone:z.string().max(100).refine(v=>{try {new Intl.DateTimeFormat("en",{timeZone:v});return true;}catch{return false;}}),
   consent:z.literal(COACH_CONSENT_VERSION), selectedExerciseId:z.string().max(150).optional(), planRunId:z.uuid().optional(),
   guestRecords:guestFactsSchema.optional(),
+  conversationId:z.uuid().optional(),
 }).strict();
 export type CoachRequest = z.infer<typeof coachRequestSchema>;
 export type CoachMessage = z.infer<typeof coachMessageSchema>;
@@ -22,6 +24,7 @@ export type CoachSource = {id:string;topic:string;from:string;to:string;readAt:s
 export type CoachProposal =
   | {kind:"personal";command:Extract<PersonalCommand,{action:"create"}>}
   | {kind:"workout";session:Session;hash:string;draft:LogDraft;operation:WorkoutOperation}
+  | {kind:"workoutReview";session:Session;hash:string;review:WorkoutReview;operation:WorkoutOperation}
   | {kind:"plan";run:RunView};
 export type CoachResponse = {message:string;model:string;provider:string;sources:CoachSource[];proposal?:CoachProposal;requestId:string;timing?:CoachTiming};
 export type CoachStatus = {available:boolean;provider:string|null;model:string|null;consentVersion:typeof COACH_CONSENT_VERSION};

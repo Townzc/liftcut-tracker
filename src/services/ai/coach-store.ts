@@ -34,7 +34,9 @@ export class CoachStore {
         select f.*,m.metric,m.value,m.unit from facts f cross join lateral (values
           (case when entry->>'kind'='body' then 'weight' end,entry->'weightKg','kg'),
           (case when entry->>'kind'='body' then 'waist' end,entry->'waistCm','cm'),
-          (case when entry->>'kind'='exercise' then 'exercise:'||lower(regexp_replace(trim(entry->>'exerciseName'),'\\s+',' ','g')) end,entry->'weightKg','kg'),
+          (case when entry->>'kind'='exercise' then 'exercise:'||lower(regexp_replace(trim(entry->>'exerciseName'),'\\s+',' ','g')) end,
+            coalesce(nullif(entry->'weightKg','null'::jsonb),entry->'perHandLoad'->'value'),
+            case when entry->'perHandLoad'->>'value' is not null then (entry->'perHandLoad'->>'unit')||'/hand' else 'kg' end),
           (case when entry->>'kind'='preference' then 'preference:'||(entry->>'key') end,entry->'value',null)
         ) m(metric,value,unit) where m.metric is not null and m.value is not null and m.value<>'null'::jsonb
         and entry->>'date'<=$2 and ($3::text is null or m.metric='exercise:'||$3)
@@ -69,7 +71,7 @@ export class CoachStore {
         rows=(await db.query(`select data from (
           select s.local_date as date,s.started_at as at,s.id::text as id,jsonb_build_object('id',s.id,'date',s.local_date,
             'status',s.status,'legacy',false,'actualSets',coalesce((select jsonb_agg(jsonb_build_object('exercise',l.exercise_name,
-              'setIndex',l.set_index,'reps',l.reps,'weightKg',l.weight_kg,'rpe',l.rpe) order by l.plan_exercise_id,l.set_index)
+              'setIndex',l.set_index,'reps',l.reps,'weightKg',l.weight_kg,'perHandLoad',l.payload->'perHandLoad','rpe',l.rpe) order by l.plan_exercise_id,l.set_index)
               from public.set_logs l where l.session_id=s.id and l.status='done'),'[]'::jsonb)) as data
           from public.workout_sessions s where s.user_id=$1 and s.local_date between $2::date and $3::date and s.status<>'cancelled'
           union all select w.date,w.created_at,w.id,jsonb_build_object('id',w.id,'date',w.date,'status',case when w.completed then 'ended' else 'active' end,

@@ -104,14 +104,15 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
       const anchorDate=toDateString(new Date());
       const entry=parsePersonalEntry(input,anchorDate);
       const localIntent=coachIntent(input,active,exerciseId||undefined);
-      const localAction=["receipts","replace"].includes(localIntent.kind)||(localIntent.kind==="parse"&&localIntent.result.status==="draft");
+      const receiptsRequest=/^(?:查看|显示|看看)?(?:我的|训练)?(?:回执|修改记录)[。.!?？]*$|^receipts$/i.test(input.trim());
+      const localAction=receiptsRequest||localIntent.kind==="replace";
       const snapshotData=useTrackerStore.getState();
       // The guest ledger already contains the adapted legacy body/food entries.
       // Counting the legacy snapshot as well would double meals and trends.
       const answer=answerDataQuestion(input,personal.guest?{...snapshotData,bodyMetricLogs:[],foodLogs:[]}:snapshotData,personal.records,active,en,new Date(),personal.owner??undefined);
       if(/^(?:开始(?:今天的|本次)?训练|我要开始训练|开始练|start (?:a |my )?workout)[。.!?？]*$/i.test(input.trim())){
         reply="data";setPanel("workout");lines=[workoutPanel?(active?(en?"Your current workout is ready below.":"这是你的本次训练."):(en?"Choose a day and confirm to start.":"选择这次要练的安排，确认后开始.")):(en?"Sign in to start a workout.":"登录后就可以开始训练.")];
-      }else if(localIntent.kind==="receipts"){
+      }else if(localIntent.kind==="receipts"&&receiptsRequest){
         reply="data";setPanel("receipts");lines=[en?"Here are your saved changes and receipts.":"这是已保存的修改和回执."];
       }else if (entry) {
         if(personal.canWrite){
@@ -129,7 +130,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
             if(personal.guest&&!guestQuota)setGuestQuota(await ensureGuestSession(signal));
             const response=await fetch("/api/ai/coach",{method:"POST",headers:{"Content-Type":"application/json","Accept":COACH_STREAM_TYPE,...(personal.owner?{"X-Workout-Owner":personal.owner}:{})},
               body:JSON.stringify({id,text:input,history:conversationHistory(turns),locale:en?"en":"zh",timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
-                consent:COACH_CONSENT_VERSION,...(personal.guest?{guestRecords:activeGuestFacts()}:{}),...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal});
+                consent:COACH_CONSENT_VERSION,conversationId:snapshot.id,...(personal.guest?{guestRecords:activeGuestFacts()}:{}),...(exerciseId?{selectedExerciseId:exerciseId}:{}),...(planRunId?{planRunId}:{})}),signal});
             if(response.headers.has("X-Guest-Remaining"))setGuestQuota({remaining:Number(response.headers.get("X-Guest-Remaining")),limit:10});
             if(!response.ok){
               interrupted=true;
@@ -152,6 +153,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
               if(pendingCount||personal.pending.length)lines.unshift(en?"Some entries are still waiting to sync and may not appear in these results.":"部分记录尚待同步，可能还未计入这次查询。" );
               if(result.proposal?.kind==="personal"){reply="personal";setPersonalProposal({turnId:id,command:result.proposal.command});}
               if(result.proposal?.kind==="workout"){reply="draft";setProposal({turnId:id,...result.proposal});}
+              if(result.proposal?.kind==="workoutReview"){reply="draft";setProposal({turnId:id,...result.proposal,draft:null});}
               if(result.proposal?.kind==="plan"){setPlanRun(result.proposal.run);}
             }
           }catch(error){interrupted=true;lines=[controller.signal.aborted?(en?"Stopped. The incomplete answer was discarded. Records and active plans were not changed. Refresh to recover a plan preview.":"已停止，未完成的回答已丢弃，记录和当前计划未修改。如已生成计划预览，可以刷新恢复。"):
@@ -231,7 +233,26 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     finally {setProposal(null); setWorking(false); flight.current = false;}
   }
   function draftView(p: Proposal) {
+    if(p.review){
+      const review=p.review;
+      const display=(s:typeof review.requests[number])=>s.status==="voided"?(en?"Voided":"作废"):
+        s.status==="skipped"?(en?"Skipped":"跳过"):
+        `${s.perHandLoad?`${s.perHandLoad.value} ${s.perHandLoad.unit} ${en?"per hand":"/ 单边"}`:`${s.weightKg??"—"} kg`} × ${s.reps??"—"} · RPE ${s.rpe??"—"}`;
+      return <div className="mt-3 space-y-3 rounded-xl border bg-background p-3" data-testid="coach-draft">
+        <strong>{en?"Review change":"确认修改"}</strong>
+        {review.requests.map((s,i)=><div key={s.id} className="space-y-1 text-sm">
+          <p>{exerciseLabel(p.session.prescription.exercises.find(e=>e.id===s.planExerciseId)?.name??"",locale)} · {ts("set",{n:s.setIndex})}</p>
+          {review.before[i]&&<p className="text-muted-foreground">{display(review.before[i]!)} →</p>}
+          <p>{display(s)}</p>
+        </div>)}
+        {review.kind==="void"&&<p className="text-xs text-muted-foreground">{en?"The old set stays in the audit history. Report and confirm the redo separately.":"原组保留作废记录. 重做的重量和次数请另行补充、确认."}</p>}
+        <p className="text-xs text-muted-foreground">{ts("unknown")}</p>
+        {stale&&<p role="status">{t("stale")}</p>}
+        <div className="flex gap-2"><Button disabled={locked||stale||pendingCount>0} onClick={()=>void confirm()}>{ts("confirm")}</Button><Button variant="outline" disabled={locked} onClick={closeDraft}>{t("cancel")}</Button></div>
+      </div>;
+    }
     const d = p.draft;
+    if(!d)return null;
     const name = d.kind === "end" ? "" : p.session.prescription.exercises.find(e => e.id === d.exerciseId)?.name ?? "";
     return <div className="mt-3 space-y-2 rounded-xl border bg-background p-3" data-testid="coach-draft">
       <strong>{(p.operation.body as {modelProof?:string}).modelProof?(en?"Review entry · AI interpreted":"确认记录 · AI 理解"):ts("rulesDraft")}{name && ` · ${exerciseLabel(name, locale)}`}</strong>

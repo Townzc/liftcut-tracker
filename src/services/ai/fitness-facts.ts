@@ -12,7 +12,7 @@ export const fitnessFactsSql = `
   and not exists(select 1 from public.personal_record_events u where u.parent_id=e.id)
   union all select 'legacy:'||id,null,jsonb_build_object('kind','body','date',date,'weightKg',weight,'waistCm',waist),created_at,'manual'
   from public.body_metric_logs where user_id=$1
-  union all select 'set:'||l.id,null,jsonb_build_object('kind','exercise','date',s.local_date,'exerciseName',l.exercise_name,'weightKg',l.weight_kg,'reps',l.reps,'sets',1,'rpe',l.rpe),l.created_at,'workout'
+  union all select 'set:'||l.id,null,jsonb_build_object('kind','exercise','date',s.local_date,'exerciseName',l.exercise_name,'weightKg',l.weight_kg,'perHandLoad',l.payload->'perHandLoad','reps',l.reps,'sets',1,'rpe',l.rpe),l.updated_at,'workout'
   from public.set_logs l join public.workout_sessions s on s.id=l.session_id where s.user_id=$1 and s.status<>'cancelled' and l.status='done'
   union all select 'legacy-set:'||e.id,null,jsonb_build_object('kind','exercise','date',w.date,'exerciseName',e.name,'weightKg',e.actual_weight,'reps',e.actual_reps,'sets',null,'rpe',e.actual_rpe),w.created_at,'workout'
   from public.workout_log_exercises e join public.workout_logs w on w.id=e.workout_log_id where w.user_id=$1 and e.completed
@@ -27,7 +27,9 @@ export async function readPlanningMemory(db:PoolClient,owner:string,kind:PlanKin
     select f.*,m.metric,m.value,m.unit from facts f cross join lateral (values
       (case when entry->>'kind'='body' then 'weight' end,entry->'weightKg','kg'),
       (case when entry->>'kind'='body' then 'waist' end,entry->'waistCm','cm'),
-      (case when entry->>'kind'='exercise' then 'exercise:'||lower(regexp_replace(trim(entry->>'exerciseName'),'\\s+',' ','g')) end,entry->'weightKg','kg'),
+      (case when entry->>'kind'='exercise' then 'exercise:'||lower(regexp_replace(trim(entry->>'exerciseName'),'\\s+',' ','g')) end,
+        coalesce(nullif(entry->'weightKg','null'::jsonb),entry->'perHandLoad'->'value'),
+        case when entry->'perHandLoad'->>'value' is not null then (entry->'perHandLoad'->>'unit')||'/hand' else 'kg' end),
       (case when entry->>'kind'='preference' then 'preference:'||(entry->>'key') end,entry->'value',null)
     ) m(metric,value,unit) where m.metric is not null and m.value is not null and m.value<>'null'::jsonb and entry->>'date'<=$2
   ), ranked as (

@@ -16,7 +16,7 @@ test("explicit record queries read fresh sources before one model call, with pri
   await login(page);await start(page,"查看今天身体和饮食记录，核对已保存的数据");
   const turn=page.getByTestId("coach-turn").last();await expect(turn).toHaveAttribute("aria-busy","false");
   await expect(turn).toContainText("已同时核对");await expect(turn).not.toContainText("toolWallMs");
-  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"查看今天身体和饮食记录，核对已保存的数据",history:[],locale:"zh",timezone:"America/Los_Angeles",consent:"coach-model-v1"}});
+  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"查看今天身体和饮食记录，核对已保存的数据",history:[],locale:"zh",timezone:"America/Los_Angeles",consent:"coach-model-v2"}});
   expect(response.status()).toBe(200);const result=await response.json();
   expect(result.sources.map((s:{topic:string})=>s.topic)).toEqual(["body","food"]);
   expect(result.timing.model).toHaveLength(1);expect(result.timing.tools.some((s:{name:string})=>s.name==="read_records.prefetch")).toBe(true);
@@ -41,7 +41,7 @@ test("long replies complete in the browser and transmit each character once inst
   await login(page);await start(page,"你好 [stream-long]");
   await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false",{timeout:15000});
   await expect(page.getByTestId("coach-turn").last().locator("p.mt-1")).toHaveText("这里是连续生成的长回答。".repeat(150));
-  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103",Accept:"application/x-ndjson"},data:{id:randomUUID(),text:"你好 [stream-long]",history:[],locale:"zh",timezone:"UTC",consent:"coach-model-v1"}});
+  const response=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103",Accept:"application/x-ndjson"},data:{id:randomUUID(),text:"你好 [stream-long]",history:[],locale:"zh",timezone:"UTC",consent:"coach-model-v2"}});
   expect(response.status()).toBe(200);const raw=await response.text(),events=raw.trim().split("\n").map(s=>JSON.parse(s));
   const result=events.find(e=>e.type==="result").result;
   expect(events.filter(e=>e.type==="text").map(e=>e.text).join("")).toBe(result.message);

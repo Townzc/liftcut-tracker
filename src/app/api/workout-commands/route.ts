@@ -16,7 +16,8 @@ export async function POST(request: Request) {
     const store = new TodayStore(todayPool()), body = await boundedJson(request);
     const action = new URL(request.url).searchParams.get("action");
     const result = action === "apply" ? await store.command(auth.user.id,body)
-      : action === "undo" ? await store.undoCommand(auth.user.id,body) : null;
+      : action === "undo" ? await store.undoCommand(auth.user.id,body)
+      : action === "review" ? await store.approveReview(auth.user.id,body) : null;
     if (!result) return Response.json({error:"INVALID_REQUEST"},{status:400});
     return Response.json(result,{headers:{"Cache-Control":"no-store"}});
   } catch (error) {

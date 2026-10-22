@@ -12,6 +12,8 @@ import { replaceExerciseSchema, undoReplacementSchema, projectReplacement, proje
 import { verifyCoachProposal } from "@/services/ai/coach-proof";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
 import { confirmReviewedSetDraft, type ReviewedSetDraft } from "@liftcut/core/confirmed-set-reference";
+import { workoutReviewApprovalSchema, reviewBasis, referenceFor, type WorkoutReview, type WorkoutConversationState } from "@liftcut/core/workout-review";
+import { resolveConfirmedSet } from "@liftcut/core/confirmed-set-reference";
 
 const hash = (v: unknown) => createHash("sha256").update(canonical(v)).digest("hex");
 export class TodayConflict extends Error {}
@@ -92,13 +94,83 @@ export class TodayStore {
         where set_log_id=$1 order by sequence`,[setId])).rows;
       const sources = [...new Set(events.flatMap(e=>[e.data.before?.sourceRef,e.data.after?.sourceRef]).filter(Boolean))];
       const commands = (await db.query("select receipt from public.workout_commands where id::text=any($1::text[])",[sources])).rows.map(r=>r.receipt);
-      return {setId,events:events.map(e=>({...e,created_at:e.created_at.toISOString()})),commands};
+      const reviews=(await db.query(`select payload,applied_at from public.workout_coach_reviews
+        where status='applied' and payload->'requests' @> $1::jsonb order by applied_at`,[JSON.stringify([{id:setId}])])).rows;
+      return {setId,events:events.map(e=>({...e,created_at:e.created_at.toISOString()})),commands,
+        reviews:reviews.map(r=>({review:r.payload,appliedAt:r.applied_at.toISOString()}))};
     });
   }
   async current(user:string):Promise<Session|null>{
     return this.tx(user,async db=>{
       const active=(await db.query("select id from public.workout_sessions where status='active'")).rows[0];
       return active?this.read(db,active.id):null;
+    });
+  }
+  /** Invalidate the old confirmation card before starting another model request.
+   * Persisted focus comes only from a successfully committed preview. */
+  async beginConversation(user:string, conversationId:string, requestId:string) {
+    z.uuid().parse(conversationId); z.uuid().parse(requestId);
+    return this.tx(user,async db=>{
+      await db.query("select pg_advisory_xact_lock(hashtextextended($1,717))",[conversationId]);
+      if((await db.query("select id from public.coach_conversations where id=$1 and deleted_at is not null",[conversationId])).rowCount)return fail("CONVERSATION_DELETED");
+      const active=(await db.query("select id from public.workout_sessions where status='active'")).rows[0];
+      if(!active)return null;
+      const session=await this.read(db,active.id);
+      const old=(await db.query("select * from public.workout_coach_contexts where conversation_id=$1",[conversationId])).rows[0];
+      const state:WorkoutConversationState=old?.session_id===session.id?old.state:{focus:null,pendingText:null};
+      await db.query("update public.workout_coach_reviews set status='superseded' where conversation_id=$1 and status='pending'",[conversationId]);
+      await db.query(`insert into public.workout_coach_contexts(user_id,conversation_id,request_id,session_id,state)
+        values($1,$2,$3,$4,$5) on conflict(user_id,conversation_id) do update
+        set request_id=excluded.request_id,session_id=excluded.session_id,state=excluded.state,updated_at=now()`,
+        [user,conversationId,requestId,session.id,JSON.stringify(state)]);
+      return {session,state};
+    });
+  }
+  async holdConversation(user:string, conversationId:string, requestId:string, text:string) {
+    return this.tx(user,async db=>{
+      const row=(await db.query("select state from public.workout_coach_contexts where conversation_id=$1 and request_id=$2",[conversationId,requestId])).rows[0];
+      if(!row)return fail("STALE_CONVERSATION");
+      await db.query("update public.workout_coach_contexts set state=$2,updated_at=now() where conversation_id=$1",
+        [conversationId,JSON.stringify({...row.state,pendingText:text.slice(0,400)})]);
+    });
+  }
+  async prepareReview(user:string, preview:WorkoutReview) {
+    return this.tx(user,async db=>{
+      const row=(await db.query("select request_id,session_id from public.workout_coach_contexts where conversation_id=$1",[preview.conversationId])).rows[0];
+      if(!row||row.request_id!==preview.requestId||row.session_id!==preview.sessionId)return fail("STALE_CONVERSATION");
+      const session=await this.read(db,preview.sessionId);
+      if(session.status!=="active"||preview.basis!==reviewBasis(session))return fail("STALE_CONTEXT");
+      for(const reference of preview.references)resolveConfirmedSet(session,{reference});
+      await db.query(`insert into public.workout_coach_reviews(id,user_id,conversation_id,session_id,request_id,payload)
+        values($1,$2,$3,$4,$5,$6)`,[preview.id,user,preview.conversationId,preview.sessionId,preview.requestId,JSON.stringify(preview)]);
+      await db.query("update public.workout_coach_contexts set state=jsonb_set(state,'{pendingText}',$2::jsonb),updated_at=now() where conversation_id=$1",
+        [preview.conversationId,JSON.stringify(preview.text)]);
+      return preview;
+    });
+  }
+  async approveReview(user:string,input:unknown) {
+    const req=workoutReviewApprovalSchema.parse(input);
+    return this.tx(user,async db=>{
+      const row=(await db.query("select * from public.workout_coach_reviews where id=$1 and conversation_id=$2 and session_id=$3",
+        [req.id,req.conversationId,req.sessionId])).rows[0];
+      if(!row)return fail("NOT_FOUND");
+      const preview=row.payload as WorkoutReview, session=await this.read(db,req.sessionId);
+      // Exact retry is harmless; replay after any affected record changed is not.
+      if(row.status==="applied"){
+        if(!preview.requests.every(r=>session.sets.some(s=>canonical(stored(s))===canonical(r))))return fail("STALE_CONTEXT");
+        return this.commandResult(db,req.sessionId);
+      }
+      const context=(await db.query("select request_id from public.workout_coach_contexts where conversation_id=$1",[req.conversationId])).rows[0];
+      if(row.status!=="pending"||context?.request_id!==preview.requestId)return fail("PREVIEW_SUPERSEDED");
+      if(preview.basis!==reviewBasis(session)||session.status!=="active")return fail("STALE_CONTEXT");
+      for(const reference of preview.references)resolveConfirmedSet(session,{reference});
+      for(const request of preview.requests)await this.writeSetInTransaction(db,user,request,false,
+        {version:"confirmed-context-v1",kind:preview.kind,references:preview.references},true);
+      const last=preview.requests.at(-1)!;
+      const state:WorkoutConversationState={focus:last.status==="done"?referenceFor(last):null,pendingText:null};
+      await db.query("update public.workout_coach_reviews set status='applied',applied_at=now() where id=$1",[req.id]);
+      await db.query("update public.workout_coach_contexts set state=$2,updated_at=now() where conversation_id=$1",[req.conversationId,JSON.stringify(state)]);
+      return this.commandResult(db,req.sessionId);
     });
   }
   async load(user: string): Promise<TodayData> {
@@ -150,8 +222,13 @@ export class TodayStore {
     const tap = setRequestSchema.parse(input);
     return this.tx(user, async db => {
       let req: StoredSet = tap;
+      const existing=(await db.query("select payload from public.set_logs where id=$1 and session_id=$2",[tap.id,tap.sessionId])).rows[0]?.payload;
+      // A repetition/RPE edit must not erase a per-hand load that the legacy
+      // scalar tap form cannot represent. An explicit new total load replaces it.
+      if(existing?.perHandLoad&&tap.weightKg===null&&tap.status==="done")
+        req={...tap,perHandLoad:existing.perHandLoad,weightSource:null};
       if (tap.status === "voided") {
-        const old = (await db.query("select payload from public.set_logs where id=$1 and session_id=$2", [tap.id,tap.sessionId])).rows[0]?.payload;
+        const old = existing;
         if (old && (old.planExerciseId !== tap.planExerciseId || old.setIndex !== tap.setIndex)) return fail("CONTENT_CONFLICT");
         if (old && ["weightKg","reps","rpe"].every(k => old[k] === tap[k as keyof typeof tap])) {
           req = { ...old, revision: tap.revision, status: "voided" };
@@ -182,9 +259,12 @@ export class TodayStore {
     });
   }
   private async writeSetInTransaction(db: PoolClient, user: string, req: StoredSet, compensating = false,
-    approval?: Pick<ReviewedSetDraft,"version"|"kind"|"references">) {
+    approval?: {version:string;kind:string;references:ReviewedSetDraft["references"]}, reviewedExtra = false) {
     // Same numeric/business contract for every entry point. Speech provenance is server-derived.
-    setRequestSchema.parse({ ...req, inputUnit: "kg", sourceRef: "today-tap",
+    const {perHandLoad,...base}=req;
+    if(perHandLoad){z.strictObject({value:z.number().min(0).max(1000),unit:z.enum(["kg","lb"])}).parse(perHandLoad);
+      if(req.weightKg!==null||req.weightSource!==null) return fail("LOAD_BASIS_CONFLICT");}
+    setRequestSchema.parse({ ...base, inputUnit: "kg", sourceRef: "today-tap",
       weightSource: req.weightSource === "user_said" ? "user_entered" : req.weightSource,
       repsSource: req.repsSource === "user_said" ? "user_entered" : req.repsSource });
     const digest = hash(req);
@@ -202,7 +282,7 @@ export class TodayStore {
     } else if (req.revision !== 1 || req.status === "voided") return fail("STALE_REVISION");
     if (session.status !== "active" && !compensating) return fail("SESSION_ENDED");
     const exercise = (session.prescription as Prescription).exercises.find(e => e.id === req.planExerciseId);
-    if (!exercise || req.setIndex > exercise.sets) return fail("SET_NOT_IN_PRESCRIPTION");
+    if (!exercise || req.setIndex > exercise.sets && !reviewedExtra && !old) return fail("SET_NOT_IN_PRESCRIPTION");
     if (req.status === "voided" && !["done", "skipped"].includes(old.status)) return fail("NOT_COMPLETED");
     // Undo preserves the original actuals/source as evidence; it only excludes them from statistics.
     if (req.status === "voided" && hash({ ...old.payload, revision: req.revision, status: "voided" }) !== digest) return fail("CONTENT_CONFLICT");

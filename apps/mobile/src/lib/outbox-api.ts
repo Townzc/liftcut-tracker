@@ -4,7 +4,7 @@ import { ApiError, apiBase, apiHeaders, getJson, sessionSchema, todaySchema } fr
 import type { Confirmed, OutboxApi } from "./outbox";
 
 // Same endpoints as the web outbox: sentence commands and their undo have their own route.
-const endpoint = (action: string) => action === "apply" || action === "undo" ? "/api/workout-commands" : "/api/workout-sessions";
+const endpoint = (action: string) => action === "apply" || action === "undo" || action === "review" ? "/api/workout-commands" : "/api/workout-sessions";
 const commandResult = z.looseObject({ session: sessionSchema, receipts: z.array(z.looseObject({ id: z.string() })) });
 
 type Credentials = { access_token: string; user: { id: string } };

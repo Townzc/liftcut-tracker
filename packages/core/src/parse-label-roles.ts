@@ -15,7 +15,10 @@ export function numericRoleEvidence(input: string, exerciseNames: readonly strin
     const normalized = name.normalize("NFKC").toLowerCase().trim();
     if (normalized) source = source.replace(new RegExp(escape(normalized), "g"), " ");
   }
-  source = source.replace(/(最后|每|这|那|上|下|同)一(?=组|次)/g, "$1")
+  // Polite discourse markers and anaphoric "the last one" are not reps.
+  // Preserve literal "做了一下/一次"; only these non-performance verbs qualify.
+  source = source.replace(/(记|记录|确认|看|等|核对|说|问|改|查|想)一下/g, "$1")
+    .replace(/(最后|每|这|那|上|下|同)一(?=组|次|个)/g, "$1")
     .replace(/一共/g, "共")
     .replace(/\b(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+set\b/g, "set $1");
   source = replaceSpokenNumbers(source).replace(/公斤|千克|kilograms?|kilos?|kgs?/g, "kg")
