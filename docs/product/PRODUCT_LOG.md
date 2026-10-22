@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-22 — M4 v4 bounded factorial runner
+
+- **Changed**: archived/new weights × short/reason-list prompts, one original-base training, five new streams/5,200 predictions. D is preselected; all inputs, source and baseline bytes are bound before inference.
+- **Gates**: retain original raw/quantization/source-v1 checks; add correct clarification reasons, useful positive accuracy and zero invalid reasons. Other arms and source-v2 cannot substitute a failed candidate.
+- **Actual**: four Linux runner checks and 13 budget/timeout checks pass; full 9 JS + 233 TS, types/build pass, lint only two existing warnings. Real assembly verifies 1,040 IDs and replays archived A as 187/240; cloned diagnostic cells are wiring tests, not new results.
+- **Limits / next**: exact-head CI and verified source backup before GPU notification; three work hours plus one backup/shutdown hour. No GPU yet, no UI or approval change, no private originals/derivatives in training. [Protocol, evidence and operation](../../research/m4-parser/train/GPU_V4.md).
+
 ## 2026-10-22 — M4 v4 controlled boundary data
 
 - **Why / change**: isolate three v3 failure families; replace 720 rows with balanced missing-unit, RPE-scope and exercise-name pairs, retaining 5,680 rows and all evaluation bytes.

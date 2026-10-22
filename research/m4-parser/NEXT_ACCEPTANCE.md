@@ -9,13 +9,19 @@ agreement passed. The original scoring environment failure remains recorded.
 [G1](results/closed-decode-20261021/README.md) fixed format while increasing
 invented fields and is not automatically the next decoding configuration.
 
-Before another GPU experiment, finish the application contract: a server-owned
+The application contract is now connected and passed the 20 unchanged originals
+plus three fixed supplemental replies through the real cloud model, hosted browser,
+Auth and PostgreSQL path (PR #153). This is system acceptance, not a native-model
+pass. The [v4 preparation](train/GPU_V4.md) separates data/prompt factors and keeps
+the originals and derivatives excluded. Its exact-head CI must pass before the
+maintainer is notified to open GPU. The following contract remains mandatory:
+a server-owned
 pending preview and a confirmed row have distinct IDs/revisions; explicit inherited
 load binds an exercise-specific confirmed source; per-hand basis survives storage;
 void and redo are separate confirmed operations. Connect these to a real Agent
 caller and test continuous dialogue with reads, clarifications and approval actions.
 The 20 originals remain private regressions, never training data or paraphrase seeds.
-An atomic parser replay plus scripted approvals does not satisfy this requirement.
+An atomic parser replay alone does not satisfy this requirement.
 
 The next runtime must pass `scripts/check-workspace.mjs` from its own reviewed
 checkout before any model invocation. Reusing dependency files is allowed only when

@@ -2,7 +2,7 @@
 
 端侧“一句话记录”解析模型（方案第 4 节 M4）。与冻结的研究代码（`research/liftcut-agent/` 等）分开。
 
-最新：[v3 完整结果与评分恢复](results/run-20261021T222100Z-v3/README.md)。量化一致性通过，原始质量退步，候选拒绝；已备份并核验关机。端侧、连续自然对话与真机验收尚未完成，20 句原话不入训练。
+最新：[v4 固定四组对照准备](train/GPU_V4.md)。CPU 已核验数据、训练/导出冒烟、归档回放与停止流程；完整 CI 后通知开 GPU。[v3](results/run-20261021T222100Z-v3/README.md)仍因原始质量不达标被拒绝。真实云端连续对话已另行通过，端侧与真机尚未验收；20 句原话及衍生文本不入训练。
 
 - `src/synth.ts`：先抽标签、再按模板渲染句子的合成数据生成器；`scripts/build-data.ts` 生成各集合与哈希清单。
 - `data/handwritten-test.jsonl`：手写评测集，只做评测。数据说明见 [DATA_CARD.md](DATA_CARD.md)。
