@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-22 — M4 v4 controlled boundary data
+
+- **Why / change**: isolate three v3 failure families; replace 720 rows with balanced missing-unit, RPE-scope and exercise-name pairs, retaining 5,680 rows and all evaluation bytes.
+- **Actual**: four new regressions, full 9 JS + 232 TS tests, type/build pass; lint zero errors/two existing warnings. Real tokenizer audit has zero truncation; two CPU optimizer steps export finite updated adapters and restored KV caching.
+- **Limits**: CPU smoke uses the saved v1 merged model and is not candidate accuracy. The 20 originals, paraphrases and outputs remain excluded from training. No GPU, UI, production data or confirmation changes.
+- **Next**: freeze the 2×2 runner, original gates, pinned artifacts and deadlines; only after full CPU/CI checks notify the maintainer to open GPU. [Data card and evidence](../../research/m4-parser/DATA_CARD_V4.md).
+
 ## 2026-10-22 — M4 continuous confirmed workout conversation
 
 - **Changed**: persistent confirmed references, immutable review approvals, current-turn numeric roles, changed-fields-only corrections, explicit inherited load, per-hand units, void and separately confirmed redo. All writes use the owner transaction/outbox; UI stays in chat.
