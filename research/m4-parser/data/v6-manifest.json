@@ -1,0 +1,865 @@
+{
+  "version": "v6-registry-catalog-1",
+  "gpuReady": false,
+  "provenance": "All 6400 sentence bytes stay identical to v4 training. Forty alias labels corrected from paired labels and registry in BOTH arms. S only varies training-derived catalog membership/order, preserving target labels. No evaluation/private text or derivatives generate rows.",
+  "sourceV4ManifestSha256": "6c979c120f874f26bf69b1c041a5d546a6065f0ecb308e705ec90e8d12369238",
+  "corrections": [
+    {
+      "sourceId": "v4-train-17-negative",
+      "id": "v6-alias-4035",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 125,
+            "unit": "kg",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-47-negative",
+      "id": "v6-alias-4095",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 22.5,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-77-negative",
+      "id": "v6-alias-4155",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 160,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-107-negative",
+      "id": "v6-alias-4215",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 197.5,
+            "unit": "kg",
+            "reps": 6,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-137-negative",
+      "id": "v6-alias-4275",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 33.75,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-167-negative",
+      "id": "v6-alias-4335",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 165,
+            "unit": "lb",
+            "reps": 13,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-197-negative",
+      "id": "v6-alias-4395",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 41.25,
+            "unit": "lb",
+            "reps": 14,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-227-negative",
+      "id": "v6-alias-4455",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 27.5,
+            "unit": "lb",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-257-negative",
+      "id": "v6-alias-4515",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 177.5,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-287-negative",
+      "id": "v6-alias-4575",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 197.5,
+            "unit": "kg",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-317-negative",
+      "id": "v6-alias-4635",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 195,
+            "unit": "lb",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-347-negative",
+      "id": "v6-alias-4695",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 92.5,
+            "unit": "kg",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-377-negative",
+      "id": "v6-alias-4755",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 112.5,
+            "unit": "lb",
+            "reps": 3,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-407-negative",
+      "id": "v6-alias-4815",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 192.5,
+            "unit": "lb",
+            "reps": 10,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-437-negative",
+      "id": "v6-alias-4875",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 71.25,
+            "unit": "lb",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-467-negative",
+      "id": "v6-alias-4935",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 75,
+            "unit": "kg",
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-497-negative",
+      "id": "v6-alias-4995",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 85,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-527-negative",
+      "id": "v6-alias-5055",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 60,
+            "unit": "kg",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-557-negative",
+      "id": "v6-alias-5115",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 22.5,
+            "unit": "lb",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-587-negative",
+      "id": "v6-alias-5175",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-617-negative",
+      "id": "v6-alias-5235",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 175,
+            "unit": "kg",
+            "reps": 18,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-647-negative",
+      "id": "v6-alias-5295",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 42.5,
+            "unit": "lb",
+            "reps": 15,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-677-negative",
+      "id": "v6-alias-5355",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-707-negative",
+      "id": "v6-alias-5415",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 197.5,
+            "unit": "lb",
+            "reps": 9,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-737-negative",
+      "id": "v6-alias-5475",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 12.5,
+            "unit": "lb",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-767-negative",
+      "id": "v6-alias-5535",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 172.5,
+            "unit": "lb",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-797-negative",
+      "id": "v6-alias-5595",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 15,
+            "unit": "lb",
+            "reps": 14,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-827-negative",
+      "id": "v6-alias-5655",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 2.5,
+            "unit": "lb",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-857-negative",
+      "id": "v6-alias-5715",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 35,
+            "unit": "lb",
+            "reps": 12,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-887-negative",
+      "id": "v6-alias-5775",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 100,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-917-negative",
+      "id": "v6-alias-5835",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 177.5,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-947-negative",
+      "id": "v6-alias-5895",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 155,
+            "unit": "lb",
+            "reps": 11,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-977-negative",
+      "id": "v6-alias-5955",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 112.5,
+            "unit": "lb",
+            "reps": 4,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1007-negative",
+      "id": "v6-alias-6015",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 135,
+            "unit": "kg",
+            "reps": 9,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1037-negative",
+      "id": "v6-alias-6075",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 140,
+            "unit": "lb",
+            "reps": 8,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1067-negative",
+      "id": "v6-alias-6135",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 72.5,
+            "unit": "kg",
+            "reps": 2,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1097-negative",
+      "id": "v6-alias-6195",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "杠铃卧推",
+        "sets": [
+          {
+            "weight": 135,
+            "unit": "kg",
+            "reps": 17,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1127-negative",
+      "id": "v6-alias-6255",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 167.5,
+            "unit": "lb",
+            "reps": 16,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1157-negative",
+      "id": "v6-alias-6315",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 167.5,
+            "unit": "lb",
+            "reps": 14,
+            "rpe": null
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "v4-train-1187-negative",
+      "id": "v6-alias-6375",
+      "from": {
+        "intent": "clarify",
+        "reason": "unknown_exercise"
+      },
+      "to": {
+        "intent": "record",
+        "exercise": "Barbell bench press",
+        "sets": [
+          {
+            "weight": 115,
+            "unit": "lb",
+            "reps": 7,
+            "rpe": null
+          }
+        ]
+      }
+    }
+  ],
+  "rowsPerArm": 6400,
+  "sourceTextSequenceSha256": "8a55923f7b358eb4786611a00dccecefb633a05b3c53298a0345a32e3df8383b",
+  "sharedTargetSequenceSha256": "fbdeb54375dd21d6604c1eeb4330e70937bf24997692e52f4abd15620b4042b0",
+  "catalogChanges": 6397,
+  "policyErrors": 0,
+  "trainIntents": {
+    "skip": 189,
+    "correct": 494,
+    "clarify": 2412,
+    "record": 3066,
+    "end": 95,
+    "repeat": 144
+  },
+  "targetPositions": {
+    "T": {
+      "0": 1103,
+      "1": 896,
+      "2": 353,
+      "3": 229
+    },
+    "S": {
+      "0": 789,
+      "1": 750,
+      "2": 600,
+      "3": 442
+    }
+  },
+  "files": {
+    "dev.gold.jsonl": {
+      "sha256": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+      "lines": 740
+    },
+    "dev.jsonl": {
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "lines": 740
+    },
+    "dev-eval.jsonl": {
+      "sha256": "a4145ee3d0bca4ee49f69ab607ca50ab7ccadc52080e831c9a074452623c9b99",
+      "lines": 740
+    },
+    "T-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "T-train.jsonl": {
+      "sha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "lines": 6400
+    },
+    "S-train.gold.jsonl": {
+      "sha256": "f784b99ab361cd2379e3bf1d0d5ba9f204388e64755bf38a0a79e346b65f16ec",
+      "lines": 6400
+    },
+    "S-train.jsonl": {
+      "sha256": "920214fa14902e5ed00f9456430f3f3cd8ef8c77867372be76779fbec644a506",
+      "lines": 6400
+    }
+  }
+}
