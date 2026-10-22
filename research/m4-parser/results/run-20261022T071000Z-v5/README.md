@@ -160,14 +160,24 @@ versus 304/740 dev rows whose catalog membership is seen. This is a coverage
 difference, not unseen exercise names or proof of cause: T still achieves
 206/240 on the same challenge inputs. [Reproduction source](../../scripts/audit-v5-catalogs.ts).
 
-The next CPU work should specify a label-preserving catalog/order/alias
-intervention and separately audit the first intent/reason decisions versus
-copied numeric fields. Retain a control and the positive-record floors, verify
-no missing value is supplied by catalog context, and freeze a new comparison
-only after CPU checks and CI. Do not simply add epochs, relax the missing-unit
+The same audit finds a concrete **alias-policy mismatch**: 40 existing training
+rows label bare `卧推` / `bench press` as `unknown_exercise` with both bench
+variants available. The shared registry resolves both exact aliases to
+`barbell-bench`, and the challenge includes nine corresponding record targets.
+The full catalogs and sentence frames differ, so these are not identical-input
+label duplicates. Nevertheless, the training policy and the registry/challenge
+policy disagree. This does not prove the v5 regression mechanism (T saw the
+same labels), and no historical label or score is changed by the audit.
+
+Before another GPU run, unify the alias policy and add a CPU check that rejects
+such cross-policy targets. Then specify a label-preserving catalog/order
+intervention and separately audit intent/reason decisions versus copied numeric
+fields. Retain a control and the positive-record floors, verify no missing value
+is supplied by catalog context, and freeze a new comparison only after CPU
+checks and CI. Do not simply add epochs, relax the missing-unit
 rule, raise the token cap or use the private 20 utterances as training material.
-The coverage audit supports a testable direction, not a prepared next GPU run or
-a claim that changing catalogs will fix the model.
+The audits support a testable direction, not a prepared next GPU run or a claim
+that changing catalogs alone will fix the model.
 
 To reproduce the attribution from the verified archive (no model loading):
 

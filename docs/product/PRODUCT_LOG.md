@@ -5,9 +5,9 @@
 - Ran: two original-base 800-step trainings, 4,160 new predictions; T reproduces v4's 1,040 outputs and all four weight hashes. S remains the sole candidate and is rejected.
 - Result: challenge 206→197/240, 8 gains/17 losses; 12 lost positives differ only in exercise, five missing-unit requests become incorrect records. Invalid reasons 7→0 and candidate truncations zero; Q8/HF 97.40%, Q8/F16 98.08%.
 - Evidence: 131 run files/eight weights restored and hashed, 31 server reports reproduced, six additional offline reference scores. Platform OFF verified 09:10:15 UTC after backup; timer cleared, instance retained. [Report](../../research/m4-parser/results/run-20261022T071000Z-v5/README.md).
-- CPU diagnosis: new hash-bound scripts attribute every paired loss and regenerate original training bytes; challenge catalog memberships are absent from training, and model inputs contain no selected-exercise field. Coverage is a hypothesis, not causal proof.
+- CPU diagnosis: hash-bound scripts attribute every loss and regenerate training bytes; challenge catalogs are absent, inputs have no selected field. Forty training unknown-exercise targets conflict with the registered bench aliases used by nine challenge records; a policy mismatch, not causal proof. Historical scores stay unchanged.
 - Verification: root 9 JS + 233 TS tests, full lint (zero errors/two existing warnings), build pass; added audit scripts separately type/lint checked. Exact-head CI required before merge.
-- Limits / next: no UI, confirmation, migration or native-flag changes; originals/derivatives excluded. Prepare a label-preserving catalog/binding comparison and intent/field diagnosis before another reviewed GPU notification; native and device gates remain closed.
+- Limits / next: no UI, confirmation, migration or native-flag changes; originals/derivatives excluded. Unify alias policy with a CPU consistency check before a catalog/binding comparison and intent/field diagnosis; native/device gates stay closed, no new GPU notification yet.
 
 ## 2026-10-22 · M4 v5 loss comparison preparation
 

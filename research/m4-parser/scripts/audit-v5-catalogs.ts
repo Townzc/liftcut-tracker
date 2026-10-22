@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { identifyExercise } from "@liftcut/core/exercise-catalog";
 import { buildV4 } from "./build-v4";
 import type { Item } from "../src/synth";
 
@@ -43,14 +44,34 @@ const splits = Object.fromEntries(["dev-eval", "challenge", "handwritten"].map(s
     catalogs: Object.entries(groups).map(([key, items]) => ({ exercises: JSON.parse(key), items,
       trainSameOrder: trainExact[key] ?? 0, trainSameMembers: trainMembers[JSON.stringify([...JSON.parse(key)].sort())] ?? 0 })) }];
 }));
+// Narrow policy audit of the exact bare aliases used by the existing generator.
+// Do not treat an explicit "barbell/dumbbell bench press" as a bare alias.
+const bareBenchAlias = (r: Item) => /(?<!杠铃|哑铃)卧推/.test(r.text) ? "卧推"
+  : !/(?:barbell|dumbbell)\s+bench press/i.test(r.text) && /\bbench press\b/i.test(r.text) ? "bench press" : null;
+const benchAliasRows = (rows: Item[]) => rows.filter(r => bareBenchAlias(r)
+  && r.context.exercises.some(n => identifyExercise(n)?.id === "barbell-bench")
+  && r.context.exercises.some(n => identifyExercise(n)?.id === "dumbbell-bench"));
+const aliasTrain = benchAliasRows(train), aliasChallenge = benchAliasRows(parse(read("challenge.gold.jsonl")));
+const policyMismatch = aliasTrain.filter(r => r.label.intent === "clarify" && r.label.reason === "unknown_exercise"
+  && identifyExercise(bareBenchAlias(r)!)?.id === "barbell-bench");
+const aliasPolicy = {
+  scope: "Bare 卧推/bench press with both barbell and dumbbell bench variants available; existing synthetic rows only",
+  registryResolution: { "卧推": identifyExercise("卧推")?.id, "bench press": identifyExercise("bench press")?.id },
+  registrySourceLfSha256: hash(readFileSync(new URL("../../../packages/core/src/exercise-catalog.ts", import.meta.url), "utf8").replace(/\r\n/g, "\n")),
+  trainIntents: count(aliasTrain, r => r.label.intent === "clarify" ? r.label.reason : r.label.intent),
+  challengeIntents: count(aliasChallenge, r => r.label.intent === "clarify" ? r.label.reason : r.label.intent),
+  trainUnknownDespiteRegistryAlias: policyMismatch.map(r => r.id),
+  note: "Training asks unknown-exercise clarification for these registered aliases, while challenge contains record targets for the same alias policy. Different full catalogs/frames remain; this is a policy mismatch to resolve before new training, not proof of v5 causation. Historical labels and scores stay unchanged.",
+};
 const report = { mode: "Post-result input coverage audit, not a model ablation or new training data", newModelCalls: 0,
   trainRows: train.length, trainGoldSha256: hash(built.files["train.gold.jsonl"]),
   trainSftSha256: hash(built.files["train.jsonl"]), savedDataManifestSha256: runHashes["data-manifests.json"],
   filesRegeneratedAndMatched: Object.keys(built.files).length,
   modelVisibleUserKeys: { train: visibleKeys(built.files["train.jsonl"]), evaluation: visibleKeys(read("all-eval.jsonl")) },
-  splits,
+  splits, aliasPolicy,
   note: "An unseen exact catalog is not an unseen exercise or proof of cause. No training, evaluation labels, thresholds or private originals changed." };
 writeFileSync(output, JSON.stringify(report, null, 2) + "\n", { flag: "wx" });
 console.log(JSON.stringify({ trainRows: train.length, modelVisibleUserKeys: report.modelVisibleUserKeys,
+  aliasPolicyMismatchRows: policyMismatch.length,
   splits: Object.fromEntries(Object.entries(splits).map(([name, v]) => [name, { total: v.total,
     exactCatalogSeenInTrain: v.exactCatalogSeenInTrain, catalogMembersSeenInTrain: v.catalogMembersSeenInTrain }])) }));

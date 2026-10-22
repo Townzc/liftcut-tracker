@@ -5107,5 +5107,67 @@
       ]
     }
   },
+  "aliasPolicy": {
+    "scope": "Bare 卧推/bench press with both barbell and dumbbell bench variants available; existing synthetic rows only",
+    "registryResolution": {
+      "卧推": "barbell-bench",
+      "bench press": "barbell-bench"
+    },
+    "registrySourceLfSha256": "64bc0707db12b06fb1cbb759eac219a175de1644ebf77e5c0195b7d76294567d",
+    "trainIntents": {
+      "unknown_exercise": 40
+    },
+    "challengeIntents": {
+      "record": 9,
+      "missing_reps": 2,
+      "plan_not_actual": 2,
+      "uncertain_quantity": 3,
+      "missing_unit": 1,
+      "negation": 1
+    },
+    "trainUnknownDespiteRegistryAlias": [
+      "v4-train-17-negative",
+      "v4-train-47-negative",
+      "v4-train-77-negative",
+      "v4-train-107-negative",
+      "v4-train-137-negative",
+      "v4-train-167-negative",
+      "v4-train-197-negative",
+      "v4-train-227-negative",
+      "v4-train-257-negative",
+      "v4-train-287-negative",
+      "v4-train-317-negative",
+      "v4-train-347-negative",
+      "v4-train-377-negative",
+      "v4-train-407-negative",
+      "v4-train-437-negative",
+      "v4-train-467-negative",
+      "v4-train-497-negative",
+      "v4-train-527-negative",
+      "v4-train-557-negative",
+      "v4-train-587-negative",
+      "v4-train-617-negative",
+      "v4-train-647-negative",
+      "v4-train-677-negative",
+      "v4-train-707-negative",
+      "v4-train-737-negative",
+      "v4-train-767-negative",
+      "v4-train-797-negative",
+      "v4-train-827-negative",
+      "v4-train-857-negative",
+      "v4-train-887-negative",
+      "v4-train-917-negative",
+      "v4-train-947-negative",
+      "v4-train-977-negative",
+      "v4-train-1007-negative",
+      "v4-train-1037-negative",
+      "v4-train-1067-negative",
+      "v4-train-1097-negative",
+      "v4-train-1127-negative",
+      "v4-train-1157-negative",
+      "v4-train-1187-negative"
+    ],
+    "note": "Training asks unknown-exercise clarification for these registered aliases, while challenge contains record targets for the same alias policy. Different full catalogs/frames remain; this is a policy mismatch to resolve before new training, not proof of v5 causation. Historical labels and scores stay unchanged."
+  },
   "note": "An unseen exact catalog is not an unseen exercise or proof of cause. No training, evaluation labels, thresholds or private originals changed."
 }
