@@ -1,5 +1,16 @@
 # 产品日志
 
+## 2026-10-23 · Mobile coach alignment R2: continuous approvals
+
+- Mobile now sends an account-scoped conversation ID and validates all four shared reply variants. Review cards show before/after, unknown values and separate void/redo; plans retain the existing web-only boundary.
+- Confirmations reuse the original outbox and immutable server review IDs. Pending, rejected and exact server-confirmed rows drive status, never reply prose; account changes reset screen state and abort its stream.
+- Browser integration found a sourceTexts metadata omission in R1; explicitly declared and covered it in the shared signed-response fixture. Unknown fields in approval bodies and unknown proposal kinds still fail closed.
+- Ran: root `npm test` (9 JS + 260 TS), `npm run lint`, `npm run build`; core/mobile type checks, explicit mobile ESLint, mobile `npm test` (14), `npm run export:check` (Android/iOS JS only).
+- Local PostgreSQL 16: `node --conditions=react-server --import tsx --test tests/product-db/workout-conversation.test.ts tests/product-db/coach-history.test.ts` — 16 pass. WSL process lifetime caused an initial connection refusal; a persistent local host fixed it.
+- `npx expo export --platform web` + `npx playwright test --config playwright.mobile.config.ts coach-context.spec.ts coach.spec.ts` — 3 pass; includes eight intervening turns, same-record correction, inherited load, void/redo, exact HTTP retry and unconfirmed zero writes. Synthetic quota rows reset between scripted turns; quota guards are separately tested.
+- Phone-width screenshot: CI `today-browser-evidence/mobile-web/coach-context-review-mobile.png`. Corrected a missing web aria-busy mapping in the new test path. Model/auth substitutes; API, queues and test DB are real.
+- Limits/next: history persistence is the next separate slice. No real user data, production migration, paid service, M4/default switch, native binary, physical device or production runtime acceptance.
+
 ## 2026-10-23 · Mobile coach alignment R1: shared wire contract
 
 - Rechecked main `7b4abbd`: mobile lacks conversationId/workoutReview and keeps turns only in screen state.

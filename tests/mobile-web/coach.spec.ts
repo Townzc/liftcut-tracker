@@ -41,7 +41,7 @@ test("the phone chat asks consent, streams a reply and saves a workout draft onl
   expect(await logs()).toEqual([]); // A draft is not a record.
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-draft-mobile.png", fullPage: true });
   await turns.last().getByRole("button", { name: "确认记录" }).click();
-  await expect(turns.last()).toContainText("已加入待同步");
+  await expect(turns.last()).toContainText(/已加入待同步|已保存，服务端记录已确认/);
   await expect.poll(logs).toEqual([{ reps: 8, weight_kg: "50", rpe: null, weight_source: "user_said" }]);
 
   // An unconfirmed draft is closed by the next message and never written.
