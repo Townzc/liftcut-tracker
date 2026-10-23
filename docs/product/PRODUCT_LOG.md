@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-23 · Mobile coach alignment R1: shared wire contract
+
+- Rechecked main `7b4abbd`: mobile lacks conversationId/workoutReview and keeps turns only in screen state.
+- Moved the unchanged request validator into pure core; added a closed four-proposal response validator and synthetic cross-client fixture. Legacy requests still omit conversationId; review IDs and approval-only bodies are checked.
+- Added compatibility/rejection/no-write regressions; real-store test validates prepared previews and keeps confirmed focus after eight more turns. Corrected the status page to the already-published v8 result; no new experiment.
+- Ran: `npm test` (9 JS + 260 TS), `npm run lint` (zero errors; two existing warnings after targeted cleanup), `npm run build`, `npm run typecheck --workspace @liftcut/core`, `npx tsc --noEmit`; mobile `npm run typecheck` and `npm test` (12).
+- Local PostgreSQL/browser: not run; Docker daemon unavailable. Required isolated database and browser suites run in CI before merge. No real users, production migrations, model calls or paid services.
+- User-visible boundary: shared protocol prerequisite only; phone card/session wiring is the next separate PR, persistence follows separately. No native build/device/production-runtime acceptance claimed.
+
 ## 2026-10-23 · M4 v8 completed factorial and residual diagnosis
 
 - Ran: one 800-step training and 3,120 fresh HF predictions; A/B/C/D challenge 185/166/0/216 of 240. D alone eligible; three semantic gates fail, quantization unmeasured. [Report](../../research/m4-parser/results/run-20261023T025600Z-v8/README.md).
