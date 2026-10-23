@@ -1,0 +1,13 @@
+{
+  "windowId": "m4-v7-20261023T001500Z",
+  "platformState": "OFF",
+  "backupBeforeShutdown": true,
+  "completedTimerCleared": true,
+  "firstOffObservedAt": "2026-10-23T01:46:02.925Z",
+  "verifiedAt": "2026-10-23T01:46:14.323Z",
+  "screenshotSha256": "ca4e2626c6fafffb785d8eeb3199c54982f68b93f6a207564cce44d750209583",
+  "originalWorkStopUtc": "2026-10-23T03:15:00Z",
+  "originalPowerDeadlineUtc": "2026-10-23T04:15:00Z",
+  "instanceAndPriorAssetsRetained": true,
+  "evidence": "Exact instance row showed 已关机, 开机 and 设置定时关机; OFF was observed before clearing the completed timer. Screenshot remains in the private operations backup."
+}

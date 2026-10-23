@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-23 · M4 v7 GPU results and CPU diagnostics
+
+- Ran: one fixed training and 3,120 new HF/F16/Q8 outputs. S challenge 180/240 versus cached T 195/240 (2 gains/17 losses); candidate rejected. [Report](../../research/m4-parser/results/run-20261023T001500Z-v7/README.md).
+- Boundaries: unit/scope reasons 3/15 and 0/15; Q8/HF and Q8/F16 97.40%/97.88%. Existing gates, UI, approvals and native-off state unchanged.
+- Recovery: four complete weights and all five streams restored and hashed; 31 reports replay exactly. Platform OFF verified after backup, completed timer cleared; original deadlines preserved.
+- CPU: separate guessed-unit/rep-role/scope diagnostics; real token audit finds legacy full prompt overflows on 54 train/six dev rows. No new examples or model calls for diagnostics.
+- Checks: root 9 JS + 249 TS, lint (zero errors/two old warnings), production build pass; final exact-head CI/source recovery required before merge.
+- Next: draft train × inference contract comparison and CPU readiness; private 20 originals/derivatives excluded. Candidate continuous and physical-device acceptance remain gated.
+
 ## 2026-10-22 · M4 v7 fixed prompt comparison runner
 
 - Why/change: freeze one original-base S training with aligned system instructions, reusing hash-bound v6 T and historical H. Keep 6,400 sentences/labels/catalogs/order, original loss/parameters and all numeric gates. [Runbook](../../research/m4-parser/train/GPU_V7.md).
