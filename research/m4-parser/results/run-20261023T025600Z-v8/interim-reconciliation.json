@@ -1,0 +1,35 @@
+{
+  "verified": true,
+  "newModelCalls": 0,
+  "arms": {
+    "B": {
+      "filesSha256": {
+        "B.jsonl": "dcb7addcbfcf654b12a82940b51931d3a6761cb300a0fd834bf2f3c9a9f758f2",
+        "B.jsonl.audit.json": "66ff78eca4f2310c13ec5a30f4f4506382d3e10718ec458a2fab8a2365a81286",
+        "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+        "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85"
+      },
+      "metricsMatched": [
+        "dev-eval",
+        "challenge",
+        "handwritten"
+      ]
+    },
+    "C": {
+      "filesSha256": {
+        "C.jsonl": "7114627d876f911cd6ec653269d5d1bcb10a2d0516e24c1dcbdcf91f08f3c9a2",
+        "C.jsonl.audit.json": "249516ec731a81d2db4fc25e48e90221542b05058a5924bc15386737993af7fa",
+        "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+        "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85"
+      },
+      "metricsMatched": [
+        "dev-eval",
+        "challenge",
+        "handwritten"
+      ]
+    }
+  },
+  "normalization": "Only raw metric gold/system absolute prefixes; all other fields exact."
+}

@@ -1,0 +1,35 @@
+{
+  "candidate": "D",
+  "hfGatePassed": false,
+  "developmentGatePassed": false,
+  "checks": {
+    "sameInputs": true,
+    "noTruncation": true,
+    "challengeExact": true,
+    "challengeSchema": true,
+    "challengeNoInvented": false,
+    "guardedSafety": true,
+    "challengeCoverage": true,
+    "focusNegativeReasons": false,
+    "focusPositiveUseful": true,
+    "challengePositiveUseful": true,
+    "clarificationVocabulary": false,
+    "fixedTraining": true,
+    "reviewedTokens": true,
+    "allFactorialInputs": true
+  },
+  "coverage": {
+    "dev-eval": 0.5052631578947369,
+    "challenge": 0.9583333333333334,
+    "handwritten": 0.3333333333333333
+  },
+  "quantization": "not-run-semantic-rejection",
+  "rawAgreement": null,
+  "releaseReady": false,
+  "pending": [
+    "passing-candidate continuous acceptance",
+    "useful coverage beyond source-only parsing",
+    "native integration",
+    "physical-device acceptance"
+  ]
+}
