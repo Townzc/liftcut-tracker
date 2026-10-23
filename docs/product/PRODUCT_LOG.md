@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-22 · M4 v7 fixed prompt comparison runner
+
+- Why/change: freeze one original-base S training with aligned system instructions, reusing hash-bound v6 T and historical H. Keep 6,400 sentences/labels/catalogs/order, original loss/parameters and all numeric gates. [Runbook](../../research/m4-parser/train/GPU_V7.md).
+- Ran: three Linux runner fault checks, one summary regression, root 9 JS + 246 TS, lint (zero errors/two old warnings), and production build pass. All 53 source hashes match; 27 historical score objects and binding categories replay unchanged. [Evidence](../../research/m4-parser/results/prompt-v7-20261022/README.md).
+- Verification boundary: a prototype build failed on cross-drive dependency junctions; the actual checkout builds successfully. Final exact-head CI and full/incremental source restoration must pass before a fresh GPU notice. Historical cloned S is wiring evidence, not a new model result.
+- Limits/next: one training, 3,120 new HF/F16/Q8 outputs; 2,080 cached H/T outputs cannot support speed claims. Private 20 originals/derivatives stay excluded. No GPU, UI, confirmation or native change; continuous and real-device acceptance follow model gates.
+
 ## 2026-10-22 · M4 v7 artifact recovery and storage
 
 - Why: one prompt-alignment candidate needs four weights, while the old v6 recovery contract required eight.

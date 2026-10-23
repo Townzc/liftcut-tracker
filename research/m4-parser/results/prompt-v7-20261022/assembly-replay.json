@@ -1,0 +1,14 @@
+{
+  "mode": "Historical T cloned under S for scoring assembly only; NOT new S predictions",
+  "inputs": 1040,
+  "inputSha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+  "controlBytesUnchanged": true,
+  "recomputedScoresMatchingHistory": 27,
+  "strictFocusMatchesHistory": true,
+  "clonedTtoSGains": 0,
+  "clonedTtoSLosses": 0,
+  "provenanceMetadata": "Paths validated separately; frozen prediction/guard sources checked after LF normalization.",
+  "newModelCalls": 0,
+  "privateOriginalsAndDerivativesUsed": false,
+  "releaseReady": false
+}
