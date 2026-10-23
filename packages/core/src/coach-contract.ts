@@ -53,7 +53,7 @@ const review: z.ZodType<WorkoutReview> = z.looseObject({
   kind: z.enum(["record", "correct", "inherit_weight", "void", "skip"]), text: z.string(),
   before: z.array(storedSet.nullable()), requests: z.array(storedSet).min(1),
   references: z.array(z.strictObject({ sessionId: z.uuid(), recordId: z.uuid(), exerciseId: z.string(), setIndex: positive, revision: positive })),
-  model: z.strictObject({ provider: z.string(), model: z.string(), version: z.literal("coach-v1") }).optional(),
+  model: z.strictObject({ provider: z.string(), model: z.string(), version: z.literal("coach-v1"), sourceTexts: z.array(z.string()).optional() }).optional(),
 }).refine(r => r.before.length === r.requests.length, "Review rows must align");
 const legacyOperation = z.strictObject({ action: z.enum(["apply", "end"]), body: z.unknown() })
   .refine(v => { try { operationBody(v as WorkoutOperation); return true; } catch { return false; } }, "Invalid operation");

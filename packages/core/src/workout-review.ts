@@ -13,7 +13,7 @@ export type WorkoutReview = {
   id: string; conversationId: string; sessionId: string; requestId: string;
   basis: string; kind: "record" | "correct" | "inherit_weight" | "void" | "skip";
   before: (StoredSet | null)[]; requests: StoredSet[]; references: ConfirmedSetReference[]; text: string;
-  model?: { provider: string; model: string; version: "coach-v1" };
+  model?: { provider: string; model: string; version: "coach-v1"; sourceTexts?: string[] };
 };
 export type WorkoutConversationState = {
   focus: ConfirmedSetReference | null;

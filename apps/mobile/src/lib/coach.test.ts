@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { ApiError } from "./api";
 import { askCoach } from "./coach";
+import { coachFixture } from "../../../../tests/fixtures/coach-contract";
 
 const auth = { access_token: "a.b.c", user: { id: "owner-1" } }, id = "5f0c7f4e-8a51-4d4e-9d7e-0c2f5b0b9a11";
 const input = { id, text: "深蹲做了几组？", history: [], locale: "zh" as const, timezone: "Asia/Shanghai" };
@@ -45,4 +46,16 @@ test("a truncated, failed or foreign stream never becomes a reply", async () => 
   await assert.rejects(askCoach(auth, input, () => {}, undefined, server(bytes(result({ requestId: "other" }))).fetcher), /STREAM_INVALID/);
   await assert.rejects(askCoach(auth, input, () => {}, undefined, server(bytes(result({ proposal: { kind: "workout", hash: "h" } }))).fetcher)); // No operation to queue.
   await assert.rejects(askCoach(auth, input, () => {}, undefined, server([], 429).fetcher), (e: unknown) => e instanceof ApiError && e.code === "RATE_LIMITED");
+});
+
+test("continuous review uses the shared contract and binds the conversation and owner", async () => {
+  const { request, reply, session } = coachFixture(), owner = { ...auth, user: { id: session.userId } };
+  const response = (r: unknown) => server(bytes(line({ type: "result", result: r })));
+  const api = response(reply);
+  assert.deepEqual(await askCoach(owner, request, () => {}, undefined, api.fetcher), reply);
+  assert.equal(JSON.parse(api.log.init!.body as string).conversationId, request.conversationId);
+  for (const input of [{ ...request, conversationId: undefined }, { ...request, conversationId: session.id }])
+    await assert.rejects(askCoach(owner, input, () => {}, undefined, response(reply).fetcher), /CONVERSATION_CHANGED/);
+  await assert.rejects(askCoach(auth, request, () => {}, undefined, response(reply).fetcher), /ACCOUNT_CHANGED/);
+  await assert.rejects(askCoach(owner, request, () => {}, undefined, response({ ...reply, proposal: { kind: "unknown" } }).fetcher));
 });
