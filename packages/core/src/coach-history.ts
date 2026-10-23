@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { CoachSource } from "./coach-contract";
+import type { CoachSource, CoachProposal } from "./coach-contract";
 
 const utf8Size=(s:string)=>{let n=0;for(const c of s){const p=c.codePointAt(0)!;n+=p<=0x7f?1:p<=0x7ff?2:p<=0xffff?3:4;}return n;};
 
@@ -10,7 +10,7 @@ export const coachTurnSchema=z.object({
   pending:z.boolean().optional(),interrupted:z.boolean().optional(),
 }).strict().refine(v=>utf8Size(JSON.stringify(v))<=20000);
 export type SavedCoachTurn=z.infer<typeof coachTurnSchema>;
-export type CoachTurn=SavedCoachTurn&{sources?:CoachSource[]};
+export type CoachTurn=SavedCoachTurn&{sources?:CoachSource[]; proposal?:CoachProposal; live?:string; error?:string};
 export const historyItemSchema=z.object({turn:coachTurnSchema,revision:z.number().int().min(1).max(1000000)}).strict();
 export type HistoryItem=z.infer<typeof historyItemSchema>;
 export const historySaveSchema=z.object({conversationId:z.uuid(),items:z.array(historyItemSchema).min(1).max(10)}).strict();

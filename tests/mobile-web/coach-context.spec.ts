@@ -12,6 +12,7 @@ test.beforeAll(async () => {
   await db.query("insert into training_plan_days(id,week_id,day_number,title) values($1,$2,1,'连续对话验收')", [day, plan + "w"]);
   await db.query("insert into training_plan_exercises(id,day_id,name,sets,rep_range,target_rpe) values($1,$2,'深蹲',1,'99',10)", [exercise, day]);
   await db.query("delete from coach_request_usage where user_id=$1", [owner]);
+  await db.query("delete from coach_conversations where user_id=$1", [owner]);
 });
 test.afterAll(async () => {
   await db.query("delete from workout_sessions where training_plan_id=$1", [plan]);
@@ -22,6 +23,7 @@ test.afterAll(async () => {
 // Real bearer API/outbox/PostgreSQL; neither model-intelligence nor native-device evidence.
 test("mobile review: confirmed focus beyond six turns, correction, inheritance, void, redo and exact retry", async ({ page }) => {
   test.setTimeout(120000);
+  page.setDefaultTimeout(15000);
   const sent: Sent[] = [], approvals: Request[] = [], chats: { conversationId: string; history: unknown[] }[] = [];
   await relay(page, sent);
   page.on("request", r => {
@@ -51,6 +53,15 @@ test("mobile review: confirmed focus beyond six turns, correction, inheritance, 
   expect(retried.status()).toBe(200); expect(await rows()).toHaveLength(1);
   expect((await db.query("select count(*)::int n from workout_session_events where set_log_id=$1", [first.id])).rows[0].n).toBe(1);
   for (let i = 0; i < 8; i++) await send("你好");
+  await expect(page.getByTestId("coach-history-status")).toHaveText("对话已同步");
+  await input.fill("尚未发送的训练草稿");
+  await page.goBack(); await page.waitForURL(/\/$/);
+  await page.getByRole("link", { name: "设置" }).click(); await page.waitForURL(/\/settings$/);
+  await page.goBack(); await page.waitForURL(/\/$/); await page.getByRole("link", { name: "教练" }).click();
+  await expect(input).toHaveValue("尚未发送的训练草稿"); await page.reload();
+  await expect(input).toHaveValue("尚未发送的训练草稿"); await expect(turns).toHaveCount(9);
+  await expect(turns.first()).toContainText("聊天文字不代表写入回执");
+  await expect(page.getByRole("button", { name: "确认记录", exact: true })).toHaveCount(0);
   await send("刚才那组不对，5次 [context-correct]"); expect((await rows())[0].reps).toBe(9);
   await expect(turns.last()).toContainText("42 kg × 9");
   await turns.last().getByRole("button", { name: "确认记录", exact: true }).scrollIntoViewIfNeeded();
@@ -61,10 +72,25 @@ test("mobile review: confirmed focus beyond six turns, correction, inheritance, 
   await send("刚才那组不算，重新做 [context-void]"); await expect(turns.last()).toContainText("作废"); await confirm();
   await send("深蹲42公斤，9次 [context-redo]"); await confirm();
   expect((await rows()).map(s => s.status)).toEqual(["done", "voided", "done"]);
-  await send("深蹲42公斤，9次 [context-record]"); await send("你好");
+  await send("深蹲42公斤，9次 [context-record]");
+  await expect(page.getByTestId("coach-history-status")).toHaveText("对话已同步"); await page.reload();
+  await expect(turns).toHaveCount(14); await expect(page.getByRole("button", { name: "确认记录", exact: true })).toHaveCount(0);
+  expect(await rows()).toHaveLength(3); await send("你好");
   await expect(page.getByRole("button", { name: "确认记录", exact: true })).toHaveCount(0); expect(await rows()).toHaveLength(3);
   expect(new Set(chats.map(x => x.conversationId)).size).toBe(1); expect(chats[0].conversationId).toMatch(/^[a-f0-9-]{36}$/);
   expect(chats.every(x => x.history.length <= 12)).toBe(true);
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-context-mobile.png", fullPage: true });
   expectBearerOnly(sent);
+  // The same cloud history is selectable after starting a new thread. Deletion only removes prose.
+  await expect(page.getByTestId("coach-history-status")).toHaveText("对话已同步");
+  await page.getByRole("button", { name: "新对话", exact: true }).click(); await expect(turns).toHaveCount(0);
+  await page.getByRole("button", { name: "历史对话", exact: true }).click();
+  await page.getByTestId("coach-history-list").getByRole("button", { name: "深蹲42公斤，9次 [context-record]", exact: true }).click();
+  await expect(turns).toHaveCount(15); await expect(page.getByRole("button", { name: "确认记录", exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "历史对话", exact: true }).click();
+  await page.getByTestId("coach-history-list").getByRole("button", { name: "删除对话", exact: true }).click();
+  await page.getByRole("button", { name: "取消", exact: true }).click(); await expect(turns).toHaveCount(15);
+  await page.getByTestId("coach-history-list").getByRole("button", { name: "删除对话", exact: true }).click();
+  await page.getByRole("button", { name: "确认删除对话", exact: true }).click(); await expect(turns).toHaveCount(0);
+  expect(await rows()).toHaveLength(3); expect((await rows()).map(s => s.status)).toEqual(["done", "voided", "done"]);
 });

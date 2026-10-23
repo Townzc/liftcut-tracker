@@ -93,6 +93,11 @@ const zh = {
   server: "服务器",
   signOut: "退出登录",
   coach: "教练",
+  coachCancel: "取消", coachHistory: "历史对话", coachNew: "新对话", coachMore: "更早的对话",
+  coachHistorySaved: "对话已同步", coachHistoryLocal: "聊天保存在本机，等待同步",
+  coachHistoryError: "聊天同步暂不可用，可重试", coachStorageError: "本机保存失败，请暂勿关闭 App",
+  coachDelete: "删除对话", coachDeleteConfirm: "确认删除对话", coachDeleteHint: "仅删除聊天，不删除训练记录. 确认删除？",
+
   coachConsentTitle: "开启训练助手",
   coachConsentHint: "开启后，你的消息和下面这些数据会发给模型，用来回答问题和起草记录。草稿要你确认才会保存。",
   coachConsent: "同意并开启",
@@ -264,6 +269,11 @@ const en: Record<MessageKey, string> = {
   server: "Server",
   signOut: "Sign out",
   coach: "Coach",
+  coachCancel: "Cancel", coachHistory: "Chat history", coachNew: "New chat", coachMore: "Older conversations",
+  coachHistorySaved: "Conversation synced", coachHistoryLocal: "Chat stored locally; waiting to sync",
+  coachHistoryError: "Chat sync is unavailable; retry", coachStorageError: "Local save failed; keep the app open",
+  coachDelete: "Delete conversation", coachDeleteConfirm: "Confirm deletion", coachDeleteHint: "Delete chat only? Workout records stay saved.",
+
   coachConsentTitle: "Turn on the coach",
   coachConsentHint: "When on, your messages and the data below are sent to the model to answer and draft entries. Drafts are saved only after you confirm.",
   coachConsent: "Agree and turn on",

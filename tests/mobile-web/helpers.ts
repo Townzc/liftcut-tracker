@@ -5,7 +5,7 @@ export type Sent = { url: string; authorization?: string; cookie?: string };
 export async function relay(page: Page, sent: Sent[]) {
   await page.route(/^http:\/\/(127\.0\.0\.1:55440|localhost:3103)\//, async route => {
     const request = route.request(), cors = { "access-control-allow-origin": "http://localhost:8099",
-      "access-control-allow-methods": "GET,POST,OPTIONS", "access-control-allow-headers": request.headers()["access-control-request-headers"] ?? "*" };
+      "access-control-allow-methods": "GET,POST,DELETE,OPTIONS", "access-control-allow-headers": request.headers()["access-control-request-headers"] ?? "*" };
     if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
     if (request.url().includes("/api/")) sent.push({ url: request.url(), authorization: request.headers().authorization, cookie: request.headers().cookie });
     const response = await route.fetch();
