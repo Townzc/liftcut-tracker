@@ -1,0 +1,49 @@
+{
+  "mode": "Post-result CPU prompt-size inventory; no candidate selection or efficacy evidence",
+  "newModelCalls": 0,
+  "trainingRuns": 0,
+  "trainingFilesWritten": 0,
+  "gpuReady": false,
+  "protocolLfSha256": "3387d907e803c0f992dc7068ee6a20d52a5e422c08cca6c671c0f411aac0906b",
+  "legacySourceLfSha256": "631bd10d2a553ef4c50a17d0c3bb13bc430791810c40890cc848a2ae7cc32b9c",
+  "scriptLfSha256": "92c3126866a4f8a17c63ce2813697b600d238db14b9ee479ce835c815a54faf4",
+  "systemsSha256": {
+    "aligned": "167de978193a3c0d77030af51979155d842d5f7a6dfcfdf6e5d4acaba6abfcb8",
+    "legacy_cloud": "c6f5da4e2dc3a7cd4525529313c08eb0144f3e376fbd604d3e6737e73818fb3d"
+  },
+  "tokenizerFiles": {
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "tokenizer_config.json": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+  },
+  "results": {
+    "S-train": {
+      "aligned": {
+        "rows": 6400,
+        "maxTokens": 348,
+        "exceeds512": 0,
+        "tokenIdsSha256": "9ef36a05d26722e44760c986abe9458937b98d7d9bef74a46ca7d3c7919c338c"
+      },
+      "legacy_cloud": {
+        "rows": 6400,
+        "maxTokens": 534,
+        "exceeds512": 54,
+        "tokenIdsSha256": "98049ddd14464d5f79f6882a02541dd03a5fa4eec5cde27e8b4b3c6ed4ef86ab"
+      }
+    },
+    "dev": {
+      "aligned": {
+        "rows": 740,
+        "maxTokens": 347,
+        "exceeds512": 0,
+        "tokenIdsSha256": "e105d8cde701eff121ad542862470b0da72f501d2f6cd9194d014918f12432b8"
+      },
+      "legacy_cloud": {
+        "rows": 740,
+        "maxTokens": 533,
+        "exceeds512": 6,
+        "tokenIdsSha256": "5da1b4a82d1cef3b628082e38c03a1aeb207e7f4deb5253dab180ac11e06dc29"
+      }
+    }
+  },
+  "limitations": "Existing synthetic train/dev only. No private originals, derivatives or model outputs used as training data. Legacy prompt is not an accepted new contract; token fit cannot prove semantic correctness."
+}

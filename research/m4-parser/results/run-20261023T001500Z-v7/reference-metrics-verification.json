@@ -1,0 +1,14 @@
+{
+  "newModelCalls": 0,
+  "additionalOfflineRawScores": 6,
+  "reports": [
+    "metrics-S-HF-dev-eval.json",
+    "metrics-S-HF-challenge.json",
+    "metrics-S-HF-handwritten.json",
+    "metrics-S-F16-dev-eval.json",
+    "metrics-S-F16-challenge.json",
+    "metrics-S-F16-handwritten.json"
+  ],
+  "provisionalHfReconciled": true,
+  "note": "Post-result reference diagnostics. These six scores were first produced offline; not additional server-report matches or changed gates."
+}

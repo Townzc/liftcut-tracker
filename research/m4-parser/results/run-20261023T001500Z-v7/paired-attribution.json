@@ -1,0 +1,357 @@
+{
+  "newModelCalls": 0,
+  "groups": {
+    "gained": {
+      "contrast_uncertain_quantity_negative": 1,
+      "contrast_missing_reps_negative": 1
+    },
+    "lost": {
+      "contrast_missing_reps_negative": 2,
+      "different_available_identity": 12,
+      "contrast_rpe_scope_positive": 2,
+      "contrast_missing_unit_negative": 1
+    }
+  },
+  "details": {
+    "gained": [
+      {
+        "id": "v2-test-4-negative",
+        "family": "contrast_uncertain_quantity_negative",
+        "binding": null,
+        "gold": {
+          "intent": "clarify",
+          "reason": "uncertain_quantity"
+        },
+        "predicted": "{\"intent\":\"clarify\",\"reason\":\"uncertain_quantity\"}"
+      },
+      {
+        "id": "v2-test-89-negative",
+        "family": "contrast_missing_reps_negative",
+        "binding": null,
+        "gold": {
+          "intent": "clarify",
+          "reason": "missing_reps"
+        },
+        "predicted": "{\"intent\":\"clarify\",\"reason\":\"missing_reps\"}"
+      }
+    ],
+    "lost": [
+      {
+        "id": "v2-test-9-negative",
+        "family": "contrast_missing_reps_negative",
+        "binding": null,
+        "gold": {
+          "intent": "clarify",
+          "reason": "missing_reps"
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"卧推\",\"sets\":[{\"weight\":55,\"unit\":\"lb\"}}]"
+      },
+      {
+        "id": "v2-test-25-positive",
+        "family": "contrast_missing_reps_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 60,
+              "unit": "lb",
+              "reps": 8,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":60,\"unit\":\"lb\",\"reps\":8,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-29-positive",
+        "family": "contrast_question_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 37.5,
+              "unit": "lb",
+              "reps": 2,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":37.5,\"unit\":\"lb\",\"reps\":2,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-30-positive",
+        "family": "contrast_rpe_scope_positive",
+        "binding": null,
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 105,
+              "unit": "kg",
+              "reps": 15,
+              "rpe": 7
+            },
+            {
+              "weight": 105,
+              "unit": "kg",
+              "reps": 15,
+              "rpe": 7
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell curl\",\"sets\":[{\"weight\":15,\"unit\":\"kg\",\"reps\":1,\"rpe\":7},{\"weight\":15,\"unit\":\"kg\",\"reps\":1,\"rpe\":7}]}"
+      },
+      {
+        "id": "v2-test-48-positive",
+        "family": "contrast_missing_unit_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Dumbbell curl",
+          "sets": [
+            {
+              "weight": 37.5,
+              "unit": "kg",
+              "reps": 7,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell bench press\",\"sets\":[{\"weight\":37.5,\"unit\":\"kg\",\"reps\":7,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-65-negative",
+        "family": "contrast_missing_reps_negative",
+        "binding": null,
+        "gold": {
+          "intent": "clarify",
+          "reason": "missing_reps"
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"卧推\",\"sets\":[{\"weight\":75,\"unit\":\"lb\"}}]"
+      },
+      {
+        "id": "v2-test-66-positive",
+        "family": "contrast_plan_not_actual_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 2.5,
+              "unit": "kg",
+              "reps": 10,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":2.5,\"unit\":\"kg\",\"reps\":10,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-72-positive",
+        "family": "contrast_missing_unit_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 197.5,
+              "unit": "kg",
+              "reps": 12,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":197.5,\"unit\":\"kg\",\"reps\":12,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-75-positive",
+        "family": "contrast_negation_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Dumbbell curl",
+          "sets": [
+            {
+              "weight": 175,
+              "unit": "kg",
+              "reps": 7,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell bench press\",\"sets\":[{\"weight\":175,\"unit\":\"kg\",\"reps\":7,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-77-positive",
+        "family": "contrast_question_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 10,
+              "unit": "kg",
+              "reps": 18,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":10,\"unit\":\"kg\",\"reps\":18,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-78-positive",
+        "family": "contrast_rpe_scope_positive",
+        "binding": null,
+        "gold": {
+          "intent": "record",
+          "exercise": "Dumbbell bench press",
+          "sets": [
+            {
+              "weight": 12.5,
+              "unit": "lb",
+              "reps": 14,
+              "rpe": 9
+            },
+            {
+              "weight": 12.5,
+              "unit": "lb",
+              "reps": 14,
+              "rpe": 9
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell bench press\",\"sets\":[{\"weight\":14,\"unit\":\"lb\",\"reps\":14,\"rpe\":9},{\"weight\":14,\"unit\":\"lb\",\"reps\":14,\"rpe\":9}]}"
+      },
+      {
+        "id": "v2-test-79-positive",
+        "family": "contrast_unknown_exercise_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Dumbbell curl",
+          "sets": [
+            {
+              "weight": 80,
+              "unit": "kg",
+              "reps": 9,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell bench press\",\"sets\":[{\"weight\":80,\"unit\":\"kg\",\"reps\":9,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-89-positive",
+        "family": "contrast_missing_reps_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 85,
+              "unit": "lb",
+              "reps": 13,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":85,\"unit\":\"lb\",\"reps\":13,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-92-positive",
+        "family": "contrast_uncertain_quantity_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Dumbbell curl",
+          "sets": [
+            {
+              "weight": 30,
+              "unit": "kg",
+              "reps": 10,
+              "rpe": null
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell bench press\",\"sets\":[{\"weight\":30,\"unit\":\"kg\",\"reps\":10,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-94-positive",
+        "family": "contrast_rpe_scope_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 67.5,
+              "unit": "lb",
+              "reps": 8,
+              "rpe": 9.5
+            },
+            {
+              "weight": 67.5,
+              "unit": "lb",
+              "reps": 8,
+              "rpe": 9.5
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":67.5,\"unit\":\"lb\",\"reps\":8,\"rpe\":9.5},{\"weight\":67.5,\"unit\":\"lb\",\"reps\":8,\"rpe\":9.5}]}"
+      },
+      {
+        "id": "v2-test-112-negative",
+        "family": "contrast_missing_unit_negative",
+        "binding": null,
+        "gold": {
+          "intent": "clarify",
+          "reason": "missing_unit"
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Dumbbell curl\",\"sets\":[{\"weight\":177.5,\"unit\":\"lb\",\"reps\":15,\"rpe\":null}]}"
+      },
+      {
+        "id": "v2-test-118-positive",
+        "family": "contrast_rpe_scope_positive",
+        "binding": "different_available_identity",
+        "gold": {
+          "intent": "record",
+          "exercise": "Barbell curl",
+          "sets": [
+            {
+              "weight": 187.5,
+              "unit": "lb",
+              "reps": 7,
+              "rpe": 6
+            },
+            {
+              "weight": 187.5,
+              "unit": "lb",
+              "reps": 7,
+              "rpe": 6
+            }
+          ]
+        },
+        "predicted": "{\"intent\":\"record\",\"exercise\":\"Barbell bench press\",\"sets\":[{\"weight\":187.5,\"unit\":\"lb\",\"reps\":7,\"rpe\":6},{\"weight\":187.5,\"unit\":\"lb\",\"reps\":7,\"rpe\":6}]}"
+      }
+    ]
+  },
+  "mode": "Post-result paired challenge attribution from synthetic frozen inputs; labels and predictions shown, not private acceptance data",
+  "runManifestSha256": "aa6a13712873df6baa407731dd0d0d0c05e2651dfe2822c7ef4eb11e507cda7a",
+  "inputSha256": {
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "T.jsonl": "1ea5f2c46e9c1a25792789e89e8789aeb3272f69ffa09c5b2cf8cc92b77ac5e9",
+    "S.jsonl": "8af45fef3344e3891ee078af69da4f665328527662e2f791698c316bdc7ce4f2",
+    "compare-T-challenge.json": "2ea1736b556c5eee6b5bb92e46eb7e6ca9f6a24b512c68a6208db921e6411319",
+    "compare-S-challenge.json": "12544f85cf0aa55b581425666c8e9726ece1b07d951158ce77600beef6c967c5"
+  },
+  "limitations": "Descriptive attribution, not a causal proof or a changed gate. RPE-positive family losses here are corrupted weight/reps; they are not the 15 ambiguous-scope negatives."
+}

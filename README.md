@@ -138,14 +138,14 @@ flowchart LR
   Ledger --> DB
   Engine["Progression engine<br/>loads computed by code"] -.-> Web
   Engine -.-> Mobile
-  Parser["Planned sentence fallback: rules → on-device model → cloud<br/>M4 v6 quality gate failed; native integration pending<br/>source checks + user confirmation required"] -.-> Mobile
+  Parser["Planned sentence fallback: rules → on-device model → cloud<br/>M4 v7 quality gate failed; native integration pending<br/>source checks + user confirmation required"] -.-> Mobile
 ```
 
 See the [mobile plan](docs/product/2026-10-18-mobile-agent-plan.md), [product log](docs/product/PRODUCT_LOG.md) and the [90-second phone demo](docs/product/DEMO_90S.md) (synthetic data; the coach answer in it is a scripted fixture).
 
-[M4 v6 evidence](research/m4-parser/results/run-20261022T184300Z-v6/README.md): the fixed label/catalog comparison completed two trainings and 4,160 new predictions. Candidate challenge accuracy is 204/240; quantization agreement passes at 98.17% against HF and 98.46% against F16, but exercise binding, missing units and RPE scope still reject the candidate. Complete backup restoration, 31-report replay and reproducible CPU diagnostics are verified; native integration remains pending. The [earlier v5 comparison](research/m4-parser/results/run-20261022T071000Z-v5/README.md) is retained as historical evidence.
+[M4 v7 evidence](research/m4-parser/results/run-20261023T001500Z-v7/README.md): one fixed prompt-alignment training and 3,120 new predictions completed. Candidate challenge accuracy is 180/240 versus cached control 195/240; Q8 agreement is 97.40% against HF and 97.88% against F16. Missing units, RPE scope and exercise binding still reject the candidate. Complete artifact restoration, 31-report replay and CPU diagnostics are verified; native integration remains pending. The [v6 comparison](research/m4-parser/results/run-20261022T184300Z-v6/README.md) remains historical evidence.
 
-The [frozen v6 protocol](research/m4-parser/train/GPU_V6.md) aligns 40 conflicting alias labels and holds the original acceptance gates fixed. The private 20 utterances and all derivatives remain excluded from training. Candidate continuous-dialogue acceptance and physical-device validation still precede any native activation.
+The [frozen v7 protocol](research/m4-parser/train/GPU_V7.md) holds all 6,400 sentences, targets, catalogs, order and numeric gates fixed; only the training/dev system aligns with the existing inference enumeration. The private 20 utterances and all derivatives remain excluded from training. Candidate continuous-dialogue acceptance, useful incremental coverage and physical-device validation still precede native activation. The [next CPU comparison](research/m4-parser/results/run-20261023T001500Z-v7/NEXT.md) is a draft, not a GPU-ready package.
 
 ## AI reliability pipeline
 

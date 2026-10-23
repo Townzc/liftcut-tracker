@@ -1,0 +1,4567 @@
+{
+  "mode": "Post-result decision attribution; overlapping counts are not summed into accuracy or actual writes",
+  "newModelCalls": 0,
+  "manifestSha256": "aa6a13712873df6baa407731dd0d0d0c05e2651dfe2822c7ef4eb11e507cda7a",
+  "inputsSha256": {
+    "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+    "H.jsonl": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+    "T.jsonl": "1ea5f2c46e9c1a25792789e89e8789aeb3272f69ffa09c5b2cf8cc92b77ac5e9",
+    "S.jsonl": "8af45fef3344e3891ee078af69da4f665328527662e2f791698c316bdc7ce4f2",
+    "S-HF.jsonl": "1a7e56d1dd6b6b5751324ec2abd196bbc311bcd8c9e1eb314688f8a631bf4b7a",
+    "S-F16.jsonl": "49c2bf5bb9c7e88b52fa8eed97ba4c0c474a59f6446e2fe72829ece706da022b"
+  },
+  "arms": {
+    "H": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 4,
+              "ids": [
+                "test-00079",
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "test-00012",
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00104",
+                "test-00185",
+                "test-00225",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 10,
+              "ids": [
+                "test-00012",
+                "test-00014",
+                "test-00104",
+                "test-00185",
+                "test-00271",
+                "test-00287",
+                "test-00302",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00268"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00307"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 7,
+              "ids": [
+                "test-00003",
+                "test-00180",
+                "test-00320",
+                "test-00327",
+                "test-00405",
+                "test-00439",
+                "test-00458"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "test-00005",
+                "test-00215",
+                "test-00301",
+                "test-00354",
+                "test-00357",
+                "test-00398",
+                "test-00419",
+                "test-00467"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00050",
+                "test-00443"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00083"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00359",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {
+            "invalid_schema": {
+              "count": 4,
+              "ids": [
+                "test-00110",
+                "test-00229",
+                "test-00280",
+                "test-00438"
+              ]
+            }
+          }
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00097",
+                "test-00347",
+                "test-00391",
+                "test-00478",
+                "test-00499"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 9,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 8,
+              "ids": [
+                "test-00016",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 8,
+              "ids": [
+                "test-00016",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 9,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00468",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00025",
+                "test-00090",
+                "test-00197",
+                "test-00243",
+                "test-00407"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 6,
+              "ids": [
+                "test-00061",
+                "test-00065",
+                "test-00112",
+                "test-00255",
+                "test-00259",
+                "test-00442"
+              ]
+            },
+            "invalid_schema": {
+              "count": 13,
+              "ids": [
+                "test-00120",
+                "test-00137",
+                "test-00172",
+                "test-00221",
+                "test-00226",
+                "test-00265",
+                "test-00290",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00444",
+                "test-00481",
+                "test-00496"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 5,
+              "ids": [
+                "test-00071",
+                "test-00089",
+                "test-00196",
+                "test-00213",
+                "test-00364"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "v3-dev-20-negative",
+                "v3-dev-40-negative",
+                "v3-dev-50-negative",
+                "v3-dev-70-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "v3-dev-50-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 12,
+              "ids": [
+                "v3-dev-3-negative",
+                "v3-dev-13-negative",
+                "v3-dev-23-negative",
+                "v3-dev-33-negative",
+                "v3-dev-43-negative",
+                "v3-dev-53-negative",
+                "v3-dev-63-negative",
+                "v3-dev-73-negative",
+                "v3-dev-83-negative",
+                "v3-dev-93-negative",
+                "v3-dev-103-negative",
+                "v3-dev-113-negative"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 11,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 11,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "v3-dev-97-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "v3-dev-18-negative",
+                "v3-dev-28-negative",
+                "v3-dev-68-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 2,
+              "ids": [
+                "v3-dev-58-negative",
+                "v3-dev-98-negative"
+              ]
+            },
+            "clarification_replaced_by_correct": {
+              "count": 2,
+              "ids": [
+                "v3-dev-78-negative",
+                "v3-dev-108-negative"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-19-negative",
+                "v3-dev-29-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-109-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 1,
+              "ids": [
+                "v3-dev-39-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-80-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 2,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-40-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-88-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-57-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "v2-test-2-negative",
+                "v2-test-18-negative",
+                "v2-test-26-negative",
+                "v2-test-50-negative",
+                "v2-test-66-negative",
+                "v2-test-82-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 6,
+              "ids": [
+                "v2-test-2-negative",
+                "v2-test-18-negative",
+                "v2-test-26-negative",
+                "v2-test-50-negative",
+                "v2-test-66-negative",
+                "v2-test-82-negative"
+              ]
+            }
+          }
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "v2-test-4-negative"
+              ]
+            }
+          }
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-004"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "hand-032"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-033",
+                "hand-035"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "hand-042",
+                "hand-043"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "T": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00079",
+                "test-00085",
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00001"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00012",
+                "test-00307"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 17,
+              "ids": [
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00104",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00268",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 5,
+              "ids": [
+                "test-00185",
+                "test-00225",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 7,
+              "ids": [
+                "test-00003",
+                "test-00180",
+                "test-00320",
+                "test-00327",
+                "test-00405",
+                "test-00439",
+                "test-00458"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 7,
+              "ids": [
+                "test-00050",
+                "test-00215",
+                "test-00354",
+                "test-00357",
+                "test-00398",
+                "test-00419",
+                "test-00467"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 6,
+              "ids": [
+                "test-00057",
+                "test-00083",
+                "test-00253",
+                "test-00359",
+                "test-00368",
+                "test-00395"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00242",
+                "test-00267"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "test-00242",
+                "test-00267"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00110"
+              ]
+            }
+          }
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00097",
+                "test-00391"
+              ]
+            },
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00499"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00401",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00309",
+                "test-00454",
+                "test-00468",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00197",
+                "test-00243"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 16,
+              "ids": [
+                "test-00061",
+                "test-00065",
+                "test-00120",
+                "test-00137",
+                "test-00172",
+                "test-00221",
+                "test-00226",
+                "test-00259",
+                "test-00265",
+                "test-00290",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00444",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00112"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00255",
+                "test-00442"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 6,
+              "ids": [
+                "test-00071",
+                "test-00089",
+                "test-00196",
+                "test-00212",
+                "test-00213",
+                "test-00364"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "v3-dev-20-negative",
+                "v3-dev-40-negative",
+                "v3-dev-50-negative",
+                "v3-dev-70-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 6,
+              "ids": [
+                "v3-dev-20-negative",
+                "v3-dev-40-negative",
+                "v3-dev-50-negative",
+                "v3-dev-70-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 6,
+              "ids": [
+                "v3-dev-43-negative",
+                "v3-dev-53-negative",
+                "v3-dev-73-negative",
+                "v3-dev-83-negative",
+                "v3-dev-93-negative",
+                "v3-dev-103-negative"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 4,
+              "ids": [
+                "v3-dev-18-negative",
+                "v3-dev-28-negative",
+                "v3-dev-78-negative",
+                "v3-dev-108-negative"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-79-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 1,
+              "ids": [
+                "v3-dev-109-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 7,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "v2-test-24-negative",
+                "v2-test-88-negative",
+                "v2-test-104-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "v2-test-17-negative",
+                "v2-test-33-negative",
+                "v2-test-57-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-89-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-4-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "v2-test-4-negative"
+              ]
+            }
+          }
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-004"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-028"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "hand-032"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-033",
+                "hand-035"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "S": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00476"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 16,
+              "ids": [
+                "test-00012",
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 8,
+              "ids": [
+                "test-00012",
+                "test-00185",
+                "test-00271",
+                "test-00287",
+                "test-00302",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 3,
+              "ids": [
+                "test-00075",
+                "test-00225",
+                "test-00384"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "test-00080"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00104",
+                "test-00268"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00307"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00327"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00215",
+                "test-00301"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00357",
+                "test-00419"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00006",
+                "test-00057",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00253",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00395",
+                "test-00448"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "test-00057",
+                "test-00083",
+                "test-00253",
+                "test-00359",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00024"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00197",
+                "test-00243"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00061",
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00265",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 7,
+              "ids": [
+                "test-00065",
+                "test-00172",
+                "test-00255",
+                "test-00259",
+                "test-00290",
+                "test-00442",
+                "test-00444"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00112"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00213"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 2,
+              "ids": [
+                "v3-dev-19-negative",
+                "v3-dev-109-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 11,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-24-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 6,
+              "ids": [
+                "v2-test-24-negative",
+                "v2-test-48-negative",
+                "v2-test-64-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-88-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 4,
+              "ids": [
+                "v2-test-9-negative",
+                "v2-test-65-negative",
+                "v2-test-73-negative",
+                "v2-test-105-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "v2-test-17-negative",
+                "v2-test-33-negative",
+                "v2-test-57-negative",
+                "v2-test-81-negative",
+                "v2-test-97-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-004"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "hand-032"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-033"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "S-HF": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00476"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 16,
+              "ids": [
+                "test-00001",
+                "test-00012",
+                "test-00075",
+                "test-00080",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 4,
+              "ids": [
+                "test-00001",
+                "test-00075",
+                "test-00225",
+                "test-00384"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 8,
+              "ids": [
+                "test-00012",
+                "test-00185",
+                "test-00271",
+                "test-00287",
+                "test-00302",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00014",
+                "test-00307"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "test-00080"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00104",
+                "test-00268"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00327"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00215",
+                "test-00301"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00357",
+                "test-00419"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00006",
+                "test-00057",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00253",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00395",
+                "test-00448"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "test-00057",
+                "test-00083",
+                "test-00253",
+                "test-00359",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00024"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00197",
+                "test-00243"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00061",
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00265",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 7,
+              "ids": [
+                "test-00065",
+                "test-00172",
+                "test-00255",
+                "test-00259",
+                "test-00290",
+                "test-00442",
+                "test-00444"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00112"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00213"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 2,
+              "ids": [
+                "v3-dev-19-negative",
+                "v3-dev-109-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 11,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-24-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 6,
+              "ids": [
+                "v2-test-24-negative",
+                "v2-test-48-negative",
+                "v2-test-64-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-88-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "v2-test-17-negative",
+                "v2-test-33-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "invalid_json": {
+              "count": 6,
+              "ids": [
+                "v2-test-57-negative",
+                "v2-test-65-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 3,
+              "ids": [
+                "hand-000",
+                "hand-004",
+                "hand-005"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-033"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "S-F16": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00476"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 16,
+              "ids": [
+                "test-00001",
+                "test-00012",
+                "test-00075",
+                "test-00080",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 3,
+              "ids": [
+                "test-00001",
+                "test-00075",
+                "test-00225"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 8,
+              "ids": [
+                "test-00012",
+                "test-00185",
+                "test-00271",
+                "test-00287",
+                "test-00302",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00014",
+                "test-00307"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "test-00080"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00104",
+                "test-00268"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00327"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "test-00215",
+                "test-00301",
+                "test-00443"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00419"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00443"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00006",
+                "test-00057",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00253",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00395",
+                "test-00448"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "test-00057",
+                "test-00083",
+                "test-00253",
+                "test-00359",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00024"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00197",
+                "test-00243"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00061",
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00265",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 7,
+              "ids": [
+                "test-00065",
+                "test-00172",
+                "test-00255",
+                "test-00259",
+                "test-00290",
+                "test-00442",
+                "test-00444"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00112"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00213"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 9,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 3,
+              "ids": [
+                "v3-dev-19-negative",
+                "v3-dev-29-negative",
+                "v3-dev-109-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 10,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-24-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 5,
+              "ids": [
+                "v2-test-24-negative",
+                "v2-test-48-negative",
+                "v2-test-64-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-88-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "v2-test-17-negative",
+                "v2-test-33-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "invalid_json": {
+              "count": 6,
+              "ids": [
+                "v2-test-57-negative",
+                "v2-test-65-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-004"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "hand-032"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-033"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "sourcesLfSha256": {
+    "audit-v7-decisions.ts": "b9f27e51d75df768549c053affdeee44566e9f90097b97b7786771332b6e5f7b",
+    "../../../packages/core/src/parse-label.ts": "8d7f03f75ae5974091d4bf333f6f46f5295c1b3ee5d7c4c525a072a5dc92035b",
+    "../../../packages/core/src/parse-label-roles.ts": "35bb792f2bdb25c9fccd80b682399b44d1b264ca7a2b56a11a42b0b1b2e460fd"
+  },
+  "limitations": "Uses frozen synthetic gold for descriptive attribution. Numeric roles are a necessary bounded check, not proof of semantic correctness. No private acceptance text or training is read."
+}

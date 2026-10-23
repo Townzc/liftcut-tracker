@@ -1,0 +1,1898 @@
+{
+  "mode": "Additional post-result strict reason confusion counts",
+  "newModelCalls": 0,
+  "arms": {
+    "H": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "expectedReasons": {
+            "uncertain_quantity": 17
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 13,
+            "invalid_schema": 4
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "expectedReasons": {
+            "missing_unit": 20
+          },
+          "predictions": {
+            "clarify:missing_unit": 3,
+            "record": 15,
+            "invalid_schema": 1,
+            "invalid_json": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "expectedReasons": {
+            "missing_reps": 17
+          },
+          "predictions": {
+            "invalid_schema": 8,
+            "clarify:missing_unit": 2,
+            "clarify:missing_reps": 6,
+            "record": 1
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "expectedReasons": {
+            "negation": 13
+          },
+          "predictions": {
+            "clarify:negation": 10,
+            "invalid_schema": 1,
+            "clarify:missing_reps": 1,
+            "clarify:plan_not_actual": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "expectedReasons": {
+            "rpe_scope": 14
+          },
+          "predictions": {
+            "record": 9,
+            "clarify:rpe_scope": 5
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "expectedReasons": {
+            "unknown_exercise": 9
+          },
+          "predictions": {
+            "record": 9
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "expectedReasons": {
+            "unsupported_unit": 9
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 9
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "expectedReasons": {
+            "out_of_range": 19
+          },
+          "predictions": {
+            "clarify:rpe_scope": 6,
+            "invalid_schema": 13
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 4,
+            "clarify:missing_unit": 1,
+            "clarify:plan_not_actual": 6,
+            "record": 4
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_unit": 12
+          },
+          "predictions": {
+            "clarify:missing_unit": 6,
+            "invalid_schema": 6
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_reps": 12
+          },
+          "predictions": {
+            "clarify:missing_reps": 12
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "plan_not_actual": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "negation": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "uncertain_quantity": 12
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "rpe_scope": 12
+          },
+          "predictions": {
+            "record": 12
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unknown_exercise": 12
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 11,
+            "clarify:unsupported_unit": 1
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unsupported_unit": 12
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 5,
+            "invalid_schema": 3,
+            "record": 2,
+            "correct": 2
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "out_of_range": 12
+          },
+          "predictions": {
+            "invalid_schema": 10,
+            "skip": 1,
+            "clarify:out_of_range": 1
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_unit": 15
+          },
+          "predictions": {
+            "record": 4,
+            "clarify:missing_unit": 10,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_reps": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 14,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "invalid_schema": 6,
+            "clarify:plan_not_actual": 9
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "negation": 15
+          },
+          "predictions": {
+            "clarify:negation": 15
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "uncertain_quantity": 15
+          },
+          "predictions": {
+            "clarify:missing_unit": 1,
+            "clarify:uncertain_quantity": 14
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "question": 15
+          },
+          "predictions": {
+            "clarify:question": 15
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "rpe_scope": 15
+          },
+          "predictions": {
+            "record": 15
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "unknown_exercise": 15
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 15
+          }
+        }
+      },
+      "handwritten": {
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "expectedReasons": {
+            "uncertain_quantity": 3
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 3
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "expectedReasons": {
+            "plan_not_actual": 2
+          },
+          "predictions": {
+            "clarify:missing_unit": 2
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "expectedReasons": {
+            "question": 2
+          },
+          "predictions": {
+            "clarify:question": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "expectedReasons": {
+            "negation": 2
+          },
+          "predictions": {
+            "invalid_schema": 1,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "expectedReasons": {
+            "missing_reps": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "invalid_schema": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "expectedReasons": {
+            "missing_unit": 3
+          },
+          "predictions": {
+            "clarify:missing_unit": 2,
+            "correct": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "expectedReasons": {
+            "unsupported_unit": 1
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "expectedReasons": {
+            "rpe_scope": 2
+          },
+          "predictions": {
+            "clarify:rpe_scope": 1,
+            "record": 1
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "expectedReasons": {
+            "unknown_exercise": 2
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 2
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "expectedReasons": {
+            "out_of_range": 2
+          },
+          "predictions": {
+            "clarify:out_of_range": 1,
+            "clarify:rpe_scope": 1
+          }
+        }
+      }
+    },
+    "T": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "expectedReasons": {
+            "uncertain_quantity": 17
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12,
+            "invalid_schema": 5
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "expectedReasons": {
+            "missing_unit": 20
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 1,
+            "invalid_json": 2,
+            "record": 17
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "expectedReasons": {
+            "missing_reps": 17
+          },
+          "predictions": {
+            "clarify:missing_reps": 9,
+            "invalid_schema": 7,
+            "record": 1
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "expectedReasons": {
+            "negation": 13
+          },
+          "predictions": {
+            "clarify:negation": 5,
+            "clarify:missing_reps": 6,
+            "invalid_schema": 2
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "expectedReasons": {
+            "rpe_scope": 14
+          },
+          "predictions": {
+            "record": 12,
+            "clarify:rpe_scope": 2
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "expectedReasons": {
+            "unknown_exercise": 9
+          },
+          "predictions": {
+            "record": 8,
+            "clarify:unknown_exercise": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "expectedReasons": {
+            "unsupported_unit": 9
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 9
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "expectedReasons": {
+            "out_of_range": 19
+          },
+          "predictions": {
+            "invalid_schema": 16,
+            "record": 1,
+            "clarify:rpe_scope": 2
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 6,
+            "clarify:plan_not_actual": 5,
+            "record": 4
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_unit": 12
+          },
+          "predictions": {
+            "clarify:missing_unit": 6,
+            "invalid_schema": 6
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_reps": 12
+          },
+          "predictions": {
+            "clarify:missing_reps": 12
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "plan_not_actual": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "negation": 12
+          },
+          "predictions": {
+            "clarify:negation": 6,
+            "clarify:plan_not_actual": 6
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "uncertain_quantity": 12
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "rpe_scope": 12
+          },
+          "predictions": {
+            "record": 12
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unknown_exercise": 12
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 12
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unsupported_unit": 12
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 8,
+            "clarify:out_of_range": 4
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "out_of_range": 12
+          },
+          "predictions": {
+            "invalid_schema": 6,
+            "clarify:out_of_range": 5,
+            "repeat": 1
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_unit": 15
+          },
+          "predictions": {
+            "record": 8,
+            "clarify:missing_unit": 4,
+            "invalid_schema": 3
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_reps": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 6,
+            "invalid_schema": 8,
+            "record": 1
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 15
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "negation": 15
+          },
+          "predictions": {
+            "clarify:negation": 15
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "uncertain_quantity": 15
+          },
+          "predictions": {
+            "invalid_schema": 1,
+            "clarify:uncertain_quantity": 14
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "question": 15
+          },
+          "predictions": {
+            "clarify:question": 15
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "rpe_scope": 15
+          },
+          "predictions": {
+            "record": 15
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "unknown_exercise": 15
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 15
+          }
+        }
+      },
+      "handwritten": {
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "expectedReasons": {
+            "uncertain_quantity": 3
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 3
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "expectedReasons": {
+            "plan_not_actual": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "clarify:plan_not_actual": 1
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "expectedReasons": {
+            "question": 2
+          },
+          "predictions": {
+            "clarify:question": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "expectedReasons": {
+            "negation": 2
+          },
+          "predictions": {
+            "clarify:negation": 2
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "expectedReasons": {
+            "missing_reps": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "invalid_schema": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "expectedReasons": {
+            "missing_unit": 3
+          },
+          "predictions": {
+            "clarify:missing_unit": 2,
+            "correct": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "expectedReasons": {
+            "unsupported_unit": 1
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "expectedReasons": {
+            "rpe_scope": 2
+          },
+          "predictions": {
+            "clarify:rpe_scope": 1,
+            "record": 1
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "expectedReasons": {
+            "unknown_exercise": 2
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 2
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "expectedReasons": {
+            "out_of_range": 2
+          },
+          "predictions": {
+            "clarify:out_of_range": 1,
+            "clarify:rpe_scope": 1
+          }
+        }
+      }
+    },
+    "S": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "expectedReasons": {
+            "uncertain_quantity": 17
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 13,
+            "invalid_schema": 3,
+            "clarify:missing_reps": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "expectedReasons": {
+            "missing_unit": 20
+          },
+          "predictions": {
+            "clarify:missing_unit": 1,
+            "record": 16,
+            "invalid_schema": 2,
+            "invalid_json": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "expectedReasons": {
+            "missing_reps": 17
+          },
+          "predictions": {
+            "clarify:missing_reps": 12,
+            "invalid_schema": 2,
+            "record": 1,
+            "invalid_json": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "expectedReasons": {
+            "negation": 13
+          },
+          "predictions": {
+            "invalid_schema": 12,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "expectedReasons": {
+            "rpe_scope": 14
+          },
+          "predictions": {
+            "record": 12,
+            "clarify:rpe_scope": 2
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "expectedReasons": {
+            "unknown_exercise": 9
+          },
+          "predictions": {
+            "record": 8,
+            "clarify:unknown_exercise": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "expectedReasons": {
+            "unsupported_unit": 9
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 9
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "expectedReasons": {
+            "out_of_range": 19
+          },
+          "predictions": {
+            "invalid_schema": 11,
+            "clarify:rpe_scope": 7,
+            "record": 1
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 8,
+            "clarify:missing_reps": 2,
+            "record": 4,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_unit": 12
+          },
+          "predictions": {
+            "clarify:missing_unit": 12
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_reps": 12
+          },
+          "predictions": {
+            "clarify:missing_reps": 12
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "plan_not_actual": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "negation": 12
+          },
+          "predictions": {
+            "clarify:negation": 12
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "uncertain_quantity": 12
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "rpe_scope": 12
+          },
+          "predictions": {
+            "record": 12
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unknown_exercise": 12
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 12
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unsupported_unit": 12
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 12
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "out_of_range": 12
+          },
+          "predictions": {
+            "invalid_schema": 10,
+            "repeat": 2
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_unit": 15
+          },
+          "predictions": {
+            "record": 11,
+            "clarify:missing_unit": 3,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_reps": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 5,
+            "invalid_json": 4,
+            "invalid_schema": 5,
+            "record": 1
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 15
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "negation": 15
+          },
+          "predictions": {
+            "clarify:negation": 15
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "uncertain_quantity": 15
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 15
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "question": 15
+          },
+          "predictions": {
+            "clarify:question": 15
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "rpe_scope": 15
+          },
+          "predictions": {
+            "record": 15
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "unknown_exercise": 15
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 15
+          }
+        }
+      },
+      "handwritten": {
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "expectedReasons": {
+            "uncertain_quantity": 3
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 3
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "expectedReasons": {
+            "plan_not_actual": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "clarify:plan_not_actual": 1
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "expectedReasons": {
+            "question": 2
+          },
+          "predictions": {
+            "clarify:question": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "expectedReasons": {
+            "negation": 2
+          },
+          "predictions": {
+            "invalid_schema": 1,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "expectedReasons": {
+            "missing_reps": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "invalid_schema": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "expectedReasons": {
+            "missing_unit": 3
+          },
+          "predictions": {
+            "clarify:missing_unit": 2,
+            "correct": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "expectedReasons": {
+            "unsupported_unit": 1
+          },
+          "predictions": {
+            "clarify:out_of_range": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "expectedReasons": {
+            "rpe_scope": 2
+          },
+          "predictions": {
+            "clarify:rpe_scope": 1,
+            "record": 1
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "expectedReasons": {
+            "unknown_exercise": 2
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 2
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "expectedReasons": {
+            "out_of_range": 2
+          },
+          "predictions": {
+            "clarify:out_of_range": 1,
+            "clarify:rpe_scope": 1
+          }
+        }
+      }
+    },
+    "S-HF": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "expectedReasons": {
+            "uncertain_quantity": 17
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 13,
+            "invalid_schema": 3,
+            "clarify:missing_reps": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "expectedReasons": {
+            "missing_unit": 20
+          },
+          "predictions": {
+            "record": 16,
+            "invalid_json": 2,
+            "invalid_schema": 2
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "expectedReasons": {
+            "missing_reps": 17
+          },
+          "predictions": {
+            "clarify:missing_reps": 12,
+            "invalid_schema": 2,
+            "record": 1,
+            "invalid_json": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "expectedReasons": {
+            "negation": 13
+          },
+          "predictions": {
+            "invalid_schema": 12,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "expectedReasons": {
+            "rpe_scope": 14
+          },
+          "predictions": {
+            "record": 12,
+            "clarify:rpe_scope": 2
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "expectedReasons": {
+            "unknown_exercise": 9
+          },
+          "predictions": {
+            "record": 8,
+            "clarify:unknown_exercise": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "expectedReasons": {
+            "unsupported_unit": 9
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 9
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "expectedReasons": {
+            "out_of_range": 19
+          },
+          "predictions": {
+            "invalid_schema": 11,
+            "clarify:rpe_scope": 7,
+            "record": 1
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 8,
+            "clarify:missing_reps": 2,
+            "record": 4,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_unit": 12
+          },
+          "predictions": {
+            "clarify:missing_unit": 12
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_reps": 12
+          },
+          "predictions": {
+            "clarify:missing_reps": 12
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "plan_not_actual": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "negation": 12
+          },
+          "predictions": {
+            "clarify:negation": 12
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "uncertain_quantity": 12
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "rpe_scope": 12
+          },
+          "predictions": {
+            "record": 12
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unknown_exercise": 12
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 12
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unsupported_unit": 12
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 12
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "out_of_range": 12
+          },
+          "predictions": {
+            "invalid_schema": 10,
+            "repeat": 2
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_unit": 15
+          },
+          "predictions": {
+            "record": 11,
+            "clarify:missing_unit": 3,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_reps": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 6,
+            "invalid_schema": 2,
+            "record": 1,
+            "invalid_json": 6
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 15
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "negation": 15
+          },
+          "predictions": {
+            "clarify:negation": 15
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "uncertain_quantity": 15
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 15
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "question": 15
+          },
+          "predictions": {
+            "clarify:question": 15
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "rpe_scope": 15
+          },
+          "predictions": {
+            "record": 15
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "unknown_exercise": 15
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 15
+          }
+        }
+      },
+      "handwritten": {
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "expectedReasons": {
+            "uncertain_quantity": 3
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 3
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "expectedReasons": {
+            "plan_not_actual": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "clarify:plan_not_actual": 1
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "expectedReasons": {
+            "question": 2
+          },
+          "predictions": {
+            "clarify:question": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "expectedReasons": {
+            "negation": 2
+          },
+          "predictions": {
+            "invalid_schema": 1,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "expectedReasons": {
+            "missing_reps": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "invalid_schema": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "expectedReasons": {
+            "missing_unit": 3
+          },
+          "predictions": {
+            "clarify:missing_unit": 2,
+            "correct": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "expectedReasons": {
+            "unsupported_unit": 1
+          },
+          "predictions": {
+            "clarify:out_of_range": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "expectedReasons": {
+            "rpe_scope": 2
+          },
+          "predictions": {
+            "clarify:rpe_scope": 1,
+            "record": 1
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "expectedReasons": {
+            "unknown_exercise": 2
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 2
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "expectedReasons": {
+            "out_of_range": 2
+          },
+          "predictions": {
+            "clarify:out_of_range": 1,
+            "clarify:rpe_scope": 1
+          }
+        }
+      }
+    },
+    "S-F16": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "expectedReasons": {
+            "uncertain_quantity": 17
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 13,
+            "invalid_schema": 3,
+            "clarify:missing_reps": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "expectedReasons": {
+            "missing_unit": 20
+          },
+          "predictions": {
+            "record": 16,
+            "invalid_json": 2,
+            "invalid_schema": 2
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "expectedReasons": {
+            "missing_reps": 17
+          },
+          "predictions": {
+            "clarify:missing_reps": 12,
+            "invalid_schema": 3,
+            "record": 1,
+            "invalid_json": 1
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "expectedReasons": {
+            "negation": 13
+          },
+          "predictions": {
+            "invalid_schema": 12,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "expectedReasons": {
+            "rpe_scope": 14
+          },
+          "predictions": {
+            "record": 12,
+            "clarify:rpe_scope": 2
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "expectedReasons": {
+            "unknown_exercise": 9
+          },
+          "predictions": {
+            "record": 8,
+            "clarify:unknown_exercise": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "expectedReasons": {
+            "unsupported_unit": 9
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 9
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "expectedReasons": {
+            "out_of_range": 19
+          },
+          "predictions": {
+            "invalid_schema": 11,
+            "clarify:rpe_scope": 7,
+            "record": 1
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 8,
+            "clarify:missing_reps": 2,
+            "record": 4,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_unit": 12
+          },
+          "predictions": {
+            "clarify:missing_unit": 12
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "missing_reps": 12
+          },
+          "predictions": {
+            "clarify:missing_reps": 12
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "plan_not_actual": 12
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 12
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "negation": 12
+          },
+          "predictions": {
+            "clarify:negation": 12
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "uncertain_quantity": 12
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 12
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "question": 12
+          },
+          "predictions": {
+            "clarify:question": 12
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "rpe_scope": 12
+          },
+          "predictions": {
+            "record": 12
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unknown_exercise": 12
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 12
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "unsupported_unit": 12
+          },
+          "predictions": {
+            "clarify:unsupported_unit": 12
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "expectedReasons": {
+            "out_of_range": 12
+          },
+          "predictions": {
+            "invalid_schema": 9,
+            "repeat": 3
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_unit": 15
+          },
+          "predictions": {
+            "record": 10,
+            "clarify:missing_unit": 4,
+            "invalid_schema": 1
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "missing_reps": 15
+          },
+          "predictions": {
+            "clarify:missing_reps": 6,
+            "invalid_schema": 2,
+            "record": 1,
+            "invalid_json": 6
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "plan_not_actual": 15
+          },
+          "predictions": {
+            "clarify:plan_not_actual": 15
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "negation": 15
+          },
+          "predictions": {
+            "clarify:negation": 15
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "uncertain_quantity": 15
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 15
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "question": 15
+          },
+          "predictions": {
+            "clarify:question": 15
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "rpe_scope": 15
+          },
+          "predictions": {
+            "record": 15
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "expectedReasons": {
+            "unknown_exercise": 15
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 15
+          }
+        }
+      },
+      "handwritten": {
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "expectedReasons": {
+            "uncertain_quantity": 3
+          },
+          "predictions": {
+            "clarify:uncertain_quantity": 3
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "expectedReasons": {
+            "plan_not_actual": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "clarify:plan_not_actual": 1
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "expectedReasons": {
+            "question": 2
+          },
+          "predictions": {
+            "clarify:question": 2
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "expectedReasons": {
+            "negation": 2
+          },
+          "predictions": {
+            "invalid_schema": 1,
+            "clarify:negation": 1
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "expectedReasons": {
+            "missing_reps": 2
+          },
+          "predictions": {
+            "clarify:missing_reps": 1,
+            "invalid_schema": 1
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "expectedReasons": {
+            "missing_unit": 3
+          },
+          "predictions": {
+            "clarify:missing_unit": 2,
+            "correct": 1
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "expectedReasons": {
+            "unsupported_unit": 1
+          },
+          "predictions": {
+            "clarify:out_of_range": 1
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "expectedReasons": {
+            "rpe_scope": 2
+          },
+          "predictions": {
+            "clarify:rpe_scope": 1,
+            "record": 1
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "expectedReasons": {
+            "unknown_exercise": 2
+          },
+          "predictions": {
+            "clarify:unknown_exercise": 2
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "expectedReasons": {
+            "out_of_range": 2
+          },
+          "predictions": {
+            "clarify:out_of_range": 1,
+            "clarify:rpe_scope": 1
+          }
+        }
+      }
+    }
+  }
+}

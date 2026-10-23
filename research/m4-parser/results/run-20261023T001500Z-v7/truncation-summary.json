@@ -1,0 +1,41 @@
+{
+  "newModelCalls": 0,
+  "arms": {
+    "H": {
+      "total": 1040,
+      "truncated": 1,
+      "ids": [
+        "test-00307"
+      ]
+    },
+    "T": {
+      "total": 1040,
+      "truncated": 2,
+      "ids": [
+        "test-00012",
+        "test-00307"
+      ]
+    },
+    "S-HF": {
+      "total": 1040,
+      "truncated": 1,
+      "ids": [
+        "test-00307"
+      ]
+    },
+    "S-F16": {
+      "total": 1040,
+      "truncated": 1,
+      "ids": [
+        "test-00307"
+      ]
+    },
+    "S": {
+      "total": 1040,
+      "truncated": 1,
+      "ids": [
+        "test-00307"
+      ]
+    }
+  }
+}
