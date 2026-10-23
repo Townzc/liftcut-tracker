@@ -37,13 +37,14 @@ test("long rule-mode progress remains usable and only oversized stored copies ar
 test("offline queue restores messages and draft across reload, isolates accounts and clears on logout",async t=>{
   const cache=browser(),owner=randomUUID();Object.defineProperty(navigator,"onLine",{value:false});
   t.mock.method(globalThis,"fetch",async()=>{throw Error("offline");});
-  const a=new CoachHistoryClient(owner);a.activate();const complete=turn(),partial={...turn("慢回复"),pending:true};
+  const a=new CoachHistoryClient(owner);await a.activate();const complete=turn(),partial={...turn("慢回复"),pending:true};
   a.setTurns([complete,partial]);a.setText("还没有发送的消息");assert.equal(a.snapshot().sync,"offline");
-  const b=new CoachHistoryClient(owner);b.activate();assert.equal(b.snapshot().id,a.snapshot().id);assert.equal(b.snapshot().text,"还没有发送的消息");
+  await a.whenStored();
+  const b=new CoachHistoryClient(owner);await b.activate();assert.equal(b.snapshot().id,a.snapshot().id);assert.equal(b.snapshot().text,"还没有发送的消息");
   assert.equal(b.snapshot().turns.length,2);assert.equal(b.snapshot().turns.find(t=>t.id===partial.id)?.interrupted,true);
   assert.equal(conversationHistory(b.snapshot().turns).length,2);
-  const other=new CoachHistoryClient(randomUUID());other.activate();assert.deepEqual(other.snapshot().turns,[]);
-  assert.ok(cache.get(`liftcut-chat-history:${owner}`));b.dispose();assert.equal(cache.get(`liftcut-chat-history:${owner}`),undefined);
+  const other=new CoachHistoryClient(randomUUID());await other.activate();assert.deepEqual(other.snapshot().turns,[]);
+  assert.ok(cache.get(`liftcut-chat-history:${owner}`));b.dispose();await b.whenStored();assert.equal(cache.get(`liftcut-chat-history:${owner}`),undefined);
   await settle();
 });
 test("an in-flight pending upload cannot mark a newer complete reply saved, and chunks do not create uploads",async t=>{
@@ -53,7 +54,7 @@ test("an in-flight pending upload cannot mark a newer complete reply saved, and 
     if(options?.method==="POST"){batches.push(JSON.parse(options.body as string).items);if(batches.length===1)await gate;return Response.json({saved:true});}
     return Response.json({items:[],next:null});
   });
-  const a=new CoachHistoryClient(randomUUID());a.activate();const base=turn();
+  const a=new CoachHistoryClient(randomUUID());await a.activate();const base=turn();
   a.setTurns([{...base,pending:true,lines:["部"]}]);await settle();
   for(const lines of [["部分"],["部分文字"]])a.setTurns([{...base,pending:true,lines}]);
   assert.equal(batches.length,1);assert.equal(batches[0][0].turn.lines,undefined);
@@ -69,7 +70,7 @@ test("failed upload remains retryable; late history response never replaces a ne
     if(String(url).includes("?id=")){await gate;return Response.json({items:[{turn:old,revision:1}],next:null});}
     return Response.json({items:[],next:null});
   });
-  const a=new CoachHistoryClient(randomUUID());a.activate();a.setTurns([turn()]);await settle();assert.equal(a.snapshot().sync,"error");
+  const a=new CoachHistoryClient(randomUUID());await a.activate();a.setTurns([turn()]);await settle();assert.equal(a.snapshot().sync,"error");
   fail=false;await a.flush();assert.equal(a.snapshot().sync,"saved");
   const selecting=a.select(randomUUID());a.newConversation();const id=a.snapshot().id;release();await selecting;
   assert.equal(a.snapshot().id,id);assert.deepEqual(a.snapshot().turns,[]);a.dispose();
@@ -81,7 +82,7 @@ test("a confirmed remote deletion clears a synced cached conversation after relo
     if(String(url).includes("?id="))return Response.json({}, {status:deleted?404:503});
     return Response.json({items:[],next:null});
   });
-  const owner=randomUUID(),a=new CoachHistoryClient(owner);a.activate();a.setTurns([turn()]);await settle();await a.flush();const id=a.snapshot().id;
-  deleted=true;const reloaded=new CoachHistoryClient(owner);reloaded.activate();await settle();
+  const owner=randomUUID(),a=new CoachHistoryClient(owner);await a.activate();a.setTurns([turn()]);await settle();await a.flush();const id=a.snapshot().id;
+  deleted=true;const reloaded=new CoachHistoryClient(owner);await reloaded.activate();await settle();
   assert.notEqual(reloaded.snapshot().id,id);assert.deepEqual(reloaded.snapshot().turns,[]);reloaded.dispose();a.dispose();
 });
