@@ -1,0 +1,121 @@
+{
+  "mode": "CPU full token/mask/input audit and two-step D train/export wiring; not model efficacy",
+  "base": "saved v1 merged weights for CPU smoke only; GPU uses pinned original base",
+  "baseSha256": "15fb9ae56e5b765211f7923018faadcccc3bcb2d896605c99ef005b42dffcdff",
+  "tokenizerFiles": {
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "tokenizer_config.json": "1cc816812993bff176eb4f7495433b736f06fba9b6e7b05cac7b4a1780650c95"
+  },
+  "tokenizerEquivalence": "All old v7 train/dev and 1040 enum inference token IDs reproduced; saved tokenizer serialization differs from original base",
+  "trainingInputAudit": {
+    "A-train": {
+      "rows": 6400,
+      "sha256": "28818e64f24361c3720df4059c2899970efa8e88c882ec5cc67f3033e976b410",
+      "maxTokens": 348,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "9ef36a05d26722e44760c986abe9458937b98d7d9bef74a46ca7d3c7919c338c",
+      "maskSha256": "d167b028214d446edee97ae66cc589843cb1b85d3288da1d655bd2b96672e02e",
+      "promptTokenIdsSha256": "289f0d927780f1cf2b22ba210bef8dbebb175553b0a8fbb5e56f22012a105d0f",
+      "truncated": 0
+    },
+    "D-train": {
+      "rows": 6400,
+      "sha256": "3296e65a016bc796d044ff55ebb150a3b35e1ef4c0da37331ff9b540bed0463e",
+      "maxTokens": 511,
+      "answerTokens": 208114,
+      "tokenIdsSha256": "bf263d209bbaae09f283b6a8c6c230b72f6c37ae22f8408a16efc2effb6078f7",
+      "maskSha256": "c1d12d72599f5399b4c67581a7fad05c58292a84b7e484e31f46582252e4ff69",
+      "promptTokenIdsSha256": "f2a491ce4e587275fa114522b8b74c30f7e7a8fff7823d05bb01e1e768a7522a",
+      "truncated": 0
+    },
+    "A-dev": {
+      "rows": 740,
+      "sha256": "0748191410013407c3ddbb55c36c91a293ac8508e90ab271a393039d31b3eedb",
+      "maxTokens": 347,
+      "answerTokens": 25155,
+      "tokenIdsSha256": "e105d8cde701eff121ad542862470b0da72f501d2f6cd9194d014918f12432b8",
+      "maskSha256": "83612cb3e4d98d26e65b2eeab036828a638c6addef6c8d4724b1abe4410138c6",
+      "promptTokenIdsSha256": "bb9501165dcfcb59202db06fe0e79b057a9834e2a12bbed9656cb2e04fcc710b",
+      "truncated": 0
+    },
+    "D-dev": {
+      "rows": 740,
+      "sha256": "6b01b0e11008ad8d7aa785a71e0a3060f54fd84ea5928eaa9ae301d87e88c161",
+      "maxTokens": 510,
+      "answerTokens": 25155,
+      "tokenIdsSha256": "73bc7139abb4f8061ea8399c31e349d4e3bad178aba51e57720ffa60657745bc",
+      "maskSha256": "7aa7f600db3fd3762b63784ca236c4c2486201f1c4d2fc5b9c4a8b07b725e793",
+      "promptTokenIdsSha256": "2c25dd727d3f43b7149834cca08d37bb4d36df4082516b8b2ccd57d3625956c9",
+      "truncated": 0
+    }
+  },
+  "inputs": {
+    "enum": {
+      "sha256": "6f7bb5c070d7913649d4bed90e70ad814761aaed02c33452cf07514f1af4d5a0",
+      "items": 1040,
+      "maxInputTokens": 231,
+      "tokenIdsSha256": "9f1c3ebbabbf632c9f0333ae5997e46100a031416875d14ba4e10e995f6818e5"
+    },
+    "contract": {
+      "sha256": "45297403a55a3deb8f2dc286eb194d3e9cd8f231124d4fc555fd398975e115df",
+      "items": 1040,
+      "maxInputTokens": 394,
+      "tokenIdsSha256": "f11a4987359ef13856949461c85e454f18b44094df0293c75afcc2a295411ed8"
+    }
+  },
+  "maskMatchesActualTrainer": true,
+  "trainIndices": [
+    4035,
+    4095,
+    4000,
+    4020,
+    4001,
+    4021,
+    4012,
+    4032,
+    4013,
+    4033,
+    4,
+    14
+  ],
+  "privateOriginalsAndDerivativesUsed": false,
+  "gpuRunPerformed": false,
+  "releaseReady": false,
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "5.20.1",
+    "peft": "0.21.2"
+  },
+  "smoke": {
+    "metrics": {
+      "seed": 20261019,
+      "steps": 2,
+      "train_examples": 12,
+      "dev_examples": 6,
+      "batch": 2,
+      "lr": 0.0002,
+      "rank": 4,
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "dev_loss": 0.28636,
+      "log": [
+        {
+          "step": 2,
+          "loss": 0.00027
+        }
+      ],
+      "seconds": 84.8,
+      "gradientCheckpointing": true,
+      "peakCudaAllocatedBytes": null
+    },
+    "finite": true,
+    "updated": true,
+    "cacheEnabled": true,
+    "exports": {
+      "adapter/adapter_model.safetensors": "1dde77f2e581184c6a464e5d1efae686f939a041bc8069920431589bf014d329",
+      "merged/model.safetensors": "ac210525d02a97a913cb0ef6f4c6e141f26104e40acddad0063b6b65bd9024b6",
+      "merged/config.json": "16116e026669b42bc8a97d0d11743bb47139390618c7da710eefef1ff0a55770"
+    }
+  },
+  "verifiedAt": 1792721564.6758504
+}

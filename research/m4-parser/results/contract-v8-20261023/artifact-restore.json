@@ -1,0 +1,67 @@
+{
+  "verified": true,
+  "mode": "CPU real historical v7 weight/stream restoration through synthetic completed-state fixtures, NOT v8 inference or efficacy",
+  "sourceV7ManifestSha256": "aa6a13712873df6baa407731dd0d0d0c05e2651dfe2822c7ef4eb11e507cda7a",
+  "helperLfSha256": "0c0d515df3069695fe2d99b82d38b4f3f56b5ff1dcfe9fd00ea7fcbba6fc56ea",
+  "stagedFullWeights": true,
+  "fullWeightsEmbeddedInArchive": false,
+  "states": {
+    "semantic": {
+      "state": "semantic-rejected",
+      "predictionRows": {
+        "A": 1040,
+        "B": 1040,
+        "C": 1040,
+        "D": 1040
+      },
+      "quantization": "not-run-semantic-rejection",
+      "archiveSha256": "ac75a5134999771843fc077d97dfd6a69ee2305d4db2c8fff8e7de5a2b2105a1",
+      "independentRestoredBytes": true,
+      "weights": {
+        "run/D/model/adapter/adapter_model.safetensors": {
+          "bytes": 40422168,
+          "sha256": "191a7506e06265e17dda963b7bbb95ef00a14b62fe2d56fddac1d624a4c62837"
+        },
+        "run/D/model/merged/model.safetensors": {
+          "bytes": 1192135096,
+          "sha256": "418edcaf048376345012e7dd3dff846efda210f9ecb382ec6ced1b187fc3108e"
+        }
+      }
+    },
+    "quant": {
+      "state": "quantization-rejected",
+      "predictionRows": {
+        "A": 1040,
+        "B": 1040,
+        "C": 1040,
+        "D": 1040,
+        "D-F16": 1040,
+        "D-Q8": 1040
+      },
+      "quantization": "measured",
+      "archiveSha256": "38b11af5cbd85fb163f6721d2c4586d65893b5a6549bdc3fb87b5c701b17f7b9",
+      "independentRestoredBytes": true,
+      "weights": {
+        "run/D/model/adapter/adapter_model.safetensors": {
+          "bytes": 40422168,
+          "sha256": "191a7506e06265e17dda963b7bbb95ef00a14b62fe2d56fddac1d624a4c62837"
+        },
+        "run/D/model/merged/model.safetensors": {
+          "bytes": 1192135096,
+          "sha256": "418edcaf048376345012e7dd3dff846efda210f9ecb382ec6ced1b187fc3108e"
+        },
+        "run/D/gguf/parser-f16.gguf": {
+          "bytes": 1198182144,
+          "sha256": "408ec2474b95111373d5b95e3c05c853fbc7d8f2f0f9c61ca26534060bac1d9e"
+        },
+        "run/D/gguf/parser-q8_0.gguf": {
+          "bytes": 639446784,
+          "sha256": "436c3664c69b476b9fa17959b7d3e2244fd1a80e78b461ac56b61b97ee05d9c9"
+        }
+      }
+    }
+  },
+  "newModelCalls": 0,
+  "gpuReady": false,
+  "verifiedAt": 1792722440.8781004
+}

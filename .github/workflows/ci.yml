@@ -55,6 +55,10 @@ jobs:
           python research/m4-parser/test_v7_backup.py -v
           python research/m4-parser/test_v6_runner.py -v
           python research/m4-parser/test_v7_runner.py -v
+          python research/m4-parser/test_v8_inputs.py -v
+          python research/m4-parser/test_v8_acceptance.py -v
+          python research/m4-parser/test_v8_backup.py -v
+          python research/m4-parser/test_v8_runner.py -v
           python research/m4-parser/test_loss_mass.py -v
           python research/m4-parser/test_closed_decode.py -v
 
