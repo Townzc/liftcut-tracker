@@ -1,0 +1,1425 @@
+{
+  "mode": "Historical saved outputs and original resolved-score failure IDs; strict reasons are separate post-result diagnostics",
+  "sameChallengeBytes": true,
+  "challengeSha256": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+  "newModelCalls": 0,
+  "trainingRowsAdded": 0,
+  "arms": [
+    {
+      "id": "v2-Q8",
+      "exact": 213,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 11,
+          "strictReasonExact": 11
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 2,
+          "strictReasonExact": 1
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 8
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 12,
+          "strictReasonExact": 12
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {},
+      "illegalClarifySchemas": 13,
+      "hashes": {
+        "manifest": "282ef6020604689a0ae545fff2e3a668fe306bc5a250d0c04f19a43167425a2f",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "9ea45a4b0848e14c733fb6fb0d3fc478da6bf01a891c258258392b4d2df8dd01",
+        "frozenScore": "1d95954a895f8afbd8c6aca6779554b4d2cf1d836d24d4502764eecf5bcb7352"
+      }
+    },
+    {
+      "id": "v3-Q8",
+      "exact": 187,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 3,
+          "strictReasonExact": 3
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 11,
+          "strictReasonExact": 11
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 0,
+          "strictReasonExact": 0
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 2,
+          "strictReasonExact": 2
+        }
+      },
+      "binding": {
+        "different_available_identity": 9
+      },
+      "illegalClarifySchemas": 17,
+      "hashes": {
+        "manifest": "282ef6020604689a0ae545fff2e3a668fe306bc5a250d0c04f19a43167425a2f",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "cbd2d9f1e3eb6754fb6741ed07f419ef6286b89b2e8dc92b369f13d379c1c53d",
+        "frozenScore": "a2c50dccc07d4e3cd98f39f09ab4f2e2e8b875348ed55cf36e0f905d11e9d0ac"
+      }
+    },
+    {
+      "id": "v4-D",
+      "exact": 206,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 10,
+          "strictReasonExact": 10
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 14,
+          "strictReasonExact": 14
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 9,
+          "strictReasonExact": 9
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 14
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 0,
+          "strictReasonExact": 0
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {
+        "different_available_identity": 7
+      },
+      "illegalClarifySchemas": 6,
+      "hashes": {
+        "manifest": "8592d6fcd79b621cb7115fa2879081e163811a0d87334116474056bff7cbd3bd",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "9dcbbbc0e3b575b7af928543ecf7bd0026043ae93de2dc0d03ff9a6a29c32a00",
+        "frozenScore": "53e6768d4dc77ed53d52f3d6e696dae71d22da1ec281bf1fc3240e90f8f39dfb"
+      }
+    },
+    {
+      "id": "v5-S",
+      "exact": 197,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 5,
+          "strictReasonExact": 5
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 1,
+          "strictReasonExact": 1
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {
+        "different_available_identity": 19
+      },
+      "illegalClarifySchemas": 0,
+      "hashes": {
+        "manifest": "000cd00a6f027dea2aa553f38ebd20dd49aacb81f532409d25609a50098edfa7",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "d9611d5e9767168df462daec5f748daca21678e987ed9519f072c164d4c823b4",
+        "frozenScore": "f3826d6810f33bc5843a691c886226391c8114748a4eb2847a0e3b759144b176"
+      }
+    },
+    {
+      "id": "v6-T",
+      "exact": 195,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 4,
+          "strictReasonExact": 4
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 6,
+          "strictReasonExact": 6
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 14,
+          "strictReasonExact": 14
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 0,
+          "strictReasonExact": 0
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {
+        "different_available_identity": 9
+      },
+      "illegalClarifySchemas": 1,
+      "hashes": {
+        "manifest": "a003d4bba99e5f0a0a9aa03c0ef38e8d3e9c80887205944808bf426a219409c8",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "1ea5f2c46e9c1a25792789e89e8789aeb3272f69ffa09c5b2cf8cc92b77ac5e9",
+        "frozenScore": "2ea1736b556c5eee6b5bb92e46eb7e6ca9f6a24b512c68a6208db921e6411319"
+      }
+    },
+    {
+      "id": "v6-S",
+      "exact": 204,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 9,
+          "strictReasonExact": 9
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 12,
+          "strictReasonExact": 12
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 12
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 0,
+          "strictReasonExact": 0
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {
+        "different_available_identity": 12
+      },
+      "illegalClarifySchemas": 0,
+      "hashes": {
+        "manifest": "a003d4bba99e5f0a0a9aa03c0ef38e8d3e9c80887205944808bf426a219409c8",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "f425c5b2650cb935a342b309970fb272e19d95f9e340e1847d1e4d81d385fad1",
+        "frozenScore": "8a70c727a7763af9a71389fa04e4ca64228c63866f71b59eb790fc7716b8d46f"
+      }
+    },
+    {
+      "id": "v7-S",
+      "exact": 180,
+      "total": 240,
+      "focus": {
+        "missing_unit": {
+          "total": 15,
+          "resolvedExact": 3,
+          "strictReasonExact": 3
+        },
+        "missing_reps": {
+          "total": 15,
+          "resolvedExact": 5,
+          "strictReasonExact": 5
+        },
+        "plan_not_actual": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "negation": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "uncertain_quantity": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "question": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        },
+        "rpe_scope": {
+          "total": 15,
+          "resolvedExact": 0,
+          "strictReasonExact": 0
+        },
+        "unknown_exercise": {
+          "total": 15,
+          "resolvedExact": 15,
+          "strictReasonExact": 15
+        }
+      },
+      "binding": {
+        "different_available_identity": 21
+      },
+      "illegalClarifySchemas": 0,
+      "hashes": {
+        "manifest": "aa6a13712873df6baa407731dd0d0d0c05e2651dfe2822c7ef4eb11e507cda7a",
+        "gold": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+        "predictions": "8af45fef3344e3891ee078af69da4f665328527662e2f791698c316bdc7ce4f2",
+        "frozenScore": "12544f85cf0aa55b581425666c8e9726ece1b07d951158ce77600beef6c967c5"
+      }
+    }
+  ],
+  "comparisons": {
+    "v2-Q8->v3-Q8": {
+      "bothCorrect": 171,
+      "gained": 16,
+      "lost": 42,
+      "bothWrong": 11,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 8,
+          "bothWrong": 4
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 12,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 12,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 1,
+          "gained": 10,
+          "lost": 1,
+          "bothWrong": 3
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 13,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 1
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 12,
+          "bothWrong": 3
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 2,
+          "gained": 0,
+          "lost": 13,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-0-negative",
+        "v2-test-1-positive",
+        "v2-test-2-negative",
+        "v2-test-6-negative",
+        "v2-test-7-negative",
+        "v2-test-14-negative",
+        "v2-test-15-negative",
+        "v2-test-22-negative",
+        "v2-test-23-negative",
+        "v2-test-24-negative",
+        "v2-test-26-positive",
+        "v2-test-30-negative",
+        "v2-test-31-negative",
+        "v2-test-32-negative",
+        "v2-test-36-positive",
+        "v2-test-38-negative",
+        "v2-test-39-negative",
+        "v2-test-42-positive",
+        "v2-test-46-negative",
+        "v2-test-47-negative",
+        "v2-test-48-negative",
+        "v2-test-49-positive",
+        "v2-test-54-negative",
+        "v2-test-55-negative",
+        "v2-test-56-negative",
+        "v2-test-62-negative",
+        "v2-test-63-negative",
+        "v2-test-64-positive",
+        "v2-test-64-negative",
+        "v2-test-70-negative",
+        "v2-test-71-negative",
+        "v2-test-78-negative",
+        "v2-test-84-positive",
+        "v2-test-87-negative",
+        "v2-test-91-positive",
+        "v2-test-95-negative",
+        "v2-test-96-negative",
+        "v2-test-102-negative",
+        "v2-test-103-negative",
+        "v2-test-104-negative",
+        "v2-test-110-negative",
+        "v2-test-119-negative"
+      ],
+      "gainedIds": [
+        "v2-test-10-negative",
+        "v2-test-17-positive",
+        "v2-test-18-negative",
+        "v2-test-21-positive",
+        "v2-test-31-positive",
+        "v2-test-42-negative",
+        "v2-test-50-positive",
+        "v2-test-58-negative",
+        "v2-test-74-negative",
+        "v2-test-82-negative",
+        "v2-test-83-positive",
+        "v2-test-90-negative",
+        "v2-test-92-positive",
+        "v2-test-98-negative",
+        "v2-test-106-negative",
+        "v2-test-114-negative"
+      ]
+    },
+    "v3-Q8->v4-D": {
+      "bothCorrect": 182,
+      "gained": 24,
+      "lost": 5,
+      "bothWrong": 29,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 1,
+          "gained": 9,
+          "lost": 2,
+          "bothWrong": 3
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 13,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 13,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 9,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 4
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 15
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 2,
+          "gained": 13,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-18-negative",
+        "v2-test-40-negative",
+        "v2-test-57-negative",
+        "v2-test-82-negative",
+        "v2-test-88-negative"
+      ],
+      "gainedIds": [
+        "v2-test-7-negative",
+        "v2-test-15-negative",
+        "v2-test-16-negative",
+        "v2-test-23-negative",
+        "v2-test-24-negative",
+        "v2-test-31-negative",
+        "v2-test-32-negative",
+        "v2-test-39-negative",
+        "v2-test-42-positive",
+        "v2-test-47-negative",
+        "v2-test-49-positive",
+        "v2-test-55-negative",
+        "v2-test-56-negative",
+        "v2-test-63-negative",
+        "v2-test-64-negative",
+        "v2-test-71-negative",
+        "v2-test-72-negative",
+        "v2-test-87-negative",
+        "v2-test-95-negative",
+        "v2-test-96-negative",
+        "v2-test-103-negative",
+        "v2-test-104-negative",
+        "v2-test-112-negative",
+        "v2-test-119-negative"
+      ]
+    },
+    "v4-D->v5-S": {
+      "bothCorrect": 189,
+      "gained": 8,
+      "lost": 17,
+      "bothWrong": 26,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 5,
+          "bothWrong": 5
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 9,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 14
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-7-positive",
+        "v2-test-8-negative",
+        "v2-test-16-negative",
+        "v2-test-19-positive",
+        "v2-test-34-positive",
+        "v2-test-41-positive",
+        "v2-test-42-positive",
+        "v2-test-49-positive",
+        "v2-test-56-negative",
+        "v2-test-61-positive",
+        "v2-test-63-positive",
+        "v2-test-74-positive",
+        "v2-test-80-positive",
+        "v2-test-81-positive",
+        "v2-test-104-negative",
+        "v2-test-109-positive",
+        "v2-test-112-negative"
+      ],
+      "gainedIds": [
+        "v2-test-2-negative",
+        "v2-test-18-negative",
+        "v2-test-26-negative",
+        "v2-test-50-negative",
+        "v2-test-57-negative",
+        "v2-test-66-negative",
+        "v2-test-82-negative",
+        "v2-test-110-negative"
+      ]
+    },
+    "v4-D->v6-T": {
+      "bothCorrect": 189,
+      "gained": 6,
+      "lost": 17,
+      "bothWrong": 28,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 4,
+          "gained": 0,
+          "lost": 6,
+          "bothWrong": 5
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 6,
+          "gained": 0,
+          "lost": 8,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 9,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 15
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-4-negative",
+        "v2-test-8-negative",
+        "v2-test-17-negative",
+        "v2-test-24-negative",
+        "v2-test-25-negative",
+        "v2-test-33-negative",
+        "v2-test-42-positive",
+        "v2-test-49-positive",
+        "v2-test-56-negative",
+        "v2-test-64-negative",
+        "v2-test-73-negative",
+        "v2-test-81-negative",
+        "v2-test-89-negative",
+        "v2-test-96-negative",
+        "v2-test-97-negative",
+        "v2-test-104-negative",
+        "v2-test-105-negative"
+      ],
+      "gainedIds": [
+        "v2-test-2-negative",
+        "v2-test-18-negative",
+        "v2-test-26-negative",
+        "v2-test-50-negative",
+        "v2-test-66-negative",
+        "v2-test-82-negative"
+      ]
+    },
+    "v6-T->v6-S": {
+      "bothCorrect": 183,
+      "gained": 21,
+      "lost": 12,
+      "bothWrong": 24,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 12,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 4,
+          "gained": 5,
+          "lost": 0,
+          "bothWrong": 6
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 11,
+          "gained": 2,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 6,
+          "gained": 6,
+          "lost": 0,
+          "bothWrong": 3
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 12,
+          "gained": 2,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 13,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 11,
+          "gained": 3,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 15
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-25-positive",
+        "v2-test-29-positive",
+        "v2-test-48-positive",
+        "v2-test-66-positive",
+        "v2-test-72-positive",
+        "v2-test-75-positive",
+        "v2-test-77-positive",
+        "v2-test-79-positive",
+        "v2-test-89-positive",
+        "v2-test-92-positive",
+        "v2-test-94-positive",
+        "v2-test-118-positive"
+      ],
+      "gainedIds": [
+        "v2-test-1-positive",
+        "v2-test-4-negative",
+        "v2-test-24-negative",
+        "v2-test-25-negative",
+        "v2-test-26-positive",
+        "v2-test-33-negative",
+        "v2-test-36-positive",
+        "v2-test-40-negative",
+        "v2-test-42-positive",
+        "v2-test-49-positive",
+        "v2-test-56-negative",
+        "v2-test-64-positive",
+        "v2-test-73-negative",
+        "v2-test-81-negative",
+        "v2-test-84-positive",
+        "v2-test-88-negative",
+        "v2-test-89-negative",
+        "v2-test-91-positive",
+        "v2-test-96-negative",
+        "v2-test-97-negative",
+        "v2-test-108-positive"
+      ]
+    },
+    "v6-T->v7-S": {
+      "bothCorrect": 178,
+      "gained": 2,
+      "lost": 17,
+      "bothWrong": 43,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 1
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 3,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 11
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 2
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 4,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 8
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 2
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 1
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 3
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 14,
+          "gained": 1,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 13,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 4,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 15
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 14,
+          "gained": 0,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-9-negative",
+        "v2-test-25-positive",
+        "v2-test-29-positive",
+        "v2-test-30-positive",
+        "v2-test-48-positive",
+        "v2-test-65-negative",
+        "v2-test-66-positive",
+        "v2-test-72-positive",
+        "v2-test-75-positive",
+        "v2-test-77-positive",
+        "v2-test-78-positive",
+        "v2-test-79-positive",
+        "v2-test-89-positive",
+        "v2-test-92-positive",
+        "v2-test-94-positive",
+        "v2-test-112-negative",
+        "v2-test-118-positive"
+      ],
+      "gainedIds": [
+        "v2-test-4-negative",
+        "v2-test-89-negative"
+      ]
+    },
+    "v2-Q8->v7-S": {
+      "bothCorrect": 160,
+      "gained": 20,
+      "lost": 53,
+      "bothWrong": 7,
+      "families": {
+        "contrast_missing_unit_positive": {
+          "bothCorrect": 12,
+          "gained": 0,
+          "lost": 3,
+          "bothWrong": 0
+        },
+        "contrast_missing_unit_negative": {
+          "bothCorrect": 1,
+          "gained": 2,
+          "lost": 10,
+          "bothWrong": 2
+        },
+        "contrast_missing_reps_positive": {
+          "bothCorrect": 10,
+          "gained": 1,
+          "lost": 4,
+          "bothWrong": 0
+        },
+        "contrast_missing_reps_negative": {
+          "bothCorrect": 5,
+          "gained": 0,
+          "lost": 10,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_positive": {
+          "bothCorrect": 11,
+          "gained": 1,
+          "lost": 3,
+          "bothWrong": 0
+        },
+        "contrast_plan_not_actual_negative": {
+          "bothCorrect": 2,
+          "gained": 13,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_negation_positive": {
+          "bothCorrect": 12,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_negation_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_uncertain_quantity_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 2,
+          "bothWrong": 2
+        },
+        "contrast_uncertain_quantity_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_question_positive": {
+          "bothCorrect": 12,
+          "gained": 1,
+          "lost": 2,
+          "bothWrong": 0
+        },
+        "contrast_question_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_positive": {
+          "bothCorrect": 11,
+          "gained": 0,
+          "lost": 4,
+          "bothWrong": 0
+        },
+        "contrast_rpe_scope_negative": {
+          "bothCorrect": 0,
+          "gained": 0,
+          "lost": 12,
+          "bothWrong": 3
+        },
+        "contrast_unknown_exercise_positive": {
+          "bothCorrect": 13,
+          "gained": 1,
+          "lost": 1,
+          "bothWrong": 0
+        },
+        "contrast_unknown_exercise_negative": {
+          "bothCorrect": 15,
+          "gained": 0,
+          "lost": 0,
+          "bothWrong": 0
+        }
+      },
+      "lostIds": [
+        "v2-test-0-negative",
+        "v2-test-1-positive",
+        "v2-test-6-negative",
+        "v2-test-8-negative",
+        "v2-test-9-negative",
+        "v2-test-14-negative",
+        "v2-test-17-negative",
+        "v2-test-22-negative",
+        "v2-test-24-negative",
+        "v2-test-25-positive",
+        "v2-test-25-negative",
+        "v2-test-26-positive",
+        "v2-test-29-positive",
+        "v2-test-30-positive",
+        "v2-test-30-negative",
+        "v2-test-33-negative",
+        "v2-test-36-positive",
+        "v2-test-38-negative",
+        "v2-test-40-negative",
+        "v2-test-42-positive",
+        "v2-test-46-negative",
+        "v2-test-48-positive",
+        "v2-test-48-negative",
+        "v2-test-49-positive",
+        "v2-test-54-negative",
+        "v2-test-56-negative",
+        "v2-test-57-negative",
+        "v2-test-62-negative",
+        "v2-test-64-positive",
+        "v2-test-64-negative",
+        "v2-test-65-negative",
+        "v2-test-66-positive",
+        "v2-test-70-negative",
+        "v2-test-72-positive",
+        "v2-test-73-negative",
+        "v2-test-75-positive",
+        "v2-test-77-positive",
+        "v2-test-78-positive",
+        "v2-test-78-negative",
+        "v2-test-79-positive",
+        "v2-test-81-negative",
+        "v2-test-84-positive",
+        "v2-test-88-negative",
+        "v2-test-89-positive",
+        "v2-test-91-positive",
+        "v2-test-94-positive",
+        "v2-test-96-negative",
+        "v2-test-97-negative",
+        "v2-test-102-negative",
+        "v2-test-104-negative",
+        "v2-test-105-negative",
+        "v2-test-110-negative",
+        "v2-test-118-positive"
+      ],
+      "gainedIds": [
+        "v2-test-10-negative",
+        "v2-test-16-negative",
+        "v2-test-17-positive",
+        "v2-test-18-negative",
+        "v2-test-21-positive",
+        "v2-test-26-negative",
+        "v2-test-31-positive",
+        "v2-test-42-negative",
+        "v2-test-50-positive",
+        "v2-test-50-negative",
+        "v2-test-58-negative",
+        "v2-test-66-negative",
+        "v2-test-72-negative",
+        "v2-test-74-negative",
+        "v2-test-82-negative",
+        "v2-test-83-positive",
+        "v2-test-90-negative",
+        "v2-test-98-negative",
+        "v2-test-106-negative",
+        "v2-test-114-negative"
+      ]
+    }
+  },
+  "limitations": "Observed regression set, not unseen acceptance. Dev changed at v3, so dev totals across that boundary are not directly compared. Different interventions and one seed do not isolate every causal mechanism. No private originals or derivatives read."
+}

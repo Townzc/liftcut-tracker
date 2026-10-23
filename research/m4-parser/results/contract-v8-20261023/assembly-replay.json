@@ -1,0 +1,15 @@
+{
+  "verified": true,
+  "mode": "Historical A HF outputs cloned under B/C/D only to exercise assembly/scoring. Not fresh factorial inference.",
+  "inputsPerVariant": 1040,
+  "cachedControlFiles": 14,
+  "scoredReports": 36,
+  "allClonedScoresIdentical": true,
+  "AReferenceMetricsMatchPublishedV7HF": true,
+  "gainsFromClones": 0,
+  "changedPromptWithOldAuditsRejected": true,
+  "quantizationExplicitlyUnmeasured": true,
+  "newModelCalls": 0,
+  "privateOriginalsAndDerivativesUsed": false,
+  "releaseReady": false
+}

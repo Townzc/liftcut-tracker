@@ -1,0 +1,64 @@
+{
+  "version": "v8-contract-factorial-1",
+  "gpuReady": false,
+  "provenance": "Only system instructions change. All 6400 v7 tuples and evaluation bytes fixed. No examples, private originals, paraphrases, numeric variants, outputs or derivatives added.",
+  "sourceV7ManifestSha256": "d0893ba6c5c47c2c6e7cb7196b5da72fec18a9eaf2a4d08644efcfca36ae10ac",
+  "rows": 6400,
+  "enumSystem": "Parse one gym report as LiftCut label v1 JSON. Copy only explicit values and an exercise name from the list. Unknown is null, never a plan value or guess. Missing weight unit or reps, uncertainty, plans, questions and negated/failed sets require clarify. A correction changes only stated fields; repeat carries no values. Preserve set order. RPE for multiple sets needs explicit scope. Reply with one JSON object. For intent clarify, reason must be exactly one of: uncertain_quantity, plan_not_actual, negation, question, missing_reps, missing_unit, unsupported_unit, rpe_scope, unknown_exercise, out_of_range. No other reason value is valid.",
+  "contractSystem": "Return one JSON object, no extra keys.\nShapes:\n{\"intent\":\"record\",\"exercise\":E,\"sets\":[{\"weight\":W,\"unit\":U,\"reps\":R,\"rpe\":P}]}\n{\"intent\":\"repeat\",\"exercise\":E,\"count\":N}\n{\"intent\":\"correct\",\"exercise\":E,\"target\":T,\"changes\":{changed weight/unit/reps/rpe only}}\n{\"intent\":\"skip\",\"exercise\":E,\"target\":T}\n{\"intent\":\"end\"}\n{\"intent\":\"clarify\",\"reason\":C}\nE=the named exercise's exact catalog match, including aliases; unnamed=null. Never substitute by equipment/list position.\nW/U=stated weight and kg/lb together, otherwise null/null for bodyweight. R=stated reps, not load or set count. Emit only completed sets, 1..16. P=null unless stated, 1..10 in 0.5 steps; multiple sets require explicit each/last/specific-set scope. T=set number or \"last\"; skip also \"next\". N=repeat count, 1..16.\nClarify C: uncertain_quantity=uncertain numbers; plan_not_actual=planned; negation=failed/not done; question=query; missing_reps=no reps; missing_unit=load without unit; unsupported_unit=斤; rpe_scope=ambiguous multi-set effort; unknown_exercise=absent/ambiguous catalog match; out_of_range=impossible value. Never guess.",
+  "unchangedTupleSequenceSha256": "7fdf966c5b487d14a99eb36f4ed41875e2fab18e79d52e148749c2c31fbdc9ff",
+  "files": {
+    "dev.gold.jsonl": {
+      "sha256": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+      "lines": 740
+    },
+    "dev.jsonl": {
+      "sha256": "0748191410013407c3ddbb55c36c91a293ac8508e90ab271a393039d31b3eedb",
+      "lines": 740
+    },
+    "dev-eval.jsonl": {
+      "sha256": "a4145ee3d0bca4ee49f69ab607ca50ab7ccadc52080e831c9a074452623c9b99",
+      "lines": 740
+    },
+    "T-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "T-train.jsonl": {
+      "sha256": "cd8222a57d3297845e493b8edf61966ab3271e0c02bc9bf2ce0555ea814da292",
+      "lines": 6400
+    },
+    "S-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "S-train.jsonl": {
+      "sha256": "28818e64f24361c3720df4059c2899970efa8e88c882ec5cc67f3033e976b410",
+      "lines": 6400
+    },
+    "dev-control.jsonl": {
+      "sha256": "fdfb601da6d7b4d6ba69e7626d14349250b701302e33adc95f9980c6e31aa6d0",
+      "lines": 740
+    },
+    "A-train.jsonl": {
+      "sha256": "28818e64f24361c3720df4059c2899970efa8e88c882ec5cc67f3033e976b410",
+      "lines": 6400
+    },
+    "A-dev.jsonl": {
+      "sha256": "0748191410013407c3ddbb55c36c91a293ac8508e90ab271a393039d31b3eedb",
+      "lines": 740
+    },
+    "D-train.gold.jsonl": {
+      "sha256": "ebe3f5cf13876561f0ac02fed85626375d0315de2b953e8671577978fd07e621",
+      "lines": 6400
+    },
+    "D-train.jsonl": {
+      "sha256": "3296e65a016bc796d044ff55ebb150a3b35e1ef4c0da37331ff9b540bed0463e",
+      "lines": 6400
+    },
+    "D-dev.jsonl": {
+      "sha256": "6b01b0e11008ad8d7aa785a71e0a3060f54fd84ea5928eaa9ae301d87e88c161",
+      "lines": 740
+    }
+  }
+}

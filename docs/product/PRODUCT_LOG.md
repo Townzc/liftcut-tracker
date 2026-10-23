@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-23 · M4 v8 training/inference contract factorial
+
+- Why: hash-bound history confirms 213→180 on identical challenge gold (53 losses/20 gains); scope, missing values and identity binding regressed. [Audit](../../research/m4-parser/results/contract-v8-20261023/HISTORY.md).
+- Change: fixed A/B/C/D train × inference prompts, one original-base training, D only; 3,120 HF outputs then conditional 2,080 GGUF outputs. Same 6,400 tuples, original loss and numeric gates.
+- Ran: complete token/mask/payload audits, two real CPU optimizer steps/export, 36 historical score replays, actual two/four-weight independent restorations. [Evidence](../../research/m4-parser/results/contract-v8-20261023/README.md).
+- Checks: root 9 JS + 252 TS, lint (zero errors/two existing warnings) and production build pass; 23 Python passes/one Linux-only skip, four window/three cleanup checks. Final-head CI/source restoration precede merge/opening.
+- Recovery: 6 GiB live free requires full weights staged off-instance before packing; only verified reproducible old transfer caches are eligible for cleanup. No remote operation during preparation.
+- Limits/next: no v8 model result; private 20 originals/derivatives excluded. Fresh 3h work + 1h backup window after all checks; then model gates → continuous acceptance → native/device validation. UI and confirmation unchanged.
+
 ## 2026-10-23 · M4 v7 GPU results and CPU diagnostics
 
 - Ran: one fixed training and 3,120 new HF/F16/Q8 outputs. S challenge 180/240 versus cached T 195/240 (2 gains/17 losses); candidate rejected. [Report](../../research/m4-parser/results/run-20261023T001500Z-v7/README.md).
