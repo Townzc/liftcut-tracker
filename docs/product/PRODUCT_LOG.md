@@ -8,6 +8,7 @@
 - Ran: root `npm test` (9 JS + 260 TS), `npm run lint`, `npm run build`; core/mobile type checks, explicit mobile ESLint, mobile `npm test` (14), `npm run export:check` (Android/iOS JS only).
 - Local PostgreSQL 16: `node --conditions=react-server --import tsx --test tests/product-db/workout-conversation.test.ts tests/product-db/coach-history.test.ts` — 16 pass. WSL process lifetime caused an initial connection refusal; a persistent local host fixed it.
 - `npx expo export --platform web` + `npx playwright test --config playwright.mobile.config.ts coach-context.spec.ts coach.spec.ts` — 3 pass; includes eight intervening turns, same-record correction, inherited load, void/redo, exact HTTP retry and unconfirmed zero writes. Synthetic quota rows reset between scripted turns; quota guards are separately tested.
+- CI isolation found the shared fixture depended on root package resolution; switched its imports to core source paths and rechecked with the root core link hidden.
 - Phone-width screenshot: CI `today-browser-evidence/mobile-web/coach-context-review-mobile.png`. Corrected a missing web aria-busy mapping in the new test path. Model/auth substitutes; API, queues and test DB are real.
 - Limits/next: history persistence is the next separate slice. No real user data, production migration, paid service, M4/default switch, native binary, physical device or production runtime acceptance.
 
