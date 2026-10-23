@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-23 · Mobile coach alignment R4: persistent conversations
+
+- Mobile now uses the shared history client, existing bearer history API and account-keyed AsyncStorage. The signed-in app owns its lifetime; tabs retain drafts, reload restores the conversation ID, and logout cancels requests and clears cache after pending writes.
+- Added compact history/new-chat controls and confirmed deletion. Historical proposals have no executable tokens; old queued prose directs users to current records, never claims a write receipt. Original workout outbox/approval ledgers and plan boundary remain unchanged.
+- Ran: root `npm test` (9 JS + 264 TS), `npm run lint` (two existing warnings), fixture-environment `npm run build`; core/mobile type checks, explicit mobile ESLint; mobile `npm test` (16), `npm run export:check` (Android/iOS JS only), `npx expo export --platform web`.
+- `npx playwright test --config playwright.mobile.config.ts` — all 10 pass against isolated PostgreSQL and scripted auth/model. Covers eight intervening turns plus reload/correction, inheritance, void/redo, identical retry, unconfirmed zero writes, history retry/cloud recovery/logout isolation and delete without deleting facts.
+- Initial failures exposed a missing SPA fallback in the test host and page-scoped logout cleanup; fixed both. Tests now await navigation/relay completion; a type-only fixture conflict was corrected before the final build. Failed-run logs retained locally.
+- Inspected 390px screenshots: CI `today-browser-evidence/mobile-web/coach-context-review-mobile.png` and `coach-history-mobile.png`. No change to app route structure.
+- Limits/next: no real users, production migration, paid service, new training or parser default switch. Native builds, devices, real-auth/model joint acceptance and production runtime smoke remain unrun; JS/browser checks do not replace them.
+
 ## 2026-10-23 · Mobile coach alignment R3: shared async history
 
 - Extracted the existing web history state machine and prose schemas to framework-free core. Browser transport remains a thin cookie adapter; the next mobile slice will inject bearer transport and AsyncStorage.

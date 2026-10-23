@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { CoachHistoryClient, type HistoryIO } from "@liftcut/core/coach-history-client";
+import { coachFixture } from "./fixtures/coach-contract";
 
 const turn = () => ({ id: randomUUID(), text: "synthetic", at: new Date().toISOString(), reply: "data" as const });
 function deferred() { let resolve!: () => void; const promise = new Promise<void>(r => { resolve = r; }); return { promise, resolve }; }
@@ -15,11 +16,11 @@ test("asynchronous writes stay ordered; leaving retains prose but never executab
   const write = adapter.storage.setItem; let first = true;
   adapter.storage.setItem = async (k, v) => { if (first) { first = false; await gate.promise; } await write(k, v); };
   const a = new CoachHistoryClient(owner, false, adapter); await a.activate();
-  const id = a.snapshot().id, t = { ...turn(), pending: true, lines: ["provisional"], proposal: { proof: "never-cache" } };
+  const id = a.snapshot().id, t = { ...turn(), pending: true, lines: ["provisional"], proposal: coachFixture().reply.proposal };
   a.setTurns([t]); a.setText("older draft"); a.setText("latest draft"); a.dispose(false);
   gate.resolve(); await a.whenStored();
   const raw = entries.get(`liftcut-chat-history:${owner}`)!;
-  assert.equal(raw.includes("never-cache"), false); assert.equal(raw.includes("provisional"), false);
+  assert.equal(raw.includes('"proposal":'), false); assert.equal(raw.includes("provisional"), false);
   const b = new CoachHistoryClient(owner, false, io(entries)); await b.activate();
   assert.equal(b.snapshot().id, id); assert.equal(b.snapshot().text, "latest draft");
   assert.equal(b.snapshot().turns[0].interrupted, true); assert.equal("proposal" in b.snapshot().turns[0], false);

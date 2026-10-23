@@ -16,6 +16,6 @@ export default defineConfig({
       env: { WORKOUT_DATABASE_URL: runtime, AGENT_DATABASE_URL: runtime.replace("liftcut_workout:w1b-local-fixture-only", "liftcut_agent:p1-local-fixture-only"),
         NEXT_PUBLIC_SUPABASE_URL: authUrl, NEXT_PUBLIC_SUPABASE_ANON_KEY: "w1b-local-fixture-anon", FEATURE_TODAY_SESSION: "true",
         AI_PROVIDER: "local", LOCAL_AI_BASE_URL: "http://127.0.0.1:59999/v1", COACH_SIGNING_SECRET: "synthetic-browser-signing-key-not-for-production" } },
-    { command: "npx expo serve --port 8099", cwd: "apps/mobile", url: "http://localhost:8099", reuseExistingServer: false },
+    { command: "node tests/mobile-web/serve.mjs", url: "http://localhost:8099", reuseExistingServer: false },
   ],
 });
