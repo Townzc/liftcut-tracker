@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-23 · M4 v8 completed factorial and residual diagnosis
+
+- Ran: one 800-step training and 3,120 fresh HF predictions; A/B/C/D challenge 185/166/0/216 of 240. D alone eligible; three semantic gates fail, quantization unmeasured. [Report](../../research/m4-parser/results/run-20261023T025600Z-v8/README.md).
+- Diagnosis: D's 24 errors partition into scope 15, missing-unit records 4, dumbbell→barbell curl 5. Scope guesses are 12 all-set/3 last-only; four illegal reasons remain across all inputs. C has no valid output schema.
+- Verification: 137 run files/two full weights restored, 61 frozen sources verified; all 39 reports replay and B/C provisional results reconcile. Four new CPU audit/fault tests pass; raw scores/gates unchanged.
+- Checks: root 9 JS + 256 TS, lint (zero errors/two existing warnings) and production build pass. Exact-head CI and production metadata are separate final release checks.
+- Power: OFF verified after backup at 04:02:26 UTC, then timer cleared; original deadlines retained. Approx. ¥2.41 conservative time proxy, not invoice; primary assets retained.
+- Limits/next: no private originals/derivatives, new candidate continuous acceptance, native activation or UI/confirmation change. [Next CPU draft](../../research/m4-parser/results/run-20261023T025600Z-v8/NEXT.md) audits training boundaries before another frozen, CI-verified GPU package.
+
 ## 2026-10-23 · M4 v8 training/inference contract factorial
 
 - Why: hash-bound history confirms 213→180 on identical challenge gold (53 losses/20 gains); scope, missing values and identity binding regressed. [Audit](../../research/m4-parser/results/contract-v8-20261023/HISTORY.md).

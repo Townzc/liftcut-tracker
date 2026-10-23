@@ -1,0 +1,26 @@
+{
+  "dev-eval": {
+    "denominator": 740,
+    "inferenceEffectEnumTraining": -198,
+    "inferenceEffectContractTraining": 642,
+    "trainingEffectEnumInference": -642,
+    "trainingEffectContractInference": 198,
+    "interactionCount": 840
+  },
+  "challenge": {
+    "denominator": 240,
+    "inferenceEffectEnumTraining": -19,
+    "inferenceEffectContractTraining": 216,
+    "trainingEffectEnumInference": -185,
+    "trainingEffectContractInference": 50,
+    "interactionCount": 235
+  },
+  "handwritten": {
+    "denominator": 60,
+    "inferenceEffectEnumTraining": -17,
+    "inferenceEffectContractTraining": 49,
+    "trainingEffectEnumInference": -49,
+    "trainingEffectContractInference": 17,
+    "interactionCount": 66
+  }
+}

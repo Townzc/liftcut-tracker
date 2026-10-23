@@ -1,0 +1,5039 @@
+{
+  "newModelCalls": 0,
+  "manifestSha256": "d06ba27accc6482e547819fb348d34ae2355f19b5d6c4c1b790eb5960a39658f",
+  "inputsSha256": {
+    "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+    "A.jsonl": "1a7e56d1dd6b6b5751324ec2abd196bbc311bcd8c9e1eb314688f8a631bf4b7a",
+    "B.jsonl": "dcb7addcbfcf654b12a82940b51931d3a6761cb300a0fd834bf2f3c9a9f758f2",
+    "C.jsonl": "7114627d876f911cd6ec653269d5d1bcb10a2d0516e24c1dcbdcf91f08f3c9a2",
+    "D.jsonl": "67136bc1f7e0dd241d9cd5ccf574f6ff38f3f37635dc4b07818eb9a38c02448e"
+  },
+  "sourceCommit": "fd4205e8c99048a3e5e720c3ad009f30050cc34a",
+  "note": "Post-result descriptive counts. Synthetic observed development cases only; overlapping issues are not extra errors or actual writes. Binding categories require exact numerical sets. No private20 originals/derivatives or training input is read.",
+  "arms": {
+    "A": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "test-00348",
+                "test-00415",
+                "test-00470"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00476"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 16,
+              "ids": [
+                "test-00001",
+                "test-00012",
+                "test-00075",
+                "test-00080",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 4,
+              "ids": [
+                "test-00001",
+                "test-00075",
+                "test-00225",
+                "test-00384"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 8,
+              "ids": [
+                "test-00012",
+                "test-00185",
+                "test-00271",
+                "test-00287",
+                "test-00302",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00014",
+                "test-00307"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "test-00080"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00104",
+                "test-00268"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00327"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {}
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00215",
+                "test-00301"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "test-00283"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00357",
+                "test-00419"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00006",
+                "test-00057",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00253",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00395",
+                "test-00448"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "test-00057",
+                "test-00083",
+                "test-00253",
+                "test-00359",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 11,
+              "ids": [
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 8,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00024"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00197",
+                "test-00243"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00061",
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00265",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 7,
+              "ids": [
+                "test-00065",
+                "test-00172",
+                "test-00255",
+                "test-00259",
+                "test-00290",
+                "test-00442",
+                "test-00444"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00112"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00213"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "test-00308",
+                "test-00345",
+                "test-00388",
+                "test-00404"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00364"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 2,
+              "ids": [
+                "v3-dev-19-negative",
+                "v3-dev-109-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 11,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-24-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-80-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 6,
+              "ids": [
+                "v2-test-24-negative",
+                "v2-test-48-negative",
+                "v2-test-64-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-88-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "v2-test-17-negative",
+                "v2-test-33-negative"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "v2-test-25-negative"
+              ]
+            },
+            "invalid_json": {
+              "count": 6,
+              "ids": [
+                "v2-test-57-negative",
+                "v2-test-65-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 3,
+              "ids": [
+                "hand-000",
+                "hand-004",
+                "hand-005"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-033"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "B": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 9,
+              "ids": [
+                "test-00173",
+                "test-00248",
+                "test-00292",
+                "test-00339",
+                "test-00348",
+                "test-00349",
+                "test-00415",
+                "test-00476",
+                "test-00495"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 8,
+              "ids": [
+                "test-00173",
+                "test-00248",
+                "test-00292",
+                "test-00339",
+                "test-00349",
+                "test-00415",
+                "test-00476",
+                "test-00495"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00001",
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00307",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 4,
+              "ids": [
+                "test-00001",
+                "test-00075",
+                "test-00080",
+                "test-00384"
+              ]
+            },
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "test-00012",
+                "test-00104",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00268",
+                "test-00302",
+                "test-00351"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 7,
+              "ids": [
+                "test-00014",
+                "test-00271",
+                "test-00287",
+                "test-00307",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "test-00003",
+                "test-00088",
+                "test-00141",
+                "test-00170",
+                "test-00180",
+                "test-00198",
+                "test-00209",
+                "test-00256",
+                "test-00320",
+                "test-00327",
+                "test-00382",
+                "test-00405",
+                "test-00414",
+                "test-00439",
+                "test-00458"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {
+            "invalid_json": {
+              "count": 13,
+              "ids": [
+                "test-00026",
+                "test-00059",
+                "test-00096",
+                "test-00106",
+                "test-00138",
+                "test-00144",
+                "test-00260",
+                "test-00279",
+                "test-00291",
+                "test-00361",
+                "test-00367",
+                "test-00453",
+                "test-00480"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00184",
+                "test-00457"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "test-00005",
+                "test-00050",
+                "test-00098",
+                "test-00215",
+                "test-00283",
+                "test-00301",
+                "test-00354",
+                "test-00419",
+                "test-00443",
+                "test-00465"
+              ]
+            },
+            "invalid_json": {
+              "count": 7,
+              "ids": [
+                "test-00148",
+                "test-00204",
+                "test-00357",
+                "test-00398",
+                "test-00467",
+                "test-00474",
+                "test-00477"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "test-00006",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00368",
+                "test-00448"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00057"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 2,
+              "ids": [
+                "test-00253",
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00030",
+                "test-00119",
+                "test-00121",
+                "test-00328",
+                "test-00335"
+              ]
+            }
+          }
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "test-00008",
+                "test-00054",
+                "test-00070",
+                "test-00101",
+                "test-00127",
+                "test-00199",
+                "test-00245",
+                "test-00270",
+                "test-00310",
+                "test-00332",
+                "test-00344",
+                "test-00362",
+                "test-00370",
+                "test-00385",
+                "test-00455"
+              ]
+            },
+            "invalid_json": {
+              "count": 22,
+              "ids": [
+                "test-00045",
+                "test-00047",
+                "test-00055",
+                "test-00060",
+                "test-00087",
+                "test-00093",
+                "test-00100",
+                "test-00103",
+                "test-00237",
+                "test-00252",
+                "test-00258",
+                "test-00264",
+                "test-00294",
+                "test-00324",
+                "test-00381",
+                "test-00428",
+                "test-00440",
+                "test-00446",
+                "test-00451",
+                "test-00466",
+                "test-00491",
+                "test-00494"
+              ]
+            }
+          }
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00010",
+                "test-00149",
+                "test-00153",
+                "test-00234",
+                "test-00289",
+                "test-00319",
+                "test-00358",
+                "test-00391",
+                "test-00436",
+                "test-00469",
+                "test-00478"
+              ]
+            },
+            "invalid_json": {
+              "count": 7,
+              "ids": [
+                "test-00130",
+                "test-00131",
+                "test-00147",
+                "test-00160",
+                "test-00167",
+                "test-00176",
+                "test-00499"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00375",
+                "test-00401",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 10,
+              "ids": [
+                "test-00018",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 10,
+              "ids": [
+                "test-00018",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00375",
+                "test-00411"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00029",
+                "test-00346"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "test-00249"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00249"
+              ]
+            }
+          }
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_skip": {
+              "count": 1,
+              "ids": [
+                "test-00022"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 6,
+              "ids": [
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00454",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00033",
+                "test-00322",
+                "test-00369",
+                "test-00456",
+                "test-00463"
+              ]
+            },
+            "invalid_json": {
+              "count": 5,
+              "ids": [
+                "test-00053",
+                "test-00211",
+                "test-00425",
+                "test-00485",
+                "test-00490"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00025",
+                "test-00090",
+                "test-00193",
+                "test-00205",
+                "test-00235",
+                "test-00243",
+                "test-00303",
+                "test-00360",
+                "test-00402",
+                "test-00407",
+                "test-00447",
+                "test-00479"
+              ]
+            },
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00091"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00027",
+                "test-00044"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 7,
+              "ids": [
+                "test-00046",
+                "test-00062",
+                "test-00135",
+                "test-00192",
+                "test-00298",
+                "test-00352",
+                "test-00486"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {
+            "invalid_schema": {
+              "count": 7,
+              "ids": [
+                "test-00051",
+                "test-00156",
+                "test-00223",
+                "test-00269",
+                "test-00434",
+                "test-00459",
+                "test-00492"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00273",
+                "test-00365"
+              ]
+            }
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_json": {
+              "count": 7,
+              "ids": [
+                "test-00061",
+                "test-00112",
+                "test-00172",
+                "test-00265",
+                "test-00426",
+                "test-00442",
+                "test-00444"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00065"
+              ]
+            },
+            "invalid_schema": {
+              "count": 11,
+              "ids": [
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00255",
+                "test-00259",
+                "test-00290",
+                "test-00312",
+                "test-00410",
+                "test-00481",
+                "test-00496"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "test-00071",
+                "test-00089",
+                "test-00212",
+                "test-00261",
+                "test-00345",
+                "test-00412"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 6,
+              "ids": [
+                "test-00191",
+                "test-00196",
+                "test-00213",
+                "test-00364",
+                "test-00400",
+                "test-00424"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 3,
+              "ids": [
+                "test-00308",
+                "test-00388",
+                "test-00404"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "test-00345",
+                "test-00412"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 4,
+              "ids": [
+                "v3-dev-0-positive",
+                "v3-dev-30-positive",
+                "v3-dev-60-positive",
+                "v3-dev-90-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "v3-dev-0-negative",
+                "v3-dev-20-negative",
+                "v3-dev-30-negative",
+                "v3-dev-40-negative",
+                "v3-dev-60-negative",
+                "v3-dev-70-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "v3-dev-20-negative",
+                "v3-dev-40-negative",
+                "v3-dev-70-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v3-dev-112-positive"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "v3-dev-2-negative",
+                "v3-dev-32-negative",
+                "v3-dev-42-negative",
+                "v3-dev-72-negative",
+                "v3-dev-82-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 5,
+              "ids": [
+                "v3-dev-2-negative",
+                "v3-dev-32-negative",
+                "v3-dev-42-negative",
+                "v3-dev-72-negative",
+                "v3-dev-82-negative"
+              ]
+            }
+          }
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "v3-dev-5-positive",
+                "v3-dev-85-positive"
+              ]
+            }
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 10,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 10,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 6,
+              "ids": [
+                "v3-dev-27-negative",
+                "v3-dev-47-negative",
+                "v3-dev-67-negative",
+                "v3-dev-77-negative",
+                "v3-dev-87-negative",
+                "v3-dev-97-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 6,
+              "ids": [
+                "v3-dev-27-negative",
+                "v3-dev-47-negative",
+                "v3-dev-67-negative",
+                "v3-dev-77-negative",
+                "v3-dev-87-negative",
+                "v3-dev-97-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v3-dev-68-positive"
+              ]
+            }
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "v3-dev-18-negative",
+                "v3-dev-28-negative",
+                "v3-dev-78-negative"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 6,
+              "ids": [
+                "v3-dev-38-negative",
+                "v3-dev-48-negative",
+                "v3-dev-58-negative",
+                "v3-dev-88-negative",
+                "v3-dev-98-negative",
+                "v3-dev-118-negative"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 2,
+              "ids": [
+                "v3-dev-68-negative",
+                "v3-dev-108-negative"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v3-dev-19-positive"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-19-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-109-negative",
+                "v3-dev-119-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v2-test-72-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 11,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-16-negative",
+                "v2-test-24-negative",
+                "v2-test-32-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-72-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unstated_unit_lb": {
+              "count": 2,
+              "ids": [
+                "v2-test-16-negative",
+                "v2-test-24-negative"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 5,
+              "ids": [
+                "v2-test-32-negative",
+                "v2-test-64-negative",
+                "v2-test-72-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 4,
+              "ids": [
+                "v2-test-48-negative",
+                "v2-test-80-negative",
+                "v2-test-88-negative",
+                "v2-test-112-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v2-test-97-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "v2-test-1-negative",
+                "v2-test-17-negative",
+                "v2-test-57-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative",
+                "v2-test-113-negative"
+              ]
+            },
+            "invalid_json": {
+              "count": 7,
+              "ids": [
+                "v2-test-9-negative",
+                "v2-test-25-negative",
+                "v2-test-33-negative",
+                "v2-test-41-negative",
+                "v2-test-49-negative",
+                "v2-test-65-negative",
+                "v2-test-89-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 5,
+              "ids": [
+                "v2-test-10-negative",
+                "v2-test-58-negative",
+                "v2-test-90-negative",
+                "v2-test-106-negative",
+                "v2-test-114-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-98-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "v2-test-98-negative"
+              ]
+            }
+          }
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "v2-test-27-positive",
+                "v2-test-99-positive"
+              ]
+            }
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 3,
+              "ids": [
+                "v2-test-3-negative",
+                "v2-test-35-negative",
+                "v2-test-43-negative"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 10,
+              "ids": [
+                "v2-test-11-negative",
+                "v2-test-19-negative",
+                "v2-test-27-negative",
+                "v2-test-51-negative",
+                "v2-test-59-negative",
+                "v2-test-67-negative",
+                "v2-test-75-negative",
+                "v2-test-83-negative",
+                "v2-test-91-negative",
+                "v2-test-99-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "v2-test-107-negative",
+                "v2-test-115-negative"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "v2-test-107-negative",
+                "v2-test-115-negative"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-29-positive"
+              ]
+            }
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-30-positive"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "v2-test-78-positive",
+                "v2-test-94-positive"
+              ]
+            }
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 13,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 13,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 13,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "v2-test-30-negative"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v2-test-78-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "v2-test-111-positive"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 3,
+              "ids": [
+                "v2-test-15-negative",
+                "v2-test-31-negative",
+                "v2-test-79-negative"
+              ]
+            }
+          }
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-000",
+                "hand-001",
+                "hand-004"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-004"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "hand-002"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-019",
+                "hand-020"
+              ]
+            }
+          }
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-025",
+                "hand-027"
+              ]
+            }
+          }
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-028",
+                "hand-029"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-030"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-034"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-036"
+              ]
+            }
+          }
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-040",
+                "hand-041"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "hand-040",
+                "hand-041"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_skip": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-043"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-046"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 1,
+              "ids": [
+                "hand-047"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-048",
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-054"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "C": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 17,
+              "ids": [
+                "test-00000",
+                "test-00002",
+                "test-00043",
+                "test-00079",
+                "test-00082",
+                "test-00085",
+                "test-00173",
+                "test-00248",
+                "test-00292",
+                "test-00339",
+                "test-00348",
+                "test-00349",
+                "test-00415",
+                "test-00432",
+                "test-00470",
+                "test-00476",
+                "test-00495"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 20,
+              "ids": [
+                "test-00001",
+                "test-00012",
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00104",
+                "test-00175",
+                "test-00185",
+                "test-00225",
+                "test-00268",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00307",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {
+            "invalid_schema": {
+              "count": 18,
+              "ids": [
+                "test-00003",
+                "test-00088",
+                "test-00141",
+                "test-00170",
+                "test-00180",
+                "test-00198",
+                "test-00209",
+                "test-00256",
+                "test-00297",
+                "test-00320",
+                "test-00327",
+                "test-00356",
+                "test-00382",
+                "test-00390",
+                "test-00405",
+                "test-00414",
+                "test-00439",
+                "test-00458"
+              ]
+            }
+          }
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {
+            "invalid_schema": {
+              "count": 94,
+              "ids": [
+                "test-00004",
+                "test-00009",
+                "test-00019",
+                "test-00020",
+                "test-00026",
+                "test-00028",
+                "test-00031",
+                "test-00032",
+                "test-00034",
+                "test-00039",
+                "test-00041",
+                "test-00042",
+                "test-00056",
+                "test-00059",
+                "test-00095",
+                "test-00096",
+                "test-00105",
+                "test-00106",
+                "test-00111",
+                "test-00113",
+                "test-00116",
+                "test-00117",
+                "test-00125",
+                "test-00128",
+                "test-00133",
+                "test-00136",
+                "test-00138",
+                "test-00140",
+                "test-00142",
+                "test-00143",
+                "test-00144",
+                "test-00145",
+                "test-00155",
+                "test-00162",
+                "test-00163",
+                "test-00165",
+                "test-00183",
+                "test-00184",
+                "test-00188",
+                "test-00189",
+                "test-00190",
+                "test-00195",
+                "test-00210",
+                "test-00216",
+                "test-00218",
+                "test-00222",
+                "test-00227",
+                "test-00230",
+                "test-00232",
+                "test-00233",
+                "test-00238",
+                "test-00246",
+                "test-00254",
+                "test-00257",
+                "test-00260",
+                "test-00272",
+                "test-00279",
+                "test-00284",
+                "test-00285",
+                "test-00291",
+                "test-00318",
+                "test-00321",
+                "test-00329",
+                "test-00334",
+                "test-00336",
+                "test-00340",
+                "test-00341",
+                "test-00343",
+                "test-00361",
+                "test-00366",
+                "test-00367",
+                "test-00372",
+                "test-00376",
+                "test-00380",
+                "test-00386",
+                "test-00389",
+                "test-00392",
+                "test-00394",
+                "test-00396",
+                "test-00408",
+                "test-00413",
+                "test-00416",
+                "test-00417",
+                "test-00418",
+                "test-00421",
+                "test-00422",
+                "test-00430",
+                "test-00437",
+                "test-00453",
+                "test-00457",
+                "test-00460",
+                "test-00472",
+                "test-00480",
+                "test-00497"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 16,
+              "ids": [
+                "test-00005",
+                "test-00050",
+                "test-00098",
+                "test-00148",
+                "test-00204",
+                "test-00215",
+                "test-00283",
+                "test-00301",
+                "test-00354",
+                "test-00357",
+                "test-00398",
+                "test-00419",
+                "test-00443",
+                "test-00465",
+                "test-00467",
+                "test-00477"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00474"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "invalid_schema": {
+              "count": 13,
+              "ids": [
+                "test-00006",
+                "test-00057",
+                "test-00083",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00253",
+                "test-00267",
+                "test-00333",
+                "test-00359",
+                "test-00368",
+                "test-00395",
+                "test-00448"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {
+            "invalid_schema": {
+              "count": 25,
+              "ids": [
+                "test-00007",
+                "test-00049",
+                "test-00068",
+                "test-00108",
+                "test-00110",
+                "test-00119",
+                "test-00121",
+                "test-00129",
+                "test-00206",
+                "test-00229",
+                "test-00244",
+                "test-00280",
+                "test-00293",
+                "test-00311",
+                "test-00316",
+                "test-00328",
+                "test-00330",
+                "test-00335",
+                "test-00353",
+                "test-00373",
+                "test-00393",
+                "test-00438",
+                "test-00482",
+                "test-00488",
+                "test-00493"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00030"
+              ]
+            }
+          }
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {
+            "invalid_schema": {
+              "count": 57,
+              "ids": [
+                "test-00008",
+                "test-00011",
+                "test-00045",
+                "test-00047",
+                "test-00054",
+                "test-00055",
+                "test-00064",
+                "test-00067",
+                "test-00070",
+                "test-00072",
+                "test-00073",
+                "test-00077",
+                "test-00086",
+                "test-00087",
+                "test-00093",
+                "test-00100",
+                "test-00101",
+                "test-00103",
+                "test-00114",
+                "test-00127",
+                "test-00174",
+                "test-00178",
+                "test-00186",
+                "test-00199",
+                "test-00203",
+                "test-00237",
+                "test-00239",
+                "test-00245",
+                "test-00252",
+                "test-00258",
+                "test-00264",
+                "test-00266",
+                "test-00270",
+                "test-00294",
+                "test-00304",
+                "test-00310",
+                "test-00313",
+                "test-00324",
+                "test-00325",
+                "test-00332",
+                "test-00344",
+                "test-00350",
+                "test-00362",
+                "test-00370",
+                "test-00381",
+                "test-00383",
+                "test-00385",
+                "test-00428",
+                "test-00440",
+                "test-00445",
+                "test-00446",
+                "test-00450",
+                "test-00451",
+                "test-00455",
+                "test-00466",
+                "test-00491",
+                "test-00494"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00060",
+                "test-00305"
+              ]
+            }
+          }
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {
+            "invalid_schema": {
+              "count": 25,
+              "ids": [
+                "test-00010",
+                "test-00013",
+                "test-00015",
+                "test-00097",
+                "test-00130",
+                "test-00131",
+                "test-00147",
+                "test-00149",
+                "test-00153",
+                "test-00160",
+                "test-00167",
+                "test-00176",
+                "test-00234",
+                "test-00289",
+                "test-00319",
+                "test-00347",
+                "test-00358",
+                "test-00391",
+                "test-00403",
+                "test-00406",
+                "test-00436",
+                "test-00462",
+                "test-00469",
+                "test-00478",
+                "test-00499"
+              ]
+            },
+            "invalid_json": {
+              "count": 2,
+              "ids": [
+                "test-00132",
+                "test-00241"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "invalid_schema": {
+              "count": 14,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00401",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "test-00017",
+                "test-00035",
+                "test-00076",
+                "test-00126",
+                "test-00146",
+                "test-00150",
+                "test-00171",
+                "test-00249",
+                "test-00299",
+                "test-00337",
+                "test-00377",
+                "test-00397"
+              ]
+            }
+          }
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {
+            "invalid_schema": {
+              "count": 16,
+              "ids": [
+                "test-00021",
+                "test-00052",
+                "test-00107",
+                "test-00123",
+                "test-00158",
+                "test-00179",
+                "test-00207",
+                "test-00217",
+                "test-00247",
+                "test-00274",
+                "test-00276",
+                "test-00306",
+                "test-00323",
+                "test-00363",
+                "test-00371",
+                "test-00489"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00074"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "invalid_schema": {
+              "count": 9,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00309",
+                "test-00454",
+                "test-00468",
+                "test-00475"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {
+            "invalid_schema": {
+              "count": 41,
+              "ids": [
+                "test-00023",
+                "test-00033",
+                "test-00037",
+                "test-00048",
+                "test-00053",
+                "test-00069",
+                "test-00078",
+                "test-00081",
+                "test-00122",
+                "test-00139",
+                "test-00154",
+                "test-00166",
+                "test-00168",
+                "test-00181",
+                "test-00211",
+                "test-00224",
+                "test-00236",
+                "test-00262",
+                "test-00281",
+                "test-00286",
+                "test-00295",
+                "test-00300",
+                "test-00315",
+                "test-00317",
+                "test-00322",
+                "test-00331",
+                "test-00338",
+                "test-00369",
+                "test-00378",
+                "test-00379",
+                "test-00423",
+                "test-00425",
+                "test-00429",
+                "test-00435",
+                "test-00441",
+                "test-00456",
+                "test-00463",
+                "test-00471",
+                "test-00484",
+                "test-00485",
+                "test-00490"
+              ]
+            },
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "test-00473"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {
+            "invalid_schema": {
+              "count": 37,
+              "ids": [
+                "test-00024",
+                "test-00063",
+                "test-00066",
+                "test-00084",
+                "test-00092",
+                "test-00094",
+                "test-00102",
+                "test-00124",
+                "test-00151",
+                "test-00152",
+                "test-00157",
+                "test-00169",
+                "test-00187",
+                "test-00194",
+                "test-00202",
+                "test-00208",
+                "test-00220",
+                "test-00240",
+                "test-00250",
+                "test-00263",
+                "test-00278",
+                "test-00296",
+                "test-00314",
+                "test-00326",
+                "test-00342",
+                "test-00355",
+                "test-00374",
+                "test-00387",
+                "test-00399",
+                "test-00409",
+                "test-00420",
+                "test-00427",
+                "test-00431",
+                "test-00449",
+                "test-00483",
+                "test-00487",
+                "test-00498"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {
+            "invalid_schema": {
+              "count": 20,
+              "ids": [
+                "test-00025",
+                "test-00036",
+                "test-00090",
+                "test-00091",
+                "test-00115",
+                "test-00182",
+                "test-00193",
+                "test-00197",
+                "test-00205",
+                "test-00235",
+                "test-00243",
+                "test-00251",
+                "test-00277",
+                "test-00303",
+                "test-00360",
+                "test-00402",
+                "test-00407",
+                "test-00447",
+                "test-00464",
+                "test-00479"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {
+            "invalid_schema": {
+              "count": 9,
+              "ids": [
+                "test-00027",
+                "test-00044",
+                "test-00046",
+                "test-00062",
+                "test-00135",
+                "test-00192",
+                "test-00298",
+                "test-00352",
+                "test-00486"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "test-00040",
+                "test-00099",
+                "test-00159",
+                "test-00200",
+                "test-00228"
+              ]
+            }
+          }
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "test-00051",
+                "test-00156",
+                "test-00223",
+                "test-00269",
+                "test-00273",
+                "test-00288",
+                "test-00365",
+                "test-00434",
+                "test-00459",
+                "test-00492"
+              ]
+            }
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 19,
+              "ids": [
+                "test-00061",
+                "test-00065",
+                "test-00112",
+                "test-00120",
+                "test-00137",
+                "test-00172",
+                "test-00221",
+                "test-00226",
+                "test-00255",
+                "test-00259",
+                "test-00265",
+                "test-00290",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00442",
+                "test-00444",
+                "test-00481",
+                "test-00496"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "test-00071",
+                "test-00089",
+                "test-00191",
+                "test-00196",
+                "test-00212",
+                "test-00213",
+                "test-00261",
+                "test-00308",
+                "test-00345",
+                "test-00364",
+                "test-00388",
+                "test-00400",
+                "test-00404",
+                "test-00412",
+                "test-00424"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-0-positive",
+                "v3-dev-10-positive",
+                "v3-dev-20-positive",
+                "v3-dev-30-positive",
+                "v3-dev-40-positive",
+                "v3-dev-50-positive",
+                "v3-dev-60-positive",
+                "v3-dev-70-positive",
+                "v3-dev-80-positive",
+                "v3-dev-90-positive",
+                "v3-dev-100-positive",
+                "v3-dev-110-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-0-negative",
+                "v3-dev-10-negative",
+                "v3-dev-20-negative",
+                "v3-dev-30-negative",
+                "v3-dev-40-negative",
+                "v3-dev-50-negative",
+                "v3-dev-60-negative",
+                "v3-dev-70-negative",
+                "v3-dev-80-negative",
+                "v3-dev-90-negative",
+                "v3-dev-100-negative",
+                "v3-dev-110-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-1-positive",
+                "v3-dev-11-positive",
+                "v3-dev-21-positive",
+                "v3-dev-31-positive",
+                "v3-dev-41-positive",
+                "v3-dev-51-positive",
+                "v3-dev-61-positive",
+                "v3-dev-71-positive",
+                "v3-dev-81-positive",
+                "v3-dev-91-positive",
+                "v3-dev-101-positive",
+                "v3-dev-111-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-1-negative",
+                "v3-dev-11-negative",
+                "v3-dev-21-negative",
+                "v3-dev-31-negative",
+                "v3-dev-41-negative",
+                "v3-dev-51-negative",
+                "v3-dev-61-negative",
+                "v3-dev-71-negative",
+                "v3-dev-81-negative",
+                "v3-dev-91-negative",
+                "v3-dev-101-negative",
+                "v3-dev-111-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-2-positive",
+                "v3-dev-12-positive",
+                "v3-dev-22-positive",
+                "v3-dev-32-positive",
+                "v3-dev-42-positive",
+                "v3-dev-52-positive",
+                "v3-dev-62-positive",
+                "v3-dev-72-positive",
+                "v3-dev-82-positive",
+                "v3-dev-92-positive",
+                "v3-dev-102-positive",
+                "v3-dev-112-positive"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-2-negative",
+                "v3-dev-12-negative",
+                "v3-dev-22-negative",
+                "v3-dev-32-negative",
+                "v3-dev-42-negative",
+                "v3-dev-52-negative",
+                "v3-dev-62-negative",
+                "v3-dev-72-negative",
+                "v3-dev-82-negative",
+                "v3-dev-92-negative",
+                "v3-dev-102-negative",
+                "v3-dev-112-negative"
+              ]
+            }
+          }
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-3-positive",
+                "v3-dev-13-positive",
+                "v3-dev-23-positive",
+                "v3-dev-33-positive",
+                "v3-dev-43-positive",
+                "v3-dev-53-positive",
+                "v3-dev-63-positive",
+                "v3-dev-73-positive",
+                "v3-dev-83-positive",
+                "v3-dev-93-positive",
+                "v3-dev-103-positive",
+                "v3-dev-113-positive"
+              ]
+            }
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-3-negative",
+                "v3-dev-13-negative",
+                "v3-dev-23-negative",
+                "v3-dev-33-negative",
+                "v3-dev-43-negative",
+                "v3-dev-53-negative",
+                "v3-dev-63-negative",
+                "v3-dev-73-negative",
+                "v3-dev-83-negative",
+                "v3-dev-93-negative",
+                "v3-dev-103-negative",
+                "v3-dev-113-negative"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-4-positive",
+                "v3-dev-14-positive",
+                "v3-dev-24-positive",
+                "v3-dev-34-positive",
+                "v3-dev-44-positive",
+                "v3-dev-54-positive",
+                "v3-dev-64-positive",
+                "v3-dev-74-positive",
+                "v3-dev-84-positive",
+                "v3-dev-94-positive",
+                "v3-dev-104-positive",
+                "v3-dev-114-positive"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-4-negative",
+                "v3-dev-14-negative",
+                "v3-dev-24-negative",
+                "v3-dev-34-negative",
+                "v3-dev-44-negative",
+                "v3-dev-54-negative",
+                "v3-dev-64-negative",
+                "v3-dev-74-negative",
+                "v3-dev-84-negative",
+                "v3-dev-94-negative",
+                "v3-dev-104-negative",
+                "v3-dev-114-negative"
+              ]
+            }
+          }
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-5-positive",
+                "v3-dev-15-positive",
+                "v3-dev-25-positive",
+                "v3-dev-35-positive",
+                "v3-dev-45-positive",
+                "v3-dev-55-positive",
+                "v3-dev-65-positive",
+                "v3-dev-75-positive",
+                "v3-dev-85-positive",
+                "v3-dev-95-positive",
+                "v3-dev-105-positive",
+                "v3-dev-115-positive"
+              ]
+            }
+          }
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-5-negative",
+                "v3-dev-15-negative",
+                "v3-dev-25-negative",
+                "v3-dev-35-negative",
+                "v3-dev-45-negative",
+                "v3-dev-55-negative",
+                "v3-dev-65-negative",
+                "v3-dev-75-negative",
+                "v3-dev-85-negative",
+                "v3-dev-95-negative",
+                "v3-dev-105-negative",
+                "v3-dev-115-negative"
+              ]
+            }
+          }
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-positive",
+                "v3-dev-16-positive",
+                "v3-dev-26-positive",
+                "v3-dev-36-positive",
+                "v3-dev-46-positive",
+                "v3-dev-56-positive",
+                "v3-dev-66-positive",
+                "v3-dev-76-positive",
+                "v3-dev-86-positive",
+                "v3-dev-96-positive",
+                "v3-dev-106-positive",
+                "v3-dev-116-positive"
+              ]
+            }
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-26-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-7-positive",
+                "v3-dev-17-positive",
+                "v3-dev-27-positive",
+                "v3-dev-37-positive",
+                "v3-dev-47-positive",
+                "v3-dev-57-positive",
+                "v3-dev-67-positive",
+                "v3-dev-77-positive",
+                "v3-dev-87-positive",
+                "v3-dev-97-positive",
+                "v3-dev-107-positive",
+                "v3-dev-117-positive"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-7-negative",
+                "v3-dev-17-negative",
+                "v3-dev-27-negative",
+                "v3-dev-37-negative",
+                "v3-dev-47-negative",
+                "v3-dev-57-negative",
+                "v3-dev-67-negative",
+                "v3-dev-77-negative",
+                "v3-dev-87-negative",
+                "v3-dev-97-negative",
+                "v3-dev-107-negative",
+                "v3-dev-117-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-8-positive",
+                "v3-dev-18-positive",
+                "v3-dev-28-positive",
+                "v3-dev-38-positive",
+                "v3-dev-48-positive",
+                "v3-dev-58-positive",
+                "v3-dev-68-positive",
+                "v3-dev-78-positive",
+                "v3-dev-88-positive",
+                "v3-dev-98-positive",
+                "v3-dev-108-positive",
+                "v3-dev-118-positive"
+              ]
+            }
+          }
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-8-negative",
+                "v3-dev-18-negative",
+                "v3-dev-28-negative",
+                "v3-dev-38-negative",
+                "v3-dev-48-negative",
+                "v3-dev-58-negative",
+                "v3-dev-68-negative",
+                "v3-dev-78-negative",
+                "v3-dev-88-negative",
+                "v3-dev-98-negative",
+                "v3-dev-108-negative",
+                "v3-dev-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-9-positive",
+                "v3-dev-19-positive",
+                "v3-dev-29-positive",
+                "v3-dev-39-positive",
+                "v3-dev-49-positive",
+                "v3-dev-59-positive",
+                "v3-dev-69-positive",
+                "v3-dev-79-positive",
+                "v3-dev-89-positive",
+                "v3-dev-99-positive",
+                "v3-dev-109-positive",
+                "v3-dev-119-positive"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 12,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-19-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-59-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-89-negative",
+                "v3-dev-99-negative",
+                "v3-dev-109-negative",
+                "v3-dev-119-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-0-positive",
+                "v2-test-8-positive",
+                "v2-test-16-positive",
+                "v2-test-24-positive",
+                "v2-test-32-positive",
+                "v2-test-40-positive",
+                "v2-test-48-positive",
+                "v2-test-56-positive",
+                "v2-test-64-positive",
+                "v2-test-72-positive",
+                "v2-test-80-positive",
+                "v2-test-88-positive",
+                "v2-test-96-positive",
+                "v2-test-104-positive",
+                "v2-test-112-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-16-negative",
+                "v2-test-24-negative",
+                "v2-test-32-negative",
+                "v2-test-40-negative",
+                "v2-test-48-negative",
+                "v2-test-56-negative",
+                "v2-test-64-negative",
+                "v2-test-72-negative",
+                "v2-test-80-negative",
+                "v2-test-88-negative",
+                "v2-test-96-negative",
+                "v2-test-104-negative",
+                "v2-test-112-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-1-positive",
+                "v2-test-9-positive",
+                "v2-test-17-positive",
+                "v2-test-25-positive",
+                "v2-test-33-positive",
+                "v2-test-41-positive",
+                "v2-test-49-positive",
+                "v2-test-57-positive",
+                "v2-test-65-positive",
+                "v2-test-73-positive",
+                "v2-test-81-positive",
+                "v2-test-89-positive",
+                "v2-test-97-positive",
+                "v2-test-105-positive",
+                "v2-test-113-positive"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-1-negative",
+                "v2-test-9-negative",
+                "v2-test-17-negative",
+                "v2-test-25-negative",
+                "v2-test-33-negative",
+                "v2-test-41-negative",
+                "v2-test-49-negative",
+                "v2-test-57-negative",
+                "v2-test-65-negative",
+                "v2-test-73-negative",
+                "v2-test-81-negative",
+                "v2-test-89-negative",
+                "v2-test-97-negative",
+                "v2-test-105-negative",
+                "v2-test-113-negative"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-2-positive",
+                "v2-test-10-positive",
+                "v2-test-18-positive",
+                "v2-test-26-positive",
+                "v2-test-34-positive",
+                "v2-test-42-positive",
+                "v2-test-50-positive",
+                "v2-test-58-positive",
+                "v2-test-66-positive",
+                "v2-test-74-positive",
+                "v2-test-82-positive",
+                "v2-test-90-positive",
+                "v2-test-98-positive",
+                "v2-test-106-positive",
+                "v2-test-114-positive"
+              ]
+            }
+          }
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-2-negative",
+                "v2-test-10-negative",
+                "v2-test-18-negative",
+                "v2-test-26-negative",
+                "v2-test-34-negative",
+                "v2-test-42-negative",
+                "v2-test-50-negative",
+                "v2-test-58-negative",
+                "v2-test-66-negative",
+                "v2-test-74-negative",
+                "v2-test-82-negative",
+                "v2-test-90-negative",
+                "v2-test-98-negative",
+                "v2-test-106-negative",
+                "v2-test-114-negative"
+              ]
+            }
+          }
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-3-positive",
+                "v2-test-11-positive",
+                "v2-test-19-positive",
+                "v2-test-27-positive",
+                "v2-test-35-positive",
+                "v2-test-43-positive",
+                "v2-test-51-positive",
+                "v2-test-59-positive",
+                "v2-test-67-positive",
+                "v2-test-75-positive",
+                "v2-test-83-positive",
+                "v2-test-91-positive",
+                "v2-test-99-positive",
+                "v2-test-107-positive",
+                "v2-test-115-positive"
+              ]
+            }
+          }
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-3-negative",
+                "v2-test-11-negative",
+                "v2-test-19-negative",
+                "v2-test-27-negative",
+                "v2-test-35-negative",
+                "v2-test-43-negative",
+                "v2-test-51-negative",
+                "v2-test-59-negative",
+                "v2-test-67-negative",
+                "v2-test-75-negative",
+                "v2-test-83-negative",
+                "v2-test-91-negative",
+                "v2-test-99-negative",
+                "v2-test-107-negative",
+                "v2-test-115-negative"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-4-positive",
+                "v2-test-12-positive",
+                "v2-test-20-positive",
+                "v2-test-28-positive",
+                "v2-test-36-positive",
+                "v2-test-44-positive",
+                "v2-test-52-positive",
+                "v2-test-60-positive",
+                "v2-test-68-positive",
+                "v2-test-76-positive",
+                "v2-test-84-positive",
+                "v2-test-92-positive",
+                "v2-test-100-positive",
+                "v2-test-108-positive",
+                "v2-test-116-positive"
+              ]
+            }
+          }
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-4-negative",
+                "v2-test-12-negative",
+                "v2-test-20-negative",
+                "v2-test-28-negative",
+                "v2-test-36-negative",
+                "v2-test-44-negative",
+                "v2-test-52-negative",
+                "v2-test-60-negative",
+                "v2-test-68-negative",
+                "v2-test-76-negative",
+                "v2-test-84-negative",
+                "v2-test-92-negative",
+                "v2-test-100-negative",
+                "v2-test-108-negative",
+                "v2-test-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-5-positive",
+                "v2-test-13-positive",
+                "v2-test-21-positive",
+                "v2-test-29-positive",
+                "v2-test-37-positive",
+                "v2-test-45-positive",
+                "v2-test-53-positive",
+                "v2-test-61-positive",
+                "v2-test-69-positive",
+                "v2-test-77-positive",
+                "v2-test-85-positive",
+                "v2-test-93-positive",
+                "v2-test-101-positive",
+                "v2-test-109-positive",
+                "v2-test-117-positive"
+              ]
+            }
+          }
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-5-negative",
+                "v2-test-13-negative",
+                "v2-test-21-negative",
+                "v2-test-29-negative",
+                "v2-test-37-negative",
+                "v2-test-45-negative",
+                "v2-test-53-negative",
+                "v2-test-61-negative",
+                "v2-test-69-negative",
+                "v2-test-77-negative",
+                "v2-test-85-negative",
+                "v2-test-93-negative",
+                "v2-test-101-negative",
+                "v2-test-109-negative",
+                "v2-test-117-negative"
+              ]
+            }
+          }
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-positive",
+                "v2-test-14-positive",
+                "v2-test-22-positive",
+                "v2-test-30-positive",
+                "v2-test-38-positive",
+                "v2-test-46-positive",
+                "v2-test-54-positive",
+                "v2-test-62-positive",
+                "v2-test-70-positive",
+                "v2-test-78-positive",
+                "v2-test-86-positive",
+                "v2-test-94-positive",
+                "v2-test-102-positive",
+                "v2-test-110-positive",
+                "v2-test-118-positive"
+              ]
+            }
+          }
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-7-positive",
+                "v2-test-15-positive",
+                "v2-test-23-positive",
+                "v2-test-31-positive",
+                "v2-test-39-positive",
+                "v2-test-47-positive",
+                "v2-test-55-positive",
+                "v2-test-63-positive",
+                "v2-test-71-positive",
+                "v2-test-79-positive",
+                "v2-test-87-positive",
+                "v2-test-95-positive",
+                "v2-test-103-positive",
+                "v2-test-111-positive",
+                "v2-test-119-positive"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 15,
+              "ids": [
+                "v2-test-7-negative",
+                "v2-test-15-negative",
+                "v2-test-23-negative",
+                "v2-test-31-negative",
+                "v2-test-39-negative",
+                "v2-test-47-negative",
+                "v2-test-55-negative",
+                "v2-test-63-negative",
+                "v2-test-71-negative",
+                "v2-test-79-negative",
+                "v2-test-87-negative",
+                "v2-test-95-negative",
+                "v2-test-103-negative",
+                "v2-test-111-negative",
+                "v2-test-119-negative"
+              ]
+            }
+          }
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "invalid_schema": {
+              "count": 8,
+              "ids": [
+                "hand-000",
+                "hand-001",
+                "hand-002",
+                "hand-003",
+                "hand-004",
+                "hand-005",
+                "hand-006",
+                "hand-007"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-008",
+                "hand-009",
+                "hand-010"
+              ]
+            }
+          }
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-011",
+                "hand-012",
+                "hand-013"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "hand-014",
+                "hand-015",
+                "hand-016",
+                "hand-017",
+                "hand-018"
+              ]
+            }
+          }
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-019",
+                "hand-020"
+              ]
+            }
+          }
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {
+            "invalid_schema": {
+              "count": 4,
+              "ids": [
+                "hand-021",
+                "hand-022",
+                "hand-023",
+                "hand-024"
+              ]
+            }
+          }
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-025",
+                "hand-026",
+                "hand-027"
+              ]
+            }
+          }
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {
+            "invalid_json": {
+              "count": 1,
+              "ids": [
+                "hand-028"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-029"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-030"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "invalid_schema": {
+              "count": 5,
+              "ids": [
+                "hand-031",
+                "hand-032",
+                "hand-033",
+                "hand-034",
+                "hand-035"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-036",
+                "hand-037",
+                "hand-038"
+              ]
+            }
+          }
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-039",
+                "hand-040",
+                "hand-041"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-042",
+                "hand-043"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-044",
+                "hand-045"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-046",
+                "hand-047"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-048",
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "invalid_schema": {
+              "count": 3,
+              "ids": [
+                "hand-050",
+                "hand-051",
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-054",
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-056",
+                "hand-057"
+              ]
+            }
+          }
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "hand-058",
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "D": {
+      "dev-eval": {
+        "clarify_uncertain_quantity": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_missing_unit": {
+          "total": 20,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 18,
+              "ids": [
+                "test-00012",
+                "test-00014",
+                "test-00075",
+                "test-00080",
+                "test-00104",
+                "test-00185",
+                "test-00225",
+                "test-00268",
+                "test-00271",
+                "test-00282",
+                "test-00287",
+                "test-00302",
+                "test-00307",
+                "test-00351",
+                "test-00384",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 5,
+              "ids": [
+                "test-00287",
+                "test-00307",
+                "test-00433",
+                "test-00452",
+                "test-00461"
+              ]
+            }
+          }
+        },
+        "correct_rpe": {
+          "total": 18,
+          "issues": {}
+        },
+        "record_weighted": {
+          "total": 94,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "test-00232"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 17,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00050",
+                "test-00443"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 3,
+              "ids": [
+                "test-00215",
+                "test-00283",
+                "test-00301"
+              ]
+            },
+            "unstated_reps": {
+              "count": 3,
+              "ids": [
+                "test-00215",
+                "test-00283",
+                "test-00301"
+              ]
+            }
+          }
+        },
+        "clarify_negation": {
+          "total": 13,
+          "issues": {
+            "clarification_replaced_by_skip": {
+              "count": 5,
+              "ids": [
+                "test-00006",
+                "test-00109",
+                "test-00134",
+                "test-00242",
+                "test-00448"
+              ]
+            },
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00267",
+                "test-00395"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "test-00395"
+              ]
+            }
+          }
+        },
+        "skip": {
+          "total": 26,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 59,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 27,
+          "issues": {}
+        },
+        "clarify_rpe_scope": {
+          "total": 14,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 14,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00401",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 14,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00401",
+                "test-00411"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 14,
+              "ids": [
+                "test-00016",
+                "test-00018",
+                "test-00029",
+                "test-00038",
+                "test-00161",
+                "test-00177",
+                "test-00201",
+                "test-00214",
+                "test-00231",
+                "test-00275",
+                "test-00346",
+                "test-00375",
+                "test-00401",
+                "test-00411"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 12,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 17,
+          "issues": {}
+        },
+        "clarify_unknown_exercise": {
+          "total": 9,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 6,
+              "ids": [
+                "test-00022",
+                "test-00058",
+                "test-00118",
+                "test-00164",
+                "test-00219",
+                "test-00475"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "test-00309"
+              ]
+            }
+          }
+        },
+        "record_uniform": {
+          "total": 42,
+          "issues": {}
+        },
+        "record_bodyweight": {
+          "total": 37,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 20,
+          "issues": {}
+        },
+        "clarify_unsupported_unit": {
+          "total": 9,
+          "issues": {}
+        },
+        "end": {
+          "total": 5,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 10,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 19,
+          "issues": {
+            "invalid_schema": {
+              "count": 17,
+              "ids": [
+                "test-00061",
+                "test-00112",
+                "test-00120",
+                "test-00137",
+                "test-00221",
+                "test-00226",
+                "test-00255",
+                "test-00259",
+                "test-00265",
+                "test-00290",
+                "test-00312",
+                "test-00410",
+                "test-00426",
+                "test-00442",
+                "test-00444",
+                "test-00481",
+                "test-00496"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00065",
+                "test-00172"
+              ]
+            }
+          }
+        },
+        "clarify_plan_not_actual": {
+          "total": 15,
+          "issues": {
+            "invalid_schema": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00400"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 2,
+              "ids": [
+                "test-00089",
+                "test-00400"
+              ]
+            },
+            "clarification_replaced_by_skip": {
+              "count": 3,
+              "ids": [
+                "test-00191",
+                "test-00212",
+                "test-00213"
+              ]
+            },
+            "clarification_replaced_by_repeat": {
+              "count": 3,
+              "ids": [
+                "test-00196",
+                "test-00261",
+                "test-00424"
+              ]
+            },
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "test-00308"
+              ]
+            },
+            "wrong_legal_reason": {
+              "count": 2,
+              "ids": [
+                "test-00364",
+                "test-00412"
+              ]
+            }
+          }
+        },
+        "contrast_missing_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 12,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 11,
+              "ids": [
+                "v3-dev-6-negative",
+                "v3-dev-16-negative",
+                "v3-dev-36-negative",
+                "v3-dev-46-negative",
+                "v3-dev-56-negative",
+                "v3-dev-66-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-96-negative",
+                "v3-dev-106-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 4,
+              "ids": [
+                "v3-dev-16-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-116-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 4,
+              "ids": [
+                "v3-dev-16-negative",
+                "v3-dev-76-negative",
+                "v3-dev-86-negative",
+                "v3-dev-116-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_unsupported_unit_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 10,
+              "ids": [
+                "v3-dev-8-negative",
+                "v3-dev-18-negative",
+                "v3-dev-28-negative",
+                "v3-dev-38-negative",
+                "v3-dev-48-negative",
+                "v3-dev-58-negative",
+                "v3-dev-78-negative",
+                "v3-dev-98-negative",
+                "v3-dev-108-negative",
+                "v3-dev-118-negative"
+              ]
+            }
+          }
+        },
+        "contrast_out_of_range_positive": {
+          "total": 12,
+          "issues": {}
+        },
+        "contrast_out_of_range_negative": {
+          "total": 12,
+          "issues": {
+            "invalid_schema": {
+              "count": 9,
+              "ids": [
+                "v3-dev-9-negative",
+                "v3-dev-19-negative",
+                "v3-dev-29-negative",
+                "v3-dev-39-negative",
+                "v3-dev-49-negative",
+                "v3-dev-69-negative",
+                "v3-dev-79-negative",
+                "v3-dev-99-negative",
+                "v3-dev-119-negative"
+              ]
+            }
+          }
+        }
+      },
+      "challenge": {
+        "contrast_missing_unit_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_unit_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 4,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative",
+                "v2-test-56-negative"
+              ]
+            },
+            "unverified_reps_role": {
+              "count": 3,
+              "ids": [
+                "v2-test-0-negative",
+                "v2-test-8-negative",
+                "v2-test-40-negative"
+              ]
+            }
+          }
+        },
+        "contrast_missing_reps_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_missing_reps_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_plan_not_actual_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_negation_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_uncertain_quantity_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_question_negative": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_rpe_scope_negative": {
+          "total": 15,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 15,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-94-negative",
+                "v2-test-102-negative",
+                "v2-test-110-negative",
+                "v2-test-118-negative"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 12,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-110-negative"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 12,
+              "ids": [
+                "v2-test-6-negative",
+                "v2-test-14-negative",
+                "v2-test-22-negative",
+                "v2-test-30-negative",
+                "v2-test-38-negative",
+                "v2-test-46-negative",
+                "v2-test-54-negative",
+                "v2-test-62-negative",
+                "v2-test-70-negative",
+                "v2-test-78-negative",
+                "v2-test-86-negative",
+                "v2-test-110-negative"
+              ]
+            }
+          }
+        },
+        "contrast_unknown_exercise_positive": {
+          "total": 15,
+          "issues": {}
+        },
+        "contrast_unknown_exercise_negative": {
+          "total": 15,
+          "issues": {}
+        }
+      },
+      "handwritten": {
+        "record_weighted": {
+          "total": 8,
+          "issues": {
+            "false_refusal": {
+              "count": 2,
+              "ids": [
+                "hand-000",
+                "hand-006"
+              ]
+            },
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-004"
+              ]
+            },
+            "illegal_clarification_reason": {
+              "count": 1,
+              "ids": [
+                "hand-004"
+              ]
+            }
+          }
+        },
+        "record_bodyweight": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_list": {
+          "total": 3,
+          "issues": {}
+        },
+        "record_uniform": {
+          "total": 5,
+          "issues": {}
+        },
+        "record_pyramid": {
+          "total": 2,
+          "issues": {}
+        },
+        "repeat": {
+          "total": 4,
+          "issues": {}
+        },
+        "correct_reps": {
+          "total": 3,
+          "issues": {}
+        },
+        "correct_weight": {
+          "total": 2,
+          "issues": {}
+        },
+        "correct_rpe": {
+          "total": 1,
+          "issues": {}
+        },
+        "skip": {
+          "total": 5,
+          "issues": {
+            "false_refusal": {
+              "count": 1,
+              "ids": [
+                "hand-032"
+              ]
+            }
+          }
+        },
+        "end": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_uncertain_quantity": {
+          "total": 3,
+          "issues": {}
+        },
+        "clarify_plan_not_actual": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_skip": {
+              "count": 1,
+              "ids": [
+                "hand-042"
+              ]
+            }
+          }
+        },
+        "clarify_question": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_negation": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_skip": {
+              "count": 2,
+              "ids": [
+                "hand-046",
+                "hand-047"
+              ]
+            }
+          }
+        },
+        "clarify_missing_reps": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            },
+            "unstated_reps": {
+              "count": 1,
+              "ids": [
+                "hand-049"
+              ]
+            }
+          }
+        },
+        "clarify_missing_unit": {
+          "total": 3,
+          "issues": {
+            "clarification_replaced_by_correct": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            },
+            "unstated_unit_kg": {
+              "count": 1,
+              "ids": [
+                "hand-052"
+              ]
+            }
+          }
+        },
+        "clarify_unsupported_unit": {
+          "total": 1,
+          "issues": {
+            "wrong_legal_reason": {
+              "count": 1,
+              "ids": [
+                "hand-053"
+              ]
+            }
+          }
+        },
+        "clarify_rpe_scope": {
+          "total": 2,
+          "issues": {
+            "clarification_replaced_by_record": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_multiple_sets": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            },
+            "effort_assigned_to_every_set": {
+              "count": 1,
+              "ids": [
+                "hand-055"
+              ]
+            }
+          }
+        },
+        "clarify_unknown_exercise": {
+          "total": 2,
+          "issues": {}
+        },
+        "clarify_out_of_range": {
+          "total": 2,
+          "issues": {
+            "invalid_schema": {
+              "count": 1,
+              "ids": [
+                "hand-059"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "newModelCalls": 0,
+  "manifestSha256": "d06ba27accc6482e547819fb348d34ae2355f19b5d6c4c1b790eb5960a39658f",
+  "inputsSha256": {
+    "dev-eval.gold.jsonl": "79fd113684d19be4e65bab519ce181914731dd9e1ea2d44c3e6bd1ae2f9f9000",
+    "challenge.gold.jsonl": "ff192acd18f707960c2fa800e8a962350260c2619ee20bbdd1f7e0d87db9ad08",
+    "handwritten.gold.jsonl": "73aa3bb76fc1e20dbbe3bfc2f76e1baec9b70c33355de41de92f1785b1b64e85",
+    "A.jsonl": "1a7e56d1dd6b6b5751324ec2abd196bbc311bcd8c9e1eb314688f8a631bf4b7a",
+    "B.jsonl": "dcb7addcbfcf654b12a82940b51931d3a6761cb300a0fd834bf2f3c9a9f758f2",
+    "C.jsonl": "7114627d876f911cd6ec653269d5d1bcb10a2d0516e24c1dcbdcf91f08f3c9a2",
+    "D.jsonl": "67136bc1f7e0dd241d9cd5ccf574f6ff38f3f37635dc4b07818eb9a38c02448e"
+  },
+  "sourceCommit": "fd4205e8c99048a3e5e720c3ad009f30050cc34a",
+  "note": "Post-result descriptive counts. Synthetic observed development cases only; overlapping issues are not extra errors or actual writes. Binding categories require exact numerical sets. No private20 originals/derivatives or training input is read.",
+  "arms": {
+    "A": {
+      "dev-eval": {},
+      "challenge": {
+        "different_available_identity": {
+          "count": 16,
+          "ids": [
+            "v2-test-1-positive",
+            "v2-test-26-positive",
+            "v2-test-36-positive",
+            "v2-test-42-positive",
+            "v2-test-48-positive",
+            "v2-test-49-positive",
+            "v2-test-64-positive",
+            "v2-test-72-positive",
+            "v2-test-75-positive",
+            "v2-test-79-positive",
+            "v2-test-84-positive",
+            "v2-test-91-positive",
+            "v2-test-92-positive",
+            "v2-test-94-positive",
+            "v2-test-108-positive",
+            "v2-test-118-positive"
+          ]
+        }
+      },
+      "handwritten": {}
+    },
+    "B": {
+      "dev-eval": {
+        "resolved_equal": {
+          "count": 1,
+          "ids": [
+            "test-00157"
+          ]
+        }
+      },
+      "challenge": {
+        "different_available_identity": {
+          "count": 9,
+          "ids": [
+            "v2-test-1-positive",
+            "v2-test-26-positive",
+            "v2-test-36-positive",
+            "v2-test-42-positive",
+            "v2-test-49-positive",
+            "v2-test-64-positive",
+            "v2-test-84-positive",
+            "v2-test-91-positive",
+            "v2-test-108-positive"
+          ]
+        }
+      },
+      "handwritten": {
+        "resolved_equal": {
+          "count": 1,
+          "ids": [
+            "hand-005"
+          ]
+        }
+      }
+    },
+    "C": {
+      "dev-eval": {},
+      "challenge": {},
+      "handwritten": {}
+    },
+    "D": {
+      "dev-eval": {
+        "different_available_identity": {
+          "count": 5,
+          "ids": [
+            "test-00096",
+            "test-00195",
+            "test-00338",
+            "test-00453",
+            "test-00457"
+          ]
+        },
+        "resolved_equal": {
+          "count": 4,
+          "ids": [
+            "test-00254",
+            "test-00321",
+            "test-00366",
+            "test-00480"
+          ]
+        }
+      },
+      "challenge": {
+        "different_available_identity": {
+          "count": 5,
+          "ids": [
+            "v2-test-46-positive",
+            "v2-test-71-positive",
+            "v2-test-76-positive",
+            "v2-test-93-positive",
+            "v2-test-112-positive"
+          ]
+        }
+      },
+      "handwritten": {
+        "resolved_equal": {
+          "count": 1,
+          "ids": [
+            "hand-005"
+          ]
+        }
+      }
+    }
+  }
+}
