@@ -10,6 +10,7 @@ import {workoutReviewApprovalSchema,type WorkoutReview} from "@liftcut/core/work
 import {sessionsToWorkoutLogs} from "@liftcut/core/today";
 import {storedSet} from "@liftcut/core/workout-context";
 import {projectOperation} from "@liftcut/core/workout-outbox";
+import {coachResponseSchema} from "@liftcut/core/coach-contract";
 import {testUrl} from "./today-setup";
 
 test("conversation review ledger: real transactions, source references, confirmation, revisions and owner isolation",async t=>{
@@ -21,7 +22,11 @@ test("conversation review ledger: real transactions, source references, confirma
   const prepare=async(text:string,input:unknown)=>{
     const requestId=randomUUID(),c=await store.beginConversation(owner,cid,requestId);assert.ok(c);
     const p=groundWorkoutReview(input,text,c.session,c.state,{id:randomUUID(),conversationId:cid,requestId,newId:randomUUID});
-    await store.prepareReview(owner,p);return p;
+    await store.prepareReview(owner,p);
+    // Exercise the shared wire validator against real server-prepared previews.
+    coachResponseSchema.parse({requestId,message:"Confirm",model:"fixture",provider:"fixture",sources:[],proposal:{
+      kind:"workoutReview",session:c.session,hash:"fixture",review:p,operation:{action:"review",body:approval(p)}}});
+    return p;
   };
   try{
     await admin.query("insert into auth.users values($1),($2)",[owner,other]);
@@ -53,6 +58,8 @@ test("conversation review ledger: real transactions, source references, confirma
       const p=await prepare("坐姿划船42公斤，9次",{kind:"record",exerciseId:row,targetQuote:null,groups:[group("42公斤","9次")]});
       const results=await Promise.all([1,2,3].map(()=>store.approveReview(owner,approval(p))));session=results[0].session;
       assert.equal(session.sets.length,1);assert.equal((await store.trace(owner,p.requests[0].id)).events.length,1);
+      assert.equal((await store.beginConversation(owner,cid,randomUUID()))!.state.focus?.recordId,p.requests[0].id);
+      for(let i=0;i<8;i++)await store.beginConversation(owner,cid,randomUUID());
       assert.equal((await store.beginConversation(owner,cid,randomUUID()))!.state.focus?.recordId,p.requests[0].id);
     });
     await t.test("extra actual set can inherit known load without changing prescription; correction patches same identity",async()=>{
