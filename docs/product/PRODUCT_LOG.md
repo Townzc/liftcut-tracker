@@ -5,7 +5,7 @@
 - Extracted the existing web history state machine and prose schemas to framework-free core. Browser transport remains a thin cookie adapter; the next mobile slice will inject bearer transport and AsyncStorage.
 - Async cache writes are ordered; leaving can retain drafts, logout can erase them, and late reads cannot revive a disposed account. Stored turns still exclude proposals, proofs, source rows and provisional streamed text. Remote pages are runtime-validated.
 - Ran: root `npm test` (9 JS + 263 TS), `npm run lint` (zero errors/two existing warnings), fixture-environment `npm run build`, core and mobile `npm run typecheck`.
-- `node --test --import tsx tests/coach-history.test.ts tests/coach-history-async.test.ts` — 10 pass, including delayed storage, account isolation, corruption and storage failure.
+- `node --test --import tsx tests/coach-history.test.ts tests/coach-history-async.test.ts` — 11 pass, including effect cleanup/reactivation, delayed storage, account isolation, corruption and storage failure.
 - `npx playwright test --config playwright.w1b.config.ts history-chat.spec.ts history-webkit.spec.ts workout-context.spec.ts` — 8 pass against isolated local PostgreSQL, scripted model/auth. WebKit/WeChat slow-network runs are desktop emulation.
 - User-visible regression checked: web drafts/history still survive tabs and reload; unconfirmed historical text never restores an executable approval. No database/API migration or production data access.
 - Limits/next: mobile storage/UI adapter follows separately. No new training, production parser switch, native binary, device or production runtime acceptance.

@@ -35,6 +35,14 @@ test("a late storage read cannot reopen a disposed account", async () => {
   assert.equal(published, 0); assert.equal(client.snapshot().ready, false); assert.equal(client.snapshot().text, "");
 });
 
+test("effect cleanup followed by immediate reactivation preserves the stored draft", async () => {
+  const entries = new Map<string, string>(), owner = randomUUID(), a = new CoachHistoryClient(owner, false, io(entries));
+  await a.activate(); a.setText("persisted draft"); await a.whenStored(); a.dispose(false);
+  const b = new CoachHistoryClient(owner, false, io(entries)), first = b.activate();
+  b.dispose(); await b.activate(); await first;
+  assert.equal(b.snapshot().text, "persisted draft"); b.dispose(); await b.whenStored(); assert.equal(entries.size, 0);
+});
+
 test("cache failures are reported and malformed remote history is not adopted", async () => {
   const adapter = io(); adapter.storage.setItem = async () => { throw Error("full"); };
   const client = new CoachHistoryClient(randomUUID(), false, adapter); await client.activate(); client.setText("unsaved");

@@ -73,8 +73,9 @@ export class CoachHistoryClient {
   }
   dispose(eraseCache=true){
     this.alive=false;this.activation++;this.io.dispose();
-    const owner=this.owner;
-    if(owner&&eraseCache)this.store(()=>this.io.storage.removeItem(key(owner)));
+    const owner=this.owner,ticket=this.activation;
+    // Effect replay may reactivate this same client before the queued erase runs.
+    if(owner&&eraseCache)this.store(()=>{if(!this.alive&&ticket===this.activation)return this.io.storage.removeItem(key(owner));});
   }
   setText=(text:string)=>{const c=this.chats.get(this.state.id);if(!c)return;c.text=text;this.publish();this.cache();};
   setTurns=(next:CoachTurn[]|((xs:CoachTurn[])=>CoachTurn[]))=>{
