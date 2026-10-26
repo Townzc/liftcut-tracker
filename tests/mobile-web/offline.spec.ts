@@ -30,7 +30,7 @@ test("API down: queued sets survive a cold restart and automatically sync while 
   await expect(status).toHaveText("已同步");
   net.down = true;
   for (const n of [1, 2, 3]) {
-    await row(n).getByLabel(`第 ${n} 组 重量 (kg)`).fill("60"); await row(n).getByLabel(`第 ${n} 组 次数`).fill(String(4 + n));
+    await row(n).getByLabel(`第 ${n} 组 重量（公斤）`).fill("60"); await row(n).getByLabel(`第 ${n} 组 次数`).fill(String(4 + n));
     await row(n).getByRole("button", { name: "完成" }).click(); await expect(row(n).getByText("已完成")).toBeVisible();
   }
   await expect(status).toContainText("待同步 3 条");

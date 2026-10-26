@@ -38,7 +38,7 @@ test("the phone reviews a finished workout: one change accepted and applied thro
   const squat = (await active()).prescription.exercises.find((e: { name: string }) => e.name === "深蹲").id;
   for (const n of [1, 2, 3]) {
     const row = page.getByTestId(`set-${squat}-${n}`);
-    await row.getByLabel(`第 ${n} 组 重量 (kg)`).fill("60"); await row.getByLabel(`第 ${n} 组 次数`).fill("10");
+    await row.getByLabel(`第 ${n} 组 重量（公斤）`).fill("60"); await row.getByLabel(`第 ${n} 组 次数`).fill("10");
     await row.getByRole("button", { name: "完成" }).click(); await expect(row.getByText("已完成")).toBeVisible();
   }
   await page.getByRole("button", { name: "结束训练" }).click(); await expect(status).toHaveText("已同步");

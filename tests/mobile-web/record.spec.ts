@@ -28,8 +28,8 @@ test("the Expo app records sets through the shared write path: prefill provenanc
   await page.getByRole("button", { name: "开始训练" }).click();
   await expect(page.getByText("进行中的训练 · 手机训练 B")).toBeVisible();
   const row = (n: number) => page.getByTestId(`set-${exercise}-${n}`);
-  await expect(row(1).getByText("上次：50 kg × 10")).toBeVisible();
-  await expect(row(1).getByLabel("第 1 组 RPE")).toHaveValue(""); // RPE is never prefilled.
+  await expect(row(1).getByText("上次：50 公斤 × 10")).toBeVisible();
+  await expect(row(1).getByLabel("第 1 组 主观强度")).toHaveValue(""); // RPE is never prefilled.
   await expect(page.getByTestId("rest-timer")).toHaveCount(0);
   await page.getByRole("button", { name: "60 秒" }).click();
   await row(1).getByRole("button", { name: "完成" }).click();
@@ -40,7 +40,7 @@ test("the Expo app records sets through the shared write path: prefill provenanc
   await rest.getByRole("button", { name: "结束休息" }).click(); await expect(rest).toHaveCount(0);
   await row(2).getByLabel("第 2 组 次数").fill("8");
   await row(2).getByRole("button", { name: "完成" }).click();
-  await expect(row(2).getByText("50 kg × 8 · RPE —")).toBeVisible();
+  await expect(row(2).getByText("50 公斤 × 8 次 · 主观强度 —")).toBeVisible();
   await expect(rest).toBeVisible();
   await rest.getByRole("button", { name: "结束休息" }).click();
   await row(3).getByRole("button", { name: "跳过" }).click();

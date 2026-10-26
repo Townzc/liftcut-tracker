@@ -5,6 +5,7 @@ import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "@/components/ui";
 import { useI18n } from "@/lib/i18n";
+import { confirmedValues } from "@/lib/display";
 import { useColors } from "@/lib/theme";
 
 type Saved = SetLog;
@@ -15,7 +16,7 @@ export function SetRow({ sessionId, exerciseId, index, saved, previous, active, 
   sessionId: string; exerciseId: string; index: number; saved?: Saved; previous?: { weightKg: number | null; reps: number | null };
   active: boolean; busy: boolean; submit: (body: SetRequest, completed: boolean) => Promise<void>;
 }) {
-  const { t } = useI18n(), c = useColors();
+  const { t, locale } = useI18n(), c = useColors();
   const [id] = useState(() => saved?.id ?? randomUUID()); // Stable before saving, so a retry is the same write.
   const [weight, setWeight] = useState(String(previous?.weightKg ?? "")), [reps, setReps] = useState(String(previous?.reps ?? ""));
   const [rpe, setRpe] = useState(""), [changed, setChanged] = useState({ weight: false, reps: false }), [invalid, setInvalid] = useState(false);
@@ -30,7 +31,7 @@ export function SetRow({ sessionId, exerciseId, index, saved, previous, active, 
   return <View style={[styles.row, { borderColor: c.border }]} testID={`set-${exerciseId}-${index}`}>
     <View style={styles.header}><Text style={[text, styles.bold]}>{label}</Text><Text style={muted}>{t(saved ? saved.status : "unrecorded")}</Text></View>
     {saved ? <>
-      <Text style={text}>{saved.weightKg ?? "—"} kg × {saved.reps ?? "—"} · RPE {saved.rpe ?? "—"}</Text>
+      <Text style={text}>{confirmedValues(saved, locale)}</Text>
       {active && saved.status === "done" && <Button variant="outline" label={t("undo")} disabled={busy} onPress={() => void submit(voidSetRequest(saved), false)} />}
     </> : active && <>
       {previous && <Text style={muted}>{t("previous", { weight: previous.weightKg ?? "—", reps: previous.reps ?? "—" })}</Text>}
@@ -39,7 +40,7 @@ export function SetRow({ sessionId, exerciseId, index, saved, previous, active, 
           onChangeText={v => { setWeight(v); setChanged(s => ({ ...s, weight: true })); }} />
         <TextInput style={input} value={reps} placeholder="—" placeholderTextColor={c.muted} keyboardType="number-pad" accessibilityLabel={`${label} ${t("reps")}`}
           onChangeText={v => { setReps(v); setChanged(s => ({ ...s, reps: true })); }} />
-        <TextInput style={input} value={rpe} placeholder={t("rpe")} placeholderTextColor={c.muted} keyboardType="decimal-pad" accessibilityLabel={`${label} RPE`} onChangeText={setRpe} />
+        <TextInput style={input} value={rpe} placeholder={t("rpe")} placeholderTextColor={c.muted} keyboardType="decimal-pad" accessibilityLabel={`${label} ${t("rpeLabel")}`} onChangeText={setRpe} />
       </View>
       {invalid && <Text accessibilityRole="alert" style={text}>{t("invalid")}</Text>}
       <View style={styles.inputs}>

@@ -37,7 +37,7 @@ test("the phone chat asks consent, streams a reply and saves a workout draft onl
 
   await input.fill("刚才那组深蹲我实打实做了八次，用的是五十公斤，帮我记上"); await page.getByRole("button", { name: "发送", exact: true }).click();
   await expect(turns.last()).toContainText("请核对下方草稿，确认后才会保存。目前尚未写入记录。");
-  await expect(turns.last()).toContainText("第 1 组: 50 kg × 8 · RPE —");
+  await expect(turns.last()).toContainText("第 1 组: 50 公斤 × 8 次 · 主观强度 —");
   expect(await logs()).toEqual([]); // A draft is not a record.
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-draft-mobile.png", fullPage: true });
   await turns.last().getByRole("button", { name: "确认记录" }).click();
@@ -64,7 +64,7 @@ test("a body entry drafted in the phone chat is saved once, after confirmation, 
     await signIn(page); await page.getByRole("link", { name: "教练" }).click(); await page.getByRole("button", { name: "同意并开启" }).click();
     await page.getByLabel("发给训练助手").fill("昨天早上秤了一下，是七十二点五公斤，帮我补上吧"); await page.getByRole("button", { name: "发送", exact: true }).click();
     const turn = page.getByTestId("coach-turn").last();
-    await expect(turn).toContainText("体重 · 72.5 kg"); await expect(turn).toContainText("腰围 · — cm");
+    await expect(turn).toContainText("体重 · 72.5 公斤"); await expect(turn).toContainText("腰围 · — 厘米");
     expect(await entries()).toHaveLength(before.length); // A draft is not a record.
     await turn.getByRole("button", { name: "确认补录" }).dblclick();
     await expect(turn).toContainText("已加入待同步");
