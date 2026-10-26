@@ -33,6 +33,15 @@ test("live review: pending statements cannot redirect a correction to an older c
   assert.throws(()=>make("刚才那组更正为RPE 7",p,s,"另一组还没确定次数"),/CONFIRMED_FOCUS_REQUIRED/);
   const r=make("刚才那组更正为RPE 7",p);assert.equal(r.requests[0].id,sets[1].id);
 });
+
+test("explicit use of the previous load reads a confirmed row, never a copied model number",()=>{
+  for(const phrase of ["沿用上组重量", "沿用上一组的重量", "使用刚才的重量"]){
+    const r=make(`坐姿划船再做了7次，${phrase}`,{kind:"record",exerciseId:row,targetQuote:null,groups:[group("999公斤","7次")]});
+    assert.equal(r.requests[0].weightKg,40);assert.equal(r.requests[0].weightSource,"user_confirmed_prefill");
+    assert.equal(r.references[0].recordId,sets[1].id);assert.equal(r.requests[0].rpe,null);
+  }
+  assert.throws(()=>make("坐姿划船再做了7次",{kind:"inherit_weight",exerciseId:row,targetQuote:null,groups:[group(null,"7次")]}),/EXPLICIT_SAME/);
+});
 test("live review: void is compensation; redo never gets silently appended",()=>{
   const r=make("刚才那组不算，重新做了一组",{kind:"void",exerciseId:row,targetQuote:null,groups:[]});
   assert.equal(r.requests.length,1);assert.equal(r.requests[0].status,"voided");assert.equal(r.requests[0].weightKg,40);

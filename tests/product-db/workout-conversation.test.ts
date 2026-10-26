@@ -6,6 +6,7 @@ import {TodayStore} from "../../src/services/today/store";
 import {CoachStore} from "../../src/services/ai/coach-store";
 import {CoachHistoryStore} from "../../src/services/ai/coach-history-store";
 import {groundWorkoutReview} from "../../src/lib/workout-review-grounding";
+import {workoutPendingReport} from "../../src/lib/workout-evidence-reply";
 import {workoutReviewApprovalSchema,type WorkoutReview} from "@liftcut/core/workout-review";
 import {sessionsToWorkoutLogs} from "@liftcut/core/today";
 import {storedSet} from "@liftcut/core/workout-context";
@@ -59,8 +60,16 @@ test("conversation review ledger: real transactions, source references, confirma
       const results=await Promise.all([1,2,3].map(()=>store.approveReview(owner,approval(p))));session=results[0].session;
       assert.equal(session.sets.length,1);assert.equal((await store.trace(owner,p.requests[0].id)).events.length,1);
       assert.equal((await store.beginConversation(owner,cid,randomUUID()))!.state.focus?.recordId,p.requests[0].id);
-      for(let i=0;i<8;i++)await store.beginConversation(owner,cid,randomUUID());
+      for(let i=0;i<8;i++){
+        const requestId=randomUUID(),text="我稍后再报告下一组。请只回答收到。";
+        await store.beginConversation(owner,cid,requestId);
+        if(workoutPendingReport(text))await store.holdConversation(owner,cid,requestId,text);
+      }
       assert.equal((await store.beginConversation(owner,cid,randomUUID()))!.state.focus?.recordId,p.requests[0].id);
+      const c=await prepare("刚才坐姿划船那组记错，改为8次",{kind:"correct",exerciseId:row,targetQuote:null,groups:[group(null,"8次")]});
+      assert.equal(c.requests[0].id,p.requests[0].id);assert.equal(c.requests[0].weightKg,42);
+      assert.equal((await store.current(owner))!.sets[0].reps,9); // preview is not a write
+      await store.approveReview(owner,approval(c));
     });
     await t.test("extra actual set can inherit known load without changing prescription; correction patches same identity",async()=>{
       const p=await prepare("坐姿划船又做了6次，重量不变",{kind:"inherit_weight",exerciseId:row,targetQuote:null,groups:[group(null,"6次")]});

@@ -28,7 +28,7 @@ export function correctionAsReview(input:z.infer<typeof workoutCorrectionExtract
   return {kind:"correct" as const,exerciseId:input.exerciseId,targetQuote:null,groups:[group]};
 }
 const fail=(s:string):never=>{throw new GroundingError(s);};
-const same=/同上|重量(?:没变|不变|一样|相同)|(?:同样|相同)的?重量|还是[^，,;；。]*重量|same (?:weight|load)/i;
+const same=/同上|重量(?:没变|不变|一样|相同)|(?:同样|相同)的?重量|还是[^，,;；。]*重量|(?:沿用|使用)(?:刚才|刚刚|上(?:一)?组|前一组|之前)的?重量|same (?:weight|load)/i;
 const correction=/更正|改正|不对|记错|说错|改成|改为|帮我改|不是|correction|correct|change|actually/i;
 const uncertain=/不确定|记不清|忘记|忘了|好像|大概|差不多|可能|也许|应该|左右(?!各)|十几个|几次|几组|(?:至少|最多|不到)|about|around|maybe|unsure|not sure|probably/i;
 const perHand=/单边|单侧|左右各|每只|每个哑铃|一边|一侧|per hand|each hand|each arm|per arm|each dumbbell/i;
