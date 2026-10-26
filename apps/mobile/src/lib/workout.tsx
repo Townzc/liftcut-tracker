@@ -1,11 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { OutboxState } from "@liftcut/core/workout-outbox";
-import { createContext, use, useMemo, useState, type PropsWithChildren } from "react";
+import { createContext, use, useEffect, useMemo, useState, type PropsWithChildren } from "react";
+import { AppState } from "react-native";
 import { accountAuth, apiBase, apiHeaders } from "./api";
 import { MobileOutbox } from "./outbox";
 import { outboxApi } from "./outbox-api";
 import { outboxStore } from "./outbox-store";
 import { PersonalQueue } from "./personal-queue";
+import { startQueueSync } from "./queue-sync";
 import { useSession } from "./session";
 
 const Workout = createContext<{ outbox: MobileOutbox | null; state: OutboxState | null; personal: PersonalQueue | null } | null>(null);
@@ -23,6 +25,9 @@ export function WorkoutProvider({ children }: PropsWithChildren) {
     const auth = credentials();
     return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body })).status : 401;
   }) : null, [owner, credentials]);
+  useEffect(() => {
+    if (outbox && personal) return startQueueSync(outbox, personal, AppState);
+  }, [outbox, personal]);
   const value = useMemo(() => ({ outbox, state: state?.owner === owner ? state : null, personal }), [outbox, state, owner, personal]);
   return <Workout.Provider value={value}>{children}</Workout.Provider>;
 }

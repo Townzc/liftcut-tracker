@@ -17,7 +17,8 @@ test.afterAll(async () => {
   await db.query("delete from training_plans where user_id=$1 and id=$2", [user, plan]); await db.end();
 });
 
-test("API down: three sets queue on the phone, survive a cold restart and sync exactly once, in order", async ({ page }) => {
+test("API down: queued sets survive a cold restart and automatically sync while Agent stays focused", async ({ page }) => {
+  test.setTimeout(100000);
   const errors: string[] = [], sent: Sent[] = [], net = { down: false };
   page.on("pageerror", e => errors.push(e.message)); await relay(page, sent);
   // Registered last, so it runs first: only the API goes away; the app's own files still load.
@@ -41,11 +42,22 @@ test("API down: three sets queue on the phone, survive a cold restart and sync e
   await expect(page.getByText("已完成 3 / 3 组")).toBeVisible();
   await expect(status).toContainText("待同步 3 条");
   await page.screenshot({ path: "node_modules/.cache/mobile-web/offline-queued-mobile.png" });
+  await page.getByRole("link", { name: "教练" }).click();
+  await page.waitForURL(/\/coach$/);
+  await page.reload(); // Restore directly into Agent, with no Home focus event.
+  await expect(page.getByRole("button", { name: "同意并开启" })).toBeVisible();
+  const retryState = await page.evaluate(owner => {
+    const queue = JSON.parse(localStorage.getItem(`liftcut-outbox:${owner}`)!);
+    const head = queue.items[0];
+    return { pending: queue.items.length, status: head.status, attempts: head.attempts, retryInMs: head.nextAttempt - Date.now() };
+  }, user);
+  await test.info().attach("queue-retry-state", { body: JSON.stringify(retryState), contentType: "application/json" });
   net.down = false;
-  await status.getByRole("button", { name: "立即同步" }).click();
-  await expect(status).toHaveText("已同步");
-  expect(await stored()).toEqual([{ set_index: 1, reps: 5, status: "done" }, { set_index: 2, reps: 6, status: "done" }, { set_index: 3, reps: 7, status: "done" }]);
+  // An API-only outage emits no device online event; retain the queue's maximum 60s backoff plus one timer tick.
+  await expect.poll(stored, { timeout: 70000 }).toEqual([{ set_index: 1, reps: 5, status: "done" }, { set_index: 2, reps: 6, status: "done" }, { set_index: 3, reps: 7, status: "done" }]);
+  await page.screenshot({ path: "node_modules/.cache/mobile-web/offline-auto-resume-agent.png" });
   const sets = sent.filter(r => r.url.includes("action=set")).length;
   expect(sets).toBeGreaterThanOrEqual(3); // Retries resend the same bytes; the database still has exactly three.
   expectBearerOnly(sent); expect(errors).toEqual([]);
+  await page.unrouteAll({ behavior: "wait" });
 });

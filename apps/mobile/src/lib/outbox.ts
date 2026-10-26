@@ -37,6 +37,15 @@ export class MobileOutbox {
   }
   /** Cold start: whatever was confirmed or queued before is shown immediately, online or not. */
   load() { return this.change(); }
+  /** A new foreground session can retry transport failures, never auth or conflicts. */
+  async resume() {
+    await this.change(s => {
+      const head = s.items[0];
+      if (head?.status !== "retry" || head.nextAttempt === 0) return false;
+      head.nextAttempt = 0; return true;
+    });
+    return this.drain();
+  }
   async refresh() {
     const before = await this.change();
     if (before.items.length) return before;

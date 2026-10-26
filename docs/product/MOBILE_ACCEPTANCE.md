@@ -2,6 +2,42 @@
 
 ## Evidence boundaries
 
+### Physical iPhone session, 2026-10-26
+
+Maintainer-operated iPhone 16 Pro / iOS 27.0.1 / Expo Go 58.0.5 (versions reported
+by the maintainer), using the independent synthetic account and real HTTPS API.
+Baseline `b147760`; subsequent local sync fix is identified by this PR. The LAN
+connection timed out; the official temporary Expo tunnel worked. Both Expo
+clients are now logged in. No paid build, EAS project or signing identity created.
+
+| Gate | Observed evidence |
+| --- | --- |
+| Login and preview | Native login displayed 2/6; server read proved preview alone wrote nothing |
+| Confirm / correct | Explicit phone confirmation plus server receipt; correction kept the same ID, advanced revision, and preserved unknown RPE |
+| Inherit / void / redo | Inherited confirmed 39 kg; void advanced the same ID; separately confirmed redo created one new set; 4 done, 2 voided |
+| Persistence | Maintainer force-closed/reopened and reported conversation, unsent draft and Chinese preference retained |
+| Offline before fix | SQLite-backed queue survived restart and never said saved; automatic sync failed, manual sync created one record |
+| Offline after fix | Offline correction left server at 6 reps; reopen online and stay in Agent without manual retry applied 5 reps to the same ID, revision 2 → 3; still 4/6 done |
+| Stream / keyboard | Maintainer observed ordinary read-only reply growing progressively and an unobscured input; no measured phone latency distribution |
+
+The first reported correction did not match server evidence; it was repeated
+explicitly and verified. That initial mismatch is not counted as a successful
+write. Histories and raw receipt evidence remain in the local task deliverables.
+
+The retry defect came from screen-scoped scheduling: leaving Home removed its
+timer and foreground listener. The signed-in provider now owns queue recovery on
+every screen; a fresh foreground can retry transport failures, while auth/version
+conflicts remain paused. No new write path, ledger, UI structure or model default.
+
+Still unrun on device: eight-turn interval positioning (passed in real API and
+browser rehearsal), account switching/expired previews, dropped successful reply,
+standalone offline launch, Android, signed IPA/APK, notification/background timer
+matrix and mainland cellular network. Expo Go is native runtime evidence, not
+signed application or store-release acceptance. Language consistency cleanup is
+next; explicit Chinese selection worked, but technical labels need localization.
+
+### Earlier desktop / protocol evidence
+
 The base was main `a2b27dc`. One independent synthetic account was created in
 the existing Supabase project; only its synthetic plan/session/chat was used.
 No production migrations, new paid service, M4 training or model-default switch.
@@ -14,7 +50,7 @@ No production migrations, new paid service, M4 training or model-default switch.
 | History | Nine-turn conversation and draft restored; UI switched to settings and back, then reloaded | Expo web export in desktop Chrome |
 | Weak network | One history POST interrupted before upstream; UI showed retry state then synchronized; read-only reply cited actual session | Injected 503, not a mainland cellular network |
 | Continuous correction | Initial run failed after eight intervening turns; future statement polluted pending actual state | Fixed separately in #174; retain failed evidence |
-| Native | SDK dependency/JS/type/lint checks | No signed APK, Gradle/Xcode execution or device pass yet |
+| Native (before phone session above) | SDK dependency/JS/type/lint checks | JS checks alone did not establish native behavior |
 
 Auth files, response payloads and complete local logs stay outside Git in the
 task's `deliverables/2026-10-26-mobile-native-acceptance`. Never publish session
@@ -23,12 +59,13 @@ chat is prose only; its old proposals cannot execute again.
 
 ## Build prerequisites and next commands
 
-The workstation has no logged-in Expo identity (`eas whoami`: Not logged in),
-no Android SDK and no current Android JDK. Existing EAS preview/development
+The workstation is now logged into the maintainer's free Expo account. It has
+no Android SDK or current Android JDK. Existing EAS preview/development
 profiles specify internal APK distribution. The maintainer must provide their
 Expo login/project and approve the permanent Android package identifier before
 we set `owner`, `extra.eas.projectId` and `android.package`. No paid build or new
-account has been started. Device model/OS and test network remain to be supplied.
+account has been started by the agent. The iPhone test used a temporary tunnel;
+an independently signed application still needs its own build and installation.
 
 After login and configuration, from `apps/mobile`:
 
@@ -50,7 +87,7 @@ relay. Service-role, database and model secrets never enter the app or archive.
 Record the exact Git SHA, build ID, package/version, APK hash, signing identity,
 artifact link, build logs and install result. Do not call JS export an APK.
 
-## Device gates (all pending)
+## Standalone application gates (still required)
 
 1. Install the signed APK; cold launch, password login and token refresh. Record
    device/OS/network and real first-text/full-response timings separately.
