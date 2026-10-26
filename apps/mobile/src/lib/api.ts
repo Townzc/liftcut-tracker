@@ -3,6 +3,11 @@ import { z } from "zod";
 export const apiBase = (process.env.EXPO_PUBLIC_API_URL || "https://www.liftcuttracker.com").replace(/\/+$/, "");
 type Credentials = { access_token: string; user: { id: string } };
 
+/** A retained queue may refresh its token, but must never borrow another account's. */
+export function accountAuth(owner: string | undefined, current: () => Credentials | null) {
+  return () => { const auth = current(); return owner && auth?.user.id === owner ? auth : null; };
+}
+
 /** Same API and write semantics as the web app; the native app identifies itself with a bearer token. */
 export function apiHeaders(session: Credentials, json = false): Record<string, string> {
   return { Authorization: `Bearer ${session.access_token}`, "X-Workout-Owner": session.user.id, ...(json ? { "Content-Type": "application/json" } : {}) };

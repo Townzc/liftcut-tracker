@@ -1107,6 +1107,9 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Lint mobile source (separate Expo package)
+        run: npx eslint --no-ignore apps/mobile/src
+
       - name: Build application
         run: npm run build
 

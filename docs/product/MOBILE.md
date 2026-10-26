@@ -81,3 +81,5 @@ eas build --platform android --profile development
 ## 后续
 
 应用标识（Android 包名）与 EAS 项目 ID 待维护者确认后写入 `app.json`；之后在真机上验证离线记录、组间计时通知、常亮与震动。
+
+2026-10-26：独立合成账号已完成真实 Supabase 鉴权和 DeepSeek 联调，详情与逐项原生门槛见 [验收交接](MOBILE_ACCEPTANCE.md). EAS 登录、应用标识、安装包和真机验收仍待完成；Expo 网页导出和 Hermes JS 打包不代表原生通过.

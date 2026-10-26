@@ -29,7 +29,8 @@
     "plugins": [
       "expo-router",
       "expo-localization",
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true
