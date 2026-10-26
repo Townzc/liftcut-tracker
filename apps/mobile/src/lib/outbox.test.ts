@@ -5,6 +5,8 @@ import { tapSetRequest } from "@liftcut/core/set-requests";
 import type { Session, TodayData } from "@liftcut/core/today";
 import { projectOperation, type OutboxState, type WorkoutOperation } from "@liftcut/core/workout-outbox";
 import { MobileOutbox, type OutboxApi } from "./outbox";
+import { PersonalQueue } from "./personal-queue";
+import { startQueueSync } from "./queue-sync";
 
 const owner = randomUUID(), sessionId = randomUUID();
 const today = (): TodayData => ({ days: [], previous: {}, session: { id: sessionId, userId: owner, localDate: "2026-10-19", timezone: "Asia/Shanghai",
@@ -81,4 +83,40 @@ test("a conflict pauses the whole tail until the user keeps the cloud version; a
   remote.mode.reject = { status: 401, code: "UNAUTHORIZED" };
   await app.enqueue(set(1)); await app.drain();
   assert.equal((await app.load()).items[0].status, "auth");
+});
+
+test("cold start on Agent automatically retries persisted exact bytes without a Home screen or manual retry", async () => {
+  const store = memoryStore(), remote = server();
+  const first = new MobileOutbox(owner, store, remote.api, () => {}, () => 0);
+  await first.refresh(); remote.mode.loseResponse = true;
+  await first.enqueue(set(1)); await first.drain();
+  assert.equal((await first.load()).items[0].nextAttempt, 10000);
+  const reopened = new MobileOutbox(owner, store, remote.api, () => {}, () => 1);
+  const personal = new PersonalQueue(owner, { getAllKeys: async () => [], getItem: async () => null,
+    setItem: async () => {}, removeItem: async () => {} }, async () => 200);
+  const stop = startQueueSync(reopened, personal, { currentState: "active", addEventListener: () => ({ remove() {} }) });
+  try {
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal((await reopened.load()).items.length, 0);
+    assert.equal(remote.received.length, 2);
+    assert.equal(remote.received[0], remote.received[1]);
+    assert.equal(remote.data().session!.sets.length, 1);
+  } finally { stop(); }
+});
+
+test("automatic resume never clears an auth pause or a version conflict and never sends the tail", async () => {
+  for (const reject of [{ status: 401, code: "UNAUTHORIZED" }, { status: 409, code: "STALE_REVISION" }]) {
+    const store = memoryStore(), remote = server(), first = new MobileOutbox(owner, store, remote.api, () => {}, () => 0);
+    await first.refresh(); remote.mode.offline = true;
+    await first.enqueue(set(1)); await first.enqueue(set(2)); await first.drain();
+    remote.mode.offline = false; remote.mode.reject = reject;
+    await first.resume();
+    const paused = (await first.load()).items[0].status;
+    remote.mode.reject = null;
+    const reopened = new MobileOutbox(owner, store, remote.api, () => {}, () => 60000);
+    await reopened.resume(); await reopened.drain();
+    assert.equal((await reopened.load()).items[0].status, paused);
+    assert.equal((await reopened.load()).items.length, 2);
+    assert.equal(remote.received.length, 1);
+  }
 });

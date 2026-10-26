@@ -6,7 +6,7 @@ import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { AppState, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { KeepScreenOn, RestBar, RestLength, useRest } from "@/components/rest-bar";
 import { ReviewCard } from "@/components/review-card";
 import { SentenceEntry, SentenceReceipts } from "@/components/sentence-entry";
@@ -20,25 +20,19 @@ import { useWorkout } from "@/lib/workout";
 import { feedback } from "@/lib/workout-aids";
 
 export default function Today() {
-  const { t, locale } = useI18n(), c = useColors(), { outbox, state, personal } = useWorkout();
+  const { t, locale } = useI18n(), c = useColors(), { outbox, state } = useWorkout();
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState<"offlineData" | "localConflict" | null>(null), [dayId, setDayId] = useState("");
   const load = useCallback(async () => {
     if (!outbox) return;
     setLoading(true);
-    try { await outbox.load(); await outbox.refresh(); setNotice(null); void outbox.drain(); }
+    try { await outbox.load(); await outbox.refresh(); setNotice(null); }
     catch (error) {
       if (error instanceof ApiError && error.status === 401) { await supabase?.auth.signOut(); return; }
       setNotice("offlineData"); // The stored snapshot and queue are already on screen.
     } finally { setLoading(false); }
   }, [outbox]);
-  useFocusEffect(useCallback(() => {
-    void load();
-    const drain = () => { void outbox?.drain(); void personal?.drain(); };
-    const timer = setInterval(drain, 5000);
-    const foreground = AppState.addEventListener("change", s => { if (s === "active") drain(); });
-    return () => { clearInterval(timer); foreground.remove(); };
-  }, [load, outbox, personal]));
+  useFocusEffect(useCallback(() => { void load(); }, [load]));
   async function write(operation: WorkoutOperation) {
     if (!outbox) return false;
     try { await outbox.enqueue(operation); setNotice(null); return true; }

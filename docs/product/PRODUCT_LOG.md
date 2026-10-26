@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-26 · iPhone acceptance: automatic queue recovery on every screen
+
+- The real iPhone session exposed a retry defect: offline work survived restart but required manual sync. Home owned the timer/listener, so Agent had no retry loop.
+- Move scheduling to the signed-in provider, recover at startup/foreground, retain normal backoff while active, and release timers/listeners on unmount. Transport failures can resume; auth/version conflicts keep the head and tail paused. Same request bytes, owner-bound credentials and existing confirmation path remain intact.
+- Ran: mobile `npm run typecheck`, `npm test` (21); root `npm test` (9 JS + 266 TS), fixture-environment `npm run build`, direct ESLint (root: two existing warnings; mobile: zero warnings/errors), Expo web export and `playwright.mobile.config.ts` (10/10). The new API-outage test initially timed out at 30s; its queue retains up to 60s backoff, so the assertion now permits that documented delay plus a timer tick (actual test 44.5s). No product backoff or confirmation gate weakened.
+- Native retest: offline correction had zero server writes; force-close → online reopen → stay in Agent automatically updated the original record once (revision 2 → 3), still 4/6 done. User confirmed retained conversation/draft/Chinese setting, progressive ordinary reply and unobscured input.
+- [Acceptance matrix](MOBILE_ACCEPTANCE.md) separates device reports + scoped server reads from desktop/browser checks. Expo Go is not a signed IPA/APK; standalone offline launch, native account/expiry matrix and mainland cellular network remain unrun.
+- No schema migration, UI restructuring, new paid service, M4 training or parser-default change. Next: language consistency, remaining device matrix and standalone build prerequisites.
+
 ## 2026-10-26 · Mobile native readiness and recovery hygiene
 
 - Aligned Expo SDK 58 patches after doctor reported 19/20; now 20/20. Pinned app Zod to 4.6.6 for the published collection-validation fix; no forced SDK downgrade. Generated lockfile changes are dependency metadata.
