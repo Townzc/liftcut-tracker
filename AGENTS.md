@@ -38,6 +38,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
   databases, and new model training or GPU experiments other than M4.
 - Record each product PR in `docs/product/PRODUCT_LOG.md` (one entry, at most 15
   lines): why, what changed, what actually ran, limitations, next step.
+- Follow `docs/product/BACKUP_RETENTION.md` when creating recovery material.
+  Verify recovery, then remove temporary duplicate assets in the same round;
+  do not accumulate dependency trees, build caches or redundant old weights.
 
 ## Research continuity
 

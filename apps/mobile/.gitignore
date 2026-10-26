@@ -42,3 +42,4 @@ yarn-error.*
 
 # Native export check output
 dist-native/
+dist-live/

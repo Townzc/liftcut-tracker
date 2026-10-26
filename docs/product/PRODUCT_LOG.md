@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-26 · Mobile native readiness and recovery hygiene
+
+- Aligned Expo SDK 58 patches after doctor reported 19/20; now 20/20. Pinned app Zod to 4.6.6 for the published collection-validation fix; no forced SDK downgrade. Generated lockfile changes are dependency metadata.
+- Full mobile lint exposed a render-time auth ref. Reused SessionProvider's current-token getter and bound both write queues to their original owner: same-owner token refresh works, logout/account switch sends nothing. CI now lints mobile source explicitly.
+- Ran: mobile `npm run typecheck`, `npm test` (17), root `npx eslint --no-ignore apps/mobile/src` (zero errors/warnings), `npx expo-doctor` (20/20), `npm run export:check` and Expo web export. These exports are JS only.
+- Real synthetic-account browser checks: cloud history opened, settings/back and reload retained history/draft; one injected history POST 503 recovered to synced, and a genuine DeepSeek query displayed the source without adding records. Real auth/model/protocol boundaries: [handoff](MOBILE_ACCEPTANCE.md).
+- `eas whoami` reports Not logged in; Android SDK/current JDK and permanent app/EAS identifiers are absent. No APK/EAS build, emulator/device, mainland network or iOS acceptance claimed. Device/account input is pending; no paid service started.
+- Backup cleanup: 61 exact duplicate weights removed, 42.91 GiB freed; 26 keepers rehashed and one 1.12 GiB GGUF restored/hash-checked through the old-path map. Unique weights/source bundles/archive parts retained. [Retention policy](BACKUP_RETENTION.md) now applies to future work.
+- Limits/next: remaining Expo CLI transitive audit advisories are recorded locally; app validation dependency is patched, not a claim of zero audit findings. Native build/signing/install and the device matrix still gate mobile release. No UI restructuring, production migration, training or candidate activation.
+
 ## 2026-10-26 · Mobile live acceptance: preserve confirmed workout focus
 
 - Real Supabase password login, identity validation and token refresh passed with an isolated synthetic account; invalid bearer 401 and owner mismatch 409. Real DeepSeek streaming returned 216 text events (one sample: first text 3.09s, complete 4.51s).

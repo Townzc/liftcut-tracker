@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { OutboxState } from "@liftcut/core/workout-outbox";
-import { createContext, use, useMemo, useRef, useState, type PropsWithChildren } from "react";
-import { apiBase, apiHeaders } from "./api";
+import { createContext, use, useMemo, useState, type PropsWithChildren } from "react";
+import { accountAuth, apiBase, apiHeaders } from "./api";
 import { MobileOutbox } from "./outbox";
 import { outboxApi } from "./outbox-api";
 import { outboxStore } from "./outbox-store";
@@ -15,13 +15,14 @@ const Workout = createContext<{ outbox: MobileOutbox | null; state: OutboxState 
  * confirmed body/food entries in app storage. Both survive restarts and never mix accounts.
  */
 export function WorkoutProvider({ children }: PropsWithChildren) {
-  const { session: auth } = useSession(), authRef = useRef(auth); authRef.current = auth;
+  const { session: auth, getAuth } = useSession();
   const owner = auth?.user.id, [state, setState] = useState<OutboxState | null>(null);
-  const outbox = useMemo(() => owner ? new MobileOutbox(owner, outboxStore, outboxApi(() => authRef.current), setState) : null, [owner]);
+  const credentials = useMemo(() => accountAuth(owner, getAuth), [owner, getAuth]);
+  const outbox = useMemo(() => owner ? new MobileOutbox(owner, outboxStore, outboxApi(credentials), setState) : null, [owner, credentials]);
   const personal = useMemo(() => owner ? new PersonalQueue(owner, AsyncStorage, async body => {
-    const auth = authRef.current;
+    const auth = credentials();
     return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body })).status : 401;
-  }) : null, [owner]);
+  }) : null, [owner, credentials]);
   const value = useMemo(() => ({ outbox, state: state?.owner === owner ? state : null, personal }), [outbox, state, owner, personal]);
   return <Workout.Provider value={value}>{children}</Workout.Provider>;
 }
