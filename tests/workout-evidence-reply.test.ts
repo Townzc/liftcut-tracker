@@ -22,3 +22,10 @@ test("approximate effort remains uncertain in prose; normal reports and plan req
   assert.equal(workoutPendingReport("帮我查询已保存的组数"),false);
   assert.equal(workoutPendingReport("刚做完一组，还没看次数"),true);
 });
+
+test("future reporting intentions do not replace the confirmed focus with pending text",()=>{
+  for(const text of ["我稍后再报告下一组。请只回答收到。", "等会告诉你次数", "准备重做一组", "I will report my next set later."])
+    assert.equal(workoutPendingReport(text),false,text);
+  for(const text of ["刚做完一组，稍后补充次数", "稍后再练，刚才做完的次数还没确定", "这组做了几次记不清", "RPE还没确定"])
+    assert.equal(workoutPendingReport(text),true,text);
+});

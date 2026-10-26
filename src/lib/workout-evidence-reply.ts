@@ -1,8 +1,12 @@
 import type {Session} from "@liftcut/core/today";
 
 export function workoutPendingReport(text:string):boolean {
-  return !/[?？]|是不是|有没有|查询|明天|计划|安排|\b(?:plan|tomorrow|query)\b/i.test(text)
-    && /组|次数|RPE|做完|练完|重做|跳过|sets?|reps?|redo/i.test(text);
+  if(/[?？]|是不是|有没有|查询|明天|计划|安排|\b(?:plan|tomorrow|query)\b/i.test(text))return false;
+  // A future intention is not an unconfirmed actual. Check clauses separately:
+  // "I'll report later; I just finished a set" still contains a pending report.
+  return text.split(/[，,。.!！;；\n]/).some(clause=>
+    !/稍后|待会|等会|等下|晚点|接下来|准备|打算|将会|\b(?:later|will|going to)\b/i.test(clause)
+    && /组|次数|RPE|做完|练完|重做|跳过|sets?|reps?|redo/i.test(clause));
 }
 
 /** These replies assert database state or uncertainty, not model inference. */

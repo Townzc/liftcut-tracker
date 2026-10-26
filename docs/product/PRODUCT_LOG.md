@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-26 · Mobile live acceptance: preserve confirmed workout focus
+
+- Real Supabase password login, identity validation and token refresh passed with an isolated synthetic account; invalid bearer 401 and owner mismatch 409. Real DeepSeek streaming returned 216 text events (one sample: first text 3.09s, complete 4.51s).
+- Real model/API/outbox rehearsal found a future statement ("report the next set later") became pending actual data and blocked a correction eight turns later. Exclude future-intention clauses without ignoring actual reports in other clauses; recognize explicit reuse of the previous confirmed load.
+- Confirmation, record references, unknown values, account isolation and immutable retry semantics remain unchanged. No UI restructuring, migration, M4 training or parser-default change.
+- Ran: root `npm test` (9 JS + 266 TS), `npm run lint` (zero errors/two existing warnings), fixture-environment `npm run build`; mobile `npm run typecheck`, `npm test` (16).
+- Targeted grounding/evidence tests: 11 pass. Local PostgreSQL 16 `node --conditions=react-server --import tsx --test tests/product-db/workout-conversation.test.ts`: 9 pass, including eight intervening future statements and same-ID correction without pre-confirmation writes.
+- Before-fix live protocol: confirmed write, dropped successful response + persisted original outbox retry (one row), and nine-turn history/draft restoration passed; correction gate failed and is retained as a failure, not relabeled a pass.
+- Limits/next: CI then fresh real-model verification of the fix, native build and device acceptance. Node adapters and Expo web are not native SQLite, an APK or physical-device evidence. No private acceptance phrases or derived training data used.
+
 ## 2026-10-23 · Mobile coach alignment R4: persistent conversations
 
 - Mobile now uses the shared history client, existing bearer history API and account-keyed AsyncStorage. The signed-in app owns its lifetime; tabs retain drafts, reload restores the conversation ID, and logout cancels requests and clears cache after pending writes.
