@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-27 · Recoverable mobile deletion controller
+
+- Added a testable owner-bound deletion state machine: explicit confirmation and fresh same-owner authentication, persisted intent before POST, persisted receipt before DELETE, and local cleanup only after an exact server completion response.
+- Network loss, expired receipts and local cleanup failures retain recoverable state; a confirmed server deletion can finish local cleanup after restart without repeating deletion. A switched account is never signed out.
+- Added an owner runtime fence for aborting ordinary work, draining late storage writes and rejecting new workers for a deleting owner. It remains disconnected until the following UI/integration PR.
+- Ran mobile `npm run typecheck`, `npm test` (35/35), changed-source ESLint and diff checks. Six new synthetic tests cover confirmation/auth boundaries, restart, lost responses, corruption, storage errors, owner isolation and late work.
+- No real account, server request, migration, email, native build or device acceptance. An expired receipt after a lost successful deletion response stays unknown; the client must not infer success from failed login.
+- Next: public recovery page, isolated password reauthentication, feature-gated settings entry, and wire every mobile writer to the owner fence before enabling the feature.
+
 ## 2026-10-27 · Stop mobile owner queues before account cleanup
 
 - Reproduced a late `today` response recreating owner data after local purge. Added irreversible queue disposal, request abort signals and storage-idle waits so stopped workers cannot repopulate a deleted owner's cache.
