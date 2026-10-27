@@ -16,7 +16,7 @@
       "environment": "preview",
       "autoIncrement": true,
       "android": { "buildType": "apk" },
-      "ios": { "buildConfiguration": "Release", "simulator": false }
+      "ios": { "buildConfiguration": "Release", "simulator": false, "image": "macos-tahoe-26.6-xcode-27.0" }
     },
     "ios-simulator": {
       "extends": "preview",

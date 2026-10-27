@@ -35,6 +35,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f45a9ecf-0ed7-47e2-a87c-77fa8877d8ea"
+      }
+    },
+    "owner": "zhicetang"
   }
 }

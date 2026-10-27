@@ -13,7 +13,8 @@ Expo Go evidence, not acceptance of a standalone installation.
   project's domain. It has not been registered with Apple; verify availability
   and ownership before creating the permanent App ID.
 - `preview` builds an internal Release application with its JS embedded, not a
-  development client requiring Metro. On iOS it requires an ad hoc signature.
+  development client requiring Metro. EAS uses the stable Xcode 27.0 image.
+  On a physical iPhone it requires an ad hoc signature.
 - `ios-simulator` inherits Release configuration but targets a simulator. It is
   not an IPA and cannot be installed on an iPhone.
 - `ios-simulator.yml` uses a standard GitHub-hosted Mac runner for this public
@@ -58,8 +59,8 @@ purchase or cloud build. No purchase is necessary to finish the steps above.
 
 | Item | Current status / next requirement |
 | --- | --- |
-| Expo account | Existing free account is logged in. EAS project ownership/ID and preview environment still need linking before cloud builds. No new account needed. |
-| EAS Build | Published Free plan includes 15 iOS builds/month in the low-priority queue; account's remaining quota is not yet verified. Do not upgrade or consume paid overflow automatically. |
+| Expo account | Existing free account is logged in; `@zhicetang/liftcut` is linked. Only the three public client variables are configured in the project preview environment and read back. No new account needed. |
+| EAS Build | Published Free plan includes 15 iOS builds/month in the low-priority queue. Account inspection before this preparation's build showed 0/15 iOS used and zero estimated charges. Do not upgrade or consume paid overflow automatically. |
 | Apple Developer Program | Missing. USD 99/year or local currency; required for normal EAS ad hoc distribution and TestFlight. Purchase only after explicit maintainer authorization. |
 | Ad hoc signing | After enrollment: Apple Team, registered App ID, distribution certificate, provisioning profile and this iPhone's UDID. Additional devices require a new profile/build. |
 | TestFlight | Later alternative: App Store Connect app and upload authorization. External testers may require Apple review. No store submission in this preparation. |
@@ -71,8 +72,8 @@ Sources: [Expo pricing](https://expo.dev/pricing),
 [Apple personal team](https://developer.apple.com/help/account/basics/about-your-developer-account),
 [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
 
-Before a phone build, link the intended existing Expo owner/project; review its
-remaining free quota. Set only `EXPO_PUBLIC_API_URL`,
+Before a phone build, verify the linked Expo owner/project and recheck its
+remaining free quota. The preview environment contains only `EXPO_PUBLIC_API_URL`,
 `EXPO_PUBLIC_SUPABASE_URL` and the public anon/publishable key for the preview
 environment. They ship in the binary. No service-role, database, model key,
 account session or loopback test relay belongs in a release. Verify the actual
