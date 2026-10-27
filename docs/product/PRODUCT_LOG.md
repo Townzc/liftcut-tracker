@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-27 · Preserve mobile cold-start routes during local recovery reads
+
+- Integration review found Auth could resolve before deletion storage and redirect a clean cold launch to deletion recovery. Wait without replacing the launch route while storage has neither completed nor failed; actual pending records/errors retain the existing recovery path.
+- Added controlled adapter-read delay in browser responses only, without a production timing flag. On the previous export both sign-in and email-callback cases reproduced the unwanted redirect; after the fix both preserve the complete original URL through the read.
+- Ran mobile `npm run typecheck`, `npm test` (49/49), synthetic opt-in `npx expo export --platform web --output-dir dist --max-workers 2`, and `npx playwright test --config playwright.mobile-signup.config.ts` (6/6: existing four plus two delayed-read regressions). Temporary junction watch folders were restored.
+- Ran changed-source/test ESLint and `git diff --check`. No native build, signed-device cold link, real SMTP, production activation or new M4 experiment ran. The registration flag remains off; native storage/crypto and independent IPA acceptance remain release gates.
+
 ## 2026-10-27 · Gated mobile registration and email-return UI preparation
 ## 2026-10-27 · Recoverable web account deletion screen
 

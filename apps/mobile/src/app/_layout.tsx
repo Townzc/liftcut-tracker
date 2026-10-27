@@ -14,10 +14,12 @@ export default function RootLayout() {
 function RootNavigator() {
   const { session, loading } = useSession(), colors = useColors();
   const deletion = useDeletion(), router = useRouter(), blocked = ownerRuntime.isBlocked(session?.user.id);
+  const waiting = loading || (!deletion.ready && !deletion.error);
   useEffect(() => {
-    if (!loading && (!deletion.ready || blocked || (!session && deletion.records.size))) router.replace("/delete-account");
-  }, [loading, deletion, deletion.ready, deletion.records.size, blocked, session, router]);
-  if (loading) return null; // Keep the splash until the stored session is read.
+    if (!waiting && (deletion.error || blocked || (!session && deletion.records.size))) router.replace("/delete-account");
+  }, [waiting, deletion.error, deletion.records.size, blocked, session, router]);
+  // Preserve the launch route while native storage is still reading, not yet failed.
+  if (waiting) return null;
   return <>
     <StatusBar style="auto" />
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
