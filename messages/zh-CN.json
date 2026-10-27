@@ -50,7 +50,16 @@
     "logout": "退出登录",
     "passwordMismatch": "两次输入的密码不一致。",
     "registerSuccess": "注册成功。如开启邮箱验证，请先前往邮箱完成验证。",
-    "forgotSuccess": "重置密码邮件已发送。",
+    "forgotSuccess": "如果此账号存在，你会收到重置链接. 请在当前浏览器打开，也可检查垃圾邮件.",
+    "recoveryDesc": "设置至少 8 个字符的新密码. 打开链接后，请在 15 分钟内完成.",
+    "recoveryChecking": "正在验证重置链接…",
+    "recoveryInvalid": "重置链接无效、已过期或已使用. 请重新申请，并在申请时使用的浏览器打开.",
+    "recoveryUpdateFailed": "密码未能更新. 请重试，或重新申请重置链接.",
+    "recoveryNewPassword": "新密码",
+    "recoverySave": "保存新密码",
+    "recoveryDone": "密码已更新. 请使用新密码重新登录.",
+    "recoveryLogin": "使用新密码登录",
+    "recoveryRestart": "重新申请链接",
     "genericError": "操作失败，请稍后重试。",
     "loginWithWechat": "使用微信登录",
     "oauthCancelled": "授权已取消，请重新尝试。",
@@ -68,7 +77,7 @@
     "heroMetricGuest": "游客模式可先体验核心流程",
     "loginDesc": "登录后同步你的训练、饮食、身体数据和 AI 生成历史。",
     "registerDesc": "创建账号后可以保留本地数据，并继续完善长期追踪。",
-    "forgotDesc": "输入邮箱，我们会发送一封密码重置邮件。"
+    "forgotDesc": "输入邮箱，并在当前浏览器打开重置链接. 如使用无痕模式，也需保持同一无痕浏览会话."
   },
   "dashboard": {
     "title": "今日概览",
