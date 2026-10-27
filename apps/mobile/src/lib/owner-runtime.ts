@@ -1,23 +1,26 @@
 /** A pending deletion blocks this owner's ordinary work until the app restarts.
  * Every mounted writer registers its stop/drain; detached asynchronous writes stay tracked.
  */
+type Worker = { stop(): void; idle(): Promise<unknown> };
 export class OwnerRuntime {
   private blocked = new Set<string>();
-  private workers = new Map<string, Set<{ stop(): void; idle(): Promise<unknown> }>>();
+  private workers = new Map<string, Map<Worker, number>>();
   private tasks = new Map<string, Set<Promise<unknown>>>();
   private aborts = new Map<string, Set<AbortController>>();
   isBlocked(owner?: string) { return !!owner && this.blocked.has(owner); }
   assert(owner: string) { if (this.isBlocked(owner)) throw Error("ACCOUNT_DELETING"); }
-  register(owner: string, worker: { stop(): void; idle(): Promise<unknown> }) {
+  register(owner: string, worker: Worker) {
     this.assert(owner);
-    const set = this.workers.get(owner) ?? new Set(); this.workers.set(owner, set); set.add(worker);
+    const set = this.workers.get(owner) ?? new Map(); this.workers.set(owner, set); set.set(worker, (set.get(worker) ?? 0) + 1);
     return () => {
-      worker.stop(); this.track(owner, worker.idle()); set.delete(worker);
+      set.set(worker, (set.get(worker) ?? 1) - 1);
+      // React effect replay may immediately register the same worker again.
+      queueMicrotask(() => { if (set.get(worker) === 0) { worker.stop(); this.track(owner, worker.idle()); set.delete(worker); } });
     };
   }
   block(owner: string) {
     this.blocked.add(owner);
-    for (const worker of this.workers.get(owner) ?? []) worker.stop();
+    for (const worker of this.workers.get(owner)?.keys() ?? []) worker.stop();
     for (const abort of this.aborts.get(owner) ?? []) abort.abort();
   }
   private track<T>(owner: string, promise: Promise<T>) {
@@ -35,7 +38,7 @@ export class OwnerRuntime {
   }
   async idle(owner: string) {
     this.block(owner);
-    await Promise.allSettled([...(this.tasks.get(owner) ?? []), ...[...(this.workers.get(owner) ?? [])].map(w => w.idle())]);
+    await Promise.allSettled([...(this.tasks.get(owner) ?? []), ...[...(this.workers.get(owner)?.keys() ?? [])].map(w => w.idle())]);
   }
 }
 export const ownerRuntime = new OwnerRuntime();
