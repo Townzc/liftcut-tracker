@@ -25,8 +25,8 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   });
 
   const pathname = request.nextUrl.pathname;
-  // Public help must remain reachable even when authentication is unavailable.
-  if (pathname === "/support" || pathname === "/auth/mobile-callback" || isStaticAsset(pathname)) {
+  // Public support, privacy and the isolated email bridge do not read accounts.
+  if (["/support", "/privacy", "/auth/mobile-callback"].includes(pathname) || isStaticAsset(pathname)) {
     return response;
   }
 
