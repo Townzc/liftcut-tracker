@@ -881,6 +881,10 @@ jobs:
         env:
           API_GRANTS_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_grants_ci
         run: node --import tsx --test tests/product-db/api-grants.test.ts
+      - name: Verify private account deletion boundary in disposable PostgreSQL
+        env:
+          ACCOUNT_DELETION_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_deletion_ci
+        run: node --import tsx --test tests/product-db/account-deletion.test.ts
       - name: Verify W1a migration against a fresh local PostgreSQL database
         env:
           W1A_TEST_DATABASE_URL: postgresql://postgres:p1-admin-fixture-only@127.0.0.1:5432/liftcut_p1_w1a_ci
@@ -1125,6 +1129,7 @@ jobs:
           npx playwright install --with-deps chromium
           npx playwright test --config playwright.w1a.config.ts
           npx playwright test --config playwright.support.config.ts
+          npx playwright test --config playwright.mobile-email.config.ts
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -1135,3 +1140,4 @@ jobs:
             node_modules/.cache/w1a/browser/
             node_modules/.cache/support/*.png
             node_modules/.cache/support/browser/
+            node_modules/.cache/mobile-email/browser/

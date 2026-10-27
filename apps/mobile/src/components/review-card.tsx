@@ -15,6 +15,7 @@ import { useI18n } from "@/lib/i18n";
 import { reviewApi } from "@/lib/review";
 import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
+import { ownerRuntime } from "@/lib/owner-runtime";
 
 type Saved = { sessionId: string; runId: string; undoId?: string };
 const timezone = () => getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -33,7 +34,10 @@ export function ReviewCard({ sessionId }: { sessionId?: string }) {
   // Request keys survive a lost response, so tapping again replays instead of writing twice.
   const keys = useRef<{ accept?: [string, string]; rollback?: string }>({}), flight = useRef(false), reviewed = useRef(sessionId);
   const show = (value: RunView) => { setRun(value); setSelected(reviewChanges(value).map(() => true)); };
-  const remember = (value: Omit<Saved, "sessionId">) => void AsyncStorage.setItem(stored, JSON.stringify({ sessionId: reviewed.current, ...value })).catch(() => {});
+  const remember = (value: Omit<Saved, "sessionId">) => {
+    if (owner && !ownerRuntime.isBlocked(owner)) void ownerRuntime.run(owner,
+      () => AsyncStorage.setItem(stored, JSON.stringify({ sessionId: reviewed.current, ...value }))).catch(() => {});
+  };
   useEffect(() => {
     let alive = true;
     AsyncStorage.getItem(`liftcut-coach-consent:${owner}`).then(v => { if (alive) setConsented(v === COACH_CONSENT_VERSION); }).catch(() => {});
