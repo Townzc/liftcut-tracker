@@ -1026,10 +1026,23 @@ jobs:
           EXPO_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
           EXPO_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
           EXPO_PUBLIC_API_URL: http://localhost:3103
+          EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION: "false"
         run: |
           npm ci --prefix apps/mobile
           (cd apps/mobile && npx expo export --platform web)
           npx playwright test --config playwright.mobile.config.ts
+      - name: Opt-in mobile deletion UI with intercepted synthetic responses (web only)
+        env:
+          EXPO_NO_DOTENV: "1"
+          EXPO_NO_TELEMETRY: "1"
+          EXPO_PUBLIC_SUPABASE_URL: http://127.0.0.1:55440
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: w1b-local-fixture-anon
+          EXPO_PUBLIC_API_URL: http://localhost:3103
+          EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION: "true"
+          MOBILE_DELETION_OPT_IN: "true"
+        run: |
+          (cd apps/mobile && npx expo export --platform web)
+          npx playwright test --config playwright.mobile-deletion.config.ts
       - name: Opt-in mobile email UI with intercepted synthetic Auth responses (web only)
         env:
           EXPO_NO_DOTENV: "1"

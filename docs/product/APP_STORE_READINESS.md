@@ -35,7 +35,7 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | Gate | Actual state and next bounded change | Evidence required |
 | --- | --- | --- |
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
-| Account deletion | Shared API, recent reauthentication, explicit web/native confirmation and owner-scoped cleanup are implemented behind the server activation gate. The public policy describes the conditional entry and exact cleanup limits. | Real local Auth/Storage API and browser/phone-logic regressions passed; record production migration/configuration/activation evidence separately and complete signed-device acceptance. Never delete real users for release tests |
+| Account deletion | Shared API, recent reauthentication, confirmation and owner-scoped cleanup are implemented. New mobile deletion also requires default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION=true`; enabling the server alone does not enable a mobile build. Prior confirmed intents/receipts retain recovery. | Real local Auth/Storage API and browser/phone-logic regressions passed; record production migration/configuration/activation separately. Keep the mobile gate off until signed-device deletion, storage, cold restart and recovery pass. Never delete real users for release tests |
 | Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
 | Privacy | Public bilingual `/privacy`, web auth/settings entries and mobile sign-in/settings links are implemented; links preserve the selected language and send no account data. Verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Four synthetic Expo web link checks (Chinese/English × sign-in/settings) passed; signed-device opening and final in-app/recipient disclosures remain unverified. A policy page alone does not complete AI-recipient or deletion requirements |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
@@ -59,7 +59,9 @@ Do not put real review credentials or user data in this file or a public PR.
 - Web/native deletion confirmation and shared recovery are prepared, with a
   one-hour write receipt, completion-only verification after expiry, avatar API
   cleanup and owner fences. Activation requires the reviewed migrations,
-  approved server-only configuration and verified release evidence. See
+  approved server-only configuration and verified release evidence. New mobile
+  initiation has its own default-off build gate; prior owner-bound intent/receipt
+  recovery remains usable even when it is off. See
   [account release gates](ACCOUNT_RELEASE.md); no real-user deletion was tested.
 - Native registration/callback code is behind an off-by-default build flag. Slow
   local storage now preserves the original cold-start URL. Real SMTP, native

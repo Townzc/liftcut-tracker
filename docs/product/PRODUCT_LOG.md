@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-27 · Separate mobile deletion release gate
+
+- Server activation no longer exposes new mobile deletion by itself. Settings and the public delete route share a default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION` build gate; an unavailable build can continue on the website.
+- Previously confirmed, owner-bound preparing intents and pending receipts remain recoverable with the gate off. Recovery retains password reauthentication where required, explicit confirmation, original request IDs, owner fences and server-confirmed cleanup; no shared controller or outbox rule changed.
+- Ran mobile `npm run typecheck`, `npm test` (51/51), targeted `npx eslint --no-ignore` and `git diff --check`. The first lint invocation only warned that app files were ignored; the explicit no-ignore rerun passed.
+- Exported synthetic loopback Expo web builds with the gate false and true, then ran `npx playwright test --config playwright.mobile-deletion.config.ts` for each: 4 passed / 1 intentional opposite-mode skip per build. Inspected 390 px Chinese/English captures; both Metro config hashes were restored and bounded servers stopped.
+- Visual review caught a misleading disabled-build message after signing out of the opt-in fixture. Limited that message to a closed gate, added the signed-out regression and repeated both browser modes.
+- CI now verifies the default-off build and a separate opt-in deletion fixture. Evidence: `deliverables/2026-10-27-storage-runtime/mobile-deletion-gate-*`. Browser Auth/API responses are intercepted fixtures; these checks are not real Auth/Storage or native runtime acceptance.
+- No new dependency, paid service, M4 training, production operation, signed iOS build or device test. Keep the mobile gate off until signed-device deletion, local storage, cold restart and recovery pass; exact CI and merge remain pending.
+
 ## 2026-10-27 · Mobile privacy entry before and after sign-in
 
 - Added bilingual Privacy policy links beside the existing help entries on mobile sign-in and Settings, using the same fixed HTTPS host and explicit UI language. Only `lang` crosses into the browser; account, token and workout data remain local to the app.
