@@ -37,7 +37,7 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
 | Account deletion | No account deletion API/UI found. Implement authenticated self-deletion with a separate explicit confirmation and truthful failure states. | Isolated test accounts only; cross-owner denial, retry recovery and old-owner queue/session cleanup; do not execute deletion on real users during preparation |
 | Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
-| Privacy | Dedicated privacy policy and mobile entry points remain absent. Confirm operator identity, retention and actual recipients, then publish accurate bilingual disclosures. | Public URLs and matching in-app disclosures; a support page is not a privacy policy |
+| Privacy | Public bilingual `/privacy` and web auth/settings entries describe the current data flow and deletion limits. Native entry points and verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Public URLs and matching in-app disclosures; a policy page alone does not complete AI-recipient or deletion requirements |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
 | Privacy labels | Draft inventory below; SDK manifests do not cover server processing. | Complete app + processor/logging/backup inventory, linked-data and tracking assessment |
 | Export compliance | `ITSAppUsesNonExemptEncryption` is unset. Assess actual cryptography/SDKs and applicable exemption before answering. | Reviewed declaration and any required documentation; do not set a value just to silence EAS |
@@ -64,7 +64,8 @@ or accepted by the support-page change. Keep each in its own bounded PR.
 2. Reuse the shared `MODEL_DATA`, versioned consent and `coachStatus()` to disclose
    the actual recipient on mobile. Verify no send before consent, revocation,
    recipient-change confirmation and bilingual disclosure/payload agreement.
-   Confirm processor purposes/retention before writing the public privacy policy.
+   Confirm processor purposes/retention before treating the public privacy policy
+   as complete for release; its current unresolved details are stated explicitly.
 3. Design and test self-deletion locally before connecting the UI. The private
    approval ledger has non-cascading foreign keys (`agent_private.runs` in
    `20261013203030_p1_application_transactions.sql` and related records); deleting
