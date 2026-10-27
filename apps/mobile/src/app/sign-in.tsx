@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui";
+import { SupportLink } from "@/components/support-link";
 import { useI18n } from "@/lib/i18n";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
@@ -30,6 +31,7 @@ export default function SignIn() {
         {failed && <Text accessibilityRole="alert" style={{ color: c.text }}>{t("signInFailed")}</Text>}
         <Button label={busy ? t("signingIn") : t("signIn")} disabled={busy || !email.trim() || !password} onPress={() => void submit()} />
       </>}
+      <SupportLink />
     </View>
   </SafeAreaView>;
 }

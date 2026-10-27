@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Card } from "@/components/ui";
+import { SupportLink } from "@/components/support-link";
 import { apiBase } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import { useSession } from "@/lib/session";
@@ -23,6 +24,7 @@ export default function Settings() {
       <Text style={{ color: c.muted }}>{t("server")} · {apiBase}</Text>
     </Card>
     <Button variant="outline" label={t("signOut")} onPress={() => void supabase?.auth.signOut()} />
+    <SupportLink />
   </ScrollView>;
 }
 const styles = StyleSheet.create({
