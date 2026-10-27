@@ -1,6 +1,7 @@
 import { test, expect, type BrowserContext } from "@playwright/test";
 test.use({ serviceWorkers: "block" });
 const owner = "11111111-1111-4111-8111-111111111111", other = "22222222-2222-4222-8222-222222222222";
+const authCookie = `sb-${new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://127.0.0.1:55438").hostname.split(".")[0]}-auth-token`;
 const part = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");
 const session = (method = "oauth", noEmail = false) => ({ access_token: `${part({ alg: "HS256" })}.${part({ sub: owner, role: "authenticated", exp: 2200000000,
   amr: [{ method, timestamp: Math.floor(Date.now() / 1000) }] })}.synthetic`, refresh_token: "synthetic-refresh", expires_in: 3600, expires_at: 2200000000,
@@ -8,7 +9,7 @@ const session = (method = "oauth", noEmail = false) => ({ access_token: `${part(
 async function fixture(context: BrowserContext, stale = false, noEmail = false) {
   const original = session("oauth", noEmail), fresh = session("password", noEmail), unexpected: string[] = [];
   let posts = 0, deletes = 0, requestId = "", finish = stale;
-  await context.addCookies([{ name: "sb-127-auth-token", value: `base64-${part(original)}`, domain: "127.0.0.1", path: "/", sameSite: "Lax" }]);
+  await context.addCookies([{ name: authCookie, value: `base64-${part(original)}`, domain: "127.0.0.1", path: "/", sameSite: "Lax" }]);
   await context.addInitScript(({ owner, other }) => {
     if (!localStorage.getItem("deletion-seeded")) {
       localStorage.setItem(`liftcut-chat-history:${owner}`, "A history"); localStorage.setItem(`liftcut-chat-history:${other}`, "B history");
@@ -55,7 +56,7 @@ test("explicit password confirmation, lost delete reply, reload and precise owne
   await page.getByLabel("当前账号密码").fill("synthetic password"); await expect(button).toBeDisabled();
   await page.getByRole("checkbox").check(); await expect(button).toBeEnabled(); await page.screenshot({ path: "node_modules/.cache/support/deletion-zh.png" }); await button.click();
   await expect(page.locator("p[role=alert]")).toContainText("结果尚未确认"); expect(f.counts()).toEqual({ posts: 1, deletes: 1 });
-  expect((await context.cookies()).some(c => c.name === "sb-127-auth-token")).toBe(true);
+  expect((await context.cookies()).some(c => c.name === authCookie)).toBe(true);
   await page.reload(); await expect(page.getByText(/删除处理中或结果待核实/)).toBeVisible();
   f.finish(); await page.getByRole("button", { name: "重试核实并完成清理" }).click();
   await expect(page.getByText("账号已删除，本机该账号数据已清理.")).toBeVisible();
