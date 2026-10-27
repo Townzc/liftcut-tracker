@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Preserve confirmed intent across a set acknowledgement
+
+- Fixed a real browser race: a set ack could commit before React received its new revision, rejecting a quick end/correction as stale. Ordinary set/end now pass the displayed snapshot; the same IndexedDB transaction accepts only an exactly acknowledged set prefix with unchanged suffix bytes, owner, facts, sources, prescription and business revisions. Only server set timestamps are ignored.
+- No new request IDs, blind revision retry or offline end lock. Real changes, auth/conflict states and context-bound proposals retain their existing rejection paths; shared core/native protocols are unchanged.
+- RED: `npx playwright test --config playwright.w1b.config.ts outbox.spec.ts --grep 'committed set acknowledgement'` failed with the same LOCAL_CONFLICT after deliberately holding the ack's completion notification. GREEN: `npx playwright test --config playwright.w1b.config.ts outbox.spec.ts today.spec.ts` passed 17/17, including that controlled race, the original CI failure, offline end, cross-owner rejection, duplicate retry and unconfirmed preview with zero writes.
+- Ran `node --test --import tsx tests/outbox-acknowledgement.test.ts tests/workout-outbox.test.ts` (22/22), `npx tsc --noEmit --incremental false`, changed-file ESLint and `git diff --check`. `npm run build` passed with temporary Turbopack root for the local dependency junction; config was restored. Initial test key-order/type assertions were corrected before the final checks.
+- Used synthetic browser Auth and an independent local PostgreSQL database, removed after validation. Full CI/root suites, native/device and production verification remain unrun; no model, training data, real account, cloud migration or paid service changed.
+
 ## 2026-10-27 · Mobile deletion screen and owner fencing
 
 - Added a minimal bilingual settings entry and public `/delete-account` recovery screen. Feature-off has no usable deletion button; deletion needs the displayed account email, a password checked by an isolated SDK client, and explicit confirmation.
