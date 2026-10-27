@@ -76,7 +76,7 @@ function DeletionForm({ client, user, loading }: { client: AccountDeletion; user
 }
 const chinese = {
   title: "删除账号", loading: "正在读取…", retry: "重试", local: "无法读取本机删除状态，请重试.",
-  scope: "删除在线账号、资料、头像、训练和饮食计划、身体/饮食/训练记录及对话，并清理当前设备上此账号的待同步记录. 其他账号和访客数据保留. 历史迁移备份、服务商备份及导出副本不在本次即时删除范围，保留期限尚未核定，详见隐私说明.",
+  scope: "删除在线账号、资料、头像、训练和饮食计划、身体/饮食/训练记录及对话，并清理当前设备上此账号的待同步记录. 其他账号、访客数据和无法确认归属的旧版草稿会保留. 历史迁移备份、服务商备份及导出副本不在本次即时删除范围，保留期限尚未核定，详见隐私说明.",
   password: "当前账号密码", confirm: "我确认永久删除此账号及上述数据", submit: "确认并永久删除", session: "使用刚重新登录的会话确认",
   pending: "删除处理中或结果待核实. 普通同步已暂停，请保留浏览器数据并重试.", resume: "重试核实并完成清理", done: "账号已删除，本机该账号数据已清理.",
   unknown: "结果尚未确认. 请保留浏览器数据并重试，目前不会报告删除完成.", expired: "账号仍存在，继续删除需要重新验证. 请保留恢复凭据.",
@@ -85,7 +85,7 @@ const chinese = {
 };
 const english: Record<keyof typeof chinese, string> = {
   title: "Delete account", loading: "Loading…", retry: "Retry", local: "Cannot read local deletion state. Please retry.",
-  scope: "Delete your online account, profile, avatar, training and nutrition plans, body/food/workout records and conversations, plus this account's pending records on this device. Other accounts and guest data remain. Historical migration backups, provider backups and exported copies are outside immediate deletion. Retention periods are not yet confirmed; see the privacy notice.",
+  scope: "Delete your online account, profile, avatar, training and nutrition plans, body/food/workout records and conversations, plus this account's pending records on this device. Other accounts, guest data and unattributed legacy drafts remain. Historical migration backups, provider backups and exported copies are outside immediate deletion. Retention periods are not yet confirmed; see the privacy notice.",
   password: "Current account password", confirm: "I confirm permanent deletion of this account and the data above", submit: "Confirm permanent deletion", session: "Confirm using my new sign-in session",
   pending: "Deletion is pending or unknown. Ordinary sync is paused. Keep browser data and retry.", resume: "Retry verification and cleanup", done: "Account deleted. Its local data has been cleared.",
   unknown: "The outcome is not confirmed. Keep browser data and retry. Deletion is not reported as complete.", expired: "The account still exists. Verify again to continue deletion. Keep the receipt.",
