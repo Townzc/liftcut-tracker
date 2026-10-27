@@ -13,6 +13,7 @@ import { useI18n } from "@/lib/i18n";
 import type { MessageKey } from "@/lib/messages";
 import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
+import { ownerRuntime } from "@/lib/owner-runtime";
 
 // The fields the shared charts read; the rest of each row is kept as is.
 const logsSchema = z.array(z.looseObject({ date: z.string(), exercises: z.array(z.looseObject({ name: z.string(), completed: z.boolean(),
@@ -27,7 +28,7 @@ export default function History() {
   useFocusEffect(useCallback(() => {
     if (!auth) return;
     let alive = true;
-    getJson("/api/workout-sessions/history", auth, logsSchema).then(v => { if (alive) { setLogs(v as unknown as WorkoutLog[]); setFailed(false); } })
+    ownerRuntime.run(auth.user.id, signal => getJson("/api/workout-sessions/history", auth, logsSchema, fetch, signal)).then(v => { if (alive) { setLogs(v as unknown as WorkoutLog[]); setFailed(false); } })
       .catch(() => { if (alive) setFailed(true); });
     return () => { alive = false; };
   }, [auth]));

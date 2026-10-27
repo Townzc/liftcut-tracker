@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-27 · Mobile deletion screen and owner fencing
+
+- Added a minimal bilingual settings entry and public `/delete-account` recovery screen. Feature-off has no usable deletion button; deletion needs the displayed account email, a password checked by an isolated SDK client, and explicit confirmation.
+- Wired queues, conversation history, model streaming, review requests and delayed review/consent writes into the owner fence. Pending deletion prevents normal app remount and keeps its persisted receipt across lost responses and restarts; only exact server completion permits scoped cleanup.
+- Native receipt retries use `X-LiftCut-Deletion-Receipt` plus the recorded owner, without saving an Auth bearer. Password verification cannot replace the main session; a different active account is refused. Exported copies/provider backups are explicitly outside online deletion, without an invented retention promise.
+- Ran final mobile `npm run typecheck`, `npm test` (38/38), `npx eslint --no-ignore apps/mobile/src`, Expo web export with synthetic endpoints, and `npx playwright test --config playwright.mobile-deletion.config.ts` (2/2). Tests also run in the existing mobile-web CI suite; Chinese/English 390px screenshots were inspected.
+- Browser tests intercept SDK/HTTP: disabled feature, explicit confirmation, unknown DELETE, reload/blocked Agent navigation, no resumed ordinary requests, exact-owner cleanup and B/guest/locale preservation. They do not prove production Auth, Storage or native runtime.
+- The first browser attempt matched a retained hidden settings email; scoped the assertion to visible content. A later parallel native JS export caused resource contention; both extra export attempts were stopped, and the browser suite then passed independently. No native completion or phone/IPA acceptance claimed.
+- Next: merge the shared server contract, run full CI and isolated real Auth/Storage acceptance before enabling deletion; signed iPhone testing remains separate. No paid service, production deletion or M4 training ran.
+
 ## 2026-10-27 · One deletion controller for web and phone
 
 - Moved the tested controller into framework-free `@liftcut/core/account-deletion-client`; the phone re-exports it. Storage, owner fencing, network and sign-out remain injected platform adapters.
