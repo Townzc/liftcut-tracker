@@ -99,6 +99,49 @@ test("offline three sets, correction, compensating void and end sync in exact pe
   expect((await db.query("select status from workout_sessions where id=$1",[session])).rows[0].status).toBe("ended");
   expect(errors).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
+
+test("a committed set acknowledgement before its UI notification still permits the displayed end",async({page})=>{
+  await start(page);
+  let releaseResponse!:()=>void;
+  const responseGate=new Promise<void>(resolve=>{releaseResponse=resolve;});
+  await page.route("**/api/workout-sessions?action=set",async route=>{await responseGate;await route.continue();},{times:1});
+  const row=page.getByTestId(`set-${exercise}-1`);
+  await row.getByRole("button",{name:"跳过",exact:true}).click();
+  await expect(page.getByTestId("outbox-status")).toHaveText("待同步 1 条");
+  const displayed=await snapshot(page);
+  // Hold only the ack transaction's completion callback, after IDB has committed.
+  // Production has no timing flag: the following click still sees the old UI state.
+  await page.evaluate(()=>{
+    const gate=window as unknown as {ackCommitted?:boolean;releaseAck?:()=>void};
+    const put=IDBObjectStore.prototype.put;
+    IDBObjectStore.prototype.put=function(value,key){
+      const result=key===undefined?put.call(this,value):put.call(this,value,key);
+      if(this.name==="accounts" && value.items?.length===0 && value.confirmed?.session?.sets?.some((s:{status:string})=>s.status==="skipped")) {
+        IDBObjectStore.prototype.put=put;
+        const tx=this.transaction,complete=tx.oncomplete!;
+        tx.oncomplete=event=>{gate.ackCommitted=true;gate.releaseAck=()=>complete.call(tx,event);};
+      }
+      return result;
+    };
+  });
+  releaseResponse();
+  try {
+    await expect.poll(()=>page.evaluate(()=>(window as unknown as {ackCommitted?:boolean}).ackCommitted)).toBe(true);
+    const committed=await snapshot(page);
+    expect(committed.items).toHaveLength(0);expect(committed.revision).toBe(displayed.revision+1);
+    await expect(page.getByTestId("outbox-status")).toHaveText("待同步 1 条");
+    await page.getByRole("button",{name:"结束训练",exact:true}).click();
+    await expect(page.getByText("训练已结束",{exact:true})).toBeVisible();
+    const queued=await snapshot(page);
+    expect(queued.items.map(i=>i.action)).toEqual(["end"]);
+    expect(JSON.parse(queued.items[0].bodyJson)).toEqual({id:displayed.confirmed!.session!.id,revision:2,status:"ended"});
+  } finally {await page.evaluate(()=>(window as unknown as {releaseAck?:()=>void}).releaseAck?.());}
+  await synced(page);
+  const sessionId=displayed.confirmed!.session!.id;
+  expect((await db.query("select status from workout_sessions where id=$1",[sessionId])).rows[0].status).toBe("ended");
+  expect((await db.query("select status,weight_kg,reps,rpe from set_logs where session_id=$1",[sessionId])).rows).toEqual([{status:"skipped",weight_kg:null,reps:null,rpe:null}]);
+  expect((await db.query("select count(*)::int as n from workout_session_events where session_id=$1 and type='ended'",[sessionId])).rows[0].n).toBe(1);
+});
 test("sentence preview and compensation work offline without API preview or fabricated actuals",async({page,context})=>{
   await start(page);await context.setOffline(true);
   await page.getByLabel("训练原话").fill("深蹲 100 lb 10、8，最后一组 RPE 9");await page.getByRole("button",{name:"解析并预览"}).click();
@@ -182,7 +225,11 @@ test("unavailable IndexedDB shows an explicit failure instead of silently using 
 });
 test("a preview made before another local write cannot silently move to later set slots",async({page})=>{
   await start(page);await page.getByLabel("训练原话").fill("深蹲 50 kg 10、8");await page.getByRole("button",{name:"解析并预览"}).click();
-  await expect(page.getByTestId("sentence-preview")).toContainText("第 1 组");await tap(page,1);await synced(page);
+  await expect(page.getByTestId("sentence-preview")).toContainText("第 1 组");
+  const sessionId=(await snapshot(page)).confirmed!.session!.id;
+  expect((await db.query("select count(*)::int as n from set_logs where session_id=$1",[sessionId])).rows[0].n).toBe(0);
+  expect((await snapshot(page)).items).toHaveLength(0);
+  await tap(page,1);await synced(page);
   await page.getByRole("button",{name:"确认保存这句话"}).click();await expect(page.getByRole("alert").filter({hasText:"当前操作未加入队列"})).toBeVisible();
   const state=await snapshot(page);expect(state.items).toHaveLength(0);expect(state.confirmed!.session!.sets).toHaveLength(1);
   expect((await db.query("select * from workout_commands where session_id=$1",[state.confirmed!.session!.id])).rowCount).toBe(0);
