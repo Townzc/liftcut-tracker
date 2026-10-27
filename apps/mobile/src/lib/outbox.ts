@@ -7,8 +7,8 @@ export type Confirmed = Session | { session: Session; receipts: TodayData["recei
 export type OutboxStore = { read(owner: string): Promise<OutboxState | null>; write(owner: string, state: OutboxState): Promise<void> };
 /** Network edge, injected so the queue logic is testable: a server answer, or a thrown error when the outcome is unknown. */
 export type OutboxApi = {
-  today(): Promise<TodayData>;
-  send(action: WorkoutOperation["action"], bodyJson: string): Promise<{ ok: true; value: Confirmed } | { ok: false; status: number; code: string }>;
+  today(signal?: AbortSignal): Promise<TodayData>;
+  send(action: WorkoutOperation["action"], bodyJson: string, signal?: AbortSignal): Promise<{ ok: true; value: Confirmed } | { ok: false; status: number; code: string }>;
 };
 
 /**
@@ -21,15 +21,30 @@ export class MobileOutbox {
   private chain: Promise<unknown> = Promise.resolve();
   private running: Promise<void> | null = null;
   private again = false;
+  private disposed = false;
+  private controller = new AbortController();
+  private requests = new Set<Promise<unknown>>();
   constructor(readonly owner: string, private store: OutboxStore, private api: OutboxApi, private emit: (state: OutboxState) => void,
     private now: () => number = Date.now) {}
 
+  dispose() { this.disposed = true; this.controller.abort(); }
+  async whenIdle() { await Promise.allSettled([this.chain, this.running, ...this.requests]); }
+  private active() { if (this.disposed) throw new Error("QUEUE_DISPOSED"); }
+  private async request<T>(work: (signal: AbortSignal) => Promise<T>) {
+    this.active();
+    const pending = work(this.controller.signal); this.requests.add(pending);
+    try { const value = await pending; this.active(); return value; }
+    finally { this.requests.delete(pending); }
+  }
+
   private change(mutate?: (state: OutboxState) => boolean): Promise<OutboxState> {
     const next = this.chain.then(async () => {
+      this.active();
       const state = (await this.store.read(this.owner)) ?? emptyOutbox(this.owner);
+      this.active();
       if (state.owner !== this.owner) throw new Error("ACCOUNT_CHANGED");
       if (mutate?.(state)) { state.revision++; await this.store.write(this.owner, state); }
-      this.emit(state);
+      if (!this.disposed) this.emit(state);
       return state;
     });
     this.chain = next.catch(() => {});
@@ -49,7 +64,7 @@ export class MobileOutbox {
   async refresh() {
     const before = await this.change();
     if (before.items.length) return before;
-    const data = await this.api.today();
+    const data = await this.request(signal => this.api.today(signal));
     if (data.session && data.session.userId !== this.owner) throw new Error("ACCOUNT_CHANGED");
     return this.change(s => { if (s.items.length || s.revision !== before.revision) return false; s.confirmed = data; return true; });
   }
@@ -65,7 +80,7 @@ export class MobileOutbox {
       s.items.push({ id, action: operation.action, bodyJson, createdAt: at, status: "pending", attempts: 0, nextAttempt: 0 });
       return true;
     });
-    void this.drain();
+    void this.drain().catch(() => {});
     return state;
   }
   async retry() {
@@ -74,7 +89,7 @@ export class MobileOutbox {
   }
   /** After a conflict the user keeps the cloud version; the discarded steps are kept for reference, not resent. */
   async discardConflict() {
-    const remote = await this.api.today();
+    const remote = await this.request(signal => this.api.today(signal));
     return this.change(s => {
       if (s.items[0]?.status !== "conflict") throw new Error("LOCAL_CONFLICT");
       s.discarded = [{ at: new Date(this.now()).toISOString(), items: s.items }, ...(s.discarded ?? [])].slice(0, 5);
@@ -83,19 +98,23 @@ export class MobileOutbox {
   }
   /** Callers during a run join it, and the run repeats once so their trigger is never lost. */
   drain(): Promise<void> {
+    if (this.disposed) return Promise.resolve();
     if (this.running) { this.again = true; return this.running; }
     this.running = (async () => {
-      try { do { this.again = false; await this.sendHead(); } while (this.again); } finally { this.running = null; }
+      try { do { this.again = false; await this.sendHead(); } while (this.again && !this.disposed); }
+      catch (error) { if (!this.disposed) throw error; }
+      finally { this.running = null; }
     })();
     return this.running;
   }
   private async sendHead() {
-    for (;;) {
+    while (!this.disposed) {
       const state = await this.change();
       const head: OutboxItem | undefined = state.items[0];
       if (!head || head.status === "conflict" || head.status === "auth" || head.nextAttempt > this.now()) return;
       let result: Awaited<ReturnType<OutboxApi["send"]>> | null = null;
-      try { result = await this.api.send(head.action, head.bodyJson); } catch { /* Unknown outcome: resend the same bytes later. */ }
+      try { result = await this.request(signal => this.api.send(head.action, head.bodyJson, signal)); } catch { /* Unknown outcome: resend the same bytes later. */ }
+      if (this.disposed) return; // Keep the exact pending bytes; a late answer cannot restore a purged account.
       if (result?.ok && ("session" in result.value ? result.value.session : result.value).userId !== this.owner) result = { ok: false, status: 409, code: "ACCOUNT_CHANGED" };
       const settled = result;
       await this.change(s => {

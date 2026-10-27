@@ -9,6 +9,7 @@ import { outboxStore } from "./outbox-store";
 import { PersonalQueue } from "./personal-queue";
 import { startQueueSync } from "./queue-sync";
 import { useSession } from "./session";
+import { ownerRuntime } from "./owner-runtime";
 
 const Workout = createContext<{ outbox: MobileOutbox | null; state: OutboxState | null; personal: PersonalQueue | null } | null>(null);
 
@@ -21,13 +22,17 @@ export function WorkoutProvider({ children }: PropsWithChildren) {
   const owner = auth?.user.id, [state, setState] = useState<OutboxState | null>(null);
   const credentials = useMemo(() => accountAuth(owner, getAuth), [owner, getAuth]);
   const outbox = useMemo(() => owner ? new MobileOutbox(owner, outboxStore, outboxApi(credentials), setState) : null, [owner, credentials]);
-  const personal = useMemo(() => owner ? new PersonalQueue(owner, AsyncStorage, async body => {
+  const personal = useMemo(() => owner ? new PersonalQueue(owner, AsyncStorage, async (body, signal) => {
     const auth = credentials();
-    return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body })).status : 401;
+    return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body, signal })).status : 401;
   }) : null, [owner, credentials]);
+  const worker = useMemo(() => ({ stop: () => { outbox?.dispose(); personal?.dispose(); },
+    idle: async () => { await Promise.all([outbox?.whenIdle(), personal?.whenIdle()]); } }), [outbox, personal]);
   useEffect(() => {
-    if (outbox && personal) return startQueueSync(outbox, personal, AppState);
-  }, [outbox, personal]);
+    if (!owner || !outbox || !personal || ownerRuntime.isBlocked(owner)) return;
+    const release = ownerRuntime.register(owner, worker), stop = startQueueSync(outbox, personal, AppState);
+    return () => { stop(); release(); };
+  }, [owner, outbox, personal, worker]);
   const value = useMemo(() => ({ outbox, state: state?.owner === owner ? state : null, personal }), [outbox, state, owner, personal]);
   return <Workout.Provider value={value}>{children}</Workout.Provider>;
 }

@@ -26,6 +26,19 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // The handoff URL contains a one-use auth code; override the global policy.
+        source: "/auth/mobile-callback",
+        headers: [{ key: "Referrer-Policy", value: "no-referrer" }],
+      },
+      {
+        source: "/reset-password",
+        headers: [{ key: "Referrer-Policy", value: "no-referrer" }, { key: "Cache-Control", value: "no-store" }],
+      },
+      {
+        source: "/auth/callback",
+        headers: [{ key: "Referrer-Policy", value: "no-referrer" }, { key: "Cache-Control", value: "no-store" }],
+      },
+      {
         // Always revalidate the worker so a fix reaches users on their next visit.
         source: "/sw.js",
         headers: [
