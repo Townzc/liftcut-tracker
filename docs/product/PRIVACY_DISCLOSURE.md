@@ -20,7 +20,8 @@ calls, migrations, mail, paid services or M4 work are part of this change.
   reauthentication, explicit confirmation and owner-only local cleanup.
 - Historical migration/provider backups, exports, other-device copies and
   unattributed legacy drafts are outside immediate cleanup; retention is not
-  invented. Native privacy links and verified recipient-bound consent remain open.
+  invented. Mobile sign-in/settings privacy links are implemented with the current
+  UI language; signed-device opening and verified recipient-bound consent remain open.
 
 ## Source-backed inventory
 
@@ -63,7 +64,7 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 3. Keep both policy languages aligned with the available flow. Support is a
    fallback for unavailable entry or unresolved outcomes, not instant deletion
    or an App Store-compliant substitute for in-app initiation.
-4. Add native links and verify the signed-device flow separately from browser,
+4. Verify the implemented mobile privacy links on a signed device, separately from browser,
    Expo Go, JS bundle and unsigned simulator results.
 
 ## Official references checked 2026-10-26

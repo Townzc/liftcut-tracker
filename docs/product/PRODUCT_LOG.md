@@ -4,6 +4,7 @@
 
 - Added bilingual Privacy policy links beside the existing help entries on mobile sign-in and Settings, using the same fixed HTTPS host and explicit UI language. Only `lang` crosses into the browser; account, token and workout data remain local to the app.
 - Kept the page structure, existing support behavior, registration/deletion gates and confirmation/source/idempotency rules unchanged. Opening failures have a localized support contact.
+- Aligned the disclosure/readiness inventory: mobile entry code is prepared and browser-tested; signed-device opening and verified recipient/retention disclosures remain separate gates.
 - Ran mobile `npm run typecheck`, `npm test` (49/49), targeted ESLint, Expo web export with synthetic public configuration and four browser cases (4/4): Chinese/English × signed-out/signed-in, verifying actual privacy/support destinations and no account or training writes. Inspected 390 px captures.
 - The temporary local Metro junction watch folders were restored with identical config hashes; the bounded browser server stopped. Evidence: `deliverables/2026-10-27-storage-runtime/mobile-privacy-{export,browser}.*`.
 - No real user, production configuration, external page request, paid service, M4 run or signed iPhone acceptance. Native external-browser opening remains a separate device check.
