@@ -14,6 +14,8 @@ export function signupAuthFactory(url: string, anonKey: string): SignupAuthFacto
       global: { fetch: (input, init) => fetch(input, { ...init, signal: abort.signal }) } });
     return {
       async send(email, password, emailRedirectTo) {
+        // The SDK otherwise falls back to Math.random / plain PKCE on some runtimes.
+        if (typeof globalThis.crypto?.getRandomValues !== "function" || typeof globalThis.crypto?.subtle?.digest !== "function" || typeof TextEncoder === "undefined") throw new Error("signup_secure_crypto_unavailable");
         const result = await client.auth.signUp({ email, password, options: { emailRedirectTo } });
         hasSession = !!result.data.session;
         if (result.error || hasSession) throw new Error("signup_confirmation_required");

@@ -1,5 +1,11 @@
 # 产品日志
 
+## 2026-10-27 · Reject mobile PKCE crypto fallback
+
+- Reviewing the installed SDK revealed fallback to plain PKCE and potentially weak randomness when WebCrypto is absent. Registration now refuses before sign-up unless secure RNG, SHA-256 digest support and TextEncoder are present; no global crypto shim or production toggle was added.
+- Ran mobile typecheck, 35 tests, changed-file ESLint with `--no-ignore`, and `git diff --check`. The new adapter test removes each required capability and verifies zero fetch calls.
+- Node's cryptography does not prove Expo/Hermes support. Signed-device capability, real SMTP and native callback verification remain unrun release gates; keep the planned registration flag off until they pass.
+
 ## 2026-10-27 · Mobile registration persistence and isolated verification controller
 
 - Added an asynchronous persistent registration controller and the actual Supabase PKCE adapter: closed callback, email/attempt/verifier binding, durable claim, replay refusal, expiry and account-change checks. It returns a verified email for ordinary password login; it never installs a main session or signs out another account.

@@ -42,6 +42,10 @@ account/service, paid build or M4 run. The existing `liftcut` scheme is retained
 5. Storage writes use a separate queue so cancellation is durable while a network
    request is slow. Persist only pending metadata and the isolated verifier; no
    password, callback code or temporary session tokens. Storage failures surface.
+6. Refuse registration before any request if secure RNG, WebCrypto digest or
+   TextEncoder is unavailable; the SDK's plain-PKCE fallback is not accepted.
+   Node support does not establish Hermes/iPhone capability. Native capability
+   remains a release gate; no partial global crypto shim is installed.
 
 ## PR 3: native binding and minimal UI — not yet implemented
 
