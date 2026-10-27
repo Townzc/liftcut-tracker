@@ -9,4 +9,5 @@ export const outboxStore = {
     return value ? JSON.parse(value) as OutboxState : null;
   },
   async write(owner: string, state: OutboxState) { await AsyncStorage.setItem(key(owner), JSON.stringify(state)); },
+  async removeOwner(owner: string) { await AsyncStorage.removeItem(key(owner)); },
 };

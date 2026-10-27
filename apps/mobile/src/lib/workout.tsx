@@ -21,9 +21,9 @@ export function WorkoutProvider({ children }: PropsWithChildren) {
   const owner = auth?.user.id, [state, setState] = useState<OutboxState | null>(null);
   const credentials = useMemo(() => accountAuth(owner, getAuth), [owner, getAuth]);
   const outbox = useMemo(() => owner ? new MobileOutbox(owner, outboxStore, outboxApi(credentials), setState) : null, [owner, credentials]);
-  const personal = useMemo(() => owner ? new PersonalQueue(owner, AsyncStorage, async body => {
+  const personal = useMemo(() => owner ? new PersonalQueue(owner, AsyncStorage, async (body, signal) => {
     const auth = credentials();
-    return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body })).status : 401;
+    return auth ? (await fetch(`${apiBase}/api/personal-records`, { method: "POST", headers: apiHeaders(auth, true), body, signal })).status : 401;
   }) : null, [owner, credentials]);
   useEffect(() => {
     if (outbox && personal) return startQueueSync(outbox, personal, AppState);
