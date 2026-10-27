@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-27 · Account deletion database boundary (not enabled)
+
+- Added server-role-only pending deletion/status RPCs; initiation requires a live owner Auth session, while the same request can resume without a session only through the future server receipt path. No client DELETE privileges or account UI added.
+- Avatar writes now require a live session and serialize with the deletion barrier. Public avatar reads and the Storage admin cleanup path remain available; files must be removed through Storage API before Auth deletion.
+- An Auth DELETE trigger removes the owner-bound cyclic approval graph in the same transaction; ordinary approval/review write and append-only rules stay intact. Other owned rows use their existing cascades.
+- Ran `node --import tsx --test tests/product-db/account-deletion.test.ts`: 18/18 on fresh/upgraded disposable PostgreSQL 16 databases; explicit API grants regression: 8/8. Tests include both upload/barrier lock orderings, denied roles, stale sessions, request conflicts, applied records, isolation and injected rollback.
+- Ran focused ESLint, `npx tsc --noEmit --incremental false` and Supabase 2.122.0 local-URL security advisors: no errors; one existing `pgcrypto`-in-public warning. A WSL localhost refusal interrupted one run; waking WSL and rerunning passed.
+- CI now runs the boundary tests. Synthetic Auth/Storage metadata tests do not prove GoTrue revocation or real file deletion; no production migration, secret, user, model, paid service or native installation was touched.
+- Next: explicit confirmation/reauthentication API, signed retry receipt, Storage pagination/removal, owner-local cleanup and isolated real Auth/Storage acceptance before enabling deletion.
+
 ## 2026-10-26 · Separate store profile and honest release preflight
 
 - Added an explicit iOS store/production/Release profile, separate from internal preview and simulator; no build, signing, auto-submit, App Store ID or production environment change.

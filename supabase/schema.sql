@@ -491,6 +491,9 @@ create policy coach_usage_insert on public.coach_request_usage for insert to lif
 grant select on public.food_logs,public.body_metric_logs,public.user_settings to liftcut_workout;
 commit;
 
+-- This baseline is followed by the versioned migrations (including the account
+-- deletion boundary). Keep those private functions in one migration source;
+-- tests/product-db/account-deletion.test.ts checks fresh and upgraded databases.
 -- Fresh installs use the same explicit API grants as the incremental migration.
 begin;
 -- Explicit Data API access for the legacy user-scoped operations. RLS still
