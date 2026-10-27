@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { ownerLifecycle } from "@/lib/owner-lifecycle";
 import { contextSchema, planSchema, isNutritionPlan, type Binding, type Context, type Execution, type RunView } from "@liftcut/core/agent-contracts";
 
 const labels: Record<RunView["status"], string> = {
@@ -53,17 +54,19 @@ function AgentApprovalPanel({ userId }: { userId: string }) {
     setRun(null); setResumeId(id ?? ""); execution.current = null;
     const pending = userId ? localStorage.getItem(`liftcut-p1-${userId}-pending`) : null;
     try { startRequest.current = pending ? JSON.parse(pending) : null; } catch { startRequest.current = null; }
-    const draft = sessionStorage.getItem("liftcut-p1-draft");
-    if (draft) { setJson(draft); sessionStorage.removeItem("liftcut-p1-draft"); }
+    const draftKey=`liftcut-p1-draft:${userId}`,draft = sessionStorage.getItem(draftKey);
+    if (draft) { setJson(draft); sessionStorage.removeItem(draftKey); }
   }, [userId]);
   async function act(work: () => Promise<void>) {
+    if(!ownerLifecycle.active(userId))return;
     setBusy(true); setMessage("");
-    try { await work(); } catch (error) {
+    try { await ownerLifecycle.run(userId,work); } catch (error) {
       const code = error instanceof Error ? error.message : "OUTCOME_UNKNOWN";
       setMessage(`操作未确认（${code}）。请查询当前运行状态；不要重新创建运行。`);
     } finally { setBusy(false); }
   }
   function received(value: RunView) {
+    if(!ownerLifecycle.active(userId))return;
     setRun(value); setContext(value.context); setResumeId(value.id);
     localStorage.setItem(key, value.id); localStorage.removeItem(`${key}-pending`);
   }

@@ -2,6 +2,7 @@
 
 import type { StateCreator } from "zustand";
 import type { TrackerState } from "../use-tracker-store";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 import {
   GUEST_USER_ID,
   createEmptySnapshot,
@@ -32,10 +33,11 @@ export const createInitSlice: StateCreator<TrackerState, [], [], InitSlice> = (s
 
     // The Agent shell can now appear while this bundle is loading. Never relabel
     // a previous owner's data or let their late response overwrite a new session.
+    ownerLifecycle.assertActive(userId);
     set({...(get().userId!==userId?{...createEmptySnapshot(userId),trainingPlanList:[]}:{}), loading: true, error: null, userId, authMode: "authenticated" });
     try {
-      const bundle = await fetchUserDataBundle(userId);
-      if(get().userId!==userId||get().authMode!=="authenticated")return;
+      const bundle = await ownerLifecycle.run(userId,()=>fetchUserDataBundle(userId));
+      if(get().userId!==userId||get().authMode!=="authenticated"||!ownerLifecycle.active(userId))return;
       const previousWeek = get().selectedWeek;
       const previousDay = get().selectedDay;
       const matchedWeek = bundle.snapshot.trainingPlan.weeks.find((week) => week.weekNumber === previousWeek) ?? bundle.snapshot.trainingPlan.weeks[0];
@@ -54,7 +56,7 @@ export const createInitSlice: StateCreator<TrackerState, [], [], InitSlice> = (s
         guestSnapshot: state.guestSnapshot,
       }));
     } catch (error) {
-      if(get().userId!==userId||get().authMode!=="authenticated")return;
+      if(get().userId!==userId||get().authMode!=="authenticated"||!ownerLifecycle.active(userId))return;
       console.error(error);
       set((state) => ({
         userId,

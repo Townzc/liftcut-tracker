@@ -7,9 +7,10 @@ type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem" | "
 export class OwnerLifecycle {
   private work = new Map<string, Set<Promise<unknown>>>();
   private stops = new Map<string, Set<() => void | Promise<void>>>();
-  constructor(private storage: () => Storage, private notify: (owner:string)=>void=()=>{}) {}
+  constructor(private storage: () => Storage, private notify: (owner:string)=>void=()=>{},private removeDraft:(owner:string)=>void=()=>{}) {}
   status(owner: string):"active"|"pending"|"deleted"|"unavailable" {
-    try { const value=this.storage().getItem(marker(owner));return value===null?"active":value==="deleted"?"deleted":"pending"; }
+    try { const storage=this.storage(),value=storage.getItem(marker(owner));
+      return value==="deleted"?"deleted":value!==null||storage.getItem(`liftcut-deletion-v1:${owner}`)!==null?"pending":"active"; }
     catch { return "unavailable"; }
   }
   active(owner: string) { return this.status(owner)==="active"; }
@@ -44,6 +45,7 @@ export class OwnerLifecycle {
     const storage = this.storage(); storage.setItem(marker(owner), "deleted");
     this.notify(owner);
     await removeOutbox(owner);
+    this.removeDraft(owner);
     const exact = new Set([`liftcut-chat-history:${owner}`, `liftcut-review:${owner}`, `liftcut-coach-consent:${owner}`,
       `liftcut-p1-${owner}`, `liftcut-p1-${owner}-pending`]);
     const keys = Array.from({ length: storage.length }, (_, n) => storage.key(n));
@@ -51,7 +53,9 @@ export class OwnerLifecycle {
   }
   /** Other tabs stop independently; transaction-level checks also block late commits. */
   changed(key: string | null) {
-    for (const [owner, stops] of this.stops) if ((key === null || key === marker(owner)) && !this.active(owner)) {
+    const owner=key?.startsWith("liftcut-account-lifecycle:")?key.slice("liftcut-account-lifecycle:".length):null;
+    if(owner&&this.status(owner)==="deleted")this.removeDraft(owner);
+    for (const [owner, stops] of this.stops) if ((key === null || key === marker(owner) || key===`liftcut-deletion-v1:${owner}`) && !this.active(owner)) {
       this.notify(owner);
       for (const stop of stops) void Promise.resolve(stop()).catch(() => {});
     }
@@ -59,5 +63,5 @@ export class OwnerLifecycle {
 }
 export const ownerLifecycle = new OwnerLifecycle(() => localStorage,owner=>{
   if(typeof window!=="undefined")window.dispatchEvent(new CustomEvent(OWNER_LIFECYCLE_EVENT,{detail:{owner}}));
-});
+},owner=>{if(typeof sessionStorage!=="undefined")sessionStorage.removeItem(`liftcut-p1-draft:${owner}`);});
 if (typeof window !== "undefined") window.addEventListener("storage", event => ownerLifecycle.changed(event.key));

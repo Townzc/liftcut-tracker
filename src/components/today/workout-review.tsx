@@ -10,6 +10,7 @@ import { confirmPreview, previewOf, reviewBinding, reviewChanges as changesOf, t
 import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { COACH_CONSENT_VERSION } from "@/lib/coach-model";
 import { useTrackerStore } from "@/store/use-tracker-store";
+import { ownerLifecycle } from "@/lib/owner-lifecycle";
 
 const timezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 async function ledger<T = RunView>(path: string, body?: unknown): Promise<T> {
@@ -39,7 +40,7 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
   // Request keys survive a lost response, so tapping again replays instead of writing twice.
   const keys = useRef<{ accept?: [string, string]; rollback?: string }>({}), flight = useRef(false), reviewed = useRef(sessionId);
   const stored = `liftcut-review:${owner}`;
-  const remember = (value: { runId: string; undoId?: string }) => { try { localStorage.setItem(stored, JSON.stringify({ sessionId: reviewed.current, ...value })); } catch {} };
+  const remember = (value: { runId: string; undoId?: string }) => { try { ownerLifecycle.assertActive(owner);localStorage.setItem(stored, JSON.stringify({ sessionId: reviewed.current, ...value })); } catch {} };
   const show = (value: RunView) => { setRun(value); setSelected(changesOf(value).map(() => true)); };
   useEffect(() => {
     try { setConsented(localStorage.getItem(`liftcut-coach-consent:${owner}`) === COACH_CONSENT_VERSION); } catch { setConsented(false); }
@@ -52,9 +53,9 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
     return () => { alive = false; };
   }, [owner, sessionId, stored]);
   async function act(work: () => Promise<void>) {
-    if (flight.current) return;
+    if (flight.current || !ownerLifecycle.active(owner)) return;
     flight.current = true; setBusy(true); setMessage(""); setActed(true);
-    try { await work(); } catch (e) {
+    try { await ownerLifecycle.run(owner,work); } catch (e) {
       const code = e instanceof Error ? e.message : "OUTCOME_UNKNOWN";
       setMessage(code === "CONTEXT_STALE" ? t("stale") : t("failed", { code }));
       // Show what the ledger now says (e.g. stale or already applied) rather than guessing.

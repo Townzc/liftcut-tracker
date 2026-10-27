@@ -8,6 +8,7 @@ import type { WorkoutOperation } from "@liftcut/core/workout-outbox";
 import type { PersonalCommand } from "@/lib/personal-records";
 import type { RunView } from "@liftcut/core/agent-contracts";
 import type {WorkoutReview} from "@liftcut/core/workout-review";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 export type CoachWorkoutProposal={turnId:string;session:Session;hash:string;draft:LogDraft|null;review?:WorkoutReview;operation:WorkoutOperation};
 function useMemory(owner:string|null){
   const en=useLocale()==="en",[history]=useState(()=>new CoachHistoryClient(owner,en));
@@ -22,8 +23,9 @@ function useMemory(owner:string|null){
     const online=()=>{void history.flush();};window.addEventListener("online",online);
     // Abort the latest request on the account boundary, not the controller at mount.
     const stop=()=>modelRequest.current?.abort();
-    return()=>{window.removeEventListener("online",online);stop();history.dispose();};
-  },[history]);
+    const unregister=owner?ownerLifecycle.register(owner,stop):()=>{};
+    return()=>{unregister();window.removeEventListener("online",online);stop();history.dispose();};
+  },[history,owner]);
   return {history,snapshot,text:snapshot.text,setText:history.setText,turns:snapshot.turns,setTurns:history.setTurns,selected,setSelected,proposal,setProposal,working,setWorking,flight,modelRequest,planRun,setPlanRun,planRunId,setPlanRunId,planWorking,setPlanWorking,streamStage,setStreamStage,personalProposal,setPersonalProposal,resolveText,setResolveText,replace,setReplace};
 }
 const Context=createContext<ReturnType<typeof useMemory>|null>(null);
