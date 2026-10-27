@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-27 · Deletion disclosure matches the gated account flow
+
+- Replaced the outdated bilingual claim that self-service deletion is absent with the conditional mobile/web settings entry, recent verification and explicit permanent-deletion confirmation. Signing in or opening the page alone never deletes an account.
+- The policy explains pending recovery, server-confirmed owner-only local cleanup, retained other-account/guest/language data, and limits for migration/provider backups, exports, other-device copies and unattributed legacy drafts. It does not invent retention periods or claim production activation.
+- Reconciled the readiness/disclosure inventory and existing browser assertions. No interface structure, consent, API, migration, service configuration, native build, FIG work or M4 change.
+- Ran targeted ESLint, diff checks, the default production build including TypeScript, and five privacy browser regressions (5/5); inspected Chinese/English 390 px captures. The temporary local Turbopack root was restored with identical config hashes.
+- Evidence: local `deliverables/2026-10-27-storage-runtime/privacy-activation-{build,browser}.{json,log}`. Tests used synthetic public configuration and intercepted Auth; this is disclosure verification, not production deletion or signed-device acceptance.
+- Next: exact CI, dependent merge/deployment, then record separately verified rollout evidence before describing the service as active.
+
 ## 2026-10-27 · Recoverable web account deletion screen
 
 - Added a minimal bilingual settings subpage using the same owner-bound deletion controller as mobile. Confirmation and isolated password verification are required; OAuth identities can re-login and explicitly confirm a server-verified fresh session, including identities without email.

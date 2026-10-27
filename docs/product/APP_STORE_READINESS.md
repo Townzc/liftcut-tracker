@@ -35,7 +35,7 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | Gate | Actual state and next bounded change | Evidence required |
 | --- | --- | --- |
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
-| Account deletion | Shared API, recent reauthentication, explicit web/native confirmation and owner-scoped cleanup are prepared; production activation remains off. | Real local Auth/Storage API and browser/phone-logic regressions passed; production migration/admin configuration and signed-device acceptance remain gated. Never delete real users for release tests |
+| Account deletion | Shared API, recent reauthentication, explicit web/native confirmation and owner-scoped cleanup are implemented behind the server activation gate. The public policy describes the conditional entry and exact cleanup limits. | Real local Auth/Storage API and browser/phone-logic regressions passed; record production migration/configuration/activation evidence separately and complete signed-device acceptance. Never delete real users for release tests |
 | Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
 | Privacy | Public bilingual `/privacy` and web auth/settings entries describe the current data flow and deletion limits. Native entry points and verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Public URLs and matching in-app disclosures; a policy page alone does not complete AI-recipient or deletion requirements |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
@@ -58,8 +58,8 @@ Do not put real review credentials or user data in this file or a public PR.
   login while recovering A. Captured local mail does not prove public delivery.
 - Web/native deletion confirmation and shared recovery are prepared, with a
   one-hour write receipt, completion-only verification after expiry, avatar API
-  cleanup and owner fences. Production remains disabled until the reviewed
-  migrations and approved server-only configuration are applied. See
+  cleanup and owner fences. Activation requires the reviewed migrations,
+  approved server-only configuration and verified release evidence. See
   [account release gates](ACCOUNT_RELEASE.md); no real-user deletion was tested.
 - Native registration/callback code is behind an off-by-default build flag. Slow
   local storage now preserves the original cold-start URL. Real SMTP, native
@@ -123,7 +123,7 @@ Expo Go screenshots as standalone-app evidence or advertise an on-device M4 mode
 Review-note draft: sign in using the privately supplied synthetic reviewer
 account; choose its prepared workout; inspect a proposal before confirming;
 verify a receipt and same-record correction. Explain offline pending state and
-how to reach privacy/account deletion once implemented. Provide final working
+how to reach privacy and the available account-deletion entry. Provide final working
 steps and credentials in App Store Connect only after release testing.
 
 ## Official references checked

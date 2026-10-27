@@ -17,7 +17,9 @@ for (const [locale, heading] of route === "support" ? [["zh-CN", "帮助与支�
     if (route === "privacy") {
       await expect(page.locator("article")).toContainText(locale === "en" ? "not a data retention period" : "不是数据保存期限");
       await expect(page.locator("article")).toContainText(locale === "en" ? "may be stored before you confirm" : "可能在你确认前保存");
-      await expect(page.locator("article")).toContainText(locale === "en" ? "does not yet have a complete self-service account deletion flow" : "尚无完整的自助删除账号流程");
+      await expect(page.locator("article")).toContainText(locale === "en" ? "When the entry is available" : "入口可用时");
+      await expect(page.locator("article")).toContainText(locale === "en" ? "then explicitly check and confirm permanent deletion" : "再明确勾选并确认永久删除");
+      await expect(page.locator("article")).toContainText(locale === "en" ? "Legacy drafts that cannot reliably be attributed" : "无法可靠归属账号的旧版草稿");
       await expect(page.locator("article li")).toHaveCount(9);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
