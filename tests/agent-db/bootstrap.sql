@@ -7,6 +7,10 @@ do $$ begin
 end $$;
 create schema auth;
 create table auth.users(id uuid primary key);
+-- Synthetic session metadata only; no token signing or GoTrue behavior here.
+create table auth.sessions(id uuid primary key,user_id uuid references auth.users(id) on delete cascade,not_after timestamptz);
+create function auth.jwt() returns jsonb language sql stable as
+  $$select nullif(current_setting('request.jwt.claims',true),'')::jsonb$$;
 create function auth.uid() returns uuid language sql stable as
   $$select coalesce(nullif(current_setting('request.jwt.claim.sub',true),''),
     nullif(current_setting('request.jwt.claims',true),'')::jsonb ->> 'sub')::uuid$$;
