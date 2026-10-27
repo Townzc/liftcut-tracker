@@ -1,6 +1,14 @@
 import { test, expect, type BrowserContext, type Page } from "@playwright/test";
 import { createHash } from "node:crypto";
 
+test("auth callbacks keep one-use codes out of referrers", async ({ request }) => {
+  for (const path of ["/reset-password", "/auth/callback?error=access_denied&code=not-a-real-code"]) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.headers()["referrer-policy"]).toBe("no-referrer");
+    expect(response.headers()["cache-control"]).toContain("no-store");
+  }
+});
+
 test.use({ serviceWorkers: "block" }); // Keep the SDK's synthetic transport observable by Playwright.
 const key = "liftcut-password-recovery", owner = "11111111-1111-4111-8111-111111111111";
 const part = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");

@@ -26,7 +26,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
 
   const pathname = request.nextUrl.pathname;
   // Help and explicit auth callbacks must work without an existing account session.
-  if (["/support", "/reset-password", "/forgot-password", "/auth/callback"].includes(pathname) || isStaticAsset(pathname)) {
+  if (["/support", "/privacy", "/reset-password", "/forgot-password", "/auth/callback"].includes(pathname) || isStaticAsset(pathname)) {
     return response;
   }
 

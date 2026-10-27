@@ -7,9 +7,23 @@
 - Remove callback material from the URL, refuse expired/replayed links, permit verified same-tab reload, clear recovery after completion, and require new-password sign-in. Skip profile bootstrap/prefetch on recovery; OAuth redirects now reject backslashes/external paths and drop callback secrets on errors.
 - Ran `npm test` (15 JS + 268 TS), `npx tsc --noEmit --incremental false`, `npm run lint` (0 errors, 2 existing research warnings), synthetic-environment `npm run build`, and targeted ESLint/diff checks.
 - Ran `npx playwright test --config playwright.support.config.ts`: 11/11, including seven new actual-SDK/synthetic-transport recovery cases. This existing suite runs in quality CI. Browser testing caught and fixed the submit-button default; the fixture disables service workers so navigation cannot bypass its transport interception.
+- After integrating privacy main, rebuilt and passed 17/17 browser checks; actual HTTP responses now enforce no-referrer/no-store on reset/OAuth callbacks so one-use codes are not propagated in request referrers.
 - Ran `node --import tsx ../deliverables/2026-10-26-account-lifecycle/verify-recovery-real.mts`: eight real GoTrue 2.197.0 checks using the shipped recovery functions with in-memory browser adapters and locally captured SMTP. Verified signed `amr=recovery`, same-tab restore, ordinary-session/cross-owner/replay rejection, explicit update, new-password login, old-password refusal and an unchanged second account; both synthetic accounts removed.
 - Browser DOM tests above use synthetic Auth transport; the real-Auth checks are a separate API/source run. Production SMTP delivery, native email return and signed-device acceptance remain open. Existing production redirect patterns cover the new route; no hosted configuration or user data was changed.
 - No approval ledger, training/data writes, outbox, model default, M4 training, mobile registration or account deletion changes. Next: finish account deletion/privacy, then mobile registration and email return in focused PRs.
+
+## 2026-10-27 · Public bilingual privacy and source-backed disclosures
+
+- Added `/privacy?lang=zh-CN|en`, the existing public contact and localized web auth/settings entries. Explain data purposes, pre-confirmation chat/preview storage, six-turn context versus retention, guest cloud requests and distinct chat/undo/logout/account deletion effects.
+- AI categories render from shared `MODEL_DATA`. Current interface identification of DeepSeek is distinguished from the unverified endpoint; no zero-retention, fixed deletion period, provider training or processing-location promise. Self-deletion is explicitly not yet complete.
+- Exact public path bypasses auth/profile bootstrap and Agent prefetch; no mobile UI, ledger, confirmation, provenance, outbox or model changes. Added [disclosure inventory and release gaps](PRIVACY_DISCLOSURE.md).
+- Ran `npm test`: 15 JS + 266 TS passed; `npm run lint`: no errors, two existing research warnings. `git diff --check` and local Markdown-link checks passed.
+- The default build initially failed because the worktree dependency junction escaped Turbopack's root. `npm run build -- --webpack` compiled, but its missing middleware caused the protected-route browser check to fail (8/9); this was not accepted as complete verification.
+- Ran `npm run build` with a temporary local `turbopack.root` set to the common parent of this worktree and shared dependencies: passed, including middleware. Restored `next.config.ts` byte-for-byte; no build configuration change is committed. Fixture public env only, independent `.next`.
+- Ran `npx playwright test --config playwright.support.config.ts --output=.next/privacy-browser` with local Chrome: 9/9 passed, including exact auth boundaries, both languages, no parameter forwarding, signed-in refresh without record/API/Agent reads, and auth/settings links.
+- Inspected both 390px privacy screenshots under `.next/privacy-browser/`; no horizontal overflow. CI keeps screenshot evidence under the existing support-browser artifact directory.
+- Unrun: GitHub CI, deployment, production data/model/mail, account deletion, native/signed-device and App Store acceptance. No paid resources or M4 training used.
+- Next: review actual AI recipient/retention, add native entries and verified recipient consent, complete deletion separately and update both policy languages before store submission.
 
 ## 2026-10-26 · Separate store profile and honest release preflight
 
