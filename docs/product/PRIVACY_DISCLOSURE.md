@@ -1,6 +1,8 @@
 # Privacy disclosure preparation
 
-Source baseline: `421bac62846b925c11f9073a151ed857a7d7987a`, checked 2026-10-26.
+Original source baseline: `421bac62846b925c11f9073a151ed857a7d7987a`, checked 2026-10-26.
+Deletion disclosure reconciled against `4437c95` on 2026-10-27; activation evidence
+belongs in [account release gates](ACCOUNT_RELEASE.md), not an assumed policy claim.
 This is free release preparation, not App Store approval. No real records, model
 calls, migrations, mail, paid services or M4 work are part of this change.
 
@@ -13,8 +15,12 @@ calls, migrations, mail, paid services or M4 work are part of this change.
   Agent prefetch. It does not weaken protected or lookalike routes.
 - AI data categories render from `MODEL_DATA`; the public notice is not consent.
   Existing consent/revoke, confirmation, provenance and idempotency stay intact.
-- Native links, verified recipient-bound consent and self-service account
-  deletion remain separate changes. Do not advertise this page as completing them.
+- Web/native self-service deletion now shares one confirmation/recovery controller
+  behind a server gate. The policy describes the conditional entry, recent
+  reauthentication, explicit confirmation and owner-only local cleanup.
+- Historical migration/provider backups, exports, other-device copies and
+  unattributed legacy drafts are outside immediate cleanup; retention is not
+  invented. Native privacy links and verified recipient-bound consent remain open.
 
 ## Source-backed inventory
 
@@ -51,11 +57,12 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 1. Disclose a reviewed actual AI recipient before requests, reusing existing
    category consent; bind subsequent changes to renewed consent. Do not label a
    custom endpoint as OpenAI merely because an OpenAI-compatible SDK is used.
-2. Complete self-deletion separately: reauthentication/confirmation, public and
-   private-ledger dependencies, storage objects, local queue cleanup, partial
-   failures and safe retries. Verify old tokens/queues cannot restore deleted data.
-3. Update both languages when the deletion flow lands. Contact support currently
-   offers assistance, not instant deletion or an App Store-compliant substitute.
+2. Verify each deletion rollout: migrations, configured gate, online ledgers,
+   Storage objects, owner-only local cleanup, partial failures and safe retries.
+   Verify old tokens/queues cannot restore deleted data; record actual evidence.
+3. Keep both policy languages aligned with the available flow. Support is a
+   fallback for unavailable entry or unresolved outcomes, not instant deletion
+   or an App Store-compliant substitute for in-app initiation.
 4. Add native links and verify the signed-device flow separately from browser,
    Expo Go, JS bundle and unsigned simulator results.
 
