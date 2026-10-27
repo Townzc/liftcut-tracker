@@ -124,7 +124,7 @@ function TodayWorkspace({owner,conversation,initialStatus}:{owner:string;convers
     if (inFlight.current || !state || locked) return false;
     inFlight.current = true; setBusy(true); setError("");
     try {
-      await client.current!.enqueue(p,state.revision);
+      await client.current!.enqueue(p,state.revision,state);
       return true; // Means durably queued; the UI labels it pending until acknowledged.
     } catch(e) {setError(e instanceof Error && e.message==="LOCAL_CONFLICT"?"LOCAL_CONFLICT":"STORAGE");return false;}
     finally { setBusy(false); inFlight.current = false; }
