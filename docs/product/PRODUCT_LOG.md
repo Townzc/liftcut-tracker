@@ -10,6 +10,19 @@
 - [Account release steps](ACCOUNT_RELEASE.md) record the default SMTP limitation, prepared Resend free option, production permissions and remaining real-delivery checks. No service account, payment, M4 run or FIG change.
 
 
+## 2026-10-27 · Public bilingual privacy and source-backed disclosures
+
+- Added `/privacy?lang=zh-CN|en`, the existing public contact and localized web auth/settings entries. Explain data purposes, pre-confirmation chat/preview storage, six-turn context versus retention, guest cloud requests and distinct chat/undo/logout/account deletion effects.
+- AI categories render from shared `MODEL_DATA`. Current interface identification of DeepSeek is distinguished from the unverified endpoint; no zero-retention, fixed deletion period, provider training or processing-location promise. Self-deletion is explicitly not yet complete.
+- Exact public path bypasses auth/profile bootstrap and Agent prefetch; no mobile UI, ledger, confirmation, provenance, outbox or model changes. Added [disclosure inventory and release gaps](PRIVACY_DISCLOSURE.md).
+- Ran `npm test`: 15 JS + 266 TS passed; `npm run lint`: no errors, two existing research warnings. `git diff --check` and local Markdown-link checks passed.
+- The default build initially failed because the worktree dependency junction escaped Turbopack's root. `npm run build -- --webpack` compiled, but its missing middleware caused the protected-route browser check to fail (8/9); this was not accepted as complete verification.
+- Ran `npm run build` with a temporary local `turbopack.root` set to the common parent of this worktree and shared dependencies: passed, including middleware. Restored `next.config.ts` byte-for-byte; no build configuration change is committed. Fixture public env only, independent `.next`.
+- Ran `npx playwright test --config playwright.support.config.ts --output=.next/privacy-browser` with local Chrome: 9/9 passed, including exact auth boundaries, both languages, no parameter forwarding, signed-in refresh without record/API/Agent reads, and auth/settings links.
+- Inspected both 390px privacy screenshots under `.next/privacy-browser/`; no horizontal overflow. CI keeps screenshot evidence under the existing support-browser artifact directory.
+- Unrun: GitHub CI, deployment, production data/model/mail, account deletion, native/signed-device and App Store acceptance. No paid resources or M4 training used.
+- Next: review actual AI recipient/retention, add native entries and verified recipient consent, complete deletion separately and update both policy languages before store submission.
+
 ## 2026-10-26 · Separate store profile and honest release preflight
 
 - Added an explicit iOS store/production/Release profile, separate from internal preview and simulator; no build, signing, auto-submit, App Store ID or production environment change.
