@@ -11,7 +11,10 @@ export function getSupabaseBrowserClient(): SupabaseClient {
   }
 
   const { url, anonKey } = getSupabaseEnv();
-  browserClient = createBrowserClient(url, anonKey);
+  // Recovery has a separate PKCE client; the normal account must not consume its code.
+  browserClient = createBrowserClient(url, anonKey, { auth: {
+    detectSessionInUrl: typeof window === "undefined" || window.location.pathname !== "/reset-password",
+  } });
 
   return browserClient;
 }
