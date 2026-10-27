@@ -15,7 +15,8 @@ function RootNavigator() {
     <StatusBar style="auto" />
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
       <Stack.Protected guard={!!session}><Stack.Screen name="(app)" /></Stack.Protected>
-      <Stack.Protected guard={!session}><Stack.Screen name="sign-in" /></Stack.Protected>
+      <Stack.Protected guard={!session}><Stack.Screen name="sign-in" /><Stack.Screen name="register" /></Stack.Protected>
+      <Stack.Screen name="auth/callback" options={{ gestureEnabled: false }} />
     </Stack>
   </>;
 }

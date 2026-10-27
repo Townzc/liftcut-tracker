@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-27 · Gated mobile registration and email-return UI preparation
+
+- Bound the isolated registration controller to AsyncStorage and current main-session ownership. Main Auth events cancel pending attempts; password login awaits cancellation. Added minimal bilingual register/wait/cancel and callback screens using the original Expo `useLinkingURL`, with existing-account refusal and explicit return to password login.
+- `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP` defaults off; only literal `true` enables registration/callback processing. Example remains false. No hosted/EAS variables, SMTP, scheme allowlist, accounts or paid service changed. Existing training confirmation/source/idempotency is unchanged; cancelling confirmation does not delete an Auth account.
+- Ran mobile typecheck and 35 logic tests, changed-source/config/tests ESLint with `--no-ignore`, and `git diff --check`. Initial typecheck found nullable import capture; fixed by retaining the configured main Auth reference.
+- Exported only Expo web with synthetic public fixture values and the flag enabled. Temporary Metro watch folders exposed the shared dependency junction targets; restored config afterward. No iOS/Android export or new native build was run here.
+- Ran `npx playwright test --config playwright.mobile-signup.config.ts`: 2/2, including inspected 390px Chinese/English screenshots, S256 request, pending-state reload, no password/session persistence, cancellation and HTTP callback refusal. Initial selectors targeted the retained hidden login screen; fixed navigation readiness/visible selectors without changing product behavior.
+- Wired the opt-in UI suite into CI after existing default-off mobile web regression. This suite intercepts Auth responses; actual captured-mail/GoTrue/controller evidence belongs to the preceding PR. New CI, real SMTP, native crypto, signed-iPhone cold/warm/repeated links and Store acceptance remain unrun.
+- Next: review/merge after checks, evaluate a complete supported native crypto implementation, then obtain signed-device and email-delivery evidence before changing the flag. See [readiness](APP_STORE_READINESS.md) and [email handoff](MOBILE_EMAIL_AUTH.md).
+
 ## 2026-10-27 · Reject mobile PKCE crypto fallback
 
 - Reviewing the installed SDK revealed fallback to plain PKCE and potentially weak randomness when WebCrypto is absent. Registration now refuses before sign-up unless secure RNG, SHA-256 digest support and TextEncoder are present; no global crypto shim or production toggle was added.

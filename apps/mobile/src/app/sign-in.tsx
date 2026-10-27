@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { router } from "expo-router";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui";
@@ -6,23 +7,30 @@ import { SupportLink } from "@/components/support-link";
 import { useI18n } from "@/lib/i18n";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
+import { cancelEmailSignup, mobileEmailSignupEnabled } from "@/lib/email-signup-native";
 
 export default function SignIn() {
   const { t } = useI18n(), c = useColors();
   const [email, setEmail] = useState(""), [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false), [failed, setFailed] = useState(false);
+  const submitting = useRef(false);
   async function submit() {
-    if (!supabase) return;
+    if (!supabase || submitting.current) return;
+    submitting.current = true;
     setBusy(true); setFailed(false);
     // On success the session listener swaps the protected stack in; nothing else to do here.
-    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password }).catch(() => ({ error: true }));
-    setBusy(false); setFailed(!!error);
+    try {
+      await cancelEmailSignup();
+      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      setFailed(!!error);
+    } catch { setFailed(true); }
+    finally { submitting.current = false; setBusy(false); }
   }
   const input = [styles.input, { color: c.text, borderColor: c.border }];
   return <SafeAreaView style={[styles.screen, { backgroundColor: c.background }]}>
     <View style={styles.form}>
       <Text accessibilityRole="header" style={[styles.title, { color: c.text }]}>{t("signInTitle")}</Text>
-      <Text style={{ color: c.muted, lineHeight: 22 }}>{t("signInHint")}</Text>
+      <Text style={{ color: c.muted, lineHeight: 22 }}>{t(mobileEmailSignupEnabled ? "signInSharedAccount" : "signInHint")}</Text>
       {!supabase ? <Text accessibilityRole="alert" style={{ color: c.text }}>{t("notConfigured")}</Text> : <>
         <TextInput style={input} value={email} onChangeText={setEmail} placeholder={t("email")} placeholderTextColor={c.muted}
           accessibilityLabel={t("email")} autoCapitalize="none" autoComplete="email" keyboardType="email-address" textContentType="username" />
@@ -30,6 +38,7 @@ export default function SignIn() {
           accessibilityLabel={t("password")} secureTextEntry autoComplete="current-password" textContentType="password" onSubmitEditing={() => void submit()} />
         {failed && <Text accessibilityRole="alert" style={{ color: c.text }}>{t("signInFailed")}</Text>}
         <Button label={busy ? t("signingIn") : t("signIn")} disabled={busy || !email.trim() || !password} onPress={() => void submit()} />
+        {mobileEmailSignupEnabled && <Button label={t("signUp")} variant="outline" disabled={busy} onPress={() => router.push("/register")} />}
       </>}
       <SupportLink />
     </View>
