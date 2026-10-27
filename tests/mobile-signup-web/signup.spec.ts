@@ -64,3 +64,27 @@ test("pending deletion cannot be bypassed through registration or the public ema
   expect(authRequests).toBe(0);
   expect(await page.evaluate(owner => JSON.parse(localStorage.getItem(`liftcut-deletion-v1:${owner}`)!).receipt, record.owner)).toBe(record.receipt);
 });
+
+for (const path of ["/sign-in", `/auth/callback?attempt=11111111-1111-4111-8111-111111111111&code=${"a".repeat(32)}`]) test(`slow deletion storage retains cold launch ${path.split("?")[0]}`, async ({ page }) => {
+  type ReadGate = { __deletionGate: Promise<void>; __releaseDeletion: () => void; __deletionReadReached: boolean };
+  await page.addInitScript(() => {
+    localStorage.setItem("liftcut-locale", "en");
+    const state = window as typeof window & ReadGate;
+    state.__deletionReadReached = false; state.__deletionGate = new Promise(resolve => { state.__releaseDeletion = resolve; });
+  });
+  // Fault injection in the test response only: defer the real adapter's getAllKeys.
+  // This exercises shipped navigation/controller code without a production timing flag.
+  await page.route(/\/__common-[^/]+\.js$/, async route => {
+    const response = await route.fetch(), body = await response.text(), marker = "await this.io.store.getAllKeys()";
+    expect(body.split(marker)).toHaveLength(2);
+    await route.fulfill({ response, body: body.replace(marker, "await (globalThis.__deletionReadReached=true,globalThis.__deletionGate.then(()=>this.io.store.getAllKeys()))") });
+  });
+  await page.goto(path);
+  await expect.poll(() => page.evaluate(() => (window as typeof window & ReadGate).__deletionReadReached)).toBe(true);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
+  await expect(page.getByText("Delete account", { exact: true })).toHaveCount(0);
+  await page.evaluate(() => (window as typeof window & ReadGate).__releaseDeletion());
+  await expect(page.getByRole("heading", { name: path === "/sign-in" ? "Sign in to LiftCut" : "Confirm email", exact: true })).toBeVisible();
+  expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
+});
