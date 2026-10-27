@@ -35,7 +35,7 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | Gate | Actual state and next bounded change | Evidence required |
 | --- | --- | --- |
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
-| Account deletion | No account deletion API/UI found. Implement authenticated self-deletion with a separate explicit confirmation and truthful failure states. | Isolated test accounts only; cross-owner denial, retry recovery and old-owner queue/session cleanup; do not execute deletion on real users during preparation |
+| Account deletion | Shared API, recent reauthentication, explicit web/native confirmation and owner-scoped cleanup are prepared; production activation remains off. | Real local Auth/Storage API and browser/phone-logic regressions passed; production migration/admin configuration and signed-device acceptance remain gated. Never delete real users for release tests |
 | Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
 | Privacy | Public bilingual `/privacy` and web auth/settings entries describe the current data flow and deletion limits. Native entry points and verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Public URLs and matching in-app disclosures; a policy page alone does not complete AI-recipient or deletion requirements |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
@@ -51,31 +51,28 @@ external registration webpage does not remove Apple's account-deletion
 requirement. A support email or a sign-out button is not account deletion.
 Do not put real review credentials or user data in this file or a public PR.
 
-### Next free implementation sequence
+### Current free preparation and remaining activation gates
 
-Read-only source review found concrete gaps; the items below are not implemented
-or accepted by the support-page change. Keep each in its own bounded PR.
-
-1. Complete password recovery before adding mobile links. The web
-   `src/components/auth/forgot-password-form.tsx` sends `resetPasswordForEmail`
-   and redirects to login, but no password-update/recovery continuation exists.
-   Reuse the auth client; verify valid, expired/replayed and invalid callbacks,
-   new-password login and account binding with isolated accounts.
-2. Reuse the shared `MODEL_DATA`, versioned consent and `coachStatus()` to disclose
-   the actual recipient on mobile. Verify no send before consent, revocation,
-   recipient-change confirmation and bilingual disclosure/payload agreement.
-   Confirm processor purposes/retention before treating the public privacy policy
-   as complete for release; its current unresolved details are stated explicitly.
-3. Design and test self-deletion locally before connecting the UI. The private
-   approval ledger has non-cascading foreign keys (`agent_private.runs` in
-   `20261013203030_p1_application_transactions.sql` and related records); deleting
-   the Auth user alone is not a complete implementation. Verify cancellation,
-   reauthentication, ownership, deletion order, partial failure/retry and rejection
-   of old tokens/queues. Never test deletion on real users during preparation.
-4. After privacy and deletion are complete, expose native registration/recovery.
-   The `liftcut` scheme exists, but email callbacks still need implementation.
-   Test cold-start/repeated callbacks and both languages. Real email delivery
-   and signed-iPhone behavior remain separate acceptance steps.
+- Web password recovery is deployed. Actual local Next/GoTrue/SMTP-capture/browser
+  tests cover new-tab PKCE, verified identity, password update and preserved B
+  login while recovering A. Captured local mail does not prove public delivery.
+- Web/native deletion confirmation and shared recovery are prepared, with a
+  one-hour write receipt, completion-only verification after expiry, avatar API
+  cleanup and owner fences. Production remains disabled until the reviewed
+  migrations and approved server-only configuration are applied. See
+  [account release gates](ACCOUNT_RELEASE.md); no real-user deletion was tested.
+- Native registration/callback code is behind an off-by-default build flag. Slow
+  local storage now preserves the original cold-start URL. Real SMTP, native
+  secure crypto and signed iPhone warm/cold/replayed links still gate activation.
+- Resend Free is a prepared option, not an opened account or configured sender.
+  Verify the sending domain, authorized credentials and delivery when approved;
+  do not ask for passwords or API keys in a public chat.
+- Verify the actual AI recipient, processor terms, logging and backup retention,
+  then bind recipient changes to renewed consent before final Store disclosures.
+  Historical migration backups and exported copies are not instantaneously
+  erased by online account deletion; no unverified retention period is promised.
+- Apple membership/signing and a standalone phone acceptance remain later gates.
+  No paid enrollment, signed IPA, App Store submission or M4 training ran here.
 
 ## Data inventory draft
 

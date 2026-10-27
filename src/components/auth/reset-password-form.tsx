@@ -34,8 +34,12 @@ export function ResetPasswordForm() {
     setBusy(true); setError(null);
     try {
       if (state === "done") {
-        const { error } = await getSupabaseBrowserClient().auth.signOut({ scope: "local" });
+        const auth = getSupabaseBrowserClient().auth, { data, error } = await auth.getSession();
         if (error) throw error;
+        if (data.session?.user.id === identity?.id) {
+          const result = await auth.signOut({ scope: "local" });
+          if (result.error) throw result.error;
+        }
       } else await cancelRecovery();
       window.location.replace(path);
     } catch { setError(t("genericError")); setBusy(false); }

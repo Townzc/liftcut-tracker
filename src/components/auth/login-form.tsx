@@ -25,6 +25,7 @@ const oauthErrorMap: Record<string, string> = {
 export function LoginForm() {
   const t = useTranslations("auth");
   const searchParams = useSearchParams();
+  const destination = searchParams.get("returnTo") === "delete-account" ? "/delete-account" : "/onboarding";
   const { startGuestMode } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -57,7 +58,7 @@ export function LoginForm() {
 
       // Discard anonymous route/prefetch results after the session cookies change.
       // refresh() only clears the current route and can retain a cached login redirect.
-      window.location.replace("/onboarding");
+      window.location.replace(destination);
     } catch {
       setError(t("genericError"));
     } finally {
@@ -87,7 +88,7 @@ export function LoginForm() {
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "custom:wechat",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(destination)}`,
         },
       });
 

@@ -1,5 +1,5 @@
 export const deletionZh = {
-  deleteAccount: "删除账号", deletionScope: "将永久删除账号、资料、头像、训练和饮食计划、身体/饮食/训练记录及对话. 本机待同步记录也会清理，其他账号和访客数据保留. 已导出副本或服务商备份不属于本次在线删除范围，保存期限请查看隐私说明或联系支持.",
+  deleteAccount: "删除账号", deletionScope: "将永久删除账号、资料、头像、训练和饮食计划、身体/饮食/训练记录及对话. 本机待同步记录也会清理，其他账号和访客数据保留. 历史迁移备份、服务商备份和导出副本不属于本次即时删除范围，保留期限尚未核定，详见隐私说明.",
   deletionConfirm: "我确认永久删除此账号及上述数据", deletionPassword: "当前账号密码", deletionSubmit: "确认并永久删除",
   deletionUnavailable: "账号删除暂未启用. 请稍后回来检查.", deletionPending: "删除处理中或结果待核实. 普通同步已暂停，请保留此页面和应用数据，联网后重试.",
   deletionExpired: "账号尚未删除，继续删除需要重新验证当前账号密码. 请保留应用数据和恢复凭据.",
@@ -8,7 +8,7 @@ export const deletionZh = {
   deletionWeb: "没有此账号的密码？请在网页重新登录后进入账号删除页面.", deletionWebOpen: "在网页继续", deletionBack: "返回", deletionBusy: "正在处理…",
 };
 export const deletionEn: Record<keyof typeof deletionZh, string> = {
-  deleteAccount: "Delete account", deletionScope: "Permanently delete your account, profile, avatar, training and nutrition plans, body/food/workout records and conversations. Pending records on this device are removed; other accounts and guest data remain. Exported copies and provider backups are outside this online deletion. See the privacy notice or contact support about retention.",
+  deleteAccount: "Delete account", deletionScope: "Permanently delete your account, profile, avatar, training and nutrition plans, body/food/workout records and conversations. Pending records on this device are removed; other accounts and guest data remain. Historical migration backups, provider backups and exported copies are outside immediate deletion. Retention periods are not yet confirmed; see the privacy notice.",
   deletionConfirm: "I confirm permanent deletion of this account and the data above", deletionPassword: "Current account password", deletionSubmit: "Confirm permanent deletion",
   deletionUnavailable: "Account deletion is not enabled yet. Please check again later.", deletionPending: "Deletion is pending or its outcome is unknown. Ordinary sync is paused. Keep the app data and retry when online.",
   deletionExpired: "The account still exists. Verify its password again to continue deletion. Keep the app data and recovery receipt.",

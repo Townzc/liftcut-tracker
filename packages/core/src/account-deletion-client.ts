@@ -3,7 +3,7 @@ type KeyValueStore = { getAllKeys(): Promise<readonly string[]>; getItem(key: st
 type OwnerRuntime = { block(owner: string): void; idle(owner: string): Promise<void> };
 
 const prefix = "liftcut-deletion-v1:";
-const recordSchema = z.object({ owner: z.uuid(), email: z.string().email(), requestId: z.uuid(),
+const recordSchema = z.object({ owner: z.uuid(), email: z.string().email().nullable(), requestId: z.uuid(),
   receipt: z.string().min(40).max(2048).nullable(), stage: z.enum(["preparing", "pending", "deleted"]) }).strict();
 export type DeletionRecord = z.infer<typeof recordSchema>;
 export type FreshDeletionAuth = { owner: string; token: string; close(): Promise<void> };
@@ -45,7 +45,7 @@ export class AccountDeletion {
     try { await work(); } catch (error) { this.error = error instanceof Error ? error.message : "OUTCOME_UNKNOWN"; }
     finally { this.busy = false; this.emit(); }
   }
-  async begin(owner: string, email: string, confirmed: boolean, reauthenticate: () => Promise<FreshDeletionAuth>) {
+  async begin(owner: string, email: string | null, confirmed: boolean, reauthenticate: () => Promise<FreshDeletionAuth>) {
     return this.serial(async () => {
       const before = this.io.currentOwner(), old = this.records.get(owner);
       if (!confirmed || (before !== owner && (before || !old))) throw Error("CONFIRM_REQUIRED");

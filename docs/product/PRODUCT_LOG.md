@@ -1,5 +1,32 @@
 # 产品日志
 
+## 2026-10-27 · Recoverable web account deletion screen
+
+- Added a minimal bilingual settings subpage using the same owner-bound deletion controller as mobile. Confirmation and isolated password verification are required; OAuth identities can re-login and explicitly confirm a server-verified fresh session, including identities without email.
+- The exact public recovery route survives a missing Auth session. Pending owners cannot mount normal business providers, and persisted receipts survive unknown replies; cleanup only follows the exact server completion, preserving other owners, guest data and language.
+- Feature-off hides the settings action and destructive controls. The disclosure distinguishes online deletion from historical migration backups, provider backups and exported copies whose retention is not yet confirmed.
+- Ran the default production build, full `npx tsc --noEmit --incremental false`, targeted ESLint, diff checks and `npx playwright test --config playwright.support.config.ts` (22/22). Earlier root tests passed 15 JS + 282 TS; nullable-email core tests passed 2/2.
+- Initial local Turbopack root/junction failure was resolved by a build-only parent root, restored afterwards; webpack was not used as acceptance. Two initial browser failures were ambiguous alert locators, then fixed and rerun. Chinese/English 390 px screenshots were inspected.
+- CI's public `example.supabase.co` build exposed a hardcoded loopback Auth cookie in three deletion fixtures. Reproduced all three failures, derived the fixture cookie from the public URL using the SDK's rule, and reran the same default CI-config build with 22/22 browser checks passing; targeted lint/diff passed. No product behavior or real account changed.
+- Final integrated root `npm test` passed 15 JS + 287 TS, full TypeScript and lint (0 errors, 2 existing warnings); mobile logic passed 49/49. Browser transport regressions are separate from the real-service evidence below.
+- Real local Next/Turbopack/Proxy + GoTrue/PostgREST/Storage browser acceptance passed: explicit confirmation, fresh authentication, pending/failure isolation, actual removal of 105 avatar files/Auth/ledger, exact-owner local cleanup, unchanged B/guest/locale, and rejection of old credentials. Two synthetic accounts were removed; no production user or external mail/model request was used.
+- Updated release/disclosure status and restored whole log sections after parent integrations. These dependent PRs retain merge commits to preserve their verified ancestry; squash was tested to produce add/add conflicts in downstream branches. Each head still requires all CI green and exact production deployment verification.
+- Next: finish final integrated browser/CI checks. Production migration/admin configuration, real SMTP, native crypto and signed-phone acceptance remain gated; no feature activation, paid build or M4 training is claimed.
+
+## 2026-10-27 · Preserve absent email for OAuth deletion
+
+- The shared deletion record now permits a null email for authenticated OAuth identities without one. Existing email-string records remain compatible; malformed supplied addresses are still rejected.
+- Owner identity and explicit confirmation remain mandatory. The interface must show the actual owner ID when email is absent and offer fresh-session confirmation; password verification still requires a real email.
+- Ran the two focused core tests, core TypeScript, targeted ESLint and diff checks. No fabricated address, changed password policy, live account or production action.
+- Next: complete the dependent web UI and verify the no-email flow through actual SDK requests with a synthetic transport.
+
+## 2026-10-27 · Recovery completion preserves another signed-in account
+
+- Review found that leaving a completed recovery unconditionally signed out the normal browser session, even when it belonged to B while A's password had been recovered.
+- Read the current SDK session and sign out only when its owner matches the recovered identity. A different account remains untouched; no URL flag authorizes password changes.
+- Added a browser regression asserting that completion never sends a logout request for B; the 22-case browser suite passed. Separate default Next/Proxy + real local GoTrue/SMTP capture verified A's new password, rejected the old password and preserved B's cookies/session through completion.
+- Ran targeted ESLint and diff checks. No production or native acceptance is claimed; recovery owner verification and isolation are unchanged.
+
 ## 2026-10-27 · Preserve mobile cold-start routes during local recovery reads
 
 - Integration review found Auth could resolve before deletion storage and redirect a clean cold launch to deletion recovery. Wait without replacing the launch route while storage has neither completed nor failed; actual pending records/errors retain the existing recovery path.
@@ -69,6 +96,7 @@
 - Ran mobile `npm run typecheck`, `npm test` (35/35), changed-source ESLint and diff checks. Six new synthetic tests cover confirmation/auth boundaries, restart, lost responses, corruption, storage errors, owner isolation and late work.
 - No real account, server request, migration, email, native build or device acceptance. An expired receipt after a lost successful deletion response stays unknown; the client must not infer success from failed login.
 - Next: public recovery page, isolated password reauthentication, feature-gated settings entry, and wire every mobile writer to the owner fence before enabling the feature.
+
 ## 2026-10-27 · Reject mobile PKCE crypto fallback
 
 - Reviewing the installed SDK revealed fallback to plain PKCE and potentially weak randomness when WebCrypto is absent. Registration now refuses before sign-up unless secure RNG, SHA-256 digest support and TextEncoder are present; no global crypto shim or production toggle was added.
@@ -92,6 +120,7 @@
 - Ran mobile `npm run typecheck`, `npm test` (29/29), changed-file `npx eslint --no-ignore` and `git diff --check`. Tests reproduce delayed network/storage writes, pending-stop behavior, owner isolation and retry after a cleanup error with synthetic adapters.
 - Native SQLite, signed iPhone, hosted account deletion and production release were not tested here. This foundation changes no interface, approval/source/idempotency contract, migration, model default or M4 training.
 - Next: deletion UI must fence the deleting owner against remount, stop model/review requests and schedulers, retain the receipt until verified server deletion and all local cleanup succeed, and preserve a different active account. Web owner cleanup remains separate.
+
 ## 2026-10-27 · Mobile email callback contract and local PKCE handoff
 
 - Prepared a fixed `/auth/mobile-callback` raw-HTML handoff to `liftcut://auth/callback`, with a manual bilingual button, closed parameters, escaping, no script/account reads/session mutation, no-store and no-referrer. Only the exact route bypasses page authentication.
@@ -103,6 +132,7 @@
 - Local GoTrue 55460 + newly captured mail: random synthetic signup, confirmation link → raw page → SDK PKCE, wrong verifier rejection, recreated in-memory adapter, server `getUser` identity and consumed-code rejection. Synthetic account removed. No external email or main application session installed.
 - Quality CI includes the raw-page suite; local SMTP integration skips without its explicitly supplied fixture. Unrun: GitHub CI/deploy, provider-expiry timed wait, real SMTP, native persisted cold start, app-scheme delivery, signed iPhone and Store acceptance. No paid resources, new services or M4 work.
 - Next: isolated serialized PKCE storage/client plus minimal mobile registration/callback UI, then native acceptance and the separately reviewed email-service setup.
+
 ## 2026-10-27 · Default-disabled account deletion API and free email setup
 
 - Added a shared owner-only confirmation API with verified recent authentication, live-session database enforcement, and a signed one-hour write receipt. Expired valid proof can only confirm an already absent account; active/expected owner mismatches are refused. Refreshing a token does not count as reauthentication.
@@ -130,6 +160,7 @@
 - Ran focused ESLint, `npx tsc --noEmit --incremental false` and Supabase 2.122.0 local-URL security advisors: no errors; one existing `pgcrypto`-in-public warning. A WSL localhost refusal interrupted one run; waking WSL and rerunning passed.
 - CI now runs the boundary tests. Synthetic Auth/Storage metadata tests do not prove GoTrue revocation or real file deletion; no production migration, secret, user, model, paid service or native installation was touched.
 - Next: explicit confirmation/reauthentication API, signed retry receipt, Storage pagination/removal, owner-local cleanup and isolated real Auth/Storage acceptance before enabling deletion.
+
 ## 2026-10-27 · Closed web password recovery
 
 - The reset email previously returned to login without a password-change step. Added a bilingual `/reset-password` form using the default Supabase PKCE email flow, with the recovered account shown before explicit submission.

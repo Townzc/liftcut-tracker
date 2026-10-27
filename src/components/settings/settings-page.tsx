@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { AlertTriangle, ArrowLeft, Download, LoaderCircle, Trash2, Upload } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { AccountDeletionLink } from "@/components/auth/account-deletion-page";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -492,6 +493,7 @@ export function SettingsPage({section}:{section:"account"|"profile"|"preferences
             {loadingAction === "save-profile" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
             {loadingAction === "save-profile" ? t("profileSaving") : t("profileSave")}
           </Button>
+          {user && authMode === "authenticated" && <AccountDeletionLink />}
         </CardContent>
       </Card>}
 

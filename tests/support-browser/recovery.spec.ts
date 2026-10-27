@@ -22,7 +22,7 @@ function session(method = "recovery", id = owner, timestamp = Math.floor(Date.no
 }
 async function fixture(context: BrowserContext, options: { method?: string; old?: boolean; staleAccount?: boolean } = {}) {
   let challenge = "", consumed = false, savedPassword = "old-password", updates = 0, exchanges = 0, logins = 0;
-  const recovered = session(options.method, owner, options.old ? 1 : undefined), unexpected: string[] = [];
+  const recovered = session(options.method, owner, options.old ? 1 : undefined), unexpected: string[] = [], logouts: string[] = [];
   if (options.staleAccount) await context.addCookies(["example", "127", "localhost"].map(project => ({
     name: `sb-${project}-auth-token`, value: `base64-${part(session("password", "22222222-2222-4222-8222-222222222222"))}`,
     domain: "127.0.0.1", path: "/", sameSite: "Lax" as const,
@@ -43,7 +43,7 @@ async function fixture(context: BrowserContext, options: { method?: string; old?
       expect(request.headers().authorization).toBe(`Bearer ${recovered.access_token}`);
       if (request.method() === "PUT") { updates++; savedPassword = body.password; }
       await route.fulfill({ json: recovered.user });
-    } else if (url.pathname === "/auth/v1/logout") await route.fulfill({ status: 204 });
+    } else if (url.pathname === "/auth/v1/logout") { logouts.push(request.headers().authorization ?? ""); await route.fulfill({ status: 204 }); }
     else if (url.pathname === "/auth/v1/token" && url.searchParams.get("grant_type") === "password") {
       expect(body.email).toBe("recovery@example.invalid"); expect(body.password).toBe(savedPassword); logins++;
       await route.fulfill({ json: session("password") });
@@ -52,7 +52,7 @@ async function fixture(context: BrowserContext, options: { method?: string; old?
       url.origin !== "http://127.0.0.1:3109") { unexpected.push(url.pathname); await route.abort(); }
     else await route.continue();
   });
-  return { get updates() { return updates; }, get exchanges() { return exchanges; }, get logins() { return logins; }, unexpected };
+  return { get updates() { return updates; }, get exchanges() { return exchanges; }, get logins() { return logins; }, unexpected, logouts };
 }
 async function requestLink(page: Page) {
   await page.goto("/forgot-password");
@@ -82,6 +82,7 @@ test("PKCE link in a new tab, reload, explicit update and new-password login use
   expect(auth.updates).toBe(1);
   expect(await reset.evaluate(k => sessionStorage.getItem(k), key)).toBeNull();
   await reset.getByRole("button", { name: "Sign in with new password" }).click();
+  expect(auth.logouts.map(token => JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString()).sub)).not.toContain("22222222-2222-4222-8222-222222222222");
   await reset.locator("#email").fill("recovery@example.invalid"); await reset.locator("#password").fill("new-password-123");
   await reset.locator("form button[type=submit]").click();
   await expect(reset.getByRole("heading", { name: "Signed in" })).toBeVisible(); expect(auth.logins).toBe(1);
