@@ -57,6 +57,24 @@ language sql stable security invoker set search_path='' as $$select account_priv
 revoke all on function public.account_deletion_status(uuid) from public,anon,authenticated;
 grant execute on function public.account_deletion_status(uuid) to service_role;
 
+-- Enumerate complete keys, including legacy deeply nested paths. Each retry
+-- starts at zero after Storage API.remove; never DELETE object metadata here.
+create function account_private.deletion_files(target uuid, request uuid) returns setof text
+language plpgsql security definer set search_path='' as $$
+begin
+  if not exists(select 1 from account_private.deletions where user_id=target and request_id=request) then
+    raise exception 'DELETION_NOT_PENDING' using errcode='42501';
+  end if;
+  return query select name from storage.objects
+    where bucket_id='avatars' and split_part(name,'/',1)=target::text order by name limit 100;
+end $$;
+revoke all on function account_private.deletion_files(uuid,uuid) from public,anon,authenticated;
+grant execute on function account_private.deletion_files(uuid,uuid) to service_role;
+create function public.account_deletion_files(target uuid, request uuid) returns setof text
+language sql security invoker set search_path='' as $$select account_private.deletion_files(target,request)$$;
+revoke all on function public.account_deletion_files(uuid,uuid) from public,anon,authenticated;
+grant execute on function public.account_deletion_files(uuid,uuid) to service_role;
+
 -- Stateless JWT validity is insufficient after sign-out/deletion. Serialize with
 -- begin_deletion: an upload finishes before the barrier, or is rejected after it.
 -- VOLATILE ensures the queries after waiting observe the newly committed state.

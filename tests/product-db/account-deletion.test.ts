@@ -34,6 +34,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
     }
     const begin = (owner = a, id = request, session: string | null = owner === a ? sa : sb) => role("service_role", owner, null, c => c.query("select public.begin_account_deletion($1,$2,$3) result", [owner, id, session]));
     const status = (owner: string) => role("service_role", owner, null, c => c.query("select public.account_deletion_status($1) result", [owner]));
+    const files = (owner = a, id = request) => role("service_role", owner, null, c => c.query("select public.account_deletion_files($1,$2) name", [owner, id]));
     const upload = (owner = a, session: string | null = sa) => role("authenticated", owner, session, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${owner}/${randomUUID()}.png`]));
     const denied = (work: () => Promise<unknown>) => assert.rejects(work, { code: "42501" });
     const count = async (table: string, owner: string) => Number((await db.query(`select count(*) from ${table} where user_id=$1`, [owner])).rows[0].count);
@@ -94,6 +95,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
         for (const name of ["anon", "authenticated", "liftcut_agent", "liftcut_workout"] as const) {
           await denied(() => role(name, a, sa, c => c.query("select public.begin_account_deletion($1,$2)", [b, request])));
           await denied(() => role(name, a, sa, c => c.query("select public.account_deletion_status($1)", [b])));
+          await denied(() => role(name, a, sa, c => c.query("select public.account_deletion_files($1,$2)", [a, request])));
           await denied(() => role(name, a, sa, c => c.query("delete from account_private.deletions")));
           for (const table of ledger) await denied(() => role(name, a, sa, c => c.query(`delete from agent_private.${table} where user_id=$1`, [a])));
         }
@@ -104,9 +106,13 @@ for (const installation of ["fresh", "upgrade"] as const) {
         await db.query("delete from auth.sessions where id=$1", [revoked]);
         await denied(() => begin(a, request, revoked));
         assert.equal((await status(a)).rows[0].result, null);
+        await denied(() => files());
       });
       await t.test("live owner session required; revoked, expired, absent and foreign sessions denied", async () => {
         await upload(); await upload(b, sb);
+        await role("authenticated", a, sa, c => c.query(`insert into storage.objects
+          select gen_random_uuid(),'avatars',$1||'/paged/'||lpad(n::text,3,'0')||'.png' from generate_series(1,103) n`, [a]));
+        await role("authenticated", a, sa, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/deep/${"nested/".repeat(30)}avatar.png`]));
         await denied(() => upload(a, null)); await denied(() => upload(a, sb)); await denied(() => upload(a, randomUUID()));
         await db.query("update auth.sessions set not_after=now()-interval '1 second' where id=$1", [sa]);
         await denied(() => upload()); await denied(() => begin());
@@ -133,6 +139,18 @@ for (const installation of ["fresh", "upgrade"] as const) {
         await denied(() => upload()); await upload(b, sb);
         assert.equal((await role("authenticated", a, sa, c => c.query("update storage.objects set name=name where name like $1", [`${a}/%`]))).rowCount, 0);
         assert.equal((await role("authenticated", a, sa, c => c.query("delete from storage.objects where name like $1", [`${a}/%`]))).rowCount, 0);
+      });
+      await t.test("bounded full-key pages include deep legacy paths and reject foreign requests", async () => {
+        const keys = (await files()).rows.map(r => r.name as string);
+        assert.equal(keys.length, 100); assert.deepEqual(keys, [...keys].sort());
+        assert.ok(keys.includes(`${a}/deep/${"nested/".repeat(30)}avatar.png`));
+        assert.ok(keys.every(k => k.startsWith(`${a}/`)));
+        await denied(() => files(a, randomUUID())); await denied(() => files(b, request));
+        // Metadata fixture of a successful Storage API batch; never production SQL.
+        await role("service_role", a, null, c => c.query("delete from storage.objects where bucket_id='avatars' and name=any($1::text[])", [keys]));
+        const remaining = (await files()).rows.map(r => r.name as string);
+        assert.ok(remaining.length > 0 && remaining.length < 100);
+        assert.ok(remaining.every(k => !keys.includes(k) && k.startsWith(`${a}/`)));
       });
       await t.test("an upload waiting behind deletion observes the committed barrier", async () => {
         const owner = randomUUID(), session = randomUUID(), starter = await db.connect(), writer = await db.connect();
