@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { RunView } from "@liftcut/core/agent-contracts";
 import { COACH_CONSENT_VERSION } from "@liftcut/core/coach-chat";
-import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
+import { exerciseCatalog } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import type { ReviewChange } from "@liftcut/core/review-changes";
 import { confirmPreview, previewOf, reviewBinding, reviewChanges, type ReviewOutcome } from "@liftcut/core/review-client";
 import { randomUUID } from "expo-crypto";

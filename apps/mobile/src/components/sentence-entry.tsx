@@ -1,5 +1,5 @@
 import type { Session } from "@liftcut/core/today";
-import { exerciseLabel } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import type { CommandReceipt, CommandRequest } from "@liftcut/core/workout-commands";
 import { workoutContext } from "@liftcut/core/workout-context";
 import { parseWorkoutLog, type LogDraft, type ParseResult } from "@liftcut/core/workout-log-parser";

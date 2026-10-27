@@ -116,10 +116,5 @@ export function replacementCandidates(name:string,available:Equipment[]) {
     && e.equipment.every(x=>available.includes(x))).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
 }
 export function exerciseLabel(name:string,locale:string) {
-  const e=identifyExercise(name);
-  // Translation is not identification: a generic squat must not imply a barbell or a catalog ID.
-  const generic=[{zh:"深蹲",en:"Squat"},{zh:"划船",en:"Row"},{zh:"弯举",en:"Curl"},
-    {zh:"肩推",en:"Shoulder press"},{zh:"侧平举",en:"Lateral raise"},{zh:"飞鸟",en:"Fly"}]
-    .find(x=>normalize(x.zh)===normalize(name)||normalize(x.en)===normalize(name));
-  const label=e??generic;return label?(locale==="en"?label.en:label.zh):name;
+  const e=identifyExercise(name);return e?(locale==="en"?e.en:e.zh):name;
 }

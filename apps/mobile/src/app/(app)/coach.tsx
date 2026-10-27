@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COACH_CONSENT_VERSION, conversationHistory } from "@liftcut/core/coach-chat";
 import { MODEL_DATA } from "@liftcut/core/model-data";
 import { entryLines } from "@liftcut/core/personal-records";
-import { exerciseLabel } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import { sourceTopic } from "@/lib/display";
 import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";

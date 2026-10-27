@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { exerciseLabel, identifyExercise } from "@liftcut/core/exercise-catalog";
+import { identifyExercise } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import { confirmedValues, setValues, sourceTopic, workoutTitle } from "./display";
 
 test("translated previews preserve unknown units/values and explicit zero", () => {

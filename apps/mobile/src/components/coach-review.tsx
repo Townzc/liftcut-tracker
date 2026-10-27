@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { exerciseLabel } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import type { ReviewProposal } from "@/lib/coach-review";
 import { useI18n } from "@/lib/i18n";
 import { confirmedValues } from "@/lib/display";

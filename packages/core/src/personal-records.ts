@@ -1,4 +1,4 @@
-import { exerciseLabel } from "./exercise-catalog";
+import { exerciseLabel } from "./exercise-display";
 import { z } from "zod";
 
 export const recordDate = z.iso.date();

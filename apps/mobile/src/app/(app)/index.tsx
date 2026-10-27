@@ -1,4 +1,5 @@
-import { identifyExercise, exerciseLabel } from "@liftcut/core/exercise-catalog";
+import { identifyExercise } from "@liftcut/core/exercise-catalog";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
 import { nextTarget, ruleForExercise } from "@liftcut/core/progression";
 import type { SetRequest } from "@liftcut/core/today";
 import { projectOutbox, type WorkoutOperation } from "@liftcut/core/workout-outbox";
