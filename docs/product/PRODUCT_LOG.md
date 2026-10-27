@@ -43,6 +43,12 @@
 - Browser tests intercept SDK/HTTP: disabled feature, explicit confirmation, unknown DELETE, reload/blocked Agent navigation, no resumed ordinary requests, exact-owner cleanup and B/guest/locale preservation. They do not prove production Auth, Storage or native runtime.
 - The first browser attempt matched a retained hidden settings email; scoped the assertion to visible content. A later parallel native JS export caused resource contention; both extra export attempts were stopped, and the browser suite then passed independently. No native completion or phone/IPA acceptance claimed.
 - Next: merge the shared server contract, run full CI and isolated real Auth/Storage acceptance before enabling deletion; signed iPhone testing remains separate. No paid service, production deletion or M4 training ran.
+## 2026-10-27 · Recovery completion preserves another signed-in account
+
+- Review found that leaving a completed recovery unconditionally signed out the normal browser session, even when it belonged to B while A's password had been recovered.
+- Read the current SDK session and sign out only when its owner matches the recovered identity. A different account remains untouched; no URL flag authorizes password changes.
+- Added a browser regression asserting that the recovery completion never sends a logout request for B; it will run with the dependent final default build and real local Auth acceptance.
+- Ran targeted ESLint and diff checks. This small fix has not separately run production or native acceptance; the recovery owner verification and isolation policy are unchanged.
 
 ## 2026-10-27 · One deletion controller for web and phone
 
