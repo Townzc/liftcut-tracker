@@ -10,10 +10,12 @@ import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
 import { deletionApi } from "@/lib/deletion-api";
 import { useDeletion } from "@/lib/deletion-context";
+import { mobileDeletionAccess } from "@/lib/deletion-access";
 
 export default function Settings() {
   const { t, choice, choose } = useI18n(), { session } = useSession(), c = useColors();
   const deletion = useDeletion(), [available, setAvailable] = useState(false);
+  const owner = session?.user.id, access = mobileDeletionAccess(available, owner ? deletion.records.get(owner) : undefined, owner);
   useEffect(() => { let alive = true; void deletionApi().available().then(v => { if (alive) setAvailable(v); }).catch(() => {}); return () => { alive = false; }; }, []);
   return <ScrollView contentContainerStyle={styles.content}>
     <Card>
@@ -28,7 +30,7 @@ export default function Settings() {
       <Text style={[styles.heading, { color: c.text }]}>{t("account")}</Text>
       <Text style={{ color: c.text }}>{session?.user.email ?? "—"}</Text>
       <Text style={{ color: c.muted }}>{t("server")} · {apiBase}</Text>
-      {(available || deletion.records.size > 0) && <Link href="/delete-account" style={{ color: c.text, paddingVertical: 12 }}>{t("deleteAccount")} ›</Link>}
+      {access.showEntry && <Link href="/delete-account" style={{ color: c.text, paddingVertical: 12 }}>{t("deleteAccount")} ›</Link>}
     </Card>
     <Button variant="outline" label={t("signOut")} onPress={() => void supabase?.auth.signOut()} />
     <SupportLink />
