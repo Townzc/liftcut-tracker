@@ -1,6 +1,14 @@
 # 产品日志
 
 ## 2026-10-27 · Gated mobile registration and email-return UI preparation
+## 2026-10-27 · Preserve absent email for OAuth deletion
+
+- The shared deletion record now permits a null email for authenticated OAuth identities without one. Existing email-string records remain compatible; malformed supplied addresses are still rejected.
+- Owner identity and explicit confirmation remain mandatory. The interface must show the actual owner ID when email is absent and offer fresh-session confirmation; password verification still requires a real email.
+- Ran the two focused core tests, core TypeScript, targeted ESLint and diff checks. No fabricated address, changed password policy, live account or production action.
+- Next: complete the dependent web UI and verify the no-email flow through actual SDK requests with a synthetic transport.
+
+## 2026-10-27 · Recovery completion preserves another signed-in account
 
 - Bound the isolated registration controller to AsyncStorage and current main-session ownership. Main Auth events cancel pending attempts; password login awaits cancellation. Added minimal bilingual register/wait/cancel and callback screens using the original Expo `useLinkingURL`, with existing-account refusal and explicit return to password login.
 - `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP` defaults off; only literal `true` enables registration/callback processing. Example remains false. No hosted/EAS variables, SMTP, scheme allowlist, accounts or paid service changed. Existing training confirmation/source/idempotency is unchanged; cancelling confirmation does not delete an Auth account.
