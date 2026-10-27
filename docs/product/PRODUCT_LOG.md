@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Stop mobile owner queues before account cleanup
+
+- Reproduced a late `today` response recreating owner data after local purge. Added irreversible queue disposal, request abort signals and storage-idle waits so stopped workers cannot repopulate a deleted owner's cache.
+- Added an explicit cleanup helper: stop ordinary work while deletion is pending, retain unconfirmed request bytes, and erase only the confirmed deleted owner's outbox, personal queue, conversation/review cache and consent. Other accounts, guest data, preferences and the deletion receipt remain intact.
+- Reused the shared history client's disposal/storage drain; cleanup failures propagate and can be retried. No deletion UI or automatic logout/purge is connected in this change.
+- Ran mobile `npm run typecheck`, `npm test` (29/29), changed-file `npx eslint --no-ignore` and `git diff --check`. Tests reproduce delayed network/storage writes, pending-stop behavior, owner isolation and retry after a cleanup error with synthetic adapters.
+- Native SQLite, signed iPhone, hosted account deletion and production release were not tested here. This foundation changes no interface, approval/source/idempotency contract, migration, model default or M4 training.
+- Next: deletion UI must fence the deleting owner against remount, stop model/review requests and schedulers, retain the receipt until verified server deletion and all local cleanup succeed, and preserve a different active account. Web owner cleanup remains separate.
 ## 2026-10-27 · Mobile email callback contract and local PKCE handoff
 
 - Prepared a fixed `/auth/mobile-callback` raw-HTML handoff to `liftcut://auth/callback`, with a manual bilingual button, closed parameters, escaping, no script/account reads/session mutation, no-store and no-referrer. Only the exact route bypasses page authentication.
