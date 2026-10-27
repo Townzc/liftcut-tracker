@@ -63,12 +63,16 @@ chat is prose only; its old proposals cannot execute again.
 
 ## Build prerequisites and next commands
 
+iOS free preparation and signing requirements are now tracked in
+[IOS_BUILD.md](IOS_BUILD.md). The maintainer has no paid Apple membership; a
+simulator Release compile does not satisfy the standalone gates below.
+
 The workstation is now logged into the maintainer's free Expo account. It has
 no Android SDK or current Android JDK. Existing EAS preview/development
-profiles specify internal APK distribution. The maintainer must provide their
-Expo login/project and approve the permanent Android package identifier before
-we set `owner`, `extra.eas.projectId` and `android.package`. No paid build or new
-account has been started by the agent. The iPhone test used a temporary tunnel;
+profiles specify internal APK distribution. The existing Expo account's free
+project is now linked and preview public client settings are configured. The
+permanent Android identifier and physical iOS signing remain pending. No paid
+build or new account has been started. The iPhone test used a temporary tunnel;
 an independently signed application still needs its own build and installation.
 
 After login and configuration, from `apps/mobile`:
@@ -93,7 +97,7 @@ artifact link, build logs and install result. Do not call JS export an APK.
 
 ## Standalone application gates (still required)
 
-1. Install the signed APK; cold launch, password login and token refresh. Record
+1. Install the signed APK or iOS application; cold launch, password login and token refresh. Record
    device/OS/network and real first-text/full-response timings separately.
 2. Start a synthetic workout. Produce a review, inspect quantities and sources,
    and prove zero writes before confirmation. Unknown weight/RPE stays unknown.
