@@ -14,6 +14,11 @@ locally before DELETE; never put it in URLs, logs, analytics or chat messages.
 DELETE accepts `{receipt}` and reconciles retries. Network failure is unknown,
 not proof that the account was retained or deleted. Reauthentication can recover
 the existing request when a receipt expires or another device resumes the flow.
+An expired, signature-valid receipt may only verify that its own account is already
+absent (lost success response); it cannot continue deletion or read account data.
+Active or explicitly expected owners must match the receipt. Native recovery uses
+`X-LiftCut-Deletion-Receipt: 1` with no Origin/fetch metadata, never a fake Auth
+bearer. Browser requests still use same-origin checks; no CORS access is granted.
 
 Storage files are removed through the Storage API, in bounded offset-zero batches,
 before Auth deletion. Auth deletion and private-ledger cleanup are transactional;

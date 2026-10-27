@@ -1,7 +1,7 @@
 import { getRequestUser } from "@/lib/supabase/server";
 import { bearerToken } from "@/lib/supabase/bearer";
 import { accountDeletionAdapter, deletionAvailable } from "@/services/account-deletion/server";
-import { DeletionError, deletionReceipt, executeDeletion, recentAuthentication, resumeDeletion, startDeletion, verifyDeletionReceipt } from "@/services/account-deletion/operations";
+import { DeletionError, deletionReceipt, executeDeletion, matchDeletionOwner, recentAuthentication, resumeDeletion, startDeletion, verifyDeletionReceipt } from "@/services/account-deletion/operations";
 
 export const runtime = "nodejs", maxDuration = 60;
 const response = (data: unknown, status = 200) => Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
@@ -10,6 +10,11 @@ function allowed(request: Request) {
   // Next may reconstruct request.url with its internal listening hostname.
   // Compare the browser's Origin with the actual Host, never a supplied redirect.
   if (request.headers.has("authorization")) return true;
+  // Native recovery uses the signed receipt, not a fake/stored Auth bearer.
+  // Browsers cannot send this custom header cross-origin without a preflight;
+  // this route deliberately supplies no cross-origin CORS permission.
+  if (request.method === "DELETE" && request.headers.get("x-liftcut-deletion-receipt") === "1" &&
+    !request.headers.has("origin") && !request.headers.has("sec-fetch-site")) return true;
   try {
     const origin = new URL(request.headers.get("origin") ?? "");
     return origin.host === request.headers.get("host") &&
@@ -27,7 +32,7 @@ function failure(error: unknown) {
   const code = error instanceof DeletionError ? error.code : "invalid_request";
   // A failed transport may have lost a successful delete response. Never label
   // that account "not deleted"; retain the receipt and reconcile by retrying.
-  return response({ error: code }, code === "unavailable" ? 503 : code === "pending" ? 409 : code === "reauthenticate" ? 401 : 400);
+  return response({ error: code }, code === "unavailable" ? 503 : code === "pending" || code === "owner_mismatch" ? 409 : code === "reauthenticate" ? 401 : 400);
 }
 /** Explicit confirmation + fresh, server-verified authentication starts deletion.
  * The signed, one-hour receipt is scoped only to resuming this owner's deletion.
@@ -38,6 +43,7 @@ export async function POST(request: Request) {
     const body = startDeletion.parse(await input(request)), adapter = accountDeletionAdapter();
     const { user, supabase, bearer } = await getRequestUser();
     if (!user) throw new DeletionError("reauthenticate");
+    matchDeletionOwner(user.id, user.id, request.headers.get("x-workout-owner"));
     const token = bearer ? bearerToken(request.headers.get("authorization")) : (await supabase.auth.getSession()).data.session?.access_token;
     if (!token) throw new DeletionError("reauthenticate");
     const { data, error } = await supabase.auth.getClaims(token);
@@ -53,7 +59,9 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const body = resumeDeletion.parse(await input(request));
-    const identity = verifyDeletionReceipt(body.receipt, process.env.COACH_SIGNING_SECRET ?? "");
+    const identity = verifyDeletionReceipt(body.receipt, process.env.COACH_SIGNING_SECRET ?? "", Date.now(), true);
+    const { user } = await getRequestUser();
+    matchDeletionOwner(identity.owner, user?.id ?? null, request.headers.get("x-workout-owner"));
     return response(await executeDeletion(accountDeletionAdapter(), identity));
   } catch (error) { return failure(error); }
 }

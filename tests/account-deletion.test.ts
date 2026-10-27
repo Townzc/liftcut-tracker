@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHmac, randomUUID } from "node:crypto";
-import { deletionReceipt, executeDeletion, recentAuthentication, startDeletion, verifyDeletionReceipt, type DeletionAdapter } from "../src/services/account-deletion/operations";
+import { deletionReceipt, executeDeletion, matchDeletionOwner, recentAuthentication, startDeletion, verifyDeletionReceipt, type DeletionAdapter } from "../src/services/account-deletion/operations";
 
 const owner = randomUUID(), other = randomUUID(), requestId = randomUUID(), secret = "local-test-deletion-receipt-only-secret";
 test("deletion requires literal confirmation, a closed request and actual recent authentication", () => {
@@ -49,4 +49,18 @@ test("unknown Auth state, unsafe paths and unsuccessful deletion never report su
   await assert.rejects(executeDeletion(adapter, identity), /pending/);
   adapter.exists = async () => { throw new Error("transport"); };
   await assert.rejects(executeDeletion(adapter, identity), /transport/);
+});
+test("switched accounts cannot consume another owner's proof; expired proof only recovers completed deletion", async () => {
+  assert.throws(() => matchDeletionOwner(owner, other, owner), /owner_mismatch/);
+  assert.throws(() => matchDeletionOwner(owner, null, other), /owner_mismatch/);
+  matchDeletionOwner(owner, null, owner); matchDeletionOwner(owner, owner, null);
+  const identity = verifyDeletionReceipt(deletionReceipt(owner, requestId, secret, 1000), secret, 3601001, true);
+  let exists = true, writes = 0;
+  const adapter: DeletionAdapter = { exists: async () => exists, begin: async () => { writes++; }, files: async () => [], remove: async () => { writes++; }, deleteUser: async () => { writes++; } };
+  await assert.rejects(executeDeletion(adapter, identity, 3601001), /receipt_expired/);
+  assert.equal(writes, 0);
+  exists = false;
+  assert.equal((await executeDeletion(adapter, identity, 3601001)).status, "deleted");
+  assert.equal(writes, 0);
+  assert.throws(() => verifyDeletionReceipt(deletionReceipt(owner, requestId, secret, 1000), secret + "bad", 3601001, true), /invalid_receipt/);
 });

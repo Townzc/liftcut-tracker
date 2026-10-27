@@ -2,11 +2,11 @@
 
 ## 2026-10-27 · Default-disabled account deletion API and free email setup
 
-- Added a shared owner-only confirmation API with verified recent authentication, live-session database enforcement, and a signed one-hour retry receipt. Refreshing a token does not count as reauthentication.
+- Added a shared owner-only confirmation API with verified recent authentication, live-session database enforcement, and a signed one-hour write receipt. Expired valid proof can only confirm an already absent account; active/expected owner mismatches are refused. Refreshing a token does not count as reauthentication.
 - Storage cleanup uses service-only full-key batches and the Storage API; no SQL object deletion. Deep existing paths and more than one bounded batch can progress on retry; an uncertain response never reports successful deletion.
 - Ordinary clients cannot select a target owner. The feature remains off without reviewed migration, server-only admin configuration and explicit activation; no production secret or data was changed.
-- Ran `npm test` (15 JS + 270 TS), `tsc --noEmit`, targeted and full lint (0 errors, 2 existing warnings), and `git diff --check`. Four new regression groups cover confirmation, reauthentication, receipt scope/expiry, 2,410 nested objects, partial failure, retry and another account's files.
-- Built with synthetic public settings and a temporary worktree-only Turbopack root (restored unchanged); 5/5 HTTP/public browser checks passed. The first HTTP run caught Next's internal-host Origin mismatch; fixed to compare actual Host plus protocol/fetch-site. Default CI and real GoTrue/Storage integration remain required; client cleanup and signed-device checks are separate gates.
+- Ran `npm test` (15 JS + 270 TS), `tsc --noEmit`, targeted and full lint (0 errors, 2 existing warnings), and `git diff --check`. Five regression groups cover confirmation, reauthentication, receipt scope/expiry, 2,410 nested objects, partial failure, retry and another account's files.
+- Built with synthetic public settings and a temporary worktree-only Turbopack root (restored unchanged); 5/5 HTTP/public browser checks passed. The first HTTP run caught Next's internal-host Origin mismatch; fixed to compare actual Host plus protocol/fetch-site. Actual Next HTTP + local GoTrue/PostgREST/Storage integration passed 11 assertion groups: 105 real files, ledger cleanup, revoked/old-AMR rejection, response-loss reconciliation, active-owner mismatch, native headers and expired completion-only proof. The HTTP fixture used webpack after the worktree-root failure; default CI, client cleanup and signed-device checks remain separate gates.
 - [Account release steps](ACCOUNT_RELEASE.md) record the default SMTP limitation, prepared Resend free option, production permissions and remaining real-delivery checks. No service account, payment, M4 run or FIG change.
 
 
