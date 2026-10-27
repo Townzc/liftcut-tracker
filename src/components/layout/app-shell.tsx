@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   useEffect(()=>{
     // Start while the dashboard is still bootstrapping, before its nav is visible.
     // The route shell contains public capability flags, never user records.
-    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent")router.prefetch("/agent");
+    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent"&&pathname!=="/support")router.prefetch("/agent");
   },[user?.id,authMode,pathname,router]);
   const en = locale === "en";
   const currentProfile=profile?.id===user?.id?profile:null;
@@ -34,7 +34,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
     { href: "/agent", label: "Agent", icon: MessageCircle, active: pathname !== "/" && !pathname.startsWith("/settings") && !pathname.startsWith("/current-plan") },
     { href: "/settings", label: en ? "Settings" : "设置", icon: Settings, active: pathname.startsWith("/settings") },
   ];
-  if (shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
+  if (pathname === "/support" || shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
   // Agent reads through authenticated APIs; its composer need not wait for the
   // profile and the legacy dashboard's complete historical bundle.
   return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null} guest={authMode==="guest"}>

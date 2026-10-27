@@ -11,6 +11,16 @@
 - No UI, confirmation, source, approval ledger, outbox, model defaults, M4 training or production data changed. FIG scope stays in its independent private repository.
 - Next free work: native registration/recovery, safe self-deletion on isolated fixtures, confirmed contact/retention and public policy/support pages; request Apple enrollment when ready for signed-device work.
 
+## 2026-10-26 · Public bilingual support and mobile entry points
+
+- Added a minimal public `/support?lang=zh-CN|en` page and the maintainer-approved contact `townzc1@gmail.com`; no message was sent. Login/settings links open the current mobile language without account or record parameters.
+- Explain draft/confirmation, pending/server-confirmed save, source-aware corrections and compensating undo/redo. Privacy policy and account deletion remain separate release gates; this page does not substitute for them.
+- The exact help route bypasses auth refresh on the server, profile bootstrap and Agent prefetch in the shell. Protected and lookalike routes still require auth; no write path, ledger, outbox, model default or navigation structure changes.
+- Ran: root `npm test` (9 JS + 266 TS on the pre-store-check baseline), `npm run lint` (two existing research warnings), fixture `npm run build`; mobile typecheck, 24 tests and source ESLint.
+- Ran `npx playwright test --config playwright.support.config.ts`: 4/4, including intercepted synthetic session refresh with no profile/API/Agent reads. Initial redirect assertion assumed an absolute URL; corrected it to resolve against the response URL, then all passed. Quality CI runs this suite and retains screenshots.
+- Inspected Chinese/English 390px screenshots; Expo web export and both localized sign-in support links passed with an intercepted destination. No live account, email, migration, paid build or signed-device test used.
+- Next: accurate privacy/processor disclosures and native account lifecycle, then a signed iPhone acceptance pass. This change is not App Store submission approval.
+
 ## 2026-10-26 · Independent iOS free build preparation
 
 - Added an explicit iOS Release/internal profile, separate simulator profile and local bundle identifier; no Apple registration, signature or paid build. Preview embeds JS and does not require Metro.

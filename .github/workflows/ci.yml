@@ -1124,6 +1124,7 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npx playwright test --config playwright.w1a.config.ts
+          npx playwright test --config playwright.support.config.ts
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -1132,3 +1133,5 @@ jobs:
           path: |
             node_modules/.cache/w1a/*.png
             node_modules/.cache/w1a/browser/
+            node_modules/.cache/support/*.png
+            node_modules/.cache/support/browser/

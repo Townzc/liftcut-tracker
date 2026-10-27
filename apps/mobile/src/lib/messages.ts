@@ -1,5 +1,7 @@
 // Pure dictionaries so tests can check both languages without React Native.
 const zh = {
+  support: "帮助与支持",
+  supportOpenFailed: "无法打开支持页. 请联系 townzc1@gmail.com.",
   signInTitle: "登录 LiftCut",
   signInHint: "使用网页版的同一账号。还没有账号？请先在网页注册。",
   email: "邮箱",
@@ -181,6 +183,8 @@ const zh = {
 } as const;
 export type MessageKey = keyof typeof zh;
 const en: Record<MessageKey, string> = {
+  support: "Help & support",
+  supportOpenFailed: "Couldn't open support. Contact townzc1@gmail.com.",
   signInTitle: "Sign in to LiftCut",
   signInHint: "Use the same account as the web app. No account yet? Register on the web first.",
   email: "Email",
