@@ -33,6 +33,9 @@ const pendingSchema = z.object({
   phase: z.enum(["waiting", "exchanging", "cancelled", "completed"]),
 }).strict();
 export type PendingEmailSignup = z.infer<typeof pendingSchema>;
+export function readPendingEmailSignup(value: unknown): PendingEmailSignup | null {
+  const parsed = pendingSchema.safeParse(value); return parsed.success ? parsed.data : null;
+}
 export const emailSignupStorageKey = (attempt: string) => `liftcut-email-signup-${attemptId.parse(attempt)}`;
 
 export function newEmailSignup(email: string, attempt: string, now: number): PendingEmailSignup {

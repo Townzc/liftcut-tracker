@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-27 · Mobile registration persistence and isolated verification controller
+
+- Added an asynchronous persistent registration controller and the actual Supabase PKCE adapter: closed callback, email/attempt/verifier binding, durable claim, replay refusal, expiry and account-change checks. It returns a verified email for ordinary password login; it never installs a main session or signs out another account.
+- Persist only pending metadata and verifier. Passwords, URL codes and temporary session tokens are excluded. Cancellation uses a separate storage queue, so a slow request cannot postpone clearing pending state; late results are rejected. Isolated confirmation sessions receive bounded best-effort logout.
+- Ran mobile `npm run typecheck`, `npm test` (34/34, including 10 new lifecycle tests) and changed-source ESLint; root `npm test` (15 JS + 269 TS), core typecheck, root lint (0 errors, 2 existing research warnings), and `git diff --check`.
+- Fixture `npm run build` passed with a temporary common-parent Turbopack root for shared dependency junctions; restored config afterward. `npx playwright test --config playwright.mobile-email.config.ts --output=.next/mobile-email-browser` passed 4/4 with explicit local GoTrue fixture.
+- Local integration now invokes the same app controller/SDK adapter and asynchronous storage: captured synthetic email, real code exchange and `getUser`, recreated controller, wrong verifier and replay rejection, then local test-user deletion. No external mail, hosted Auth change, main account, model, production data or paid resource.
+- Unrun: GitHub CI/deploy, actual AsyncStorage/native cold start, custom-scheme delivery, real SMTP, signed iPhone and Store acceptance. Native binding and minimal bilingual UI are deliberately the next small PR; [staged plan](MOBILE_EMAIL_AUTH.md) records that boundary.
+
 ## 2026-10-27 · Mobile email callback contract and local PKCE handoff
 
 - Prepared a fixed `/auth/mobile-callback` raw-HTML handoff to `liftcut://auth/callback`, with a manual bilingual button, closed parameters, escaping, no script/account reads/session mutation, no-store and no-referrer. Only the exact route bypasses page authentication.

@@ -1,0 +1,38 @@
+import { createClient } from "@supabase/supabase-js";
+
+export type EmailStorage = { getItem(key: string): Promise<string | null>; setItem(key: string, value: string): Promise<void>; removeItem(key: string): Promise<void> };
+export type SignupAuthPort = { send(email: string, password: string, redirect: string): Promise<void>;
+  verify(code: string): Promise<{ email?: string; email_confirmed_at?: string }>; cancel(): void; close(): Promise<void> };
+export type SignupAuthFactory = (key: string, storage: EmailStorage) => SignupAuthPort;
+
+/** No React Native dependency: local Auth acceptance uses the identical SDK adapter. */
+export function signupAuthFactory(url: string, anonKey: string): SignupAuthFactory {
+  return (key, storage) => {
+    let abort = new AbortController(), hasSession = false;
+    const client = createClient(url, anonKey, { auth: { storageKey: key, storage, flowType: "pkce",
+      persistSession: true, autoRefreshToken: false, detectSessionInUrl: false },
+      global: { fetch: (input, init) => fetch(input, { ...init, signal: abort.signal }) } });
+    return {
+      async send(email, password, emailRedirectTo) {
+        const result = await client.auth.signUp({ email, password, options: { emailRedirectTo } });
+        hasSession = !!result.data.session;
+        if (result.error || hasSession) throw new Error("signup_confirmation_required");
+      },
+      async verify(code) {
+        const result = await client.auth.exchangeCodeForSession(code);
+        hasSession = !!result.data.session;
+        if (result.error || !hasSession) throw new Error("signup_code_rejected");
+        const identity = await client.auth.getUser();
+        if (identity.error || !identity.data.user) throw new Error("signup_identity_rejected");
+        return { email: identity.data.user.email, email_confirmed_at: identity.data.user.email_confirmed_at };
+      },
+      cancel() { abort.abort(); },
+      async close() {
+        abort = new AbortController();
+        const timer = setTimeout(() => abort.abort(), 5000);
+        try { if (hasSession) await client.auth.signOut({ scope: "local" }).catch(() => undefined); }
+        finally { clearTimeout(timer); await client.auth.dispose(); }
+      },
+    };
+  };
+}
