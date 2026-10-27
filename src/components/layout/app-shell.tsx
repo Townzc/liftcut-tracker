@@ -13,7 +13,7 @@ import { CoachMemoryProvider } from "@/components/agent/coach-memory-provider";
 import { WorkoutSyncProvider } from "@/components/today/workout-sync-provider";
 import { cn } from "@/lib/utils";
 
-const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/onboarding", "/demo"];
+const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/onboarding", "/demo"];
 const primaryRoutes = ["/", "/agent", "/coach", "/settings"];
 
 export function AppShell({ children }: { children: ReactNode; todayEnabled?: boolean }) {
@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   useEffect(()=>{
     // Start while the dashboard is still bootstrapping, before its nav is visible.
     // The route shell contains public capability flags, never user records.
-    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent"&&pathname!=="/support")router.prefetch("/agent");
+    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent"&&pathname!=="/support"&&!shellFreeRoutes.some(route=>pathname.startsWith(route)))router.prefetch("/agent");
   },[user?.id,authMode,pathname,router]);
   const en = locale === "en";
   const currentProfile=profile?.id===user?.id?profile:null;
