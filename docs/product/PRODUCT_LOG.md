@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · One deletion controller for web and phone
+
+- Moved the tested controller into framework-free `@liftcut/core/account-deletion-client`; the phone re-exports it. Storage, owner fencing, network and sign-out remain injected platform adapters.
+- Resume carries the recorded owner and refuses a different active account before the server call or local cleanup. A late successful server reply remains durable if the user switches accounts; it cannot sign out that other account.
+- Ran mobile typecheck and 38 tests immediately before moving the module, then core `tsc --noEmit -p packages/core/tsconfig.json`, source lint and diff checks. Post-move mobile checks await the shared dependency checkout receiving this commit.
+- The preceding Expo browser test passed 2/2 with intercepted synthetic HTTP after fixing a locator that matched a retained, hidden navigation screen. It is not native or production acceptance; final UI changes remain in the next commit.
+- Next: both interfaces use this controller and the server's restricted expired-receipt completion check. Keep deletion disabled until transport, storage and live-auth boundaries are verified.
+
 ## 2026-10-27 · Recoverable mobile deletion controller
 
 - Added a testable owner-bound deletion state machine: explicit confirmation and fresh same-owner authentication, persisted intent before POST, persisted receipt before DELETE, and local cleanup only after an exact server completion response.

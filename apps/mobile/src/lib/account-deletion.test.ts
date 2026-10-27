@@ -14,7 +14,7 @@ function fixture() {
   const api: DeletionApi = {
     begin: async (owner, _token, id) => { calls.push("POST"); assert.equal(owner, a); assert.equal(runtime.isBlocked(a), true);
       assert.equal(JSON.parse(data.get(`liftcut-deletion-v1:${a}`)!).requestId, id); requestId = id; return { status: "pending", requestId: id, receipt }; },
-    resume: async value => { calls.push(value); return { status: "deleted", requestId }; },
+    resume: async (owner, value) => { assert.equal(owner, a); calls.push(value); return { status: "deleted", requestId }; },
   };
   const io = { store, runtime, api, uuid: randomUUID, currentOwner: () => current,
     purge: async (owner: string) => { calls.push(`purge:${owner}`); }, signOut: async (owner: string) => { calls.push(`out:${owner}`); current = undefined; } };
@@ -45,7 +45,7 @@ test("unknown DELETE, expired receipt and a different response request never pur
   const f = fixture(); await f.client.begin(a, "a@local.test", true, f.fresh);
   const original = f.api.resume, before = f.data.get(`liftcut-deletion-v1:${a}`);
   for (const error of ["NETWORK", "invalid_receipt"]) {
-    f.api.resume = async value => { assert.equal(value, receipt); throw Error(error); };
+    f.api.resume = async (_owner, value) => { assert.equal(value, receipt); throw Error(error); };
     await f.client.resume(a); assert.equal(f.data.get(`liftcut-deletion-v1:${a}`), before);
   }
   f.api.resume = async () => ({ status: "deleted", requestId: randomUUID() }); await f.client.resume(a);
@@ -53,12 +53,13 @@ test("unknown DELETE, expired receipt and a different response request never pur
   f.api.resume = original; await f.client.resume(a);
   assert.equal(f.data.size, 0); assert.equal(f.client.completed, true); assert.equal(f.calls.includes(`out:${a}`), true);
 });
-test("confirmed server deletion survives local cleanup failure/restart and never signs out switched account B", async () => {
-  const f = fixture(); await f.client.begin(a, "a@local.test", true, f.fresh); f.switchTo(b);
+test("confirmed server deletion survives local cleanup failure/restart and refuses active account B", async () => {
+  const f = fixture(); await f.client.begin(a, "a@local.test", true, f.fresh);
   f.io.purge = async () => { throw Error("DISK"); }; await f.client.resume(a);
   assert.equal(f.client.records.get(a)?.stage, "deleted"); assert.equal(f.data.size, 1);
-  f.io.purge = async owner => { assert.equal(owner, a); }; const restored = new AccountDeletion(f.io); await restored.load();
+  f.io.purge = async owner => { assert.equal(owner, a); }; const restored = new AccountDeletion(f.io); await restored.load(); f.switchTo(b);
   f.api.resume = async () => { throw Error("must not repeat server deletion"); }; await restored.resume(a);
+  assert.equal(restored.error, "ACCOUNT_CHANGED"); assert.equal(restored.completed, false); f.switchTo(); await restored.resume(a);
   assert.equal(restored.completed, true); assert.equal(f.calls.includes(`out:${b}`), false); assert.equal(f.calls.includes(`out:${a}`), false);
 });
 test("storage failure prevents POST and a corrupt restart fails closed", async () => {
