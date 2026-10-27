@@ -3,6 +3,7 @@ import { mergeConfirmed, operationBody, operationId, projectOperation, projectOu
 import type { Session, TodayData } from "@liftcut/core/today";
 import { OutboxStorage } from "./outbox-storage";
 import { localContextHash } from "@/lib/workout-context";
+import { canFollowSetAcknowledgement } from "./outbox-acknowledgement";
 
 const NOTICE="liftcut-workout-outbox-change";
 export class WorkoutOutboxClient {
@@ -44,7 +45,7 @@ export class WorkoutOutboxClient {
     window.removeEventListener(NOTICE,this.notice);window.removeEventListener("online",this.wake);window.removeEventListener("focus",this.wake);
     if(!this.running)this.storage.close();
   }
-  async enqueue(p:WorkoutOperation,revision:number) {
+  async enqueue(p:WorkoutOperation,revision:number,displayed?:OutboxState) {
     const body=operationBody(p), bodyJson=JSON.stringify(body), id=operationId(p), at=new Date().toISOString();
     if("contextHash" in body) {
       const before=await this.storage.change(),view=projectOutbox(before);
@@ -53,7 +54,8 @@ export class WorkoutOutboxClient {
     const state=await this.storage.change(s=>{
       const duplicate=s.items.find(i=>i.id===id);
       if (duplicate) {if(duplicate.bodyJson!==bodyJson)throw new Error("LOCAL_CONFLICT");return false;}
-      if(s.revision!==revision || s.items.some(i=>i.status==="conflict" || i.status==="auth") || s.items.length>=100) throw new Error("LOCAL_CONFLICT");
+      const sameView=s.revision===revision || (displayed?.revision===revision && canFollowSetAcknowledgement(this.owner,p.action,displayed,s));
+      if(!sameView || s.items.some(i=>i.status==="conflict" || i.status==="auth") || s.items.length>=100) throw new Error("LOCAL_CONFLICT");
       const view=projectOutbox(s);
       if(!view.data || view.error || s.items.some(i=>i.action==="start"))throw new Error("LOCAL_CONFLICT");
       projectOperation(view.data,{action:p.action,body},at); // Reject stale UI/invalid local dependencies before disk/network.
