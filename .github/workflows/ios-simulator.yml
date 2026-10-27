@@ -1,0 +1,74 @@
+name: iOS native compile
+
+on:
+  pull_request:
+    paths:
+      - apps/mobile/**
+      - packages/core/**
+      - .github/workflows/ios-simulator.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-native-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ios-simulator:
+    # Standard hosted runners are free for this public repository. Never use a
+    # paid larger runner or silently start this job after a visibility change.
+    if: github.event.repository.private == false
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: apps/mobile
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EXPO_NO_DOTENV: "1"
+      # Compile-only artifact: no production credentials, API calls or EAS usage.
+      EXPO_PUBLIC_API_URL: https://example.invalid
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - run: xcodebuild -version
+      - run: npm ci
+      - name: Generate native project from Expo config (no hand-edited native files)
+        run: npx expo prebuild --platform ios --no-install
+      - name: Install native dependencies
+        run: pod install --project-directory=ios
+      - name: Compile an unsigned Release app for the simulator
+        run: |
+          set -o pipefail
+          xcodebuild -workspace ios/LiftCut.xcworkspace -scheme LiftCut \
+            -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/liftcut-ios" \
+            CODE_SIGNING_ALLOWED=NO -quiet 2>&1 | tee "$RUNNER_TEMP/ios-build.log"
+      - name: Verify embedded bundle and preserve compile evidence
+        run: |
+          APP="$RUNNER_TEMP/liftcut-ios/Build/Products/Release-iphonesimulator/LiftCut.app"
+          test -s "$APP/main.jsbundle"
+          test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP/Info.plist")" = com.liftcuttracker.app
+          file "$APP/LiftCut"
+          tar -czf "$RUNNER_TEMP/liftcut-ios-simulator.tgz" -C "$(dirname "$APP")" LiftCut.app
+          shasum -a 256 "$RUNNER_TEMP/liftcut-ios-simulator.tgz" > "$RUNNER_TEMP/ios-sha256.txt"
+          printf 'Simulator Release compile only. No signing, iPhone installation, login or acceptance.\nCommit: %s\n' \
+            "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: ios-simulator-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/liftcut-ios-simulator.tgz
+            ${{ runner.temp }}/ios-sha256.txt
+            ${{ runner.temp }}/ios-build.log
+          retention-days: 3

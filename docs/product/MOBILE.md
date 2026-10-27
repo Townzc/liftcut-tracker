@@ -45,16 +45,16 @@ npx expo start               # 开发服务器；原生模块需要开发构建�
 
 ## 构建安装包（EAS）
 
-`apps/mobile/eas.json` 只有两个内部分发配置（上架不在当前范围）：
+`apps/mobile/eas.json` 提供开发、内部测试和 iOS 模拟器配置（上架不在当前范围）：
 
 - `development`：开发构建，含 `expo-dev-client`，安卓出 APK。装到手机后用 `npx expo start` 连本机开发服务器，原生模块（SQLite、通知、常亮、震动）都可调试。
-- `preview`：安卓内部测试版 APK，不含开发工具，行为接近正式版；版本号由 EAS 远端自增（`appVersionSource: remote`）。
+- `preview`：安卓 APK / iOS ad hoc Release，内置 JS、不依赖 Metro；版本号由 EAS 远端自增（`appVersionSource: remote`）.
+- `ios-simulator`：无签名 Release 模拟器包，不能安装到 iPhone. 免费准备、账号、签名、费用及独立安装验收见 [iOS 构建交接](IOS_BUILD.md).
 
 维护者首次构建（需要自己的 Expo 账号，免费额度即可；云端会话不持有账号或令牌）：
 
 ```sh
-npm install -g eas-cli              # 25 或更高
-eas login
+npx eas-cli@latest login
 cd apps/mobile
 # 1. 在 app.json 写入确认后的 expo.android.package（上架后不能改）
 eas init                            # 创建 EAS 项目，把 extra.eas.projectId 和 owner 写进 app.json；提交这两处改动
@@ -67,19 +67,19 @@ eas build --platform android --profile preview
 eas build --platform android --profile development
 ```
 
-- EAS 上传整个 Git 仓库（App 通过 `file:../../packages/core` 引用核心包），只在 `apps/mobile` 里安装依赖（它不在根 workspaces 里，eas-cli 用的 `resolve-workspace-root` 本地核对为无工作区根），不会安装网页依赖。
+- EAS 以 Git 根目录打包；根 `.easignore` 只保留手机构建输入及 `packages/core`，排除网页、研究、环境文件和本机产物. App 是独立 npm 项目，只在 `apps/mobile` 安装依赖.
 - 安卓权限只保留联网与震动（通知权限由 `expo-notifications` 在 Android 13+ 运行时申请）；模板默认的存储读写和悬浮窗权限已在 `app.json` 的 `blockedPermissions` 移除。
-- iOS 安装需要 Apple 开发者账号（付费），当前不做。
+- 独立 iPhone 安装仍待签名；目前只做免费构建准备，不购买会员. 个人免费签名需要 Mac/Xcode，并有七天有效期限制.
 
 ## 已验证与未验证
 
 - CI `mobile` 任务：独立安装、类型检查、单元测试、Android/iOS JS 打包。
 - CI `today-session` 任务：App 的网页导出在本地生产构建 + PostgreSQL + 认证替身上完成登录、按令牌读取今日训练、切换语言、退出（`tests/mobile-web/`，390×844 截图）。网页导出只用于自动化验证界面与接口，不是发布目标。
 - 本地（M1-6）：`eas.json` 用 eas-cli 25.2 自带的 `@expo/eas-json` 解析通过；`expo prebuild --platform android` 能生成原生工程（DayNight 主题、权限如上）；`expo-doctor` 20/20。
-- **未验证**：EAS 云端构建与安装包（需要维护者的 Expo 账号）、真机、iOS 原生构建（需要 Mac 或 EAS 与 Apple 账号）。
+- **未验证**：EAS 云端签名安装包、独立 iPhone 安装及其冷启动矩阵. Expo Go 真机结果和后续独立安装结果分开记录，见 [验收交接](MOBILE_ACCEPTANCE.md).
 
 ## 后续
 
 应用标识（Android 包名）与 EAS 项目 ID 待维护者确认后写入 `app.json`；之后在真机上验证离线记录、组间计时通知、常亮与震动。
 
-2026-10-26：独立合成账号已完成真实 Supabase 鉴权和 DeepSeek 联调，详情与逐项原生门槛见 [验收交接](MOBILE_ACCEPTANCE.md). EAS 登录、应用标识、安装包和真机验收仍待完成；Expo 网页导出和 Hermes JS 打包不代表原生通过.
+2026-10-26：独立合成账号已完成真实 Supabase 鉴权、DeepSeek 联调和 Expo Go iPhone 连续训练验收. EAS 已登录；独立签名包未制作. Expo 网页导出、Hermes JS 打包、模拟器编译与独立真机验收分别记录.
