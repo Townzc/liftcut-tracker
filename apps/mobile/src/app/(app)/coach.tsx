@@ -2,6 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COACH_CONSENT_VERSION, conversationHistory } from "@liftcut/core/coach-chat";
 import { MODEL_DATA } from "@liftcut/core/model-data";
 import { entryLines } from "@liftcut/core/personal-records";
+import { exerciseLabel } from "@liftcut/core/exercise-display";
+import { sourceTopic } from "@/lib/display";
 import { randomUUID } from "expo-crypto";
 import { getCalendars } from "expo-localization";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -95,7 +97,7 @@ function AccountCoach() {
         return <View key={turn.id} testID="coach-turn" aria-busy={!!turn.pending} style={styles.gap}>
         <Text style={[text_, styles.user, { backgroundColor: c.card }]}>{turn.text}</Text>
         <Text style={text_}>{turn.interrupted ? t("coachFailed", { code: turn.error ?? "UNKNOWN" }) : turn.pending ? turn.live || t("coachReplying") : turn.lines?.join("\n")}</Text>
-        {turn.sources?.map(s => <Text key={s.id} style={muted}>{t("coachSource", { topic: s.topic, from: s.from, to: s.to, count: s.rows.length })}</Text>)}
+        {turn.sources?.map(s => <Text key={s.id} style={muted}>{t("coachSource", { topic: sourceTopic(s.topic, locale), from: s.from, to: s.to, count: s.rows.length })}</Text>)}
         {p?.kind === "plan" && <Text style={muted}>{t("coachWebOnly")}</Text>}
         {(turn.reply === "queued" || turn.reply === "personalQueued") && <Text accessibilityRole="alert" style={text_}>{t(saved === "saved" ? "coachSaved" : saved === "failed" ? "localConflict" : saved === "unknown" ? "coachReceiptUnknown" : "coachQueued")}</Text>}
         {((draft || entry || review) || (!p && ["draft", "personal", "closed"].includes(turn.reply))) && !open && turn.reply !== "queued" && turn.reply !== "personalQueued" && <Text style={muted}>{t(turn.reason === "STALE" ? "coachStale" : "coachClosed")}</Text>}
@@ -104,7 +106,7 @@ function AccountCoach() {
           {entryLines(entry, locale === "en").map((line, i) => <Text key={i} style={text_}>{line}</Text>)}
           <Button label={t("coachConfirmRecord")} disabled={busy} onPress={() => void confirm(turn)} />
           <Text style={muted}>{t("coachRecordUnknown")}</Text></Card>}
-        {draft && open && session && <Card><Text style={[text_, styles.bold]}>{t("coachDraft")}{draft.kind !== "end" ? ` · ${session.prescription.exercises.find(e => e.id === draft.exerciseId)?.name ?? ""}` : ""}</Text>
+        {draft && open && session && <Card><Text style={[text_, styles.bold]}>{t("coachDraft")}{draft.kind !== "end" ? ` · ${exerciseLabel(session.prescription.exercises.find(e => e.id === draft.exerciseId)?.name ?? "", locale)}` : ""}</Text>
             <DraftLines draft={draft} session={session} />
             <Button label={t("coachConfirm")} disabled={busy} onPress={() => void confirm(turn)} />
             <Text style={muted}>{t("sentenceUnknown")}</Text></Card>}

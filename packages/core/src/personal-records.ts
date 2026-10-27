@@ -1,3 +1,4 @@
+import { exerciseLabel } from "./exercise-display";
 import { z } from "zod";
 
 export const recordDate = z.iso.date();
@@ -65,7 +66,7 @@ export function parsePersonalEntry(input: string, anchorDate: string): PersonalE
 
 export function entryLines(entry: PersonalEntry, en: boolean): string[] {
   if(entry.kind==="preference")return [preferenceLabel(entry.key,en),entry.value];
-  if(entry.kind==="exercise")return [entry.exerciseName,`${entry.weightKg??"—"} kg · ${entry.reps??"—"} ${en?"reps":"次"} · ${entry.sets??"—"} ${en?"sets":"组"}`,`RPE · ${entry.rpe??"—"}`];
+  if(entry.kind==="exercise")return [exerciseLabel(entry.exerciseName,en?"en":"zh-CN"),`${entry.weightKg??"—"} kg · ${entry.reps??"—"} ${en?"reps":"次"} · ${entry.sets??"—"} ${en?"sets":"组"}`,`RPE · ${entry.rpe??"—"}`];
   return entry.kind === "body" ? [
     `${en ? "Weight" : "体重"} · ${entry.weightKg ?? "—"} kg`, `${en ? "Waist" : "腰围"} · ${entry.waistCm ?? "—"} cm`,
   ] : [entry.foodName, `${en ? "Energy" : "热量"} · ${entry.calories ?? "—"} kcal`, `${en ? "Protein" : "蛋白质"} · ${entry.protein ?? "—"} g`];

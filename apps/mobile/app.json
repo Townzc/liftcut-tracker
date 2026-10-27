@@ -28,7 +28,7 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization",
+      ["expo-localization", { "supportedLocales": { "ios": ["en", "zh-Hans"], "android": ["en", "zh"] } }],
       "expo-sqlite",
       "expo-status-bar"
     ],

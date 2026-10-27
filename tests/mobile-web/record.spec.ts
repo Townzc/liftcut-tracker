@@ -40,7 +40,7 @@ test("the Expo app records sets through the shared write path: prefill provenanc
   await rest.getByRole("button", { name: "结束休息" }).click(); await expect(rest).toHaveCount(0);
   await row(2).getByLabel("第 2 组 次数").fill("8");
   await row(2).getByRole("button", { name: "完成" }).click();
-  await expect(row(2).getByText("50 kg × 8 · RPE —")).toBeVisible();
+  await expect(row(2).getByText("50 kg × 8 次 · RPE —")).toBeVisible();
   await expect(rest).toBeVisible();
   await rest.getByRole("button", { name: "结束休息" }).click();
   await row(3).getByRole("button", { name: "跳过" }).click();

@@ -30,15 +30,29 @@ test("the Expo app signs in, reads today through a bearer token, switches langua
   await page.reload();
   await expect(page.getByText("进行中的训练 · 手机训练 A")).toBeVisible();
   await expect(page.getByText("已完成 0 / 2 组")).toBeVisible();
-  await expect(page.getByText("杠铃卧推", { exact: true })).toBeVisible(); // Catalog label from @liftcut/core.
+  await expect(page.getByRole("button", { name: "杠铃卧推", exact: true })).toBeVisible(); // Catalog label from @liftcut/core.
   await expect(page.getByText("计划：2 组 × 5 次 · 目标 RPE 8", { exact: true })).toBeVisible();
   await page.screenshot({ path: "node_modules/.cache/mobile-web/today-mobile.png" });
   expectBearerOnly(sent);
   await page.getByText("设置", { exact: true }).click();
   await page.getByRole("button", { name: "English" }).click();
   await expect(page.getByText("Language", { exact: true })).toBeVisible();
+  await page.reload(); // Stored choice wins over the browser's zh-CN language before screens mount.
+  await expect(page.getByText("Language", { exact: true })).toBeVisible();
   await expect(page.getByText("p1-fixture@example.invalid")).toBeVisible();
   await page.screenshot({ path: "node_modules/.cache/mobile-web/settings-en-mobile.png" });
+  await page.goto("/");
+  await expect(page.getByText("Workout in progress · Week 1, day 1", { exact: true })).toBeVisible();
+  await expect(page.getByText("进行中的训练 · 手机训练 A", { exact: true })).toHaveCount(0);
+  await expect(page.getByLabel("Set 1 Weight (kg)")).toBeVisible();
+  await expect(page.getByText("Plan: 2 sets × 5 reps · target RPE 8", { exact: true })).toBeVisible();
+  await page.screenshot({ path: "node_modules/.cache/mobile-web/today-en-mobile.png" });
+  await page.getByRole("link", { name: "Settings", exact: true }).click();
+  await page.getByRole("button", { name: "中文", exact: true }).click();
+  await page.goto("/");
+  await expect(page.getByText("进行中的训练 · 手机训练 A", { exact: true })).toBeVisible(); // Display fallback never rewrites the stored title.
+  await page.getByRole("link", { name: "设置", exact: true }).click();
+  await page.getByRole("button", { name: "English" }).click();
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page.getByText("Sign in to LiftCut", { exact: true })).toBeVisible();
   expect(errors).toEqual([]);

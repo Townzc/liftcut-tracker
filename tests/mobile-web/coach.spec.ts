@@ -37,7 +37,7 @@ test("the phone chat asks consent, streams a reply and saves a workout draft onl
 
   await input.fill("刚才那组深蹲我实打实做了八次，用的是五十公斤，帮我记上"); await page.getByRole("button", { name: "发送", exact: true }).click();
   await expect(turns.last()).toContainText("请核对下方草稿，确认后才会保存。目前尚未写入记录。");
-  await expect(turns.last()).toContainText("第 1 组: 50 kg × 8 · RPE —");
+  await expect(turns.last()).toContainText("第 1 组: 50 kg × 8 次 · RPE —");
   expect(await logs()).toEqual([]); // A draft is not a record.
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-draft-mobile.png", fullPage: true });
   await turns.last().getByRole("button", { name: "确认记录" }).click();

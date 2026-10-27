@@ -63,7 +63,7 @@ test("mobile review: confirmed focus beyond six turns, correction, inheritance, 
   await expect(turns.first()).toContainText("聊天文字不代表写入回执");
   await expect(page.getByRole("button", { name: "确认记录", exact: true })).toHaveCount(0);
   await send("刚才那组不对，5次 [context-correct]"); expect((await rows())[0].reps).toBe(9);
-  await expect(turns.last()).toContainText("42 kg × 9");
+  await expect(turns.last()).toContainText("42 kg × 9 次");
   await turns.last().getByRole("button", { name: "确认记录", exact: true }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: "node_modules/.cache/mobile-web/coach-context-review-mobile.png" }); await confirm();
   expect((await rows())[0]).toMatchObject({ id: first.id, reps: 5, revision: 2 });
