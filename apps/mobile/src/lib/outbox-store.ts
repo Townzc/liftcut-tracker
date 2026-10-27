@@ -15,4 +15,5 @@ export const outboxStore = {
   async write(owner: string, state: OutboxState) {
     await (await open()).runAsync("INSERT INTO outbox (owner, state) VALUES (?, ?) ON CONFLICT(owner) DO UPDATE SET state = excluded.state", owner, JSON.stringify(state));
   },
+  async removeOwner(owner: string) { await (await open()).runAsync("DELETE FROM outbox WHERE owner = ?", owner); },
 };

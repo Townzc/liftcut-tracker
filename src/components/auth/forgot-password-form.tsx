@@ -10,7 +10,7 @@ import { ActionFeedback } from "@/components/shared/action-feedback";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { sendRecoveryEmail } from "@/lib/supabase/password-recovery";
 
 export function ForgotPasswordForm() {
   const t = useTranslations("auth");
@@ -27,15 +27,7 @@ export function ForgotPasswordForm() {
     setLoading(true);
 
     try {
-      const supabase = getSupabaseBrowserClient();
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/login`,
-      });
-
-      if (resetError) {
-        setError(resetError.message);
-        return;
-      }
+      await sendRecoveryEmail(email);
 
       setSuccess(t("forgotSuccess"));
       setEmail("");
@@ -68,7 +60,7 @@ export function ForgotPasswordForm() {
             {t("forgotButton")}
           </Button>
 
-          <Link href="/login" className="text-sm font-medium text-emerald-700 hover:text-emerald-900">
+          <Link href="/login" prefetch={false} className="text-sm font-medium underline underline-offset-4">
             {t("toLogin")}
           </Link>
         </form>

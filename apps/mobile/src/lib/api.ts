@@ -22,8 +22,8 @@ async function parse<T>(response: Response, schema: z.ZodType<T>): Promise<T> {
   }
   return schema.parse(await response.json());
 }
-export async function getJson<T>(path: string, session: Credentials, schema: z.ZodType<T>, fetcher: typeof fetch = fetch): Promise<T> {
-  return parse(await fetcher(`${apiBase}${path}`, { headers: apiHeaders(session), cache: "no-store" }), schema);
+export async function getJson<T>(path: string, session: Credentials, schema: z.ZodType<T>, fetcher: typeof fetch = fetch, signal?: AbortSignal): Promise<T> {
+  return parse(await fetcher(`${apiBase}${path}`, { headers: apiHeaders(session), cache: "no-store", signal }), schema);
 }
 // Checks the fields the app relies on; loose objects keep the rest, because the offline
 // outbox stores and projects the server's full snapshot.
