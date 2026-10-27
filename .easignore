@@ -2,9 +2,9 @@
 /*
 !/.easignore
 !/LICENSE
-!/apps/
+!/apps
 /apps/*
-!/apps/mobile/
+!/apps/mobile
 /apps/mobile/*
 !/apps/mobile/app.json
 !/apps/mobile/eas.json
@@ -12,14 +12,14 @@
 !/apps/mobile/package-lock.json
 !/apps/mobile/metro.config.js
 !/apps/mobile/tsconfig.json
-!/apps/mobile/assets/
-!/apps/mobile/src/
-!/packages/
+!/apps/mobile/assets
+!/apps/mobile/src
+!/packages
 /packages/*
-!/packages/core/
+!/packages/core
 /packages/core/*
 !/packages/core/package.json
-!/packages/core/src/
+!/packages/core/src
 # No local data or credentials inside the included source trees either.
 **/node_modules/
 **/.env*
