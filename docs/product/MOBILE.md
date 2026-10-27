@@ -51,20 +51,20 @@ npx expo start               # 开发服务器；原生模块需要开发构建�
 - `preview`：安卓 APK / iOS ad hoc Release，内置 JS、不依赖 Metro；版本号由 EAS 远端自增（`appVersionSource: remote`）.
 - `ios-simulator`：无签名 Release 模拟器包，不能安装到 iPhone. 免费准备、账号、签名、费用及独立安装验收见 [iOS 构建交接](IOS_BUILD.md).
 
-维护者首次构建（需要自己的 Expo 账号，免费额度即可；云端会话不持有账号或令牌）：
+后续构建在维护者现有 Expo 项目中进行，先核对免费额度；账号令牌不写入仓库：
 
 ```sh
-npx eas-cli@latest login
 cd apps/mobile
+npx eas-cli@latest whoami
+npx eas-cli@latest project:info
+npx eas-cli@latest account:usage zhicetang
 # 1. 在 app.json 写入确认后的 expo.android.package（上架后不能改）
-eas init                            # 创建 EAS 项目，把 extra.eas.projectId 和 owner 写进 app.json；提交这两处改动
-# 2. 公开配置写入 EAS 环境变量。只放公开值：anon key 本来就随网页发布；服务端密钥绝不放进 App
-eas env:set --environment development --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_URL --value https://<项目>.supabase.co
-eas env:set --environment development --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <anon key>
-#    EXPO_PUBLIC_API_URL 不设置时默认 https://www.liftcuttracker.com
+# 2. preview 的三个公开变量已配置；development 需要另行设置公开值，服务端密钥绝不放进 App
+npx eas-cli@latest env:set --environment development --visibility plaintext --scope project --name EXPO_PUBLIC_SUPABASE_URL --value https://<项目>.supabase.co
+npx eas-cli@latest env:set --environment development --visibility plaintext --scope project --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <public-key>
 # 3. 构建（排队在 Expo 云端完成，结束后给出安装链接和二维码）
-eas build --platform android --profile preview
-eas build --platform android --profile development
+npx eas-cli@latest build --platform android --profile preview
+npx eas-cli@latest build --platform android --profile development
 ```
 
 - EAS 以 Git 根目录打包；根 `.easignore` 只保留手机构建输入及 `packages/core`，排除网页、研究、环境文件和本机产物. App 是独立 npm 项目，只在 `apps/mobile` 安装依赖.
@@ -80,6 +80,6 @@ eas build --platform android --profile development
 
 ## 后续
 
-应用标识（Android 包名）与 EAS 项目 ID 待维护者确认后写入 `app.json`；之后在真机上验证离线记录、组间计时通知、常亮与震动。
+EAS 项目已关联；Android 永久包名、iPhone 签名方式待确认. 独立安装后继续验证离线冷启动、组间计时通知、常亮与震动.
 
 2026-10-26：独立合成账号已完成真实 Supabase 鉴权、DeepSeek 联调和 Expo Go iPhone 连续训练验收. EAS 已登录；独立签名包未制作. Expo 网页导出、Hermes JS 打包、模拟器编译与独立真机验收分别记录.

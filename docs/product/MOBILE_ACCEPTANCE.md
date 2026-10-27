@@ -69,10 +69,10 @@ simulator Release compile does not satisfy the standalone gates below.
 
 The workstation is now logged into the maintainer's free Expo account. It has
 no Android SDK or current Android JDK. Existing EAS preview/development
-profiles specify internal APK distribution. The maintainer must provide their
-Expo login/project and approve the permanent Android package identifier before
-we set `owner`, `extra.eas.projectId` and `android.package`. No paid build or new
-account has been started by the agent. The iPhone test used a temporary tunnel;
+profiles specify internal APK distribution. The existing Expo account's free
+project is now linked and preview public client settings are configured. The
+permanent Android identifier and physical iOS signing remain pending. No paid
+build or new account has been started. The iPhone test used a temporary tunnel;
 an independently signed application still needs its own build and installation.
 
 After login and configuration, from `apps/mobile`:

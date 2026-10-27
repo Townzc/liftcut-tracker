@@ -52,6 +52,16 @@ For a Mac with Xcode 26.6 and CocoaPods, reproduce the native CI commands in
 Windows can inspect/configure/export JS but cannot run Xcode. A simulator
 compile must not be relabeled as acceptance on iOS 27.0.1.
 
+The preparation's first free EAS simulator build is
+[`8e216aa6`](https://expo.dev/accounts/zhicetang/projects/liftcut/builds/8e216aa6-d5bb-4903-b8d7-7084d394a04d),
+from `f3a0a80`. Its upload was 181 KB compressed; the inspected 90-file source
+archive matched every tracked file hash. See the build record for its actual
+completion result, and [PR checks](https://github.com/Townzc/liftcut-tracker/pull/178/checks)
+for the final commit's independent Mac compilation. Neither result replaces
+the signed-phone gates. EAS also warned that the App Store encryption declaration
+is unset; resolve that metadata before any later App Store Connect submission,
+not by silently asserting a declaration during this simulator preparation.
+
 ## Accounts, signing and costs
 
 Checked against official documentation on 2026-10-26; verify again before any

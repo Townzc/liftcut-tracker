@@ -7,6 +7,7 @@
 - Added a standard public-repository Mac CI job to compile unsigned simulator Release, require embedded JS, and retain short-lived artifacts. A simulator compile is not an IPA, phone install or runtime acceptance.
 - Ran: root tests (9 JS + 266 TS), lint (two existing warnings), fixture build; mobile typecheck, 24 tests, source lint and Expo doctor (20/20). EAS archive: 90 source files, all byte hashes matched; fixed directory exclusions discovered by the actual archive check.
 - Linked the existing free Expo account's project, read back only three public preview variables, and verified 0/15 iOS builds used / zero estimated charges before building. EAS uses stable Xcode 27.0; no server credentials or user data uploaded.
+- Started one free EAS simulator build from `f3a0a80`; its upload is 181 KB. [Build record and final PR checks](IOS_BUILD.md) distinguish actual native compilation from the still-unrun signed iPhone matrix.
 - [Build handoff](IOS_BUILD.md) lists account/signing/cost prerequisites and independent installation gates. Existing iPhone Expo Go results remain separately labeled. No UI/protocol, approval/outbox, M4 default/training or production-data changes.
 - Next: verify free build evidence, then wait for a compatible Mac personal-signing path or explicit paid Apple enrollment authorization before making an installable phone build.
 
