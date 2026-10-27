@@ -72,18 +72,19 @@ for (const installation of ["fresh", "upgrade"] as const) {
       await db.query(await readFile("tests/agent-db/bootstrap.sql", "utf8"));
       await db.query("do $$begin if not exists(select 1 from pg_roles where rolname='service_role') then create role service_role; end if; end$$");
       await db.query(await readFile("supabase/schema.sql", "utf8"));
-      for (const file of (await readdir("supabase/migrations")).sort()) {
-        if ([migration, "20261014002316_today_session.sql", "20261014181717_coach_model_access.sql"].includes(file) || file.endsWith("explicit_legacy_api_grants.sql")) continue;
+      const migrations = (await readdir("supabase/migrations")).sort();
+      for (const file of migrations) {
+        if (file >= migration || ["20261014002316_today_session.sql", "20261014181717_coach_model_access.sql"].includes(file) || file.endsWith("explicit_legacy_api_grants.sql")) continue;
         await db.query(await readFile(`supabase/migrations/${file}`, "utf8"));
       }
       if (installation === "upgrade") { await seed(a, sa); await seed(b, sb); }
-      await db.query(await readFile(`supabase/migrations/${migration}`, "utf8"));
+      for (const file of migrations.filter(file => file >= migration)) await db.query(await readFile(`supabase/migrations/${file}`, "utf8"));
       if (installation === "fresh") { await seed(a, sa); await seed(b, sb); }
       // Synthetic equivalent of Storage's admin path; does not grant runtime access.
       await db.query(`grant usage on schema storage to authenticated,anon,service_role;
         grant select,insert,update,delete on storage.objects to authenticated;
         grant select on storage.objects to anon;
-        grant select,delete on storage.objects to service_role;
+        grant select,insert,update,delete on storage.objects to service_role;
         create policy fixture_storage_admin on storage.objects to service_role using(true) with check(true);`);
 
       await t.test("migration preserves existing data; all remaining Auth FKs cascade except the handled ledger", async () => {
@@ -119,6 +120,12 @@ for (const installation of ["fresh", "upgrade"] as const) {
         await db.query("update auth.sessions set not_after=null where id=$1", [sa]);
         assert.ok((await role("anon", a, null, c => c.query("select * from storage.objects"))).rowCount! >= 2);
       });
+      await t.test("service writes require a real canonical avatar owner; other buckets stay unchanged", async () => {
+        await role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/signed.png`]));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${randomUUID()}/missing.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars','unowned.png')", [randomUUID()])));
+        await role("service_role", a, null, c => c.query("insert into storage.objects values($1,'other','unowned.png')", [randomUUID()]));
+      });
       await t.test("begin waits for in-flight upload; retries are bound to owner and request", async () => {
         const writer = await db.connect(), starter = await db.connect(); let pending: Promise<unknown> | undefined;
         try {
@@ -139,6 +146,12 @@ for (const installation of ["fresh", "upgrade"] as const) {
         await denied(() => upload()); await upload(b, sb);
         assert.equal((await role("authenticated", a, sa, c => c.query("update storage.objects set name=name where name like $1", [`${a}/%`]))).rowCount, 0);
         assert.equal((await role("authenticated", a, sa, c => c.query("delete from storage.objects where name like $1", [`${a}/%`]))).rowCount, 0);
+      });
+      await t.test("pending deletion blocks signed-upload-equivalent inserts, overwrites and moves", async () => {
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/new-signed.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("update storage.objects set name=name where name=$1", [`${a}/signed.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("update storage.objects set bucket_id='other' where name=$1", [`${a}/signed.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("update storage.objects set name=$1 where name=$2", [`${b}/moved.png`, `${a}/signed.png`])));
       });
       await t.test("bounded full-key pages include deep legacy paths and reject foreign requests", async () => {
         const keys = (await files()).rows.map(r => r.name as string);
@@ -175,6 +188,18 @@ for (const installation of ["fresh", "upgrade"] as const) {
         const removed = await role("service_role", a, null, c => c.query("delete from storage.objects where name like $1", [`${a}/%`]));
         assert.ok(removed.rowCount! >= 2);
       });
+      await t.test("a service write waiting behind Auth deletion sees the user disappear", async () => {
+        const owner = randomUUID(), deleter = await db.connect(), writer = await db.connect();
+        let pending: Promise<unknown> | undefined;
+        try {
+          await db.query("insert into auth.users values($1)", [owner]);
+          await deleter.query("begin"); await deleter.query("delete from auth.users where id=$1", [owner]);
+          await writer.query("begin; set local statement_timeout='5s'; set local role service_role");
+          const pid = (await writer.query("select pg_backend_pid() pid")).rows[0].pid;
+          pending = assert.rejects(writer.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${owner}/late-signed.png`]), { code: "42501" });
+          await waiting(pid); await deleter.query("commit"); await pending;
+        } finally { await writer.query("rollback"); await deleter.query("rollback"); await pending?.catch(() => {}); writer.release(); deleter.release(); }
+      });
       await t.test("cleanup failure rolls Auth and every ledger deletion back", async () => {
         await db.query(`create function account_private.fixture_failure() returns trigger language plpgsql as $$begin raise exception 'injected'; end$$;
           create trigger fixture_failure before delete on agent_private.runs for each row execute function account_private.fixture_failure()`);
@@ -192,6 +217,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
         assert.equal(await count("auth.sessions", a), 0); assert.equal(await count("account_private.deletions", a), 0);
         assert.equal((await db.query("select 1 from public.profiles where id=$1", [a])).rowCount, 0);
         await denied(() => upload()); await upload(b, sb);
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/old-signed-token.png`])));
         await assert.rejects(() => begin(), { code: "23503" });
         assert.equal((await db.query("delete from auth.users where id=$1", [a])).rowCount, 0);
       });

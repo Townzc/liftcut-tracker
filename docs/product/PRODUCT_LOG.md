@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Avatar write guard for signed uploads (not enabled)
+
+- Storage signed uploads can write as the service role, bypassing authenticated RLS. Added an INSERT/UPDATE trigger that checks canonical avatar owner, live Auth user and pending deletion state under owner lock 718, including both owners during moves.
+- The trigger uses a fresh read after the lock and takes no Auth row lock; Storage API DELETE remains available. Other buckets keep their existing behavior, and no metadata/file cleanup runs automatically.
+- Ran deletion boundary regression: 26/26 on fresh/upgraded PostgreSQL 16 fixtures, including service-role overwrite/move/recreate attempts and an in-flight service write waiting for Auth deletion to commit. Focused ESLint and full TypeScript checking passed.
+- Local-URL Supabase 2.122.0 security advisors: no errors, one existing `pgcrypto`-in-public warning. These tests simulate Storage metadata writes; real signed-upload token/file-backend acceptance is still pending.
+- Before production migration, review read-only aggregate counts of malformed or missing-user avatar prefixes. No production schema, user, key, model default or paid service was touched; deletion stays disabled until the full flow passes.
+
 ## 2026-10-27 · Account deletion database boundary (not enabled)
 
 - Added server-role-only pending deletion/status RPCs; initiation requires a live owner Auth session, while the same request can resume without a session only through the future server receipt path. No client DELETE privileges or account UI added.
