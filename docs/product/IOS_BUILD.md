@@ -1,5 +1,9 @@
 # Independent iOS build preparation
 
+For the separate store profile, offline configuration checker, native privacy
+inventory and remaining account/privacy/metadata gates, see
+[App Store readiness](APP_STORE_READINESS.md). A valid build profile is not release approval.
+
 ## Status and evidence boundaries
 
 The maintainer has a free Expo account and has tested continuous training in

@@ -1,5 +1,16 @@
 # 产品日志
 
+## 2026-10-26 · Separate store profile and honest release preflight
+
+- Added an explicit iOS store/production/Release profile, separate from internal preview and simulator; no build, signing, auto-submit, App Store ID or production environment change.
+- Added an offline checker that rejects internal/dev/simulator overrides, unreviewed endpoints/app identity and server/user keys without echoing values. Even valid inputs retain open release gates; they do not authorize submission.
+- Review found that EAS platform options override root fields; fixed the effective-profile check and tested iOS-specific environment/secret overrides as well.
+- Ran root tests (final JS 15, TS 266), root lint (0 errors, 2 existing warnings), fixture web build; mobile typecheck, 24 tests and source lint. Six preflight cases cover invalid profiles/endpoints/key roles and non-disclosure; valid synthetic CLI input exits 2 (release blocked).
+- EAS CLI 26 `config --platform ios --profile ios-store --json --non-interactive` resolved store/production/Release/device successfully; no cloud build or Apple credentials requested. Only the previous preview environment has actual readback evidence.
+- [Readiness audit](APP_STORE_READINESS.md) records the existing simulator's 14 privacy manifests, drafts bilingual store copy, and lists account lifecycle, privacy/support/AI-recipient disclosures, export declaration and signed-device gates. No compliance/phone/Store acceptance claimed.
+- No UI, confirmation, source, approval ledger, outbox, model defaults, M4 training or production data changed. FIG scope stays in its independent private repository.
+- Next free work: native registration/recovery, safe self-deletion on isolated fixtures, confirmed contact/retention and public policy/support pages; request Apple enrollment when ready for signed-device work.
+
 ## 2026-10-26 · Independent iOS free build preparation
 
 - Added an explicit iOS Release/internal profile, separate simulator profile and local bundle identifier; no Apple registration, signature or paid build. Preview embeds JS and does not require Metro.

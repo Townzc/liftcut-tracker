@@ -22,6 +22,13 @@
       "extends": "preview",
       "autoIncrement": false,
       "ios": { "simulator": true }
+    },
+    "ios-store": {
+      "developmentClient": false,
+      "distribution": "store",
+      "environment": "production",
+      "autoIncrement": true,
+      "ios": { "buildConfiguration": "Release", "simulator": false, "image": "macos-tahoe-26.6-xcode-27.0" }
     }
   }
 }
