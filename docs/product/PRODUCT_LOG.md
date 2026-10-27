@@ -1,5 +1,23 @@
 # 产品日志
 
+## 2026-10-27 · Preserve mobile cold-start routes during local recovery reads
+
+- Integration review found Auth could resolve before deletion storage and redirect a clean cold launch to deletion recovery. Wait without replacing the launch route while storage has neither completed nor failed; actual pending records/errors retain the existing recovery path.
+- Added controlled adapter-read delay in browser responses only, without a production timing flag. On the previous export both sign-in and email-callback cases reproduced the unwanted redirect; after the fix both preserve the complete original URL through the read.
+- Ran mobile `npm run typecheck`, `npm test` (49/49), synthetic opt-in `npx expo export --platform web --output-dir dist --max-workers 2`, and `npx playwright test --config playwright.mobile-signup.config.ts` (6/6: existing four plus two delayed-read regressions). Temporary junction watch folders were restored.
+- Ran changed-source/test ESLint and `git diff --check`. No native build, signed-device cold link, real SMTP, production activation or new M4 experiment ran. The registration flag remains off; native storage/crypto and independent IPA acceptance remain release gates.
+
+## 2026-10-27 · Gated mobile registration and email-return UI preparation
+
+- Bound the isolated registration controller to AsyncStorage and current main-session ownership. Main Auth events cancel pending attempts; password login awaits cancellation. Added minimal bilingual register/wait/cancel and callback screens using the original Expo `useLinkingURL`, with existing-account refusal and explicit return to password login.
+- `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP` defaults off; only literal `true` enables registration/callback processing. Example remains false. No hosted/EAS variables, SMTP, scheme allowlist, accounts or paid service changed. Existing training confirmation/source/idempotency is unchanged; cancelling confirmation does not delete an Auth account.
+- Ran mobile typecheck and 35 logic tests, changed-source/config/tests ESLint with `--no-ignore`, and `git diff --check`. Initial typecheck found nullable import capture; fixed by retaining the configured main Auth reference.
+- Exported only Expo web with synthetic public fixture values and the flag enabled. Temporary Metro watch folders exposed the shared dependency junction targets; restored config afterward. No iOS/Android export or new native build was run here.
+- Ran `npx playwright test --config playwright.mobile-signup.config.ts`: final 4/4, including inspected 390px Chinese/English screenshots, S256 request, pending-state reload, no password/session persistence, cancellation, HTTP callback refusal, existing-account preservation and deletion-recovery bypass prevention. Initial selectors targeted the retained hidden login screen; fixed navigation readiness/visible selectors without changing product behavior.
+- Integrated the full `codex/web-account-writers` parent (`19dc681`), preserving deletion providers/owner fencing/public recovery; login, registration and callback routes cannot bypass a pending anonymous deletion. Re-ran core/mobile typecheck, all 49 mobile tests, source ESLint and the opt-in web export/browser suite. Before that parent integration, root `npm test` (15 JS + 276 TS) and `npx tsc --noEmit --incremental false` passed; latest full-root CI remains separate.
+- Wired the opt-in UI suite into CI after existing default-off mobile web regression. This suite intercepts Auth responses; actual captured-mail/GoTrue/controller evidence belongs to the preceding PR. New CI, real SMTP, native crypto, signed-iPhone cold/warm/repeated links and Store acceptance remain unrun.
+- Next: review/merge after checks, evaluate a complete supported native crypto implementation, then obtain signed-device and email-delivery evidence before changing the flag. See [readiness](APP_STORE_READINESS.md) and [email handoff](MOBILE_EMAIL_AUTH.md).
+
 ## 2026-10-27 · Web writers respect pending account deletion
 
 - Connected personal queues, model/review requests, history, legacy store actions and profile bootstrap to the owner lifecycle boundary. Waiting includes late optimistic rollbacks; captured-owner setters cannot overwrite a different account or a stopped owner.

@@ -47,13 +47,32 @@ account/service, paid build or M4 run. The existing `liftcut` scheme is retained
    Node support does not establish Hermes/iPhone capability. Native capability
    remains a release gate; no partial global crypto shim is installed.
 
-## PR 3: native binding and minimal UI — not yet implemented
+## PR 3: native binding and minimal UI preparation
 
-Bind the controller to AsyncStorage and current main-session ownership, invalidate
-pending registration on account changes and before explicit password login, then
-add bilingual register/wait/cancel/callback screens. Supply the original callback
-URL, including its scheme, not reconstructed query values. Keep training approval,
-source and idempotency untouched. No screen or native storage is wired in PR 2.
+The controller is bound to AsyncStorage and current main-session ownership. Main
+Auth events invalidate pending registration, and explicit password login awaits
+cancellation. Bilingual register/wait/cancel/callback screens keep the existing
+layout; the callback supplies the original `useLinkingURL()` value, including its
+scheme, rather than reconstructing query values. Existing accounts are not replaced.
+Pending account deletion keeps its public recovery route and blocks registration,
+password-login navigation and email return until the deletion state is resolved.
+Confirmation returns to password login. Cancelling local verification does not
+delete an account already created by Auth. Training approval/source/idempotency
+remain unchanged. Native encrypted storage is not claimed.
+
+`EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP` must equal `true` to expose registration or
+process a callback. It is absent/off by default and explicitly false in the
+example. Ordinary password login remains available. No EAS or production variable
+was changed. Keep the flag off until real SMTP delivery, native secure crypto and
+signed-iPhone cold/warm/repeated-link acceptance pass; Expo Go is not that evidence.
+
+The opt-in web UI check exports `apps/mobile` with `EXPO_NO_DOTENV=1`, signup flag
+`true`, Auth `http://127.0.0.1:55438`, key `mobile-signup-fixture-only` and API
+`http://127.0.0.1:3109`, then runs `npx playwright test --config
+playwright.mobile-signup.config.ts`. Auth responses are intercepted synthetic
+fixtures: the tests inspect S256, bilingual pending restore, cancellation and HTTP
+callback refusal, not real delivery or native routing. CI runs it after the normal
+default-off mobile web regression suite; the prior local-GoTrue test stays separate.
 
 ## Configuration and verification boundaries
 
