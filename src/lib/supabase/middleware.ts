@@ -25,8 +25,8 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   });
 
   const pathname = request.nextUrl.pathname;
-  // Public pages and isolated auth callbacks do not require an account session.
-  if (["/support", "/privacy", "/auth/mobile-callback", "/reset-password", "/forgot-password", "/auth/callback"].includes(pathname) || isStaticAsset(pathname)) {
+  // Public pages and isolated account flows do not require an existing session.
+  if (["/support", "/privacy", "/auth/mobile-callback", "/delete-account", "/reset-password", "/forgot-password", "/auth/callback"].includes(pathname) || isStaticAsset(pathname)) {
     return response;
   }
 

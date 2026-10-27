@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Home, MessageCircle, Settings } from "lucide-react";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useSyncExternalStore, type ReactNode } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { GuestUpgradeBanner } from "@/components/shared/guest-upgrade-banner";
 import { UserAvatar } from "@/components/shared/user-avatar";
@@ -12,6 +12,12 @@ import { PersonalRecordsProvider } from "@/components/agent/personal-records-pro
 import { CoachMemoryProvider } from "@/components/agent/coach-memory-provider";
 import { WorkoutSyncProvider } from "@/components/today/workout-sync-provider";
 import { cn } from "@/lib/utils";
+import { ownerLifecycle, OWNER_LIFECYCLE_EVENT } from "@/lib/owner-lifecycle";
+
+function lifecycleSubscribe(listener: () => void) {
+  window.addEventListener(OWNER_LIFECYCLE_EVENT, listener); window.addEventListener("storage", listener);
+  return () => { window.removeEventListener(OWNER_LIFECYCLE_EVENT, listener); window.removeEventListener("storage", listener); };
+}
 
 const shellFreeRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/onboarding", "/demo"];
 const primaryRoutes = ["/", "/agent", "/coach", "/settings"];
@@ -20,11 +26,14 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
   const pathname = usePathname(), locale = useLocale(), t = useTranslations("common");
   const { loading, profile, user, authMode } = useAuth();
   const router=useRouter();
+  const publicPage = ["/support", "/privacy", "/delete-account"].includes(pathname) || shellFreeRoutes.some(route => pathname.startsWith(route));
+  const status = useSyncExternalStore(lifecycleSubscribe, () => user ? ownerLifecycle.status(user.id) : "active", () => "active");
+  useEffect(() => { if (user && status !== "active" && !publicPage) router.replace("/delete-account"); }, [user, status, publicPage, router]);
   useEffect(()=>{
     // Start while the dashboard is still bootstrapping, before its nav is visible.
     // The route shell contains public capability flags, never user records.
-    if(user?.id&&authMode==="authenticated"&&pathname!=="/agent"&&pathname!=="/support"&&pathname!=="/privacy"&&!shellFreeRoutes.some(route=>pathname.startsWith(route)))router.prefetch("/agent");
-  },[user?.id,authMode,pathname,router]);
+    if(user?.id&&status==="active"&&authMode==="authenticated"&&pathname!=="/agent"&&!publicPage)router.prefetch("/agent");
+  },[user?.id,authMode,pathname,router,publicPage,status]);
   const en = locale === "en";
   const currentProfile=profile?.id===user?.id?profile:null;
   const email = currentProfile?.email || user?.email || "";
@@ -34,7 +43,8 @@ export function AppShell({ children }: { children: ReactNode; todayEnabled?: boo
     { href: "/agent", label: "Agent", icon: MessageCircle, active: pathname !== "/" && !pathname.startsWith("/settings") && !pathname.startsWith("/current-plan") },
     { href: "/settings", label: en ? "Settings" : "设置", icon: Settings, active: pathname.startsWith("/settings") },
   ];
-  if (pathname === "/support" || pathname === "/privacy" || shellFreeRoutes.some(route => pathname.startsWith(route))) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
+  if (publicPage) return <main className="mx-auto flex min-h-dvh w-full max-w-6xl items-center px-5 py-8">{children}</main>;
+  if (user && status !== "active") return <main className="p-8"><Link href="/delete-account" prefetch={false}>{en ? "Resume account deletion" : "继续核实账号删除"}</Link></main>;
   // Agent reads through authenticated APIs; its composer need not wait for the
   // profile and the legacy dashboard's complete historical bundle.
   return <PersonalRecordsProvider key={user?.id ?? authMode} owner={user?.id ?? null} guest={authMode==="guest"}>

@@ -1,6 +1,16 @@
 # 产品日志
 
 ## 2026-10-27 · Gated mobile registration and email-return UI preparation
+## 2026-10-27 · Recoverable web account deletion screen
+
+- Added a minimal bilingual settings subpage using the same owner-bound deletion controller as mobile. Confirmation and isolated password verification are required; OAuth identities can re-login and explicitly confirm a server-verified fresh session, including identities without email.
+- The exact public recovery route survives a missing Auth session. Pending owners cannot mount normal business providers, and persisted receipts survive unknown replies; cleanup only follows the exact server completion, preserving other owners, guest data and language.
+- Feature-off hides the settings action and destructive controls. The disclosure distinguishes online deletion from historical migration backups, provider backups and exported copies whose retention is not yet confirmed.
+- Ran the default production build, full `npx tsc --noEmit --incremental false`, targeted ESLint, diff checks and `npx playwright test --config playwright.support.config.ts` (22/22). Earlier root tests passed 15 JS + 282 TS; nullable-email core tests passed 2/2.
+- Initial local Turbopack root/junction failure was resolved by a build-only parent root, restored afterwards; webpack was not used as acceptance. Two initial browser failures were ambiguous alert locators, then fixed and rerun. Chinese/English 390 px screenshots were inspected.
+- Browser Auth/deletion transport is synthetic; no real user deletion, production enablement, native acceptance or paid build is claimed. Separate real local Auth recovery acceptance also verified the earlier cross-account sign-out fix.
+- Next: integrate the small dependent PRs and exact CI results, then verify the enabled deletion path with isolated Auth and Storage before production activation.
+
 ## 2026-10-27 · Preserve absent email for OAuth deletion
 
 - The shared deletion record now permits a null email for authenticated OAuth identities without one. Existing email-string records remain compatible; malformed supplied addresses are still rejected.
