@@ -26,6 +26,7 @@ export function SettingsIndex(){
       <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-background"><Icon className="size-5" strokeWidth={1.6}/></span>
       <span className="min-w-0 flex-1"><span className="block text-sm font-medium sm:text-base">{title}</span><span className="mt-1 block text-xs text-muted-foreground">{description}</span></span><ChevronRight className="size-4 text-muted-foreground"/>
     </Link>)}</div>)}
+    <div className="text-center"><Link href={`/privacy?lang=${en?"en":"zh-CN"}`} prefetch={false} className="inline-flex min-h-11 items-center text-sm text-muted-foreground underline underline-offset-4">{en?"Privacy policy":"隐私政策"}</Link></div>
     <p className="pt-3 text-center text-xs tracking-wide text-muted-foreground">liftcut. {en?"At your own pace.":"按自己的节奏来."}</p>
   </div>;
 }
