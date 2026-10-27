@@ -25,8 +25,8 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   });
 
   const pathname = request.nextUrl.pathname;
-  // Public help and privacy must remain reachable when authentication is unavailable.
-  if (pathname === "/support" || pathname === "/privacy" || isStaticAsset(pathname)) {
+  // Help and explicit auth callbacks must work without an existing account session.
+  if (["/support", "/privacy", "/reset-password", "/forgot-password", "/auth/callback"].includes(pathname) || isStaticAsset(pathname)) {
     return response;
   }
 

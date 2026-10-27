@@ -1,5 +1,17 @@
 # 产品日志
 
+## 2026-10-27 · Closed web password recovery
+
+- The reset email previously returned to login without a password-change step. Added a bilingual `/reset-password` form using the default Supabase PKCE email flow, with the recovered account shown before explicit submission.
+- Recovery uses a separate verifier/session store; verified Auth claims must contain a recent recovery method and agree with a fresh `getUser`. Ordinary sessions, URL flags, user metadata, invalid exchanges and mismatched owners cannot authorize updates. The verifier can follow an email into another tab; the recovered session stays in that tab.
+- Remove callback material from the URL, refuse expired/replayed links, permit verified same-tab reload, clear recovery after completion, and require new-password sign-in. Skip profile bootstrap/prefetch on recovery; OAuth redirects now reject backslashes/external paths and drop callback secrets on errors.
+- Ran `npm test` (15 JS + 268 TS), `npx tsc --noEmit --incremental false`, `npm run lint` (0 errors, 2 existing research warnings), synthetic-environment `npm run build`, and targeted ESLint/diff checks.
+- Ran `npx playwright test --config playwright.support.config.ts`: 11/11, including seven new actual-SDK/synthetic-transport recovery cases. This existing suite runs in quality CI. Browser testing caught and fixed the submit-button default; the fixture disables service workers so navigation cannot bypass its transport interception.
+- After integrating privacy main, rebuilt and passed 17/17 browser checks; actual HTTP responses now enforce no-referrer/no-store on reset/OAuth callbacks so one-use codes are not propagated in request referrers.
+- Ran `node --import tsx ../deliverables/2026-10-26-account-lifecycle/verify-recovery-real.mts`: eight real GoTrue 2.197.0 checks using the shipped recovery functions with in-memory browser adapters and locally captured SMTP. Verified signed `amr=recovery`, same-tab restore, ordinary-session/cross-owner/replay rejection, explicit update, new-password login, old-password refusal and an unchanged second account; both synthetic accounts removed.
+- Browser DOM tests above use synthetic Auth transport; the real-Auth checks are a separate API/source run. Production SMTP delivery, native email return and signed-device acceptance remain open. Existing production redirect patterns cover the new route; no hosted configuration or user data was changed.
+- No approval ledger, training/data writes, outbox, model default, M4 training, mobile registration or account deletion changes. Next: finish account deletion/privacy, then mobile registration and email return in focused PRs.
+
 ## 2026-10-27 · Public bilingual privacy and source-backed disclosures
 
 - Added `/privacy?lang=zh-CN|en`, the existing public contact and localized web auth/settings entries. Explain data purposes, pre-confirmation chat/preview storage, six-turn context versus retention, guest cloud requests and distinct chat/undo/logout/account deletion effects.

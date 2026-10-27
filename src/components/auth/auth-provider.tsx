@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // These forms finish sign-in with a full navigation. Let the destination
       // bootstrap once instead of starting reads that this document will abort.
       // Public help and privacy need no profile bootstrap or account writes.
-      if (["/login", "/register", "/support", "/privacy"].includes(window.location.pathname)) {
+      if (["/login", "/register", "/support", "/privacy", "/forgot-password", "/reset-password"].includes(window.location.pathname)) {
         setLoading(false);
         return;
       }
