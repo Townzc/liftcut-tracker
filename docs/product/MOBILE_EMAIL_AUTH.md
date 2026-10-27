@@ -54,6 +54,8 @@ Auth events invalidate pending registration, and explicit password login awaits
 cancellation. Bilingual register/wait/cancel/callback screens keep the existing
 layout; the callback supplies the original `useLinkingURL()` value, including its
 scheme, rather than reconstructing query values. Existing accounts are not replaced.
+Pending account deletion keeps its public recovery route and blocks registration,
+password-login navigation and email return until the deletion state is resolved.
 Confirmation returns to password login. Cancelling local verification does not
 delete an account already created by Auth. Training approval/source/idempotency
 remain unchanged. Native encrypted storage is not claimed.

@@ -35,3 +35,32 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale} registration rest
   await expect(page.getByText(zh ? /链接无效、已使用/ : /This link is invalid, used/)).toBeVisible();
   expect(requests).toBe(1); // A browser URL never gets reconstructed into a trusted custom scheme.
 });
+
+test("an existing account is kept and no email code is exchanged", async ({ page }) => {
+  const owner = "11111111-1111-4111-8111-111111111111";
+  const token = `eyJhbGciOiJIUzI1NiJ9.${Buffer.from(JSON.stringify({ sub: owner, exp: 2200000000 })).toString("base64url")}.synthetic`;
+  const session = { access_token: token, refresh_token: "synthetic-refresh", expires_at: 2200000000, expires_in: 3600, token_type: "bearer",
+    user: { id: owner, email: "existing@local.test", aud: "authenticated" } };
+  await page.addInitScript(session => { localStorage.setItem("sb-127-auth-token", JSON.stringify(session)); localStorage.setItem("liftcut-locale", "en"); }, session);
+  let authRequests = 0;
+  await page.route("http://127.0.0.1:55438/**", async route => { authRequests++; await route.fulfill({ status: 401, json: {} }); });
+  await page.goto(`/auth/callback?attempt=${owner}&code=${"a".repeat(32)}`);
+  await expect(page.getByText(/An account is already signed in/)).toBeVisible();
+  expect(authRequests).toBe(0);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem("sb-127-auth-token")!).user.id)).toBe(owner);
+});
+
+test("pending deletion cannot be bypassed through registration or the public email return", async ({ page }) => {
+  const record = { owner: "11111111-1111-4111-8111-111111111111", requestId: "22222222-2222-4222-8222-222222222222",
+    email: "pending@local.test", receipt: "synthetic-pending-receipt".repeat(2), stage: "pending" };
+  await page.addInitScript(record => { localStorage.setItem(`liftcut-deletion-v1:${record.owner}`, JSON.stringify(record)); localStorage.setItem("liftcut-locale", "en"); }, record);
+  await page.route("http://127.0.0.1:3109/**", async route => { expect(route.request().method()).toBe("GET"); await route.fulfill({ json: { available: true } }); });
+  let authRequests = 0;
+  await page.route("http://127.0.0.1:55438/**", async route => { authRequests++; await route.fulfill({ status: 401, json: {} }); });
+  for (const path of ["/register", `/auth/callback?attempt=${record.owner}&code=${"a".repeat(32)}`]) {
+    await page.goto(path); await expect(page).toHaveURL(/\/delete-account$/);
+    await expect(page.getByRole("button", { name: "Create account", exact: true })).toHaveCount(0);
+  }
+  expect(authRequests).toBe(0);
+  expect(await page.evaluate(owner => JSON.parse(localStorage.getItem(`liftcut-deletion-v1:${owner}`)!).receipt, record.owner)).toBe(record.receipt);
+});
