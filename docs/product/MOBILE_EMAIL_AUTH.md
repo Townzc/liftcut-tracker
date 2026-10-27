@@ -23,23 +23,37 @@ account/service, paid build or M4 run. The existing `liftcut` scheme is retained
 - These helpers do not persist/lock native storage or adopt a session. No mobile
   registration button or callback screen is wired in this PR.
 
-## PR 2: native adapter and minimal UI
+## PR 2: persistent controller and isolated SDK adapter
 
 1. Use one serialized registration controller and an isolated PKCE client with
    `detectSessionInUrl: false`, per-attempt storage key and persisted verifier.
    Persist only pending email/attempt/state/time, never passwords. Preserve it
-   across cold starts; cancelling removes its verifier and prevents resumption.
-2. Persist `exchanging` before the one-use code exchange. Repeated or interrupted
-   claims must not silently retry/adopt; offer a fresh request or password login.
+   across adapter recreation; cancelling removes its verifier and prevents resumption.
+2. Persist `exchanging` before the one-use code exchange. Concurrent identical
+   callbacks share one promise; completed/interrupted claims cannot exchange again.
 3. Accept only the exact app scheme/host/path, with no fragments or token payload.
    Match the local attempt, expiry and verifier namespace. Obtain identity using
    Auth `getUser` after exchange and compare its confirmed email to the pending
    email. Never install tokens supplied by the URL.
-4. Recheck cancellation/expiry and current session before adoption. Coordinate
-   password login, signup and sign-out to prevent async account-switch races.
-   Refuse existing login without signing that account out or loading another's data.
-5. Add bilingual register/wait/cancel/callback screens within the existing simple
-   auth flow; no change to training confirmation, source or idempotency rules.
+4. Recheck cancellation, expiry and current session after network/cleanup. The
+   confirmation session stays in memory and is best-effort revoked, never moved
+   into the main client. Successful verification returns the email for ordinary
+   password login; an existing account is never signed out or replaced.
+5. Storage writes use a separate queue so cancellation is durable while a network
+   request is slow. Persist only pending metadata and the isolated verifier; no
+   password, callback code or temporary session tokens. Storage failures surface.
+6. Refuse registration before any request if secure RNG, WebCrypto digest or
+   TextEncoder is unavailable; the SDK's plain-PKCE fallback is not accepted.
+   Node support does not establish Hermes/iPhone capability. Native capability
+   remains a release gate; no partial global crypto shim is installed.
+
+## PR 3: native binding and minimal UI — not yet implemented
+
+Bind the controller to AsyncStorage and current main-session ownership, invalidate
+pending registration on account changes and before explicit password login, then
+add bilingual register/wait/cancel/callback screens. Supply the original callback
+URL, including its scheme, not reconstructed query values. Keep training approval,
+source and idempotency untouched. No screen or native storage is wired in PR 2.
 
 ## Configuration and verification boundaries
 
@@ -54,7 +68,8 @@ case is skipped unless `LIFTCUT_LOCAL_AUTH_FIXTURE` explicitly points to a local
 fixture JSON (`url`, synthetic `anonKey`/`serviceKey`), with `captured-mail/` beside
 it. It rejects any Auth URL except `http://127.0.0.1:55460`; callback is port 3110.
 It reads only newly captured messages for its random `@local.test` address and
-removes its synthetic user. It exercises real email confirmation, PKCE rejection,
+removes its synthetic user. It calls the same application controller and SDK adapter
+with asynchronous storage and exercises real email confirmation, PKCE rejection,
 identity and code replay; in-memory adapter recreation is not a native cold start.
 
 Official docs checked: [Expo SDK 58 Linking](https://docs.expo.dev/versions/v58.0.0/sdk/linking/),

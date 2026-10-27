@@ -1,5 +1,20 @@
 # 产品日志
 
+## 2026-10-27 · Reject mobile PKCE crypto fallback
+
+- Reviewing the installed SDK revealed fallback to plain PKCE and potentially weak randomness when WebCrypto is absent. Registration now refuses before sign-up unless secure RNG, SHA-256 digest support and TextEncoder are present; no global crypto shim or production toggle was added.
+- Ran mobile typecheck, 35 tests, changed-file ESLint with `--no-ignore`, and `git diff --check`. The new adapter test removes each required capability and verifies zero fetch calls.
+- Node's cryptography does not prove Expo/Hermes support. Signed-device capability, real SMTP and native callback verification remain unrun release gates; keep the planned registration flag off until they pass.
+
+## 2026-10-27 · Mobile registration persistence and isolated verification controller
+
+- Added an asynchronous persistent registration controller and the actual Supabase PKCE adapter: closed callback, email/attempt/verifier binding, durable claim, replay refusal, expiry and account-change checks. It returns a verified email for ordinary password login; it never installs a main session or signs out another account.
+- Persist only pending metadata and verifier. Passwords, URL codes and temporary session tokens are excluded. Cancellation uses a separate storage queue, so a slow request cannot postpone clearing pending state; late results are rejected. Isolated confirmation sessions receive bounded best-effort logout.
+- Ran mobile `npm run typecheck`, `npm test` (34/34, including 10 new lifecycle tests) and changed-source ESLint; root `npm test` (15 JS + 269 TS), core typecheck, root lint (0 errors, 2 existing research warnings), and `git diff --check`.
+- Fixture `npm run build` passed with a temporary common-parent Turbopack root for shared dependency junctions; restored config afterward. `npx playwright test --config playwright.mobile-email.config.ts --output=.next/mobile-email-browser` passed 4/4 with explicit local GoTrue fixture.
+- Local integration now invokes the same app controller/SDK adapter and asynchronous storage: captured synthetic email, real code exchange and `getUser`, recreated controller, wrong verifier and replay rejection, then local test-user deletion. No external mail, hosted Auth change, main account, model, production data or paid resource.
+- Unrun: GitHub CI/deploy, actual AsyncStorage/native cold start, custom-scheme delivery, real SMTP, signed iPhone and Store acceptance. Native binding and minimal bilingual UI are deliberately the next small PR; [staged plan](MOBILE_EMAIL_AUTH.md) records that boundary.
+
 ## 2026-10-27 · Stop mobile owner queues before account cleanup
 
 - Reproduced a late `today` response recreating owner data after local purge. Added irreversible queue disposal, request abort signals and storage-idle waits so stopped workers cannot repopulate a deleted owner's cache.
