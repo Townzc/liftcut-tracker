@@ -1,9 +1,10 @@
 # App Store preparation — not submission approval
 
-Audited 2026-10-26 against `ad8fdbc` and the existing simulator build. FIG planning
-lives in its separate repository; this document concerns the released LiftCut
-product. No Apple enrollment, paid service, new build, migration or M4 run is
-part of this preparation. The simple UI and existing write protocol are unchanged.
+Initial build audit: 2026-10-26 against `ad8fdbc` and the existing simulator build.
+Account-release status updated 2026-10-27 for `ab7fb3c`; the verified web/API
+rollout is recorded separately below. FIG planning stays in its own repository.
+No Apple enrollment, new paid service, signed-device acceptance or M4 training
+is claimed. The simple UI and existing write protocol are unchanged.
 
 ## Build and configuration checks
 
@@ -35,13 +36,13 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | Gate | Actual state and next bounded change | Evidence required |
 | --- | --- | --- |
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
-| Account deletion | Shared API, recent reauthentication, confirmation and owner-scoped cleanup are implemented. New mobile deletion also requires default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION=true`; enabling the server alone does not enable a mobile build. Prior confirmed intents/receipts retain recovery. | Real local Auth/Storage API and browser/phone-logic regressions passed; record production migration/configuration/activation separately. Keep the mobile gate off until signed-device deletion, storage, cold restart and recovery pass. Never delete real users for release tests |
-| Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
+| Account deletion | Production web/API enabled after reviewed migrations, real synthetic hosted acceptance and cleanup; see [release evidence](ACCOUNT_RELEASE.md#production-rollout-evidence--2026-10-27). New mobile deletion independently requires default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION=true`; prior confirmed intents/receipts retain recovery. | Hosted HTTP/Auth/Storage and earlier local browser checks are separate from native acceptance. Keep the mobile gate off until signed-device deletion, storage, cold restart and recovery pass. Never delete real users for release tests |
+| Support | Bilingual `/support` with explicit language and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Local browser/Expo web checks passed; both production page languages returned 200 with the expected contact on 2026-10-27. Signed-device link opening remains unrun |
 | Privacy | Public bilingual `/privacy`, web auth/settings entries and mobile sign-in/settings links are implemented; links preserve the selected language and send no account data. Verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Four synthetic Expo web link checks (Chinese/English × sign-in/settings) passed; signed-device opening and final in-app/recipient disclosures remain unverified. A policy page alone does not complete AI-recipient or deletion requirements |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
 | Privacy labels | Draft inventory below; SDK manifests do not cover server processing. | Complete app + processor/logging/backup inventory, linked-data and tracking assessment |
 | Export compliance | `ITSAppUsesNonExemptEncryption` is unset. Assess actual cryptography/SDKs and applicable exemption before answering. | Reviewed declaration and any required documentation; do not set a value just to silence EAS |
-| Store metadata | Bilingual draft and support route exist; signed-build screenshots, privacy URL, rating questionnaire and review account remain missing. | Screenshots from the actual signed build; synthetic reviewer account and reproducible steps |
+| Store metadata | Bilingual draft, support and public privacy pages exist; signed-build screenshots, rating questionnaire, final Store form entries and review account remain missing. | Screenshots from the actual signed build; final disclosure review, synthetic reviewer account and reproducible steps |
 | Signed device | Simulator compilation and Expo Go evidence exist; standalone installation matrix is unrun. | [IOS_BUILD gates](IOS_BUILD.md#independent-installation-gate), artifact/source/signing identity and iPhone observations |
 | Store distribution | Apple membership and App Store Connect record are absent. No signing or submission attempted. | Maintainer enrollment when ready; registered App ID, valid profile/certificate, reviewed quota/environment |
 | Mainland availability | Existing website filing is not proof of APP filing or AI application paperwork. | Verify relevant APP/AI requirements and filed identity before selecting mainland availability |
@@ -56,13 +57,15 @@ Do not put real review credentials or user data in this file or a public PR.
 - Web password recovery is deployed. Actual local Next/GoTrue/SMTP-capture/browser
   tests cover new-tab PKCE, verified identity, password update and preserved B
   login while recovering A. Captured local mail does not prove public delivery.
-- Web/native deletion confirmation and shared recovery are prepared, with a
+- Production web/API deletion is enabled, with a
   one-hour write receipt, completion-only verification after expiry, avatar API
-  cleanup and owner fences. Activation requires the reviewed migrations,
-  approved server-only configuration and verified release evidence. New mobile
+  cleanup and owner fences. Reviewed backup/restore, three migrations, approved
+  server-only configuration, isolated hosted acceptance and cleanup passed before
+  exact-deployment promotion. New mobile
   initiation has its own default-off build gate; prior owner-bound intent/receipt
   recovery remains usable even when it is off. See
-  [account release gates](ACCOUNT_RELEASE.md); no real-user deletion was tested.
+  [account release evidence and native gates](ACCOUNT_RELEASE.md); no real-user
+  deletion or hosted browser/native interaction was part of that runner.
 - Native registration/callback code is behind an off-by-default build flag. Slow
   local storage now preserves the original cold-start URL. Real SMTP, native
   secure crypto and signed iPhone warm/cold/replayed links still gate activation.

@@ -1,5 +1,16 @@
 # 产品日志
 
+## 2026-10-27 · Verified production account-deletion rollout
+
+- All 11 checks passed for #199; release source `ab7fb3cec60aca2902f09937a14e45da5f5d479a` produced protected canary `dpl_2F6J4iMo4g8t1izhsytHtKX8zAWd`. Custom-domain assignment stayed off until acceptance and cleanup passed; the same READY deployment was promoted and assignment restored.
+- Six affected ledger/avatar-metadata snapshots matched source and same-database restore copies (zero differences). Applied the lifecycle boundary, all-role storage guard and legacy ownership boundary; each combined source invariant/phase assertion passed, with a full catalog captured after phase 3.
+- Real hosted GoTrue/Storage/API checks used only two new synthetic accounts: A's 105 avatars including a 30-level path and B's one file; missing/false confirmation, owner/session violations, lost acknowledgement, same-request recovery, ordinary/signed pending guards, tampered/cross-owner proof, deletion/retry and old credentials were checked.
+- Independent SQL found A's audited dependencies absent while B's seeded rows/file remained; B's selected profile/settings fields and file bytes were unchanged. Both synthetic accounts were then cleaned through the API, all audited synthetic counts were zero, and original seven-user identity/ledger/avatar invariants plus phase 3 passed again.
+- At 10:12:54 UTC public availability was true with no-store; reset/delete and bilingual privacy/support pages returned 200 with the expected contact where applicable. Temporary share access was revoked. No real user was deleted for testing.
+- Evidence and exact limits: [account release record](ACCOUNT_RELEASE.md). Hosted checks were HTTP/Auth/Storage, not production browser or native UI; physical storage/backup erasure was not inspected. The same-database snapshot is not full Auth/file/offsite recovery.
+- This PR updates four documents only; verified their local links, Markdown diff and release-evidence consistency. No application, migration, workflow or runtime configuration changed in this documentation step; CI runs separately.
+- Mobile registration/new deletion remain default-off. Public SMTP delivery, native secure crypto/storage, signed-device cold/warm recovery, Apple membership and Store submission remain pending; no new paid service or M4 training ran.
+
 ## 2026-10-27 · Separate mobile deletion release gate
 
 - Server activation no longer exposes new mobile deletion by itself. Settings and the public delete route share a default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION` build gate; an unavailable build can continue on the website.
