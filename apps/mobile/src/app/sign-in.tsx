@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui";
-import { SupportLink } from "@/components/support-link";
+import { PrivacyLink, SupportLink } from "@/components/support-link";
 import { useI18n } from "@/lib/i18n";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
@@ -41,6 +41,7 @@ export default function SignIn() {
         {mobileEmailSignupEnabled && <Button label={t("signUp")} variant="outline" disabled={busy} onPress={() => router.push("/register")} />}
       </>}
       <SupportLink />
+      <PrivacyLink />
     </View>
   </SafeAreaView>;
 }

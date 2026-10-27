@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { Link } from "expo-router";
 import { Button, Card } from "@/components/ui";
-import { SupportLink } from "@/components/support-link";
+import { PrivacyLink, SupportLink } from "@/components/support-link";
 import { apiBase } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import { useSession } from "@/lib/session";
@@ -32,6 +32,7 @@ export default function Settings() {
     </Card>
     <Button variant="outline" label={t("signOut")} onPress={() => void supabase?.auth.signOut()} />
     <SupportLink />
+    <PrivacyLink />
   </ScrollView>;
 }
 const styles = StyleSheet.create({

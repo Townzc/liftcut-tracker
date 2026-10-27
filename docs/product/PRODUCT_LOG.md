@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Mobile privacy entry before and after sign-in
+
+- Added bilingual Privacy policy links beside the existing help entries on mobile sign-in and Settings, using the same fixed HTTPS host and explicit UI language. Only `lang` crosses into the browser; account, token and workout data remain local to the app.
+- Kept the page structure, existing support behavior, registration/deletion gates and confirmation/source/idempotency rules unchanged. Opening failures have a localized support contact.
+- Ran mobile `npm run typecheck`, `npm test` (49/49), targeted ESLint, Expo web export with synthetic public configuration and four browser cases (4/4): Chinese/English × signed-out/signed-in, verifying actual privacy/support destinations and no account or training writes. Inspected 390 px captures.
+- The temporary local Metro junction watch folders were restored with identical config hashes; the bounded browser server stopped. Evidence: `deliverables/2026-10-27-storage-runtime/mobile-privacy-{export,browser}.*`.
+- No real user, production configuration, external page request, paid service, M4 run or signed iPhone acceptance. Native external-browser opening remains a separate device check.
+
 ## 2026-10-27 · Restrict legacy avatar writes to the authenticated owner's directory
 
 - Read-only audit found legacy permissive bucket-only policies could OR around fresh-schema owner policies. Added three authenticated restrictive INSERT/UPDATE/DELETE policies; UPDATE checks both source and destination. Public reads, other buckets and service cleanup retain their existing rules.
