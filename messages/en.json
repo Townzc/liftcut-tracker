@@ -50,7 +50,16 @@
     "logout": "Sign Out",
     "passwordMismatch": "Passwords do not match.",
     "registerSuccess": "Account created. Please check your email for verification if enabled.",
-    "forgotSuccess": "Password reset email sent.",
+    "forgotSuccess": "If this account exists, you will receive a reset link. Open it in this browser. Check spam too.",
+    "recoveryDesc": "Choose a new password of at least 8 characters. After opening the link, complete this step within 15 minutes.",
+    "recoveryChecking": "Checking your reset link…",
+    "recoveryInvalid": "This reset link is invalid, expired or already used. Request a new link and open it in the same browser.",
+    "recoveryUpdateFailed": "The password could not be updated. Try again, or request a new reset link.",
+    "recoveryNewPassword": "New password",
+    "recoverySave": "Save new password",
+    "recoveryDone": "Password updated. Sign in again with your new password.",
+    "recoveryLogin": "Sign in with new password",
+    "recoveryRestart": "Request a new link",
     "genericError": "Operation failed, please try again.",
     "loginWithWechat": "Continue with WeChat",
     "oauthCancelled": "Authorization was cancelled. Please try again.",
@@ -68,7 +77,7 @@
     "heroMetricGuest": "Guest mode lets you try the core flow first",
     "loginDesc": "Sign in to sync your workout, nutrition, body metrics, and AI generation history.",
     "registerDesc": "Create an account to keep local data and continue long-term tracking.",
-    "forgotDesc": "Enter your email and we will send a password reset link."
+    "forgotDesc": "Enter your email. Open the reset link in this same browser, including the same private browsing session."
   },
   "dashboard": {
     "title": "Today at a glance",
