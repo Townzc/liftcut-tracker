@@ -70,7 +70,7 @@ function DeletionForm({ client, user, loading }: { client: AccountDeletion; user
         {available && <div className="space-y-3 text-sm"><p className="text-muted-foreground">{words.oauth}</p>
           <Button variant="outline" className="min-h-11 w-full" disabled={client.busy} onClick={() => void relogin()}>{words.relogin}</Button></div>}
       </>}
-    <div className="flex gap-4 text-sm underline underline-offset-4"><Link href="/privacy" prefetch={false}>{words.privacy}</Link><Link href="/support" prefetch={false}>{words.support}</Link>
+    <div className="flex gap-4 text-sm underline underline-offset-4"><Link href={`/privacy?lang=${en ? "en" : "zh-CN"}`} prefetch={false}>{words.privacy}</Link><Link href={`/support?lang=${en ? "en" : "zh-CN"}`} prefetch={false}>{words.support}</Link>
       {!record && <Link href={user ? "/settings/account" : "/login"} prefetch={false}>{words.back}</Link>}</div>
   </section>;
 }
