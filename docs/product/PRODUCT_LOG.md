@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Web owner cleanup boundary (no deletion UI)
+
+- Added durable per-owner pending/deleted markers, stop hooks and awaited in-flight work. Pending preserves queued bytes; only a caller-verified server `deleted` result may purge that owner's history, personal queue, consent, review/P1 keys and IndexedDB row.
+- Web outbox and history block remount and late writes after the marker, abort requests and preserve other owners, guest data and locale. Cross-tab storage events stop registered workers; markers remain after cleanup failure for retry.
+- Ran 17 targeted lifecycle/history tests, full TypeScript check and targeted ESLint. Local Chromium with real IndexedDB passed six checks including a delayed fetch ignoring abort, exact owner deletion and preserved B/guest/locale; external synthetic evidence is retained locally.
+- Full root tests/lint are still running at this commit; default build, GitHub CI, deployment, native/device and real-user deletion have not run for this change.
+- No UI, server mutation, migration, approval-ledger change, paid service or M4 work. Next: connect remaining web writers/providers and the deletion page. Legacy unowned `liftcut-p1-draft` is intentionally not erased; its producer/consumer need owner namespacing.
+
 ## 2026-10-27 · Public bilingual privacy and source-backed disclosures
 
 - Added `/privacy?lang=zh-CN|en`, the existing public contact and localized web auth/settings entries. Explain data purposes, pre-confirmation chat/preview storage, six-turn context versus retention, guest cloud requests and distinct chat/undo/logout/account deletion effects.
