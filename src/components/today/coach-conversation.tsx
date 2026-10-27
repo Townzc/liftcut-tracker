@@ -30,6 +30,7 @@ import { CoachHistoryControls } from "@/components/agent/coach-history-controls"
 import {activeGuestFacts} from "@/lib/guest-records";
 import {ensureGuestSession} from "@/lib/guest-client";
 import { MODEL_DATA } from "@liftcut/core/model-data";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 
 type Reply = CoachTurn["reply"];
 type Props = {data: TodayData; busy: boolean; pendingCount: number; submit: (p: WorkoutOperation) => Promise<boolean>; workoutPanel?:ReactNode; receiptsPanel?:ReactNode; onPlanApplied?:()=>void;initialStatus?:CoachStatus};
@@ -59,7 +60,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
   }, [turns]);
   useEffect(() => {
     const prompt = new URLSearchParams(window.location.search).get("prompt");
-    history.activate();
+    void history.activate().catch(()=>{});
     const timer=window.setTimeout(()=>{if(prompt)setText(prompt.slice(0,400));},0); // URL text is only a draft.
     return()=>window.clearTimeout(timer);
   }, [history,setText]);
@@ -78,6 +79,7 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     return()=>controller.abort();
   },[personal.guest,modelEnabled,modelStatus?.available]);
   function toggleModel(enabled:boolean){
+    if(personal.owner&&!ownerLifecycle.active(personal.owner))return;
     if(!consentKey)return;
     try{if(enabled)localStorage.setItem(consentKey,COACH_CONSENT_VERSION);else localStorage.removeItem(consentKey);
       setModelEnabled(enabled);setConsentError(false);if(!enabled){modelRequest.current?.abort();closeDraft();}
@@ -92,6 +94,12 @@ export function CoachConversation({data, busy, pendingCount, submit,workoutPanel
     setProposal(null); setResolveText(null); setReplace(null);
   }
   async function send(input = text, exerciseId = chosen) {
+    if(personal.owner){
+      if(!ownerLifecycle.active(personal.owner))return;
+      await ownerLifecycle.run(personal.owner,()=>sendActive(input,exerciseId)).catch(()=>{});
+    }else await sendActive(input,exerciseId);
+  }
+  async function sendActive(input: string, exerciseId: string) {
     if (flight.current || locked || !input.trim()) return;
     flight.current = true; setWorking(true); closeDraft(); setPanel(null); setText("");
     const id = crypto.randomUUID(), at = new Date().toISOString();

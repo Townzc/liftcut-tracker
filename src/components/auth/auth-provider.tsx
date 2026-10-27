@@ -28,6 +28,7 @@ import {GUEST_RECORD_EVENT} from "@/lib/guest-records";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
 import type { AppLocale, AuthMode, UserProfile } from "@liftcut/core/types";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 
 interface AuthContextValue {
   user: User | null;
@@ -62,6 +63,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [pendingGuestMigration, setPendingGuestMigration] = useState(false);
   const activeUserIdRef = useRef<string | null>(null);
   const bootstrappingUserRef = useRef<string | null>(null);
+  const identity=useRef<string|null>(null);
+  useEffect(()=>user?ownerLifecycle.register(user.id,()=>{
+    if(useTrackerStore.getState().userId===user.id)clearUserData();
+    if(identity.current===user.id){setProfile(null);setLoading(false);}
+  }):undefined,[user,clearUserData]);
 
   const updatePendingGuestMigration = useCallback(() => {
     try{setPendingGuestMigration(hasGuestFacts(getGuestSnapshot()));}
@@ -78,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // These forms finish sign-in with a full navigation. Let the destination
       // bootstrap once instead of starting reads that this document will abort.
       // Public help and privacy need no profile bootstrap or account writes.
-      if (["/login", "/register", "/support", "/privacy"].includes(window.location.pathname)) {
+      if (["/login", "/register", "/support", "/privacy", "/forgot-password", "/reset-password", "/delete-account"].includes(window.location.pathname) || !ownerLifecycle.active(nextUser.id)) {
         setLoading(false);
         return;
       }
@@ -93,12 +99,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const email = nextUser.email ?? "";
-        const nextProfile = await ensureUserBootstrap(nextUser.id, email);
+        const nextProfile = await ownerLifecycle.run(nextUser.id,()=>ensureUserBootstrap(nextUser.id, email));
+        if(identity.current!==nextUser.id||!ownerLifecycle.active(nextUser.id))return;
         setProfile(nextProfile);
         setLanguage(nextProfile.preferredLanguage);
       } catch (error) {
         console.error(error);
         setProfile((current) => {
+          if(identity.current!==nextUser.id||!ownerLifecycle.active(nextUser.id))return current;
           if (current) {
             return current;
           }
@@ -115,14 +123,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
       } finally {
         try {
-          await initializeForUser(nextUser.id);
-          activeUserIdRef.current = nextUser.id;
+          if(identity.current===nextUser.id&&ownerLifecycle.active(nextUser.id)){
+            await initializeForUser(nextUser.id);
+            if(identity.current===nextUser.id&&ownerLifecycle.active(nextUser.id))activeUserIdRef.current = nextUser.id;
+          }
         } catch (initializeError) {
           console.error(initializeError);
-          activeUserIdRef.current = nextUser.id;
+          if(identity.current===nextUser.id&&ownerLifecycle.active(nextUser.id))activeUserIdRef.current = nextUser.id;
         } finally {
           bootstrappingUserRef.current = null;
-          setLoading(false);
+          if(identity.current===nextUser.id)setLoading(false);
           updatePendingGuestMigration();
         }
       }
@@ -131,6 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const enterGuestSession = useCallback(async () => {
+    identity.current=null;
     setLoading(true);
     setUser(null);
     setProfile(null);
@@ -156,6 +167,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } = await supabase.auth.getSession();
 
         const sessionUser = session?.user ?? null;
+        identity.current=sessionUser?.id??null;
         setUser(sessionUser);
 
         if (sessionUser) {
@@ -194,6 +206,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user ?? null;
+      identity.current=sessionUser?.id??null;
       setUser(sessionUser);
 
       if (!sessionUser) {
@@ -230,6 +243,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [enterGuestSession]);
 
   const exitGuestMode = useCallback(async () => {
+    identity.current=null;
     setGuestModeEnabled(false);
     clearUserData();
     setProfile(null);
@@ -248,6 +262,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const supabase = getSupabaseBrowserClient();
     await supabase.auth.signOut();
+    identity.current=null;
     clearUserData();
     setProfile(null);
     setUser(null);
@@ -263,13 +278,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       throw createAuthRequiredError();
     }
 
-    const nextProfile = await ensureUserProfile(
+    const nextProfile = await ownerLifecycle.run(user.id,()=>ensureUserProfile(
       user.id,
       user.email ?? "",
       profile?.preferredLanguage ?? useUIStore.getState().language,
-    );
+    ));
 
-    setProfile(nextProfile);
+    if(identity.current===user.id&&ownerLifecycle.active(user.id))setProfile(nextProfile);
   }, [profile?.preferredLanguage, user]);
 
   const updateProfilePatch = useCallback(
@@ -278,7 +293,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw createAuthRequiredError();
       }
 
-      await updateUserProfile(user.id, patch);
+      await ownerLifecycle.run(user.id,()=>updateUserProfile(user.id, patch));
       await refreshProfile();
     },
     [refreshProfile, user],
@@ -295,7 +310,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw createAuthRequiredError();
       }
 
-      await updateUserPreferredLanguage(user.id, locale);
+      await ownerLifecycle.run(user.id,()=>updateUserPreferredLanguage(user.id, locale));
+      if(identity.current!==user.id||!ownerLifecycle.active(user.id))return;
       setLanguage(locale);
       setProfile((current) => {
         if (!current) {
@@ -320,10 +336,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const guestSnapshot = getGuestSnapshot();
     setLoading(true);
     try {
-      await migrateGuestFactsToUser({
+      await ownerLifecycle.run(user.id,()=>migrateGuestFactsToUser({
         userId: user.id,
         guestSnapshot,
-      });
+      }));
+      if(identity.current!==user.id||!ownerLifecycle.active(user.id))return;
       useTrackerStore.setState(state=>({guestSnapshot:remainingGuestSnapshot(state.guestSnapshot)}));
       updatePendingGuestMigration();
       await initializeForUser(user.id);

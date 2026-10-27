@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-27 · Web writers respect pending account deletion
+
+- Connected personal queues, model/review requests, history, legacy store actions and profile bootstrap to the owner lifecycle boundary. Waiting includes late optimistic rollbacks; captured-owner setters cannot overwrite a different account or a stopped owner.
+- `/delete-account` bypasses profile bootstrap alongside existing public/recovery routes. A persisted deletion intent blocks cold-start workers even before its lifecycle marker is written; account-specific stop leaves guest data and language intact.
+- New plan handoff drafts use `liftcut-p1-draft:<owner>` and are removed only for a confirmed deleted owner. Old unowned `liftcut-p1-draft` is neither imported nor blindly deleted; users may clear that legacy browser-tab data themselves.
+- Ran 20 targeted lifecycle/history/store tests, full TypeScript and targeted ESLint. The preceding foundation also completed full root tests (15 JS + 272 TS), root lint (two existing warnings) and six local Chromium/real IndexedDB checks.
+- This integration's full suite/build/CI and the deletion-page browser flow remain to be verified by the dependent UI release. No production data, migration, paid service, model change or native acceptance claimed.
+
 ## 2026-10-27 · Web owner cleanup boundary (no deletion UI)
 
 - Added durable per-owner pending/deleted markers, stop hooks and awaited in-flight work. Pending preserves queued bytes; only a caller-verified server `deleted` result may purge that owner's history, personal queue, consent, review/P1 keys and IndexedDB row.
