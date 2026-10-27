@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-27 · Restrict legacy avatar writes to the authenticated owner's directory
+
+- Read-only audit found legacy permissive bucket-only policies could OR around fresh-schema owner policies. Added three authenticated restrictive INSERT/UPDATE/DELETE policies; UPDATE checks both source and destination. Public reads, other buckets and service cleanup retain their existing rules.
+- Added an all-role INSERT/UPDATE trigger comparing non-null Storage `owner_id`/legacy `owner` metadata to the key prefix, covering foreign-signer uploads that bypass RLS. Null-owner trusted admin writes and DELETE remain available; existing lifecycle guards still apply. No production policy/data/key changes were made.
+- Generated `20261027082130_avatar_owner_write_boundary.sql` with Supabase CLI 2.122.0 `migration new avatar_owner_write_boundary`, after checking current docs/changelog and pinned Storage signed-upload/database source. Application code uses ordinary upload/upsert, not signed uploads; externally callable signed APIs still need verification.
+- Ran `node --import tsx --test tests/product-db/account-deletion.test.ts` against new disposable databases on the existing local fixture cluster: 32/32 passed. Both fresh/upgrade cases first reproduce B writing/deleting A under the exact legacy policy shape, then verify rejected insert/upsert/moves/delete, own writes, public reads, other buckets, metadata binding and all prior pending/deleted/retry guards.
+- Initial test run caught a UUID/text parameter cast mismatch in the new metadata fixture; explicit casts fixed it. Ran `npx tsc --noEmit --incremental false`, targeted test ESLint and `git diff --check` successfully.
+- These are real PostgreSQL policy/trigger tests with synthetic Auth/Storage metadata. Real Storage pre-issued signed URL/file tests, hosted migration, full CI and production deployment remain separate gates; no native test or M4/model change ran. See [rollout limits](PENDING_PRODUCTION_STEPS.md#avatar-ownership--independent-security-boundary).
+
 ## 2026-10-27 · Deletion disclosure matches the gated account flow
 
 - Replaced the outdated bilingual claim that self-service deletion is absent with the conditional mobile/web settings entry, recent verification and explicit permanent-deletion confirmation. Signing in or opening the page alone never deletes an account.

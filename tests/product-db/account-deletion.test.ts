@@ -8,6 +8,7 @@ import { Pool, type PoolClient } from "pg";
 // GoTrue revocation, Storage file removal, HTTP confirmation, or native clients.
 const configured = process.env.ACCOUNT_DELETION_TEST_DATABASE_URL;
 const migration = "20261027065932_account_deletion_boundary.sql";
+const ownerMigration = "20261027082130_avatar_owner_write_boundary.sql";
 for (const installation of ["fresh", "upgrade"] as const) {
   test(`account deletion boundary: ${installation}`, { skip: !configured }, async t => {
     const url = new URL(configured!);
@@ -35,7 +36,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
     const begin = (owner = a, id = request, session: string | null = owner === a ? sa : sb) => role("service_role", owner, null, c => c.query("select public.begin_account_deletion($1,$2,$3) result", [owner, id, session]));
     const status = (owner: string) => role("service_role", owner, null, c => c.query("select public.account_deletion_status($1) result", [owner]));
     const files = (owner = a, id = request) => role("service_role", owner, null, c => c.query("select public.account_deletion_files($1,$2) name", [owner, id]));
-    const upload = (owner = a, session: string | null = sa) => role("authenticated", owner, session, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${owner}/${randomUUID()}.png`]));
+    const upload = (owner = a, session: string | null = sa) => role("authenticated", owner, session, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${owner}/${randomUUID()}.png`]));
     const denied = (work: () => Promise<unknown>) => assert.rejects(work, { code: "42501" });
     const count = async (table: string, owner: string) => Number((await db.query(`select count(*) from ${table} where user_id=$1`, [owner])).rows[0].count);
     async function seed(owner: string, session: string) {
@@ -70,6 +71,8 @@ for (const installation of ["fresh", "upgrade"] as const) {
     }
     try {
       await db.query(await readFile("tests/agent-db/bootstrap.sql", "utf8"));
+      // Match actual Storage owner columns and object-path uniqueness.
+      await db.query("alter table storage.objects add column owner uuid, add column owner_id text; create unique index on storage.objects(bucket_id,name)");
       await db.query("do $$begin if not exists(select 1 from pg_roles where rolname='service_role') then create role service_role; end if; end$$");
       await db.query(await readFile("supabase/schema.sql", "utf8"));
       const migrations = (await readdir("supabase/migrations")).sort();
@@ -78,7 +81,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
         await db.query(await readFile(`supabase/migrations/${file}`, "utf8"));
       }
       if (installation === "upgrade") { await seed(a, sa); await seed(b, sb); }
-      for (const file of migrations.filter(file => file >= migration)) await db.query(await readFile(`supabase/migrations/${file}`, "utf8"));
+      for (const file of migrations.filter(file => file >= migration && file !== ownerMigration)) await db.query(await readFile(`supabase/migrations/${file}`, "utf8"));
       if (installation === "fresh") { await seed(a, sa); await seed(b, sb); }
       // Synthetic equivalent of Storage's admin path; does not grant runtime access.
       await db.query(`grant usage on schema storage to authenticated,anon,service_role;
@@ -86,6 +89,54 @@ for (const installation of ["fresh", "upgrade"] as const) {
         grant select on storage.objects to anon;
         grant select,insert,update,delete on storage.objects to service_role;
         create policy fixture_storage_admin on storage.objects to service_role using(true) with check(true);`);
+
+      // These four bucket-only legacy policies match the audited production
+      // policy shape. Strong fresh-schema permissive policies cannot override OR.
+      await db.query(`create policy "Allow authenticated avatar uploads" on storage.objects for insert to authenticated with check(bucket_id='avatars');
+        create policy "Allow authenticated avatar updates" on storage.objects for update to authenticated using(bucket_id='avatars') with check(bucket_id='avatars');
+        create policy "Allow authenticated avatar deletes" on storage.objects for delete to authenticated using(bucket_id='avatars');
+        create policy "Allow authenticated avatar reads" on storage.objects for select to authenticated using(bucket_id='avatars');
+        create policy fixture_other_bucket on storage.objects to authenticated using(bucket_id='other') with check(bucket_id='other');`);
+      await t.test("legacy bucket-only policies permit active B to write and delete A before the fix", async () => {
+        const id = randomUUID(), path = `${a}/legacy.png`;
+        await role("authenticated", b, sb, c => c.query("insert into storage.objects(id,bucket_id,name,owner_id) values($1,'avatars',$2,$3)", [id, path, b]));
+        assert.equal((await role("authenticated", b, sb, c => c.query("update storage.objects set name=$1 where id=$2", [`${a}/legacy-moved.png`, id]))).rowCount, 1);
+        assert.equal((await role("authenticated", b, sb, c => c.query("delete from storage.objects where id=$1", [id]))).rowCount, 1);
+      });
+      await db.query(await readFile(`supabase/migrations/${ownerMigration}`, "utf8"));
+      await t.test("restrictive ownership defeats legacy OR for insert, upsert, both move directions and delete", async () => {
+        const aid = randomUUID(), bid = randomUUID(), ap = `${a}/scope.png`, bp = `${b}/scope.png`;
+        const put = (owner: string, session: string, id: string, path: string) => role("authenticated", owner, session, c => c.query(
+          "insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2) on conflict(bucket_id,name) do update set name=excluded.name", [id, path]));
+        await put(a, sa, aid, ap); await put(a, sa, aid, ap); await put(b, sb, bid, bp);
+        await denied(() => put(b, sb, randomUUID(), `${a}/new.png`));
+        await denied(() => put(b, sb, randomUUID(), ap));
+        await denied(() => put(b, sb, randomUUID(), b)); // A UUID without a directory is not an owner prefix.
+        assert.equal((await role("authenticated", b, sb, c => c.query("update storage.objects set name=name where id=$1", [aid]))).rowCount, 0);
+        assert.equal((await role("authenticated", b, sb, c => c.query("delete from storage.objects where id=$1", [aid]))).rowCount, 0);
+        assert.equal((await role("authenticated", b, sb, c => c.query("update storage.objects set name=$1 where id=$2", [`${b}/stolen.png`, aid]))).rowCount, 0);
+        await denied(() => role("authenticated", b, sb, c => c.query("update storage.objects set name=$1 where id=$2", [`${a}/moved.png`, bid])));
+        // Other-bucket policy remains authoritative, but it cannot move into A.
+        const other = randomUUID();
+        await role("authenticated", b, sb, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'other',$2)", [other, `${a}/other.png`]));
+        await denied(() => role("authenticated", b, sb, c => c.query("update storage.objects set bucket_id='avatars' where id=$1", [other])));
+        assert.equal((await role("anon", a, null, c => c.query("select * from storage.objects where id=$1", [aid]))).rowCount, 1);
+        await role("authenticated", a, sa, c => c.query("update storage.objects set name=$1 where id=$2", [`${a}/renamed.png`, aid]));
+        assert.equal((await role("authenticated", a, sa, c => c.query("delete from storage.objects where id=$1", [aid]))).rowCount, 1);
+        await role("authenticated", b, sb, c => c.query("delete from storage.objects where id=any($1::uuid[])", [[bid, other]]));
+      });
+      await t.test("admin-path signed owner metadata must match the avatar prefix; trusted null owner and cleanup remain", async () => {
+        for (const columns of ["owner", "owner_id"] as const) {
+          await denied(() => role("service_role", b, null, c => c.query(`insert into storage.objects(id,bucket_id,name,${columns}) values($1,'avatars',$2,$3)`, [randomUUID(), `${a}/${columns}.png`, b])));
+        }
+        const id = randomUUID();
+        await role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name,owner,owner_id) values($1,'avatars',$2,$3::uuid,$3::text)", [id, `${a}/signed-owner.png`, a]));
+        await denied(() => role("service_role", b, null, c => c.query("update storage.objects set owner_id=$1 where id=$2", [b, id])));
+        await denied(() => role("service_role", a, null, c => c.query("update storage.objects set name=$1 where id=$2", [`${b}/signed-move.png`, id])));
+        await role("service_role", a, null, c => c.query("update storage.objects set owner=null,owner_id=null where id=$1", [id]));
+        assert.equal((await role("service_role", a, null, c => c.query("delete from storage.objects where id=$1", [id]))).rowCount, 1);
+        await denied(() => role("authenticated", a, sa, c => c.query("select account_private.guard_avatar_object_owner()")));
+      });
 
       await t.test("migration preserves existing data; all remaining Auth FKs cascade except the handled ledger", async () => {
         for (const table of [...ledger.map(x => `agent_private.${x}`), ...publicRows.map(x => `public.${x}`)]) assert.equal(await count(table, a), 1);
@@ -111,9 +162,9 @@ for (const installation of ["fresh", "upgrade"] as const) {
       });
       await t.test("live owner session required; revoked, expired, absent and foreign sessions denied", async () => {
         await upload(); await upload(b, sb);
-        await role("authenticated", a, sa, c => c.query(`insert into storage.objects
+        await role("authenticated", a, sa, c => c.query(`insert into storage.objects(id,bucket_id,name)
           select gen_random_uuid(),'avatars',$1||'/paged/'||lpad(n::text,3,'0')||'.png' from generate_series(1,103) n`, [a]));
-        await role("authenticated", a, sa, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/deep/${"nested/".repeat(30)}avatar.png`]));
+        await role("authenticated", a, sa, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${a}/deep/${"nested/".repeat(30)}avatar.png`]));
         await denied(() => upload(a, null)); await denied(() => upload(a, sb)); await denied(() => upload(a, randomUUID()));
         await db.query("update auth.sessions set not_after=now()-interval '1 second' where id=$1", [sa]);
         await denied(() => upload()); await denied(() => begin());
@@ -121,17 +172,17 @@ for (const installation of ["fresh", "upgrade"] as const) {
         assert.ok((await role("anon", a, null, c => c.query("select * from storage.objects"))).rowCount! >= 2);
       });
       await t.test("service writes require a real canonical avatar owner; other buckets stay unchanged", async () => {
-        await role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/signed.png`]));
-        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${randomUUID()}/missing.png`])));
-        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars','unowned.png')", [randomUUID()])));
-        await role("service_role", a, null, c => c.query("insert into storage.objects values($1,'other','unowned.png')", [randomUUID()]));
+        await role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${a}/signed.png`]));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${randomUUID()}/missing.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars','unowned.png')", [randomUUID()])));
+        await role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'other','unowned.png')", [randomUUID()]));
       });
       await t.test("begin waits for in-flight upload; retries are bound to owner and request", async () => {
         const writer = await db.connect(), starter = await db.connect(); let pending: Promise<unknown> | undefined;
         try {
           await writer.query("begin; set local role authenticated");
           await writer.query("select set_config('request.jwt.claims',$1,true)", [JSON.stringify({ sub: a, session_id: sa })]);
-          await writer.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/in-flight.png`]);
+          await writer.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${a}/in-flight.png`]);
           await starter.query("begin; set local statement_timeout='5s'; set local role service_role");
           const pid = (await starter.query("select pg_backend_pid() pid")).rows[0].pid;
           pending = starter.query("select public.begin_account_deletion($1,$2,$3)", [a, request, sa]);
@@ -148,7 +199,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
         assert.equal((await role("authenticated", a, sa, c => c.query("delete from storage.objects where name like $1", [`${a}/%`]))).rowCount, 0);
       });
       await t.test("pending deletion blocks signed-upload-equivalent inserts, overwrites and moves", async () => {
-        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/new-signed.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${a}/new-signed.png`])));
         await denied(() => role("service_role", a, null, c => c.query("update storage.objects set name=name where name=$1", [`${a}/signed.png`])));
         await denied(() => role("service_role", a, null, c => c.query("update storage.objects set bucket_id='other' where name=$1", [`${a}/signed.png`])));
         await denied(() => role("service_role", a, null, c => c.query("update storage.objects set name=$1 where name=$2", [`${b}/moved.png`, `${a}/signed.png`])));
@@ -176,7 +227,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
           await writer.query("begin; set local statement_timeout='5s'; set local role authenticated");
           await writer.query("select set_config('request.jwt.claims',$1,true)", [JSON.stringify({ sub: owner, session_id: session })]);
           const pid = (await writer.query("select pg_backend_pid() pid")).rows[0].pid;
-          pending = assert.rejects(writer.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${owner}/late.png`]), { code: "42501" });
+          pending = assert.rejects(writer.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${owner}/late.png`]), { code: "42501" });
           await waiting(pid); await starter.query("commit"); await pending;
         } finally { await writer.query("rollback"); await starter.query("rollback"); await pending?.catch(() => {}); writer.release(); starter.release(); }
         await db.query("delete from auth.users where id=$1", [owner]);
@@ -196,7 +247,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
           await deleter.query("begin"); await deleter.query("delete from auth.users where id=$1", [owner]);
           await writer.query("begin; set local statement_timeout='5s'; set local role service_role");
           const pid = (await writer.query("select pg_backend_pid() pid")).rows[0].pid;
-          pending = assert.rejects(writer.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${owner}/late-signed.png`]), { code: "42501" });
+          pending = assert.rejects(writer.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${owner}/late-signed.png`]), { code: "42501" });
           await waiting(pid); await deleter.query("commit"); await pending;
         } finally { await writer.query("rollback"); await deleter.query("rollback"); await pending?.catch(() => {}); writer.release(); deleter.release(); }
       });
@@ -217,7 +268,7 @@ for (const installation of ["fresh", "upgrade"] as const) {
         assert.equal(await count("auth.sessions", a), 0); assert.equal(await count("account_private.deletions", a), 0);
         assert.equal((await db.query("select 1 from public.profiles where id=$1", [a])).rowCount, 0);
         await denied(() => upload()); await upload(b, sb);
-        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects values($1,'avatars',$2)", [randomUUID(), `${a}/old-signed-token.png`])));
+        await denied(() => role("service_role", a, null, c => c.query("insert into storage.objects(id,bucket_id,name) values($1,'avatars',$2)", [randomUUID(), `${a}/old-signed-token.png`])));
         await assert.rejects(() => begin(), { code: "23503" });
         assert.equal((await db.query("delete from auth.users where id=$1", [a])).rowCount, 0);
       });
