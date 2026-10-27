@@ -1,5 +1,17 @@
 # 产品日志
 
+## 2026-10-27 · Mobile email callback contract and local PKCE handoff
+
+- Prepared a fixed `/auth/mobile-callback` raw-HTML handoff to `liftcut://auth/callback`, with a manual bilingual button, closed parameters, escaping, no script/account reads/session mutation, no-store and no-referrer. Only the exact route bypasses page authentication.
+- Added shared pending-signup policy: email/attempt binding, isolated SDK verifier namespace, bounded local lifetime, existing-login refusal, cancellation/replay states and confirmed-email identity check. These are pure contracts; native storage, serialization and registration/callback UI remain PR 2, as documented in [handoff plan](MOBILE_EMAIL_AUTH.md).
+- Real Next tests caught the global Referrer-Policy overriding the handler; added an exact-path header override and re-ran successfully. An initial test import path failed type checking and was corrected before the final build.
+- Ran root `npm test` (15 JS + 269 TS), `npm run lint` (0 errors, 2 existing research warnings), `npm run typecheck -w @liftcut/core`; mobile `npm run typecheck`, 24 tests and source ESLint. Changed-file ESLint and `git diff --check` passed.
+- Fixture `npm run build` passed with a temporary local Turbopack common-parent root for shared dependency junctions, then restored the config; only the intentional callback header override remains. No `.env` or hosted Auth secret was read.
+- Ran `npx playwright test --config playwright.mobile-email.config.ts --output=.next/mobile-email-browser` with explicit local fixture: 4/4. Actual Next responses verify headers, fixed href, bilingual isolation, invalid-input refusal and protected lookalike paths; inspected both 390px screenshots in that output directory.
+- Local GoTrue 55460 + newly captured mail: random synthetic signup, confirmation link → raw page → SDK PKCE, wrong verifier rejection, recreated in-memory adapter, server `getUser` identity and consumed-code rejection. Synthetic account removed. No external email or main application session installed.
+- Quality CI includes the raw-page suite; local SMTP integration skips without its explicitly supplied fixture. Unrun: GitHub CI/deploy, provider-expiry timed wait, real SMTP, native persisted cold start, app-scheme delivery, signed iPhone and Store acceptance. No paid resources, new services or M4 work.
+- Next: isolated serialized PKCE storage/client plus minimal mobile registration/callback UI, then native acceptance and the separately reviewed email-service setup.
+
 ## 2026-10-26 · Separate store profile and honest release preflight
 
 - Added an explicit iOS store/production/Release profile, separate from internal preview and simulator; no build, signing, auto-submit, App Store ID or production environment change.

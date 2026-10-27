@@ -26,7 +26,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
 
   const pathname = request.nextUrl.pathname;
   // Public help must remain reachable even when authentication is unavailable.
-  if (pathname === "/support" || isStaticAsset(pathname)) {
+  if (pathname === "/support" || pathname === "/auth/mobile-callback" || isStaticAsset(pathname)) {
     return response;
   }
 
