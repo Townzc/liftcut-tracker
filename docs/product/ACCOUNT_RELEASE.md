@@ -1,11 +1,53 @@
 # Account lifecycle release gates
 
-Prepared 2026-10-27. Free code preparation is not a signed iOS or public email
-delivery acceptance. No M4 work, Apple enrollment or paid service is needed here.
+Updated 2026-10-27 after the verified production web/API rollout. Signed iOS
+installation and public email delivery remain separate, unfinished acceptance
+gates. No M4 training, Apple enrollment or new paid service was used.
+
+## Production rollout evidence — 2026-10-27
+
+Release source: `ab7fb3cec60aca2902f09937a14e45da5f5d479a`, after all 11 checks
+passed for [#199](https://github.com/Townzc/liftcut-tracker/pull/199).
+Production deployment `dpl_2F6J4iMo4g8t1izhsytHtKX8zAWd` was first tested as an
+isolated, protected canary without assigning the custom domains. The same READY
+deployment was promoted; public availability was verified at **10:12:54 UTC**.
+Automatic domain assignment was restored and temporary share access revoked.
+The public `www.liftcuttracker.com` alias was verified on that exact deployment.
+
+| Checkpoint | Observed result |
+| --- | --- |
+| Backup and restore rehearsal | Six affected ledger/avatar-metadata snapshots matched source and same-database restore copies, with zero row differences. This is not an Auth-identity/file-byte backup or offsite disaster recovery. |
+| Three migrations | The lifecycle boundary, all-role avatar lifecycle guard and legacy avatar ownership boundary were applied in order. Each combined source-invariant and phase assertion passed; the full catalog was captured after phase 3. |
+| Auth and confirmation | Two new synthetic accounts logged in through real GoTrue. Missing/false confirmation, changed caller/expected owner and a revoked session could not initiate deletion. |
+| Storage and recovery | A uploaded 105 tiny avatars, including a 30-level path; B uploaded one. Cross-owner overwrite/delete/signing was refused. Discarding the POST acknowledgement recovered the same request ID; pending status blocked ordinary and previously signed uploads. Tampered proof and active B could not complete A's deletion. |
+| Completion and isolation | A's deletion and same-proof retry succeeded; old credentials/uploads were rejected and representative deleted objects were no longer readable. B's selected profile/settings fields and file bytes remained unchanged. An independent SQL checkpoint found A's audited dependencies absent, while B's seeded rows and file remained. |
+| Cleanup and baseline | Both synthetic accounts were then deleted through the API. The independent audit found zero remaining synthetic Auth/session/profile/settings/avatar/ledger/pending rows. The original seven-user identity digest and affected ledger/avatar baseline matched; phase 3 assertions passed again. |
+| Public smoke | `/api/account/deletion` returned `available:true` with `no-store`; reset/delete pages and both languages of privacy/support returned 200. Privacy/support showed the expected support contact. |
+
+The hosted migration registry uses execution versions: backup `20261027100648`;
+source `20261027065932_account_deletion_boundary.sql` → `20261027100700`;
+`20261027071408_account_storage_write_guard.sql` → `20261027100712`;
+`20261027082130_avatar_owner_write_boundary.sql` → `20261027100722`.
+These are recorded mappings, not a change to migration history.
+
+Sanitized operator evidence is kept outside Git under
+`deliverables/2026-10-27-storage-runtime/`: `production-backup-verified.json`,
+`production-migration-{1,2,3}-verified.json`, `production-acceptance-{login,run,cleanup}-evidence.json`,
+`production-synthetic-{seed-verified,checkpoint,cleanup-audit}.json`,
+`production-final-baseline.json`, `production-public-enabled-smoke.json`,
+`production-migration-registry.json` and `production-public-alias.json`.
+No credentials, receipts, user identifiers or account contents belong in this document.
+
+The hosted runner tested HTTP/Auth/Storage, not production browser interaction or
+a native app. It did not inspect physical storage media or prove backup erasure.
+Earlier local browser tests remain separate evidence. No public SMTP delivery or
+new signed-device acceptance was performed; mobile registration and new deletion
+retain their independent default-off build gates.
 
 ## Self-deletion API
 
-The default-disabled `/api/account/deletion` is shared by web and native clients.
+The shared `/api/account/deletion` remains default-disabled in configuration;
+the production server flag was explicitly enabled for the rollout above.
 GET returns availability. POST requires `{requestId, confirmed:true}`, a verified
 owner and authentication within five minutes. A refreshed JWT is not a new login.
 The database verifies that the signed session still exists before starting.
@@ -25,20 +67,23 @@ before Auth deletion. Auth deletion and private-ledger cleanup are transactional
 Storage is not. A partial failure retains pending status for retry. No real user
 deletion belongs in release tests. Local device queues are a separate client gate.
 
-Activation prerequisites (not executed by this change):
+Operational rules after activation:
 
-1. Back up affected production tables, verify restore material, apply the reviewed
-   account deletion migration and verify grants, RLS and Auth trigger.
+1. Back up affected tables and verify restore material before future migrations.
+   The three reviewed migrations above are already applied; do not rerun them as
+   pending work. Roll back availability by disabling the feature while retaining
+   the guards and recovery records; this cannot undo a completed account deletion.
 2. Explicit maintainer approval is required by `AGENTS.md` before adding the
    server-only `SUPABASE_SERVICE_ROLE_KEY` or changing production secrets.
    Never expose it through `NEXT_PUBLIC_*`, `EXPO_PUBLIC_*` or a browser bundle.
 3. The existing signing secret is domain-separated by the required signed purpose
    `account-deletion-v1`. The receipt grants no read, training or account-selection
-   permissions. Keep `FEATURE_ACCOUNT_DELETION` off until all gates pass.
-4. Test real GoTrue + Storage with synthetic accounts, including concurrent upload,
-   old JWT/refresh rejection, complete dependency cleanup, retry and another owner.
-5. Ship web/native confirmation, reauthentication and owner-scoped local cleanup;
-   then check an independently installed signed iPhone build before App Store claims.
+   permissions. Do not treat server activation as permission to enable a mobile build.
+4. Future acceptance must use isolated synthetic accounts and preserve other
+   owners. Stop for baseline drift review rather than restoring over legitimate data.
+5. Keep `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION` off until an independently installed
+   signed iPhone build passes confirmation, reauthentication, storage, cold restart
+   and recovery. Existing owner-bound intents/receipts remain recoverable while off.
 
 ## Free email setup prepared; no account created
 
