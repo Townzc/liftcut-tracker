@@ -19,6 +19,8 @@ clients are now logged in. No paid build, EAS project or signing identity create
 | Offline before fix | SQLite-backed queue survived restart and never said saved; automatic sync failed, manual sync created one record |
 | Offline after fix | Offline correction left server at 6 reps; reopen online and stay in Agent without manual retry applied 5 reps to the same ID, revision 2 → 3; still 4/6 done |
 | Stream / keyboard | Maintainer observed ordinary read-only reply growing progressively and an unobscured input; no measured phone latency distribution |
+| History selection | Maintainer created a new chat, selected the original from history, and confirmed content restored with old confirmations disabled |
+| Language | Initial English check exposed an untranslated generic squat and custom title. After the display-only fix, maintainer confirmed English Squat / Week 1, day 1 and restoration of the Chinese names. International abbreviations (kg, lb, cm, RPE) remain by maintainer preference |
 
 The first reported correction did not match server evidence; it was repeated
 explicitly and verified. That initial mismatch is not counted as a successful
@@ -33,8 +35,10 @@ Still unrun on device: eight-turn interval positioning (passed in real API and
 browser rehearsal), account switching/expired previews, dropped successful reply,
 standalone offline launch, Android, signed IPA/APK, notification/background timer
 matrix and mainland cellular network. Expo Go is native runtime evidence, not
-signed application or store-release acceptance. Language consistency cleanup is
-next; explicit Chinese selection worked, but technical labels need localization.
+signed application or store-release acceptance. Names, controls and source labels
+follow the selected language; stored custom titles and original chat prose are
+not rewritten. A title without a translation uses the known week/day. Translating
+a generic movement does not identify equipment or change parser matching.
 
 ### Earlier desktop / protocol evidence
 

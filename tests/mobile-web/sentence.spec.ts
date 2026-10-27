@@ -31,7 +31,7 @@ test("one sentence: rules preview on the phone, explicit confirm, server re-chec
   await input.fill("卧推 60 公斤 5、5，最后一组 RPE 8");
   await page.getByRole("button", { name: "解析并预览" }).click();
   const preview = page.getByTestId("sentence-preview");
-  await expect(preview).toContainText("第 1 组: 60 公斤 × 5 次 · 主观强度 —"); await expect(preview).toContainText("第 2 组: 60 公斤 × 5 次 · 主观强度 8");
+  await expect(preview).toContainText("第 1 组: 60 kg × 5 次 · RPE —"); await expect(preview).toContainText("第 2 组: 60 kg × 5 次 · RPE 8");
   expect((await db.query("select count(*)::int as n from set_logs l join workout_sessions s on s.id=l.session_id where s.training_plan_id=$1", [plan])).rows[0].n).toBe(0);
   await page.screenshot({ path: "node_modules/.cache/mobile-web/sentence-mobile.png", fullPage: true });
   await preview.getByRole("button", { name: "确认保存这句话" }).click();

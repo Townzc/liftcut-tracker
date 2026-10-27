@@ -66,10 +66,10 @@ export function parsePersonalEntry(input: string, anchorDate: string): PersonalE
 
 export function entryLines(entry: PersonalEntry, en: boolean): string[] {
   if(entry.kind==="preference")return [preferenceLabel(entry.key,en),entry.value];
-  if(entry.kind==="exercise")return [exerciseLabel(entry.exerciseName,en?"en":"zh-CN"),`${entry.weightKg??"—"} ${en?"kg":"公斤"} · ${entry.reps??"—"} ${en?"reps":"次"} · ${entry.sets??"—"} ${en?"sets":"组"}`,`${en?"RPE":"主观强度"} · ${entry.rpe??"—"}`];
+  if(entry.kind==="exercise")return [exerciseLabel(entry.exerciseName,en?"en":"zh-CN"),`${entry.weightKg??"—"} kg · ${entry.reps??"—"} ${en?"reps":"次"} · ${entry.sets??"—"} ${en?"sets":"组"}`,`RPE · ${entry.rpe??"—"}`];
   return entry.kind === "body" ? [
-    `${en ? "Weight" : "体重"} · ${entry.weightKg ?? "—"} ${en ? "kg" : "公斤"}`, `${en ? "Waist" : "腰围"} · ${entry.waistCm ?? "—"} ${en ? "cm" : "厘米"}`,
-  ] : [entry.foodName, `${en ? "Energy" : "热量"} · ${entry.calories ?? "—"} ${en ? "kcal" : "千卡"}`, `${en ? "Protein" : "蛋白质"} · ${entry.protein ?? "—"} ${en ? "g" : "克"}`];
+    `${en ? "Weight" : "体重"} · ${entry.weightKg ?? "—"} kg`, `${en ? "Waist" : "腰围"} · ${entry.waistCm ?? "—"} cm`,
+  ] : [entry.foodName, `${en ? "Energy" : "热量"} · ${entry.calories ?? "—"} kcal`, `${en ? "Protein" : "蛋白质"} · ${entry.protein ?? "—"} g`];
 }
 
 export function preferenceLabel(key:z.infer<typeof preferenceKeySchema>,en:boolean){

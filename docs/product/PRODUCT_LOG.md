@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-26 · Mobile language consistency after physical-device feedback
+
+- English exposed raw Chinese generic exercise names and a custom workout title. Translate generic movement labels without identifying equipment; a custom title without a translation displays the known week/day, preserving its original stored text.
+- Localize source categories and exercise names in drafts/reviews. Shared value display preserves null, explicit zero and original per-hand load; kg/lb/cm/RPE remain international abbreviations at the maintainer's request. Original chat prose is retained.
+- Load the stored language choice before screens mount and track system locale changes. Declare supported native locales; the config requires a future native build, not a change to Expo Go itself.
+- Ran: mobile/core type checks, mobile `npm test` (24), direct mobile/core ESLint; root `npm test` (9 JS + 266 TS), fixture-environment `npm run build`, Expo web export; `playwright.mobile.config.ts` (10/10), W1b `model-chat.spec.ts record-memory.spec.ts` (9/9). Inspected the 390px English screenshot.
+- iPhone feedback: initial mixed-language result failed; after the fix, maintainer confirmed English Squat / Week 1, day 1 and restoration of Chinese names. History selection also restored content with old confirmations disabled. Unit-abbreviation preference was subsequently checked by automated regressions.
+- No write-contract, ledger, confirmation, source, idempotency, parser-identification or model-default change. No M4 training, migration or paid build. [Acceptance limits](MOBILE_ACCEPTANCE.md): signed IPA/APK, native account/expiry matrix and mainland cellular checks remain pending.
+- Next: standalone signing/build prerequisites and the remaining device matrix; JS exports and Vercel deployment do not establish standalone mobile release acceptance.
+
 ## 2026-10-26 · iPhone acceptance: automatic queue recovery on every screen
 
 - The real iPhone session exposed a retry defect: offline work survived restart but required manual sync. Home owned the timer/listener, so Agent had no retry loop.

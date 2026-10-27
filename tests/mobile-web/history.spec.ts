@@ -25,7 +25,7 @@ test("the app history shows the same calendar and muscle volume as the web, from
   const status = page.getByTestId("outbox-status"); await expect(status).toHaveText("已同步");
   const row = (n: number) => page.getByTestId(`set-${exercise}-${n}`);
   for (const n of [1, 2]) {
-    await row(n).getByLabel(`第 ${n} 组 重量（公斤）`).fill("60"); await row(n).getByLabel(`第 ${n} 组 次数`).fill("5");
+    await row(n).getByLabel(`第 ${n} 组 重量 (kg)`).fill("60"); await row(n).getByLabel(`第 ${n} 组 次数`).fill("5");
     await row(n).getByRole("button", { name: "完成" }).click(); await expect(row(n).getByText("已完成")).toBeVisible();
   }
   await row(3).getByRole("button", { name: "跳过" }).click(); await expect(row(3).getByText("已跳过")).toBeVisible();

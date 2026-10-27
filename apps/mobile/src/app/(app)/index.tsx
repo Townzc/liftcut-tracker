@@ -14,6 +14,7 @@ import { SetRow } from "@/components/set-row";
 import { Button, Card } from "@/components/ui";
 import { ApiError } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
+import { workoutTitle } from "@/lib/display";
 import { supabase } from "@/lib/supabase";
 import { useColors } from "@/lib/theme";
 import { useWorkout } from "@/lib/workout";
@@ -68,7 +69,10 @@ export default function Today() {
       : !session ? state?.items.some(i => i.action === "start") ? <Card><Text style={text}>{t("starting")}</Text></Card>
         : data.days.length ? <Card>
           <Text style={[styles.heading, text]}>{t("chooseDay")}</Text>
-          {data.days.map(d => <Button key={d.id} variant={d.id === chosen ? "primary" : "outline"} label={`${t("day", { week: d.weekNumber, day: d.dayNumber })} · ${d.title}`} onPress={() => setDayId(d.id)} />)}
+          {data.days.map(d => {
+            const day = t("day", { week: d.weekNumber, day: d.dayNumber }), title = workoutTitle(d.title, locale, d.weekNumber, d.dayNumber);
+            return <Button key={d.id} variant={d.id === chosen ? "primary" : "outline"} label={title === day ? day : `${day} · ${title}`} onPress={() => setDayId(d.id)} />;
+          })}
           <Button label={t("start")} disabled={!chosen || paused} onPress={() => void write({ action: "start", body: { id: randomUUID(), dayId: chosen,
             timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone } })} />
         </Card> : <Text style={text}>{t("noPlan")}</Text>
@@ -76,7 +80,7 @@ export default function Today() {
         <KeepScreenOn active={active} />
         {active && <RestBar rest={rest} />}
         <Card>
-          <Text style={[styles.heading, text]}>{active ? t("activeSession") : t("ended")} · {session.prescription.title}</Text>
+          <Text style={[styles.heading, text]}>{active ? t("activeSession") : t("ended")} · {workoutTitle(session.prescription.title, locale, session.weekNumber, session.dayNumber)}</Text>
           <Text style={muted}>{t("progress", { done: session.sets.filter(s => s.status === "done").length, total: session.prescription.exercises.reduce((n, e) => n + e.sets, 0) })}</Text>
           {active && <RestLength rest={rest} />}
         </Card>

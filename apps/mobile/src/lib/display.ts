@@ -15,3 +15,10 @@ export function confirmedValues(s: { weightKg: number | null; reps: number | nul
 const topics: Record<string, MessageKey> = { body: "sourceBody", food: "sourceFood", workout: "sourceWorkout",
   plan: "sourcePlan", nutrition: "sourceNutrition", profile: "sourceProfile" };
 export const sourceTopic = (topic: string, locale: Locale) => messages[locale][topics[topic] ?? "sourceRecords"];
+
+/** Preserve the stored custom title; use the known week/day when no translation is available. */
+export function workoutTitle(title: string, locale: Locale, week: number, day: number) {
+  const chinese = /\p{Script=Han}/u.test(title);
+  const foreign = locale === "en" ? chinese : !chinese && /[a-z]{2,}/i.test(title);
+  return foreign ? format(messages[locale].day, { week, day }) : title;
+}

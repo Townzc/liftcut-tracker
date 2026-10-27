@@ -21,7 +21,7 @@ test("model consent, oral body draft, no write until confirmation, signed replay
   await page.screenshot({path:"node_modules/.cache/w1b/model-data-consent-mobile.png",fullPage:true});
   await send(page,"你好呀");expect((await db.query("select count(*)::int n from coach_request_usage where user_id=$1",[owner])).rows[0].n).toBe(0);
   await enable(page);await send(page,"昨天早上秤了一下，是七十二点五公斤，帮我补上吧");
-  await expect(page.getByTestId("personal-draft")).toContainText("72.5 公斤");await expect(page.getByTestId("personal-draft")).toContainText("— 厘米");expect(await entries(page)).toEqual([]);
+  await expect(page.getByTestId("personal-draft")).toContainText("72.5 kg");await expect(page.getByTestId("personal-draft")).toContainText("— cm");expect(await entries(page)).toEqual([]);
   let posted="";page.on("request",r=>{if(r.method()==="POST"&&r.url().includes("/api/personal-records"))posted=r.postData()!;});
   await page.getByRole("button",{name:"确认补录",exact:true}).dblclick();await expect.poll(async()=>(await entries(page)).length).toBe(1);
   expect(JSON.parse(posted).modelProof).toBeTruthy();const receipt=(await entries(page))[0];expect(receipt.model).toBeTruthy();
@@ -64,7 +64,7 @@ test("a same-day body append after food history survives invalid tool fields and
   }
   await send(page,"我午餐都吃了什么");
   await send(page,"现在称到七十三点一公斤，腰围仍没量，帮我追加一条今天的数据 [oral-append]");
-  await expect(page.getByTestId("personal-draft")).toContainText("73.1 kg");await expect(page.getByTestId("personal-draft")).toContainText("— 厘米");
+  await expect(page.getByTestId("personal-draft")).toContainText("73.1 kg");await expect(page.getByTestId("personal-draft")).toContainText("— cm");
   await expect(page.getByTestId("coach-turn").last()).toContainText("目前尚未写入记录");expect((await entries(page)).length).toBe(2);
   await page.getByRole("button",{name:"确认补录",exact:true}).click();await expect.poll(async()=>(await entries(page)).length).toBe(3);
   const after=await entries(page);expect(after.filter((r:{entry:{kind:string}})=>r.entry.kind==="food")).toHaveLength(1);
