@@ -36,11 +36,12 @@ Changing a reviewed endpoint/project requires explicit re-review of the checker.
 | --- | --- | --- |
 | Native account lifecycle | Only email/password login exists; the hint tells users to register on the web. Add in-app registration and recovery in a focused PR. | Synthetic-account success, validation, expired links, cancellation and existing-login regressions |
 | Account deletion | No account deletion API/UI found. Implement authenticated self-deletion with a separate explicit confirmation and truthful failure states. | Isolated test accounts only; cross-owner denial, retry recovery and old-owner queue/session cleanup; do not execute deletion on real users during preparation |
-| Privacy/support | Dedicated public pages and mobile entry points are absent. Confirm operator contact, retention and actual recipients, then publish accurate bilingual pages reachable before login and from settings. | Public URLs, rendered device-width checks, working contact and matching in-app disclosures |
+| Support | Bilingual `/support?lang=zh-CN|en` and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Four public-route browser checks and 390px screenshots passed; both Expo web sign-in links passed. Confirm deployed URLs after merge; new signed-device link checks remain unrun |
+| Privacy | Dedicated privacy policy and mobile entry points remain absent. Confirm operator identity, retention and actual recipients, then publish accurate bilingual disclosures. | Public URLs and matching in-app disclosures; a support page is not a privacy policy |
 | AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
 | Privacy labels | Draft inventory below; SDK manifests do not cover server processing. | Complete app + processor/logging/backup inventory, linked-data and tracking assessment |
 | Export compliance | `ITSAppUsesNonExemptEncryption` is unset. Assess actual cryptography/SDKs and applicable exemption before answering. | Reviewed declaration and any required documentation; do not set a value just to silence EAS |
-| Store metadata | Bilingual draft below; screenshots, support/privacy URLs, rating questionnaire and review account remain missing. | Screenshots from the actual signed build; synthetic reviewer account and reproducible steps |
+| Store metadata | Bilingual draft and support route exist; signed-build screenshots, privacy URL, rating questionnaire and review account remain missing. | Screenshots from the actual signed build; synthetic reviewer account and reproducible steps |
 | Signed device | Simulator compilation and Expo Go evidence exist; standalone installation matrix is unrun. | [IOS_BUILD gates](IOS_BUILD.md#independent-installation-gate), artifact/source/signing identity and iPhone observations |
 | Store distribution | Apple membership and App Store Connect record are absent. No signing or submission attempted. | Maintainer enrollment when ready; registered App ID, valid profile/certificate, reviewed quota/environment |
 | Mainland availability | Existing website filing is not proof of APP filing or AI application paperwork. | Verify relevant APP/AI requirements and filed identity before selecting mainland availability |
@@ -49,6 +50,31 @@ Email/password login does not itself require Sign in with Apple. Opening an
 external registration webpage does not remove Apple's account-deletion
 requirement. A support email or a sign-out button is not account deletion.
 Do not put real review credentials or user data in this file or a public PR.
+
+### Next free implementation sequence
+
+Read-only source review found concrete gaps; the items below are not implemented
+or accepted by the support-page change. Keep each in its own bounded PR.
+
+1. Complete password recovery before adding mobile links. The web
+   `src/components/auth/forgot-password-form.tsx` sends `resetPasswordForEmail`
+   and redirects to login, but no password-update/recovery continuation exists.
+   Reuse the auth client; verify valid, expired/replayed and invalid callbacks,
+   new-password login and account binding with isolated accounts.
+2. Reuse the shared `MODEL_DATA`, versioned consent and `coachStatus()` to disclose
+   the actual recipient on mobile. Verify no send before consent, revocation,
+   recipient-change confirmation and bilingual disclosure/payload agreement.
+   Confirm processor purposes/retention before writing the public privacy policy.
+3. Design and test self-deletion locally before connecting the UI. The private
+   approval ledger has non-cascading foreign keys (`agent_private.runs` in
+   `20261013203030_p1_application_transactions.sql` and related records); deleting
+   the Auth user alone is not a complete implementation. Verify cancellation,
+   reauthentication, ownership, deletion order, partial failure/retry and rejection
+   of old tokens/queues. Never test deletion on real users during preparation.
+4. After privacy and deletion are complete, expose native registration/recovery.
+   The `liftcut` scheme exists, but email callbacks still need implementation.
+   Test cold-start/repeated callbacks and both languages. Real email delivery
+   and signed-iPhone behavior remain separate acceptance steps.
 
 ## Data inventory draft
 
