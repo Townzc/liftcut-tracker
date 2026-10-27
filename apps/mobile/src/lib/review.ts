@@ -1,5 +1,6 @@
 import type { ReviewApi } from "@liftcut/core/review-client";
 import { apiBase, apiHeaders } from "./api";
+import { ownerRuntime } from "./owner-runtime";
 
 type Credentials = Parameters<typeof apiHeaders>[0];
 
@@ -8,9 +9,11 @@ export function reviewApi(auth: () => Credentials | null, fetcher: typeof fetch 
   const call = async (path: string, body?: unknown) => {
     const session = auth();
     if (!session) throw new Error("AUTH");
-    const response = await fetcher(`${apiBase}${path}`, body === undefined ? { headers: apiHeaders(session), cache: "no-store" }
-      : { method: "POST", headers: apiHeaders(session, true), body: JSON.stringify(body) });
-    return { response, result: await response.json().catch(() => null) };
+    return ownerRuntime.run(session.user.id, async signal => {
+      const response = await fetcher(`${apiBase}${path}`, body === undefined ? { signal, headers: apiHeaders(session), cache: "no-store" }
+        : { signal, method: "POST", headers: apiHeaders(session, true), body: JSON.stringify(body) });
+      return { response, result: await response.json().catch(() => null) };
+    });
   };
   return {
     async review(action, body) {

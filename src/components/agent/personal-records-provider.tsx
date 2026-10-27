@@ -5,6 +5,7 @@ import { personalCommandSchema, type PersonalCommand, type PersonalRecord } from
 import {guestRecords,saveGuestCommand,GUEST_RECORD_EVENT} from "@/lib/guest-records";
 import {collectGuestFacts} from "@/services/guest-fact-migration";
 import {useTrackerStore} from "@/store/use-tracker-store";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 
 type Pending = {key: string; body: string};
 type Context = {owner: string | null; guest:boolean; canWrite:boolean; records: PersonalRecord[]; pending: Pending[]; loading: boolean; error: string;
@@ -22,16 +23,17 @@ export function PersonalRecordsProvider({owner,guest=false, children}: {owner: s
   const [records,setRecords] = useState<PersonalRecord[]>([]), [pending,setPending] = useState<Pending[]>([]);
   const [loading,setLoading] = useState(!!owner), [error,setError] = useState("");
   const alive = useRef(true), flight = useRef(false), rejected = useRef<string | null>(null);
+  const controller=useRef(new AbortController());
   const synchronize = useCallback(async () => {
     if(guest&&!owner){try{collectGuestFacts(useTrackerStore.getState().guestSnapshot);setRecords(guestRecords());setError("");}catch{setError("storage");}setLoading(false);return;}
-    if (!owner || flight.current || !alive.current) return;
+    if (!owner || flight.current || !alive.current || !ownerLifecycle.active(owner)) return;
     flight.current = true;
     try {
       const queue = readPending(owner); setPending(queue);
       if (!navigator.onLine) {setLoading(false); return;}
       for (const item of queue) {
         if (!alive.current) return;
-        const response = await fetch("/api/personal-records", {method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":owner},body:item.body});
+        const response = await ownerLifecycle.run(owner,()=>fetch("/api/personal-records", {method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":owner},body:item.body,signal:controller.current.signal}));
         if (!response.ok) {
           if ([400,404,409].includes(response.status)) rejected.current = item.key;
           throw new Error(response.status === 401 ? "auth" : rejected.current ? "conflict" : "retry");
@@ -41,23 +43,28 @@ export function PersonalRecordsProvider({owner,guest=false, children}: {owner: s
         if (localStorage.getItem(item.key) === item.body) localStorage.removeItem(item.key);
         setPending(readPending(owner));
       }
-      const response = await fetch("/api/personal-records",{headers:{"X-Workout-Owner":owner},cache:"no-store"});
-      if (!response.ok) throw new Error(response.status === 401 ? "auth" : response.status === 404 ? "unavailable" : "load");
-      const data: PersonalRecord[] = await response.json();
+      const data: PersonalRecord[] = await ownerLifecycle.run(owner,async()=>{
+        const response = await fetch("/api/personal-records",{headers:{"X-Workout-Owner":owner},cache:"no-store",signal:controller.current.signal});
+        if (!response.ok) throw new Error(response.status === 401 ? "auth" : response.status === 404 ? "unavailable" : "load");
+        return response.json();
+      });
       if (alive.current) {setRecords(data); setError(""); rejected.current = null;}
     } catch (e) {
       if (alive.current) setError(e instanceof Error && ["auth","conflict","load","unavailable"].includes(e.message) ? e.message : "retry");
     } finally {flight.current=false; if (alive.current) setLoading(false);}
   },[owner,guest]);
   useEffect(() => {
-    alive.current=true; void synchronize();
+    alive.current=true;controller.current=new AbortController();
+    const unregister=owner?ownerLifecycle.register(owner,()=>{alive.current=false;controller.current.abort();}):()=>{};
+    void synchronize();
     const wake = () => void synchronize();
     window.addEventListener("online",wake); window.addEventListener("storage",wake); window.addEventListener("focus",wake);
     window.addEventListener(GUEST_RECORD_EVENT,wake);
     const interval = window.setInterval(wake,15000);
-    return () => {alive.current=false; window.clearInterval(interval); window.removeEventListener("online",wake); window.removeEventListener("storage",wake); window.removeEventListener("focus",wake);window.removeEventListener(GUEST_RECORD_EVENT,wake);};
-  },[synchronize]);
+    return () => {unregister();controller.current.abort();alive.current=false; window.clearInterval(interval); window.removeEventListener("online",wake); window.removeEventListener("storage",wake); window.removeEventListener("focus",wake);window.removeEventListener(GUEST_RECORD_EVENT,wake);};
+  },[synchronize,owner]);
   async function submit(command: PersonalCommand) {
+    if(!alive.current || (owner&&!ownerLifecycle.active(owner)))return false;
     if(guest&&!owner){try{saveGuestCommand(command);setRecords(guestRecords());setError("");return true;}catch{setError("storage");return false;}}
     if (!owner || rejected.current) {setError(owner ? "conflict" : "auth"); return false;}
     try {
@@ -71,6 +78,7 @@ export function PersonalRecordsProvider({owner,guest=false, children}: {owner: s
     } catch {setError("storage"); return false;}
   }
   function discard() {
+    if(!alive.current || (owner&&!ownerLifecycle.active(owner)))return;
     if (!owner || !rejected.current) return;
     localStorage.removeItem(rejected.current); rejected.current=null; setPending(readPending(owner)); setError(""); void synchronize();
   }

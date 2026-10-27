@@ -3,12 +3,13 @@ import {createContext,useCallback,useContext,useEffect,useRef,useState,type Reac
 import type {OutboxState} from "@liftcut/core/workout-outbox";
 import {WorkoutOutboxClient} from "@/services/today/outbox-client";
 import {useTrackerStore} from "@/store/use-tracker-store";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 
 function useSync(owner:string|null){
   const client=useRef<WorkoutOutboxClient|null>(null);
   const [state,setState]=useState<OutboxState|null>(null),[error,setError]=useState("");
   const activate=useCallback(()=>{
-    if(!owner)return;
+    if(!owner || !ownerLifecycle.active(owner))return;
     if(client.current){void client.current.refresh();return;}
     const outbox=new WorkoutOutboxClient(owner,next=>setState(old=>old&&old.revision>=next.revision?old:next),setError,()=>{
       const store=useTrackerStore.getState();

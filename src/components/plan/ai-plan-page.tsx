@@ -36,6 +36,7 @@ import {
 } from "@/lib/guest-mode";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { useUIStore } from "@/store/use-ui-store";
+import {ownerLifecycle} from "@/lib/owner-lifecycle";
 import type { DietPreference, FitnessGoal, TrainingLocation } from "@liftcut/core/types";
 
 type LoadingState =
@@ -130,7 +131,7 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
   const tNav = useTranslations("nav");
   const tNutrition = useTranslations("nutrition");
   const locale = useLocale();
-  const { authMode } = useAuth();
+  const { authMode,user } = useAuth();
   const settings = useTrackerStore((state) => state.settings);
   const refreshUserData = useTrackerStore((state) => state.refreshUserData);
   const ensureUserId = useTrackerStore((state) => state.ensureUserId);
@@ -945,7 +946,7 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
                     {loading === "save-training" ? t("savingTrainingPlan") : t("saveTrainingPlan")}
                   </Button>
                   {approvalEnabled && authMode === "authenticated" && <Link href="/plan/review" className="ml-3 text-sm underline" onClick={() => {
-                    sessionStorage.setItem("liftcut-p1-draft", JSON.stringify(trainingPlanDraft));
+                    if(user&&ownerLifecycle.active(user.id))sessionStorage.setItem(`liftcut-p1-draft:${user.id}`, JSON.stringify(trainingPlanDraft));
                   }}>{requestLocale === "zh-CN" ? "检查版本并批准保存" : "Review version and approve"}</Link>}
                 </>
               )}

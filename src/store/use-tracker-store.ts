@@ -23,6 +23,7 @@ import { createFoodSlice } from "./slices/food-slice";
 import { createBodySlice } from "./slices/body-slice";
 import { createGuestSlice } from "./slices/guest-slice";
 import { createInitSlice } from "./slices/init-slice";
+import { ownerSlice } from "./owner-slice";
 
 export interface TrackerState extends AppDataSnapshot {
   trainingPlanList: TrainingPlanSummary[];
@@ -67,13 +68,13 @@ export const useTrackerStore = create<TrackerState>()(
   persist(
     (set, get, store) => ({
       ...createSessionSlice(set, get, store),
-      ...createSettingsSlice(set, get, store),
-      ...createPlanSlice(set, get, store),
-      ...createWorkoutSlice(set, get, store),
-      ...createFoodSlice(set, get, store),
-      ...createBodySlice(set, get, store),
+      ...ownerSlice(createSettingsSlice,[set,get,store],["updateSettings"]),
+      ...ownerSlice(createPlanSlice,[set,get,store],["setTrainingPlan","setActivePlan","deleteTrainingPlan"]),
+      ...ownerSlice(createWorkoutSlice,[set,get,store],["addWorkoutLog","updateWorkoutLog"]),
+      ...ownerSlice(createFoodSlice,[set,get,store],["addFoodLog","updateFoodLog","deleteFoodLog"]),
+      ...ownerSlice(createBodySlice,[set,get,store],["addBodyMetricLog","updateBodyMetricLog","deleteBodyMetricLog"]),
       ...createGuestSlice(set, get, store),
-      ...createInitSlice(set, get, store),
+      ...ownerSlice(createInitSlice,[set,get,store],["refreshUserData","resetAllData"]),
       ...defaultSnapshot,
     }),
     {

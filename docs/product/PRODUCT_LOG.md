@@ -10,6 +10,47 @@
 - Wired the opt-in UI suite into CI after existing default-off mobile web regression. This suite intercepts Auth responses; actual captured-mail/GoTrue/controller evidence belongs to the preceding PR. New CI, real SMTP, native crypto, signed-iPhone cold/warm/repeated links and Store acceptance remain unrun.
 - Next: review/merge after checks, evaluate a complete supported native crypto implementation, then obtain signed-device and email-delivery evidence before changing the flag. See [readiness](APP_STORE_READINESS.md) and [email handoff](MOBILE_EMAIL_AUTH.md).
 
+## 2026-10-27 · Web writers respect pending account deletion
+
+- Connected personal queues, model/review requests, history, legacy store actions and profile bootstrap to the owner lifecycle boundary. Waiting includes late optimistic rollbacks; captured-owner setters cannot overwrite a different account or a stopped owner.
+- `/delete-account` bypasses profile bootstrap alongside existing public/recovery routes. A persisted deletion intent blocks cold-start workers even before its lifecycle marker is written; account-specific stop leaves guest data and language intact.
+- New plan handoff drafts use `liftcut-p1-draft:<owner>` and are removed only for a confirmed deleted owner. Old unowned `liftcut-p1-draft` is neither imported nor blindly deleted; users may clear that legacy browser-tab data themselves.
+- Ran 20 targeted lifecycle/history/store tests, full TypeScript and targeted ESLint. The preceding foundation also completed full root tests (15 JS + 272 TS), root lint (two existing warnings) and six local Chromium/real IndexedDB checks.
+- This integration's full suite/build/CI and the deletion-page browser flow remain to be verified by the dependent UI release. No production data, migration, paid service, model change or native acceptance claimed.
+
+## 2026-10-27 · Web owner cleanup boundary (no deletion UI)
+
+- Added durable per-owner pending/deleted markers, stop hooks and awaited in-flight work. Pending preserves queued bytes; only a caller-verified server `deleted` result may purge that owner's history, personal queue, consent, review/P1 keys and IndexedDB row.
+- Web outbox and history block remount and late writes after the marker, abort requests and preserve other owners, guest data and locale. Cross-tab storage events stop registered workers; markers remain after cleanup failure for retry.
+- Ran 17 targeted lifecycle/history tests, full TypeScript check and targeted ESLint. Local Chromium with real IndexedDB passed six checks including a delayed fetch ignoring abort, exact owner deletion and preserved B/guest/locale; external synthetic evidence is retained locally.
+- Full root tests/lint are still running at this commit; default build, GitHub CI, deployment, native/device and real-user deletion have not run for this change.
+- No UI, server mutation, migration, approval-ledger change, paid service or M4 work. Next: connect remaining web writers/providers and the deletion page. Legacy unowned `liftcut-p1-draft` is intentionally not erased; its producer/consumer need owner namespacing.
+## 2026-10-27 · Mobile deletion screen and owner fencing
+
+- Added a minimal bilingual settings entry and public `/delete-account` recovery screen. Feature-off has no usable deletion button; deletion needs the displayed account email, a password checked by an isolated SDK client, and explicit confirmation.
+- Wired queues, conversation history, model streaming, review requests and delayed review/consent writes into the owner fence. Pending deletion prevents normal app remount and keeps its persisted receipt across lost responses and restarts; only exact server completion permits scoped cleanup.
+- Native receipt retries use `X-LiftCut-Deletion-Receipt` plus the recorded owner, without saving an Auth bearer. Password verification cannot replace the main session; a different active account is refused. Exported copies/provider backups are explicitly outside online deletion, without an invented retention promise.
+- Ran final mobile `npm run typecheck`, `npm test` (38/38), `npx eslint --no-ignore apps/mobile/src`, Expo web export with synthetic endpoints, and `npx playwright test --config playwright.mobile-deletion.config.ts` (2/2). Tests also run in the existing mobile-web CI suite; Chinese/English 390px screenshots were inspected.
+- Browser tests intercept SDK/HTTP: disabled feature, explicit confirmation, unknown DELETE, reload/blocked Agent navigation, no resumed ordinary requests, exact-owner cleanup and B/guest/locale preservation. They do not prove production Auth, Storage or native runtime.
+- The first browser attempt matched a retained hidden settings email; scoped the assertion to visible content. A later parallel native JS export caused resource contention; both extra export attempts were stopped, and the browser suite then passed independently. No native completion or phone/IPA acceptance claimed.
+- Next: merge the shared server contract, run full CI and isolated real Auth/Storage acceptance before enabling deletion; signed iPhone testing remains separate. No paid service, production deletion or M4 training ran.
+
+## 2026-10-27 · One deletion controller for web and phone
+
+- Moved the tested controller into framework-free `@liftcut/core/account-deletion-client`; the phone re-exports it. Storage, owner fencing, network and sign-out remain injected platform adapters.
+- Resume carries the recorded owner and refuses a different active account before the server call or local cleanup. A late successful server reply remains durable if the user switches accounts; it cannot sign out that other account.
+- Ran mobile typecheck and 38 tests immediately before moving the module, then core `tsc --noEmit -p packages/core/tsconfig.json`, source lint and diff checks. Post-move mobile checks await the shared dependency checkout receiving this commit.
+- The preceding Expo browser test passed 2/2 with intercepted synthetic HTTP after fixing a locator that matched a retained, hidden navigation screen. It is not native or production acceptance; final UI changes remain in the next commit.
+- Next: both interfaces use this controller and the server's restricted expired-receipt completion check. Keep deletion disabled until transport, storage and live-auth boundaries are verified.
+
+## 2026-10-27 · Recoverable mobile deletion controller
+
+- Added a testable owner-bound deletion state machine: explicit confirmation and fresh same-owner authentication, persisted intent before POST, persisted receipt before DELETE, and local cleanup only after an exact server completion response.
+- Network loss, expired receipts and local cleanup failures retain recoverable state; a confirmed server deletion can finish local cleanup after restart without repeating deletion. A switched account is never signed out.
+- Added an owner runtime fence for aborting ordinary work, draining late storage writes and rejecting new workers for a deleting owner. It remains disconnected until the following UI/integration PR.
+- Ran mobile `npm run typecheck`, `npm test` (35/35), changed-source ESLint and diff checks. Six new synthetic tests cover confirmation/auth boundaries, restart, lost responses, corruption, storage errors, owner isolation and late work.
+- No real account, server request, migration, email, native build or device acceptance. An expired receipt after a lost successful deletion response stays unknown; the client must not infer success from failed login.
+- Next: public recovery page, isolated password reauthentication, feature-gated settings entry, and wire every mobile writer to the owner fence before enabling the feature.
 ## 2026-10-27 · Reject mobile PKCE crypto fallback
 
 - Reviewing the installed SDK revealed fallback to plain PKCE and potentially weak randomness when WebCrypto is absent. Registration now refuses before sign-up unless secure RNG, SHA-256 digest support and TextEncoder are present; no global crypto shim or production toggle was added.

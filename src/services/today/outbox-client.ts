@@ -3,6 +3,7 @@ import { mergeConfirmed, operationBody, operationId, projectOperation, projectOu
 import type { Session, TodayData } from "@liftcut/core/today";
 import { OutboxStorage } from "./outbox-storage";
 import { localContextHash } from "@/lib/workout-context";
+import { ownerLifecycle } from "@/lib/owner-lifecycle";
 
 const NOTICE="liftcut-workout-outbox-change";
 export class WorkoutOutboxClient {
@@ -12,9 +13,12 @@ export class WorkoutOutboxClient {
   private disposed=false;
   private request:AbortController | null=null;
   private timer:ReturnType<typeof setInterval> | null=null;
+  private unregister:()=>void;
+  private controller=new AbortController();
   constructor(readonly owner:string,private changed:(state:OutboxState)=>void,private problem:(code:string)=>void,
     private synced:()=>void) {
     this.storage=new OutboxStorage(owner);
+    this.unregister=ownerLifecycle.register(owner,()=>this.dispose());
   }
   private emit(state:OutboxState) {if (!this.disposed) this.changed(state);}
   private notify() {
@@ -26,6 +30,7 @@ export class WorkoutOutboxClient {
   private notice=(event:Event)=>{if ((event as CustomEvent).detail===this.owner) void this.read();};
   private wake=()=>{void this.read();void this.drain();};
   async start() {
+    if(this.disposed || !ownerLifecycle.active(this.owner))return;
     window.addEventListener(NOTICE,this.notice);window.addEventListener("online",this.wake);window.addEventListener("focus",this.wake);
     if (typeof BroadcastChannel!=="undefined") {
       this.channel=new BroadcastChannel(NOTICE);this.channel.onmessage=e=>{if(e.data===this.owner)this.wake();};
@@ -39,12 +44,13 @@ export class WorkoutOutboxClient {
     } catch {if(!this.disposed)this.problem("STORAGE");}
   }
   dispose() {
-    this.disposed=true;this.request?.abort();this.channel?.close();
+    this.disposed=true;this.unregister?.();this.controller.abort();this.request?.abort();this.channel?.close();
     if(this.timer)clearInterval(this.timer);
     window.removeEventListener(NOTICE,this.notice);window.removeEventListener("online",this.wake);window.removeEventListener("focus",this.wake);
-    if(!this.running)this.storage.close();
+    if(!this.running)void ownerLifecycle.settled(this.owner).then(()=>this.storage.close());
   }
   async enqueue(p:WorkoutOperation,revision:number) {
+    if(this.disposed)throw Error("ACCOUNT_STOPPED");
     const body=operationBody(p), bodyJson=JSON.stringify(body), id=operationId(p), at=new Date().toISOString();
     if("contextHash" in body) {
       const before=await this.storage.change(),view=projectOutbox(before);
@@ -62,13 +68,16 @@ export class WorkoutOutboxClient {
     this.emit(state);this.notify();void this.drain();
   }
   private async fetchData():Promise<TodayData> {
-    const response=await fetch("/api/workout-sessions",{cache:"no-store",headers:{"X-Workout-Owner":this.owner},signal:AbortSignal.timeout(15000)});
+    return ownerLifecycle.run(this.owner,async()=>{
+    const response=await fetch("/api/workout-sessions",{cache:"no-store",headers:{"X-Workout-Owner":this.owner},signal:AbortSignal.any([this.controller.signal,AbortSignal.timeout(15000)])});
     if(!response.ok)throw new Error(response.status===401 || response.status===409?"AUTH":"LOAD_FAILED");
     const data=await response.json() as TodayData;
     if(!Array.isArray(data.days) || !data.previous || (data.session && data.session.userId!==this.owner))throw new Error("AUTH");
     return data;
+    });
   }
   async refresh() {
+    if(this.disposed)return;
     try {
       const before=await this.storage.change();
       if(before.items.length) {this.emit(before);return;}
@@ -83,11 +92,13 @@ export class WorkoutOutboxClient {
     } catch(error) {if(!this.disposed)this.problem(error instanceof Error?error.message:"LOAD_FAILED");}
   }
   async remoteForConflict() {
+    if(this.disposed)throw Error("ACCOUNT_STOPPED");
     const state=await this.storage.change();
     if(state.items[0]?.status!=="conflict")throw new Error("LOCAL_CONFLICT");
     return {data:await this.fetchData(),revision:state.revision};
   }
   async discardConflict(remote:{data:TodayData;revision:number}) {
+    if(this.disposed)throw Error("ACCOUNT_STOPPED");
     const state=await this.storage.change(s=>{
       if(s.revision!==remote.revision || s.items[0]?.status!=="conflict" || s.lease)throw new Error("LOCAL_CONFLICT");
       s.discarded=[{at:new Date().toISOString(),items:s.items},...(s.discarded??[])].slice(0,5);
@@ -95,6 +106,7 @@ export class WorkoutOutboxClient {
     });this.emit(state);this.notify();this.problem("");
   }
   async retry() {
+    if(this.disposed)throw Error("ACCOUNT_STOPPED");
     const state=await this.storage.change(s=>{
       const head=s.items[0];
       if(!head || head.status==="conflict")return false;
@@ -120,9 +132,11 @@ export class WorkoutOutboxClient {
         try {
           const endpoint=item.action==="replace" || item.action==="undoReplacement"?"/api/workout-replacements":
             item.action==="apply" || item.action==="undo" || item.action==="review"?"/api/workout-commands":"/api/workout-sessions";
-          const response=await fetch(`${endpoint}?action=${item.action}`,{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":this.owner},
-            body:item.bodyJson,signal:this.request.signal});
-          const result=await response.json();
+          const {response,result}=await ownerLifecycle.run(this.owner,async()=>{
+            const response=await fetch(`${endpoint}?action=${item.action}`,{method:"POST",headers:{"Content-Type":"application/json","X-Workout-Owner":this.owner},
+              body:item.bodyJson,signal:this.request!.signal});
+            return {response,result:await response.json()};
+          });
           if(response.ok) {
             const session=result.session??result;
             if(session.userId!==this.owner || !Array.isArray(session.sets))throw new Error("INVALID_RESPONSE");
@@ -146,6 +160,6 @@ export class WorkoutOutboxClient {
         if(!state.items.length && !this.disposed)this.synced();
       }
     } catch {if(!this.disposed)this.problem("STORAGE");}
-    finally {this.running=false;if(this.disposed)this.storage.close();}
+    finally {this.running=false;if(this.disposed)void ownerLifecycle.settled(this.owner).then(()=>this.storage.close());}
   }
 }

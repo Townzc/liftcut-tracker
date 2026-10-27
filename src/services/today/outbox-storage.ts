@@ -1,4 +1,5 @@
 import { emptyOutbox, operationBody, operationId, operationOf, type OutboxState } from "@liftcut/core/workout-outbox";
+import { ownerLifecycle } from "@/lib/owner-lifecycle";
 
 export const OUTBOX_DB = "liftcut-workout-outbox-v1";
 // An account record and its queue/lease are committed in one IDB transaction.
@@ -20,7 +21,10 @@ export class OutboxStorage {
       };
     });
   }
-  async change(update?:(s:OutboxState)=>boolean, bump=true):Promise<OutboxState> {
+  change(update?:(s:OutboxState)=>boolean, bump=true):Promise<OutboxState> {
+    return ownerLifecycle.run(this.owner,()=>this.transaction(update,bump));
+  }
+  private async transaction(update?:(s:OutboxState)=>boolean, bump=true):Promise<OutboxState> {
     const db=await this.database;
     return new Promise((resolve,reject)=>{
       const tx=db.transaction("accounts",update?"readwrite":"readonly");
@@ -28,6 +32,7 @@ export class OutboxStorage {
       let result:OutboxState, failure:unknown;
       get.onsuccess=()=>{
         try {
+          ownerLifecycle.assertActive(this.owner);
           result=get.result??emptyOutbox(this.owner);
           if (result.version!==1 || result.owner!==this.owner || !Array.isArray(result.items)) throw new Error("STORAGE_VERSION");
           for(const item of result.items) {
@@ -43,5 +48,18 @@ export class OutboxStorage {
       tx.onerror=()=>{failure??=tx.error;};
     });
   }
+  async removeDeletedOwner() {
+    if (localStorage.getItem(`liftcut-account-lifecycle:${this.owner}`)!=="deleted") throw Error("DELETION_UNCONFIRMED");
+    const db=await this.database;
+    await new Promise<void>((resolve,reject)=>{
+      const tx=db.transaction("accounts","readwrite");tx.objectStore("accounts").delete(this.owner);
+      tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error??new Error("STORAGE_UNAVAILABLE"));
+    });
+  }
   close() {void this.database.then(db=>db.close()).catch(()=>{});}
+}
+
+export async function removeDeletedOutbox(owner:string) {
+  const storage=new OutboxStorage(owner);
+  try {await storage.removeDeletedOwner();} finally {storage.close();}
 }

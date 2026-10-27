@@ -22,6 +22,7 @@ import { useI18n } from "@/lib/i18n";
 import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
 import { useWorkout } from "@/lib/workout";
+import { ownerRuntime } from "@/lib/owner-runtime";
 
 /** The web coach on the phone: same endpoint and consent; a draft is saved only after confirmation, through the same queues as the web. */
 export default function Coach() {
@@ -43,7 +44,8 @@ function AccountCoach() {
   const session = state?.confirmed?.session ?? null;
   const draftId = turns.findLast(x => x.proposal && x.proposal.kind !== "plan")?.id;
   const update = (id: string, patch: Partial<Turn>) => setTurns(ts => ts.map(x => x.id === id ? { ...x, ...patch } : x));
-  const consent = (on: boolean) => { setConsented(on); void (on ? AsyncStorage.setItem(key, COACH_CONSENT_VERSION) : AsyncStorage.removeItem(key)).catch(() => {}); };
+  const consent = (on: boolean) => { if (!auth || ownerRuntime.isBlocked(auth.user.id)) return; setConsented(on);
+    void ownerRuntime.run(auth.user.id, () => on ? AsyncStorage.setItem(key, COACH_CONSENT_VERSION) : AsyncStorage.removeItem(key)).catch(() => {}); };
 
   async function send() {
     const input = text.trim();
@@ -54,8 +56,12 @@ function AccountCoach() {
     setTurns(ts => [...ts.map(x => x.id === draftId && (x.reply === "draft" || x.reply === "personal") ? { ...x, reply: "closed" as const } : x), { id, at: new Date().toISOString(), text: input, reply: "data", pending: true }]);
     setText(""); setBusy(true);
     try {
-      const reply = await askCoach(auth, { id, conversationId, text: input, history: recent, locale: locale === "en" ? "en" : "zh",
-        timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone }, live => update(id, { live }), abort.signal);
+      const reply = await ownerRuntime.run(auth.user.id, async signal => {
+        const stop = () => abort.abort(); signal.addEventListener("abort", stop);
+        try { return await askCoach(auth, { id, conversationId, text: input, history: recent, locale: locale === "en" ? "en" : "zh",
+          timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone }, live => update(id, { live }), abort.signal); }
+        finally { signal.removeEventListener("abort", stop); }
+      });
       update(id, { pending: false, lines: [reply.message], sources: reply.sources, proposal: reply.proposal,
         reply: reply.proposal?.kind === "workout" || reply.proposal?.kind === "workoutReview" ? "draft" : reply.proposal?.kind === "personal" ? "personal" : "data" });
     } catch (error) {

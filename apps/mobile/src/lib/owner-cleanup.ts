@@ -23,6 +23,11 @@ export async function purgeDeletedOwner(confirmed: { status: "deleted"; owner: s
   const { owner } = z.object({ status: z.literal("deleted"), owner: z.uuid() }).strict().parse(confirmed);
   stopOwnerQueues(owner, clients); clients.history.client.dispose(true);
   await Promise.all([clients.outbox.whenIdle(), clients.personal.whenIdle(), clients.history.client.whenStored()]);
+  await removeOwnerData(owner, stores);
+}
+/** Caller must first stop and drain every mounted owner writer, including model/review caches. */
+export async function removeOwnerData(owner: string, stores: Stores) {
+  z.uuid().parse(owner);
   await stores.outboxStore.removeOwner(owner);
   const exact = new Set([`liftcut-chat-history:${owner}`, `liftcut-review:${owner}`, `liftcut-coach-consent:${owner}`]);
   for (const key of await stores.storage.getAllKeys()) {

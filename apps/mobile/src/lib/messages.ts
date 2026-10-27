@@ -1,5 +1,7 @@
 // Pure dictionaries so tests can check both languages without React Native.
+import { deletionEn, deletionZh } from "./deletion-messages";
 const zh = {
+  ...deletionZh,
   support: "帮助与支持",
   supportOpenFailed: "无法打开支持页. 请联系 townzc1@gmail.com.",
   signInTitle: "登录 LiftCut",
@@ -195,6 +197,7 @@ const zh = {
 } as const;
 export type MessageKey = keyof typeof zh;
 const en: Record<MessageKey, string> = {
+  ...deletionEn,
   support: "Help & support",
   supportOpenFailed: "Couldn't open support. Contact townzc1@gmail.com.",
   signInTitle: "Sign in to LiftCut",
