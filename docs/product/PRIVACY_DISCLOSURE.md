@@ -21,7 +21,9 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 - Historical migration/provider backups, exports, other-device copies and
   unattributed legacy drafts are outside immediate cleanup; retention is not
   invented. Mobile sign-in/settings privacy links are implemented with the current
-  UI language; signed-device opening and verified recipient-bound consent remain open.
+  UI language; signed-device opening remains open. Recipient consent now binds the
+  reviewed technical API origin, configured model and data policy on web/mobile;
+  see the staged [recipient rollout and evidence](AI_RECIPIENT_CONSENT.md).
 
 ## Source-backed inventory
 
@@ -32,7 +34,7 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 | Recent conversation window | `packages/core/src/coach-chat.ts` | Six turns bounds a request, not server history retention |
 | Chats and pending clarification | `src/services/ai/coach-history-store.ts`; coach context store | Chat/preview persistence can precede business confirmation |
 | Sources, previews, receipts and revisions | Workout review store; `src/services/agent/store.ts` | Confirmation is not the first time every item is stored; undo retains history |
-| Configurable AI provider/endpoint | `src/services/ai/config.ts`, `coach-config.ts` | Public provider/model labels do not prove the receiving endpoint or contractual processor |
+| Configurable AI provider/endpoint | `src/services/ai/config.ts`, `recipient-policy.ts` | The descriptor resolves the actual configured API base, not its SDK label; it does not establish contractual processing/retention terms |
 | Guest records/import, local drafts and queues | `src/services/guest-fact-migration.ts`; mobile outbox/history | Cloud AI requests leave the device even when guest records are local |
 | Error/timing paths and infrastructure | AI route diagnostics, hosting/auth services | Do not infer no logs, no tracking or a retention period from absence of an analytics SDK |
 
@@ -41,10 +43,12 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 - Parent task read-only checks: Supabase project region `ap-northeast-2`, Free
   plan; built-in email service, no custom SMTP. The dashboard warns its built-in
   mail service is unsuitable for production. No account/token values belong here.
-- Production public coach status identifies `deepseek` / `deepseek-flash` /
-  `coach-model-v2`. The model name is a UI alias. The sensitive base-URL value
-  could not be read back; do not treat the default source URL as runtime proof.
-- Verify the actual endpoint origin/operator and any relay, applicable API terms,
+- The additive public status descriptor allows sanitized runtime verification
+  without exposing keys or server URL paths. Record the actual production
+  readback and enforcement deployment in [the rollout record](AI_RECIPIENT_CONSENT.md)
+  before treating this source implementation as live. Model aliases do not
+  establish the backend checkpoint; no default source URL is runtime proof.
+- Verify applicable API terms, any downstream processing or relay,
   retention/training controls, function regions, logs/drains, database backups,
   avatar objects and mail handling before final release disclosures.
 - Project region is not a guarantee that every provider processes all data in
@@ -55,9 +59,11 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 
 ## Bounded next steps
 
-1. Disclose a reviewed actual AI recipient before requests, reusing existing
-   category consent; bind subsequent changes to renewed consent. Do not label a
-   custom endpoint as OpenAI merely because an OpenAI-compatible SDK is used.
+1. Verify the staged recipient rollout and signed-device consent behavior. Web,
+   mobile and legacy plan requests now bind to a reviewed recipient; unreviewed
+   endpoints fail closed, changed policies require a new choice and requests are
+   not automatically resent. The public token is not proof of a click or a write
+   approval, and does not establish provider retention/training terms.
 2. Verify each deletion rollout: migrations, configured gate, online ledgers,
    Storage objects, owner-only local cleanup, partial failures and safe retries.
    Verify old tokens/queues cannot restore deleted data; record actual evidence.

@@ -29,12 +29,12 @@ The enforcement release rejects a missing/stale token; it does not treat an old
 
 ## Model call inventory and next release gates
 
-| Entry | Actual model path | Enforcement work still required |
+| Entry | Actual model path | Implemented binding |
 | --- | --- | --- |
-| `/api/ai/coach` | `runCoach` → AI SDK; tools include plan preparation | Bind web/mobile saved consent and request to the current descriptor before reads/quota/model calls |
-| `/api/workout-review` without an action | `reviewWorkout` → `callAiProviderForJson` | Same binding for web/mobile review cards; acceptance/rollback creates previews without calling a model |
-| `/api/ai/generate-training-plan` | `generateStructuredTrainingPlan` → `callAiProviderForJson` | Legacy plan page needs the same disclosure and binding |
-| `/api/ai/generate-nutrition-plan` | `generateStructuredNutritionPlan` → `callAiProviderForJson` | Same legacy-page gate |
+| `/api/ai/coach` | `runCoach` → AI SDK; tools include plan preparation | Web/mobile saved consent and body token bind to the current descriptor before reads/quota/model calls |
+| `/api/workout-review` without an action | `reviewWorkout` → `callAiProviderForJson` | Web/mobile review cards send the body token; acceptance/rollback creates previews without calling a model |
+| `/api/ai/generate-training-plan` | `generateStructuredTrainingPlan` → `callAiProviderForJson` | Legacy page discloses the recipient/data and sends the header token, including guest profile inputs |
+| `/api/ai/generate-nutrition-plan` | `generateStructuredNutritionPlan` → `callAiProviderForJson` | Same legacy-page gate, independent of the coach availability flag |
 
 The approval ledger endpoints store, approve or execute proposals; they are not
 an extra model transport. `/api/ai/parse-log` is the read-only rule parser.
@@ -56,6 +56,24 @@ Test opt-out, recipient/model changes, stale tabs, old clients, guest/account
 separation and renewal before quota/data/model access. Browser and native tests
 remain distinct. A matching endpoint establishes the technical recipient, not
 provider retention/training terms, processing locations or App Store approval.
+
+## Evidence and deployment record
+
+- Integrated local checks: root TypeScript, 20 JavaScript + 310 TypeScript tests,
+  full lint (zero errors, two pre-existing research warnings), and Next/Turbopack
+  production build passed. A temporary dependency-junction root override was restored.
+- Focused W1b API browser check passed 1/1 with local PostgreSQL 16 and real Next
+  routes, using synthetic Auth-contract and model doubles. It checked all four
+  missing/stale-token boundaries, no quota/model work, and explicit resending
+  of the previously rejected request ID after renewal. It is not GoTrue or
+  real-provider evidence. Client UI and mobile results are in the product log;
+  Expo web, JavaScript export and simulator builds do not prove signed-device behavior.
+- Deployment fields remain pending until the release owner records the actual
+  status readback time, sanitized origin/configured model, enforcement source SHA
+  and READY deployment. Do not fill these from defaults or a local build.
+- The policy token is publicly readable and is not a server-side consent receipt.
+  Clients require an explicit saved choice; a matching request token only proves
+  configuration compatibility. Existing write confirmations remain separate.
 
 Official endpoint references checked 2026-10-28:
 [DeepSeek API](https://api-docs.deepseek.com/) and

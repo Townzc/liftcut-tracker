@@ -40,8 +40,8 @@ email callback scheme also require review; valid Release flags alone are insuffi
 | Native account lifecycle | Password login remains available. Registration and email callback code are prepared behind default-off `EXPO_PUBLIC_MOBILE_EMAIL_SIGNUP`; [handoff plan](MOBILE_EMAIL_AUTH.md) records the stages. | Local captured mail/controller tests are not signed-device acceptance. Verify real SMTP, native secure RNG/SHA-256, cold/warm/repeated links, cancellation and existing-account protection before enabling; recovery remains separate |
 | Account deletion | Production web/API enabled after reviewed migrations, real synthetic hosted acceptance and cleanup; see [release evidence](ACCOUNT_RELEASE.md#production-rollout-evidence--2026-10-27). New mobile deletion independently requires default-off `EXPO_PUBLIC_MOBILE_ACCOUNT_DELETION=true`; prior confirmed intents/receipts retain recovery. | Hosted HTTP/Auth/Storage and earlier local browser checks are separate from native acceptance. Keep the mobile gate off until signed-device deletion, storage, cold restart and recovery pass. Never delete real users for release tests |
 | Support | Bilingual `/support` with explicit language and mobile login/settings links are implemented. Maintainer confirmed `townzc1@gmail.com` for public contact. | Local browser/Expo web checks passed; both production page languages returned 200 with the expected contact on 2026-10-27. Signed-device link opening remains unrun |
-| Privacy | Public bilingual `/privacy`, web auth/settings entries and mobile sign-in/settings links are implemented; links preserve the selected language and send no account data. Verified processor/retention details remain open; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Four synthetic Expo web link checks (Chinese/English × sign-in/settings) passed; signed-device opening and final in-app/recipient disclosures remain unverified. A policy page alone does not complete AI-recipient or deletion requirements |
-| AI permission | Category allowlist and opt-in/revoke exist, but the recipient is described generically as a model. Disclose the actual configured recipient before sending. | Code/payload/disclosure agreement; opt-out sends nothing; no guessing provider retention terms |
+| Privacy | Public bilingual `/privacy`, web auth/settings entries and mobile sign-in/settings links are implemented; links preserve the selected language and send no account data. Reviewed API binding does not establish processor/retention terms; see [disclosure preparation](PRIVACY_DISCLOSURE.md). | Four synthetic Expo web link checks (Chinese/English × sign-in/settings) passed; signed-device opening and final provider disclosures remain unverified. A policy page alone does not complete AI-recipient or deletion requirements |
+| AI permission | Web/mobile opt-in now displays a reviewed API origin and configured model; changed recipient/data policy requires renewal across chat, review and legacy plan generation. Unknown recipients and stale requests fail closed. | [Exact staged rollout and evidence](AI_RECIPIENT_CONSENT.md), no automatic replay, signed-device consent/revoke and code/payload/disclosure agreement. A public binding token is not proof of a click or a provider retention promise |
 | Privacy labels | Draft inventory below; SDK manifests do not cover server processing. | Complete app + processor/logging/backup inventory, linked-data and tracking assessment |
 | Export compliance | `ITSAppUsesNonExemptEncryption` is unset. Assess actual cryptography/SDKs and applicable exemption before answering. | Reviewed declaration and any required documentation; do not set a value just to silence EAS |
 | Store metadata | Bilingual draft, support and public privacy pages exist; signed-build screenshots, rating questionnaire, final Store form entries and review account remain missing. | Screenshots from the actual signed build; final disclosure review, synthetic reviewer account and reproducible steps |
@@ -74,12 +74,19 @@ Do not put real review credentials or user data in this file or a public PR.
 - Resend Free is a prepared option, not an opened account or configured sender.
   Verify the sending domain, authorized credentials and delivery when approved;
   do not ask for passwords or API keys in a public chat.
-- Verify the actual AI recipient, processor terms, logging and backup retention,
-  then bind recipient changes to renewed consent before final Store disclosures.
+- Record the staged AI recipient readback/enforcement deployment, then verify
+  processor terms, logging and backup retention before final Store disclosures.
   Historical migration backups and exported copies are not instantaneously
   erased by online account deletion; no unverified retention period is promised.
 - Apple membership/signing and a standalone phone acceptance remain later gates.
   No paid enrollment, signed IPA, App Store submission or M4 training ran here.
+
+Apple enrollment is not needed to finish these code, local-test and disclosure
+tasks. Request it when the free checks and reviewed build configuration are ready
+for a signed iPhone build. Custom SMTP still requires the maintainer to create or
+authorize a sender account, verify its domain and authorize production credential
+configuration; no account, paid plan or public mail delivery is implied by the
+prepared Resend option or captured local SMTP tests.
 
 ## Data inventory draft
 
@@ -96,21 +103,28 @@ settings have not been audited here.
 | Device-local preferences/queue | Locale and SQLite outbox, `outbox-store.ts` | Offline pending state, logout/account switching and deletion behavior need signed-device verification |
 | Infrastructure diagnostics | Hosting/auth/model providers and app timing/error paths | Verify identifiers, IP/log fields, retention and subprocessors before privacy answers; no unsupported "no collection" claim |
 
-## Existing native artifact audit
+## Latest inspected unsigned simulator artifact
 
-Read-only inspection of EAS simulator build
-[`8e216aa6`](https://expo.dev/accounts/zhicetang/projects/liftcut/builds/8e216aa6-d5bb-4903-b8d7-7084d394a04d),
-source `f3a0a80326180a23c61a40ff231f5f4ff027bfc6`:
+On 2026-10-28, the release owner inspected the archive produced for
+[#202](https://github.com/Townzc/liftcut-tracker/pull/202), source merge
+`d58b7f55acba67f03694e54ee3b98d94e54ff4c5`, using the corrected offline inspector.
+Archive size: 22,811,639 bytes; SHA-256:
+`62ce9e394a1d255f75691f356983905ae023bfdb834ab0619c7c0bf3f49a6de0`.
+Native compilation produced this archive; the original CI inventory step failed,
+and local reinspection succeeded after the inspector fix. This does not claim
+the new CI run, final source or signed-device acceptance has passed.
 
 - Bundle `com.liftcuttracker.app`, version 0.1.0/build 1, platform iPhoneSimulator,
-  SDK 27.0, minimum OS 16.4; no device provisioning profile.
+  minimum OS 16.4; no device provisioning profile. The archive declares the
+  `liftcut`, `exp+liftcut` and bundle-ID URL schemes.
 - ATS blocks arbitrary HTTP and permits local networking. No `NS*UsageDescription`
   entries were present. This does not prove the absence of every permission/API.
-- Fourteen `PrivacyInfo.xcprivacy` files include app/RN/Expo/AsyncStorage declarations
+- Fifteen `PrivacyInfo.xcprivacy` files include app/RN/Expo/AsyncStorage declarations
   for UserDefaults, FileTimestamp, SystemBootTime and DiskSpace required-reason APIs.
   Empty SDK collected-data arrays do not describe LiftCut's server data handling.
-- Encryption declaration is absent. No new native build or phone test ran for
-  this audit; repeat against the final signed artifact before submission.
+- Encryption declaration is absent. The local inventory does not execute native
+  code or verify signing. Repeat against the final artifact and complete the
+  independent signed-phone matrix before submission.
 
 ## Draft store copy and screenshot plan
 

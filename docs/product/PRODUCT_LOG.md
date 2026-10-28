@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Reconcile privacy and remaining free release work
+
+- Updated both public policy languages to explain the reviewed technical AI recipient, configured model, renewed consent and no automatic resend. Model aliases, provider terms, processing locations and retention remain explicitly qualified; a policy token is not proof of a click or permission to write.
+- Readiness/recipient documents distinguish implemented gates from pending production readback/deployment evidence, and keep real SMTP, signed-phone, privacy-label and export-compliance acceptance open. Apple enrollment is unnecessary for remaining free preparation; no sender account or production credential change is implied.
+- Reconciled the latest inspected unsigned simulator archive with the release owner's source/hash-bound report: 15 privacy declarations, no encryption declaration/profile. Original inventory CI failed; corrected local inspection is not a claim that the replacement CI or final signed build passed.
+- Ran root TypeScript, targeted ESLint, default Next/Turbopack build, `playwright test --config playwright.support.config.ts --grep 'public privacy'` (2/2) and `git diff --check`; inspected both 390 px screenshots. The temporary dependency-junction build-root override was restored byte-for-byte.
+- Public-page tests are local browser evidence with synthetic configuration, not provider, SMTP, native or Store acceptance. No real user, paid service, model call or M4 work. Release owner must fill actual deployment evidence after the staged rollout before final disclosure sign-off.
+
 ## 2026-10-28 · Enforce the reviewed recipient before cloud work
 
 - All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
