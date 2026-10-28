@@ -7,6 +7,13 @@
 - Ran mobile `npm run typecheck`, `npm test` (58/58), explicit targeted ESLint, `git diff --check`, synthetic Expo web export and bilingual 390 px browser tests (2/2). Inspected both captures; React hook review moved store lifetime mutation outside hook-owned values. Fixed the initial English test label to match the shipped label.
 - These are controller/browser fixture checks, not native, public SMTP or model acceptance. Server enforcement follows the staged recipient rollout; no service/account, production secret, paid build or M4 training changed.
 
+## 2026-10-28 · Isolate recipient-consent model fixtures
+
+- W1b/mobile-web fixtures now configure a reviewed API origin while an explicitly preloaded, test-only Next-process transport maps the one chat endpoint to the scripted loopback server. Unknown outbound destinations and redirects fail; production code and the strict recipient resolver have no test bypass.
+- Raw test requests obtain the current synthetic recipient token from the no-store status endpoint. Model output remains a scripted double, not real-provider/privacy evidence; Auth/SQL/application routes still run normally.
+- Ran `node --test tests/ai-model-transport.test.mjs` (2/2), targeted ESLint, root TypeScript and `git diff --check`. A fresh preloaded Node subprocess successfully reached the scripted loopback model; its bounded server was stopped and port 59999 verified closed.
+- The full W1b and Expo-web browser suites have not run locally for this isolated infrastructure commit; CI/integrated acceptance remain required. No production endpoint/key, paid service, new account, native device or M4 change.
+
 ## 2026-10-28 · Prepare recipient-bound AI consent
 
 - Added a reviewed direct-API recipient descriptor to the existing no-store Coach status response. It derives from the configured endpoint, not an SDK label; unknown relays/paths return null and keys/server paths are never exposed.

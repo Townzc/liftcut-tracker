@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import {fixtureRecipient} from "./recipient-fixture";
 import {COACH_CONSENT_VERSION} from "../../src/lib/coach-model";
 // The review answer comes from the scripted model fixture (never real-model evidence); the ledger, routes and PostgreSQL writes are real.
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
@@ -33,7 +34,7 @@ const squatNow=async()=>(await db.query(`select e.sets,e.target_rpe::float as rp
 async function applyElsewhere(page:Page){
   const post=async(url:string,data:unknown)=>(await page.request.post(url,{headers:{Origin:"http://localhost:3103"},data})).json();
   const sessionId=(await db.query("select id from workout_sessions where user_id=$1 and status='ended'",[owner])).rows[0].id;
-  let run=(await post("/api/workout-review",{sessionId,requestKey:randomUUID(),consent:COACH_CONSENT_VERSION,locale:"zh",timezone:"UTC"})).run;
+  let run=(await post("/api/workout-review",{sessionId,requestKey:randomUUID(),consent:COACH_CONSENT_VERSION,recipient:await fixtureRecipient(page.request),locale:"zh",timezone:"UTC"})).run;
   const binding={proposalId:run.proposal.proposalId,contentHash:run.proposal.contentHash,contextRevision:run.proposal.contextRevision};
   run=(await post(`/api/agent/runs/${run.id}/user-events`,{action:"approve",expectedRevision:run.revision,binding})).value;
   expect((await post(`/api/agent/runs/${run.id}/execute`,{binding,approvalId:run.approvalId,idempotencyKey:binding.proposalId})).ok).toBe(true);
