@@ -646,7 +646,7 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
       <section className="space-y-2 rounded-2xl border p-4 text-sm" data-testid="plan-recipient-consent">
         <p className="break-words">{consent.recipient ? `${en ? "AI recipient" : "AI 接收方"}：${consent.recipient.name} · ${consent.recipient.origin} · ${consent.recipient.model}` : (en ? "AI recipient is not verified. Saved plans remain available." : "AI 接收方尚未核验. 已保存的计划仍可查看.")}</p>
         {!consent.enabled && <><p>{en ? "Only the information needed to generate a plan is sent from these categories:" : "只会发送生成计划所需的下列内容："}</p>
-          <ul className="list-disc pl-5">{MODEL_DATA.filter(c => authMode !== "guest" || !c.accountOnly).map(c => <li key={c.id}>{en ? c.en : c.zh}</li>)}</ul></>}
+          <ul className="list-disc pl-5">{MODEL_DATA.map(c => <li key={c.id}>{en ? c.en : c.zh}</li>)}</ul></>}
         <Button variant="outline" disabled={!consent.recipient || Boolean(loading)} onClick={() => {
           if (!user || ownerLifecycle.active(user.id)) consent.setEnabled(!consent.enabled);
         }}>{consent.enabled ? (en ? "Turn off AI sharing" : "关闭 AI 数据发送") : (en ? "Agree & enable" : "同意并开启")}</Button>

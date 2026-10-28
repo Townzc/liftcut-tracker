@@ -70,6 +70,8 @@ test("legacy training and nutrition require explicit consent and attach its reci
   await guest(page); await page.goto("/plan/ai");
   const panel = page.getByTestId("plan-recipient-consent"), buttons = page.getByRole("button", { name: /生成训练计划|生成饮食计划/, exact: true });
   await expect(panel).toContainText(status.recipient.origin); await expect(buttons.first()).toBeDisabled();
+  await expect(panel.getByRole("listitem")).toHaveCount(9); // Guest legacy requests also send the profile snapshot.
+  await expect(panel).toContainText("年龄"); await expect(panel).toContainText("伤病");
   for (let index = 0; index < 2; index++) {
     await panel.getByRole("button", { name: "同意并开启", exact: true }).click();
     await buttons.nth(index).click(); await expect(buttons.nth(index)).toBeDisabled();
@@ -97,4 +99,21 @@ test("failed storage writes and failed revocation stay closed despite storage ev
   await page.getByRole("button", { name: "关闭自然对话", exact: true }).click();
   await page.evaluate(key => window.dispatchEvent(new StorageEvent("storage", { key })), key);
   await expect(agree).toBeVisible(); await send(page, "你好呀"); expect(calls).toBe(0);
+});
+
+test("failed plan revocation also blocks a newly mounted Agent consumer in the same tab", async ({ page }) => {
+  let calls = 0;
+  await page.route("**/api/ai/coach", route => {
+    if (route.request().method() === "GET") return route.continue();
+    calls++; return route.fulfill({ status: 500, json: { error: "UNEXPECTED_REQUEST" } });
+  });
+  await guest(page); await page.goto("/plan/ai");
+  await page.getByRole("button", { name: "同意并开启", exact: true }).click();
+  await page.evaluate(key => { const original = Storage.prototype.removeItem; Storage.prototype.removeItem = function(k) {
+    if (k === key) throw Error("synthetic-storage-denied"); return original.call(this, k); }; }, key);
+  await page.getByRole("button", { name: "关闭 AI 数据发送", exact: true }).click();
+  await page.locator('a[href="/plan"]').first().click();
+  await page.getByRole("navigation").getByRole("link", { name: "Agent", exact: true }).click();
+  await expect(page.getByRole("button", { name: "同意并开启", exact: true })).toBeVisible();
+  await send(page, "你好"); expect(calls).toBe(0);
 });
