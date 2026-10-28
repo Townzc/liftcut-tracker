@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Scoped native S256 without global crypto shims
+
+- Native registration now passes Expo async RNG and SHA-256 directly to a scoped S256 signup transport; the same isolated SDK still exchanges/verifies/revokes temporary sessions. Verifiers are durable before sending; immediate sessions, crypto/storage failure and cancellation fail closed. No main-session adoption, admin secret or UI structure change.
+- Ran mobile types and logic tests (60/60), root types and tests (17 JavaScript + 305 TypeScript), targeted ESLint, root lint (zero errors/two existing warnings), default Next/Turbopack build and iOS/Android JavaScript exports. Local dependency-junction config overrides were restored. The first build required the documented local root override; it was not an application defect.
+- Real disposable PG16/GoTrue with captured SMTP: normal confirmation suite 5 passed/1 opposite-mode skip; auto-confirm rejection suite 4 passed/2 opposite-mode skips. Both SDK and scoped paths verified S256, wrong verifier, identity, recreation and replay. Auto-confirm returned a temporary session that was refused and revoked; refresh failed afterward. Synthetic users/sessions ended at zero.
+- Initial fixture runs exposed missing Auth search_path/migration-history setup and a local SMTP restart socket issue; fixed the isolated fixture, then reran successfully. No production setting/data or external email changed.
+- Native primitive tests use Node substitutes; JS exports and local HTTP/browser checks are not signed-iPhone/native execution. Signup remains default-off pending real SMTP and signed-device acceptance. No paid service, Apple enrollment or M4 run; full CI remains a merge gate.
+
 ## 2026-10-28 · Fail closed on broken signup crypto and PKCE downgrade
 
 - Mobile email signup now exercises RNG, encoding and a SHA-256 known vector before sending credentials; method names alone no longer count as working capability. This detects obvious failures, not an entropy certification.

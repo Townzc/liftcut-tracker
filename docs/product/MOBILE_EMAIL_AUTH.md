@@ -42,13 +42,31 @@ account/service, paid build or M4 run. The existing `liftcut` scheme is retained
 5. Storage writes use a separate queue so cancellation is durable while a network
    request is slow. Persist only pending metadata and the isolated verifier; no
    password, callback code or temporary session tokens. Storage failures surface.
-6. Refuse registration before any request if RNG, WebCrypto digest, TextEncoder
+6. The web SDK path refuses registration before any request if RNG, WebCrypto digest, TextEncoder
    or base64 capability is missing or broken. Exercise RNG and the SHA-256 `abc`
    known vector; this detects obvious broken implementations, not proof of entropy.
    Before network I/O, verify the pinned SDK's actual signup request uses S256
    matching its persisted verifier. A missing/changed verifier or plain fallback
    fails closed. Node support does not establish Hermes/iPhone capability. Native
    capability remains a release gate; no partial global crypto shim is installed.
+
+## Scoped native S256 preparation
+
+Native bindings now supply Expo Crypto's `getRandomBytesAsync(32)` and SHA-256
+`digestStringAsync` directly. The synchronous random-byte API's development
+fallback is not used. No WebCrypto global is installed. A scoped public Auth
+signup request uses S256 only, after the verifier is durably stored and checked;
+the same isolated SDK still exchanges the code, verifies identity and closes its
+temporary session. An unexpected immediate session is rejected and its token is
+best-effort revoked with local scope, using the public key, never an admin secret.
+No response token is adopted by the main account or persisted by the controller.
+
+Local GoTrue acceptance covers both SDK and scoped paths with captured mail,
+wrong-verifier rejection, identity and replay; a separate auto-confirm fixture
+verifies immediate-session refusal and refresh-token revocation. The scoped test
+uses Node crypto primitives, not Expo/Hermes. iOS/Android JavaScript exports also
+do not prove native runtime behavior. The flag remains off until public SMTP and
+independently installed signed-iPhone secure-crypto/cold/warm/replay tests pass.
 
 ## PR 3: native binding and minimal UI preparation
 
@@ -93,6 +111,9 @@ It reads only newly captured messages for its random `@local.test` address and
 removes its synthetic user. It calls the same application controller and SDK adapter
 with asynchronous storage and exercises real email confirmation, PKCE rejection,
 identity and code replay; in-memory adapter recreation is not a native cold start.
+The separate rejection case runs only with fixture `autoConfirm:true`; normal
+email-confirmation cases skip in that mode. Never enable auto-confirm on hosted
+Auth to run this test.
 
 Official docs checked: [Expo SDK 58 Linking](https://docs.expo.dev/versions/v58.0.0/sdk/linking/),
 [Expo authentication](https://docs.expo.dev/guides/authentication/),
