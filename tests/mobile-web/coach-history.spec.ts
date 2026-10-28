@@ -1,6 +1,6 @@
-import { test, expect, type Route } from "@playwright/test";
+import { expect, type Route } from "@playwright/test";
 import { Pool } from "pg";
-import { relay, signIn, expectBearerOnly, type Sent } from "./helpers";
+import { test, relay, signIn, expectBearerOnly, type Sent } from "./helpers";
 const db = new Pool({ connectionString: process.env.W1B_TEST_DATABASE_URL });
 const owner = "11111111-1111-4111-8111-111111111111", other = "22222222-2222-4222-8222-222222222222";
 test.afterAll(async () => { await db.end(); });
@@ -41,5 +41,4 @@ test("phone history retries after reload, recovers from cloud and clears account
   await listed;
   await expect(page.getByTestId("coach-history-list").getByRole("button", { name: "你好", exact: true })).toHaveCount(0);
   expectBearerOnly(sent);
-  await page.unrouteAll({ behavior: "wait" }); // Finish relays before Playwright disposes their responses.
 });

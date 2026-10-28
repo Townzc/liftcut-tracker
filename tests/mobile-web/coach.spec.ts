@@ -1,8 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { Pool } from "pg";
 import { randomUUID } from "node:crypto";
 import { MODEL_DATA } from "@liftcut/core/model-data";
-import { expectBearerOnly, relay, signIn, type Sent } from "./helpers";
+import { test, expectBearerOnly, relay, signIn, type Sent } from "./helpers";
 // Replies come from the scripted model fixture (never real-model evidence); the API, queue and PostgreSQL writes are real.
 const db = new Pool({ connectionString: process.env.W1B_TEST_DATABASE_URL });
 const user = "11111111-1111-4111-8111-111111111111", plan = randomUUID(), day = randomUUID(), exercise = randomUUID();
@@ -57,7 +57,7 @@ test("the phone chat asks consent, streams a reply and saves a workout draft onl
 
 test("a body entry drafted in the phone chat is saved once, after confirmation, through the web's records API", async ({ page }) => {
   const errors: string[] = [], sent: Sent[] = [];
-  page.on("pageerror", e => errors.push(e.message)); await relay(page, sent);
+  page.on("pageerror", e => errors.push(e.message)); await relay(page, sent, 800); // Keep the history relay in flight beyond the confirmed database write.
   const entries = async () => (await db.query("select id,request from personal_record_events where user_id=$1 and request->>'source'='conversation'", [user])).rows;
   const before = (await entries()).map(r => r.id);
   try {
@@ -72,5 +72,8 @@ test("a body entry drafted in the phone chat is saved once, after confirmation, 
     const saved = (await entries()).find(r => !before.includes(r.id))!.request;
     expect([saved.entry.kind, saved.entry.weightKg, saved.entry.waistCm, saved.text]).toEqual(["body", 72.5, null, "昨天早上秤了一下，是七十二点五公斤，帮我补上吧"]);
     expectBearerOnly(sent); expect(errors).toEqual([]);
-  } finally { await db.query("delete from personal_record_events where user_id=$1 and not (id = any($2))", [user, before]); }
+  } finally {
+    await page.unrouteAll({ behavior: "wait" }); // Drain before removing this test's confirmed records.
+    await db.query("delete from personal_record_events where user_id=$1 and not (id = any($2))", [user, before]);
+  }
 });
