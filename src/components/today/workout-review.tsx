@@ -11,6 +11,7 @@ import { exerciseCatalog, exerciseLabel } from "@liftcut/core/exercise-catalog";
 import { COACH_CONSENT_VERSION } from "@/lib/coach-model";
 import { useTrackerStore } from "@/store/use-tracker-store";
 import { ownerLifecycle } from "@/lib/owner-lifecycle";
+import { useRecipientConsent, recipientNotice } from "@/components/agent/use-recipient-consent";
 
 const timezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 async function ledger<T = RunView>(path: string, body?: unknown): Promise<T> {
@@ -36,14 +37,14 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
   const t = useTranslations("today.review"), locale = useLocale(), en = locale.startsWith("en");
   const refreshUserData = useTrackerStore(s => s.refreshUserData);
   const [run, setRun] = useState<RunView | null>(null), [undo, setUndo] = useState<RunView | null>(null), [why, setWhy] = useState("");
-  const [selected, setSelected] = useState<boolean[]>([]), [busy, setBusy] = useState(false), [message, setMessage] = useState(""), [consented, setConsented] = useState(false), [acted, setActed] = useState(false);
+  const [selected, setSelected] = useState<boolean[]>([]), [busy, setBusy] = useState(false), [message, setMessage] = useState(""), [acted, setActed] = useState(false);
+  const consent = useRecipientConsent(`liftcut-coach-consent:${owner}`), consented = consent.enabled;
   // Request keys survive a lost response, so tapping again replays instead of writing twice.
   const keys = useRef<{ accept?: [string, string]; rollback?: string }>({}), flight = useRef(false), reviewed = useRef(sessionId);
   const stored = `liftcut-review:${owner}`;
   const remember = (value: { runId: string; undoId?: string }) => { try { ownerLifecycle.assertActive(owner);localStorage.setItem(stored, JSON.stringify({ sessionId: reviewed.current, ...value })); } catch {} };
   const show = (value: RunView) => { setRun(value); setSelected(changesOf(value).map(() => true)); };
   useEffect(() => {
-    try { setConsented(localStorage.getItem(`liftcut-coach-consent:${owner}`) === COACH_CONSENT_VERSION); } catch { setConsented(false); }
     let saved: { sessionId: string; runId: string; undoId?: string } | null = null, alive = true;
     try { saved = JSON.parse(localStorage.getItem(stored) ?? "null"); } catch {}
     if (saved && sessionId && saved.sessionId !== sessionId) saved = null; // A newer workout starts a new review.
@@ -57,7 +58,7 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
     flight.current = true; setBusy(true); setMessage(""); setActed(true);
     try { await ownerLifecycle.run(owner,work); } catch (e) {
       const code = e instanceof Error ? e.message : "OUTCOME_UNKNOWN";
-      setMessage(code === "CONTEXT_STALE" ? t("stale") : t("failed", { code }));
+      setMessage(consent.invalidate(code) ? recipientNotice(en) : code === "CONTEXT_STALE" ? t("stale") : t("failed", { code }));
       // Show what the ledger now says (e.g. stale or already applied) rather than guessing.
       if (run) await ledger(`/${run.id}`).then(show).catch(() => {});
     } finally { flight.current = false; setBusy(false); }
@@ -67,8 +68,10 @@ export function WorkoutReview({ owner, sessionId }: { owner: string; sessionId?:
     return previewOf(o);
   };
   const start = () => act(async () => {
+    const authorized = consent.authorizedRecipient();
+    if (!authorized) throw new Error("AI_CONSENT_REQUIRED");
     setWhy(""); setUndo(null); keys.current = {};
-    const value = proposed(await api.review("", { sessionId: reviewed.current, requestKey: crypto.randomUUID(), consent: COACH_CONSENT_VERSION, locale: en ? "en" : "zh", timezone: timezone() }));
+    const value = proposed(await api.review("", { sessionId: reviewed.current, requestKey: crypto.randomUUID(), consent: COACH_CONSENT_VERSION, recipient: authorized.id, locale: en ? "en" : "zh", timezone: timezone() }));
     if (value) { show(value); remember({ runId: value.id }); }
   });
   const apply = () => act(async () => {

@@ -1,9 +1,33 @@
 const SHA256_ABC = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
 const hex = (value: ArrayBuffer) => Array.from(new Uint8Array(value), byte => byte.toString(16).padStart(2, "0")).join("");
-type Digest = (value: string) => Promise<string>;
+export type SignupDigest = (value: string) => Promise<string>;
+export type NativeSignupCrypto = { randomBytes(): Promise<Uint8Array>; digest: SignupDigest };
+
+function challengeFromHex(value: string) {
+  if (!/^[a-f0-9]{64}$/.test(value)) throw new Error("signup_secure_crypto_unavailable");
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  let result = "", bits = 0, buffer = 0;
+  for (let index = 0; index < value.length; index += 2) {
+    buffer = (buffer << 8) | parseInt(value.slice(index, index + 2), 16); bits += 8;
+    while (bits >= 6) { bits -= 6; result += alphabet[(buffer >>> bits) & 63]; }
+  }
+  return bits ? result + alphabet[(buffer << (6 - bits)) & 63] : result;
+}
+
+/** Scoped native primitives; never install a partial global WebCrypto implementation. */
+export async function prepareNativeSignupPkce(crypto: NativeSignupCrypto) {
+  try {
+    if (await crypto.digest("abc") !== SHA256_ABC) throw new Error();
+    const first = await crypto.randomBytes(), second = await crypto.randomBytes();
+    if (!(first instanceof Uint8Array) || !(second instanceof Uint8Array) || first.length !== 32 || second.length !== 32
+      || !first.some(value => value !== 0) || first.every((value, index) => value === second[index])) throw new Error();
+    const verifier = Array.from(first, byte => byte.toString(16).padStart(2, "0")).join("");
+    return { verifier, challenge: challengeFromHex(await crypto.digest(verifier)), digest: crypto.digest };
+  } catch { throw new Error("signup_secure_crypto_unavailable"); }
+}
 
 /** Exercise the runtime, not just method names. This cannot certify an RNG's entropy. */
-export async function requireSignupCrypto(): Promise<Digest> {
+export async function requireSignupCrypto(): Promise<SignupDigest> {
   try {
     const crypto = globalThis.crypto;
     if (typeof crypto?.getRandomValues !== "function" || typeof crypto?.subtle?.digest !== "function" || typeof TextEncoder === "undefined"
@@ -12,7 +36,7 @@ export async function requireSignupCrypto(): Promise<Digest> {
     if (crypto.getRandomValues(first) !== first || crypto.getRandomValues(second) !== second
       || !first.some(value => value !== 0) || first.every((value, index) => value === second[index])
       || Array.from(encoder.encode("abc")).join(",") !== "97,98,99") throw new Error();
-    const digest: Digest = async value => {
+    const digest: SignupDigest = async value => {
       const result = await crypto.subtle.digest("SHA-256", encoder.encode(value));
       if (!(result instanceof ArrayBuffer) || result.byteLength !== 32) throw new Error("signup_secure_crypto_unavailable");
       return hex(result);
@@ -23,14 +47,12 @@ export async function requireSignupCrypto(): Promise<Digest> {
 }
 
 /** Check the actual SDK request against its persisted verifier before network I/O. */
-export async function requireSignupS256(body: unknown, stored: string | null, digest: Digest) {
+export async function requireSignupS256(body: unknown, stored: string | null, digest: SignupDigest) {
   try {
     const parsed = typeof body === "string" ? JSON.parse(body) : null;
     const verifier: unknown = stored ? JSON.parse(stored) : null;
     if (typeof verifier !== "string" || !/^[A-Za-z0-9._~-]{43,128}$/.test(verifier)
       || parsed?.code_challenge_method !== "s256" || !/^[A-Za-z0-9_-]{43}$/.test(parsed?.code_challenge)) throw new Error();
-    // Decode only a validated public challenge; no verifier or credential is logged.
-    const bytes = Uint8Array.from(atob(parsed.code_challenge.replace(/-/g, "+").replace(/_/g, "/") + "="), value => value.charCodeAt(0));
-    if (hex(bytes.buffer) !== await digest(verifier)) throw new Error();
+    if (parsed.code_challenge !== challengeFromHex(await digest(verifier))) throw new Error();
   } catch { throw new Error("signup_pkce_rejected"); }
 }

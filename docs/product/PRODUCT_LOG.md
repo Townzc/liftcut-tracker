@@ -1,5 +1,6 @@
 # 产品日志
 
+<<<<<<< HEAD
 ## 2026-10-28 · Enforce the reviewed recipient before cloud work
 
 - All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
@@ -7,6 +8,33 @@
 - Ran `npm test` (20 JS + 310 TS), root TypeScript, targeted ESLint and `git diff --check`. Added boundary errors and a pinned-SDK subprocess proving config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
 - Added W1b API coverage for old/stale consent across four routes, zero quota/model calls, and explicit same-ID resending after renewal. That Next/Auth/PG browser test has not yet run locally; integrated CI/build acceptance remains required before release.
 - Release only after sanitized production recipient readback and both web/mobile client changes. No live model, real user, production config/migration, paid service, native phone or M4 work; provider terms/retention and Store approval remain separate gates.
+=======
+## 2026-10-28 · Scoped native S256 without global crypto shims
+
+- Native registration now passes Expo async RNG and SHA-256 directly to a scoped S256 signup transport; the same isolated SDK still exchanges/verifies/revokes temporary sessions. Verifiers are durable before sending; immediate sessions, crypto/storage failure and cancellation fail closed. No main-session adoption, admin secret or UI structure change.
+- Ran mobile types and logic tests (61/61), root types and tests (17 JavaScript + 305 TypeScript), targeted ESLint, root lint (zero errors/two existing warnings), default Next/Turbopack build and iOS/Android JavaScript exports. Local dependency-junction config overrides were restored. The first build required the documented local root override; it was not an application defect.
+- Real disposable PG16/GoTrue with captured SMTP: normal confirmation suite 5 passed/1 opposite-mode skip; auto-confirm rejection suite 4 passed/2 opposite-mode skips. Both SDK and scoped paths verified S256, wrong verifier, identity, recreation and replay. Auto-confirm returned a temporary session that was refused and revoked; refresh failed afterward. Synthetic users/sessions ended at zero.
+- Initial fixture runs exposed missing Auth search_path/migration-history setup and a local SMTP restart socket issue; fixed the isolated fixture, then reran successfully. No production setting/data or external email changed.
+- Real loopback HTTP 307 reproduced credential forwarding, then passed for signup/code/temporary-session requests after `redirect:error`. Native binding explicitly uses `expo/fetch`, independent of the legacy global override; native enforcement remains unverified.
+- After integrating the recipient-client stack, mobile types and the full 64-test mobile suite passed again; CI verifies the complete combined head.
+- Native primitive tests use Node substitutes; JS exports and local HTTP/browser checks are not signed-iPhone/native execution. Signup remains default-off pending real SMTP and signed-device acceptance. No paid service, Apple enrollment or M4 run; full CI remains a merge gate.
+
+## 2026-10-28 · Web recipient-bound AI consent
+
+- Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
+- Changed/unreviewed recipient errors clear consent and refresh the public descriptor without resending. New server descriptors supersede old async status. Storage failure denies every same-tab consumer, and each send rechecks persisted consent; history/manual data remain available. Failed browser storage cannot guarantee withdrawal across a full reload and visibly reports failure. Legacy generation is independent of the coach feature flag and discloses guest profile fields too.
+- Ran root `npx tsc --noEmit`, targeted ESLint, `git diff --check`, default Next/Turbopack build and `npx playwright test --config playwright.recipient.config.ts` (6/6). Reviewed 390 px Chinese/English screenshots for descriptor wrapping and reachable consent controls; React hook/state/error boundaries were reviewed.
+- The first worktree build hit the shared dependency junction/root restriction; the successful build temporarily used the common workspace as Turbopack root and restored `next.config.ts` byte-for-byte. Initial browser fixture timing/locale assumptions were corrected before the passing run.
+- Browser tests intercept model/identity requests and use synthetic guest state: old consent, changed/null recipient, no automatic resend, revoke/storage faults and both legacy headers are covered. No real model call, user record, paid service, native acceptance or M4 training ran.
+- Source-bound server enforcement and signed-device/privacy review remain separate gates; this client PR does not enable new provider endpoints or change production secrets.
+
+## 2026-10-28 · Mobile consent follows the disclosed AI recipient
+
+- Coach and post-workout review now share owner-scoped consent to the displayed recipient, configured model and data policy. Legacy consent requires a new click; new requests include the reviewed token, without changing write approvals or outbox semantics.
+- Stale/unreviewed recipient errors revoke local consent and reload status without resending. A failed status check pauses new messages while preserving history and drafts. Failed storage never grants consent; revocation supersedes slow reads and stays closed after a failed removal.
+- Ran mobile `npm run typecheck`, `npm test` (58/58), explicit targeted ESLint, `git diff --check`, synthetic Expo web export and bilingual 390 px browser tests (2/2). Inspected both captures; React hook review moved store lifetime mutation outside hook-owned values. Fixed the initial English test label to match the shipped label.
+- These are controller/browser fixture checks, not native, public SMTP or model acceptance. Server enforcement follows the staged recipient rollout; no service/account, production secret, paid build or M4 training changed.
+>>>>>>> 67368416ea65670f69869675d2e270db97611fb7
 
 ## 2026-10-28 · Isolate recipient-consent model fixtures
 
