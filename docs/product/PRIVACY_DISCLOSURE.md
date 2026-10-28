@@ -21,7 +21,9 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 - Historical migration/provider backups, exports, other-device copies and
   unattributed legacy drafts are outside immediate cleanup; retention is not
   invented. Mobile sign-in/settings privacy links are implemented with the current
-  UI language; signed-device opening and verified recipient-bound consent remain open.
+  UI language; signed-device opening remains open. Recipient consent now binds the
+  reviewed technical API origin, configured model and data policy on web/mobile;
+  see the staged [recipient rollout and evidence](AI_RECIPIENT_CONSENT.md).
 
 ## Source-backed inventory
 
@@ -32,7 +34,7 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 | Recent conversation window | `packages/core/src/coach-chat.ts` | Six turns bounds a request, not server history retention |
 | Chats and pending clarification | `src/services/ai/coach-history-store.ts`; coach context store | Chat/preview persistence can precede business confirmation |
 | Sources, previews, receipts and revisions | Workout review store; `src/services/agent/store.ts` | Confirmation is not the first time every item is stored; undo retains history |
-| Configurable AI provider/endpoint | `src/services/ai/config.ts`, `coach-config.ts` | Public provider/model labels do not prove the receiving endpoint or contractual processor |
+| Configurable AI provider/endpoint | `src/services/ai/config.ts`, `recipient-policy.ts` | The descriptor resolves the actual configured API base, not its SDK label; it does not establish contractual processing/retention terms |
 | Guest records/import, local drafts and queues | `src/services/guest-fact-migration.ts`; mobile outbox/history | Cloud AI requests leave the device even when guest records are local |
 | Error/timing paths and infrastructure | AI route diagnostics, hosting/auth services | Do not infer no logs, no tracking or a retention period from absence of an analytics SDK |
 
@@ -41,10 +43,16 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 - Parent task read-only checks: Supabase project region `ap-northeast-2`, Free
   plan; built-in email service, no custom SMTP. The dashboard warns its built-in
   mail service is unsuitable for production. No account/token values belong here.
-- Production public coach status identifies `deepseek` / `deepseek-flash` /
-  `coach-model-v2`. The model name is a UI alias. The sensitive base-URL value
-  could not be read back; do not treat the default source URL as runtime proof.
-- Verify the actual endpoint origin/operator and any relay, applicable API terms,
+- On 2026-10-28 at 11:15:23 UTC, the additive production status response returned
+  HTTP 200/no-store and identified `DeepSeek`, `https://api.deepseek.com` and
+  configured model `deepseek-v4-flash`, without exposing keys or server URL paths.
+  Exact #204 source/deployment and the policy ID are in
+  [the rollout record](AI_RECIPIENT_CONSENT.md). #206–209 subsequently passed
+  required checks and deployed; at 11:54:03 UTC six synthetic guest-mode probes
+  verified missing/stale consent refusal on coach and both legacy plan routes.
+  Production authenticated review, positive model calls and native interaction
+  were not tested by these probes. Model aliases do not establish the backend checkpoint.
+- Verify applicable API terms, any downstream processing or relay,
   retention/training controls, function regions, logs/drains, database backups,
   avatar objects and mail handling before final release disclosures.
 - Project region is not a guarantee that every provider processes all data in
@@ -55,9 +63,11 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 
 ## Bounded next steps
 
-1. Disclose a reviewed actual AI recipient before requests, reusing existing
-   category consent; bind subsequent changes to renewed consent. Do not label a
-   custom endpoint as OpenAI merely because an OpenAI-compatible SDK is used.
+1. Complete signed-device consent behavior after the recorded staged rollout. Web,
+   mobile and legacy plan requests now bind to a reviewed recipient; unreviewed
+   endpoints fail closed, changed policies require a new choice and requests are
+   not automatically resent. The public token is not proof of a click or a write
+   approval, and does not establish provider retention/training terms.
 2. Verify each deletion rollout: migrations, configured gate, online ledgers,
    Storage objects, owner-only local cleanup, partial failures and safe retries.
    Verify old tokens/queues cannot restore deleted data; record actual evidence.
@@ -66,6 +76,46 @@ calls, migrations, mail, paid services or M4 work are part of this change.
    or an App Store-compliant substitute for in-app initiation.
 4. Verify the implemented mobile privacy links on a signed device, separately from browser,
    Expo Go, JS bundle and unsigned simulator results.
+
+## Provider facts checked 2026-10-28
+
+This is a bounded public-source review, not a legal conclusion or verification of
+this account's contracts/settings. Clarifying the applicable agreement and allowed
+data scope remains a Store release gate, particularly for injury/health notes.
+No provider was contacted and no account, setting, service or runtime was changed.
+
+- **DeepSeek direct API:** [Open Platform terms](https://cdn.deepseek.com/policies/zh-CN/deepseek-open-platform-terms-of-service.html)
+  sections 3.5/5.5 require downstream disclosure and distinguish the developer's
+  and end users' processing. They do not establish API-specific zero retention or
+  no-training guarantees. The [public privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+  describes improvement/training, rights to request training opt-out, processing
+  and storage in China, variable retention, and restrictions on sensitive data
+  including health. Do not assume these general statements settle every API
+  payload's treatment, or that an app opt-in changes provider controls. Confirm
+  API-specific scope, supported controls and the injury-note use case before
+  claiming a provider guarantee.
+- **Supabase:** the [DPA](https://supabase.com/legal/customer-resources/data-processing-addendum)
+  limits covered processing to instructions/purposes and describes selected-region
+  storage/primary processing with exceptions. Its 30-day post-agreement return/
+  deletion term is not a per-user deletion SLA. It separately requires a BAA for
+  HIPAA PHI; ordinary fitness data must not automatically be called HIPAA PHI.
+  The [Free log window](https://supabase.com/kb/troubleshooting/check-usage-for-monthly-active-users-mau-MwZaBs)
+  is one day of user access, not proof of physical erasure. [Backup documentation](https://supabase.com/docs/guides/platform/backups)
+  recommends exports for Free projects and states database backups exclude
+  Storage object bytes. Verify actual copies and settings before promising a
+  retention/deletion period; this review did not read production configuration.
+- **Vercel:** [runtime log windows](https://vercel.com/docs/logs/runtime) vary by
+  plan (Hobby one hour, Pro one day, Observability Plus 30 days); exported drains
+  and other copies are separate. Its [DPA](https://vercel.com/legal/dpa) permits
+  US/global processing, lacks a fixed per-user deletion deadline and restricts
+  sensitive/special-category Customer Data. Clarify the applicable agreement and
+  injury/health scope; do not infer that consent alone resolves it. [Infrastructure backups](https://vercel.com/docs/security/compliance)
+  have a documented 30-day window but do not prove every API body is backed up.
+  The [optional training program](https://vercel.com/changelog/updates-to-terms-of-service-march-2026)
+  has Team/Project Data Preferences for code, agent chats and build/usage data;
+  this is not proof that LiftCut fitness conversations are training inputs.
+  Actual preferences are unverified. AI Gateway retention controls do not apply
+  automatically to our direct DeepSeek transport.
 
 ## Official references checked 2026-10-26
 

@@ -1,5 +1,15 @@
 # 产品日志
 
+## 2026-10-28 · Reconcile privacy and remaining free release work
+
+- Updated both public policy languages to explain the reviewed technical AI recipient, configured model, renewed consent and no automatic resend. Model aliases, provider terms, processing locations and retention remain explicitly qualified; a policy token is not proof of a click or permission to write.
+- Readiness/recipient documents distinguish implemented gates, verified production deployment and remaining real SMTP, signed-phone, privacy-label and export-compliance acceptance. Apple enrollment is unnecessary for remaining free preparation. The maintainer explicitly chose SMTP preparation only this round: no account creation (including free), production SMTP configuration or public delivery test.
+- Read current official DeepSeek, Supabase and Vercel policies/docs; recorded bounded retention/training/region controls and the remaining applicable-agreement/data-scope question. No production settings were read, providers contacted or legal compliance asserted. Subsequent edits were Markdown only; the checked public policy source is unchanged.
+- Reconciled #208's successful CI run 40675351127 and exact downloaded archive/inventory comparison: source PR merge `973df0a`, 15 privacy declarations, no encryption declaration/profile. All 11 PR checks passed; later merge/deployment is separately recorded. The earlier #202 inventory failure is historical. This is unsigned compilation/inventory evidence for that source, not final signed-device acceptance.
+- Recorded #204's 11:15:23 UTC public no-store recipient readback and #206–209 exact-source READY deployments after all checks passed. Six 11:54:03 UTC synthetic guest-mode missing/stale-token probes returned no-store 409 on coach and both legacy plan routes. No real account, signed guest, valid model request or write endpoint; production authenticated review was unrun and has separate local coverage.
+- Ran root TypeScript, targeted ESLint, default Next/Turbopack build, `playwright test --config playwright.support.config.ts --grep 'public privacy'` (2/2) and `git diff --check`; inspected both 390 px screenshots. The temporary dependency-junction build-root override was restored byte-for-byte.
+- Public-page tests are local browser evidence with synthetic configuration, not provider, SMTP, native or Store acceptance. No real user, paid service, model call or M4 work. Provider agreement/data-scope clarification and signed-device evidence remain necessary before final disclosure sign-off.
+
 ## 2026-10-28 · Enforce the reviewed recipient before cloud work
 
 - All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
@@ -7,6 +17,7 @@
 - Ran integrated `npm test` (20 JS + 310 TS), root TypeScript, full ESLint (zero errors/two existing research warnings), default Next/Turbopack build and `git diff --check`. The temporary shared-dependency Turbopack root override was restored byte-for-byte. The pinned-SDK subprocess proves config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
 - Ran `playwright test --config playwright.w1b.config.ts recipient-consent.spec.ts` (1/1) against a disposable local PG16 instance, real Next routes, synthetic Auth contract and scripted model doubles. All four routes refused old/stale consent without quota/model calls; explicit same-ID resending after renewal succeeded. This is not real GoTrue/provider/native acceptance; full CI remains required.
 - Release only after sanitized production recipient readback and both web/mobile client changes. No live model, real user, production config/migration, paid service, native phone or M4 work; provider terms/retention and Store approval remain separate gates.
+
 ## 2026-10-28 · Scoped native S256 without global crypto shims
 
 - Native registration now passes Expo async RNG and SHA-256 directly to a scoped S256 signup transport; the same isolated SDK still exchanges/verifies/revokes temporary sessions. Verifiers are durable before sending; immediate sessions, crypto/storage failure and cancellation fail closed. No main-session adoption, admin secret or UI structure change.
