@@ -6,6 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { Copy, LoaderCircle, Plus, Save, Sparkles, Trash2 } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { useRecipientConsent, recipientNotice } from "@/components/agent/use-recipient-consent";
+import { MODEL_DATA } from "@liftcut/core/model-data";
 import { NumericInput } from "@/components/shared/numeric-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -132,6 +134,8 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
   const tNutrition = useTranslations("nutrition");
   const locale = useLocale();
   const { authMode,user } = useAuth();
+  const consent = useRecipientConsent(user ? `liftcut-coach-consent:${user.id}` : authMode === "guest" ? "liftcut-coach-consent:guest" : null, undefined, false);
+  const en = locale === "en";
   const settings = useTrackerStore((state) => state.settings);
   const refreshUserData = useTrackerStore((state) => state.refreshUserData);
   const ensureUserId = useTrackerStore((state) => state.ensureUserId);
@@ -372,6 +376,8 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
 
   const generateTraining = async () => {
     clearFeedback();
+    const authorized = consent.authorizedRecipient();
+    if (!authorized) { setError(recipientNotice(en)); return; }
     if (authMode === "guest" && !canConsumeGuestAiQuota(guestAiLimit)) {
       setError(t("guestQuotaReached"));
       return;
@@ -381,6 +387,7 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
     try {
       const data = await requestJson("/api/ai/generate-training-plan", {
         method: "POST",
+        headers: { "X-LiftCut-AI-Recipient": authorized.id },
         body: JSON.stringify({
           locale: requestLocale,
           profile_snapshot: profileSnapshot,
@@ -421,7 +428,9 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
       await loadHistory();
     } catch (requestError) {
       const typedError = requestError as Error & { code?: string; detail?: string };
-      if (typedError.code === "AI_LANGUAGE_MISMATCH") {
+      if (consent.invalidate(typedError.code)) {
+        setError(recipientNotice(en));
+      } else if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
       } else if (typedError.code === "AI_GUEST_QUOTA_REACHED") {
         setError(t("guestQuotaReached"));
@@ -441,6 +450,8 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
 
   const generateNutrition = async () => {
     clearFeedback();
+    const authorized = consent.authorizedRecipient();
+    if (!authorized) { setError(recipientNotice(en)); return; }
     if (authMode === "guest" && !canConsumeGuestAiQuota(guestAiLimit)) {
       setError(t("guestQuotaReached"));
       return;
@@ -450,6 +461,7 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
     try {
       const data = await requestJson("/api/ai/generate-nutrition-plan", {
         method: "POST",
+        headers: { "X-LiftCut-AI-Recipient": authorized.id },
         body: JSON.stringify({
           locale: requestLocale,
           profile_snapshot: profileSnapshot,
@@ -487,7 +499,9 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
       await loadHistory();
     } catch (requestError) {
       const typedError = requestError as Error & { code?: string; detail?: string };
-      if (typedError.code === "AI_LANGUAGE_MISMATCH") {
+      if (consent.invalidate(typedError.code)) {
+        setError(recipientNotice(en));
+      } else if (typedError.code === "AI_LANGUAGE_MISMATCH") {
         setError(t("languageMismatch"));
       } else if (typedError.code === "AI_GUEST_QUOTA_REACHED") {
         setError(t("guestQuotaReached"));
@@ -629,6 +643,16 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
         </Card>
       ) : null}
 
+      <section className="space-y-2 rounded-2xl border p-4 text-sm" data-testid="plan-recipient-consent">
+        <p className="break-words">{consent.recipient ? `${en ? "AI recipient" : "AI 接收方"}：${consent.recipient.name} · ${consent.recipient.origin} · ${consent.recipient.model}` : (en ? "AI recipient is not verified. Saved plans remain available." : "AI 接收方尚未核验. 已保存的计划仍可查看.")}</p>
+        {!consent.enabled && <><p>{en ? "Only the information needed to generate a plan is sent from these categories:" : "只会发送生成计划所需的下列内容："}</p>
+          <ul className="list-disc pl-5">{MODEL_DATA.filter(c => authMode !== "guest" || !c.accountOnly).map(c => <li key={c.id}>{en ? c.en : c.zh}</li>)}</ul></>}
+        <Button variant="outline" disabled={!consent.recipient || Boolean(loading)} onClick={() => {
+          if (!user || ownerLifecycle.active(user.id)) consent.setEnabled(!consent.enabled);
+        }}>{consent.enabled ? (en ? "Turn off AI sharing" : "关闭 AI 数据发送") : (en ? "Agree & enable" : "同意并开启")}</Button>
+        {consent.error && <p role="alert">{en ? "Your choice could not be saved." : "无法保存你的选择."}</p>}
+      </section>
+
       <Card className="border-emerald-200/80 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-900/20">
         <CardHeader className="pb-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -742,11 +766,11 @@ export function AiPlanPage({ approvalEnabled = false }: { approvalEnabled?: bool
             <Textarea rows={2} value={extraNotes} onChange={(event) => setExtraNotes(event.target.value)} placeholder={t("extraNotesPlaceholder")} />
           </div>
           <div className="flex flex-wrap gap-2 sm:col-span-2 lg:col-span-3">
-            <Button onClick={generateTraining} disabled={Boolean(loading)}>
+            <Button onClick={generateTraining} disabled={Boolean(loading) || !consent.enabled}>
               {loading === "training" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
               {loading === "training" ? t("generatingTraining") : t("generateTraining")}
             </Button>
-            <Button variant="outline" onClick={generateNutrition} disabled={Boolean(loading)}>
+            <Button variant="outline" onClick={generateNutrition} disabled={Boolean(loading) || !consent.enabled}>
               {loading === "nutrition" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
               {loading === "nutrition" ? t("generatingNutrition") : t("generateNutrition")}
             </Button>

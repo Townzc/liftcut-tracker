@@ -1,5 +1,14 @@
 # 产品日志
 
+## 2026-10-28 · Web recipient-bound AI consent
+
+- Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
+- Changed/unreviewed recipient errors clear consent and refresh the public descriptor without resending the user's message. Storage failure stays closed, and each send rechecks persisted consent; local entries, saved plans, receipts and history remain available. Legacy generation does not depend on the separate coach feature flag.
+- Ran root `npx tsc --noEmit`, targeted ESLint, `git diff --check`, default Next/Turbopack build and `npx playwright test --config playwright.recipient.config.ts` (5/5). Reviewed 390 px Chinese/English screenshots for descriptor wrapping and reachable consent controls; React hook/state/error boundaries were reviewed.
+- The first worktree build hit the shared dependency junction/root restriction; the successful build temporarily used the common workspace as Turbopack root and restored `next.config.ts` byte-for-byte. Initial browser fixture timing/locale assumptions were corrected before the passing run.
+- Browser tests intercept model/identity requests and use synthetic guest state: old consent, changed/null recipient, no automatic resend, revoke/storage faults and both legacy headers are covered. No real model call, user record, paid service, native acceptance or M4 training ran.
+- Source-bound server enforcement and signed-device/privacy review remain separate gates; this client PR does not enable new provider endpoints or change production secrets.
+
 ## 2026-10-28 · Prepare recipient-bound AI consent
 
 - Added a reviewed direct-API recipient descriptor to the existing no-store Coach status response. It derives from the configured endpoint, not an SDK label; unknown relays/paths return null and keys/server paths are never exposed.
