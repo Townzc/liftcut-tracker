@@ -24,7 +24,15 @@ export function inspectStore(eas, app, environment = {}) {
     ios.environment !== "production" || ios.autoIncrement !== true || ios.simulator !== false ||
     ios.buildConfiguration !== "Release") issues.push("store-profile-must-be-explicit-release-device-production");
   if (eas?.cli?.appVersionSource !== "remote") issues.push("remote-build-number-required");
+  if (ios.withoutCredentials !== undefined && ios.withoutCredentials !== false) issues.push("store-signing-must-not-be-skipped");
+  // These options can replace the native project, workflow or uploaded archive.
+  // Review them explicitly rather than certifying only the visible Release flags.
+  if ([p, p?.ios].some(profile => profile && ["config", "prebuildCommand", "applicationArchivePath"]
+    .some(key => Object.hasOwn(profile, key)))) issues.push("custom-build-path-needs-review");
   if (expo?.ios?.bundleIdentifier !== "com.liftcuttracker.app") issues.push("unreviewed-bundle-identifier");
+  if (expo?.scheme !== "liftcut" || (expo?.ios?.scheme !== undefined && expo.ios.scheme !== "liftcut")) {
+    issues.push("unreviewed-email-callback-scheme");
+  }
   if (!/^\d+\.\d+\.\d+$/.test(expo?.version ?? "")) issues.push("invalid-app-version");
   if (expo?.extra?.eas?.projectId !== "f45a9ecf-0ed7-47e2-a87c-77fa8877d8ea") issues.push("unreviewed-expo-project");
   if ([p?.env, p?.ios?.env].some(env => env && Object.keys(env).length)) issues.push("inline-profile-environment-needs-review");
