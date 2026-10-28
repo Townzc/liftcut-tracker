@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-28 · Mobile consent follows the disclosed AI recipient
+
+- Coach and post-workout review now share owner-scoped consent to the displayed recipient, configured model and data policy. Legacy consent requires a new click; new requests include the reviewed token, without changing write approvals or outbox semantics.
+- Stale/unreviewed recipient errors revoke local consent and reload status without resending. A failed status check pauses new messages while preserving history and drafts. Failed storage never grants consent; revocation supersedes slow reads and stays closed after a failed removal.
+- Ran mobile `npm run typecheck`, `npm test` (58/58), explicit targeted ESLint, `git diff --check`, synthetic Expo web export and bilingual 390 px browser tests (2/2). Inspected both captures; React hook review moved store lifetime mutation outside hook-owned values. Fixed the initial English test label to match the shipped label.
+- These are controller/browser fixture checks, not native, public SMTP or model acceptance. Server enforcement follows the staged recipient rollout; no service/account, production secret, paid build or M4 training changed.
+
 ## 2026-10-28 · Prepare recipient-bound AI consent
 
 - Added a reviewed direct-API recipient descriptor to the existing no-store Coach status response. It derives from the configured endpoint, not an SDK label; unknown relays/paths return null and keys/server paths are never exposed.

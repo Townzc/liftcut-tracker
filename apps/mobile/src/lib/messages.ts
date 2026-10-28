@@ -122,6 +122,9 @@ const zh = {
   coachDelete: "删除对话", coachDeleteConfirm: "确认删除对话", coachDeleteHint: "仅删除聊天，不删除训练记录. 确认删除？",
 
   coachConsentTitle: "开启训练助手",
+  aiRecipient: "AI 接收方：{name} · {origin}\n配置模型：{model}",
+  aiRecipientUnavailable: "暂时无法确认 AI 接收方，已暂停发送新内容. 历史记录仍可查看.",
+  aiRecipientRetry: "重新检查",
   coachConsentHint: "开启后，你的消息和下面这些数据会发给模型，用来回答问题和起草记录。草稿要你确认才会保存。",
   coachConsent: "同意并开启",
   coachRevoke: "关闭训练助手（不再发送数据）",
@@ -320,6 +323,9 @@ const en: Record<MessageKey, string> = {
   coachDelete: "Delete conversation", coachDeleteConfirm: "Confirm deletion", coachDeleteHint: "Delete chat only? Workout records stay saved.",
 
   coachConsentTitle: "Turn on the coach",
+  aiRecipient: "AI recipient: {name} · {origin}\nConfigured model: {model}",
+  aiRecipientUnavailable: "The AI recipient cannot be verified. Sending is paused; history remains available.",
+  aiRecipientRetry: "Check again",
   coachConsentHint: "When on, your messages and the data below are sent to the model to answer and draft entries. Drafts are saved only after you confirm.",
   coachConsent: "Agree and turn on",
   coachRevoke: "Turn off the coach (stop sending data)",
