@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import {fixtureRecipient} from "./recipient-fixture";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 async function login(page:Page,email="p1-fixture@example.invalid"){
   await page.goto("/login");await page.locator("#email").fill(email);await page.locator("#password").fill("p1-fixture-password");
@@ -75,7 +76,7 @@ test("untrusted model numbers, provider failure, cancellation and missing consen
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{}})).status()).toBe(401);
   await login(page);expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"hi",history:[],locale:"zh",timezone:"UTC"}})).status()).toBe(400);
   await enable(page);await send(page,"帮我记体重 [invent]");await expect(page.getByTestId("personal-draft")).toHaveCount(0);expect(await entries(page)).toEqual([]);
-  const priorTarget=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"帮我记体重 [invent]",history:[{role:"user",content:"我的目标是82公斤"}],locale:"zh",timezone:"UTC",consent:"coach-model-v2"}});
+  const priorTarget=await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103"},data:{id:randomUUID(),text:"帮我记体重 [invent]",history:[{role:"user",content:"我的目标是82公斤"}],locale:"zh",timezone:"UTC",consent:"coach-model-v2",recipient:await fixtureRecipient(page.request)}});
   expect(priorTarget.status()).toBe(200);expect((await priorTarget.json()).proposal).toBeUndefined();expect(await entries(page)).toEqual([]);
   await send(page,"你好 [provider-down]");await expect(page.getByTestId("coach-turn").last()).toContainText("暂时不可用");
   await page.getByLabel("发给训练助手",{exact:true}).fill("你好 [slow]");await page.getByRole("button",{name:"发送",exact:true}).click();

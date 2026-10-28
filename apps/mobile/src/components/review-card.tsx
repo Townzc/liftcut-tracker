@@ -16,6 +16,8 @@ import { reviewApi } from "@/lib/review";
 import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
 import { ownerRuntime } from "@/lib/owner-runtime";
+import { useRecipientConsent } from "@/lib/use-recipient-consent";
+import { recipientError } from "@/lib/recipient-consent";
 
 type Saved = { sessionId: string; runId: string; undoId?: string };
 const timezone = () => getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -30,7 +32,8 @@ export function ReviewCard({ sessionId }: { sessionId?: string }) {
   const api = useMemo(() => reviewApi(() => authRef.current), []), owner = auth?.user.id, stored = `liftcut-review:${owner}`;
   const [run, setRun] = useState<RunView | null>(null), [undo, setUndo] = useState<RunView | null>(null), [why, setWhy] = useState("");
   const [selected, setSelected] = useState<boolean[]>([]), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
-  const [consented, setConsented] = useState(false), [acted, setActed] = useState(false);
+  const policy = useRecipientConsent(owner), consented = policy.consented;
+  const [acted, setActed] = useState(false);
   // Request keys survive a lost response, so tapping again replays instead of writing twice.
   const keys = useRef<{ accept?: [string, string]; rollback?: string }>({}), flight = useRef(false), reviewed = useRef(sessionId);
   const show = (value: RunView) => { setRun(value); setSelected(reviewChanges(value).map(() => true)); };
@@ -40,7 +43,6 @@ export function ReviewCard({ sessionId }: { sessionId?: string }) {
   };
   useEffect(() => {
     let alive = true;
-    AsyncStorage.getItem(`liftcut-coach-consent:${owner}`).then(v => { if (alive) setConsented(v === COACH_CONSENT_VERSION); }).catch(() => {});
     AsyncStorage.getItem(stored).then(async raw => {
       let saved: Saved | null = raw ? JSON.parse(raw) : null;
       if (saved && sessionId && saved.sessionId !== sessionId) saved = null; // A newer workout starts a new review.
@@ -56,14 +58,16 @@ export function ReviewCard({ sessionId }: { sessionId?: string }) {
     flight.current = true; setBusy(true); setMessage(""); setActed(true);
     try { await work(); } catch (e) {
       const code = e instanceof Error ? e.message : "OUTCOME_UNKNOWN";
+      if (recipientError(code)) void policy.controller.invalidate();
       setMessage(code === "CONTEXT_STALE" ? t("reviewStale") : t("reviewFailed", { code }));
       if (run) await api.ledger(`/${run.id}`).then(r => show(r as RunView)).catch(() => {}); // Show what the ledger now says.
     } finally { flight.current = false; setBusy(false); }
   }
   const proposed = (o: ReviewOutcome) => { if (o.status === "nochange") setWhy(o.review.outcome === "nochange" ? o.review.why : ""); return previewOf(o); };
   const start = () => act(async () => {
+    const recipient = policy.controller.token(); if (!recipient) throw Error("AI_CONSENT_REQUIRED");
     setWhy(""); setUndo(null); setRun(null); keys.current = {};
-    const value = proposed(await api.review("", { sessionId: reviewed.current, requestKey: randomUUID(), consent: COACH_CONSENT_VERSION, locale: locale === "en" ? "en" : "zh", timezone: timezone() }));
+    const value = proposed(await api.review("", { sessionId: reviewed.current, requestKey: randomUUID(), recipient, consent: COACH_CONSENT_VERSION, locale: locale === "en" ? "en" : "zh", timezone: timezone() }));
     if (value) { show(value); remember({ runId: value.id }); }
   });
   const apply = () => act(async () => {

@@ -1,5 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { COACH_CONSENT_VERSION, conversationHistory } from "@liftcut/core/coach-chat";
+import { conversationHistory } from "@liftcut/core/coach-chat";
 import { MODEL_DATA } from "@liftcut/core/model-data";
 import { entryLines } from "@liftcut/core/personal-records";
 import { exerciseLabel } from "@liftcut/core/exercise-display";
@@ -23,6 +22,8 @@ import { useSession } from "@/lib/session";
 import { useColors } from "@/lib/theme";
 import { useWorkout } from "@/lib/workout";
 import { ownerRuntime } from "@/lib/owner-runtime";
+import { useRecipientConsent } from "@/lib/use-recipient-consent";
+import { recipientError } from "@/lib/recipient-consent";
 
 /** The web coach on the phone: same endpoint and consent; a draft is saved only after confirmation, through the same queues as the web. */
 export default function Coach() {
@@ -31,25 +32,23 @@ export default function Coach() {
 }
 function AccountCoach() {
   const { session: auth } = useSession(), { t, locale } = useI18n(), c = useColors(), { outbox, state, personal } = useWorkout();
-  const key = `liftcut-coach-consent:${auth?.user.id}`;
-  const [consented, setConsented] = useState<boolean | null>(null), [busy, setBusy] = useState(false), [notice, setNotice] = useState(false);
+  const policy = useRecipientConsent(auth?.user.id);
+  const [busy, setBusy] = useState(false), [notice, setNotice] = useState(false);
   const history = useCoachHistory();
   const snapshot = useSyncExternalStore(history.subscribe, history.snapshot, history.serverSnapshot);
   const { id: conversationId, text, turns } = snapshot, { setText, setTurns } = history;
   const scroll = useRef<ScrollViewInstance>(null);
   const flight = useRef(false), controller = useRef<AbortController | null>(null);
   useEffect(() => () => { controller.current?.abort(); }, []);
-  useEffect(() => { AsyncStorage.getItem(key).then(v => setConsented(v === COACH_CONSENT_VERSION)).catch(() => setConsented(false)); }, [key]);
   useEffect(() => { void outbox?.load().catch(() => {}); }, [outbox]);
   const session = state?.confirmed?.session ?? null;
   const draftId = turns.findLast(x => x.proposal && x.proposal.kind !== "plan")?.id;
   const update = (id: string, patch: Partial<Turn>) => setTurns(ts => ts.map(x => x.id === id ? { ...x, ...patch } : x));
-  const consent = (on: boolean) => { if (!auth || ownerRuntime.isBlocked(auth.user.id)) return; setConsented(on);
-    void ownerRuntime.run(auth.user.id, () => on ? AsyncStorage.setItem(key, COACH_CONSENT_VERSION) : AsyncStorage.removeItem(key)).catch(() => {}); };
 
   async function send() {
     const input = text.trim();
-    if (!input || !snapshot.ready || busy || flight.current || !auth) return;
+    const recipient = policy.controller.token();
+    if (!input || !snapshot.ready || busy || flight.current || !auth || !recipient) return;
     flight.current = true; const abort = new AbortController(); controller.current = abort;
     const id = randomUUID(), recent = conversationHistory(turns);
     // Only the newest draft can be confirmed; a new message closes an unconfirmed one.
@@ -58,7 +57,7 @@ function AccountCoach() {
     try {
       const reply = await ownerRuntime.run(auth.user.id, async signal => {
         const stop = () => abort.abort(); signal.addEventListener("abort", stop);
-        try { return await askCoach(auth, { id, conversationId, text: input, history: recent, locale: locale === "en" ? "en" : "zh",
+        try { return await askCoach(auth, { id, conversationId, recipient, text: input, history: recent, locale: locale === "en" ? "en" : "zh",
           timezone: getCalendars()[0]?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone }, live => update(id, { live }), abort.signal); }
         finally { signal.removeEventListener("abort", stop); }
       });
@@ -66,6 +65,7 @@ function AccountCoach() {
         reply: reply.proposal?.kind === "workout" || reply.proposal?.kind === "workoutReview" ? "draft" : reply.proposal?.kind === "personal" ? "personal" : "data" });
     } catch (error) {
       update(id, { pending: false, interrupted: true, error: error instanceof ApiError ? error.code : error instanceof Error ? error.message : "UNKNOWN" });
+      if (error instanceof ApiError && recipientError(error.code)) void policy.controller.invalidate();
     } finally { flight.current = false; setBusy(false); }
   }
   async function confirm(turn: Turn) {
@@ -85,16 +85,18 @@ function AccountCoach() {
   }
 
   const text_ = { color: c.text }, muted = { color: c.muted };
-  if (consented === null) return null;
-  if (!consented) return <ScrollView contentContainerStyle={styles.content}><Card>
-    <Text style={[text_, styles.bold]}>{t("coachConsentTitle")}</Text>
-    <Text style={muted}>{t("coachConsentHint")}</Text>
-    {MODEL_DATA.map(d => <Text key={d.id} testID="coach-data-category" style={text_}>· {locale === "en" ? d.en : d.zh}</Text>)}
-    <Button label={t("coachConsent")} onPress={() => consent(true)} />
-  </Card></ScrollView>;
   return <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === "ios" ? "padding" : undefined}>
     <CoachHistory history={history} state={snapshot} busy={busy} closeDrafts={() => setTurns(ts => ts.map(x => x.reply === "draft" || x.reply === "personal" ? { ...x, reply: "closed" } : x))} />
     <ScrollView ref={scroll} contentContainerStyle={styles.content} onContentSizeChange={() => scroll.current?.scrollToEnd()} keyboardShouldPersistTaps="handled">
+      {!policy.consented && <Card>
+        <Text style={[text_, styles.bold]}>{t("coachConsentTitle")}</Text>
+        <Text style={muted}>{t("coachConsentHint")}</Text>
+        {policy.recipient && <Text testID="ai-recipient" style={text_}>{t("aiRecipient", { name: policy.recipient.name, origin: policy.recipient.origin, model: policy.recipient.model })}</Text>}
+        {MODEL_DATA.map(d => <Text key={d.id} testID="coach-data-category" style={text_}>· {locale === "en" ? d.en : d.zh}</Text>)}
+        <Button label={t("coachConsent")} disabled={policy.loading || !policy.recipient} onPress={() => void policy.controller.change(true)} />
+        {policy.failed && <><Text accessibilityRole="alert" style={muted}>{t("aiRecipientUnavailable")}</Text>
+          <Button variant="outline" label={t("aiRecipientRetry")} onPress={() => void policy.controller.refresh()} /></>}
+      </Card>}
       {snapshot.older && <Button variant="outline" label={t("coachMore")} disabled={busy || snapshot.loading} onPress={() => void history.older()} />}
       {turns.map(turn => { const p = turn.proposal, draft = p?.kind === "workout" ? p.draft : null, entry = p?.kind === "personal" && p.command.action === "create" ? p.command.entry : null;
         const open = turn.id === draftId && (turn.reply === "draft" || turn.reply === "personal");
@@ -122,8 +124,8 @@ function AccountCoach() {
     <View style={[styles.composer, { borderColor: c.border }]}>
       <TextInput style={[styles.input, { color: c.text, borderColor: c.border }]} editable={snapshot.ready && !snapshot.loading} value={text} onChangeText={setText} maxLength={400} multiline
         accessibilityLabel={t("coachInput")} placeholder={t("coachInput")} placeholderTextColor={c.muted} />
-      <Button label={t("coachSend")} disabled={!snapshot.ready || busy || snapshot.loading || !text.trim()} onPress={() => void send()} />
-      <Button variant="outline" label={t("coachRevoke")} disabled={busy} onPress={() => consent(false)} />
+      <Button label={t("coachSend")} disabled={!policy.consented || !snapshot.ready || busy || snapshot.loading || !text.trim()} onPress={() => void send()} />
+      {policy.consented && <Button variant="outline" label={t("coachRevoke")} disabled={busy} onPress={() => void policy.controller.change(false)} />}
     </View>
   </KeyboardAvoidingView>;
 }
