@@ -117,7 +117,10 @@ test("real HTTP redirects cannot forward signup passwords, exchange codes or tem
     globalThis.fetch = async () => { throw new Error("global_transport_must_not_run"); };
     for (phase of ["native-password", "sdk-password", "exchange-code", "temporary-token"]) {
       const { data, storage } = memory(); data.set(`${phase}-code-verifier`, JSON.stringify("a".repeat(64)));
-      const client = signupAuthFactory(origin, "fixture-public-key", phase === "sdk-password" ? undefined : crypto, request)(phase, storage);
+      const client = signupAuthFactory(origin, "fixture-public-key", phase === "sdk-password" ? undefined : crypto, (input, init) => {
+        assert.equal(init?.credentials, "omit"); assert.equal(init?.redirect, "error");
+        return request(input, init);
+      })(phase, storage);
       try {
         if (phase === "exchange-code") await assert.rejects(client.verify("fixture-code"));
         else await assert.rejects(client.send(email, "fixture-password", redirect));
