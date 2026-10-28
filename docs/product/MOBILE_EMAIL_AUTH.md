@@ -57,8 +57,9 @@ Native bindings now supply Expo Crypto's `getRandomBytesAsync(32)` and SHA-256
 fallback is not used. No WebCrypto global is installed. A scoped public Auth
 signup request uses S256 only, after the verifier is durably stored and checked;
 the same isolated SDK still exchanges the code, verifies identity and closes its
-temporary session. An unexpected immediate session is rejected and its token is
-best-effort revoked with local scope, using the public key, never an admin secret.
+temporary session. An unexpected immediate session is rejected and best-effort
+signed out with local scope, using the public key, never an admin secret. This
+revokes refresh capability; an issued access JWT may remain valid until expiry.
 No response token is adopted by the main account or persisted by the controller.
 
 Local GoTrue acceptance covers both SDK and scoped paths with captured mail,
