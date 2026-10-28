@@ -5,8 +5,8 @@
 
 - All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
 - The checked config is passed through Coach, review and legacy plan generation without a second config lookup at model invocation. Model HTTP redirects are refused. Review accept/rollback and normal confirmed writes retain their existing ledger, source and idempotency rules.
-- Ran `npm test` (20 JS + 310 TS), root TypeScript, targeted ESLint and `git diff --check`. Added boundary errors and a pinned-SDK subprocess proving config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
-- Added W1b API coverage for old/stale consent across four routes, zero quota/model calls, and explicit same-ID resending after renewal. That Next/Auth/PG browser test has not yet run locally; integrated CI/build acceptance remains required before release.
+- Ran integrated `npm test` (20 JS + 310 TS), root TypeScript, full ESLint (zero errors/two existing research warnings), default Next/Turbopack build and `git diff --check`. The temporary shared-dependency Turbopack root override was restored byte-for-byte. The pinned-SDK subprocess proves config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
+- Ran `playwright test --config playwright.w1b.config.ts recipient-consent.spec.ts` (1/1) against a disposable local PG16 instance, real Next routes, synthetic Auth contract and scripted model doubles. All four routes refused old/stale consent without quota/model calls; explicit same-ID resending after renewal succeeded. This is not real GoTrue/provider/native acceptance; full CI remains required.
 - Release only after sanitized production recipient readback and both web/mobile client changes. No live model, real user, production config/migration, paid service, native phone or M4 work; provider terms/retention and Store approval remain separate gates.
 =======
 ## 2026-10-28 · Scoped native S256 without global crypto shims
