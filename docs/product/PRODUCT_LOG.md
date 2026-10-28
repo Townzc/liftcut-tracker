@@ -1,6 +1,5 @@
 # 产品日志
 
-<<<<<<< HEAD
 ## 2026-10-28 · Enforce the reviewed recipient before cloud work
 
 - All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
@@ -8,7 +7,6 @@
 - Ran integrated `npm test` (20 JS + 310 TS), root TypeScript, full ESLint (zero errors/two existing research warnings), default Next/Turbopack build and `git diff --check`. The temporary shared-dependency Turbopack root override was restored byte-for-byte. The pinned-SDK subprocess proves config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
 - Ran `playwright test --config playwright.w1b.config.ts recipient-consent.spec.ts` (1/1) against a disposable local PG16 instance, real Next routes, synthetic Auth contract and scripted model doubles. All four routes refused old/stale consent without quota/model calls; explicit same-ID resending after renewal succeeded. This is not real GoTrue/provider/native acceptance; full CI remains required.
 - Release only after sanitized production recipient readback and both web/mobile client changes. No live model, real user, production config/migration, paid service, native phone or M4 work; provider terms/retention and Store approval remain separate gates.
-=======
 ## 2026-10-28 · Scoped native S256 without global crypto shims
 
 - Native registration now passes Expo async RNG and SHA-256 directly to a scoped S256 signup transport; the same isolated SDK still exchanges/verifies/revokes temporary sessions. Verifiers are durable before sending; immediate sessions, crypto/storage failure and cancellation fail closed. No main-session adoption, admin secret or UI structure change.
@@ -34,7 +32,6 @@
 - Stale/unreviewed recipient errors revoke local consent and reload status without resending. A failed status check pauses new messages while preserving history and drafts. Failed storage never grants consent; revocation supersedes slow reads and stays closed after a failed removal.
 - Ran mobile `npm run typecheck`, `npm test` (58/58), explicit targeted ESLint, `git diff --check`, synthetic Expo web export and bilingual 390 px browser tests (2/2). Inspected both captures; React hook review moved store lifetime mutation outside hook-owned values. Fixed the initial English test label to match the shipped label.
 - These are controller/browser fixture checks, not native, public SMTP or model acceptance. Server enforcement follows the staged recipient rollout; no service/account, production secret, paid build or M4 training changed.
->>>>>>> 67368416ea65670f69869675d2e270db97611fb7
 
 ## 2026-10-28 · Isolate recipient-consent model fixtures
 
