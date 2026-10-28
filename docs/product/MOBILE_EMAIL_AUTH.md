@@ -42,10 +42,13 @@ account/service, paid build or M4 run. The existing `liftcut` scheme is retained
 5. Storage writes use a separate queue so cancellation is durable while a network
    request is slow. Persist only pending metadata and the isolated verifier; no
    password, callback code or temporary session tokens. Storage failures surface.
-6. Refuse registration before any request if secure RNG, WebCrypto digest or
-   TextEncoder is unavailable; the SDK's plain-PKCE fallback is not accepted.
-   Node support does not establish Hermes/iPhone capability. Native capability
-   remains a release gate; no partial global crypto shim is installed.
+6. Refuse registration before any request if RNG, WebCrypto digest, TextEncoder
+   or base64 capability is missing or broken. Exercise RNG and the SHA-256 `abc`
+   known vector; this detects obvious broken implementations, not proof of entropy.
+   Before network I/O, verify the pinned SDK's actual signup request uses S256
+   matching its persisted verifier. A missing/changed verifier or plain fallback
+   fails closed. Node support does not establish Hermes/iPhone capability. Native
+   capability remains a release gate; no partial global crypto shim is installed.
 
 ## PR 3: native binding and minimal UI preparation
 
