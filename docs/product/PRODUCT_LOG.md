@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Reproducible unsigned iOS artifact inventory
+
+- Simulator CI previously checked only bundle ID and embedded JavaScript; its privacy/platform audit was historical. Each new archive now produces a source/hash-bound inventory of platform, callback schemes, transport settings and packaged privacy declarations.
+- The offline Python inspector never extracts archives, reads provisioning contents or reports signing/runtime/privacy compliance. It rejects links, unsafe/duplicate paths, malformed plists, unexpected device identity and bounded-size/count violations.
+- Ran `python -m unittest discover -s tests/ci -v` (11/11) and `git diff --check`; fixtures cover binary/XML plists, absent declarations, traversal, duplicates, links, changed identity, limits and sanitized failure output. Corrected the initial link fixture, which accidentally wrote ordinary byte files, before the passing run.
+- No new native build ran locally on Windows. CI's unsigned simulator build/report remains separate from independent signed-iPhone installation, public SMTP and App Store acceptance. No paid service, production setting, model call or M4 training changed.
+- Next: inspect the exact CI archive/report, then retain standalone device, privacy-label and export-compliance gates before release.
+
 ## 2026-10-27 · Verified production account-deletion rollout
 
 - All 11 checks passed for #199; release source `ab7fb3cec60aca2902f09937a14e45da5f5d479a` produced protected canary `dpl_2F6J4iMo4g8t1izhsytHtKX8zAWd`. Custom-domain assignment stayed off until acceptance and cleanup passed; the same READY deployment was promoted and assignment restored.
