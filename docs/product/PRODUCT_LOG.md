@@ -7,6 +7,15 @@
 - Ran root TypeScript, targeted ESLint, `git diff --check`, synthetic Next build/Expo web export, full `playwright.mobile.config.ts` (18 passed, 1 expected deletion-opt-in skip) and `playwright.recipient.config.ts` (6/6). Used disposable local PostgreSQL, scripted model and synthetic Auth fixtures.
 - This changes test teardown only; no real provider/Auth, native installation, production data, paid service or M4 acceptance is claimed.
 
+## 2026-10-28 · Web recipient-bound AI consent
+
+- Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
+- Changed/unreviewed recipient errors clear consent and refresh the public descriptor without resending. New server descriptors supersede old async status. Storage failure denies every same-tab consumer, and each send rechecks persisted consent; history/manual data remain available. Failed browser storage cannot guarantee withdrawal across a full reload and visibly reports failure. Legacy generation is independent of the coach feature flag and discloses guest profile fields too.
+- Ran root `npx tsc --noEmit`, targeted ESLint, `git diff --check`, default Next/Turbopack build and `npx playwright test --config playwright.recipient.config.ts` (6/6). Reviewed 390 px Chinese/English screenshots for descriptor wrapping and reachable consent controls; React hook/state/error boundaries were reviewed.
+- The first worktree build hit the shared dependency junction/root restriction; the successful build temporarily used the common workspace as Turbopack root and restored `next.config.ts` byte-for-byte. Initial browser fixture timing/locale assumptions were corrected before the passing run.
+- Browser tests intercept model/identity requests and use synthetic guest state: old consent, changed/null recipient, no automatic resend, revoke/storage faults and both legacy headers are covered. No real model call, user record, paid service, native acceptance or M4 training ran.
+- Source-bound server enforcement and signed-device/privacy review remain separate gates; this client PR does not enable new provider endpoints or change production secrets.
+
 ## 2026-10-28 · Mobile consent follows the disclosed AI recipient
 
 - Coach and post-workout review now share owner-scoped consent to the displayed recipient, configured model and data policy. Legacy consent requires a new click; new requests include the reviewed token, without changing write approvals or outbox semantics.
