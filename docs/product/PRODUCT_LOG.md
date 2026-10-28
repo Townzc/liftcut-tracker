@@ -7,6 +7,7 @@
 - Real disposable PG16/GoTrue with captured SMTP: normal confirmation suite 5 passed/1 opposite-mode skip; auto-confirm rejection suite 4 passed/2 opposite-mode skips. Both SDK and scoped paths verified S256, wrong verifier, identity, recreation and replay. Auto-confirm returned a temporary session that was refused and revoked; refresh failed afterward. Synthetic users/sessions ended at zero.
 - Initial fixture runs exposed missing Auth search_path/migration-history setup and a local SMTP restart socket issue; fixed the isolated fixture, then reran successfully. No production setting/data or external email changed.
 - Real loopback HTTP 307 reproduced credential forwarding, then passed for signup/code/temporary-session requests after `redirect:error`. Native binding explicitly uses `expo/fetch`, independent of the legacy global override; native enforcement remains unverified.
+- After integrating the recipient-client stack, mobile types and the full 64-test mobile suite passed again; CI verifies the complete combined head.
 - Native primitive tests use Node substitutes; JS exports and local HTTP/browser checks are not signed-iPhone/native execution. Signup remains default-off pending real SMTP and signed-device acceptance. No paid service, Apple enrollment or M4 run; full CI remains a merge gate.
 
 ## 2026-10-28 · Web recipient-bound AI consent
