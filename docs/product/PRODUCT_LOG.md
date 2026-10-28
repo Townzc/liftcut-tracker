@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Fail closed on broken signup crypto and PKCE downgrade
+
+- Mobile email signup now exercises RNG, encoding and a SHA-256 known vector before sending credentials; method names alone no longer count as working capability. This detects obvious failures, not an entropy certification.
+- The isolated SDK transport verifies its outgoing S256 challenge against the durably stored verifier before network I/O. Missing/changed verifiers and runtime downgrade to plain PKCE are refused; cancellation, owner isolation and temporary-session handling remain unchanged.
+- Ran mobile `npm run typecheck`, `npm test` (55/55), targeted `npx eslint --no-ignore` and `git diff --check`. Real pinned-SDK tests cover healthy S256, broken callable crypto and capability loss after the probe with zero outgoing requests.
+- Exported the opt-in Expo web fixture and ran `npx playwright test --config playwright.mobile-signup.config.ts` (6/6); temporary Metro junction configuration was restored. These browser fixtures do not prove public email delivery or native crypto/routing.
+- No dependency, production configuration, account, paid service or M4 change. Registration stays default-off. Native crypto binding, real local Auth acceptance, public SMTP and signed-iPhone warm/cold/replay checks remain separate gates; full CI runs before merge.
+
 ## 2026-10-28 · Reproducible unsigned iOS artifact inventory
 
 - Simulator CI previously checked only bundle ID and embedded JavaScript; its privacy/platform audit was historical. Each new archive now produces a source/hash-bound inventory of platform, callback schemes, transport settings and packaged privacy declarations.
