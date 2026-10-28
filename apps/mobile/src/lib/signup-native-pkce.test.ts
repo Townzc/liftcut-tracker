@@ -100,11 +100,13 @@ test("native HTTP failures do not retry signup or claim confirmation", async () 
 
 test("real HTTP redirects cannot forward signup passwords, exchange codes or temporary tokens", async () => {
   let targetRequests = 0, phase = "native-password";
+  const sourceRequests = new Map<string, number>();
   const target = createServer((_req, res) => { targetRequests++; res.writeHead(200, { "Content-Type": "application/json" }); res.end("{}"); });
   const listen = (server: Server) => new Promise<string>(resolve => server.listen(0, "127.0.0.1", () => resolve(`http://127.0.0.1:${(server.address() as AddressInfo).port}`)));
   const close = (server: Server) => new Promise<void>(resolve => server.close(() => resolve()));
   const destination = await listen(target);
   const source = createServer((req, res) => {
+    sourceRequests.set(phase, (sourceRequests.get(phase) ?? 0) + 1);
     if (phase === "temporary-token" && req.url?.startsWith("/auth/v1/signup")) {
       res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ access_token: "fixture-temporary-token", refresh_token: "fixture-refresh" }));
     } else { res.writeHead(307, { Location: `${destination}/must-not-receive` }); res.end(); }
@@ -120,6 +122,7 @@ test("real HTTP redirects cannot forward signup passwords, exchange codes or tem
         if (phase === "exchange-code") await assert.rejects(client.verify("fixture-code"));
         else await assert.rejects(client.send(email, "fixture-password", redirect));
       } finally { await client.close(); }
+      assert.equal(sourceRequests.get(phase), phase === "temporary-token" ? 2 : 1, `original request reached source: ${phase}`);
       assert.equal(targetRequests, 0, phase);
     }
   } finally { console.error = error; globalThis.fetch = request; await close(source); await close(target); }
