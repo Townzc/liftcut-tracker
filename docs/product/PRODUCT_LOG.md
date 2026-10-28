@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Prepare recipient-bound AI consent
+
+- Added a reviewed direct-API recipient descriptor to the existing no-store Coach status response. It derives from the configured endpoint, not an SDK label; unknown relays/paths return null and keys/server paths are never exposed.
+- Added shared optional bounded recipient tokens and stored-consent helpers. The SHA-256 policy binding changes with origin/path, configured model or data-policy version. Existing requests remain transport-compatible; enforcement and renewed client consent are deliberately a separate release step.
+- Inventoried all four model transports and the staged deployment/readback/client/enforcement gates in [AI_RECIPIENT_CONSENT](AI_RECIPIENT_CONSENT.md). Approval, sources, idempotency and UI are unchanged.
+- Ran `npm test` (15 JS + 309 TS), root/core TypeScript checks, targeted ESLint, full `npm run lint` (0 errors, 2 existing research warnings), `git diff --check`, and a synthetic no-network status smoke. Reused dependency files through a junction and a temporary local-core tsconfig outside Git; initial checks before that setup could not resolve tsx/core.
+- No new local production build/browser/native/real-model acceptance in this step; CI and the integrated build run separately. No production configuration, service account, paid service or M4 training. The next gate is sanitized live-descriptor readback, then every client and model route must enforce renewed consent.
+
 ## 2026-10-27 · Verified production account-deletion rollout
 
 - All 11 checks passed for #199; release source `ab7fb3cec60aca2902f09937a14e45da5f5d479a` produced protected canary `dpl_2F6J4iMo4g8t1izhsytHtKX8zAWd`. Custom-domain assignment stayed off until acceptance and cleanup passed; the same READY deployment was promoted and assignment restored.

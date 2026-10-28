@@ -8,6 +8,7 @@ import { samePlain } from "@liftcut/core/plain-data";
 import { applyReview, reviewProblems, reviewSchema, type Review } from "@liftcut/core/review-changes";
 import type { ReviewOutcome } from "@liftcut/core/review-client";
 import { COACH_CONSENT_VERSION } from "@/lib/coach-model";
+import { recipientTokenSchema } from "@liftcut/core/ai-recipient";
 import type { AgentStore } from "@/services/agent/store";
 import { beginOwnerTransaction } from "@/services/owner-transaction";
 
@@ -18,7 +19,7 @@ import { beginOwnerTransaction } from "@/services/owner-transaction";
  * approval-ledger proposal; nothing is applied until the user approves it there.
  */
 // Equipment is chosen by the user, as in the replacement sheet; without it no replacement is offered.
-export const reviewRequestSchema = z.strictObject({ sessionId: z.uuid(), requestKey: z.uuid(), consent: z.literal(COACH_CONSENT_VERSION),
+export const reviewRequestSchema = z.strictObject({ sessionId: z.uuid(), requestKey: z.uuid(), consent: z.literal(COACH_CONSENT_VERSION), recipient: recipientTokenSchema.optional(),
   locale: z.enum(["zh", "en"]), timezone: z.string().max(100), equipment: z.array(z.enum(equipmentIds)).max(equipmentIds.length).default([]) });
 export type ReviewModel = (prompt: { system: string; user: string }) => Promise<unknown>;
 export type { ReviewOutcome }; // Shared with the web and mobile review cards.
