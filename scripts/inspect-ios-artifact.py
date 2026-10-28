@@ -39,9 +39,15 @@ def identifier(value):
     return value
 
 
-def strings(value):
+def url_scheme(value):
+    # RFC 3986 section 3.1; Expo also emits schemes such as exp+liftcut.
+    require(isinstance(value, str) and re.fullmatch(r"[A-Za-z][A-Za-z0-9+.-]{0,159}", value))
+    return value
+
+
+def strings(value, validate=identifier):
     require(isinstance(value, list) and len(value) <= 100)
-    return sorted({identifier(item) for item in value})
+    return sorted({validate(item) for item in value})
 
 
 def optional_bool(data, name):
@@ -85,7 +91,7 @@ def metadata(payload):
     schemes = []
     for item in url_types:
         require(isinstance(item, dict))
-        schemes.extend(strings(item.get("CFBundleURLSchemes", [])))
+        schemes.extend(strings(item.get("CFBundleURLSchemes", []), url_scheme))
     return {"bundleId": identifier(data.get("CFBundleIdentifier")),
             "version": identifier(data.get("CFBundleShortVersionString")),
             "build": identifier(data.get("CFBundleVersion")),
