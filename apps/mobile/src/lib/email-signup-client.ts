@@ -19,7 +19,7 @@ export function signupAuthFactory(url: string, anonKey: string, nativeCrypto?: N
         if (!digest || target.origin !== new URL(url).origin || target.pathname !== "/auth/v1/signup" || init?.method !== "POST") throw new Error("signup_pkce_rejected");
         await requireSignupS256(init.body, await storage.getItem(`${key}-code-verifier`), digest);
       }
-      return request(input, { ...init, signal: abort.signal, redirect: "error" });
+      return request(input, { ...init, signal: abort.signal, redirect: "error", credentials: "omit" });
     };
     const client = createClient(url, anonKey, { auth: { storageKey: key, storage, flowType: "pkce",
       persistSession: true, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch: guardedFetch } });
