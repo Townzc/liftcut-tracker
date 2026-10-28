@@ -58,6 +58,14 @@ class ArtifactTests(unittest.TestCase):
         self.assertEqual(result["privacyManifests"], [])
         self.assertTrue(result["limitations"])
 
+    def test_expo_scheme_uses_uri_grammar_without_accepting_urls_or_invalid_tokens(self):
+        info = {**self.info, "CFBundleURLTypes": [{"CFBundleURLSchemes": ["liftcut", "exp+liftcut", "com.liftcuttracker.app"]}]}
+        result = MOD.inspect_archive(self.archive(info=info), SHA)
+        self.assertEqual(result["info"]["urlSchemes"], ["com.liftcuttracker.app", "exp+liftcut", "liftcut"])
+        for value in ["https://example.invalid", "1liftcut", "exp_liftcut", "liftcut\n", "a" * 161]:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                MOD.metadata(plistlib.dumps({**info, "CFBundleURLTypes": [{"CFBundleURLSchemes": [value]}]}))
+
     def test_paths_duplicates_links_and_special_entries_are_rejected(self):
         for name, content in [("/LiftCut.app/private", b"secret"), ("LiftCut.app/../outside", b"secret"),
                               ("LiftCut.app/main.jsbundle", b"duplicate"), ("Other.app/a", b"x"),

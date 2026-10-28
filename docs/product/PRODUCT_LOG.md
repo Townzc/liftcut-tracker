@@ -5,6 +5,7 @@
 - Simulator CI previously checked only bundle ID and embedded JavaScript; its privacy/platform audit was historical. Each new archive now produces a source/hash-bound inventory of platform, callback schemes, transport settings and packaged privacy declarations.
 - The offline Python inspector never extracts archives, reads provisioning contents or reports signing/runtime/privacy compliance. It rejects links, unsafe/duplicate paths, malformed plists, unexpected device identity and bounded-size/count violations.
 - Ran `python -m unittest discover -s tests/ci -v` (11/11) and `git diff --check`; fixtures cover binary/XML plists, absent declarations, traversal, duplicates, links, changed identity, limits and sanitized failure output. Corrected the initial link fixture, which accidentally wrote ordinary byte files, before the passing run.
+- CI compiled the actual simulator app, then exposed an overly strict scheme validator rejecting Expo's legal `exp+liftcut`. Applied RFC 3986 scheme grammar, added valid/invalid cases and rechecked the same 22.8 MB archive successfully; all 12 CI-helper tests pass. This is a local reinspection, not a claim that the new CI head passed.
 - No new native build ran locally on Windows. CI's unsigned simulator build/report remains separate from independent signed-iPhone installation, public SMTP and App Store acceptance. No paid service, production setting, model call or M4 training changed.
 - Next: inspect the exact CI archive/report, then retain standalone device, privacy-label and export-compliance gates before release.
 
