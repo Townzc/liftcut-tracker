@@ -71,11 +71,14 @@ Do not put real review credentials or user data in this file or a public PR.
 - Native registration/callback code is behind an off-by-default build flag. Slow
   local storage now preserves the original cold-start URL. Real SMTP, native
   secure crypto and signed iPhone warm/cold/replayed links still gate activation.
-- Resend Free is a prepared option, not an opened account or configured sender.
-  Verify the sending domain, authorized credentials and delivery when approved;
-  do not ask for passwords or API keys in a public chat.
-- Record the staged AI recipient readback/enforcement deployment, then verify
-  processor terms, logging and backup retention before final Store disclosures.
+- Maintainer decision on 2026-10-28: prepare SMTP only this round; do not create
+  an account, including a free Resend account. Resend Free remains a prepared
+  option. No production SMTP configuration or public delivery test will run in
+  this round; captured local mail remains separate evidence.
+- AI recipient readback, client/enforcement deployment and six bounded production
+  refusal probes are recorded in [the rollout evidence](AI_RECIPIENT_CONSENT.md).
+  Verify processor terms, allowed data scope, logging and backup retention before
+  final Store disclosures; the probes are not signed-device or positive-model acceptance.
   Historical migration backups and exported copies are not instantaneously
   erased by online account deletion; no unverified retention period is promised.
 - Apple membership/signing and a standalone phone acceptance remain later gates.
@@ -83,10 +86,10 @@ Do not put real review credentials or user data in this file or a public PR.
 
 Apple enrollment is not needed to finish these code, local-test and disclosure
 tasks. Request it when the free checks and reviewed build configuration are ready
-for a signed iPhone build. Custom SMTP still requires the maintainer to create or
-authorize a sender account, verify its domain and authorize production credential
-configuration; no account, paid plan or public mail delivery is implied by the
-prepared Resend option or captured local SMTP tests.
+for a signed iPhone build. SMTP activation is deferred by the explicit maintainer
+decision above. A later round requires sender-account authorization, domain
+verification and separate production credential approval before public delivery
+acceptance. Do not request passwords or API keys in a public chat.
 
 ## Data inventory draft
 
@@ -105,14 +108,18 @@ settings have not been audited here.
 
 ## Latest inspected unsigned simulator artifact
 
-On 2026-10-28, the release owner inspected the archive produced for
-[#202](https://github.com/Townzc/liftcut-tracker/pull/202), source merge
-`d58b7f55acba67f03694e54ee3b98d94e54ff4c5`, using the corrected offline inspector.
-Archive size: 22,811,639 bytes; SHA-256:
-`62ce9e394a1d255f75691f356983905ae023bfdb834ab0619c7c0bf3f49a6de0`.
-Native compilation produced this archive; the original CI inventory step failed,
-and local reinspection succeeded after the inspector fix. This does not claim
-the new CI run, final source or signed-device acceptance has passed.
+On 2026-10-28, [CI run 40675351127](https://github.com/Townzc/liftcut-tracker/actions/runs/40675351127)
+produced and inspected the unsigned simulator archive for
+[#208](https://github.com/Townzc/liftcut-tracker/pull/208), source PR merge
+`973df0abf323123c0d67d73a5facd9ac16c3dfa7`. The release owner downloaded the
+archive, recomputed its inventory and verified exact equality with the CI JSON.
+Archive size: 22,821,554 bytes; SHA-256:
+`d829d46b39a72c62365a5b6ba06d72d0be7eb34298669ad1e017eb90ff9e901d`.
+All 11 #208 PR checks passed; its later merge/deployment is recorded separately
+in the recipient rollout evidence. An earlier #202 inventory attempt failed on an Expo URI
+scheme; the corrected successful run superseded that historical failure.
+This verifies compilation and inventory for the stated source, not later release
+sources or signed-device acceptance.
 
 - Bundle `com.liftcuttracker.app`, version 0.1.0/build 1, platform iPhoneSimulator,
   minimum OS 16.4; no device provisioning profile. The archive declares the
@@ -122,7 +129,7 @@ the new CI run, final source or signed-device acceptance has passed.
 - Fifteen `PrivacyInfo.xcprivacy` files include app/RN/Expo/AsyncStorage declarations
   for UserDefaults, FileTimestamp, SystemBootTime and DiskSpace required-reason APIs.
   Empty SDK collected-data arrays do not describe LiftCut's server data handling.
-- Encryption declaration is absent. The local inventory does not execute native
+- Encryption declaration is absent. The inventory does not execute native
   code or verify signing. Repeat against the final artifact and complete the
   independent signed-phone matrix before submission.
 

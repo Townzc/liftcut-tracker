@@ -43,11 +43,15 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 - Parent task read-only checks: Supabase project region `ap-northeast-2`, Free
   plan; built-in email service, no custom SMTP. The dashboard warns its built-in
   mail service is unsuitable for production. No account/token values belong here.
-- The additive public status descriptor allows sanitized runtime verification
-  without exposing keys or server URL paths. Record the actual production
-  readback and enforcement deployment in [the rollout record](AI_RECIPIENT_CONSENT.md)
-  before treating this source implementation as live. Model aliases do not
-  establish the backend checkpoint; no default source URL is runtime proof.
+- On 2026-10-28 at 11:15:23 UTC, the additive production status response returned
+  HTTP 200/no-store and identified `DeepSeek`, `https://api.deepseek.com` and
+  configured model `deepseek-v4-flash`, without exposing keys or server URL paths.
+  Exact #204 source/deployment and the policy ID are in
+  [the rollout record](AI_RECIPIENT_CONSENT.md). #206–209 subsequently passed
+  required checks and deployed; at 11:54:03 UTC six synthetic guest-mode probes
+  verified missing/stale consent refusal on coach and both legacy plan routes.
+  Production authenticated review, positive model calls and native interaction
+  were not tested by these probes. Model aliases do not establish the backend checkpoint.
 - Verify applicable API terms, any downstream processing or relay,
   retention/training controls, function regions, logs/drains, database backups,
   avatar objects and mail handling before final release disclosures.
@@ -59,7 +63,7 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 
 ## Bounded next steps
 
-1. Verify the staged recipient rollout and signed-device consent behavior. Web,
+1. Complete signed-device consent behavior after the recorded staged rollout. Web,
    mobile and legacy plan requests now bind to a reviewed recipient; unreviewed
    endpoints fail closed, changed policies require a new choice and requests are
    not automatically resent. The public token is not proof of a click or a write
