@@ -9,6 +9,7 @@ import { localDateAt, type Session } from "@liftcut/core/today";
 import { workoutCanonical, workoutContextInput } from "@liftcut/core/workout-context";
 import { allowModelObject, allowModelRows } from "@liftcut/core/model-data";
 import { requireAiProviderConfig } from "./config";
+import type { AiProviderConfig } from "./types";
 import { signCoachProposal, type ModelProvenance } from "./coach-proof";
 import { CoachStore, readRecordsSchema, recordTopicSchema } from "./coach-store";
 import { TodayStore } from "@/services/today/store";
@@ -49,8 +50,8 @@ Drafts are NOT saved. Say 'please review and confirm the card' and never 'record
 General advice: be modest and practical; no diagnosis, prescriptions, extreme calorie restriction, or aggressive exercise through pain. For acute chest pain, fainting or severe symptoms advise stopping exercise and seeking urgent local medical help. Avoid claiming clinical expertise.
 For queries and clarification, end by calling finish_response with sourceIds from THIS request's read_records or current_workout calls (empty for general chat/clarification), followed by a concise helpful message. Always serialize sourceIds FIRST and message SECOND so the verified answer can stream to the user. A successfully prepared draft ends the request automatically with its confirmation card; no further text generation is needed. current_workout is evidence about that session only, not complete historical statistics. Answer only the requested period; do not repeat statistics from previous replies without a fresh read covering that period. Usually 2–5 short sentences are enough. Answer the specific question; avoid unsolicited advice, repeated disclaimers or repeated offers to log something. Never emit HTML or a code fence. Keep the UI simple; no long preambles. Do not reveal internal reasoning.`;}
 
-export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>,emit?:(event:CoachStreamEvent)=>void,timer=new CoachTimer(),guest?:{records:PersonalRecord[]}):Promise<CoachResponse>{
-  const config=requireAiProviderConfig(),name=modelName(config.provider,config.model),pool=todayPool();
+export async function runCoach(owner:string,input:CoachRequest,signal:AbortSignal,trace?:(steps:unknown)=>Promise<void>,emit?:(event:CoachStreamEvent)=>void,timer=new CoachTimer(),guest?:{records:PersonalRecord[]},config:AiProviderConfig=requireAiProviderConfig()):Promise<CoachResponse>{
+  const name=modelName(config.provider,config.model),pool=todayPool();
   const store=new CoachStore(pool,timer),anchor=localDateAt(new Date(),input.timezone);
   const smalltalk=simpleCoachChat(input.text,input.history);
   if(!guest)await timer.measure("quota",()=>store.reserve(owner,input.id));
@@ -77,7 +78,7 @@ export async function runCoach(owner:string,input:CoachRequest,signal:AbortSigna
   const hash=(v:unknown)=>createHash("sha256").update(workoutCanonical(v)).digest("hex");
   const modelStarts=new Map<string,number>(),toolStarts=new Map<string,number>();let httpHeadersMs:number|null=null;
   const provider=createOpenAICompatible({name:"liftcut",apiKey:config.apiKey,baseURL:config.baseURL,
-    fetch:async(url,options)=>{const start=timer.elapsed();const response=await fetch(url,options);httpHeadersMs=timer.elapsed()-start;return response;},
+    fetch:async(url,options)=>{const start=timer.elapsed();const response=await fetch(url,{...options,redirect:"error"});httpHeadersMs=timer.elapsed()-start;return response;},
     transformRequestBody:body=>config.provider==="deepseek"?{...body,thinking:{type:"disabled"}}:body});
   const ensureTime=()=>{if(signal.aborted)throw new Error("ABORTED");};
   const proposalError=(error:unknown)=>({ok:false,reason:error instanceof GroundingError?error.message:"DRAFT_NEEDS_CLARIFICATION",instruction:"Ask for explicit missing/corrected details; no entry was saved."});

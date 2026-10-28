@@ -15,6 +15,7 @@ import {
 import type {
   AiProfileSnapshot,
   AiProviderName,
+  AiProviderConfig,
 } from "@/services/ai/types";
 
 export interface TrainingGenerationResult {
@@ -57,13 +58,13 @@ export async function generateStructuredTrainingPlan(input: {
   constraints: AiTrainingGenerationConstraints;
   locale: AiLocale;
   logValidationFailures?: boolean;
-}): Promise<TrainingGenerationResult> {
+}, config?: AiProviderConfig): Promise<TrainingGenerationResult> {
   const logValidationFailures = input.logValidationFailures ?? true;
   const prompt = buildTrainingPlanPrompt(input.profile, input.constraints, input.locale);
   const response = await callAiProviderForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,
-  });
+  }, config);
 
   const rawParsed = aiTrainingPlanRawSchema.safeParse(response.json);
   if (!rawParsed.success) {

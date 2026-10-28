@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { generateTrainingPlanRequestSchema } from "@liftcut/core/ai-schemas";
 import { getAiProviderConfig } from "@/services/ai/config";
+import { recipientConsentResponse } from "@/services/ai/recipient-policy";
 import { AiServiceError } from "@/services/ai/errors";
 import { verifyTrainingPlanLanguage } from "@/services/ai/language-check";
 import { insertTrainingGenerationHistory } from "@/services/ai/persistence";
@@ -27,6 +28,8 @@ export async function POST(request: Request) {
     return auth.errorResponse;
   }
 
+  const config = getAiProviderConfig(), rejected = recipientConsentResponse(request.headers.get("X-LiftCut-AI-Recipient"), config);
+  if (rejected) return rejected;
   const { supabase } = auth;
 
   let body: z.infer<typeof generateTrainingPlanRequestSchema>;
@@ -77,7 +80,7 @@ export async function POST(request: Request) {
       profile,
       constraints: body.constraints,
       locale: body.locale,
-    });
+    }, config!);
 
     const languageCheck = verifyTrainingPlanLanguage(body.locale, result.parsedPlan);
     if (!languageCheck.matched) {

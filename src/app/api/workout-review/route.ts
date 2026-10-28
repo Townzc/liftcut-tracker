@@ -9,6 +9,7 @@ import { getAiProviderConfig } from "@/services/ai/config";
 import { CoachReadError, CoachStore } from "@/services/ai/coach-store";
 import { acceptReview, reviewRequestSchema, reviewWorkout, rollbackReview, type ReviewOutcome } from "@/services/ai/workout-review";
 import { todayEnabled, todayPool } from "@/services/today/database";
+import { recipientConsentResponse } from "@/services/ai/recipient-policy";
 
 export const runtime = "nodejs";
 /**
@@ -32,10 +33,12 @@ export async function POST(request: Request) {
     else if (action === "rollback") outcome = await rollbackReview(auth.user.id, input, { agent });
     else {
       const body = reviewRequestSchema.parse(input);
+      const config = getAiProviderConfig(), rejected = recipientConsentResponse(body.recipient, config);
+      if (rejected) return rejected;
       // The request key reserves one model call: a retry with the same key is refused instead of paying twice.
       await new CoachStore(todayPool()).reserve(auth.user.id, body.requestKey);
       outcome = await reviewWorkout(auth.user.id, body, { pool: todayPool(), agent,
-        model: async ({ system, user }) => (await callAiProviderForJson({ systemPrompt: system, userPrompt: user })).json });
+        model: async ({ system, user }) => (await callAiProviderForJson({ systemPrompt: system, userPrompt: user }, config!)).json });
     }
     return Response.json(outcome, { status: outcome.status === "invalid" ? 422 : outcome.status === "unavailable" ? 409 : 200, headers: { "Cache-Control": "no-store" } });
   } catch (error) {

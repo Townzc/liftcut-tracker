@@ -12,6 +12,8 @@ import {guestSession,guestNetworkHash} from "@/services/ai/guest-session";
 import {GuestStore,GuestError} from "@/services/ai/guest-store";
 import {todayPool} from "@/services/today/database";
 import {localDateAt} from "@liftcut/core/today";
+import { getAiProviderConfig } from "@/services/ai/config";
+import { recipientConsentResponse } from "@/services/ai/recipient-policy";
 
 export const runtime="nodejs";
 export const maxDuration=60;
@@ -31,6 +33,8 @@ export async function POST(request:Request){
     const input=coachRequestSchema.parse(await boundedJson(request));
     if(auth.user&&input.guestRecords!==undefined)return Response.json({error:"GUEST_DATA_NOT_ALLOWED"},{status:400,headers});
     if(!coachStatus().available)return Response.json({error:"MODEL_UNAVAILABLE"},{status:503,headers});
+    const config=getAiProviderConfig(),rejected=recipientConsentResponse(input.recipient,config);
+    if(rejected)return rejected;
     const guest=auth.user?null:await guestSession();
     if(!auth.user&&!guest)return Response.json({error:"GUEST_SESSION_REQUIRED"},{status:401,headers});
     const owner=auth.user?.id??guest!,context=guest?{records:input.guestRecords??[]}:undefined;
@@ -45,7 +49,7 @@ export async function POST(request:Request){
         start(stream){
           const emit=(event:CoachStreamEvent)=>{if(!closed&&!signal.aborted)stream.enqueue(encoder.encode(JSON.stringify(event)+"\n"));};
           emit({type:"status",stage:"connecting"});
-          void runCoach(owner,input,signal,undefined,emit,timer,context).then(result=>emit({type:"result",result})).catch(error=>{
+          void runCoach(owner,input,signal,undefined,emit,timer,context,config!).then(result=>emit({type:"result",result})).catch(error=>{
             console.warn("coach_stream_failed",JSON.stringify({kind:error instanceof Error?error.name:"unknown",timing:timer.snapshot()}));
             emit({type:"error",error:error instanceof CoachReadError?error.message:coachFailureCode(error)});
           }).finally(()=>{if(!closed){closed=true;stream.close();}});
@@ -55,7 +59,7 @@ export async function POST(request:Request){
       return new Response(body,{headers:{...guestHeaders,"Content-Type":`${COACH_STREAM_TYPE}; charset=utf-8`,"Cache-Control":"no-store, no-transform","X-Accel-Buffering":"no","Server-Timing":`auth;dur=${timer.snapshot().authMs??0}, ready;dur=${timer.elapsed()}`}});
     }
     const signal=AbortSignal.any([request.signal,AbortSignal.timeout(50000)]);
-    return Response.json(await runCoach(owner,input,signal,undefined,undefined,timer,context),{headers:{...headers,...guestHeaders}});
+    return Response.json(await runCoach(owner,input,signal,undefined,undefined,timer,context,config!),{headers:{...headers,...guestHeaders}});
   }catch(e){
     if(e instanceof GuestError)return Response.json({error:e.message},{status:e.message==="REQUEST_ALREADY_USED"?409:429,headers:{...headers,"Retry-After":e.message==="GUEST_DAILY_LIMIT"?"3600":"60"}});
     if(e instanceof ZodError||e instanceof SyntaxError)return Response.json({error:"INVALID_REQUEST"},{status:400,headers});

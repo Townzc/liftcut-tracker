@@ -34,3 +34,12 @@ export function recipientConsentError(token: unknown, recipient: AiRecipient | n
   if (!recipient) return "AI_RECIPIENT_UNREVIEWED";
   return token === recipient.id ? null : "AI_CONSENT_REQUIRED";
 }
+
+export function recipientConsentResponse(token: unknown, config: AiProviderConfig | null): Response | null {
+  const error = recipientConsentError(token, resolveAiRecipient(config));
+  if (!error) return null;
+  const message = error === "AI_CONSENT_REQUIRED"
+    ? "Refresh or update LiftCut, review the AI recipient, then agree again before resending. 请刷新或更新 LiftCut，查看 AI 接收方并重新同意后再发送."
+    : "Cloud AI is unavailable until its recipient has been reviewed. AI 接收方尚未核对，云端对话暂不可用.";
+  return Response.json({ ok: false, error, message }, { status: 409, headers: { "Cache-Control": "no-store" } });
+}

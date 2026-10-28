@@ -36,6 +36,7 @@ export function createAiClient(config: AiProviderConfig): OpenAI {
     baseURL: config.baseURL,
     timeout: config.timeoutMs,
     maxRetries: AI_MAX_RETRIES,
+    fetch: (url, options) => fetch(url, { ...options, redirect: "error" }),
   });
 }
 
@@ -140,8 +141,8 @@ export interface AiJsonResponse {
 
 export async function callAiProviderForJson(
   input: AiJsonRequest,
+  config: AiProviderConfig = requireAiProviderConfig(),
 ): Promise<AiJsonResponse> {
-  const config = requireAiProviderConfig();
   const client = getAiClient(config);
 
   let completion: Awaited<ReturnType<typeof client.chat.completions.create>>;
