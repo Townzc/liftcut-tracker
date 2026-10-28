@@ -53,3 +53,29 @@ test("wrong app/project and inline environment cannot bypass reviewed target che
   const changedEas = structuredClone(eas); changedEas.build["ios-store"].env = { SECRET: "DO_NOT_DISCLOSE" };
   assert.equal(inspectStore(changedEas, app, env).configurationValid, false);
 });
+
+test("unsigned or custom workflow/archive paths require independent review", () => {
+  for (const layer of ["root", "ios"]) {
+    for (const change of [{ withoutCredentials: true }, { withoutCredentials: "false" },
+      { config: "unreviewed.yml" }, { prebuildCommand: "prebuild --template unreviewed" },
+      { applicationArchivePath: "unreviewed.ipa" }]) {
+      const changed = structuredClone(eas), profile = changed.build["ios-store"];
+      Object.assign(layer === "ios" ? profile.ios : profile, change);
+      const result = inspectStore(changed, app, env);
+      assert.equal(result.configurationValid, false);
+      assert.equal(result.appStoreReady, false);
+      assert.ok(!JSON.stringify(result).includes("unreviewed.ipa"));
+    }
+  }
+  const explicit = structuredClone(eas); explicit.build["ios-store"].ios.withoutCredentials = false;
+  assert.equal(inspectStore(explicit, app, env).configurationValid, true);
+});
+
+test("an altered callback scheme is not a valid registration build", () => {
+  for (const scheme of [undefined, "other", ["liftcut", "other"]]) {
+    const changed = structuredClone(app); changed.expo.scheme = scheme;
+    assert.ok(inspectStore(eas, changed, env).issues.includes("unreviewed-email-callback-scheme"));
+  }
+  const changed = structuredClone(app); changed.expo.ios.scheme = "other";
+  assert.equal(inspectStore(eas, changed, env).configurationValid, false);
+});
