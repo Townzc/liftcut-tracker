@@ -19,9 +19,13 @@ export function useRecipientConsent(owner: string | undefined) {
       read: () => AsyncStorage.getItem(key),
       write: value => ownerRuntime.run(id, () => value ? AsyncStorage.setItem(key, value) : AsyncStorage.removeItem(key)),
       status: () => ownerRuntime.run(id, async signal => {
-        const response = await fetch(`${apiBase}/api/ai/coach`, { cache: "no-store", signal });
-        if (!response.ok) throw Error("STATUS_UNAVAILABLE");
-        return response.json();
+        const abort = new AbortController(), stop = () => abort.abort();
+        signal.addEventListener("abort", stop); const timer = setTimeout(stop, 10000);
+        try {
+          const response = await fetch(`${apiBase}/api/ai/coach`, { cache: "no-store", signal: abort.signal });
+          if (!response.ok) throw Error("STATUS_UNAVAILABLE");
+          return await response.json();
+        } finally { clearTimeout(timer); signal.removeEventListener("abort", stop); }
       }),
     });
     const created = { controller, users: 0 }; stores.set(id, created); return created;
