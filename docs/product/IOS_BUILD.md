@@ -27,7 +27,8 @@ Expo Go evidence, not acceptance of a standalone installation.
   Artifacts expire after three days. This is compilation evidence only, not a
   runtime, login, network or physical-device test. The job refuses private repos.
 - Each new simulator archive is inventoried by `scripts/inspect-ios-artifact.py`.
-  The JSON report binds the source SHA to the archive SHA-256 and records selected
+  The JSON report binds the built checkout SHA (`GITHUB_SHA`, the synthetic merge
+  commit in pull-request CI rather than the PR head) to the archive SHA-256 and records selected
   bundle/platform/scheme/ATS fields and packaged privacy-manifest declarations.
   It rejects links, unsafe paths, invalid plists and oversized input without
   extracting files or reading provisioning credentials. Missing declarations
