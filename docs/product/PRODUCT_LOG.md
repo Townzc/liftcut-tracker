@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-28 · Reject unreviewed Store build overrides
+
+- The offline Store checker now rejects skipped signing, custom workflows/prebuild commands/archive paths and changed email callback schemes, including iOS-specific overrides.
+- Ran `node --test tests/ios-store-preflight.test.mjs` (8/8), `npm test` (17 JavaScript + 305 TypeScript tests), `npm run lint` (zero errors, two existing research warnings), `npm run build` and `git diff --check`; all passed.
+- This checks reviewed configuration only. It starts no build service, reads no secret and never reports Store/device acceptance. No Apple enrollment, production setting or M4 training changed.
+- Next: bind native compile evidence to its actual archive and finish the separate email/consent release gates before paid signing.
+
 ## 2026-10-27 · Verified production account-deletion rollout
 
 - All 11 checks passed for #199; release source `ab7fb3cec60aca2902f09937a14e45da5f5d479a` produced protected canary `dpl_2F6J4iMo4g8t1izhsytHtKX8zAWd`. Custom-domain assignment stayed off until acceptance and cleanup passed; the same READY deployment was promoted and assignment restored.
