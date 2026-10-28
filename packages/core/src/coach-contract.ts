@@ -6,6 +6,7 @@ import { operationBody, type WorkoutOperation } from "./workout-outbox";
 import { workoutReviewApprovalSchema, type WorkoutReview } from "./workout-review";
 import type { Session } from "./today";
 import type { LogDraft } from "./workout-log-parser";
+import { recipientTokenSchema, type AiRecipient } from "./ai-recipient";
 
 // Transport contracts only. Parsing a reply never authorizes or performs a write.
 export const coachMessageSchema = z.strictObject({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(2400) });
@@ -17,6 +18,8 @@ export const coachRequestSchema = z.strictObject({
   planRunId: z.uuid().optional(), guestRecords: guestFactsSchema.optional(),
   // Older clients remain valid and keep their legacy, non-continuous tool path.
   conversationId: z.uuid().optional(),
+  // Additive transport preparation. Route enforcement is a separate release step.
+  recipient: recipientTokenSchema.optional(),
 });
 export type CoachRequest = z.infer<typeof coachRequestSchema>;
 export type CoachMessage = z.infer<typeof coachMessageSchema>;
@@ -90,4 +93,4 @@ export const coachResponseSchema = z.looseObject({ requestId: z.uuid(), message:
 export type CoachSource = z.infer<typeof coachSourceSchema>;
 export type CoachProposal = z.infer<typeof coachProposalSchema>;
 export type CoachResponse = z.infer<typeof coachResponseSchema>;
-export type CoachStatus = { available: boolean; provider: string | null; model: string | null; consentVersion: typeof COACH_CONSENT_VERSION };
+export type CoachStatus = { available: boolean; provider: string | null; model: string | null; consentVersion: typeof COACH_CONSENT_VERSION; recipient?: AiRecipient | null };

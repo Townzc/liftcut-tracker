@@ -9,6 +9,37 @@
 - Real loopback HTTP 307 reproduced credential forwarding, then passed for signup/code/temporary-session requests after `redirect:error`. Native binding explicitly uses `expo/fetch`, independent of the legacy global override; native enforcement remains unverified.
 - Native primitive tests use Node substitutes; JS exports and local HTTP/browser checks are not signed-iPhone/native execution. Signup remains default-off pending real SMTP and signed-device acceptance. No paid service, Apple enrollment or M4 run; full CI remains a merge gate.
 
+## 2026-10-28 · Web recipient-bound AI consent
+
+- Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
+- Changed/unreviewed recipient errors clear consent and refresh the public descriptor without resending. New server descriptors supersede old async status. Storage failure denies every same-tab consumer, and each send rechecks persisted consent; history/manual data remain available. Failed browser storage cannot guarantee withdrawal across a full reload and visibly reports failure. Legacy generation is independent of the coach feature flag and discloses guest profile fields too.
+- Ran root `npx tsc --noEmit`, targeted ESLint, `git diff --check`, default Next/Turbopack build and `npx playwright test --config playwright.recipient.config.ts` (6/6). Reviewed 390 px Chinese/English screenshots for descriptor wrapping and reachable consent controls; React hook/state/error boundaries were reviewed.
+- The first worktree build hit the shared dependency junction/root restriction; the successful build temporarily used the common workspace as Turbopack root and restored `next.config.ts` byte-for-byte. Initial browser fixture timing/locale assumptions were corrected before the passing run.
+- Browser tests intercept model/identity requests and use synthetic guest state: old consent, changed/null recipient, no automatic resend, revoke/storage faults and both legacy headers are covered. No real model call, user record, paid service, native acceptance or M4 training ran.
+- Source-bound server enforcement and signed-device/privacy review remain separate gates; this client PR does not enable new provider endpoints or change production secrets.
+
+## 2026-10-28 · Mobile consent follows the disclosed AI recipient
+
+- Coach and post-workout review now share owner-scoped consent to the displayed recipient, configured model and data policy. Legacy consent requires a new click; new requests include the reviewed token, without changing write approvals or outbox semantics.
+- Stale/unreviewed recipient errors revoke local consent and reload status without resending. A failed status check pauses new messages while preserving history and drafts. Failed storage never grants consent; revocation supersedes slow reads and stays closed after a failed removal.
+- Ran mobile `npm run typecheck`, `npm test` (58/58), explicit targeted ESLint, `git diff --check`, synthetic Expo web export and bilingual 390 px browser tests (2/2). Inspected both captures; React hook review moved store lifetime mutation outside hook-owned values. Fixed the initial English test label to match the shipped label.
+- These are controller/browser fixture checks, not native, public SMTP or model acceptance. Server enforcement follows the staged recipient rollout; no service/account, production secret, paid build or M4 training changed.
+
+## 2026-10-28 · Isolate recipient-consent model fixtures
+
+- W1b/mobile-web fixtures now configure a reviewed API origin while an explicitly preloaded, test-only Next-process transport maps the one chat endpoint to the scripted loopback server. Unknown outbound destinations and redirects fail; production code and the strict recipient resolver have no test bypass.
+- Raw test requests obtain the current synthetic recipient token from the no-store status endpoint. Model output remains a scripted double, not real-provider/privacy evidence; Auth/SQL/application routes still run normally.
+- Ran `node --test tests/ai-model-transport.test.mjs` (2/2), targeted ESLint, root TypeScript and `git diff --check`. A fresh preloaded Node subprocess successfully reached the scripted loopback model; its bounded server was stopped and port 59999 verified closed.
+- The full W1b and Expo-web browser suites have not run locally for this isolated infrastructure commit; CI/integrated acceptance remain required. No production endpoint/key, paid service, new account, native device or M4 change.
+
+## 2026-10-28 · Prepare recipient-bound AI consent
+
+- Added a reviewed direct-API recipient descriptor to the existing no-store Coach status response. It derives from the configured endpoint, not an SDK label; unknown relays/paths return null and keys/server paths are never exposed.
+- Added shared optional bounded recipient tokens and stored-consent helpers. The SHA-256 policy binding changes with origin/path, configured model or data-policy version. Existing requests remain transport-compatible; enforcement and renewed client consent are deliberately a separate release step.
+- Inventoried all four model transports and the staged deployment/readback/client/enforcement gates in [AI_RECIPIENT_CONSENT](AI_RECIPIENT_CONSENT.md). Approval, sources, idempotency and UI are unchanged.
+- Ran `npm test` (15 JS + 309 TS), root/core TypeScript checks, targeted ESLint, full `npm run lint` (0 errors, 2 existing research warnings), `git diff --check`, and a synthetic no-network status smoke. Reused dependency files through a junction and a temporary local-core tsconfig outside Git; initial checks before that setup could not resolve tsx/core.
+- No new local production build/browser/native/real-model acceptance in this step; CI and the integrated build run separately. No production configuration, service account, paid service or M4 training. The next gate is sanitized live-descriptor readback, then every client and model route must enforce renewed consent.
+
 ## 2026-10-28 · Fail closed on broken signup crypto and PKCE downgrade
 
 - Mobile email signup now exercises RNG, encoding and a SHA-256 known vector before sending credentials; method names alone no longer count as working capability. This detects obvious failures, not an entropy certification.
