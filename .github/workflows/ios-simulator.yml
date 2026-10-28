@@ -6,6 +6,8 @@ on:
       - apps/mobile/**
       - packages/core/**
       - .github/workflows/ios-simulator.yml
+      - scripts/inspect-ios-artifact.py
+      - tests/ci/test_ios_artifact.py
   workflow_dispatch:
 
 permissions:
@@ -61,6 +63,9 @@ jobs:
           file "$APP/LiftCut"
           tar -czf "$RUNNER_TEMP/liftcut-ios-simulator.tgz" -C "$(dirname "$APP")" LiftCut.app
           shasum -a 256 "$RUNNER_TEMP/liftcut-ios-simulator.tgz" > "$RUNNER_TEMP/ios-sha256.txt"
+          python3 ../../scripts/inspect-ios-artifact.py \
+            --archive "$RUNNER_TEMP/liftcut-ios-simulator.tgz" --source-sha "$GITHUB_SHA" \
+            > "$RUNNER_TEMP/ios-inventory.json"
           printf 'Simulator Release compile only. No signing, iPhone installation, login or acceptance.\nCommit: %s\n' \
             "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v6
@@ -70,5 +75,6 @@ jobs:
           path: |
             ${{ runner.temp }}/liftcut-ios-simulator.tgz
             ${{ runner.temp }}/ios-sha256.txt
+            ${{ runner.temp }}/ios-inventory.json
             ${{ runner.temp }}/ios-build.log
           retention-days: 3

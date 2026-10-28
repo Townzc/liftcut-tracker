@@ -30,6 +30,8 @@ permission to submit. The public key check validates format/role, not authentici
 Verify current project/environment values independently before a real build.
 Only EAS **preview** variables have been read back so far; production is unverified.
 Changing a reviewed endpoint/project requires explicit re-review of the checker.
+Skipped signing, custom workflows/prebuild commands/archive paths and a changed
+email callback scheme also require review; valid Release flags alone are insufficient.
 
 ## Remaining gates and free work queue
 
