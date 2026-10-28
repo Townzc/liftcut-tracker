@@ -15,6 +15,7 @@ import {
 import type {
   AiProfileSnapshot,
   AiProviderName,
+  AiProviderConfig,
 } from "@/services/ai/types";
 
 function unwrapNutritionPlanCandidate(value: unknown): unknown {
@@ -69,13 +70,13 @@ export async function generateStructuredNutritionPlan(input: {
   constraints: AiNutritionGenerationConstraints;
   locale: AiLocale;
   logValidationFailures?: boolean;
-}): Promise<NutritionGenerationResult> {
+}, config?: AiProviderConfig): Promise<NutritionGenerationResult> {
   const logValidationFailures = input.logValidationFailures ?? true;
   const prompt = buildNutritionPlanPrompt(input.profile, input.constraints, input.locale);
   const response = await callAiProviderForJson({
     systemPrompt: prompt.systemPrompt,
     userPrompt: prompt.userPrompt,
-  });
+  }, config);
 
   const unwrappedJson = unwrapNutritionPlanCandidate(response.json);
   const rawParsed = aiNutritionPlanRawSchema.safeParse(unwrappedJson);

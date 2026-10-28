@@ -1,8 +1,9 @@
 # AI recipient consent rollout
 
-Prepared 2026-10-28 from `9a63a88`. This first step adds a public descriptor and
-request contract; it does **not** enforce recipient-bound consent yet. No model
-call, production configuration change or new privacy/retention promise is made.
+Prepared 2026-10-28 from `9a63a88`. The first step added a public descriptor and
+request contract without enforcement. The subsequent server change below must
+deploy after the matching client updates and live descriptor check. No real
+model call, production configuration change or retention promise is made here.
 
 ## Contract and resolution
 
@@ -21,10 +22,10 @@ proof of a click, permission to save data or a model-output trust signal.
 The configured name is not a claim about a provider's currently served checkpoint;
 server aliases and provider-managed aliases remain separate from this binding.
 
-Coach and review requests accept an optional bounded `recipient` token. Existing
-transport remains compatible in this preparation release. Do not describe the
-presence of this field as enforced consent. Never treat an old `coach-model-v2`
-stored value as consent to an arbitrary recipient.
+Coach and review schemas accept an optional bounded `recipient` token so an old
+request reaches the renewal response, rather than failing schema validation.
+The enforcement release rejects a missing/stale token; it does not treat an old
+`coach-model-v2` stored value as consent to an arbitrary recipient.
 
 ## Model call inventory and next release gates
 
@@ -41,8 +42,13 @@ No separate mobile approval ledger or altered confirmation rule is needed.
 
 Before enforcing the binding, deploy this additive status response and inspect
 its sanitized production descriptor without reading a key or invoking a model.
-Then wire every listed client and route, retaining one checked provider config
-through the actual call. Reject missing/stale tokens with `AI_CONSENT_REQUIRED`
+The server enforcement change checks all four listed routes before profile/tool
+reads, quota reservation or model work (authentication may run first). Coach and
+review use body `recipient`; legacy plan routes use `X-LiftCut-AI-Recipient`.
+Accepting or rolling back an existing review uses no model and keeps its ledger
+rules. One checked provider config is retained through the actual call, and model
+HTTP redirects are refused so they cannot silently change the recipient.
+Missing/stale tokens return HTTP 409 `AI_CONSENT_REQUIRED`
 and an actionable renewal/update message, and unreviewed recipients with
 `AI_RECIPIENT_UNREVIEWED`. Do not silently resend a user's request after renewal.
 

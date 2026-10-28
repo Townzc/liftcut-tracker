@@ -9,7 +9,9 @@ const foodEmpty={dateQuote:null,foodQuote:null,mealQuote:null,caloriesQuote:null
 // Loopback-only test control. Hold a real partial provider stream until the
 // browser has asserted/navigation-tested it; elapsed time must never release it.
 const streamGates=new Map<string,{ready:Promise<boolean>;finish:(released:boolean)=>void}>();
+let modelRequests=0;
 createServer(async(req,res)=>{
+  if(req.method==="GET"&&req.url==="/__model-requests"){res.end(JSON.stringify({count:modelRequests}));return;}
   res.setHeader("Content-Type","application/json");
   const gateId=/^\/__test\/stream-gates\/([a-f0-9-]{36})$/.exec(req.url??"")?.[1];
   if(gateId){
@@ -25,7 +27,7 @@ createServer(async(req,res)=>{
     res.end();return;
   }
   if(req.method==="GET"){res.end('{"fixture":"scripted, not a model"}');return;}
-  let raw="";for await(const chunk of req)raw+=chunk;
+  modelRequests++;let raw="";for await(const chunk of req)raw+=chunk;
   const body=JSON.parse(raw),messages=body.messages as {role:string;content:string;tool_calls?:{id:string;function:{name:string}}[];tool_call_id?:string}[];
   // The post-workout review asks for one JSON object, not a tool call: two closed changes citing the first exercise's sets.
   if(messages[0]?.content.startsWith("You review one finished workout")){

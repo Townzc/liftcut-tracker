@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { aiRecipientSchema, hasRecipientConsent, recipientConsentValue } from "@liftcut/core/ai-recipient";
 import { coachRequestSchema } from "@liftcut/core/coach-contract";
-import { resolveAiRecipient, recipientConsentError } from "../src/services/ai/recipient-policy";
+import { resolveAiRecipient, recipientConsentError, recipientConsentResponse } from "../src/services/ai/recipient-policy";
 import { coachFixture } from "./fixtures/coach-contract";
 
 const config = { baseURL: "https://api.deepseek.com/v1", model: "deepseek-flash" };
@@ -51,4 +51,23 @@ test("request transport remains backward compatible while accepting only bounded
   assert.equal(coachRequestSchema.parse({ ...request, recipient: recipient.id }).recipient, recipient.id);
   for (const value of [null, "", "a".repeat(63), "A".repeat(64), "https://api.deepseek.com", { id: recipient.id }])
     assert.equal(coachRequestSchema.safeParse({ ...request, recipient: value }).success, false);
+});
+
+test("route boundary returns actionable no-store renewal errors and never exposes private config", async () => {
+  const full = { ...config, provider: "deepseek" as const, apiKey: "never-publish-this", timeoutMs: 1000 };
+  const recipient = resolveAiRecipient(full)!;
+  assert.equal(recipientConsentResponse(recipient.id, full), null);
+  for (const token of [undefined, "a".repeat(64)]) {
+    const response = recipientConsentResponse(token, full)!;
+    assert.equal(response.status, 409);
+    assert.equal(response.headers.get("Cache-Control"), "no-store");
+    const body = await response.json();
+    assert.equal(body.error, "AI_CONSENT_REQUIRED");
+    assert.match(body.message, /Refresh or update/);
+    assert.equal(JSON.stringify(body).includes(full.apiKey), false);
+  }
+  const blocked = recipientConsentResponse(recipient.id, { ...full, baseURL: "https://relay.example/private-path" })!;
+  const body = await blocked.json();
+  assert.equal(body.error, "AI_RECIPIENT_UNREVIEWED");
+  assert.equal(JSON.stringify(body).includes("relay.example"), false);
 });
