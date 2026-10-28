@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Enforce the reviewed recipient before cloud work
+
+- All four model entry routes now require the current recipient binding before profile/tool reads, quota or model calls; auth/owner validation still runs first. Old requests receive a no-store 409 with renewal/update instructions, and unknown recipients fail closed.
+- The checked config is passed through Coach, review and legacy plan generation without a second config lookup at model invocation. Model HTTP redirects are refused. Review accept/rollback and normal confirmed writes retain their existing ledger, source and idempotency rules.
+- Ran `npm test` (20 JS + 310 TS), root TypeScript, targeted ESLint and `git diff --check`. Added boundary errors and a pinned-SDK subprocess proving config drift cannot replace the checked endpoint/model and a real local 307 is not followed.
+- Added W1b API coverage for old/stale consent across four routes, zero quota/model calls, and explicit same-ID resending after renewal. That Next/Auth/PG browser test has not yet run locally; integrated CI/build acceptance remains required before release.
+- Release only after sanitized production recipient readback and both web/mobile client changes. No live model, real user, production config/migration, paid service, native phone or M4 work; provider terms/retention and Store approval remain separate gates.
+
 ## 2026-10-28 · Isolate recipient-consent model fixtures
 
 - W1b/mobile-web fixtures now configure a reviewed API origin while an explicitly preloaded, test-only Next-process transport maps the one chat endpoint to the scripted loopback server. Unknown outbound destinations and redirects fail; production code and the strict recipient resolver have no test bypass.
