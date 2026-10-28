@@ -10,6 +10,13 @@
 - After integrating the recipient-client stack, mobile types and the full 64-test mobile suite passed again; CI verifies the complete combined head.
 - Native primitive tests use Node substitutes; JS exports and local HTTP/browser checks are not signed-iPhone/native execution. Signup remains default-off pending real SMTP and signed-device acceptance. No paid service, Apple enrollment or M4 run; full CI remains a merge gate.
 
+## 2026-10-28 · Drain mobile browser relays before teardown
+
+- PR #206 CI passed 97 product-browser tests, but a mobile body-entry test ended while its history relay still awaited `route.fetch`; this was a test lifecycle error after the record assertions.
+- All nine relay-using suites now use a shared page fixture that awaits `unrouteAll({ behavior: "wait" })` before disposal. Errors are not swallowed; bearer-only and no-write-before-confirmation assertions remain intact. The body-entry case delays history responses by 800 ms and drains before database cleanup.
+- Ran root TypeScript, targeted ESLint, `git diff --check`, synthetic Next build/Expo web export, full `playwright.mobile.config.ts` (18 passed, 1 expected deletion-opt-in skip) and `playwright.recipient.config.ts` (6/6). Used disposable local PostgreSQL, scripted model and synthetic Auth fixtures.
+- This changes test teardown only; no real provider/Auth, native installation, production data, paid service or M4 acceptance is claimed.
+
 ## 2026-10-28 · Web recipient-bound AI consent
 
 - Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
@@ -54,6 +61,7 @@
 - Simulator CI previously checked only bundle ID and embedded JavaScript; its privacy/platform audit was historical. Each new archive now produces a source/hash-bound inventory of platform, callback schemes, transport settings and packaged privacy declarations.
 - The offline Python inspector never extracts archives, reads provisioning contents or reports signing/runtime/privacy compliance. It rejects links, unsafe/duplicate paths, malformed plists, unexpected device identity and bounded-size/count violations.
 - Ran `python -m unittest discover -s tests/ci -v` (11/11) and `git diff --check`; fixtures cover binary/XML plists, absent declarations, traversal, duplicates, links, changed identity, limits and sanitized failure output. Corrected the initial link fixture, which accidentally wrote ordinary byte files, before the passing run.
+- CI compiled the actual simulator app, then exposed an overly strict scheme validator rejecting Expo's legal `exp+liftcut`. Applied RFC 3986 scheme grammar, added valid/invalid cases and rechecked the same 22.8 MB archive successfully; all 12 CI-helper tests pass. This is a local reinspection, not a claim that the new CI head passed.
 - No new native build ran locally on Windows. CI's unsigned simulator build/report remains separate from independent signed-iPhone installation, public SMTP and App Store acceptance. No paid service, production setting, model call or M4 training changed.
 - Next: inspect the exact CI archive/report, then retain standalone device, privacy-label and export-compliance gates before release.
 
