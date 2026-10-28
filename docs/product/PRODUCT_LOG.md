@@ -1,5 +1,13 @@
 # 产品日志
 
+## 2026-10-28 · Bound CI native artifact downloads without skipping checksums
+
+- RN 0.88's unbounded curl download spent 25 minutes receiving 11% of a 30 MB artifact before HTTP/2 failed. CI now prepares only four exact SHA-256-pinned dependency scripts with HTTP/1.1, connection/transfer/low-speed limits and bounded retries; official URLs and TLS verification stay unchanged.
+- Missing or malformed Maven SHA-1 now refuses the artifact in both RN and Hermes validators. All inputs are validated before writes; unexpected versions, source changes and partial patches fail. Preparation is not a multi-file transaction. The dependency step has a separate 15-minute limit; no cache policy or application dependency changes.
+- Ran `python -m unittest discover -s tests/ci -v` (16/16), exact installed-source copies through preparation twice, and `git diff --check`. Tiny localhost HTTP fixtures exercised 503 recovery, repeated failure, truncation and stalled transfers. Shared dependency files were hashed before/after and remained unchanged.
+- Ruby is unavailable on this Windows/WSL host, so Ruby syntax and execution did not run locally. The macOS job explicitly requires `ruby -c` on all patched sources and executes both real installed checksum validators against missing, invalid, mismatched and valid synthetic responses before pod installation; no skip is allowed.
+- No real artifact download, production change, paid service, native acceptance or M4 work ran locally. Full CI, including one free public unsigned simulator compile, remains required before merge.
+
 ## 2026-10-28 · Reconcile privacy and remaining free release work
 
 - Updated both public policy languages to explain the reviewed technical AI recipient, configured model, renewed consent and no automatic resend. Model aliases, provider terms, processing locations and retention remain explicitly qualified; a policy token is not proof of a click or permission to write.
