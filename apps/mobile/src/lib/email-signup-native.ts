@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CryptoDigestAlgorithm, digestStringAsync, getRandomBytesAsync, randomUUID } from "expo-crypto";
 import { Platform } from "react-native";
+import { fetch as expoFetch } from "expo/fetch";
 import { EmailSignupController } from "./email-signup";
 import { signupAuthFactory } from "./email-signup-client";
 import { supabase } from "./supabase";
@@ -11,7 +12,7 @@ export const emailSignup = url && key && mainAuth ? new EmailSignupController({
   storage: AsyncStorage, auth: signupAuthFactory(url, key, Platform.OS === "web" ? undefined : {
     randomBytes: () => getRandomBytesAsync(32),
     digest: value => digestStringAsync(CryptoDigestAlgorithm.SHA256, value),
-  }), uuid: randomUUID,
+  }, Platform.OS === "web" ? undefined : expoFetch), uuid: randomUUID,
   owner: async () => {
     const result = await mainAuth.getSession();
     if (result.error) throw result.error;

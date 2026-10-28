@@ -7,7 +7,8 @@ export type SignupAuthPort = { send(email: string, password: string, redirect: s
 export type SignupAuthFactory = (key: string, storage: EmailStorage) => SignupAuthPort;
 
 /** No React Native dependency: local Auth acceptance uses the identical SDK adapter. */
-export function signupAuthFactory(url: string, anonKey: string, nativeCrypto?: NativeSignupCrypto): SignupAuthFactory {
+export function signupAuthFactory(url: string, anonKey: string, nativeCrypto?: NativeSignupCrypto,
+  request: typeof fetch = (input, init) => fetch(input, init)): SignupAuthFactory {
   return (key, storage) => {
     let abort = new AbortController(), hasSession = false, sending = false;
     let digest: Awaited<ReturnType<typeof requireSignupCrypto>> | undefined;
@@ -18,7 +19,7 @@ export function signupAuthFactory(url: string, anonKey: string, nativeCrypto?: N
         if (!digest || target.origin !== new URL(url).origin || target.pathname !== "/auth/v1/signup" || init?.method !== "POST") throw new Error("signup_pkce_rejected");
         await requireSignupS256(init.body, await storage.getItem(`${key}-code-verifier`), digest);
       }
-      return fetch(input, { ...init, signal: abort.signal });
+      return request(input, { ...init, signal: abort.signal, redirect: "error" });
     };
     const client = createClient(url, anonKey, { auth: { storageKey: key, storage, flowType: "pkce",
       persistSession: true, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch: guardedFetch } });

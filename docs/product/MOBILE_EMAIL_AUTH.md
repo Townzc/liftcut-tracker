@@ -61,6 +61,10 @@ temporary session. An unexpected immediate session is rejected and best-effort
 signed out with local scope, using the public key, never an admin secret. This
 revokes refresh capability; an issued access JWT may remain valid until expiry.
 No response token is adopted by the main account or persisted by the controller.
+All adapter requests reject redirects. Native binding explicitly uses `expo/fetch`,
+so the legacy global-fetch override cannot silently change this transport. Real
+loopback HTTP 307 tests cover passwords, code exchange and temporary signout;
+native redirect enforcement still belongs in signed-device acceptance.
 
 Local GoTrue acceptance covers both SDK and scoped paths with captured mail,
 wrong-verifier rejection, identity and replay; a separate auto-confirm fixture
