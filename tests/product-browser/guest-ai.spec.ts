@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {Pool} from "pg";
 import {randomUUID} from "node:crypto";
+import {fixtureRecipient} from "./recipient-fixture";
 const db=new Pool({connectionString:process.env.W1B_TEST_DATABASE_URL}),owner="11111111-1111-4111-8111-111111111111";
 async function guest(page:Page){await page.goto("/login");await page.getByRole("button",{name:"以游客身份继续",exact:true}).click();await expect(page.getByTestId("current-plan-card")).toBeVisible();await page.getByRole("navigation").getByRole("link",{name:"Agent",exact:true}).click();await expect(page.locator("#coach-input")).toBeEnabled();}
 async function send(page:Page,text:string){await page.locator("#coach-input").fill(text);await page.getByRole("button",{name:"发送",exact:true}).click();await expect(page.getByTestId("coach-turn").last()).toHaveAttribute("aria-busy","false",{timeout:25000});}
@@ -50,7 +51,7 @@ test("guest quota rejection persists after reload, forged identities fail and ac
   await send(page,"你好");const used=(await db.query("select guest_id,network_hash from coach_private.guest_ai_usage order by created_at desc limit 1")).rows[0];
   await db.query("insert into coach_private.guest_ai_usage(request_id,guest_id,network_hash,created_at) select gen_random_uuid(),$1,$2,now()-interval '2 minutes' from generate_series(1,9)",[used.guest_id,used.network_hash]);
   await page.reload();await expect(page.getByTestId("guest-quota")).toContainText("0/10");await send(page,"你能做什么呀");await expect(page.getByTestId("coach-turn").last()).toContainText("今日访客试用额度已用完");
-  const body={id:randomUUID(),text:"hello",history:[],locale:"en",timezone:"UTC",consent:"coach-model-v2",guestRecords:[]};
+  const body={id:randomUUID(),text:"hello",history:[],locale:"en",timezone:"UTC",consent:"coach-model-v2",recipient:await fixtureRecipient(page.request),guestRecords:[]};
   expect((await page.request.post("/api/ai/coach",{headers:{Origin:"http://localhost:3103","X-Workout-Owner":owner},data:body})).status()).toBe(409);
   for(const path of ["/api/personal-records","/api/coach-memory","/api/coach-history"]){const res=await page.request.get(path);expect([401,404]).toContain(res.status());}
   const old=(await page.context().cookies()).find(c=>c.name==="liftcut_ai_guest")!;
