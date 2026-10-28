@@ -8,6 +8,9 @@ on:
       - .github/workflows/ios-simulator.yml
       - scripts/inspect-ios-artifact.py
       - tests/ci/test_ios_artifact.py
+      - scripts/prepare-ios-downloads.py
+      - tests/ci/test_ios_downloads.py
+      - tests/ci/ios_download_checks.rb
   workflow_dispatch:
 
 permissions:
@@ -43,9 +46,20 @@ jobs:
           cache-dependency-path: apps/mobile/package-lock.json
       - run: xcodebuild -version
       - run: npm ci
+      - name: Bound pinned native downloads and verify actual Ruby checksum behavior
+        timeout-minutes: 3
+        run: |
+          python3 ../../scripts/prepare-ios-downloads.py node_modules/react-native
+          for FILE in node_modules/react-native/scripts/cocoapods/{utils,rncore,rndependencies}.rb node_modules/react-native/sdks/hermes-engine/hermes-utils.rb; do
+            ruby -c "$FILE"
+          done
+          ruby ../../tests/ci/ios_download_checks.rb node_modules/react-native
       - name: Generate native project from Expo config (no hand-edited native files)
         run: npx expo prebuild --platform ios --no-install
       - name: Install native dependencies
+        timeout-minutes: 15
+        env:
+          RCT_SKIP_CACHES: "0"
         run: pod install --project-directory=ios
       - name: Compile an unsigned Release app for the simulator
         run: |
