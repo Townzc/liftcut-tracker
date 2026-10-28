@@ -73,6 +73,46 @@ calls, migrations, mail, paid services or M4 work are part of this change.
 4. Verify the implemented mobile privacy links on a signed device, separately from browser,
    Expo Go, JS bundle and unsigned simulator results.
 
+## Provider facts checked 2026-10-28
+
+This is a bounded public-source review, not a legal conclusion or verification of
+this account's contracts/settings. Clarifying the applicable agreement and allowed
+data scope remains a Store release gate, particularly for injury/health notes.
+No provider was contacted and no account, setting, service or runtime was changed.
+
+- **DeepSeek direct API:** [Open Platform terms](https://cdn.deepseek.com/policies/zh-CN/deepseek-open-platform-terms-of-service.html)
+  sections 3.5/5.5 require downstream disclosure and distinguish the developer's
+  and end users' processing. They do not establish API-specific zero retention or
+  no-training guarantees. The [public privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+  describes improvement/training, rights to request training opt-out, processing
+  and storage in China, variable retention, and restrictions on sensitive data
+  including health. Do not assume these general statements settle every API
+  payload's treatment, or that an app opt-in changes provider controls. Confirm
+  API-specific scope, supported controls and the injury-note use case before
+  claiming a provider guarantee.
+- **Supabase:** the [DPA](https://supabase.com/legal/customer-resources/data-processing-addendum)
+  limits covered processing to instructions/purposes and describes selected-region
+  storage/primary processing with exceptions. Its 30-day post-agreement return/
+  deletion term is not a per-user deletion SLA. It separately requires a BAA for
+  HIPAA PHI; ordinary fitness data must not automatically be called HIPAA PHI.
+  The [Free log window](https://supabase.com/kb/troubleshooting/check-usage-for-monthly-active-users-mau-MwZaBs)
+  is one day of user access, not proof of physical erasure. [Backup documentation](https://supabase.com/docs/guides/platform/backups)
+  recommends exports for Free projects and states database backups exclude
+  Storage object bytes. Verify actual copies and settings before promising a
+  retention/deletion period; this review did not read production configuration.
+- **Vercel:** [runtime log windows](https://vercel.com/docs/logs/runtime) vary by
+  plan (Hobby one hour, Pro one day, Observability Plus 30 days); exported drains
+  and other copies are separate. Its [DPA](https://vercel.com/legal/dpa) permits
+  US/global processing, lacks a fixed per-user deletion deadline and restricts
+  sensitive/special-category Customer Data. Clarify the applicable agreement and
+  injury/health scope; do not infer that consent alone resolves it. [Infrastructure backups](https://vercel.com/docs/security/compliance)
+  have a documented 30-day window but do not prove every API body is backed up.
+  The [optional training program](https://vercel.com/changelog/updates-to-terms-of-service-march-2026)
+  has Team/Project Data Preferences for code, agent chats and build/usage data;
+  this is not proof that LiftCut fitness conversations are training inputs.
+  Actual preferences are unverified. AI Gateway retention controls do not apply
+  automatically to our direct DeepSeek transport.
+
 ## Official references checked 2026-10-26
 
 - [Apple review guidelines](https://developer.apple.com/app-store/review/guidelines/):
