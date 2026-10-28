@@ -1,5 +1,12 @@
 # 产品日志
 
+## 2026-10-28 · Drain mobile browser relays before teardown
+
+- PR #206 CI passed 97 product-browser tests, but a mobile body-entry test ended while its history relay still awaited `route.fetch`; this was a test lifecycle error after the record assertions.
+- All nine relay-using suites now use a shared page fixture that awaits `unrouteAll({ behavior: "wait" })` before disposal. Errors are not swallowed; bearer-only and no-write-before-confirmation assertions remain intact. The body-entry case delays history responses by 800 ms and drains before database cleanup.
+- Ran root TypeScript, targeted ESLint, `git diff --check`, synthetic Next build/Expo web export, full `playwright.mobile.config.ts` (18 passed, 1 expected deletion-opt-in skip) and `playwright.recipient.config.ts` (6/6). Used disposable local PostgreSQL, scripted model and synthetic Auth fixtures.
+- This changes test teardown only; no real provider/Auth, native installation, production data, paid service or M4 acceptance is claimed.
+
 ## 2026-10-28 · Web recipient-bound AI consent
 
 - Existing Agent consent now names the reviewed API origin/operator and configured model. Stored version-only consent cannot enable cloud calls; new consent binds the recipient policy. Workout review and legacy training/nutrition generation carry the same binding.
